@@ -69,8 +69,9 @@ export function DeadlinesGantt({
   const list = useList()
   const scores = useScores()
   const catalog = useScoreCatalog()
+  // The calendar endpoint answers at most 400 days: a month back plus 370 ahead.
   const range = useMemo(
-    () => ({ from: utcDayToIso(today - 30 * DAY), to: utcDayToIso(today + 400 * DAY) }),
+    () => ({ from: utcDayToIso(today - 30 * DAY), to: utcDayToIso(today + 370 * DAY) }),
     [today],
   )
   const calendar = useCalendar(range.from, range.to)

@@ -239,9 +239,9 @@ function DetailBody({ institution }: { institution: Institution }) {
           ) : null}
           {rateValue !== null ? <Stat label={t("detail.stats.admissionRate")}>{percent(rateValue)}</Stat> : null}
           {kind && hasValue(kind) ? <Stat label={t("detail.stats.type")}>{kindLabel(String(kind.value))}</Stat> : null}
-          {institution.coa_total ? (
+          {institution.cost_after_aid ? (
             <Stat label={t("detail.stats.cost")}>
-              {formatCurrency(institution.coa_total, institution.coa_currency, locale) ?? institution.coa_total}
+              ≈ {formatCurrency(institution.cost_after_aid, institution.coa_currency, locale) ?? institution.cost_after_aid}
             </Stat>
           ) : null}
           <Stat label={t("detail.stats.deadline")}>

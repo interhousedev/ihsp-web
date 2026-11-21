@@ -17,6 +17,7 @@ export function institution(overrides: Partial<Institution> = {}): Institution {
     website_url: null,
     coa_total: "40000",
     coa_currency: "USD",
+    cost_after_aid: null,
     aid_basis: null,
     merit_available: null,
     scholarship_count: 0,

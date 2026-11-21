@@ -28614,6 +28614,8 @@ export interface components {
             coa_currency: string | null;
             /** Coa Total */
             coa_total: string | null;
+            /** Cost After Aid */
+            cost_after_aid: string | null;
             /** Country */
             country: string;
             /** Cover Url */
