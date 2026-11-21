@@ -139,7 +139,6 @@ describe("career quiz persistence", () => {
     expect(await screen.findByText("Autosaved")).toBeInTheDocument()
     expect(store.quizzes.career.answers.study_fields).toEqual(["biology"])
   })
-
 })
 
 describe("career tabs and field counter", () => {

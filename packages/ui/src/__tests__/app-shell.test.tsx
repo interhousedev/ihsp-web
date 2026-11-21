@@ -85,7 +85,9 @@ describe("AppShell from 768 px", () => {
 
     // Top to bottom: toolbar, slot, nav, bottom menu, account.
     const order = ["history", "slot", "Today", "bell", "account"].map((text) =>
-      Array.from(sidebar.querySelectorAll("*")).findIndex((node) => node.children.length === 0 && node.textContent === text),
+      Array.from(sidebar.querySelectorAll("*")).findIndex(
+        (node) => node.children.length === 0 && node.textContent === text,
+      ),
     )
     expect([...order].sort((x, y) => x - y)).toEqual(order)
   })

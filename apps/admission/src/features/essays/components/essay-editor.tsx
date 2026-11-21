@@ -256,12 +256,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
       <div className="flex min-h-0 min-w-0 flex-1 gap-4 p-3 md:p-4">
         <div className="flex min-w-0 flex-1 flex-col gap-3 md:overflow-y-auto md:pr-1 md:[scrollbar-gutter:stable]">
           <div className="mx-auto flex w-full max-w-3xl flex-col gap-3">
-            <ScoreBar
-              essayId={essay.id}
-              state={readState}
-              onRead={() => go("read")}
-              onUnis={() => go("unis")}
-            />
+            <ScoreBar essayId={essay.id} state={readState} onRead={() => go("read")} onUnis={() => go("unis")} />
             <EssayMeta
               prompt={draft.prompt_text}
               summary={targets.length > 0 ? targets.map((tg) => tg.prompt).join(" · ") : undefined}
@@ -279,7 +274,13 @@ export function EssayEditor({ essay }: { essay: Essay }) {
               className="bg-warning-muted text-warning mx-auto flex w-full max-w-3xl flex-wrap items-center gap-x-3 gap-y-1 rounded-md px-3 py-2 text-sm"
             >
               <span className="min-w-0 flex-1">{te("staleBanner")}</span>
-              <Button type="button" size="sm" variant="outline" disabled={readState.run.isPending} onClick={() => void readState.start()}>
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                disabled={readState.run.isPending}
+                onClick={() => void readState.start()}
+              >
                 {te("staleAction")}
               </Button>
             </p>
@@ -324,14 +325,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             </p>
           ) : null}
         </div>
-        <Dock
-          split={split}
-          view={view}
-          onView={go}
-          onClose={() => setView(null)}
-          title={dockTitle}
-          panes={panes}
-        />
+        <Dock split={split} view={view} onView={go} onClose={() => setView(null)} title={dockTitle} panes={panes} />
       </div>
       <ShareDialog essayId={essay.id} open={shareOpen} onOpenChange={setShareOpen} />
       <PreviewDialog

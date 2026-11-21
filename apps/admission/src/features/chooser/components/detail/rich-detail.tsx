@@ -38,7 +38,8 @@ export function RichSections({
         const rows = rowsOf(details, name)
         const extra: ReactNode[] = []
         if (name === "selectivity" && factors.length > 0) extra.push(<FactorsTable key="factors" factors={factors} />)
-        if (name === "application" && deadlines.length > 0) extra.push(<DeadlinesTable key="deadlines" items={deadlines} />)
+        if (name === "application" && deadlines.length > 0)
+          extra.push(<DeadlinesTable key="deadlines" items={deadlines} />)
         if (rows.length === 0 && extra.length === 0 && !after?.[name]) return null
         return (
           <section key={name} aria-label={t(`groups.${name}`)} className="flex flex-col gap-2">

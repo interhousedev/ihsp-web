@@ -91,11 +91,16 @@ export function GroupDrawer({ row, onClose }: { row: LedgerRow | null; onClose: 
                   <span className="flex min-w-0 flex-1 flex-col">
                     <span className="truncate font-medium">{label(e)}</span>
                     <span className="text-muted-foreground text-xs">
-                      {e.word_limit ? te("wordsOf", { count: e.word_count, limit: e.word_limit }) : te("words", { count: e.word_count })}
+                      {e.word_limit
+                        ? te("wordsOf", { count: e.word_count, limit: e.word_limit })
+                        : te("words", { count: e.word_count })}
                       {e.forked_from ? ` · ${t("forked")}` : ""}
                     </span>
                   </span>
-                  <Link href={`/essays/edit/?id=${encodeURIComponent(e.id)}`} className={buttonVariants({ size: "sm", variant: "outline" })}>
+                  <Link
+                    href={`/essays/edit/?id=${encodeURIComponent(e.id)}`}
+                    className={buttonVariants({ size: "sm", variant: "outline" })}
+                  >
                     {t("open")}
                   </Link>
                 </li>

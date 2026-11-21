@@ -13,7 +13,7 @@ export function ListTotals({ data }: { data: Pick<ListRows, "familyBudget" | "to
   return (
     <section
       aria-label={t("totals.title")}
-      className="bg-muted/40 flex flex-wrap items-baseline gap-x-5 gap-y-1 rounded-xl border px-3 py-2.5 text-sm"
+      className="bg-muted/40 flex flex-wrap items-baseline gap-x-5 gap-y-1 rounded-card border px-3 py-2.5 text-sm"
     >
       <span className="font-semibold">{t("totals.title")}</span>
       <span>{t("totals.count", { count: rows.length })}</span>
@@ -24,11 +24,15 @@ export function ListTotals({ data }: { data: Pick<ListRows, "familyBudget" | "to
           <span>{t("totals.budget", { amount: usd(familyBudget) })}</span>
           <span className="text-success">{t("totals.within", { count: totals.within })}</span>
           <span className={totals.over > 0 ? "text-destructive" : "text-muted-foreground"}>
-            {totals.avgOver === null ? t("totals.over", { count: 0 }) : t("totals.overAvg", { count: totals.over, amount: usd(totals.avgOver) })}
+            {totals.avgOver === null
+              ? t("totals.over", { count: 0 })
+              : t("totals.overAvg", { count: totals.over, amount: usd(totals.avgOver) })}
           </span>
         </>
       )}
-      {totals.unknown > 0 ? <span className="text-muted-foreground">{t("totals.unknown", { count: totals.unknown })}</span> : null}
+      {totals.unknown > 0 ? (
+        <span className="text-muted-foreground">{t("totals.unknown", { count: totals.unknown })}</span>
+      ) : null}
     </section>
   )
 }

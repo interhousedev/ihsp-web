@@ -118,7 +118,8 @@ export function filterRows(rows: LedgerRow[], query: string): LedgerRow[] {
 /** The distinct universities of a row (the Common App has no university), soonest list entries first. */
 export function rowUniversities(row: LedgerRow): { id: string; name: string }[] {
   const seen = new Map<string, string>()
-  for (const p of row.group.prompts) if (p.institution_id && !seen.has(p.institution_id)) seen.set(p.institution_id, p.institution_name)
+  for (const p of row.group.prompts)
+    if (p.institution_id && !seen.has(p.institution_id)) seen.set(p.institution_id, p.institution_name)
   return [...seen].map(([id, name]) => ({ id, name }))
 }
 

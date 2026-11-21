@@ -42,7 +42,9 @@ export function PreviewDialog({
             data-testid="preview-count"
             className={cn("text-sm font-medium tabular-nums", over ? "text-destructive" : "text-muted-foreground")}
           >
-            {limit ? t("previewCountLimit", { words, limit, chars: body.length }) : t("previewCount", { words, chars: body.length })}
+            {limit
+              ? t("previewCountLimit", { words, limit, chars: body.length })
+              : t("previewCount", { words, chars: body.length })}
             {over ? ` · ${t("overBy", { count: words - limit })}` : ""}
           </p>
           <div className="bg-muted/30 max-h-[55dvh] overflow-y-auto rounded-md border p-4 text-sm leading-relaxed whitespace-pre-wrap [scrollbar-gutter:stable]">

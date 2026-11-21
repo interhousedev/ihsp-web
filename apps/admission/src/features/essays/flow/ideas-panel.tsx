@@ -26,7 +26,10 @@ function StallHelper({ fewIdeas }: { fewIdeas: boolean }) {
   const t = useT("essayFlow")
   const [open, setOpen] = useState(false)
   return (
-    <section className="bg-warning/10 border-warning/30 rounded-card flex flex-col gap-3 border p-3" data-testid="ideas-stall">
+    <section
+      className="bg-warning/10 border-warning/30 rounded-card flex flex-col gap-3 border p-3"
+      data-testid="ideas-stall"
+    >
       <div className="flex flex-col gap-1">
         <h3 className="flex items-center gap-2 text-base font-semibold">
           <Icons.sparkles aria-hidden className="size-4" />
@@ -62,7 +65,10 @@ export function IdeasPanel() {
   const ideas = (ideasQuery.data?.items ?? []).filter((i) => i.status !== "drop")
   const fitQueries = useQueries({ queries: ideas.map((i) => ideaFitOptions(i.body, aiGranted)) })
   const fits = Object.fromEntries(
-    ideas.map((idea, i) => [idea.body, { data: fitQueries[i]?.data, pending: fitQueries[i]?.isPending === true && aiGranted }]),
+    ideas.map((idea, i) => [
+      idea.body,
+      { data: fitQueries[i]?.data, pending: fitQueries[i]?.isPending === true && aiGranted },
+    ]),
   )
   const scores = fitQueries.flatMap((q) => q.data?.items.map((x) => x.score) ?? [])
   const best = aiGranted && fitQueries.every((q) => !q.isPending) && scores.length > 0 ? Math.max(0, ...scores) : null

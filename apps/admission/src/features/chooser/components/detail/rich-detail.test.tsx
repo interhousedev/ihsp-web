@@ -6,7 +6,12 @@ import { RichSections } from "./rich-detail"
 
 describe("rich school details", () => {
   it("shows sections with rows and source chips, and hides sections without rows", () => {
-    renderAdmissionApp(<RichSections institution={richInstitution()} groups={["overview", "selectivity", "costs", "english", "credentials", "application", "visa"]} />)
+    renderAdmissionApp(
+      <RichSections
+        institution={richInstitution()}
+        groups={["overview", "selectivity", "costs", "english", "credentials", "application", "visa"]}
+      />,
+    )
     expect(screen.getByRole("heading", { name: "Selectivity" })).toBeTruthy()
     expect(screen.queryByRole("heading", { name: "Visa" })).toBeNull()
     expect(screen.getByText("4-6%")).toBeTruthy()
@@ -35,7 +40,9 @@ describe("rich school details", () => {
   })
 
   it("hides empty sections", () => {
-    renderAdmissionApp(<RichSections institution={institution({ details: [] })} groups={["selectivity", "application"]} />)
+    renderAdmissionApp(
+      <RichSections institution={institution({ details: [] })} groups={["selectivity", "application"]} />,
+    )
     expect(screen.queryByTestId("factors")).toBeNull()
     expect(screen.queryByTestId("deadlines")).toBeNull()
   })

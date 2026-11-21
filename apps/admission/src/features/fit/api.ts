@@ -44,6 +44,8 @@ export function useFitAnalysis(institutionId: string) {
   const locale = useLocale()
   return useMutation({
     mutationFn: () =>
-      getApiClient().post<FitAnalysis>(`${BASE}/fit/${institutionId}/analysis`, undefined, { headers: { "Accept-Language": locale } }),
+      getApiClient().post<FitAnalysis>(`${BASE}/fit/${institutionId}/analysis`, undefined, {
+        headers: { "Accept-Language": locale },
+      }),
   })
 }

@@ -39,7 +39,8 @@ export function useLedgerView() {
     },
     [params, pathname, router],
   )
-  const practiceLink = params.get("step") === "practice" || params.get("tab") === "practice" || params.get("drawer") === "practice"
+  const practiceLink =
+    params.get("step") === "practice" || params.get("tab") === "practice" || params.get("drawer") === "practice"
   return { scope, lens, drawer, group, uni, practiceLink, set }
 }
 

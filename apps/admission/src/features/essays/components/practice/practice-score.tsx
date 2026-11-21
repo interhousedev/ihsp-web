@@ -8,7 +8,9 @@ import type { PracticeEntry } from "../../flow/api"
 
 /** The sum of the four criteria, out of 20. */
 export const totalOf = (entry: PracticeEntry | null | undefined): number | null =>
-  entry?.evaluation && entry.evaluation.scores.length > 0 ? entry.evaluation.scores.reduce((n, s) => n + s.score, 0) : null
+  entry?.evaluation && entry.evaluation.scores.length > 0
+    ? entry.evaluation.scores.reduce((n, s) => n + s.score, 0)
+    : null
 
 /** The score column: the total, one row per criterion, what works, what to try and the idea seeds. */
 export function PracticeScore({ entry, canSeed }: { entry: PracticeEntry | null | undefined; canSeed: boolean }) {
@@ -39,7 +41,10 @@ export function PracticeScore({ entry, canSeed }: { entry: PracticeEntry | null 
           <li key={s.key} className="flex min-w-0 flex-col gap-1 text-sm">
             <span className="flex items-center justify-between gap-2 font-medium">
               {tf(`practice.score.${s.key}`)}
-              <span aria-label={tf("practice.scoreOf", { score: s.score })} className="text-muted-foreground tabular-nums">
+              <span
+                aria-label={tf("practice.scoreOf", { score: s.score })}
+                className="text-muted-foreground tabular-nums"
+              >
                 {s.score}/5
               </span>
             </span>
@@ -87,7 +92,10 @@ export function PracticeScore({ entry, canSeed }: { entry: PracticeEntry | null 
                     variant="outline"
                     disabled={add.isPending}
                     onClick={() =>
-                      add.mutate({ body: seed, tags: [tf("practice.seedTag")], essay_id: null }, { onError: (error) => toast.error(errorMessage(error)) })
+                      add.mutate(
+                        { body: seed, tags: [tf("practice.seedTag")], essay_id: null },
+                        { onError: (error) => toast.error(errorMessage(error)) },
+                      )
                     }
                   >
                     <Icons.add aria-hidden />

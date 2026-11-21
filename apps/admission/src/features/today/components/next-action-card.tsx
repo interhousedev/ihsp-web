@@ -52,9 +52,7 @@ export function NextActionCard({
             {t("next.min", { n: top.minutes })}
           </span>
         </div>
-        <h2 className="text-lg leading-tight font-semibold tracking-tight text-balance md:text-2xl">
-          {top.title}
-        </h2>
+        <h2 className="text-lg leading-tight font-semibold tracking-tight text-balance md:text-2xl">{top.title}</h2>
         <p className="text-muted-foreground flex items-start gap-2 text-sm leading-snug">
           <Icons.info aria-hidden className="mt-0.5 size-4 shrink-0" />
           <span>
@@ -68,16 +66,16 @@ export function NextActionCard({
             <Icons.arrowRight aria-hidden />
           </Link>
           {top.kind === "pinned" ? null : (
-          <button
-            type="button"
-            onClick={() => {
-              onSnooze(top.key)
-              snooze.mutate(top.key)
-            }}
-            className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "max-md:h-10")}
-          >
-            {t("next.later")}
-          </button>
+            <button
+              type="button"
+              onClick={() => {
+                onSnooze(top.key)
+                snooze.mutate(top.key)
+              }}
+              className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "max-md:h-10")}
+            >
+              {t("next.later")}
+            </button>
           )}
         </div>
       </div>
@@ -94,11 +92,11 @@ export function NextActionCard({
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-medium">{action.title}</span>
-                  <span className="text-muted-foreground block truncate text-xs">
-                    {action.why}
-                  </span>
+                  <span className="text-muted-foreground block truncate text-xs">{action.why}</span>
                 </span>
-                <span className="text-muted-foreground shrink-0 text-xs tabular-nums">{t("next.min", { n: action.minutes })}</span>
+                <span className="text-muted-foreground shrink-0 text-xs tabular-nums">
+                  {t("next.min", { n: action.minutes })}
+                </span>
                 <Icons.chevronRight aria-hidden className="text-muted-foreground size-4 shrink-0" />
               </Link>
             </li>
@@ -110,7 +108,15 @@ export function NextActionCard({
 }
 
 /** The queued items on their own, for the phone order (next action, universities, then these). */
-export function QueuedActions({ actions, snoozed, className }: { actions: TodayAction[]; snoozed: string[]; className?: string }) {
+export function QueuedActions({
+  actions,
+  snoozed,
+  className,
+}: {
+  actions: TodayAction[]
+  snoozed: string[]
+  className?: string
+}) {
   const t = useT("today")
   const rest = actions.filter((a) => !snoozed.includes(a.key)).slice(1, 3)
   if (rest.length === 0) return null
@@ -126,7 +132,9 @@ export function QueuedActions({ actions, snoozed, className }: { actions: TodayA
               <span className="block truncate text-sm font-medium">{action.title}</span>
               <span className="text-muted-foreground block truncate text-xs">{action.why}</span>
             </span>
-            <span className="text-muted-foreground shrink-0 text-xs tabular-nums">{t("next.min", { n: action.minutes })}</span>
+            <span className="text-muted-foreground shrink-0 text-xs tabular-nums">
+              {t("next.min", { n: action.minutes })}
+            </span>
           </Link>
         </li>
       ))}

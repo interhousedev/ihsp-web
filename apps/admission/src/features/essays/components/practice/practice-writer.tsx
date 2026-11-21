@@ -17,9 +17,14 @@ export function PastDay({ entry }: { entry: PracticeEntry }) {
   const t = useT("essayPractice")
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3 p-4">
-      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{formatDate(entry.day, undefined, { day: "numeric", month: "long" })}</p>
+      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+        {formatDate(entry.day, undefined, { day: "numeric", month: "long" })}
+      </p>
       <h2 className="text-xl font-semibold">{entry.theme}</h2>
-      <p className="min-h-0 flex-1 overflow-y-auto text-sm whitespace-pre-wrap [scrollbar-gutter:stable]" data-testid="practice-past-body">
+      <p
+        className="min-h-0 flex-1 overflow-y-auto text-sm whitespace-pre-wrap [scrollbar-gutter:stable]"
+        data-testid="practice-past-body"
+      >
         {entry.body}
       </p>
       <p className="text-muted-foreground text-sm">{t("words", { count: entry.word_count })}</p>
@@ -60,9 +65,16 @@ export function PracticeWriter({ today, onScored }: { today: PracticeToday; onSc
     evaluate.mutate(undefined, { onSuccess: onScored })
   }
   const action = (
-    <Button type="button" disabled={words < 5 || evaluate.isPending || save.isPending} onClick={() => void evaluateNow()} className="min-h-11 lg:min-h-9">
+    <Button
+      type="button"
+      disabled={words < 5 || evaluate.isPending || save.isPending}
+      onClick={() => void evaluateNow()}
+      className="min-h-11 lg:min-h-9"
+    >
       <Icons.sparkles aria-hidden />
-      {evaluate.isPending ? tf("practice.evaluating") : tf(today.entry?.evaluation ? "practice.reevaluate" : "practice.evaluate")}
+      {evaluate.isPending
+        ? tf("practice.evaluating")
+        : tf(today.entry?.evaluation ? "practice.reevaluate" : "practice.evaluate")}
     </Button>
   )
   return (
@@ -91,7 +103,16 @@ export function PracticeWriter({ today, onScored }: { today: PracticeToday; onSc
         </span>
         <div className="flex gap-2">
           {dictation.supported ? (
-            <Button type="button" variant="outline" size="icon" aria-label={tf(dictation.listening ? "practice.dictateStop" : "practice.dictate")} title={tf(dictation.listening ? "practice.dictateStop" : "practice.dictate")} onClick={dictation.listening ? dictation.stop : dictation.start} aria-pressed={dictation.listening} className={cn("size-11 lg:size-9")}>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              aria-label={tf(dictation.listening ? "practice.dictateStop" : "practice.dictate")}
+              title={tf(dictation.listening ? "practice.dictateStop" : "practice.dictate")}
+              onClick={dictation.listening ? dictation.stop : dictation.start}
+              aria-pressed={dictation.listening}
+              className={cn("size-11 lg:size-9")}
+            >
               <Icons.microphone aria-hidden />
             </Button>
           ) : null}
@@ -99,9 +120,7 @@ export function PracticeWriter({ today, onScored }: { today: PracticeToday; onSc
         </div>
       </div>
       <CoachError error={evaluate.error} />
-      <div
-        className="bg-background/95 border-hairline sticky bottom-[calc(var(--bottom-nav-height,0px)+var(--safe-bottom,0px))] z-10 -mx-4 -mb-4 flex border-t p-3 backdrop-blur lg:hidden"
-      >
+      <div className="bg-background/95 border-hairline sticky bottom-[calc(var(--bottom-nav-height,0px)+var(--safe-bottom,0px))] z-10 -mx-4 -mb-4 flex border-t p-3 backdrop-blur lg:hidden">
         <span className="flex w-full [&>button]:w-full">{action}</span>
       </div>
     </div>

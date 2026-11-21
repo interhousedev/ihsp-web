@@ -28,7 +28,9 @@ for (const app of APPS) {
 }
 
 const glyph = (app: string, fill: string) =>
-  marks[app]!.paths.map((d) => `<path d="${d}" fill="${fill}"${marks[app]!.evenodd ? ' fill-rule="evenodd"' : ""}/>`).join("")
+  marks[app]!.paths.map(
+    (d) => `<path d="${d}" fill="${fill}"${marks[app]!.evenodd ? ' fill-rule="evenodd"' : ""}/>`,
+  ).join("")
 /** `scale` < 1 keeps the glyph inside the maskable safe zone. */
 const tile = (app: string, scale = 1, tileFill = NAVY, glyphFill = "white") =>
   `<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">` +
@@ -62,7 +64,8 @@ for (const app of APPS) {
 }
 
 const body = APPS.map(
-  (app) => `  ${app}: { paths: [${marks[app]!.paths.map((d) => JSON.stringify(d)).join(", ")}], evenodd: ${marks[app]!.evenodd} },`,
+  (app) =>
+    `  ${app}: { paths: [${marks[app]!.paths.map((d) => JSON.stringify(d)).join(", ")}], evenodd: ${marks[app]!.evenodd} },`,
 ).join("\n")
 writeFileSync(
   join(root, "packages/ui/src/components/layout/platform-marks.ts"),

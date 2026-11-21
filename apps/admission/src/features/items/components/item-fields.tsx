@@ -73,7 +73,18 @@ const num = (v: string) => (v.trim() === "" ? null : Number(v))
 export const descriptionMax = (kind: ItemKind) =>
   kind === "honor" ? LIMITS.honorDescription : LIMITS.activityDescription
 
-const FIELD_ORDER = ["category", "level", "title", "organization", "description", "grades", "timing", "hours_per_week", "weeks_per_year", "intend_in_college"] as const
+const FIELD_ORDER = [
+  "category",
+  "level",
+  "title",
+  "organization",
+  "description",
+  "grades",
+  "timing",
+  "hours_per_week",
+  "weeks_per_year",
+  "intend_in_college",
+] as const
 
 /** The fields a ready item still lacks (client-side hint only; the backend decides). */
 export function missingFields(f: FormState, kind: ItemKind): string[] {
@@ -97,10 +108,7 @@ export function Counter({ text, max, warn }: { text: string; max: number; warn: 
   const t = useT("items")
   const over = text.length > warn
   return (
-    <span
-      className={`text-xs tabular-nums ${over ? "text-amber-600 dark:text-amber-400" : "text-muted-foreground"}`}
-      aria-live="off"
-    >
+    <span className={`text-xs tabular-nums ${over ? "text-warning" : "text-muted-foreground"}`} aria-live="off">
       {text.length}/{max}
       {over ? ` · ${t("form.longHint", { warn })}` : ""}
     </span>
@@ -167,7 +175,8 @@ export function ItemFields({
   const options = useAdmissionConfig().data?.options
   const tc = useT("honorCategory")
   const configured = optionList(options, kind === "honor" ? "honor_categories" : "activity_categories")
-  const categories = configured.length > 0 ? configured : [...(kind === "honor" ? HONOR_CATEGORIES : ACTIVITY_CATEGORIES)]
+  const categories =
+    configured.length > 0 ? configured : [...(kind === "honor" ? HONOR_CATEGORIES : ACTIVITY_CATEGORIES)]
   const levelOptions = optionList(options, "recognition_levels")
   const levels = levelOptions.length > 0 ? levelOptions : [...RECOGNITION_LEVELS]
   const grades = optionList(options, "item_grades").map(Number) as ItemGrade[]
@@ -203,7 +212,7 @@ export function ItemFields({
           ))}
         </div>
         {value.status === "ready" && missing.length > 0 ? (
-          <span role="status" className="text-xs text-amber-600 dark:text-amber-400">
+          <span role="status" className="text-xs text-warning">
             {t("form.incompleteHint", { fields: missing.map((k) => t(`form.missing.${k}`)).join(", ") })}
           </span>
         ) : null}

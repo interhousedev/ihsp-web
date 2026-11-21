@@ -11,7 +11,7 @@ export function ListTray({ onOpenList }: { onOpenList: () => void }) {
   const t = useT("uniFlow")
   const { rows, isPending } = useFitRows()
   return (
-    <section aria-label={t("tray.title")} className="bg-card flex min-w-0 flex-col gap-3 rounded-xl border p-3">
+    <section aria-label={t("tray.title")} className="bg-card flex min-w-0 flex-col gap-3 rounded-card border p-3">
       <div className="flex items-baseline justify-between gap-2">
         <h2 className="text-sm font-semibold">{t("tray.title")}</h2>
         <span className="text-muted-foreground text-xs">{t("tray.count", { count: rows.length })}</span>
@@ -28,7 +28,10 @@ export function ListTray({ onOpenList }: { onOpenList: () => void }) {
                 <RingLogo name={entry.institution.name} src={entry.institution.logo_url} />
               </FitRing>
               <span className="min-w-0 flex-1 truncate text-sm">{entry.institution.name}</span>
-              <span className="text-muted-foreground text-xs tabular-nums" aria-label={fit.total == null ? t("tray.unknown") : undefined}>
+              <span
+                className="text-muted-foreground text-xs tabular-nums"
+                aria-label={fit.total == null ? t("tray.unknown") : undefined}
+              >
                 {fit.total == null ? "–" : Math.round(fit.total)}
               </span>
             </li>

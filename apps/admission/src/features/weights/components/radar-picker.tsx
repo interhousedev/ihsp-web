@@ -49,7 +49,10 @@ export function RadarPicker({ value, onChange }: { value: Ratings; onChange: (ne
 
   const locate = (event: PointerEvent<SVGSVGElement>): Pt => {
     const box = svg.current!.getBoundingClientRect()
-    return { x: VB.x + ((event.clientX - box.left) / box.width) * VB.w, y: VB.y + ((event.clientY - box.top) / box.height) * VB.h }
+    return {
+      x: VB.x + ((event.clientX - box.left) / box.width) * VB.w,
+      y: VB.y + ((event.clientY - box.top) / box.height) * VB.h,
+    }
   }
   const set = (trait: TraitId, rating: number) => {
     const next = clampRating(rating)
@@ -100,14 +103,18 @@ export function RadarPicker({ value, onChange }: { value: Ratings; onChange: (ne
         {RINGS.map((ring) => (
           <polygon
             key={ring}
-            points={TRAITS.map((_, i) => radarPoint(i, ring, R, CX, CY)).map((p) => `${p.x},${p.y}`).join(" ")}
+            points={TRAITS.map((_, i) => radarPoint(i, ring, R, CX, CY))
+              .map((p) => `${p.x},${p.y}`)
+              .join(" ")}
             className={ring % 5 === 0 ? "stroke-hairline-strong fill-none" : "stroke-border fill-none"}
             strokeWidth={ring % 5 === 0 ? 1.2 : 0.6}
           />
         ))}
         {TRAITS.map((trait, i) => {
           const edge = radarPoint(i, RATING_MAX, R, CX, CY)
-          return <line key={trait} x1={CX} y1={CY} x2={edge.x} y2={edge.y} className="stroke-border" strokeWidth={0.8} />
+          return (
+            <line key={trait} x1={CX} y1={CY} x2={edge.x} y2={edge.y} className="stroke-border" strokeWidth={0.8} />
+          )
         })}
         <polygon
           points={shape.map((p) => `${p.x},${p.y}`).join(" ")}
@@ -150,7 +157,12 @@ export function RadarPicker({ value, onChange }: { value: Ratings; onChange: (ne
                   style={{ fill: METRIC_STYLE[TRAIT_AXIS[trait]].color }}
                   strokeWidth={2.5}
                 />
-                <text x={p.x} y={p.y + 4} textAnchor="middle" className="fill-white pointer-events-none text-[12px] font-semibold">
+                <text
+                  x={p.x}
+                  y={p.y + 4}
+                  textAnchor="middle"
+                  className="fill-white pointer-events-none text-[12px] font-semibold"
+                >
                   {value[trait]}
                 </text>
               </g>

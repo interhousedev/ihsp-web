@@ -51,14 +51,23 @@ export function UniDetail({ table, h, onBack }: { table: MatchTable; h: SlotHand
   return (
     <div className="flex min-h-0 flex-1 flex-col" data-testid="uni-detail">
       <header className="border-hairline flex shrink-0 items-center gap-3 border-b px-4 py-3">
-        <Button type="button" variant="ghost" size="icon" className="-ml-2 size-11 md:hidden" onClick={onBack} aria-label={t("backToUnis")}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="-ml-2 size-11 md:hidden"
+          onClick={onBack}
+          aria-label={t("backToUnis")}
+        >
           <Icons.chevronLeft aria-hidden />
         </Button>
         <UniLogo id={table.institution_id} name={table.institution_name} size="lg" />
         <div className="flex min-w-0 flex-1 flex-col">
           <h3 className="truncate font-semibold">{table.institution_name}</h3>
           <p className="text-muted-foreground text-xs">
-            {table.due_utc ? `${t(table.due_predicted ? "duePredicted" : "due", { date: formatDate(table.due_utc, undefined, { day: "numeric", month: "short" }) })} · ` : ""}
+            {table.due_utc
+              ? `${t(table.due_predicted ? "duePredicted" : "due", { date: formatDate(table.due_utc, undefined, { day: "numeric", month: "short" }) })} · `
+              : ""}
             {t("slotsFilled", { done: filledCount(table), total: table.slots.length })}
           </p>
         </div>
@@ -77,7 +86,10 @@ export function UniDetail({ table, h, onBack }: { table: MatchTable; h: SlotHand
                   onClick={() => setShortOpen((v) => !v)}
                   className="text-muted-foreground flex min-h-9 items-center gap-2 text-xs font-semibold tracking-wide uppercase"
                 >
-                  <Icons.chevronDown aria-hidden className={cn("size-4 transition-transform", !shortOpen && "-rotate-90")} />
+                  <Icons.chevronDown
+                    aria-hidden
+                    className={cn("size-4 transition-transform", !shortOpen && "-rotate-90")}
+                  />
                   {t("shortGroup", { count: short.length })}
                 </button>
                 {shortOpen ? <ul className="flex flex-col gap-3">{short.map(card)}</ul> : null}

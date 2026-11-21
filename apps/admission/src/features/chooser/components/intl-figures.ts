@@ -44,7 +44,8 @@ export function useIntlFigures(institution: Institution): IntlFigures {
   else if (overallRate !== null) admit = { percent: overallRate * 100, overall: true }
   const profile = budget?.aid_profile
   const fullFact = fact(institution, "meets_full_need")
-  const fullNeed = profile?.meets_full_need ?? (typeof fullFact === "boolean" ? fullFact : (match?.meets_full_need ?? null))
+  const fullNeed =
+    profile?.meets_full_need ?? (typeof fullFact === "boolean" ? fullFact : (match?.meets_full_need ?? null))
   const aidAmount = num(profile?.avg_aid) ?? num(match?.avg_aid_intl)
   const afterAid = num(institution.cost_after_aid)
   const cost: Cost | null =

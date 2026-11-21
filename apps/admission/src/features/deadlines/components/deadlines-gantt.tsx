@@ -103,10 +103,7 @@ export function DeadlinesGantt({
   const scores = useScores()
   const catalog = useScoreCatalog()
   // The calendar endpoint answers at most 400 days: a month back plus 370 ahead.
-  const range = useMemo(
-    () => ({ from: utcDayToIso(today - 30 * DAY), to: utcDayToIso(today + 370 * DAY) }),
-    [today],
-  )
+  const range = useMemo(() => ({ from: utcDayToIso(today - 30 * DAY), to: utcDayToIso(today + 370 * DAY) }), [today])
   const calendar = useCalendar(range.from, range.to)
   useEffect(() => {
     if (!box) return
@@ -222,7 +219,13 @@ export function DeadlinesGantt({
   }, [tasks.data, scores.data, catalog.data, calendar.data, list.data, locale])
 
   const universities = useMemo(
-    () => (list.data ?? []).map((entry) => ({ id: uniGroup(entry.id), entry: entry.id, name: entry.institution.name, institution: entry.institution })),
+    () =>
+      (list.data ?? []).map((entry) => ({
+        id: uniGroup(entry.id),
+        entry: entry.id,
+        name: entry.institution.name,
+        institution: entry.institution,
+      })),
     [list.data],
   )
   const taskById = useMemo(() => new Map((tasks.data?.items ?? []).map((task) => [task.id, task])), [tasks.data])
@@ -289,7 +292,9 @@ export function DeadlinesGantt({
         <>
           <span className="text-[11px] opacity-80">{range1(block)}</span>
           {many ? (
-            <span className="font-medium">{t("dayCount", { count: block.entries.length, date: day(block.start) })}</span>
+            <span className="font-medium">
+              {t("dayCount", { count: block.entries.length, date: day(block.start) })}
+            </span>
           ) : null}
           {lines(block)}
         </>
@@ -448,7 +453,9 @@ export function DeadlinesGantt({
             sidebarWidth={sidebar}
             todayLabel={t("today")}
             ariaLabel={t("label")}
-            monthLabel={(time) => fmt(time, { month: "long", year: "numeric" }).replace(/^\p{L}/u, (c) => c.toLocaleUpperCase(locale))}
+            monthLabel={(time) =>
+              fmt(time, { month: "long", year: "numeric" }).replace(/^\p{L}/u, (c) => c.toLocaleUpperCase(locale))
+            }
             dayLabel={day}
             weekdayLabel={(time) => fmt(time, { weekday: "short" })}
             onSelect={select}
@@ -459,7 +466,13 @@ export function DeadlinesGantt({
       <ResponsiveDialog
         open={Boolean(open)}
         onOpenChange={(next) => !next && setSelected(null)}
-        title={open ? (open.entries.length > 1 ? t("dayCount", { count: open.entries.length, date: day(open.start) }) : open.entries[0]!.title) : ""}
+        title={
+          open
+            ? open.entries.length > 1
+              ? t("dayCount", { count: open.entries.length, date: day(open.start) })
+              : open.entries[0]!.title
+            : ""
+        }
       >
         {open ? (
           <ul className="flex flex-col gap-3">
@@ -467,11 +480,15 @@ export function DeadlinesGantt({
               <li key={entry.id} className="flex min-w-0 flex-col gap-1 rounded-lg border p-3 text-sm">
                 {open.entries.length > 1 ? <span className="font-medium break-words">{entry.title}</span> : null}
                 <span className="text-muted-foreground text-xs">
-                  {kindLabel(entry)} · {entry.start === entry.end ? day(entry.start) : `${day(entry.start)} – ${day(entry.end)}`}
+                  {kindLabel(entry)} ·{" "}
+                  {entry.start === entry.end ? day(entry.start) : `${day(entry.start)} – ${day(entry.end)}`}
                 </span>
                 <div className="mt-1 flex flex-wrap items-center gap-2">
                   {entry.href ? (
-                    <Link href={entry.href} className="text-primary min-h-11 content-center text-sm font-medium hover:underline md:min-h-0">
+                    <Link
+                      href={entry.href}
+                      className="text-primary min-h-11 content-center text-sm font-medium hover:underline md:min-h-0"
+                    >
                       {t("openItem")}
                     </Link>
                   ) : null}
@@ -483,7 +500,8 @@ export function DeadlinesGantt({
                     onClick={() => {
                       setSelected(null)
                       onCreate({
-                        title: entry.kind === "registration" ? `${entry.title}: ${t("registrationCloses")}` : entry.title,
+                        title:
+                          entry.kind === "registration" ? `${entry.title}: ${t("registrationCloses")}` : entry.title,
                         deadline: utcDayToIso(entry.end),
                         links: uniLinks(entry),
                         list_entry_id: uniEntry(entry),

@@ -64,7 +64,14 @@ export function SuggestedRow({
           </p>
         ) : null}
         {filled >= SUGGEST_MIN_CIRCLES ? (
-          <Button type="button" variant="ghost" size="sm" className="ms-auto" disabled={run.isPending} onClick={() => run.mutate()}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="ms-auto"
+            disabled={run.isPending}
+            onClick={() => run.mutate()}
+          >
             <Icons.sparkles aria-hidden />
             {t(items.length > 0 ? "suggest.again" : "suggest.run")}
           </Button>
@@ -84,7 +91,11 @@ export function SuggestedRow({
       {items.length > 0 && !run.isPending ? (
         <ul className="flex flex-wrap gap-1.5">
           {items.map((item) => (
-            <li key={item.title} className="bg-card flex min-h-9 items-center gap-1 rounded-full border ps-3 pe-1" title={item.reason}>
+            <li
+              key={item.title}
+              className="bg-card flex min-h-9 items-center gap-1 rounded-full border ps-3 pe-1"
+              title={item.reason}
+            >
               <span className="text-sm font-medium">{item.title}</span>
               <Button
                 type="button"

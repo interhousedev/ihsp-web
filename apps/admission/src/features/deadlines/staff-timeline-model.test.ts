@@ -19,7 +19,12 @@ const row = (student: string, date: string, extra: Partial<CaseloadDeadline> = {
 describe("caseload timeline", () => {
   it("groups per student and per day, soonest student first", () => {
     const rows = groupByStudent(
-      [row("b", "2026-12-20"), row("a", "2026-12-01"), row("a", "2026-12-01", { title: "Essay" }), row("c", "2026-10-01")],
+      [
+        row("b", "2026-12-20"),
+        row("a", "2026-12-01"),
+        row("a", "2026-12-01", { title: "Essay" }),
+        row("c", "2026-10-01"),
+      ],
       today,
     )
     expect(rows.map((r) => r.studentId)).toEqual(["a", "b", "c"])
@@ -28,7 +33,10 @@ describe("caseload timeline", () => {
   })
 
   it("marks days with a staff task and fades the past", () => {
-    const [a, b] = groupByStudent([row("a", "2026-12-01", { by_staff: true, kind: "task" }), row("b", "2026-10-01")], today)
+    const [a, b] = groupByStudent(
+      [row("a", "2026-12-01", { by_staff: true, kind: "task" }), row("b", "2026-10-01")],
+      today,
+    )
     expect(a!.days[0]).toMatchObject({ byStaff: true, tone: "info" })
     expect(b!.days[0]!.tone).toBe("muted")
   })

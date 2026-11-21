@@ -31,7 +31,15 @@ const essay: Essay = {
   updated_at: "2026-01-01T00:00:00Z",
 }
 
-const summary = ({ body: _b, notes: _n, plan: _p, links: _l, lock_version: _v, prompt_text: _t, ...rest }: Essay): EssaySummary => ({
+const summary = ({
+  body: _b,
+  notes: _n,
+  plan: _p,
+  links: _l,
+  lock_version: _v,
+  prompt_text: _t,
+  ...rest
+}: Essay): EssaySummary => ({
   ...rest,
   uniqueness: null,
   deep_read: "none",
@@ -176,7 +184,15 @@ describe("essay ledger", () => {
     due_utc: "2027-01-01T00:00:00Z",
     due_predicted: false,
   }
-  const lonely = { ...group, key: "g2", label: "A unique one", kind: "unique", essay_ids: [], prompts: [{ ...prompt, key: "p3" }], due_utc: null }
+  const lonely = {
+    ...group,
+    key: "g2",
+    label: "A unique one",
+    kind: "unique",
+    essay_ids: [],
+    prompts: [{ ...prompt, key: "p3" }],
+    due_utc: null,
+  }
   const written = { ...summary(essay), title: "Why physics", uniqueness: 72, deep_read: "fresh" as const }
   const scopes: string[] = []
   const base = () =>
@@ -236,7 +252,9 @@ describe("essay ledger", () => {
     await screen.findByTestId("ledger-rows")
     expect(scopes).toContain("list")
     fireEvent.click(screen.getByRole("button", { name: /^All/ }))
-    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith(expect.stringContaining("scope=all"), { scroll: false }))
+    await waitFor(() =>
+      expect(testRouter.replace).toHaveBeenCalledWith(expect.stringContaining("scope=all"), { scroll: false }),
+    )
     await Bun.sleep(300)
     view.unmount()
   })
@@ -273,7 +291,11 @@ describe("essay ledger", () => {
     expect(drawer.textContent).toContain("Describe the world you come from.")
     fireEvent.click(screen.getByRole("button", { name: "Start an essay" }))
     await waitFor(() => expect(testRouter.push).toHaveBeenCalledWith("/essays/edit/?id=e7"))
-    expect(body).toMatchObject({ kind: "supplemental", title: "A unique one", targets: [{ institution_id: "i1", position: 0 }] })
+    expect(body).toMatchObject({
+      kind: "supplemental",
+      title: "A unique one",
+      targets: [{ institution_id: "i1", position: 0 }],
+    })
     await Bun.sleep(300)
     view.unmount()
   })
@@ -292,7 +314,16 @@ describe("essay ledger", () => {
       prompt_key: "supp1",
       shared: false,
       short_answer: null,
-      candidates: [{ essay_id: "e1", title: "Why physics", kind: "supplemental", word_count: 200, alignment: 80, target_match: true }],
+      candidates: [
+        {
+          essay_id: "e1",
+          title: "Why physics",
+          kind: "supplemental",
+          word_count: 200,
+          alignment: 80,
+          target_match: true,
+        },
+      ],
     }
     const table = { institution_id: "i1", institution_name: "MIT", due_utc: null, due_predicted: false, slots: [slot] }
     let current = table
@@ -300,7 +331,14 @@ describe("essay ledger", () => {
       http.get(apiUrl("/v1/admission/essays/match"), () => HttpResponse.json({ items: [current] })),
       http.put(apiUrl("/v1/admission/essays/match/i1/slots/supp1"), async ({ request }) => {
         put = await request.json()
-        const assigned = { essay_id: "e1", kind: "supplemental", over_limit: false, status: "draft", title: "Why physics", word_count: 200 }
+        const assigned = {
+          essay_id: "e1",
+          kind: "supplemental",
+          over_limit: false,
+          status: "draft",
+          title: "Why physics",
+          word_count: 200,
+        }
         current = { ...table, slots: [{ ...slot, essay_id: "e1", assigned }] }
         return HttpResponse.json(current)
       }),

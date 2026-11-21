@@ -44,7 +44,6 @@ const task: Task = {
   updated_at: "2025-12-01T00:00:00Z",
 }
 
-
 const uniLink = { label: "MIT", url: "/chooser/institution/?id=inst1", kind: "internal" } as const
 const uniTask: Task = { ...task, id: "t2", title: "MIT supplement", links: [uniLink], overdue: false }
 const listEntry = { id: "e1", institution: { id: "inst1", name: "MIT" } }

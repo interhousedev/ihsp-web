@@ -87,7 +87,8 @@ export function useDeepRead(essayId: string | null) {
   return useQuery({
     queryKey: flowKeys.deep(essayId ?? ""),
     enabled: !!essayId,
-    queryFn: ({ signal }) => getApiClient().get<DeepReadOut>(`${BASE}/essays/${seg(essayId ?? "")}/deep-read`, { signal }),
+    queryFn: ({ signal }) =>
+      getApiClient().get<DeepReadOut>(`${BASE}/essays/${seg(essayId ?? "")}/deep-read`, { signal }),
   })
 }
 
@@ -121,7 +122,8 @@ export function useStoredReviews(essayId: string | null) {
   return useQuery({
     queryKey: flowKeys.reviews(essayId ?? ""),
     enabled: !!essayId,
-    queryFn: ({ signal }) => getApiClient().get<EssayReviews>(`${BASE}/essays/${seg(essayId ?? "")}/reviews`, { signal }),
+    queryFn: ({ signal }) =>
+      getApiClient().get<EssayReviews>(`${BASE}/essays/${seg(essayId ?? "")}/reviews`, { signal }),
   })
 }
 
@@ -139,7 +141,14 @@ export function useGroupCritique(essayId: string) {
   })
 }
 
-export type TopEssay = { essay_id: string; title: string; kind: string; word_count: number; score: number; band: string }
+export type TopEssay = {
+  essay_id: string
+  title: string
+  kind: string
+  word_count: number
+  score: number
+  band: string
+}
 export type MatchCandidate = {
   essay_id: string
   title: string
@@ -148,7 +157,14 @@ export type MatchCandidate = {
   alignment: number | null
   target_match: boolean
 }
-export type AssignedEssay = { essay_id: string; kind: string; over_limit: boolean; status: string; title: string; word_count: number }
+export type AssignedEssay = {
+  essay_id: string
+  kind: string
+  over_limit: boolean
+  status: string
+  title: string
+  word_count: number
+}
 export type MatchSlot = {
   slot: string
   prompt: string | null
@@ -219,7 +235,8 @@ export function useAssignSlot() {
 export function useAssignCommonApp() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (essayId: string | null) => getApiClient().put<unknown>(`${BASE}/essays/match/common-app`, { essay_id: essayId }),
+    mutationFn: (essayId: string | null) =>
+      getApiClient().put<unknown>(`${BASE}/essays/match/common-app`, { essay_id: essayId }),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ["admission", "essays", "match"] })
       void qc.invalidateQueries({ queryKey: PROMPT_MAP_KEY })

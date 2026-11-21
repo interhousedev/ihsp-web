@@ -56,7 +56,16 @@ const opportunity: Opportunity = {
 }
 
 const plan: Plan = {
-  entries: [{ id: "e1", opportunity_id: "o1", planned_grade: 11, planned_term: "fall", note: null, created_at: "2026-01-01T00:00:00Z" }],
+  entries: [
+    {
+      id: "e1",
+      opportunity_id: "o1",
+      planned_grade: 11,
+      planned_term: "fall",
+      note: null,
+      created_at: "2026-01-01T00:00:00Z",
+    },
+  ],
   opportunities: [opportunity],
   analytics: { load: { "11:fall": 1 }, coverage: { f1: 1 }, unplaced: 0, conflicts: [] },
   deadlines: [{ opportunity_id: "o1", title: "SAT", day: "2026-10-03", kind: "exam", projected: false }],

@@ -226,7 +226,12 @@ export function ActivityWizard({
               </div>
             ))}
             <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="outline" size="sm" onClick={() => setFacts([...facts, { label: "", value: "" }])}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setFacts([...facts, { label: "", value: "" }])}
+              >
                 {t("wizard.addFact")}
               </Button>
               <Button
@@ -234,7 +239,11 @@ export function ActivityWizard({
                 variant="outline"
                 size="sm"
                 disabled={phrase === ""}
-                onClick={() => set({ description: [value.description.trim(), phrase].filter(Boolean).join(" ").slice(0, descriptionMax) })}
+                onClick={() =>
+                  set({
+                    description: [value.description.trim(), phrase].filter(Boolean).join(" ").slice(0, descriptionMax),
+                  })
+                }
               >
                 {t("wizard.useInDescription")}
               </Button>

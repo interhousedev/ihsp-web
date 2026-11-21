@@ -59,7 +59,12 @@ export function MatchCard({ match }: { match: Match }) {
     facts.push({
       label: t("stats.cost"),
       value: list("approx", { amount: money(cost) }),
-      note: gap === null ? undefined : gap > 0 ? list("over", { amount: money(gap) }) : list("under", { amount: money(-gap) }),
+      note:
+        gap === null
+          ? undefined
+          : gap > 0
+            ? list("over", { amount: money(gap) })
+            : list("under", { amount: money(-gap) }),
       noteTone: gap !== null && gap > 0 ? "text-destructive" : "text-success",
     })
   const logo = <RingLogo name={match.name} src={match.logo_url} />
@@ -94,7 +99,11 @@ export function MatchCard({ match }: { match: Match }) {
       ) : (
         <p className="text-muted-foreground text-sm">
           {t("fewFacts")} —{" "}
-          <button type="button" onClick={() => setResearching(true)} className="text-primary font-medium underline-offset-2 hover:underline">
+          <button
+            type="button"
+            onClick={() => setResearching(true)}
+            className="text-primary font-medium underline-offset-2 hover:underline"
+          >
             {t("research")}
           </button>
         </p>
@@ -103,7 +112,9 @@ export function MatchCard({ match }: { match: Match }) {
         {researching ? <UniChatPanel match={match} /> : null}
       </ResponsiveDialog>
       {fit && thin ? (
-        <p className="text-muted-foreground text-xs">{fitT("known", { pct: Math.round((match.known_share ?? 0) * 100) })}</p>
+        <p className="text-muted-foreground text-xs">
+          {fitT("known", { pct: Math.round((match.known_share ?? 0) * 100) })}
+        </p>
       ) : null}
       {why ? (
         <p aria-label={t("overlap.label")} className="text-muted-foreground line-clamp-2 text-sm">

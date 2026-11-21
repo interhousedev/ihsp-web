@@ -93,7 +93,9 @@ function SuggestedColleges({ institution }: { institution: Institution }) {
   const country = institution.country.trim().toLowerCase()
   const items = (matches.data?.items ?? []).filter(
     (match) =>
-      match.university_id !== institution.id && match.country.trim().toLowerCase() === country && (match.fit_total ?? match.match_pct) >= 50,
+      match.university_id !== institution.id &&
+      match.country.trim().toLowerCase() === country &&
+      (match.fit_total ?? match.match_pct) >= 50,
   )
   if (items.length === 0) return null
   return (
@@ -184,7 +186,8 @@ function DetailBody({ institution }: { institution: Institution }) {
   const applyGroups = ["application", "visa"] as const
   const factsEmpty = rich ? !hasSections(institution, factGroups) : admissionFacts.length + campusFacts.length === 0
   const profile = institution.aid_profile
-  const aidSplit = profile != null && [profile.grant_pct, profile.loan_pct, profile.work_pct].some((share) => share != null)
+  const aidSplit =
+    profile != null && [profile.grant_pct, profile.loan_pct, profile.work_pct].some((share) => share != null)
   const moneyEmpty =
     !aidSplit &&
     (rich ? !hasSections(institution, moneyGroups) : costFacts.length === 0) &&
@@ -206,7 +209,11 @@ function DetailBody({ institution }: { institution: Institution }) {
         row={row}
       />
       <IntlStrip figures={figures} deadline={deadline ? deadlineText(deadline, locale) : t("list.noDeadline")} />
-      <Tabs value={tab} onValueChange={(value) => select(String(value))} className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+      <Tabs
+        value={tab}
+        onValueChange={(value) => select(String(value))}
+        className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
+      >
         <TabsList className="max-w-full justify-start overflow-x-auto">
           {TABS.map((name) => (
             <TabsTrigger key={name} value={name}>
@@ -218,7 +225,7 @@ function DetailBody({ institution }: { institution: Institution }) {
           {row ? (
             <InstitutionFit row={row} />
           ) : (
-            <section className="bg-card flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-4">
+            <section className="bg-card flex flex-wrap items-center justify-between gap-3 rounded-card border p-4">
               <p className="text-muted-foreground min-w-0 flex-1 basis-60 text-sm">{t("detail.fitHint")}</p>
               <AddToListButton institutionId={institution.id} />
             </section>

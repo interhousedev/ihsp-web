@@ -72,11 +72,7 @@ export function AnnotatedText({
       }
       if (at < p.end) parts.push(body.slice(at, p.end))
       out.push(
-        <span
-          key={i}
-          data-para={p.n}
-          className={selected === p.n ? "bg-primary/10 rounded-sm" : undefined}
-        >
+        <span key={i} data-para={p.n} className={selected === p.n ? "bg-primary/10 rounded-sm" : undefined}>
           {parts.map((x, k) => (
             <Fragment key={k}>{x}</Fragment>
           ))}

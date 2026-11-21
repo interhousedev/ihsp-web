@@ -17,7 +17,9 @@ export function LedgerSentence({ summary }: { summary: LedgerSummary }) {
       {summary.due ? (
         <>
           {" · "}
-          {t(summary.due.predicted ? "nextDuePredicted" : "nextDue", { date: formatDate(summary.due.date, undefined, { day: "numeric", month: "short" }) })}
+          {t(summary.due.predicted ? "nextDuePredicted" : "nextDue", {
+            date: formatDate(summary.due.date, undefined, { day: "numeric", month: "short" }),
+          })}
         </>
       ) : null}
     </p>
@@ -46,7 +48,10 @@ export function LedgerToolbar({
     <div className="flex flex-wrap items-center gap-2">
       {lens === "essay" ? (
         <div className="relative min-w-0 flex-1 basis-48 md:max-w-sm">
-          <Icons.search aria-hidden className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+          <Icons.search
+            aria-hidden
+            className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+          />
           <Input
             type="search"
             value={query}

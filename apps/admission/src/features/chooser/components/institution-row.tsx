@@ -19,18 +19,29 @@ export function InstitutionRow({ institution, row }: { institution: Institution;
   const locale = useLocale()
   const countryLabel = useOptionLabel("country")
   const name = institution.name
-  const cost = row?.cost ?? (institution.cost_after_aid ? { amount: Number(institution.cost_after_aid), currency: institution.coa_currency ?? "USD", kind: "net" as const } : null)
+  const cost =
+    row?.cost ??
+    (institution.cost_after_aid
+      ? {
+          amount: Number(institution.cost_after_aid),
+          currency: institution.coa_currency ?? "USD",
+          kind: "net" as const,
+        }
+      : null)
   const intl = institution.facts.intl_acceptance_rate?.value ?? institution.facts.acceptance_rate?.value
   const summary = [
     cost && Number.isFinite(cost.amount)
-      ? (cost.kind === "net" ? t("approx", { amount: formatCompactCurrency(cost.amount, cost.currency, locale) }) : formatCompactCurrency(cost.amount, cost.currency, locale))
+      ? cost.kind === "net"
+        ? t("approx", { amount: formatCompactCurrency(cost.amount, cost.currency, locale) })
+        : formatCompactCurrency(cost.amount, cost.currency, locale)
       : null,
     typeof intl === "number" ? percent(intl) : null,
     institution.next_deadline ? formatDate(institution.next_deadline) : null,
   ]
     .filter(Boolean)
     .join(" · ")
-  const fit = row?.fit ?? (institution.fit_total == null ? null : totalFit(institution.fit_total, institution.known_share))
+  const fit =
+    row?.fit ?? (institution.fit_total == null ? null : totalFit(institution.fit_total, institution.known_share))
   const logo = <RingLogo name={name} src={institution.logo_url} />
   return (
     <div className="flex min-w-0 items-center gap-3 border-b py-2.5">

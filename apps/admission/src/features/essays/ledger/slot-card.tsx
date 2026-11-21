@@ -46,7 +46,11 @@ export function SlotCard({
   const a = slot.assigned
   const tooLong = a?.over_limit === true
   const personal = isPersonalSlot(slot)
-  const title = slot.shared ? t("commonApp") : personal ? t("slotPersonal") : (promptHead(slot.prompt) ?? t("slotExtra"))
+  const title = slot.shared
+    ? t("commonApp")
+    : personal
+      ? t("slotPersonal")
+      : (promptHead(slot.prompt) ?? t("slotExtra"))
   const words = a?.word_count ?? 0
   return (
     <li
@@ -63,15 +67,32 @@ export function SlotCard({
     >
       <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
         <h4 className="min-w-0 flex-1 truncate text-sm font-semibold">{title}</h4>
-        {slot.required ? <Pill tone="neutral" className="h-5 px-2 text-xs">{t("required")}</Pill> : <span className="text-muted-foreground text-xs">{t("optional")}</span>}
-        {slot.word_limit ? <span className="text-muted-foreground text-xs">{t("limitUpTo", { count: slot.word_limit })}</span> : null}
+        {slot.required ? (
+          <Pill tone="neutral" className="h-5 px-2 text-xs">
+            {t("required")}
+          </Pill>
+        ) : (
+          <span className="text-muted-foreground text-xs">{t("optional")}</span>
+        )}
+        {slot.word_limit ? (
+          <span className="text-muted-foreground text-xs">{t("limitUpTo", { count: slot.word_limit })}</span>
+        ) : null}
       </div>
-      {slot.shared ? <p className="text-primary text-xs font-medium">{t("sharedAll")}</p> : personal ? <p className="text-muted-foreground text-xs">{t("sharedCommonApp")}</p> : null}
+      {slot.shared ? (
+        <p className="text-primary text-xs font-medium">{t("sharedAll")}</p>
+      ) : personal ? (
+        <p className="text-muted-foreground text-xs">{t("sharedCommonApp")}</p>
+      ) : null}
       {slot.prompt ? (
         <div className="flex flex-col items-start gap-0.5">
           <p className={cn("text-muted-foreground text-xs italic", !open && "line-clamp-2")}>{slot.prompt}</p>
           {slot.prompt.length > 120 ? (
-            <button type="button" onClick={() => setOpen((v) => !v)} className="text-primary text-xs font-medium" aria-expanded={open}>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="text-primary text-xs font-medium"
+              aria-expanded={open}
+            >
               {t(open ? "promptLess" : "promptMore")}
             </button>
           ) : null}
@@ -84,11 +105,21 @@ export function SlotCard({
           <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm">
             <Icons.check aria-hidden className={cn("size-4 shrink-0", tooLong ? "text-warning" : "text-success")} />
             <span className="min-w-0 truncate font-medium">{essay ? label(essay) : a.title || te("untitled")}</span>
-            <span className={cn("text-xs tabular-nums", tooLong ? "text-warning font-medium" : "text-muted-foreground")}>
-              {slot.word_limit ? te("wordsOf", { count: words, limit: slot.word_limit }) : te("words", { count: words })}
+            <span
+              className={cn("text-xs tabular-nums", tooLong ? "text-warning font-medium" : "text-muted-foreground")}
+            >
+              {slot.word_limit
+                ? te("wordsOf", { count: words, limit: slot.word_limit })
+                : te("words", { count: words })}
             </span>
-            {tooLong && slot.word_limit ? <Pill tone="warning" className="h-5 px-2 text-xs">{t("overBy", { count: words - slot.word_limit })}</Pill> : null}
-            {essay?.uniqueness != null ? <span className="text-muted-foreground text-xs">· {t("score", { value: essay.uniqueness })}</span> : null}
+            {tooLong && slot.word_limit ? (
+              <Pill tone="warning" className="h-5 px-2 text-xs">
+                {t("overBy", { count: words - slot.word_limit })}
+              </Pill>
+            ) : null}
+            {essay?.uniqueness != null ? (
+              <span className="text-muted-foreground text-xs">· {t("score", { value: essay.uniqueness })}</span>
+            ) : null}
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
             <Button type="button" size="sm" variant="outline" onClick={onPreview} className="min-h-9">
@@ -99,14 +130,25 @@ export function SlotCard({
               <Icons.copy aria-hidden />
               {t("copy")}
             </Button>
-            <Link href={`/essays/edit/?id=${encodeURIComponent(a.essay_id)}`} className={cn(buttonVariants({ size: "sm", variant: "outline" }), "min-h-9")}>
+            <Link
+              href={`/essays/edit/?id=${encodeURIComponent(a.essay_id)}`}
+              className={cn(buttonVariants({ size: "sm", variant: "outline" }), "min-h-9")}
+            >
               <Icons.edit aria-hidden />
               {t("open")}
             </Link>
             <Button type="button" size="sm" variant="ghost" disabled={busy} onClick={onPick} className="min-h-9">
               {t("change")}
             </Button>
-            <Button type="button" size="icon-sm" variant="ghost" disabled={busy} onClick={onClear} aria-label={t("clearAria", { title: a.title })} className="size-9">
+            <Button
+              type="button"
+              size="icon-sm"
+              variant="ghost"
+              disabled={busy}
+              onClick={onClear}
+              aria-label={t("clearAria", { title: a.title })}
+              className="size-9"
+            >
               <Icons.close aria-hidden />
             </Button>
           </div>

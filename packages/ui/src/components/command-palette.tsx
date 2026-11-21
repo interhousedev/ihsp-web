@@ -202,11 +202,7 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
         enterKeyHint="search"
         className="pointer-events-none fixed start-0 top-0 size-px opacity-0"
       />
-      {typeof trigger === "function" ? (
-        trigger(openSearch)
-      ) : (
-        (trigger ?? <DefaultTrigger onOpen={openSearch} />)
-      )}
+      {typeof trigger === "function" ? trigger(openSearch) : (trigger ?? <DefaultTrigger onOpen={openSearch} />)}
       <CommandDialog
         open={open}
         onOpenChange={setOpen}

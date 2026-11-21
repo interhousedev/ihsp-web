@@ -15,7 +15,7 @@ export function ApplyActions({ row }: { row: ListRow | undefined }) {
   if (!row) return <p className="text-muted-foreground text-sm">{t("apply.notInList")}</p>
   const { tasks, entry } = row
   return (
-    <section aria-label={t("apply.title")} className="bg-card flex flex-col gap-3 rounded-2xl border p-4">
+    <section aria-label={t("apply.title")} className="bg-card flex flex-col gap-3 rounded-card border p-4">
       <h3 className="text-base font-semibold">{t("apply.title")}</h3>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
         {tasks.total > 0 ? (
@@ -34,10 +34,16 @@ export function ApplyActions({ row }: { row: ListRow | undefined }) {
             </Button>
           </>
         )}
-        <Link href="/essays/" className="text-primary inline-flex min-h-9 items-center underline-offset-2 hover:underline">
+        <Link
+          href="/essays/"
+          className="text-primary inline-flex min-h-9 items-center underline-offset-2 hover:underline"
+        >
           {t("apply.essays")}
         </Link>
-        <Link href="/documents/" className="text-primary inline-flex min-h-9 items-center underline-offset-2 hover:underline">
+        <Link
+          href="/documents/"
+          className="text-primary inline-flex min-h-9 items-center underline-offset-2 hover:underline"
+        >
           {t("apply.documents")}
         </Link>
       </div>

@@ -131,7 +131,7 @@ export function ListRowView({ row, onResearch }: { row: ListRow; onResearch: (ro
     .join(" · ")
 
   return (
-    <li className="bg-card flex min-w-0 flex-col gap-2 rounded-xl border p-3 @min-[30rem]:rounded-none @min-[30rem]:border-0 @min-[30rem]:border-b @min-[30rem]:bg-transparent @min-[30rem]:py-2.5">
+    <li className="bg-card flex min-w-0 flex-col gap-2 rounded-card border p-3 @min-[30rem]:rounded-none @min-[30rem]:border-0 @min-[30rem]:border-b @min-[30rem]:bg-transparent @min-[30rem]:py-2.5">
       <div className={cn("grid min-w-0 items-center gap-x-2 gap-y-2", LIST_COLUMNS)}>
         <div className="flex min-w-0 items-center gap-3">
           <FitRingButton name={name} fit={row.fit} size={44}>

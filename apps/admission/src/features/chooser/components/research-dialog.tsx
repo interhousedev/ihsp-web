@@ -14,7 +14,9 @@ export function ResearchDialog({ row, onClose }: { row: ListRow | null; onClose:
       open={row !== null}
       onOpenChange={(open) => !open && onClose()}
       title={t("researchTitle", { name: institution?.name ?? "" })}
-      description={row ? t("researchMissing", { facts: row.missing.map((key) => t(`missing.${key}`)).join(", ") }) : undefined}
+      description={
+        row ? t("researchMissing", { facts: row.missing.map((key) => t(`missing.${key}`)).join(", ") }) : undefined
+      }
       size="lg"
     >
       {institution ? (

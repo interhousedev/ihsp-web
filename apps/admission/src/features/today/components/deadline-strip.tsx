@@ -7,7 +7,15 @@ import type { TodayDeadline } from "../api"
 import { dayTone, daysBetween, dedupeDeadlines, shortDate } from "../dates"
 
 /** The three nearest dated things, one line each (desktop only: on a phone the dates sit under the rings). */
-export function DeadlineStrip({ items, today, className }: { items: TodayDeadline[]; today: string; className?: string }) {
+export function DeadlineStrip({
+  items,
+  today,
+  className,
+}: {
+  items: TodayDeadline[]
+  today: string
+  className?: string
+}) {
   const t = useT("today")
   const locale = useLocale()
   const nearest = dedupeDeadlines(items).slice(0, 3)

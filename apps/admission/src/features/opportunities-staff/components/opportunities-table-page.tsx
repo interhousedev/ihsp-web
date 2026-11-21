@@ -29,10 +29,12 @@ function Body() {
   const { visibility, remove } = useStaffOpportunityMutations()
   const total = list.data?.total ?? 0
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE))
-  const filter = <T,>(set: (v: T) => void) => (v: T) => {
-    set(v)
-    setPage(1)
-  }
+  const filter =
+    <T,>(set: (v: T) => void) =>
+    (v: T) => {
+      set(v)
+      setPage(1)
+    }
 
   function confirmDelete() {
     if (!deleting) return

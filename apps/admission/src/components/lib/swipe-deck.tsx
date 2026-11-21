@@ -47,7 +47,17 @@ export type SwipeDeckProps<T> = {
 type Leaving<T> = { id: number; item: T; direction: SwipeDirection; from: number }
 
 /** A card on its way out: it starts where the drag left it, then slides off while it blurs and fades. */
-function LeavingCard({ direction, from, children, onDone }: { direction: SwipeDirection; from: number; children: ReactNode; onDone: () => void }) {
+function LeavingCard({
+  direction,
+  from,
+  children,
+  onDone,
+}: {
+  direction: SwipeDirection
+  from: number
+  children: ReactNode
+  onDone: () => void
+}) {
   const [gone, setGone] = useState(false)
   useEffect(() => {
     const frame = requestAnimationFrame(() => requestAnimationFrame(() => setGone(true)))
@@ -67,7 +77,13 @@ function LeavingCard({ direction, from, children, onDone }: { direction: SwipeDi
       }
     : { transform: `translateX(${from}px) rotate(${(from / 300) * MAX_ROTATION}deg)`, opacity: 1, filter: "blur(0px)" }
   return (
-    <div aria-hidden data-testid="deck-leaving" data-direction={direction} style={style} className="pointer-events-none absolute inset-0 z-20">
+    <div
+      aria-hidden
+      data-testid="deck-leaving"
+      data-direction={direction}
+      style={style}
+      className="pointer-events-none absolute inset-0 z-20"
+    >
       {children}
     </div>
   )
@@ -169,7 +185,8 @@ export function SwipeDeck<T>({
     const current = drag.current
     if (!current || current.pointerId !== event.pointerId) return
     drag.current = null
-    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId))
+      event.currentTarget.releasePointerCapture(event.pointerId)
     setDragging(false)
     setDx(0)
     if (top !== undefined && event.type !== "pointercancel" && Math.abs(current.dx) >= THRESHOLD) {
@@ -219,7 +236,9 @@ export function SwipeDeck<T>({
           className={cn(
             "relative h-full cursor-grab select-none active:cursor-grabbing",
             dragging ? "z-40" : null,
-            dragging ? "transition-none" : "transition-transform duration-[180ms] ease-out motion-reduce:transition-none",
+            dragging
+              ? "transition-none"
+              : "transition-transform duration-[180ms] ease-out motion-reduce:transition-none",
           )}
         >
           {renderCard(top)}

@@ -39,17 +39,30 @@ export function LedgerSectionBlock({
           onClick={onToggle}
           className="hover:bg-accent/40 focus-visible:ring-ring border-hairline flex w-full min-w-0 items-center gap-2 border-b px-2 py-2 text-left focus-visible:ring-2 focus-visible:outline-none md:px-3"
         >
-          <Icons.chevronDown aria-hidden className={cn("text-muted-foreground size-4 shrink-0 transition-transform", folded && "-rotate-90")} />
-          <span className="min-w-0 truncate text-xs font-semibold tracking-wide uppercase">{t(`type.${section.type}`)}</span>
+          <Icons.chevronDown
+            aria-hidden
+            className={cn("text-muted-foreground size-4 shrink-0 transition-transform", folded && "-rotate-90")}
+          />
+          <span className="min-w-0 truncate text-xs font-semibold tracking-wide uppercase">
+            {t(`type.${section.type}`)}
+          </span>
           {section.pickOne !== null ? (
-            <span className="text-muted-foreground hidden min-w-0 truncate text-xs font-normal normal-case sm:inline">· {t("pickOne", { count: section.pickOne })}</span>
+            <span className="text-muted-foreground hidden min-w-0 truncate text-xs font-normal normal-case sm:inline">
+              · {t("pickOne", { count: section.pickOne })}
+            </span>
           ) : null}
           {section.due && section.pickOne === null ? (
             <span className="text-muted-foreground ml-auto hidden text-xs font-normal sm:inline">
               <DueText due={section.due} />
             </span>
           ) : null}
-          <span className={cn("ml-auto shrink-0 text-xs font-semibold tabular-nums", done ? "text-success" : "text-muted-foreground", section.due && section.pickOne === null && "sm:ml-3")}>
+          <span
+            className={cn(
+              "ml-auto shrink-0 text-xs font-semibold tabular-nums",
+              done ? "text-success" : "text-muted-foreground",
+              section.due && section.pickOne === null && "sm:ml-3",
+            )}
+          >
             {section.filled}/{section.needed}
           </span>
         </button>
@@ -61,7 +74,13 @@ export function LedgerSectionBlock({
           ))}
           {hidden > 0 || (more && section.pickOne !== null) ? (
             <li className="px-2 py-1 md:px-3">
-              <Button type="button" variant="ghost" size="sm" onClick={() => setMore((v) => !v)} className="text-muted-foreground h-8 px-2">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setMore((v) => !v)}
+                className="text-muted-foreground h-8 px-2"
+              >
                 {more ? t("showFewer") : t("showMore", { count: hidden })}
               </Button>
             </li>

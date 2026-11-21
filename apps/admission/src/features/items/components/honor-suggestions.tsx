@@ -101,7 +101,10 @@ export function CertificatePicker({ onPick }: { onPick: (s: HonorSuggestion) => 
   const suggestions = useHonorSuggestions()
   const rows = suggestions.data?.available ?? []
   return (
-    <section aria-label={t("suggestions.pickTitle")} className="border-hairline rounded-card flex flex-col gap-2 border p-3">
+    <section
+      aria-label={t("suggestions.pickTitle")}
+      className="border-hairline rounded-card flex flex-col gap-2 border p-3"
+    >
       <h3 className="text-sm font-medium">{t("suggestions.pickTitle")}</h3>
       {rows.length === 0 ? (
         <p className="text-muted-foreground text-sm">{t("suggestions.pickEmpty")}</p>
@@ -146,7 +149,10 @@ export function HonorDistribution({ items }: { items: Item[] }) {
     .filter((r) => r.ready + r.draft > 0)
   const max = Math.max(1, ...rows.map((r) => r.ready + r.draft))
   return (
-    <section aria-label={t("distribution.title")} className="border-hairline bg-card rounded-card flex flex-col gap-2 border px-4 py-3">
+    <section
+      aria-label={t("distribution.title")}
+      className="border-hairline bg-card rounded-card flex flex-col gap-2 border px-4 py-3"
+    >
       <h2 title={t("distribution.hint")} className="text-sm font-medium">
         {t("distribution.title")}
       </h2>

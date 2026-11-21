@@ -21,9 +21,7 @@ export function useFitRows() {
       const item = byEntry.get(entry.id)
       return { entry, fit: item ? toUniFit(item) : toUniFit({ total: null, axes: [] }) }
     })
-    return byTotal(all, (row) =>
-      row.fit.total === null ? null : row.fit.total * (0.5 + 0.5 * knownShare(row.fit)),
-    )
+    return byTotal(all, (row) => (row.fit.total === null ? null : row.fit.total * (0.5 + 0.5 * knownShare(row.fit))))
   }, [list.data, fit.data])
   const weights: Weights | undefined = fit.data?.weights
   return {

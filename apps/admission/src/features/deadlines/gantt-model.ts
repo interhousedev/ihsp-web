@@ -92,7 +92,10 @@ export const MIN_DAYS = 70
  */
 export function chartRange(blocks: Block[], today: number): { start: number; end: number } {
   const last = Math.max(today + MIN_DAYS * DAY, ...blocks.map((block) => block.end))
-  const first = Math.min(today - BACK_DAYS * DAY, ...blocks.filter((block) => block.shape === "bar").map((block) => block.start))
+  const first = Math.min(
+    today - BACK_DAYS * DAY,
+    ...blocks.filter((block) => block.shape === "bar").map((block) => block.start),
+  )
   return { start: Math.max(first, today - 400 * DAY), end: Math.min(last, today + 400 * DAY) }
 }
 

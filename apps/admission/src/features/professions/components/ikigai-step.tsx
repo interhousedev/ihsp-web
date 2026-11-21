@@ -49,7 +49,7 @@ export function IkigaiStep() {
               role="tab"
               aria-selected={id === active}
               onClick={() => setActive(id)}
-              className="focus-visible:ring-ring flex min-h-11 items-center gap-2 rounded-xl border px-3 text-start text-sm font-medium outline-none focus-visible:ring-2 aria-selected:border-transparent aria-selected:bg-muted"
+              className="focus-visible:ring-ring flex min-h-11 items-center gap-2 rounded-card border px-3 text-start text-sm font-medium outline-none focus-visible:ring-2 aria-selected:border-transparent aria-selected:bg-muted"
             >
               <span aria-hidden className="size-3 shrink-0 rounded-full" style={{ background: CIRCLE_COLOR[id] }} />
               <span className="min-w-0 flex-1">{t(`circle.${id}`)}</span>
@@ -70,7 +70,11 @@ export function IkigaiStep() {
           removeLabel={(tag) => t("venn.remove", { tag })}
         />
         <p className="text-muted-foreground text-xs" aria-live="polite">
-          {save.isError ? t("venn.saveError") : saved ? t("venn.saved") : t("venn.hint", { count: filledCount(ikigai) })}
+          {save.isError
+            ? t("venn.saveError")
+            : saved
+              ? t("venn.saved")
+              : t("venn.hint", { count: filledCount(ikigai) })}
         </p>
       </div>
     </div>

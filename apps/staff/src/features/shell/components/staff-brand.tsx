@@ -5,10 +5,5 @@ import { SidebarBrand } from "@ihsp/ui"
 
 export function StaffBrand() {
   const t = useT("app")
-  return (
-    <SidebarBrand
-      name={t("name")}
-      platform="staff"
-    />
-  )
+  return <SidebarBrand name={t("name")} platform="staff" />
 }

@@ -6,7 +6,15 @@ import { useStoredReviews } from "../../flow/steps-api"
 import type { ReadState } from "./read-state"
 
 /** A ring filled in proportion to a 0-100 score; the number sits in the middle. */
-export function ScoreRing({ value, label, className = "size-28" }: { value: number; label: string; className?: string }) {
+export function ScoreRing({
+  value,
+  label,
+  className = "size-28",
+}: {
+  value: number
+  label: string
+  className?: string
+}) {
   const r = 44
   const c = 2 * Math.PI * r
   const v = Math.min(100, Math.max(0, value))
@@ -34,7 +42,17 @@ export function ScoreRing({ value, label, className = "size-28" }: { value: numb
 const MAX_CHIPS = 4
 
 /** The one uniqueness score of the essay and, beside it, how well it fits each university it targets. */
-export function ScoreBar({ essayId, state, onUnis, onRead }: { essayId: string; state: ReadState; onUnis: () => void; onRead: () => void }) {
+export function ScoreBar({
+  essayId,
+  state,
+  onUnis,
+  onRead,
+}: {
+  essayId: string
+  state: ReadState
+  onUnis: () => void
+  onRead: () => void
+}) {
   const t = useT("essayEditor")
   const stored = useStoredReviews(essayId)
   const unis = stored.data?.universities ?? []

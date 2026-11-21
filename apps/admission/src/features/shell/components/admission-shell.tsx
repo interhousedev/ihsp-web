@@ -2,7 +2,13 @@
 
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole, useSession } from "@ihsp/auth"
-import { MaintenanceBanner, NotificationBell, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
+import {
+  MaintenanceBanner,
+  NotificationBell,
+  PageLoading,
+  ShellNavControls,
+  usePlatformLinks,
+} from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { AppShell, buttonVariants, CommandPalette, Icons, OfflineBadge, StateView } from "@ihsp/ui"
 import { ShellSearch } from "./shell-search"

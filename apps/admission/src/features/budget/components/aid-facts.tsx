@@ -47,20 +47,36 @@ export function AidFacts({
         <Fact label={t("aid.meetsNeed")}>
           {need == null ? <span className="text-muted-foreground">{none}</span> : need ? t("aid.yes") : t("aid.no")}
         </Fact>
-        <Fact label={aid?.avg_aid_scope ? t("aid.avgAid", { scope: t(`aid.scope.${aid.avg_aid_scope}`) }) : t("aid.avgAidPlain")}>
+        <Fact
+          label={
+            aid?.avg_aid_scope ? t("aid.avgAid", { scope: t(`aid.scope.${aid.avg_aid_scope}`) }) : t("aid.avgAidPlain")
+          }
+        >
           {avg ?? <span className="text-muted-foreground">{none}</span>}
         </Fact>
-        {showAdmit ? <Fact label={rate ? t("aid.admit", { scope: t(`aid.scope.${rate.scope}`) }) : t("aid.admitPlain")}>
-          {rate ? `${new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(rate.percent)}%` : <span className="text-muted-foreground">{none}</span>}
-        </Fact> : null}
+        {showAdmit ? (
+          <Fact label={rate ? t("aid.admit", { scope: t(`aid.scope.${rate.scope}`) }) : t("aid.admitPlain")}>
+            {rate ? (
+              `${new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(rate.percent)}%`
+            ) : (
+              <span className="text-muted-foreground">{none}</span>
+            )}
+          </Fact>
+        ) : null}
       </dl>
       <div className="flex flex-col gap-1.5">
         <p className="text-muted-foreground text-xs">{t("aid.composition")}</p>
         {known ? (
           <>
-            <div role="img" aria-label={BARS.map(({ key }) => `${t(`aid.${key}`)} ${shares[key] ?? 0}%`).join(", ")} className="flex h-2.5 gap-0.5 overflow-hidden rounded-full">
+            <div
+              role="img"
+              aria-label={BARS.map(({ key }) => `${t(`aid.${key}`)} ${shares[key] ?? 0}%`).join(", ")}
+              className="flex h-2.5 gap-0.5 overflow-hidden rounded-full"
+            >
               {BARS.map(({ key, color }) =>
-                shares[key] ? <span key={key} style={{ flexGrow: shares[key] ?? 0 }} className={cn("min-w-1", color)} /> : null,
+                shares[key] ? (
+                  <span key={key} style={{ flexGrow: shares[key] ?? 0 }} className={cn("min-w-1", color)} />
+                ) : null,
               )}
             </div>
             <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs">

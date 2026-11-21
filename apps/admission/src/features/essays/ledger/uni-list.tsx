@@ -26,10 +26,17 @@ function UniRow({ table, active, onSelect }: { table: MatchTable; active: boolea
         <UniLogo id={table.institution_id} name={table.institution_name} size="md" />
         <span className="flex min-w-0 flex-1 flex-col">
           <span className="truncate text-sm font-medium">{table.institution_name}</span>
-          <span className="text-muted-foreground text-xs">{table.due_utc ? <DueText due={{ date: table.due_utc, predicted: table.due_predicted }} /> : null}</span>
+          <span className="text-muted-foreground text-xs">
+            {table.due_utc ? <DueText due={{ date: table.due_utc, predicted: table.due_predicted }} /> : null}
+          </span>
         </span>
         {total > 0 ? (
-          <span className={cn("shrink-0 text-xs font-semibold tabular-nums", done === total ? "text-success" : "text-muted-foreground")}>
+          <span
+            className={cn(
+              "shrink-0 text-xs font-semibold tabular-nums",
+              done === total ? "text-success" : "text-muted-foreground",
+            )}
+          >
             {done}/{total}
           </span>
         ) : null}
@@ -40,7 +47,15 @@ function UniRow({ table, active, onSelect }: { table: MatchTable; active: boolea
 }
 
 /** The master list: universities with a round logo, filled/total and the deadline; those with nothing to write sit folded below. */
-export function UniList({ tables, selectedId, onSelect }: { tables: MatchTable[]; selectedId: string | null; onSelect: (id: string) => void }) {
+export function UniList({
+  tables,
+  selectedId,
+  onSelect,
+}: {
+  tables: MatchTable[]
+  selectedId: string | null
+  onSelect: (id: string) => void
+}) {
   const t = useT("essayLedger")
   const [showEmpty, setShowEmpty] = useState(false)
   const { active, empty } = splitTables(tables)
@@ -48,7 +63,12 @@ export function UniList({ tables, selectedId, onSelect }: { tables: MatchTable[]
     <div className="flex flex-col p-1.5" data-testid="uni-list">
       <ul className="flex flex-col">
         {active.map((table) => (
-          <UniRow key={table.institution_id} table={table} active={selectedId === table.institution_id} onSelect={() => onSelect(table.institution_id)} />
+          <UniRow
+            key={table.institution_id}
+            table={table}
+            active={selectedId === table.institution_id}
+            onSelect={() => onSelect(table.institution_id)}
+          />
         ))}
       </ul>
       {empty.length > 0 ? (
@@ -65,7 +85,12 @@ export function UniList({ tables, selectedId, onSelect }: { tables: MatchTable[]
           {showEmpty ? (
             <ul className="flex flex-col">
               {empty.map((table) => (
-                <UniRow key={table.institution_id} table={table} active={selectedId === table.institution_id} onSelect={() => onSelect(table.institution_id)} />
+                <UniRow
+                  key={table.institution_id}
+                  table={table}
+                  active={selectedId === table.institution_id}
+                  onSelect={() => onSelect(table.institution_id)}
+                />
               ))}
             </ul>
           ) : null}

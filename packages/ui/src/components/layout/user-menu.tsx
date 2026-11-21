@@ -169,7 +169,10 @@ export function UserMenu({
             }}
           >
             {THEME_CHOICES.map((mode) => (
-              <DropdownMenuRadioItem key={mode} value={mode} className="data-checked:bg-accent data-checked:font-medium min-h-11 min-w-0 justify-center px-1 pr-1 pl-1 text-xs md:min-h-8 [&_[data-slot=dropdown-menu-radio-item-indicator]]:hidden"
+              <DropdownMenuRadioItem
+                key={mode}
+                value={mode}
+                className="data-checked:bg-accent data-checked:font-medium min-h-11 min-w-0 justify-center px-1 pr-1 pl-1 text-xs md:min-h-8 [&_[data-slot=dropdown-menu-radio-item-indicator]]:hidden"
               >
                 <span className="truncate">{t(`theme.${mode}`)}</span>
               </DropdownMenuRadioItem>

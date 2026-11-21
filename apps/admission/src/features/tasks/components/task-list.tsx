@@ -90,7 +90,9 @@ export function TaskList({
                   </button>
                 </TableCell>
                 <TableCell>
-                  {task.assigned_by_name ? t("assignedBy", { name: task.assigned_by_name }) : t(`source.${task.created_by}`)}
+                  {task.assigned_by_name
+                    ? t("assignedBy", { name: task.assigned_by_name })
+                    : t(`source.${task.created_by}`)}
                 </TableCell>
                 <TableCell>{task.created_at ? date(task.created_at) : ""}</TableCell>
                 <TableCell>

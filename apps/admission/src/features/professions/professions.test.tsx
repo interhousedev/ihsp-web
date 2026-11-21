@@ -32,7 +32,9 @@ describe("professions page", () => {
         puts.push(body)
         return HttpResponse.json({ items: [{ ...profession("2512", "Software developer", "medium"), rank: 1 }] })
       }),
-      http.get(apiUrl("/v1/admission/me/ikigai"), () => HttpResponse.json({ love: [], good_at: [], needs: [], paid: [] })),
+      http.get(apiUrl("/v1/admission/me/ikigai"), () =>
+        HttpResponse.json({ love: [], good_at: [], needs: [], paid: [] }),
+      ),
       http.get(apiUrl("/v1/admission/list/fit"), () => HttpResponse.json({ weights: {}, items: [] })),
     )
     renderAdmissionApp(<ProfessionsPage />)

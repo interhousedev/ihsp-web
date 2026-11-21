@@ -28,7 +28,11 @@ export function ProfessionsPage() {
   const labels = new Map(groups.flatMap((g) => g.items.map((i) => [i.id, i.label] as const)))
   const picks: MyProfession[] = [...(mine.data?.items ?? [])].sort((a, b) => a.rank - b.rank)
   const save = useMutation({
-    mutationFn: (next: Profession[]) => putMyProfessions(next.map((p) => p.id), locale),
+    mutationFn: (next: Profession[]) =>
+      putMyProfessions(
+        next.map((p) => p.id),
+        locale,
+      ),
     // The list shows the choice at once; the server answer replaces it, a failure restores the stored one.
     onMutate: (next) => {
       client.setQueryData(professionKeys.mine(locale), { items: next.map((p, i) => ({ ...p, rank: i + 1 })) })
@@ -40,7 +44,10 @@ export function ProfessionsPage() {
 
   const add = (p: Profession) => {
     if (picks.some((x) => x.id === p.id) || picks.length >= MAX_PICKS) return
-    const ids = addPick(picks.map((x) => x.id), p.id)
+    const ids = addPick(
+      picks.map((x) => x.id),
+      p.id,
+    )
     if (ids.length > picks.length) save.mutate([...picks, p])
   }
   const ranking = (
@@ -98,7 +105,13 @@ export function ProfessionsPage() {
           <Icons.chevronUp aria-hidden className="size-4" />
         </button>
       </div>
-      <ResponsiveDialog open={sheet} onOpenChange={setSheet} title={t("step.mine.title")} description={t("step.mine.hint", { max: MAX_PICKS })} size="md">
+      <ResponsiveDialog
+        open={sheet}
+        onOpenChange={setSheet}
+        title={t("step.mine.title")}
+        description={t("step.mine.hint", { max: MAX_PICKS })}
+        size="md"
+      >
         {ranking}
       </ResponsiveDialog>
     </AdmissionShell>

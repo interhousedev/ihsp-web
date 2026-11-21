@@ -6,7 +6,16 @@ import { useLocale } from "@ihsp/i18n"
 
 /** Wire types of `GET /v1/admission/today` (generated `TodayOut`). */
 export type SeasonId = "explore" | "build" | "choose" | "write" | "submit" | "results"
-export type TodayAction = { key: string; title: string; why: string; minutes: number; href: string; kind?: string; pinned_by?: string | null; list_entry_id: string | null }
+export type TodayAction = {
+  key: string
+  title: string
+  why: string
+  minutes: number
+  href: string
+  kind?: string
+  pinned_by?: string | null
+  list_entry_id: string | null
+}
 export type TodayDeadline = { date: string; href: string; kind: string; list_entry_id: string | null; title: string }
 export type TodayCheck = { key: string; label: string; done: boolean; href: string; progress: string | null }
 export type Today = {

@@ -144,6 +144,8 @@ describe("courses to take", () => {
     renderAdmissionApp(<CoursesPage />)
     expect(await screen.findByText("Derivatives 101")).toBeTruthy()
     expect(await screen.findByText("IELTS Academic")).toBeTruthy()
-    expect(screen.getAllByRole("link", { name: /Open events/ })[0]?.getAttribute("href")).toBe("/opportunities?kind=event")
+    expect(screen.getAllByRole("link", { name: /Open events/ })[0]?.getAttribute("href")).toBe(
+      "/opportunities?kind=event",
+    )
   })
 })

@@ -71,7 +71,9 @@ export function CaseloadList({
           {
             key: "actions",
             header: <span className="sr-only">{t("scope.actions")}</span>,
-            cell: (item: CaseloadItem) => <AssignDialog studentId={item.student_id} current={item.assigned_staff} compact />,
+            cell: (item: CaseloadItem) => (
+              <AssignDialog studentId={item.student_id} current={item.assigned_staff} compact />
+            ),
           },
         ]
       : []),

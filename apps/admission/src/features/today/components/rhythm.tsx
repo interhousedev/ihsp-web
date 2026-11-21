@@ -23,22 +23,30 @@ export function Rhythm({
           {t("streak.days", { n: streak.days })}
         </p>
         {streak.last7.some(Boolean) ? (
-        <ul className="flex gap-1.5" aria-label={t("streak.week")}>
-          {streak.last7.map((done, index) => (
-            <li
-              key={index}
-              title={done ? t("streak.done") : t("streak.missed")}
-              className={cn("size-3 rounded-full", done ? "bg-primary" : "border-muted-foreground/50 border border-dashed")}
-            >
-              <span className="sr-only">{done ? t("streak.done") : t("streak.missed")}</span>
-            </li>
-          ))}
-        </ul>
+          <ul className="flex gap-1.5" aria-label={t("streak.week")}>
+            {streak.last7.map((done, index) => (
+              <li
+                key={index}
+                title={done ? t("streak.done") : t("streak.missed")}
+                className={cn(
+                  "size-3 rounded-full",
+                  done ? "bg-primary" : "border-muted-foreground/50 border border-dashed",
+                )}
+              >
+                <span className="sr-only">{done ? t("streak.done") : t("streak.missed")}</span>
+              </li>
+            ))}
+          </ul>
         ) : null}
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <span className="text-muted-foreground text-xs">{t("readiness.title")}</span>
-        <ProgressRing percent={readiness} label={t("readiness.title")} size={44} className="[&_span]:text-xs md:[&_span]:text-sm" />
+        <ProgressRing
+          percent={readiness}
+          label={t("readiness.title")}
+          size={44}
+          className="[&_span]:text-xs md:[&_span]:text-sm"
+        />
       </div>
     </div>
   )

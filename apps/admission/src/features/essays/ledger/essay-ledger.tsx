@@ -82,7 +82,14 @@ export function EssayLedger({ ledger, nextHref, nextLabel }: { ledger: Ledger; n
       />
     )
   else if (shown.length === 0)
-    body = <StateView state="empty" icon={<Icons.search aria-hidden />} title={t("noMatch")} description={t("noMatchText", { query })} />
+    body = (
+      <StateView
+        state="empty"
+        icon={<Icons.search aria-hidden />}
+        title={t("noMatch")}
+        description={t("noMatchText", { query })}
+      />
+    )
   else
     body = (
       <div className="flex flex-col gap-1" data-testid="ledger-rows">
@@ -132,10 +139,18 @@ export function EssayLedger({ ledger, nextHref, nextLabel }: { ledger: Ledger; n
       </div>
 
       <GroupDrawer row={open} onClose={() => view.set({ group: null })} />
-      <LedgerSheet open={view.drawer === "ideas"} onOpenChange={(o) => !o && view.set({ drawer: null })} title={t("ideasHeading")}>
+      <LedgerSheet
+        open={view.drawer === "ideas"}
+        onOpenChange={(o) => !o && view.set({ drawer: null })}
+        title={t("ideasHeading")}
+      >
         <IdeasPanel />
       </LedgerSheet>
-      <LedgerSheet open={view.drawer === "examples"} onOpenChange={(o) => !o && view.set({ drawer: null })} title={t("examplesTitle")}>
+      <LedgerSheet
+        open={view.drawer === "examples"}
+        onOpenChange={(o) => !o && view.set({ drawer: null })}
+        title={t("examplesTitle")}
+      >
         <ExamplesPanel />
       </LedgerSheet>
     </>

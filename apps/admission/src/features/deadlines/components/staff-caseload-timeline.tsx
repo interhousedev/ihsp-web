@@ -1,7 +1,19 @@
 "use client"
 
 import { useFormatters, useLocale, useNow, useT } from "@ihsp/i18n"
-import { Button, Gantt, type GanttItem, type GanttRow, ResponsiveDialog, Skeleton, StateView, TooltipProvider, ToggleGroup, ToggleGroupItem, UserAvatar } from "@ihsp/ui"
+import {
+  Button,
+  Gantt,
+  type GanttItem,
+  type GanttRow,
+  ResponsiveDialog,
+  Skeleton,
+  StateView,
+  TooltipProvider,
+  ToggleGroup,
+  ToggleGroupItem,
+  UserAvatar,
+} from "@ihsp/ui"
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import { QueryError } from "../../shell/components/query-error"
@@ -51,7 +63,9 @@ export function StaffCaseloadTimeline({ canSeeAll }: { canSeeAll: boolean }) {
     count: entry.items.length,
     past: entry.day < today,
     ariaLabel: `${student.name ?? t("unknownStudent")}: ${
-      entry.items.length > 1 ? tg("dayCount", { count: entry.items.length, date: day(entry.day) }) : `${entry.items[0]!.title}, ${day(entry.day)}`
+      entry.items.length > 1
+        ? tg("dayCount", { count: entry.items.length, date: day(entry.day) })
+        : `${entry.items[0]!.title}, ${day(entry.day)}`
     }`,
     tooltip: (
       <>
@@ -66,7 +80,12 @@ export function StaffCaseloadTimeline({ canSeeAll }: { canSeeAll: boolean }) {
     ),
   })
 
-  const rows: GanttRow[] = students.map((s) => ({ id: `${s.studentId}:heading`, label: "", group: s.studentId, items: [] }))
+  const rows: GanttRow[] = students.map((s) => ({
+    id: `${s.studentId}:heading`,
+    label: "",
+    group: s.studentId,
+    items: [],
+  }))
   const groups = Object.fromEntries(students.map((s) => [s.studentId, s.name ?? t("unknownStudent")]))
   const groupItems = Object.fromEntries(students.map((s) => [s.studentId, s.days.map((d) => flag(s, d))]))
   const groupIcons = Object.fromEntries(
@@ -113,7 +132,9 @@ export function StaffCaseloadTimeline({ canSeeAll }: { canSeeAll: boolean }) {
           sidebarWidth={sidebar}
           todayLabel={tg("today")}
           ariaLabel={t("label")}
-          monthLabel={(time) => fmt(time, { month: "long", year: "numeric" }).replace(/^\p{L}/u, (c) => c.toLocaleUpperCase(locale))}
+          monthLabel={(time) =>
+            fmt(time, { month: "long", year: "numeric" }).replace(/^\p{L}/u, (c) => c.toLocaleUpperCase(locale))
+          }
           dayLabel={day}
           weekdayLabel={(time) => fmt(time, { weekday: "short" })}
           onSelect={setSelected}
@@ -155,10 +176,19 @@ export function StaffCaseloadTimeline({ canSeeAll }: { canSeeAll: boolean }) {
         {open ? (
           <ul className="flex flex-col gap-3">
             {open.d.items.map((item) => (
-              <li key={`${item.kind}:${item.title}:${item.href}`} className="flex min-w-0 flex-col gap-1 rounded-lg border p-3 text-sm">
+              <li
+                key={`${item.kind}:${item.title}:${item.href}`}
+                className="flex min-w-0 flex-col gap-1 rounded-lg border p-3 text-sm"
+              >
                 <span className="font-medium break-words">{item.title}</span>
                 {item.by_staff ? <span className="text-muted-foreground text-xs">{t("byStaff")}</span> : null}
-                <Button render={<Link href={item.href} />} nativeButton={false} variant="outline" size="sm" className="mt-1 min-h-11 w-fit md:min-h-8">
+                <Button
+                  render={<Link href={item.href} />}
+                  nativeButton={false}
+                  variant="outline"
+                  size="sm"
+                  className="mt-1 min-h-11 w-fit md:min-h-8"
+                >
                   {tg("openItem")}
                 </Button>
               </li>

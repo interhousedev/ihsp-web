@@ -31,7 +31,13 @@ export function FitAnalysisPanel({
     <section className="flex flex-col gap-2 border-t pt-3" aria-label={t("analysis.title")} data-testid="fit-analysis">
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-sm font-semibold">{t("analysis.title")}</h3>
-        <Button type="button" size="sm" variant="outline" disabled={analysis.isPending} onClick={() => analysis.mutate()}>
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          disabled={analysis.isPending}
+          onClick={() => analysis.mutate()}
+        >
           {analysis.isPending ? t("analysis.running") : data ? t("analysis.rerun") : t("analysis.run")}
         </Button>
       </div>

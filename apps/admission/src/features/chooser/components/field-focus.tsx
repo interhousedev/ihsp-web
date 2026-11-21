@@ -53,7 +53,11 @@ export function FieldFocus() {
       <Icons.search aria-hidden className="size-4 shrink-0 max-md:hidden" />
       <span className="max-md:hidden">{t("fieldFocus.chip", { labels: labels.join(", ") })}</span>
       <span className="max-w-28 truncate md:hidden">{labels.join(", ")}</span>
-      <Link href={FIELD_HREF} aria-label={t("fieldFocus.change")} className="text-primary inline-flex items-center font-medium underline max-md:no-underline">
+      <Link
+        href={FIELD_HREF}
+        aria-label={t("fieldFocus.change")}
+        className="text-primary inline-flex items-center font-medium underline max-md:no-underline"
+      >
         <span className="max-md:sr-only">{t("fieldFocus.change")}</span>
         <Icons.edit aria-hidden className="size-4 md:hidden" />
       </Link>

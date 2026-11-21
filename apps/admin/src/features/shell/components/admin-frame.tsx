@@ -1,13 +1,7 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import {
-  AssistantEntry,
-  LegalGate,
-  MaintenanceBanner,
-  ShellNavControls,
-  usePlatformLinks,
-} from "@ihsp/features-core"
+import { AssistantEntry, LegalGate, MaintenanceBanner, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
 import { AppShell, CommandPalette, StateView, ThemeToggle } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"

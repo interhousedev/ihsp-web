@@ -40,7 +40,16 @@ const opportunity: Opportunity = {
 } as Opportunity
 
 const plan: Plan = {
-  entries: [{ id: "e1", opportunity_id: "o1", planned_grade: 10, planned_term: null, note: null, created_at: "2026-01-01T00:00:00Z" }],
+  entries: [
+    {
+      id: "e1",
+      opportunity_id: "o1",
+      planned_grade: 10,
+      planned_term: null,
+      note: null,
+      created_at: "2026-01-01T00:00:00Z",
+    },
+  ],
   opportunities: [opportunity],
   analytics: { load: {}, coverage: {}, unplaced: 0, conflicts: [] },
   deadlines: [],

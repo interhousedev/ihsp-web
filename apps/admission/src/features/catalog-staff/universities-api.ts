@@ -43,7 +43,13 @@ export type StaffInstitutionInput = Partial<
   Omit<StaffInstitution, "id" | "in_use" | "lock_version" | "updated_at" | "logo_zoom">
 > & { logo_zoom?: number | null }
 
-export type StaffInstitutionQuery = { q: string; country: string; status: "" | InstitutionStatus; page: number; pageSize: number }
+export type StaffInstitutionQuery = {
+  q: string
+  country: string
+  status: "" | InstitutionStatus
+  page: number
+  pageSize: number
+}
 
 /** GET /staff/catalog/institutions: every institution of any status, one page. */
 export function useStaffInstitutions(q: StaffInstitutionQuery) {

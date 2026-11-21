@@ -30,7 +30,14 @@ function FitList({
   if (pending) return <Skeleton className="h-10 w-full" />
   if (fit?.pending)
     return (
-      <Button type="button" size="sm" variant="outline" className="self-start" disabled={run.isPending} onClick={() => run.mutate()}>
+      <Button
+        type="button"
+        size="sm"
+        variant="outline"
+        className="self-start"
+        disabled={run.isPending}
+        onClick={() => run.mutate()}
+      >
         <Icons.sparkles aria-hidden />
         {run.isPending ? t("ideas.fitRunning") : t("ideas.fitRun")}
       </Button>

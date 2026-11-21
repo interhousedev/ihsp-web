@@ -53,7 +53,8 @@ export function UniBoard() {
   const first = splitTables(tables).active[0] ?? tables[0]
   const selected = tables.find((x) => x.institution_id === view.uni)
   const shown = selected ?? first
-  const slotAt = (universityId: string, slot: string) => tables.find((x) => x.institution_id === universityId)?.slots.find((s) => s.slot === slot)
+  const slotAt = (universityId: string, slot: string) =>
+    tables.find((x) => x.institution_id === universityId)?.slots.find((s) => s.slot === slot)
   const canDrop = (_t: MatchTable, slot: MatchSlot, essayId: string) => {
     const e = mine.find((x) => x.id === essayId)
     return !!e && blocker(slot, e) === null
@@ -107,8 +108,16 @@ export function UniBoard() {
     )
   const onList = view.uni === null || !selected
   return (
-    <div className="grid min-h-0 grid-cols-[minmax(0,1fr)] gap-4 md:h-full md:grid-cols-[15rem_minmax(0,1fr)] lg:grid-cols-[17rem_minmax(0,1fr)]" data-testid="uni-board">
-      <div className={cn("bg-card rounded-card min-h-0 border md:overflow-y-auto md:[scrollbar-gutter:stable]", !onList && "max-md:hidden")}>
+    <div
+      className="grid min-h-0 grid-cols-[minmax(0,1fr)] gap-4 md:h-full md:grid-cols-[15rem_minmax(0,1fr)] lg:grid-cols-[17rem_minmax(0,1fr)]"
+      data-testid="uni-board"
+    >
+      <div
+        className={cn(
+          "bg-card rounded-card min-h-0 border md:overflow-y-auto md:[scrollbar-gutter:stable]",
+          !onList && "max-md:hidden",
+        )}
+      >
         {sharedTable && shared ? (
           <ul className="border-hairline min-w-0 border-b p-2" data-testid="shared-slot">
             <SlotCard
@@ -117,10 +126,19 @@ export function UniBoard() {
               essay={mine.find((e) => e.id === shared.assigned?.essay_id)}
               busy={assign.isPending || create.isPending}
               over={dnd.over === dropId(sharedTable.institution_id, shared.slot)}
-              droppable={dnd.drag !== null && dnd.over !== dropId(sharedTable.institution_id, shared.slot) && canDrop(sharedTable, shared, dnd.drag.essayId)}
+              droppable={
+                dnd.drag !== null &&
+                dnd.over !== dropId(sharedTable.institution_id, shared.slot) &&
+                canDrop(sharedTable, shared, dnd.drag.essayId)
+              }
               onPick={() => setPicking({ universityId: sharedTable.institution_id, slot: shared.slot })}
-              onClear={() => assign.mutate({ universityId: sharedTable.institution_id, slot: shared.slot, essayId: null })}
-              onPreview={() => shared.assigned && setPreview({ id: shared.assigned.essay_id, title: shared.assigned.title, limit: shared.word_limit })}
+              onClear={() =>
+                assign.mutate({ universityId: sharedTable.institution_id, slot: shared.slot, essayId: null })
+              }
+              onPreview={() =>
+                shared.assigned &&
+                setPreview({ id: shared.assigned.essay_id, title: shared.assigned.title, limit: shared.word_limit })
+              }
               onCopy={() => shared.assigned && void text.copy(shared.assigned.essay_id)}
               onWrite={() => write(sharedTable, shared)}
             />
@@ -128,7 +146,12 @@ export function UniBoard() {
         ) : null}
         <UniList tables={tables} selectedId={shown?.institution_id ?? null} onSelect={(id) => view.set({ uni: id })} />
       </div>
-      <div className={cn("bg-card rounded-card flex min-h-0 min-w-0 flex-col overflow-hidden border", onList && "max-md:hidden")}>
+      <div
+        className={cn(
+          "bg-card rounded-card flex min-h-0 min-w-0 flex-col overflow-hidden border",
+          onList && "max-md:hidden",
+        )}
+      >
         {shown ? (
           <UniDetail
             table={shown}
@@ -171,7 +194,12 @@ export function UniBoard() {
         onClose={() => setPicking(null)}
         onChoose={(e) => picking && assign.mutate({ ...picking, essayId: e.id }, { onSuccess: () => setPicking(null) })}
       />
-      <EssayPreview essayId={preview?.id ?? null} title={preview?.title ?? ""} limit={preview?.limit ?? null} onClose={() => setPreview(null)} />
+      <EssayPreview
+        essayId={preview?.id ?? null}
+        title={preview?.title ?? ""}
+        limit={preview?.limit ?? null}
+        onClose={() => setPreview(null)}
+      />
     </div>
   )
 }

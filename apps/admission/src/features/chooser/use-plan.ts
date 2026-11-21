@@ -30,7 +30,9 @@ export function usePlanTasks() {
         action: {
           label: t("plan.undo"),
           onClick: () => {
-            void Promise.allSettled(created.map((task) => getApiClient().delete<void>(`/v1/admission/tasks/${task.id}`)))
+            void Promise.allSettled(
+              created.map((task) => getApiClient().delete<void>(`/v1/admission/tasks/${task.id}`)),
+            )
               .then(() => client.invalidateQueries({ queryKey: TASKS_KEY }))
               .then(() => toast(t("plan.undone")))
           },

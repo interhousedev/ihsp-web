@@ -29,12 +29,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
       nav={nav}
       bottomNav={bottom}
       platforms={platforms}
-      brand={
-        <SidebarBrand
-          name={t("idCommon.brand")}
-          platform="id"
-        />
-      }
+      brand={<SidebarBrand name={t("idCommon.brand")} platform="id" />}
       history={<ShellNavControls home="/security/" />}
       search={<CommandPalette nav={nav} />}
       sidebarFooter={

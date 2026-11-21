@@ -11,13 +11,21 @@ const TONE = { strong: "success", ok: "neutral", weak: "warning" } as const
 /** The dimensions the model names for the weakest spot; an unknown one is left out rather than shown in English. */
 const DIMENSIONS = ["detail", "voice", "structure", "originality", "imagery"]
 
-const BAR: Record<ParagraphStrength, string> = { strong: "bg-success", ok: "bg-muted-foreground/50", weak: "bg-warning" }
+const BAR: Record<ParagraphStrength, string> = {
+  strong: "bg-success",
+  ok: "bg-muted-foreground/50",
+  weak: "bg-warning",
+}
 
 function Uniqueness({ read }: { read: DeepRead }) {
   const t = useT("essayFlow")
   return (
     <div className="bg-card border-hairline rounded-card flex flex-wrap items-center gap-3 border p-3">
-      <ScoreRing value={read.uniqueness} label={t("deep.uniquenessLabel", { value: read.uniqueness })} className="size-20" />
+      <ScoreRing
+        value={read.uniqueness}
+        label={t("deep.uniquenessLabel", { value: read.uniqueness })}
+        className="size-20"
+      />
       <div className="min-w-0 flex-1 basis-40">
         <h3 className="text-sm font-semibold">{t("deep.uniqueness")}</h3>
         <p className="mt-1 text-sm">{read.uniqueness_note}</p>
@@ -52,7 +60,12 @@ export function ReadPanel({
   if (query.isError) return <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
   const button = (
     <div className="flex flex-col gap-1">
-      <Button type="button" variant={stale || !read ? "default" : "outline"} disabled={run.isPending} onClick={() => void start()}>
+      <Button
+        type="button"
+        variant={stale || !read ? "default" : "outline"}
+        disabled={run.isPending}
+        onClick={() => void start()}
+      >
         <Icons.sparkles aria-hidden />
         {run.isPending ? t("deep.running") : read ? t("deep.rerun") : t("deep.run")}
       </Button>
@@ -111,7 +124,9 @@ export function ReadPanel({
                 <span aria-hidden className={cn("w-1 shrink-0 rounded-full", BAR[p.strength])} />
                 <span className="min-w-0 flex-1">
                   <span className="flex flex-wrap items-center gap-1.5">
-                    <span className="text-muted-foreground text-xs font-medium">{t("deep.paragraph", { n: p.paragraph })}</span>
+                    <span className="text-muted-foreground text-xs font-medium">
+                      {t("deep.paragraph", { n: p.paragraph })}
+                    </span>
                     <Pill tone="primary">{t(`deep.roles.${p.role}` as "deep.roles.hook")}</Pill>
                     <Pill tone={TONE[p.strength]}>{t(`deep.strength.${p.strength}` as "deep.strength.ok")}</Pill>
                   </span>
@@ -127,7 +142,10 @@ export function ReadPanel({
           <h3 className="text-sm font-semibold">{t("deep.moments")}</h3>
           <ul className="flex flex-col gap-2">
             {read.moments.map((m) => (
-              <li key={`${m.paragraph}-${m.quote}`} className="bg-card border-hairline rounded-card flex flex-col gap-1 border p-2.5">
+              <li
+                key={`${m.paragraph}-${m.quote}`}
+                className="bg-card border-hairline rounded-card flex flex-col gap-1 border p-2.5"
+              >
                 <div className="flex items-center gap-1.5">
                   <Pill tone="success">{t(`deep.kind.${m.kind}` as "deep.kind.fresh")}</Pill>
                   <span className="text-muted-foreground text-xs">{t("deep.paragraph", { n: m.paragraph })}</span>

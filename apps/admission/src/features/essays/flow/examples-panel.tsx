@@ -40,15 +40,7 @@ function Excerpt({ body }: { body: string }) {
 }
 
 /** One shared essay: kind, size, the prompt it answers and the targets it was written for. */
-function GalleryCard({
-  item,
-  onOpen,
-  action,
-}: {
-  item: GalleryItem
-  onOpen: () => void
-  action?: React.ReactNode
-}) {
+function GalleryCard({ item, onOpen, action }: { item: GalleryItem; onOpen: () => void; action?: React.ReactNode }) {
   const t = useT("essayFlow")
   const te = useT("essays")
   const kind = te(`kind.${item.kind}` as "kind.other")
@@ -60,7 +52,9 @@ function GalleryCard({
         {item.targets.length > 0 ? <Pill>{t("gallery.targets", { count: item.targets.length })}</Pill> : null}
       </div>
       <h4 className="line-clamp-2 text-sm font-semibold">{item.title || te("untitled")}</h4>
-      {item.prompt_text ? <p className="text-muted-foreground line-clamp-2 text-xs italic">{item.prompt_text}</p> : null}
+      {item.prompt_text ? (
+        <p className="text-muted-foreground line-clamp-2 text-xs italic">{item.prompt_text}</p>
+      ) : null}
       <Excerpt body={item.body} />
       <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
         <Button size="sm" variant="outline" onClick={onOpen}>
@@ -103,7 +97,17 @@ function ReadDialog({ item, onClose }: { item: GalleryItem | null; onClose: () =
 }
 
 /** Publishing needs sharing consent: the bar says where it stands and grants it in one tap. */
-function ConsentBar({ granted, loading, onGrant, busy }: { granted: boolean; loading: boolean; onGrant: () => void; busy: boolean }) {
+function ConsentBar({
+  granted,
+  loading,
+  onGrant,
+  busy,
+}: {
+  granted: boolean
+  loading: boolean
+  onGrant: () => void
+  busy: boolean
+}) {
   const t = useT("essayFlow")
   if (loading) return null
   if (granted)
@@ -141,7 +145,10 @@ function Publisher({ mine, sharing }: { mine: GalleryItem[]; sharing: boolean })
   const copy = mine.find((m) => m.essay_id === current)
   // Publishing stamps the essay and the entry with the same instant: later edits move `updated_at` past it.
   const unchanged =
-    copy !== undefined && selected !== undefined && copy.published_at !== null && (selected.updated_at ?? "") <= copy.published_at
+    copy !== undefined &&
+    selected !== undefined &&
+    copy.published_at !== null &&
+    (selected.updated_at ?? "") <= copy.published_at
   const err = publish.error instanceof ApiError ? publish.error : null
   return (
     <div className="bg-card border-hairline rounded-card flex flex-col gap-2 border p-4">
@@ -152,7 +159,11 @@ function Publisher({ mine, sharing }: { mine: GalleryItem[]; sharing: boolean })
         <p className="text-muted-foreground text-sm">{t("gallery.publishEmpty")}</p>
       ) : (
         <div className="flex flex-wrap gap-2">
-          <Select items={items.map((e) => ({ value: e.id, label: optionLabel(e) }))} value={current} onValueChange={(next) => next && setPicked(next)}>
+          <Select
+            items={items.map((e) => ({ value: e.id, label: optionLabel(e) }))}
+            value={current}
+            onValueChange={(next) => next && setPicked(next)}
+          >
             <SelectTrigger id="gallery-publish" className="min-w-0 flex-1">
               <SelectValue />
             </SelectTrigger>
@@ -164,7 +175,10 @@ function Publisher({ mine, sharing }: { mine: GalleryItem[]; sharing: boolean })
               ))}
             </SelectContent>
           </Select>
-          <Button disabled={!current || !sharing || publish.isPending || unchanged} onClick={() => publish.mutate(current)}>
+          <Button
+            disabled={!current || !sharing || publish.isPending || unchanged}
+            onClick={() => publish.mutate(current)}
+          >
             <Icons.share aria-hidden />
             {unchanged ? t("gallery.alreadyPublished") : copy ? t("gallery.republish") : t("gallery.publish")}
           </Button>
@@ -229,7 +243,12 @@ export function ExamplesPanel({ institutionIds }: { institutionIds?: string[] })
                 item={item}
                 onOpen={() => setOpen(item)}
                 action={
-                  <Button size="sm" variant="ghost" disabled={unpublish.isPending} onClick={() => unpublish.mutate(item.essay_id)}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    disabled={unpublish.isPending}
+                    onClick={() => unpublish.mutate(item.essay_id)}
+                  >
                     {t("gallery.unpublish")}
                   </Button>
                 }

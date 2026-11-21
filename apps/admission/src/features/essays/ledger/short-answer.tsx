@@ -73,18 +73,32 @@ export function ShortAnswerField({ slot }: { slot: MatchSlot }) {
         )}
       />
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span className={cn("text-xs tabular-nums", over ? "text-warning font-medium" : "text-muted-foreground")} aria-live="polite">
+        <span
+          className={cn("text-xs tabular-nums", over ? "text-warning font-medium" : "text-muted-foreground")}
+          aria-live="polite"
+        >
           {limit ? t("wordsOfLimit", { count: words, limit }) : t("wordsCount", { count: words })}
         </span>
         <span className="text-muted-foreground text-xs" aria-live="polite">
           {state === "saving" ? t("saving") : state === "saved" ? t("saved") : state === "error" ? t("saveFailed") : ""}
         </span>
-        <Button type="button" size="sm" variant="outline" disabled={words === 0} onClick={() => void copy()} className="ml-auto min-h-9">
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          disabled={words === 0}
+          onClick={() => void copy()}
+          className="ml-auto min-h-9"
+        >
           <Icons.copy aria-hidden />
           {t("copy")}
         </Button>
       </div>
-      {over && limit ? <p role="status" className="text-warning text-xs">{t("shortOver", { count: words - limit })}</p> : null}
+      {over && limit ? (
+        <p role="status" className="text-warning text-xs">
+          {t("shortOver", { count: words - limit })}
+        </p>
+      ) : null}
     </div>
   )
 }
