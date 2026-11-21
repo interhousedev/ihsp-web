@@ -49,11 +49,13 @@ export function FieldFocus() {
     )
   }
   return (
-    <p className="bg-muted inline-flex w-fit max-w-full flex-wrap items-center gap-x-2 rounded-full px-3 py-1.5 text-sm">
-      <Icons.search aria-hidden className="size-4" />
-      <span>{t("fieldFocus.chip", { labels: labels.join(", ") })}</span>
-      <Link href={FIELD_HREF} className="text-primary font-medium underline">
-        {t("fieldFocus.change")}
+    <p className="bg-muted inline-flex w-fit max-w-full min-w-0 items-center gap-x-2 rounded-full px-3 py-1.5 text-sm">
+      <Icons.search aria-hidden className="size-4 shrink-0 max-md:hidden" />
+      <span className="max-md:hidden">{t("fieldFocus.chip", { labels: labels.join(", ") })}</span>
+      <span className="max-w-28 truncate md:hidden">{labels.join(", ")}</span>
+      <Link href={FIELD_HREF} aria-label={t("fieldFocus.change")} className="text-primary inline-flex items-center font-medium underline max-md:no-underline">
+        <span className="max-md:sr-only">{t("fieldFocus.change")}</span>
+        <Icons.edit aria-hidden className="size-4 md:hidden" />
       </Link>
     </p>
   )

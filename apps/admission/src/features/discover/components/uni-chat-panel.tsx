@@ -25,7 +25,7 @@ export function UniChatPanel({ match }: { match: ChatSubject | undefined }) {
   const chat = useUniChat(id)
   const suggestions = useUniChatSuggestions(id)
   const { state, run } = useRunDefault(chat.data)
-  const running = state.status === "running" || chat.data?.auto_run_pending === true
+  const running = state.status === "running"
 
   /** The panel's line for a limit, the problem's own copy (revoked access), or the generic failure. */
   const runErrorText = (error: unknown) => {
@@ -96,7 +96,7 @@ export function UniChatPanel({ match }: { match: ChatSubject | undefined }) {
       {chat.isError ? <StateView state="error" error={chat.error} onRetry={() => void chat.refetch()} /> : null}
       {chat.data ? (
         <>
-          <Button type="button" variant="outline" size="sm" disabled={running} onClick={() => void run(false)}>
+          <Button type="button" variant="outline" size="sm" disabled={running} onClick={() => void run()}>
             <Icons.search aria-hidden />
             {running ? t("researching") : t("run")}
           </Button>

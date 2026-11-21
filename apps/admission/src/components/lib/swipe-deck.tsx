@@ -214,9 +214,11 @@ export function SwipeDeck<T>({
           style={{
             transform: `translateX(${dx}px) rotate(${(dx / 300) * MAX_ROTATION}deg)`,
             touchAction: "pan-y",
+            ...(dragging ? { filter: `blur(${progress * 6}px)`, opacity: 1 - progress * 0.4 } : null),
           }}
           className={cn(
             "relative h-full cursor-grab select-none active:cursor-grabbing",
+            dragging ? "z-40" : null,
             dragging ? "transition-none" : "transition-transform duration-[180ms] ease-out motion-reduce:transition-none",
           )}
         >

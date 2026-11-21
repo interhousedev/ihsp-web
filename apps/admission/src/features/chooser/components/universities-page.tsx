@@ -11,10 +11,20 @@ import { ScreenSummary } from "../../assistant/screen-context"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { deriveStages, type StageId } from "../flow"
 import { useList } from "../hooks"
-import { BriefRail } from "./brief-rail"
+import { BriefRail, useBrief } from "./brief-rail"
 import { UniListStage } from "./list-stage"
 import { SearchView } from "./search-view"
 import { StageRail } from "./stage-rail"
+
+function ListWithBrief() {
+  const brief = useBrief()
+  return (
+    <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <UniListStage brief={brief} />
+      <BriefRail brief={brief} />
+    </div>
+  )
+}
 
 function Stages() {
   const router = useRouter()
@@ -34,12 +44,7 @@ function Stages() {
       <StageRail stages={flow.stages} open={flow.open} onSelect={go} />
       {flow.open === "quiz" ? <AlgorithmFlow withContinue={false} onFinished={() => go("match")} /> : null}
       {flow.open === "match" ? <SearchView /> : null}
-      {flow.open === "list" ? (
-        <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
-          <UniListStage />
-          <BriefRail />
-        </div>
-      ) : null}
+      {flow.open === "list" ? <ListWithBrief /> : null}
     </>
   )
 }

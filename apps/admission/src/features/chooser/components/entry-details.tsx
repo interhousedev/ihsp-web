@@ -33,12 +33,12 @@ export function EntryDetails({ entry, budget }: { entry: ListEntry; budget: Budg
     patch.mutate({ id: entry.id, body: { lock_version: entry.lock_version, ...body } })
   return (
     <div className="bg-muted/40 flex flex-col gap-4 rounded-lg p-3 md:p-4">
-      <nav aria-label={t("list.links.label", { name: entry.institution.name })} className="flex flex-wrap gap-x-4">
+      <nav aria-label={t("list.links.label", { name: entry.institution.name })} className="border-hairline flex flex-wrap gap-x-4 border-b">
         {ENTRY_LINKS.map(({ key, href }) => (
           <Link
             key={key}
             href={href(entry)}
-            className="text-primary inline-flex min-h-11 items-center text-sm underline-offset-2 hover:underline md:min-h-9"
+            className="text-primary hover:border-primary -mb-px inline-flex min-h-11 items-center border-b-2 border-transparent px-1 text-sm font-medium md:min-h-9"
           >
             {t(`list.links.${key}`)}
           </Link>

@@ -3,7 +3,7 @@
 import { isApiError, type AdmissionListBrief } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
-import { Button, Icons, Skeleton } from "@ihsp/ui"
+import { Button, cn, Icons, Skeleton } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
@@ -90,9 +90,10 @@ function BriefBody({ brief }: { brief: AdmissionListBrief }) {
   const role = useOptionLabel("bucket")
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-sm leading-snug">
-        <strong className="font-semibold">{brief.headline}</strong> <span className="text-muted-foreground">{brief.diagnosis}</span>
-      </p>
+      <div className="flex flex-col gap-1">
+        <p className="text-sm leading-snug font-semibold">{brief.headline}</p>
+        <p className="text-muted-foreground text-sm leading-snug">{brief.diagnosis}</p>
+      </div>
       {brief.next_steps.length > 0 ? (
         <section className="flex flex-col gap-1.5">
           <h3 className="text-muted-foreground text-xs font-medium">{t("brief.steps")}</h3>
@@ -128,10 +129,9 @@ function BriefBody({ brief }: { brief: AdmissionListBrief }) {
 
 /**
  * The AI brief of the list, kept in this browser per user. It is generated again only when the list changed, and at
- * most once a day; the refresh button always works. Shows when it was written.
+ * most once a day; a manual refresh always works. One instance serves the rail and the "AI overview" sheet.
  */
-export function BriefRail() {
-  const t = useT("uniList")
+export function useBrief() {
   const locale = useLocale()
   const { session } = useSession()
   const userId = session?.user.id
@@ -179,10 +179,22 @@ export function BriefRail() {
       )
     : null
 
+  return { entries, generate, cached, stale, written, run }
+}
+
+export type BriefState = ReturnType<typeof useBrief>
+
+/** The brief as a card (the right rail from `lg`) or, `embedded`, as the plain content of the "AI overview" sheet. */
+export function BriefRail({ brief, embedded = false }: { brief: BriefState; embedded?: boolean }) {
+  const t = useT("uniList")
+  const { entries, generate, cached, stale, written, run } = brief
   return (
-    <aside aria-label={t("brief.title")} className="bg-card flex flex-col gap-4 rounded-3xl border p-4 lg:sticky lg:top-4">
-      <header className="flex items-center justify-between gap-2">
-        <h2 className="flex items-center gap-2 text-base font-semibold">
+    <aside
+      aria-label={t("brief.title")}
+      className={cn("flex flex-col gap-4", embedded ? null : "bg-card rounded-3xl border p-4 max-lg:hidden lg:sticky lg:top-4")}
+    >
+      <header className={cn("flex items-center gap-2", embedded ? "justify-end" : "justify-between")}>
+        <h2 className={cn("flex items-center gap-2 text-base font-semibold", embedded ? "sr-only" : null)}>
           <Icons.sparkles aria-hidden className="text-primary size-4" />
           {t("brief.title")}
         </h2>

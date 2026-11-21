@@ -42,7 +42,8 @@ describe("list stage", () => {
     const names = within(screen.getByRole("list", { name: "Your list" })).getAllByRole("link", { name: /U$/ }).map((l) => l.textContent)
     expect(names).toEqual(["Alpha U", "Beta U", "Gamma U"])
     expect(screen.getByText(/Fit 80/)).toBeTruthy()
-    expect(screen.getByText("≈ $12K")).toBeTruthy()
+    const alpha = screen.getAllByRole("listitem").find((li) => within(li).queryByRole("link", { name: "Alpha U" }))!
+    expect(within(alpha).getAllByText("≈ $12K").length).toBeGreaterThan(0)
     expect(screen.getByText("$18K under budget")).toBeTruthy()
     expect(screen.getByText("$15K over budget")).toBeTruthy()
     expect(screen.getByText("Safe at home")).toBeTruthy()

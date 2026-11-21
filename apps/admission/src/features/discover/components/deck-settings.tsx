@@ -25,9 +25,16 @@ export function DeckSettings({ onSaved }: { onSaved: () => void }) {
   if (isMobile)
     return (
       <>
-        <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="size-11 px-0"
+          aria-label={t("settings.open")}
+          onClick={() => setOpen(true)}
+        >
           <Icons.adjustments aria-hidden />
-          {t("settings.open")}
+          <span className="sr-only">{t("settings.open")}</span>
         </Button>
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent side="bottom" className="max-h-[88dvh] overflow-y-auto p-4">

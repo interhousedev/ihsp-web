@@ -1,7 +1,7 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons, ResponsiveDialog, StateView } from "@ihsp/ui"
+import { Button, cn, Icons, ResponsiveDialog, StateView } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react"
 import { toast } from "sonner"
@@ -13,7 +13,7 @@ import { MatchCard } from "./match-card"
 import { SwipeExplainer } from "./swipe-explainer"
 import { UniChatPanel } from "./uni-chat-panel"
 
-/** The assistant sits beside the deck from 1024px; narrower it opens in a dialog. */
+/** The tray sits beside the deck from 1024px, under it when narrower. */
 function subscribe(onChange: () => void) {
   window.addEventListener("resize", onChange)
   return () => window.removeEventListener("resize", onChange)
@@ -96,7 +96,6 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
   }
 
   const refresh = () => void client.invalidateQueries({ queryKey: ["admission", "matches"] })
-  const context = <UniChatPanel match={top} />
 
   const deck = matches.isLoading ? (
     <StateView state="loading" rows={4} />
@@ -104,9 +103,9 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
     <StateView state="error" error={matches.error} onRetry={() => void matches.refetch()} />
   ) : (
     <div className="mx-auto flex w-full min-w-0 max-w-md flex-col gap-4">
-      <div className="rounded-card relative isolate z-0 min-w-0 overflow-hidden">
+      <div className="rounded-card relative z-10 min-w-0">
         <SwipeDeck
-          className="h-[min(34rem,calc(100dvh-28.5rem))] min-h-[16rem] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
+          className="h-[min(34rem,calc(100dvh-19rem))] min-h-[16rem] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
           items={remaining}
           getKey={(match) => match.university_id}
           getExitDirection={(match) => history.find((entry) => entry.match.university_id === match.university_id)?.direction}
@@ -118,7 +117,10 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
           empty={<StateView state="empty" title={t("empty.title")} description={t("empty.text")} />}
         />
       </div>
-      <p role="status" aria-live="polite" className="text-success h-5 text-center text-sm font-medium">
+      <p role="status" aria-live="polite" className={cn(
+          "h-5 text-center text-sm font-medium",
+          history[history.length - 1]?.direction === "left" ? "text-muted-foreground" : "text-success",
+        )}>
         {stamp}
       </p>
       <div className="bg-background/90 sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 flex items-center justify-center gap-3 py-2 pr-16 backdrop-blur md:static md:bg-transparent md:p-0 md:backdrop-blur-none">
@@ -149,16 +151,21 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
 
   return (
     <div className="flex w-full min-w-0 flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex min-w-0 flex-wrap items-center gap-2">{lead}</div>
-        <div className="flex items-center gap-2">
-        {wide ? null : (
-          <Button type="button" variant="outline" size="sm" onClick={() => setChatOpen(true)}>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">{lead}</div>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="max-md:size-11 max-md:px-0"
+            aria-label={tChat("ask")}
+            onClick={() => setChatOpen(true)}
+          >
             <Icons.sparkles aria-hidden />
-            {tChat("ask")}
+            <span className="max-md:sr-only">{tChat("ask")}</span>
           </Button>
-        )}
-        <DeckSettings onSaved={refresh} />
+          <DeckSettings onSaved={refresh} />
         </div>
       </div>
       {wide ? (
@@ -166,18 +173,17 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
           {deck}
           <aside data-testid="discover-side-slot" className="relative z-10 flex min-w-0 flex-col gap-4">
             {tray}
-            {context}
           </aside>
         </div>
       ) : (
         <>
           {deck}
           {tray}
-          <ResponsiveDialog open={chatOpen} onOpenChange={setChatOpen} title={tChat("tab")}>
-            {context}
-          </ResponsiveDialog>
         </>
       )}
+      <ResponsiveDialog open={chatOpen} onOpenChange={setChatOpen} title={tChat("tab")}>
+        <UniChatPanel match={top} />
+      </ResponsiveDialog>
     </div>
   )
 }
