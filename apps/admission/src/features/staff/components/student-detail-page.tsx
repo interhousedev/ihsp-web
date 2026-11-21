@@ -14,7 +14,11 @@ import { TestsBody } from "../../test-scores/components/tests-page"
 import { StudentReadiness } from "../../readiness/student-readiness"
 import { AssignDialog } from "./assign-dialog"
 import { STAFF_ROLES } from "./caseload-page"
-import { useCaseload } from "../api"
+import { useStudentRow } from "../api"
+import { FamilyBudgetCard } from "./family-budget-card"
+import { PinCard } from "./pin-card"
+import { StudentDocumentsTab } from "./student-documents-tab"
+import { StudentTasksTab } from "./student-tasks-tab"
 import { AlignmentTab, CoursesTab, ListTab, ProfileTab, WordsTab } from "./student-tabs"
 
 export const STUDENT_TABS = [
@@ -24,6 +28,8 @@ export const STUDENT_TABS = [
   "courses",
   "list",
   "tests",
+  "tasks",
+  "documents",
   "review",
   "checklist",
   "comments",
@@ -37,10 +43,15 @@ const TAB_ICON = {
   courses: Icons.kanban,
   list: Icons.page,
   tests: Icons.checks,
+  tasks: Icons.homework,
+  documents: Icons.files,
   review: Icons.eye,
   checklist: Icons.circleCheck,
   comments: Icons.chat,
 } as const
+
+/** What staff without the student's consent still read: list, tasks, documents and scores. */
+const LIMITED_TABS: readonly StudentTab[] = ["list", "tests", "tasks", "documents", "checklist"]
 
 /** Comment targets of the student's own objects; their id is the student id. */
 const COMMENT_TARGETS = ["profile", "words"] as const
@@ -55,11 +66,15 @@ export function StudentDetailPage() {
   const requested = params.get("tab")
   const roles = session?.user.roles ?? []
   const mentorOnly = roles.includes("mentor") && !roles.some((r) => r === "admin" || r === "counselor")
-  const tabs = STUDENT_TABS.filter((value) => value !== "checklist" || !mentorOnly)
-  const tab: StudentTab = tabs.find((value) => value === requested) ?? "profile"
-  const canAssign = roles.some((role) => role === "admin" || role === "counselor")
-  const caseload = useCaseload({})
-  const name = caseload.data?.items.find((item) => item.student_id === id)?.student_name
+  const isAdmin = roles.includes("admin")
+  const row = useStudentRow(id, isAdmin)
+  const limited = row?.limited === true
+  const tabs = STUDENT_TABS.filter(
+    (value) => (value !== "checklist" || !mentorOnly) && (!limited || LIMITED_TABS.includes(value)),
+  )
+  const tab: StudentTab = tabs.find((value) => value === requested) ?? tabs[0] ?? "profile"
+  const canAssign = isAdmin || roles.includes("counselor")
+  const name = row?.student_name
 
   return (
     <AdmissionShell roles={[...STAFF_ROLES]}>
@@ -75,9 +90,15 @@ export function StudentDetailPage() {
               <Icons.chevronLeft className="size-4" />
             </Link>
           }
-          actions={id && canAssign ? <AssignDialog studentId={id} /> : null}
+          actions={id && canAssign ? <AssignDialog studentId={id} current={row?.assigned_staff} /> : null}
         />
         {id ? <StudentReadiness studentId={id} /> : null}
+        {id ? (
+          <div className="grid gap-3 md:grid-cols-2">
+            <PinCard studentId={id} />
+            {limited ? null : <FamilyBudgetCard studentId={id} />}
+          </div>
+        ) : null}
         {!id ? (
           <StateView state="empty" title={t("student.noId")} />
         ) : (
@@ -107,6 +128,12 @@ export function StudentDetailPage() {
             </TabsContent>
             <TabsContent value="list">
               <ListTab studentId={id} />
+            </TabsContent>
+            <TabsContent value="tasks">
+              <StudentTasksTab studentId={id} />
+            </TabsContent>
+            <TabsContent value="documents">
+              <StudentDocumentsTab studentId={id} />
             </TabsContent>
             <TabsContent value="review">
               <StaffReviewTab studentId={id} />

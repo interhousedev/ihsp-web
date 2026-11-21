@@ -15,7 +15,7 @@ import { QueryError } from "../../shell/components/query-error"
 
 const FILTERS = ["none", "accepted", "rejected"] as const
 
-function QueueRow({ doc }: { doc: AdmissionDocument }) {
+export function QueueRow({ doc }: { doc: AdmissionDocument }) {
   const t = useT("documents")
   const errorMessage = useErrorMessage()
   const review = useReviewDocument()

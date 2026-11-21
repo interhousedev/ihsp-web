@@ -63,7 +63,7 @@ const KIND_TONE = {
 const uniGroup = (entryId: string) => `uni:${entryId}`
 
 /** Day width that puts the whole span inside the panel (never thinner than a readable minimum). */
-function fitWidth(panel: number, sidebar: number, start: number, end: number): number {
+export function fitWidth(panel: number, sidebar: number, start: number, end: number): number {
   const days = Math.round((end - start) / DAY) + 1
   return Math.min(FIT_MAX, Math.max(FIT_MIN, (panel - sidebar - 2) / days))
 }
@@ -141,7 +141,12 @@ export function DeadlinesGantt({
         end,
         tone: task.overdue ? "danger" : task.status === "done" ? "success" : "primary",
         href: "/tasks/",
-        caption: task.deadline ? tt(`status.${task.status}`) : `${tt(`status.${task.status}`)} · ${t("noDeadline")}`,
+        caption: [
+          task.deadline ? tt(`status.${task.status}`) : `${tt(`status.${task.status}`)} · ${t("noDeadline")}`,
+          task.assigned_by_name ? tt("assignedBy", { name: task.assigned_by_name }) : null,
+        ]
+          .filter(Boolean)
+          .join(" · "),
       })
     }
     for (const entry of scores.data?.entries ?? []) {

@@ -8,6 +8,7 @@ import {
   type AdmissionReminderPrefs,
   getApiClient,
 } from "@ihsp/api"
+import type { CaseloadDeadline } from "./staff-timeline-model"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 const BASE = "/v1/admission"
@@ -91,5 +92,18 @@ export function useCreateDeadline() {
   return useMutation({
     mutationFn: (body: DeadlineCreateBody) => getApiClient().post<Deadline>(`${BASE}/staff/deadlines`, body),
     onSuccess: () => client.invalidateQueries({ queryKey: STAFF_DEADLINES_KEY }),
+  })
+}
+
+export type CaseloadScope = "mine" | "all"
+
+/** GET /v1/admission/staff/caseload-deadlines: dated items and staff tasks of the students the caller reaches. */
+export function useCaseloadDeadlines(scope: CaseloadScope) {
+  return useQuery({
+    queryKey: ["admission", "staff-caseload-deadlines", scope] as const,
+    queryFn: ({ signal }) =>
+      getApiClient()
+        .get<{ items: CaseloadDeadline[] }>(`${BASE}/staff/caseload-deadlines`, { query: { scope }, signal })
+        .then((page) => page.items),
   })
 }

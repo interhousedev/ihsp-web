@@ -1,5 +1,6 @@
 "use client"
 
+import type { AdmissionAssignedStaff } from "@ihsp/api"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
   Button,
@@ -30,11 +31,21 @@ import {
 } from "../api"
 
 /** Gives a staff member a role for this student (scope `student`); both pickers are backed by the server. */
-export function AssignDialog({ studentId }: { studentId: string }) {
+export function AssignDialog({
+  studentId,
+  current = [],
+  compact = false,
+}: {
+  studentId: string
+  /** Staff already assigned; each can be revoked here. */
+  current?: AdmissionAssignedStaff[]
+  /** A short trigger label for table rows. */
+  compact?: boolean
+}) {
   const t = useT("staff")
   const locale = useLocale()
   const errorMessage = useErrorMessage()
-  const { assign } = useAssignmentMutations()
+  const { assign, unassign } = useAssignmentMutations()
   const [open, setOpen] = useState(false)
   const [q, setQ] = useState("")
   const [user, setUser] = useState<AssignableUser | null>(null)
@@ -69,10 +80,19 @@ export function AssignDialog({ studentId }: { studentId: string }) {
     }
   }
 
+  async function revoke(person: AdmissionAssignedStaff) {
+    try {
+      await unassign.mutateAsync(person.assignment_id)
+      toast.success(t("assign.revoked"))
+    } catch (error) {
+      toast.error(errorMessage(error))
+    }
+  }
+
   return (
     <>
-      <Button variant="outline" onClick={() => setOpen(true)}>
-        {t("assign.open")}
+      <Button variant="outline" size={compact ? "sm" : undefined} onClick={() => setOpen(true)}>
+        {compact ? t("assign.manage") : t("assign.open")}
       </Button>
       <ResponsiveDialog
         open={open}
@@ -86,6 +106,28 @@ export function AssignDialog({ studentId }: { studentId: string }) {
         }
       >
         <div className="flex flex-col gap-3">
+          {current.length > 0 ? (
+            <ul className="flex flex-col gap-2" aria-label={t("assign.current")}>
+              {current.map((person) => (
+                <li
+                  key={person.assignment_id}
+                  className="rounded-card flex items-center justify-between gap-2 border p-2 text-sm"
+                >
+                  <span className="min-w-0 truncate">{person.name}</span>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={unassign.isPending}
+                    aria-label={`${t("assign.revoke")}: ${person.name}`}
+                    onClick={() => void revoke(person)}
+                  >
+                    {t("assign.revoke")}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
           {user ? (
             <div className="flex items-center justify-between gap-2 rounded-card border p-2 text-sm">
               <span>{user.name}</span>

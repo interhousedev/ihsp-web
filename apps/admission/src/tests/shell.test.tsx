@@ -100,10 +100,10 @@ describe("staff nav by role", () => {
     expect(items).not.toContain("Admission management")
   })
 
-  it("offers a mentor the knowledge base editor but not the deadlines or catalog", async () => {
+  it("offers a mentor the knowledge base editor and the deadlines timeline but not the catalog", async () => {
     const items = await navFor("mentor")
     expect(items).toContain("Knowledge base editor")
-    expect(items).not.toContain("Deadlines")
+    expect(items).toContain("Deadlines")
     expect(items).not.toContain("Catalog review")
   })
 

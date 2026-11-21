@@ -200,3 +200,9 @@ export type AdmissionOutcomeIn = Schemas["OutcomeIn"]
 export type AdmissionOutcomePatch = Schemas["OutcomePatch"]
 export type AdmissionOutcomeSummary = Served["OutcomeSummaryOut"]
 export type AdmissionOutcomeTally = Served["OutcomeTallyOut"]
+
+// Staff pin, caseload deadlines and assigned staff
+export type AdmissionPin = Served["PinOut"]
+export type AdmissionPinIn = Schemas["PinIn"]
+export type AdmissionStudentDeadline = Served["StudentDeadlineOut"]
+export type AdmissionAssignedStaff = Served["AssignedStaffOut"]

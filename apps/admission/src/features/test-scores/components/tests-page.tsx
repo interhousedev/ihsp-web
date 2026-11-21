@@ -22,6 +22,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useScreenContext } from "../../assistant/screen-context"
 import { downloadDocument } from "../../documents/api"
+import { AccessDenied, isForbidden } from "../../shell/components/access-denied"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
   scoreName,
@@ -357,7 +358,9 @@ export function TestsBody({ studentId, staffEmpty }: { studentId?: string; staff
           {t("openPrepCalendar")}
         </Link>
       )}
-      {failed ? (
+      {failed && isForbidden(failed.error) ? (
+        <AccessDenied section="tests" />
+      ) : failed ? (
         <StateView state="error" error={failed.error} onRetry={() => void failed.refetch()} />
       ) : !overview || catalog.isPending ? (
         <StateView state="loading" rows={3} />

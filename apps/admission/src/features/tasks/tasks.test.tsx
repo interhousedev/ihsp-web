@@ -191,6 +191,18 @@ describe("task drawer", () => {
     expect(screen.getByText("1 of 2 steps")).toBeTruthy()
   })
 
+  test("shows who assigned the task, and nothing for a task of the student", async () => {
+    serve()
+    const { unmount } = renderAdmissionApp(
+      <TaskDrawer task={{ ...task, assigned_by_name: "Dilnoza Counselor" }} open onOpenChange={() => {}} />,
+    )
+    expect(await screen.findByText(/Dilnoza Counselor/)).toBeTruthy()
+    unmount()
+    renderAdmissionApp(<TaskDrawer task={task} open onOpenChange={() => {}} />)
+    await screen.findByText("two")
+    expect(screen.queryByText(/Dilnoza/)).toBeNull()
+  })
+
   test("ticking a step patches it and does not close the task", async () => {
     serve()
     let body: Record<string, unknown> | null = null

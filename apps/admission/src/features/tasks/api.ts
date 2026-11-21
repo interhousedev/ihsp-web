@@ -61,6 +61,11 @@ function path(studentId: string | undefined) {
   return studentId ? `${BASE}/students/${studentId}/tasks` : `${BASE}/tasks`
 }
 
+/** Staff create a student's task through the staff endpoint; the task carries the creator's name. */
+function createPath(studentId: string | undefined) {
+  return studentId ? `${BASE}/staff/students/${studentId}/tasks` : `${BASE}/tasks`
+}
+
 function query(filters: TaskFilters): string {
   const params = new URLSearchParams()
   for (const [key, value] of Object.entries(filters)) if (value) params.set(key, value)
@@ -84,7 +89,7 @@ function useInvalidate() {
 export function useCreateTask(studentId?: string) {
   const invalidate = useInvalidate()
   return useMutation({
-    mutationFn: (body: TaskIn) => getApiClient().post<Task>(path(studentId), body),
+    mutationFn: (body: TaskIn) => getApiClient().post<Task>(createPath(studentId), body),
     onSuccess: invalidate,
   })
 }

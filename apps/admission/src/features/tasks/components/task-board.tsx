@@ -59,6 +59,9 @@ function Card({ task, onOpen, overlay }: { task: Task; onOpen?: (task: Task) => 
         {task.overdue ? <OverdueBadge /> : null}
         {task.deadline ? <span className="text-muted-foreground text-xs">{date(task.deadline)}</span> : null}
         {total > 0 ? <span className="text-muted-foreground text-xs">{`${done}/${total}`}</span> : null}
+        {task.assigned_by_name ? (
+          <span className="text-muted-foreground text-xs">{t("assignedBy", { name: task.assigned_by_name })}</span>
+        ) : null}
       </div>
     </div>
   )

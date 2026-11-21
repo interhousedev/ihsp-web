@@ -5,9 +5,18 @@ import { Pill } from "@ihsp/ui"
 import Link from "next/link"
 import { DataTable, type DataColumn } from "../../../components/lib/page"
 import type { CaseloadItem } from "../api"
+import { AssignDialog } from "./assign-dialog"
 
 /** One row per student; `limited` marks a student the caller sees only partly. */
-export function CaseloadList({ items, stageLabel }: { items: CaseloadItem[]; stageLabel: (stage: string) => string }) {
+export function CaseloadList({
+  items,
+  stageLabel,
+  canAssign = false,
+}: {
+  items: CaseloadItem[]
+  stageLabel: (stage: string) => string
+  canAssign?: boolean
+}) {
   const t = useT("staff")
   const columns: DataColumn<CaseloadItem>[] = [
     {
@@ -26,13 +35,25 @@ export function CaseloadList({ items, stageLabel }: { items: CaseloadItem[]; sta
     {
       key: "stage",
       header: t("caseload.columns.stage"),
+      className: "hidden md:table-cell",
       cell: (item) => (item.stage ? <Pill tone="primary">{stageLabel(item.stage)}</Pill> : null),
     },
     {
       key: "due",
       header: t("caseload.columns.due"),
-      className: "text-muted-foreground",
+      className: "text-muted-foreground hidden md:table-cell",
       cell: (item) => (item.next_due ? formatDate(item.next_due) : t("caseload.noDeadline")),
+    },
+    {
+      key: "staff",
+      header: t("scope.assigned"),
+      className: "hidden lg:table-cell",
+      cell: (item) =>
+        item.assigned_staff.length === 0 ? (
+          <span className="text-muted-foreground">{t("scope.noneAssigned")}</span>
+        ) : (
+          <span className="text-sm">{item.assigned_staff.map((a) => a.name).join(", ")}</span>
+        ),
     },
     {
       key: "status",
@@ -45,6 +66,15 @@ export function CaseloadList({ items, stageLabel }: { items: CaseloadItem[]; sta
         </div>
       ),
     },
+    ...(canAssign
+      ? [
+          {
+            key: "actions",
+            header: <span className="sr-only">{t("scope.actions")}</span>,
+            cell: (item: CaseloadItem) => <AssignDialog studentId={item.student_id} current={item.assigned_staff} compact />,
+          },
+        ]
+      : []),
   ]
   return (
     <DataTable

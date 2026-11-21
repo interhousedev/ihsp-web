@@ -152,7 +152,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       { title: t("inbox"), url: "/staff/inbox/", icon: "inbox", visible: isStaff },
       { title: t("staffDocuments"), url: "/staff/documents/", icon: "files", visible: isDocStaff },
       { title: t("transcripts"), url: "/staff/transcripts/", icon: "page", visible: isDocStaff },
-      { title: t("deadlines"), url: "/staff/deadlines/", icon: "calendarEvent", visible: isCurator },
+      { title: t("deadlines"), url: "/staff/deadlines/", icon: "calendarEvent", visible: isStaff },
       { title: t("catalog"), url: "/staff/catalog/", icon: "search", visible: isCurator },
       { title: t("exemplars"), url: "/staff/exemplars/", icon: "post", visible: isCurator },
       { title: t("promptStudio"), url: "/staff/prompt-studio/", icon: "sparkles", visible: isCurator },
