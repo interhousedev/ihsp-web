@@ -7456,6 +7456,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/staff/caseload-deadlines": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Staff Deadlines
+         * @description Deadlines and tasks of the students the caller reaches (`mine`: assigned).
+         */
+        get: operations["admission_staff_deadlines"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/catalog/fact-spec": {
         parameters: {
             query?: never;
@@ -8057,12 +8077,36 @@ export interface paths {
         };
         /**
          * List Caseload
-         * @description Students the caller reaches, soonest deadline first.
+         * @description Students the caller reaches, soonest deadline first; `all` is admin-only.
          */
         get: operations["admission_list_caseload"];
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/students/{student_id}/pin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pin Action
+         * @description Pin one action at the top of the student's Today for 14 days.
+         */
+        post: operations["admission_staff_pin_action"];
+        /**
+         * Unpin Action
+         * @description Remove the pinned action.
+         */
+        delete: operations["admission_staff_unpin_action"];
         options?: never;
         head?: never;
         patch?: never;
@@ -20218,6 +20262,21 @@ export interface components {
             word_count: number;
         };
         /**
+         * AssignedStaffOut
+         * @description A staff member assigned to the student.
+         */
+        AssignedStaffOut: {
+            /** Kind */
+            kind: string;
+            /** Name */
+            name: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
          * AssignmentIn
          * @description Delegate a sub-role over one student or a class.
          */
@@ -21805,6 +21864,11 @@ export interface components {
          * @description One student on the staff member's list.
          */
         CaseloadItemOut: {
+            /**
+             * Assigned Staff
+             * @default []
+             */
+            assigned_staff?: components["schemas"]["AssignedStaffOut"][];
             /** Group Id */
             group_id: string | null;
             /** Group Name */
@@ -33705,6 +33769,11 @@ export interface components {
             list_entry_id: string | null;
             /** Minutes */
             minutes: number;
+            /**
+             * Pinned By
+             * @description Name of the counselor who pinned it (`pinned`).
+             */
+            pinned_by?: string | null;
             /** Title */
             title: string;
             /** Why */
@@ -35412,6 +35481,42 @@ export interface components {
             category: 1 | 2 | 3 | 4;
         };
         /**
+         * PinIn
+         * @description The action to pin on a student's Today (14 days).
+         */
+        PinIn: {
+            /** Href */
+            href?: string | null;
+            /** Note */
+            note?: string | null;
+            /** Title */
+            title: string;
+        };
+        /**
+         * PinOut
+         * @description The stored pin.
+         */
+        PinOut: {
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Href */
+            href: string | null;
+            /** Note */
+            note: string | null;
+            /** Pinned By */
+            pinned_by: string;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * PinReadingListBody
          * @description `PUT /library/reading-lists/{id}/pin`: `{pinned}`.
          */
@@ -36392,6 +36497,16 @@ export interface components {
             answers: {
                 [key: string]: unknown;
             };
+            /**
+             * Budget Shared
+             * @default false
+             */
+            budget_shared?: boolean;
+            /**
+             * Family Budget
+             * @description Budget band; set only when the student shares it.
+             */
+            family_budget?: string | null;
             /** Lock Version */
             lock_version: number;
             /** Missing Required */
@@ -40875,6 +40990,14 @@ export interface components {
             items: components["schemas"]["StaffAssessmentItem"][];
         };
         /**
+         * StaffDeadlinesOut
+         * @description The caseload timeline, soonest first.
+         */
+        StaffDeadlinesOut: {
+            /** Items */
+            items: components["schemas"]["StudentDeadlineOut"][];
+        };
+        /**
          * StaffEntriesResponse
          * @description A page of staff entries.
          */
@@ -41588,6 +41711,42 @@ export interface components {
             refresh_in: number;
             /** Token */
             token: string;
+        };
+        /**
+         * StudentDeadlineOut
+         * @description One dated item of one student on the caseload.
+         */
+        StudentDeadlineOut: {
+            /**
+             * By Staff
+             * @description A task a staff member set for the student.
+             */
+            by_staff: boolean;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Group Name */
+            group_name: string | null;
+            /** Href */
+            href: string;
+            /**
+             * Kind
+             * @description A calendar source, or `task`.
+             */
+            kind: string;
+            /** List Entry Id */
+            list_entry_id: string | null;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Student Name */
+            student_name: string | null;
+            /** Title */
+            title: string;
         };
         /**
          * StudentGroupBody
@@ -62487,6 +62646,39 @@ export interface operations {
             };
         };
     };
+    admission_staff_deadlines: {
+        parameters: {
+            query?: {
+                scope?: "mine" | "all";
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffDeadlinesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_catalog_fact_spec: {
         parameters: {
             query?: never;
@@ -63971,6 +64163,8 @@ export interface operations {
                 risk?: boolean;
                 deadline_before?: string | null;
                 group_id?: string | null;
+                scope?: "mine" | "all";
+                q?: string;
             };
             header?: never;
             path?: never;
@@ -63986,6 +64180,70 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["CaseloadOut"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_pin_action: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PinIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PinOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_unpin_action: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
