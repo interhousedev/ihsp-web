@@ -5173,8 +5173,10 @@
       "action": {
         "task": "Open the task",
         "essay": "Write the essay",
-        "opportunity": "See the scholarship"
-      }
+        "opportunity": "See the scholarship",
+        "pinned": "Open"
+      },
+      "pinnedBy": "Pinned by {name}"
     },
     "action": {
       "quiz": {

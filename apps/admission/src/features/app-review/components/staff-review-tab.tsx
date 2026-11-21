@@ -2,7 +2,7 @@
 
 import { ApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Skeleton, StateView } from "@ihsp/ui"
+import { Icons, Skeleton, StateView } from "@ihsp/ui"
 import { useState } from "react"
 import { useStudentReviews } from "../api"
 import { History, ReviewView } from "./app-review-page"
@@ -16,7 +16,7 @@ export function StaffReviewTab({ studentId }: { studentId: string }) {
   if (query.isPending) return <Skeleton className="h-40 w-full" />
   if (query.isError) {
     const status = query.error instanceof ApiError ? query.error.status : 0
-    if (status === 403 || status === 404) return <StateView state="empty" icon="lock" title={t("staffNoAccess")} />
+    if (status === 403 || status === 404) return <StateView state="empty" icon={<Icons.lock aria-hidden />} title={t("staffNoAccess")} />
     return <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
   }
   const items = query.data

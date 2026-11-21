@@ -5173,8 +5173,10 @@
       "action": {
         "task": "Vazifani ochish",
         "essay": "Esse yozish",
-        "opportunity": "Stipendiyani koʻrish"
-      }
+        "opportunity": "Stipendiyani koʻrish",
+        "pinned": "Ochish"
+      },
+      "pinnedBy": "Qadab qoʻydi: {name}"
     },
     "action": {
       "quiz": {

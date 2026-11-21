@@ -5,7 +5,7 @@ import { buttonVariants, cn, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useSnoozeAction, type TodayAction } from "../api"
 
-const KINDS = ["task", "essay", "opportunity"]
+const KINDS = ["task", "essay", "opportunity", "pinned"]
 
 /**
  * The one feed of "what to do now": a big top item and at most two queued ones, each with a "why" line and a time
@@ -38,7 +38,14 @@ export function NextActionCard({
             <span className="bg-primary text-primary-foreground flex size-5 items-center justify-center rounded-full text-[11px] font-semibold">
               1
             </span>
-            {t("next.title")}
+            {top.kind === "pinned" && top.pinned_by ? (
+              <span className="flex items-center gap-1 normal-case">
+                <Icons.pin aria-hidden className="size-3.5" />
+                {t("next.pinnedBy", { name: top.pinned_by })}
+              </span>
+            ) : (
+              t("next.title")
+            )}
           </span>
           <span className="flex items-center gap-1 normal-case tabular-nums">
             <Icons.clock aria-hidden className="size-3.5" />
@@ -60,6 +67,7 @@ export function NextActionCard({
             {t(`next.action.${KINDS.includes(top.kind ?? "") ? top.kind : "task"}`)}
             <Icons.arrowRight aria-hidden />
           </Link>
+          {top.kind === "pinned" ? null : (
           <button
             type="button"
             onClick={() => {
@@ -70,6 +78,7 @@ export function NextActionCard({
           >
             {t("next.later")}
           </button>
+          )}
         </div>
       </div>
       {rest.length > 0 ? (

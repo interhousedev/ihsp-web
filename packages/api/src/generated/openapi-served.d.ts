@@ -7467,7 +7467,7 @@ export interface paths {
          * Staff Deadlines
          * @description Deadlines and tasks of the students the caller reaches (`mine`: assigned).
          */
-        get: operations["admission_staff_deadlines"];
+        get: operations["admission_staff_caseload_deadlines"];
         put?: never;
         post?: never;
         delete?: never;
@@ -8095,7 +8095,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * Get Pin
+         * @description The pinned action in force; 404 when there is none.
+         */
+        get: operations["admission_staff_get_pin"];
         put?: never;
         /**
          * Pin Action
@@ -20266,6 +20270,11 @@ export interface components {
          * @description A staff member assigned to the student.
          */
         AssignedStaffOut: {
+            /**
+             * Assignment Id
+             * Format: uuid
+             */
+            assignment_id: string;
             /** Kind */
             kind: string;
             /** Name */
@@ -62646,7 +62655,7 @@ export interface operations {
             };
         };
     };
-    admission_staff_deadlines: {
+    admission_staff_caseload_deadlines: {
         parameters: {
             query?: {
                 scope?: "mine" | "all";
@@ -64179,6 +64188,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CaseloadOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_get_pin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PinOut"];
                 };
             };
             /** @description Validation Error */
