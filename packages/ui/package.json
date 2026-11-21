@@ -20,6 +20,6 @@
   "dependencies": {
     "@ihsp/config": "workspace:*",
     "@ihsp/i18n": "workspace:*",
-    "motion": "14.10.1"
+    "motion": "14.14.0"
   }
 }
