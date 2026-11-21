@@ -1,11 +1,12 @@
 "use client"
 
-import { useFormatters, useLocale, useNow, useT } from "@ihsp/i18n"
+import { useErrorMessage, useFormatters, useLocale, useNow, useT } from "@ihsp/i18n"
 import type { ReactNode } from "react"
 import {
   Button,
   Gantt,
   type GanttItem,
+  type GanttRange,
   type GanttRow,
   Icons,
   ResponsiveDialog,
@@ -16,16 +17,20 @@ import {
   TooltipProvider,
 } from "@ihsp/ui"
 import Link from "next/link"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { LogoAvatar } from "../../../components/lib/photo-header"
+import { showProblemToast } from "../../../lib/problem-fields"
 import { useList } from "../../chooser/hooks"
-import { useTasks } from "../../tasks/api"
+import { useMoveTask, useTasks } from "../../tasks/api"
 import type { TaskPrefill } from "../../tasks/components/task-form-dialog"
 import { scoreName, useScoreCatalog, useScores } from "../../test-scores/api"
 import { useCalendar } from "../calendar-api"
 import {
   type Block,
   type Entry,
+  BACK_DAYS,
   chartRange,
+  deadlineKind,
   institutionUrl,
   toBlocks,
   utcDay,
@@ -35,12 +40,33 @@ import { PrefsForm } from "./prefs-form"
 import { CalendarFeed } from "./calendar-feed"
 
 const DAY = 86_400_000
-const ZOOM = { year: 8, month: 22, week: 44 } as const
-type Zoom = keyof typeof ZOOM
+/** Pixels a day takes on the fixed zoom levels; "fit" stretches the whole span to the width of the panel. */
+const ZOOM = { month: 22, week: 44 } as const
+const FIT_MIN = 5
+const FIT_MAX = 30
+type Zoom = "fit" | keyof typeof ZOOM
+const ZOOMS: Zoom[] = ["fit", "month", "week"]
 
 const GENERAL = "general"
 const MINE = "mine"
+const NONE = "none"
+const HEADER_SUFFIX = ":head"
+const KIND_TONE = {
+  early: "warning",
+  regular: "primary",
+  aid: "info",
+  test: "accent",
+  document: "accent",
+  opportunity: "accent",
+  other: "accent",
+} as const
 const uniGroup = (entryId: string) => `uni:${entryId}`
+
+/** Day width that puts the whole span inside the panel (never thinner than a readable minimum). */
+function fitWidth(panel: number, sidebar: number, start: number, end: number): number {
+  const days = Math.round((end - start) / DAY) + 1
+  return Math.min(FIT_MAX, Math.max(FIT_MIN, (panel - sidebar - 2) / days))
+}
 
 /**
  * The default view of the tasks page: every dated thing as blocks on one timeline (the library Gantt), grouped per
@@ -50,9 +76,12 @@ const uniGroup = (entryId: string) => `uni:${entryId}`
 export function DeadlinesGantt({
   onOpenTask,
   onCreate,
+  focusEntry,
 }: {
   onOpenTask: (id: string) => void
   onCreate: (prefill: TaskPrefill) => void
+  /** List entry whose group is scrolled into view on load (the "tasks" link of the university list). */
+  focusEntry?: string | null
 }) {
   const t = useT("deadlines.gantt")
   const tc = useT("deadlines.calendar")
@@ -62,7 +91,11 @@ export function DeadlinesGantt({
   const { date } = useFormatters()
   const now = useNow({ updateInterval: 60_000 })
   const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
-  const [zoom, setZoom] = useState<Zoom>("month")
+  const errorMessage = useErrorMessage()
+  const move = useMoveTask()
+  const [zoom, setZoom] = useState<Zoom>("fit")
+  const [box, setBox] = useState<HTMLDivElement | null>(null)
+  const [boxWidth, setBoxWidth] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
   const [settings, setSettings] = useState(false)
   const tasks = useTasks()
@@ -75,6 +108,13 @@ export function DeadlinesGantt({
     [today],
   )
   const calendar = useCalendar(range.from, range.to)
+  useEffect(() => {
+    if (!box) return
+    const observer = new ResizeObserver(([entry]) => setBoxWidth(entry?.contentRect.width ?? 0))
+    observer.observe(box)
+    setBoxWidth(box.clientWidth)
+    return () => observer.disconnect()
+  }, [box])
   const fmt = (time: number, options: Intl.DateTimeFormatOptions) =>
     // The shared formatter owns the uz month names (plain Intl answers "M10" there).
     date(`${utcDayToIso(time)}T12:00:00+05:00`, options)
@@ -88,7 +128,7 @@ export function DeadlinesGantt({
       const uni = task.list_entry_id && listed.has(task.list_entry_id) ? task.list_entry_id : null
       // An undated task of a university stays visible at the start of the chart, tagged "no due date".
       if (!task.deadline && !uni) continue
-      const end = task.deadline ? utcDay(task.deadline) : today - 30 * DAY
+      const end = task.deadline ? utcDay(task.deadline) : today - BACK_DAYS * DAY
       entries.push({
         id: `task:${task.id}`,
         rowId: `task:${task.id}`,
@@ -119,9 +159,10 @@ export function DeadlinesGantt({
           title,
           start: at,
           end: at,
-          tone: done ? "success" : "warning",
+          tone: done ? "success" : "accent",
           href: "/tests/",
           caption: t("exam"),
+          short: t("short.test"),
         })
       }
       if (entry.registration_deadline) {
@@ -138,6 +179,7 @@ export function DeadlinesGantt({
           tone: "danger",
           href: "/tests/",
           caption: t("registrationCloses"),
+          short: t("short.registration"),
         })
       }
     }
@@ -145,19 +187,29 @@ export function DeadlinesGantt({
       const at = utcDay(item.day)
       const uni = item.list_entry_id ?? null
       const inList = uni !== null && listed.has(uni)
+      const kind =
+        item.source === "university"
+          ? deadlineKind(item.title)
+          : item.source === "exam"
+            ? "test"
+            : item.source === "checklist"
+              ? "document"
+              : "opportunity"
       entries.push({
         id: `cal:${item.key}`,
-        rowId: inList ? `${uniGroup(uni)}:deadlines` : `cal:${item.source}`,
-        rowLabel: inList ? t("deadlines") : tc(`sources.${item.source}`),
+        // A university's deadlines sit on its heading row, not on a row of their own.
+        rowId: inList ? `${uniGroup(uni)}${HEADER_SUFFIX}` : `cal:${item.source}`,
+        rowLabel: tc(`sources.${item.source}`),
         group: inList ? uniGroup(uni) : GENERAL,
         kind: "deadline",
         title: item.title,
         start: at,
         end: at,
-        tone: item.predicted ? "muted" : "warning",
+        tone: item.predicted ? "muted" : KIND_TONE[kind],
         href: item.url_path,
         caption: item.predicted ? `${tc(`sources.${item.source}`)} · ${t("predicted")}` : tc(`sources.${item.source}`),
         predicted: item.predicted,
+        short: kind === "other" ? undefined : t(`short.${kind}`),
       })
     }
     return toBlocks(entries)
@@ -168,22 +220,35 @@ export function DeadlinesGantt({
     () => (list.data ?? []).map((entry) => ({ id: uniGroup(entry.id), entry: entry.id, name: entry.institution.name, institution: entry.institution })),
     [list.data],
   )
-  const order = useMemo(() => [...universities.map((uni) => uni.id), GENERAL, MINE], [universities])
+  const taskById = useMemo(() => new Map((tasks.data?.items ?? []).map((task) => [task.id, task])), [tasks.data])
   const view = useMemo(() => {
     const byRow = new Map<string, Block[]>()
     for (const block of blocks) byRow.set(block.rowId, [...(byRow.get(block.rowId) ?? []), block])
     const first = (list: Block[]) => Math.min(...list.map((block) => block.start))
-    const rows = [...byRow.values()]
-      .sort(
-        (a, b) =>
-          order.indexOf(a[0]!.group) - order.indexOf(b[0]!.group) ||
-          Number(b[0]!.rowId.endsWith(":deadlines")) - Number(a[0]!.rowId.endsWith(":deadlines")) ||
-          first(a) - first(b),
-      )
+    const lists = [...byRow.values()]
+    const heads = new Map<string, Block[]>()
+    for (const list of lists) {
+      if (list[0]!.rowId.endsWith(HEADER_SUFFIX)) heads.set(list[0]!.group, list)
+    }
+    // Universities with nothing dated and no tasks fold into one line at the bottom.
+    const used = new Set(lists.map((list) => list[0]!.group))
+    const active = universities.filter((uni) => used.has(uni.id))
+    const order = [...active.map((uni) => uni.id), GENERAL, MINE, NONE]
+    const rows = lists
+      .filter((list) => !list[0]!.rowId.endsWith(HEADER_SUFFIX))
+      .sort((a, b) => order.indexOf(a[0]!.group) - order.indexOf(b[0]!.group) || first(a) - first(b))
       .map((list) => ({ list, first: list[0]! }))
-    return { rows, blocks: new Map(blocks.map((block) => [block.id, block])), ...chartRange(blocks, today) }
-  }, [blocks, order, today])
-
+    return {
+      rows,
+      heads,
+      active,
+      idle: universities.filter((uni) => !used.has(uni.id)),
+      order,
+      blocks: new Map(blocks.map((block) => [block.id, block])),
+      ...chartRange(blocks, today),
+    }
+  }, [blocks, universities, today])
+  const order = view.order
   const kindLabel = (entry: Entry) =>
     entry.kind === "registration" ? t("registrationCloses") : entry.kind === "test" ? t("exam") : entry.caption
   const range1 = (block: Block) =>
@@ -198,14 +263,20 @@ export function DeadlinesGantt({
   const item = (block: Block): GanttItem => {
     const first = block.entries[0]!
     const many = block.entries.length > 1
+    const task = first.taskId ? taskById.get(first.taskId) : undefined
+    const flag = block.shape === "flag"
+    const behind = block.end < today
     return {
       id: block.id,
       start: block.start,
       end: block.end,
-      tone: block.tone,
+      tone: flag && behind ? "muted" : block.tone,
       shape: block.shape,
       label: first.title,
+      short: flag ? first.short : undefined,
       count: block.entries.length,
+      past: behind && (flag || task?.status === "done"),
+      editable: Boolean(task?.deadline),
       ariaLabel: many
         ? t("dayCount", { count: block.entries.length, date: day(block.start) })
         : `${first.title}, ${range1(block)}`,
@@ -226,18 +297,40 @@ export function DeadlinesGantt({
     group: first.group,
     items: list.map(item),
   }))
-  // A university with nothing dated yet still gets its heading, so its (+) is reachable.
+  // A heading row stands for every group without task rows, so its (+) and deadline flags stay reachable.
   const withRows = new Set(rows.map((row) => row.group))
-  const empty = universities.filter((uni) => !withRows.has(uni.id))
-  const allRows: GanttRow[] = [
-    ...empty.map((uni) => ({ id: `${uni.id}:none`, label: "", group: uni.id, items: [] })),
-    ...rows,
-  ].sort((a, b) => order.indexOf(a.group) - order.indexOf(b.group))
+  const headings: GanttRow[] = [
+    ...view.active.filter((uni) => !withRows.has(uni.id)).map((uni) => uni.id),
+    ...(withRows.has(MINE) ? [] : [MINE]),
+    ...(view.idle.length > 0 ? [NONE] : []),
+  ].map((group) => ({ id: `${group}:heading`, label: "", group, items: [] }))
+  const allRows: GanttRow[] = [...headings, ...rows].sort((a, b) => order.indexOf(a.group) - order.indexOf(b.group))
   const groups: Record<string, string> = {
     [GENERAL]: t("general"),
     [MINE]: t("mine"),
-    ...Object.fromEntries(universities.map((uni) => [uni.id, uni.name])),
+    [NONE]: t("undated"),
+    ...Object.fromEntries(view.active.map((uni) => [uni.id, uni.name])),
   }
+  const groupItems: Record<string, GanttItem[]> = Object.fromEntries(
+    view.active.map((uni) => [uni.id, (view.heads.get(uni.id) ?? []).map(item)]),
+  )
+  const groupIcons: Record<string, ReactNode> = Object.fromEntries(
+    view.active.map((uni) => [
+      uni.id,
+      <LogoAvatar key={uni.id} name={uni.name} src={uni.institution.logo_url} className="size-5 shrink-0 ring-0" />,
+    ]),
+  )
+  const focusGroup = !focusEntry
+    ? null
+    : view.active.some((uni) => uni.entry === focusEntry)
+      ? uniGroup(focusEntry)
+      : view.idle.some((uni) => uni.entry === focusEntry)
+        ? NONE
+        : null
+  // Before the panel is measured (and where nothing can be measured) the window width stands in for it.
+  const panel = boxWidth || (typeof window === "undefined" ? 1024 : window.innerWidth)
+  const sidebar = panel < 640 ? 104 : 168
+  const dayWidth = zoom === "fit" ? fitWidth(panel, sidebar, view.start, view.end) : ZOOM[zoom]
   const addTo = (label: string, prefill: TaskPrefill) => (
     <Button
       type="button"
@@ -260,14 +353,21 @@ export function DeadlinesGantt({
       .sort()
     return days[0] ?? null
   }
+  const uniPrefill = (uni: (typeof universities)[number]): TaskPrefill => ({
+    list_entry_id: uni.entry,
+    deadline: nearestDeadline(uni.entry),
+    links: [{ kind: "internal", label: uni.name, url: institutionUrl(uni.institution.id) }],
+  })
   const groupActions: Record<string, ReactNode> = {
     [MINE]: addTo(t("mine"), {}),
-    ...Object.fromEntries(
-      universities.map((uni) => [
-        uni.id,
-        addTo(uni.name, { list_entry_id: uni.entry, deadline: nearestDeadline(uni.entry), links: [{ kind: "internal", label: uni.name, url: institutionUrl(uni.institution.id) }] }),
-      ]),
-    ),
+    [GENERAL]: addTo(t("general"), {}),
+    [NONE]: view.idle.map((uni) => (
+      <span key={uni.id} className="inline-flex items-center normal-case">
+        <span className="text-foreground font-medium">{uni.name}</span>
+        {addTo(uni.name, uniPrefill(uni))}
+      </span>
+    )),
+    ...Object.fromEntries(view.active.map((uni) => [uni.id, addTo(uni.name, uniPrefill(uni))])),
   }
   const uniLinks = (entry: Entry): TaskPrefill["links"] => {
     const uni = universities.find((candidate) => candidate.id === entry.group)
@@ -280,13 +380,26 @@ export function DeadlinesGantt({
     if (taskId) onOpenTask(taskId)
     else setSelected(id)
   }
+  function change(id: string, next: GanttRange) {
+    const task = taskById.get(view.blocks.get(id)?.entries[0]?.taskId ?? "")
+    if (!task) return
+    move.mutate(
+      {
+        id: task.id,
+        lock_version: task.lock_version,
+        deadline: utcDayToIso(next.end),
+        ...(task.start_date || next.start < next.end ? { start_date: utcDayToIso(next.start) } : {}),
+      },
+      { onError: (error) => showProblemToast(errorMessage(error)) },
+    )
+  }
   const open = selected ? view.blocks.get(selected) : undefined
 
   if (tasks.isPending || scores.isPending || list.isPending) return <Skeleton className="h-[60dvh] w-full" />
   if (tasks.isError) return <StateView state="error" error={tasks.error} onRetry={() => void tasks.refetch()} />
 
   return (
-    <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
+    <div ref={setBox} className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <ToggleGroup
           value={[zoom]}
@@ -294,38 +407,47 @@ export function DeadlinesGantt({
           aria-label={t("zoom")}
           variant="outline"
         >
-          {(Object.keys(ZOOM) as Zoom[]).map((key) => (
+          {ZOOMS.map((key) => (
             <ToggleGroupItem key={key} value={key} className="min-h-11 px-3 md:min-h-8">
               {t(`zoomLevel.${key}`)}
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
-        <Button variant="outline" onClick={() => setSettings(true)} className="min-h-11 md:min-h-8">
+        <Button
+          variant="outline"
+          onClick={() => setSettings(true)}
+          className="min-h-11 md:min-h-8"
+          aria-label={t("reminders")}
+        >
           <Icons.notification aria-hidden />
-          {t("reminders")}
+          <span className="max-sm:hidden">{t("reminders")}</span>
         </Button>
       </div>
-      {allRows.length === 0 ? (
+      {blocks.length === 0 && universities.length === 0 ? (
         <StateView state="empty" title={t("empty")} />
       ) : (
         <TooltipProvider delay={120}>
           <Gantt
             key={zoom}
-            className="min-h-[360px] flex-1 md:max-h-[calc(100dvh-14rem)]"
+            className="max-h-[calc(100dvh-13rem)] min-h-[280px]"
             rows={allRows}
             groups={groups}
             groupActions={groupActions}
+            groupItems={groupItems}
+            groupIcons={groupIcons}
+            scrollToGroup={focusGroup}
             start={view.start}
             end={view.end}
             today={today}
-            dayWidth={ZOOM[zoom]}
-            sidebarWidth={typeof window !== "undefined" && window.innerWidth < 640 ? 104 : 168}
+            dayWidth={dayWidth}
+            sidebarWidth={sidebar}
             todayLabel={t("today")}
             ariaLabel={t("label")}
             monthLabel={(time) => fmt(time, { month: "long", year: "numeric" }).replace(/^\p{L}/u, (c) => c.toLocaleUpperCase(locale))}
             dayLabel={day}
             weekdayLabel={(time) => fmt(time, { weekday: "short" })}
             onSelect={select}
+            onChange={change}
           />
         </TooltipProvider>
       )}
@@ -338,7 +460,7 @@ export function DeadlinesGantt({
           <ul className="flex flex-col gap-3">
             {open.entries.map((entry) => (
               <li key={entry.id} className="flex min-w-0 flex-col gap-1 rounded-lg border p-3 text-sm">
-                <span className="font-medium break-words">{entry.title}</span>
+                {open.entries.length > 1 ? <span className="font-medium break-words">{entry.title}</span> : null}
                 <span className="text-muted-foreground text-xs">
                   {kindLabel(entry)} · {entry.start === entry.end ? day(entry.start) : `${day(entry.start)} – ${day(entry.end)}`}
                 </span>

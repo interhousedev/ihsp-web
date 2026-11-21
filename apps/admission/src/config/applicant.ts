@@ -30,3 +30,14 @@ export function useIsAlumnus(): boolean {
   })
   return needed && me.data?.entitlement_kind === "alumni"
 }
+
+/** The signed-in student's school grade (`GET /v1/admission/me`), or null when unknown (staff, alumni, loading). */
+export function useStudentGrade(): number | null {
+  const me = useQuery({
+    queryKey: ["admission", "me", "grade"],
+    queryFn: ({ signal }) => getApiClient().get<{ grade?: number | null }>("/v1/admission/me", { signal }),
+    staleTime: 5 * 60_000,
+    retry: false,
+  })
+  return me.data?.grade ?? null
+}

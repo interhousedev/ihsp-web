@@ -71,7 +71,7 @@ function Column({ status, tasks, onOpen }: { status: string; tasks: Task[]; onOp
     <section
       ref={drop.setNodeRef}
       aria-label={t(`status.${status}`)}
-      className={`bg-muted/40 flex w-72 shrink-0 flex-col gap-2 rounded-2xl p-3 ${drop.isOver ? "ring-primary/50 ring-2" : ""}`}
+      className={`bg-muted/40 flex min-w-44 flex-1 basis-0 flex-col gap-2 rounded-2xl p-3 ${drop.isOver ? "ring-primary/50 ring-2" : ""}`}
     >
       <h3 className="flex items-center justify-between gap-2 text-sm font-medium">
         <StatusPill status={status} />

@@ -20,6 +20,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useId, useMemo, useState } from "react"
 import { toast } from "sonner"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
+import { useStudentGrade } from "../../../config/applicant"
 import { useSchoolGrades } from "../../../lib/config"
 import { OpportunityTabs } from "./opportunity-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
@@ -106,7 +107,13 @@ export function CatalogBody() {
   const router = useRouter()
   const pathname = usePathname()
   const category = parseCategory(params.get("kind"))
+  const myGrade = useStudentGrade()
   const [other, setFilter] = useState<CatalogFilter>({})
+  const [gradeTouched, setGradeTouched] = useState(false)
+  // Until the student picks a grade, the catalog shows the opportunities of their own grade (school level first).
+  useEffect(() => {
+    if (myGrade !== null && !gradeTouched) setFilter((f) => (f.grade === undefined ? { ...f, grade: myGrade } : f))
+  }, [myGrade, gradeTouched])
   const [cost, setCost] = useState<string | undefined>()
   const filter: CatalogFilter = {
     ...other,
@@ -147,7 +154,7 @@ export function CatalogBody() {
     if (saved.has(id)) remove.mutate(id, opts)
     else
       save.mutate(
-        { id, planned_grade: grades[0] ?? null },
+        { id, planned_grade: (myGrade !== null && grades.includes(myGrade) ? myGrade : grades[0]) ?? null },
         {
           ...opts,
           onSuccess: () =>
@@ -244,7 +251,10 @@ export function CatalogBody() {
                   <FilterSelect
                     label={t("gradeLabel")}
                     value={filter.grade?.toString()}
-                    onChange={(v) => setFilter({ ...other, grade: v ? Number(v) : undefined })}
+                    onChange={(v) => {
+                      setGradeTouched(true)
+                      setFilter({ ...other, grade: v ? Number(v) : undefined })
+                    }}
                     options={GRADES.map((g) => ({ value: String(g), label: t("gradeShort", { grade: g }) }))}
                   />
                   <FilterSelect

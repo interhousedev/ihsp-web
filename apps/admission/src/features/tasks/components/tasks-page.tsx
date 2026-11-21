@@ -4,6 +4,7 @@ import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Icons, Pill, StateView, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
 import { ScrollFade } from "@/components/scroll-fade"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { showProblemToast } from "../../../lib/problem-fields"
@@ -24,18 +25,27 @@ import { TaskDrawer } from "./task-drawer"
 import { TaskFormDialog, type TaskPrefill } from "./task-form-dialog"
 import { TaskList } from "./task-list"
 
-type View = "deadlines" | "board" | "list"
-const VIEWS: View[] = ["deadlines", "board", "list"]
-const VIEW_KEY = "admission.tasks.view.v3"
+type View = "gantt" | "board" | "list"
+const VIEWS: View[] = ["gantt", "board", "list"]
+/** Message key of a view tab (the timeline kept its old key). */
+const VIEW_LABEL: Record<View, string> = { gantt: "deadlines", board: "board", list: "list" }
 
-/** Tasks of the signed-in student: the deadlines timeline (default), board and list, with filters, drawer and dialogs. */
+const asView = (value: string | null): View => VIEWS.find((item) => item === value) ?? "gantt"
+
+/**
+ * Tasks of the signed-in student: the deadlines timeline (default), board and list, with filters, drawer and
+ * dialogs. The view lives in the URL (`?view=`), so a bare `/tasks/` always opens the timeline; `?task=` opens that
+ * task and `?uni=` scrolls the timeline to a university of the list.
+ */
 export function TasksBody() {
   const t = useT("tasks")
   const vocab = useTaskVocab()
   const errorMessage = useErrorMessage()
-  const [view, setView] = useState<View>("deadlines")
+  const router = useRouter()
+  const params = useSearchParams()
+  const [view, setView] = useState<View>(asView(params.get("view")))
   const [filters, setFilters] = useState<TaskFilters>({})
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(params.get("task"))
   const [creating, setCreating] = useState<TaskPrefill | null>(null)
   const [suggesting, setSuggesting] = useState(false)
   const [removing, setRemoving] = useState<Task | null>(null)
@@ -45,26 +55,27 @@ export function TasksBody() {
   const items = tasks.data?.items ?? []
   const opened = items.find((task) => task.id === openId)
   const filtered = Object.values(filters).some(Boolean)
+  const taskParam = params.get("task")
+  const viewParam = params.get("view")
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(VIEW_KEY)
-      const known = VIEWS.find((item) => item === saved)
-      if (known) setView(known)
-    } catch {
-      // storage unavailable: keep the default view
-    }
-  }, [])
+    setView(asView(viewParam))
+  }, [viewParam])
+
+  useEffect(() => {
+    if (taskParam) setOpenId(taskParam)
+  }, [taskParam])
 
   function chooseView(next: View) {
     setView(next)
     // The timeline always shows every task, so a filter left over from another view cannot hide the opened one.
-    if (next === "deadlines") setFilters({})
-    try {
-      localStorage.setItem(VIEW_KEY, next)
-    } catch {
-      // storage unavailable: the choice is just not remembered
-    }
+    if (next === "gantt") setFilters({})
+    router.replace(`/tasks/?view=${next}`)
+  }
+
+  function closeTask() {
+    setOpenId(null)
+    if (taskParam) router.replace(`/tasks/?view=${view}`)
   }
 
   async function move(task: Task, status: TaskStatus) {
@@ -105,53 +116,54 @@ export function TasksBody() {
   }
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-6">
-      <aside
-        aria-label={t("overview")}
-        className="grid grid-cols-3 gap-2 xl:col-start-2 xl:row-start-1 xl:flex xl:flex-col xl:content-start"
-      >
-        {(["open", "overdue", "done"] as const).map((key) => (
-          <div
-            key={key}
-            className="border-hairline bg-card rounded-card flex flex-col gap-1 border p-3 xl:flex-row xl:items-center xl:justify-between"
+    <div className="flex min-w-0 flex-col gap-3">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <Tabs value={view} onValueChange={(value) => chooseView(asView(value))}>
+          <TabsList variant="line" aria-label={t("view.label")}>
+            {VIEWS.map((item) => (
+              <TabsTrigger key={item} value={item} className="min-h-11 md:min-h-9">
+                {t(`view.${VIEW_LABEL[item]}`)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+        <ul aria-label={t("overview")} className="flex items-center gap-1.5">
+          {(["open", "overdue", "done"] as const).map((key) => (
+            <li key={key}>
+              <Pill
+                tone={key === "overdue" ? "danger" : key === "done" ? "success" : "primary"}
+                title={`${t(`stats.${key}`)}: ${stats[key]}`}
+                className="gap-1"
+              >
+                <span className="max-lg:sr-only">{t(`stats.${key}`)}</span>
+                {stats[key]}
+              </Pill>
+            </li>
+          ))}
+        </ul>
+        <div className="ml-auto flex gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setSuggesting(true)}
+            aria-label={t("suggest")}
+            className="max-sm:size-11 max-sm:p-0"
           >
-            <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
-              {key === "overdue" ? (
-                <Icons.alertCircle aria-hidden className="text-destructive size-4" />
-              ) : key === "done" ? (
-                <Icons.check aria-hidden className="text-success size-4" />
-              ) : (
-                <Icons.clock aria-hidden className="text-primary size-4" />
-              )}
-              {t(`stats.${key}`)}
-            </span>
-            <Pill tone={key === "overdue" ? "danger" : key === "done" ? "success" : "primary"}>{stats[key]}</Pill>
-          </div>
-        ))}
-      </aside>
-      <div className="flex min-w-0 flex-col gap-4 xl:col-start-1 xl:row-start-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <Tabs value={view} onValueChange={(value) => chooseView(VIEWS.find((item) => item === value) ?? "list")}>
-            <TabsList variant="line" aria-label={t("view.label")} className="max-sm:h-14">
-              {VIEWS.map((item) => (
-                <TabsTrigger key={item} value={item} className="min-h-11 md:min-h-9">
-                  {t(`view.${item}`)}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-          <div className="ml-auto flex flex-wrap gap-2">
-            <Button type="button" variant="outline" onClick={() => setSuggesting(true)}>
-              <Icons.sparkles aria-hidden />
-              {t("suggest")}
-            </Button>
-            <Button type="button" onClick={() => setCreating({})}>
-              <Icons.add aria-hidden />
-              {t("add")}
-            </Button>
-          </div>
+            <Icons.sparkles aria-hidden />
+            <span className="max-sm:sr-only">{t("suggest")}</span>
+          </Button>
+          <Button
+            type="button"
+            onClick={() => setCreating({})}
+            aria-label={t("add")}
+            className="max-sm:size-11 max-sm:p-0"
+          >
+            <Icons.add aria-hidden />
+            <span className="max-sm:sr-only">{t("add")}</span>
+          </Button>
         </div>
-        {view === "deadlines" ? null : (
+      </div>
+      {view === "gantt" ? null : (
         <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
           {filterSpecs.map(({ key, values }) => (
             <div key={key} className="flex flex-col gap-1">
@@ -166,33 +178,32 @@ export function TasksBody() {
             </div>
           ))}
         </div>
-        )}
-        {view === "deadlines" ? (
-          <DeadlinesGantt onOpenTask={setOpenId} onCreate={setCreating} />
-        ) : tasks.isPending ? (
-          <StateView state="loading" />
-        ) : tasks.isError ? (
-          <StateView state="error" error={tasks.error} onRetry={() => void tasks.refetch()} />
-        ) : items.length === 0 ? (
-          <StateView state="empty" emptyText={filtered ? t("emptyFiltered") : t("empty")} />
-        ) : view === "board" ? (
-          <TaskBoard
+      )}
+      {view === "gantt" ? (
+        <DeadlinesGantt onOpenTask={setOpenId} onCreate={setCreating} focusEntry={params.get("uni")} />
+      ) : tasks.isPending ? (
+        <StateView state="loading" />
+      ) : tasks.isError ? (
+        <StateView state="error" error={tasks.error} onRetry={() => void tasks.refetch()} />
+      ) : items.length === 0 ? (
+        <StateView state="empty" emptyText={filtered ? t("emptyFiltered") : t("empty")} />
+      ) : view === "board" ? (
+        <TaskBoard
+          tasks={items}
+          onOpen={(task) => setOpenId(task.id)}
+          onMove={(task, status) => void move(task, status as TaskStatus)}
+        />
+      ) : (
+        <ScrollFade maxHeight="70vh">
+          <TaskList
             tasks={items}
             onOpen={(task) => setOpenId(task.id)}
-            onMove={(task, status) => void move(task, status as TaskStatus)}
+            onStatus={(task, status) => void move(task, status as TaskStatus)}
+            onDelete={setRemoving}
           />
-        ) : (
-          <ScrollFade maxHeight="70vh">
-            <TaskList
-              tasks={items}
-              onOpen={(task) => setOpenId(task.id)}
-              onStatus={(task, status) => void move(task, status as TaskStatus)}
-              onDelete={setRemoving}
-            />
-          </ScrollFade>
-        )}
-      </div>
-      {opened ? <TaskDrawer task={opened} open onOpenChange={(open) => !open && setOpenId(null)} /> : null}
+        </ScrollFade>
+      )}
+      {opened ? <TaskDrawer task={opened} open onOpenChange={(open) => !open && closeTask()} /> : null}
       {creating ? <TaskFormDialog open prefill={creating} onOpenChange={(open) => !open && setCreating(null)} /> : null}
       {suggesting ? <SuggestDialog open onOpenChange={setSuggesting} /> : null}
       <ConfirmDialog

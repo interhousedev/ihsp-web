@@ -8068,6 +8068,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/staff/students/{student_id}/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create For
+         * @description Create a task for a student (mentor or counselor in scope, or the owner).
+         */
+        post: operations["admission_staff_create_student_task"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/transcripts": {
         parameters: {
             query?: never;
@@ -42938,6 +42958,11 @@ export interface components {
          * @description A task. `overdue` is computed against today in Tashkent.
          */
         TaskOut: {
+            /**
+             * Assigned By Name
+             * @description Name of the staff member who set the task; null when the student or the AI did.
+             */
+            assigned_by_name: string | null;
             /** Completed At */
             completed_at: string | null;
             /** Created At */
@@ -63960,6 +63985,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CaseloadOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_create_student_task: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskOut"];
                 };
             };
             /** @description Validation Error */

@@ -53,7 +53,7 @@ describe("old routes", () => {
   test("/deadlines/ opens the tasks page, where deadlines are the default view", async () => {
     open("/deadlines/")
     render(<Deadlines />)
-    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/tasks/"))
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/tasks/?view=gantt"))
   })
 
   test("/profile/ turns the old tab into a section of the settings tab", async () => {

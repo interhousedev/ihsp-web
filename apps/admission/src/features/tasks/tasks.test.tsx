@@ -1,4 +1,4 @@
-import { apiUrl, server } from "@ihsp/test-utils"
+import { apiUrl, server, testRouter } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
@@ -25,6 +25,7 @@ const task: Task = {
   start_date: "2026-01-01",
   deadline: "2026-02-01",
   list_entry_id: null,
+  assigned_by_name: null,
   created_by: "mentor",
   creator_id: "m1",
   steps: [
@@ -43,11 +44,12 @@ const task: Task = {
   updated_at: "2025-12-01T00:00:00Z",
 }
 
-const VIEW_KEY = "admission.tasks.view.v3"
 
 const uniLink = { label: "MIT", url: "/chooser/institution/?id=inst1", kind: "internal" } as const
 const uniTask: Task = { ...task, id: "t2", title: "MIT supplement", links: [uniLink], overdue: false }
 const listEntry = { id: "e1", institution: { id: "inst1", name: "MIT" } }
+
+let route = "/tasks/"
 
 function serve(items: Task[] = [task], list: unknown[] = []) {
   server.use(
@@ -75,25 +77,23 @@ function serve(items: Task[] = [task], list: unknown[] = []) {
 }
 
 describe("tasks list", () => {
-  beforeEach(() => localStorage.setItem(VIEW_KEY, "list"))
-  afterEach(() => localStorage.removeItem(VIEW_KEY))
+  beforeEach(() => (route = "/tasks/?view=list"))
+  afterEach(() => (route = "/tasks/"))
 
   test("shows name, source, overdue badge and priority", async () => {
     serve()
-    renderAdmissionApp(<TasksBody />)
+    renderAdmissionApp(<TasksBody />, { route })
     expect((await screen.findAllByText("Draft the Common App essay")).length).toBeGreaterThan(0)
     expect(screen.getAllByText("Overdue").length).toBeGreaterThan(0)
     expect(screen.getAllByText("High").length).toBeGreaterThan(0)
     expect(screen.getAllByText("Mentor").length).toBeGreaterThan(0)
   })
 
-  test("the chosen view is remembered", async () => {
+  test("the chosen view goes into the URL", async () => {
     serve()
-    localStorage.removeItem(VIEW_KEY)
-    const { user } = renderAdmissionApp(<TasksBody />)
+    const { user } = renderAdmissionApp(<TasksBody />, { route })
     await user.click(await screen.findByRole("tab", { name: "Board" }))
-    expect(localStorage.getItem(VIEW_KEY)).toBe("board")
-    localStorage.removeItem(VIEW_KEY)
+    expect(testRouter.replace).toHaveBeenCalledWith("/tasks/?view=board")
   })
 
   test("the inline status select patches the task with its lock version", async () => {
@@ -105,7 +105,7 @@ describe("tasks list", () => {
         return HttpResponse.json({ ...task, status: "done" })
       }),
     )
-    const { user } = renderAdmissionApp(<TasksBody />)
+    const { user } = renderAdmissionApp(<TasksBody />, { route })
     const [select] = await screen.findAllByRole("combobox", { name: "Status of Draft the Common App essay" })
     await user.click(select)
     await user.click(await screen.findByRole("option", { name: "Done" }))
@@ -121,7 +121,7 @@ describe("tasks list", () => {
         return HttpResponse.json({ items: [] })
       }),
     )
-    const { user } = renderAdmissionApp(<TasksBody />)
+    const { user } = renderAdmissionApp(<TasksBody />, { route })
     await user.click(await screen.findByRole("combobox", { name: "Priority" }))
     await user.click(await screen.findByRole("option", { name: "High" }))
     await waitFor(() => expect(seen).toContain("priority=high"))
@@ -129,9 +129,11 @@ describe("tasks list", () => {
 })
 
 describe("tasks board", () => {
+  beforeEach(() => (route = "/tasks/"))
+
   test("puts a task in the column of its status", async () => {
     serve()
-    renderAdmissionApp(<TasksBody />)
+    renderAdmissionApp(<TasksBody />, { route })
     fireEvent.click(await screen.findByRole("tab", { name: "Board" }))
     const column = await screen.findByRole("region", { name: "In progress" })
     expect(within(column).getByText("Draft the Common App essay")).toBeTruthy()
@@ -141,11 +143,11 @@ describe("tasks board", () => {
 })
 
 describe("tasks deadlines view", () => {
-  beforeEach(() => localStorage.removeItem(VIEW_KEY))
+  beforeEach(() => (route = "/tasks/"))
 
   test("is the default and groups per university, general and own tasks", async () => {
     serve([task, uniTask], [listEntry])
-    renderAdmissionApp(<TasksBody />)
+    renderAdmissionApp(<TasksBody />, { route })
     expect(await screen.findByRole("button", { name: /Draft the Common App essay/ })).toBeTruthy()
     expect(screen.getByRole("tab", { name: "Deadlines", selected: true })).toBeTruthy()
     expect(screen.getByText("MIT")).toBeTruthy()
@@ -156,7 +158,7 @@ describe("tasks deadlines view", () => {
 
   test("a bar opens the task", async () => {
     serve([uniTask], [listEntry])
-    const { user } = renderAdmissionApp(<TasksBody />)
+    const { user } = renderAdmissionApp(<TasksBody />, { route })
     await user.click(await screen.findByRole("button", { name: /MIT supplement/ }))
     expect(await screen.findByText("1 of 2 steps")).toBeTruthy()
   })
@@ -170,7 +172,7 @@ describe("tasks deadlines view", () => {
         return HttpResponse.json({ ...task, id: "new" })
       }),
     )
-    const { user } = renderAdmissionApp(<TasksBody />)
+    const { user } = renderAdmissionApp(<TasksBody />, { route })
     await user.click(await screen.findByRole("button", { name: "Add a task to MIT" }))
     await user.type(await screen.findByLabelText("Name"), "Visit campus")
     await user.click(screen.getByRole("button", { name: "Save" }))

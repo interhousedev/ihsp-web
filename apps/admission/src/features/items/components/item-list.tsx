@@ -130,7 +130,7 @@ export function ItemList() {
           </div>
         ) : null}
         {items.isSuccess ? (
-          <div className={ofKind.length === 0 ? "hidden md:block" : undefined}>
+          <div key={kind} className={ofKind.length === 0 ? "hidden md:block" : undefined}>
             <ItemBoard drafts={drafts} ready={ready} onEdit={openItem} onDelete={setDeleting} />
           </div>
         ) : null}

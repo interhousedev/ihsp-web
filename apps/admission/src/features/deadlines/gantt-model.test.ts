@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { chartRange, type Entry, toBlocks, utcDay } from "./gantt-model"
+import { chartRange, deadlineKind, type Entry, toBlocks, utcDay } from "./gantt-model"
 
 const base: Omit<Entry, "id" | "start" | "end"> = {
   rowId: "cal:university",
@@ -29,12 +29,21 @@ describe("toBlocks", () => {
 })
 
 describe("chartRange", () => {
-  test("covers a month back and a quarter ahead, capped at 400 days", () => {
+  test("starts two weeks back, runs ten weeks at least and is capped at 400 days", () => {
     const today = utcDay("2026-11-21")
     const range = chartRange([], today)
-    expect(range.start).toBe(today - 30 * 86_400_000)
-    expect(range.end).toBe(today + 120 * 86_400_000)
+    expect(range.start).toBe(today - 14 * 86_400_000)
+    expect(range.end).toBe(today + 70 * 86_400_000)
     const far = toBlocks([{ ...base, id: "x", start: today + 900 * 86_400_000, end: today + 900 * 86_400_000 }])
     expect(chartRange(far, today).end).toBe(today + 400 * 86_400_000)
+  })
+})
+
+describe("deadlineKind", () => {
+  test("tells early, regular and aid deadlines from the title", () => {
+    expect(deadlineKind("Early Decision: MIT")).toBe("early")
+    expect(deadlineKind("Stanford: Regular Decision")).toBe("regular")
+    expect(deadlineKind("CSS Profile: Yale")).toBe("aid")
+    expect(deadlineKind("Open day")).toBe("other")
   })
 })

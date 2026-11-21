@@ -98,6 +98,40 @@ export function useUpdateTask() {
   })
 }
 
+/** Moves a task's dates; the cached lists change at once and roll back when the server refuses. */
+export function useMoveTask() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, ...body }: TaskPatch & { id: string }) =>
+      getApiClient().patch<Task>(`${BASE}/tasks/${id}`, body),
+    onMutate: async ({ id, deadline, start_date }) => {
+      await client.cancelQueries({ queryKey: TASKS_KEY })
+      const previous = client.getQueriesData<TasksOut>({ queryKey: TASKS_KEY })
+      client.setQueriesData<TasksOut>({ queryKey: TASKS_KEY }, (data) =>
+        data
+          ? {
+              ...data,
+              items: data.items.map((task) =>
+                task.id === id
+                  ? {
+                      ...task,
+                      deadline: deadline === undefined ? task.deadline : deadline,
+                      start_date: start_date === undefined ? task.start_date : start_date,
+                    }
+                  : task,
+              ),
+            }
+          : data,
+      )
+      return { previous }
+    },
+    onError: (_error, _vars, context) => {
+      for (const [key, data] of context?.previous ?? []) client.setQueryData(key, data)
+    },
+    onSettled: () => client.invalidateQueries({ queryKey: TASKS_KEY }),
+  })
+}
+
 export function useDeleteTask() {
   const invalidate = useInvalidate()
   return useMutation({
