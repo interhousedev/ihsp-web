@@ -10,7 +10,7 @@ export function Rhythm({
   readiness,
   className,
 }: {
-  streak: { days: number; week: boolean[] }
+  streak: { days: number; last7: boolean[] }
   readiness: number
   className?: string
 }) {
@@ -23,7 +23,7 @@ export function Rhythm({
           {t("streak.days", { n: streak.days })}
         </p>
         <ul className="flex gap-1.5" aria-label={t("streak.week")}>
-          {streak.week.map((done, index) => (
+          {streak.last7.map((done, index) => (
             <li
               key={index}
               title={done ? t("streak.done") : t("streak.missed")}

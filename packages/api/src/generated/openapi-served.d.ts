@@ -4885,7 +4885,7 @@ export interface paths {
         };
         /**
          * List Essays
-         * @description My essays.
+         * @description My essays with forks, targets and the stored deep-read score (no model call).
          */
         get: operations["admission_list_essays"];
         put?: never;
@@ -4934,6 +4934,26 @@ export interface paths {
          * @description Score an idea against the prompts no essay or slot covers (AI consent).
          */
         post: operations["admission_essay_idea_fit"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/essays/match": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Essay Match List
+         * @description Every listed university's slots at once, with its application due date.
+         */
+        get: operations["admission_essay_match_list"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -5057,7 +5077,7 @@ export interface paths {
         };
         /**
          * Get Prompt Map
-         * @description The prompts grouped into common, shared and unique clusters.
+         * @description The prompts grouped into named clusters; `scope=list` is my list + Common App.
          */
         get: operations["admission_essay_prompt_map"];
         put?: never;
@@ -5792,6 +5812,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/list/fit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get List Fit
+         * @description Fit of each entry of my list, from my preferences and plan.
+         */
+        get: operations["admission_get_list_fit"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/list/insights": {
         parameters: {
             query?: never;
@@ -6108,6 +6148,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/me/fit-preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Fit Preferences
+         * @description The caller's ratings and the axis weights they give.
+         */
+        get: operations["admission_get_fit_preferences"];
+        /**
+         * Put Fit Preferences
+         * @description Replace the caller's ratings.
+         */
+        put: operations["admission_put_fit_preferences"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/me/honor-suggestions": {
         parameters: {
             query?: never;
@@ -6142,6 +6206,30 @@ export interface paths {
          * @description Hide a suggestion; the certificate stays in the creation pick list.
          */
         post: operations["admission_dismiss_honor_suggestion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/me/ikigai": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Ikigai
+         * @description The caller's ikigai chips.
+         */
+        get: operations["admission_get_ikigai"];
+        /**
+         * Put Ikigai
+         * @description Replace the caller's ikigai chips.
+         */
+        put: operations["admission_put_ikigai"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -6320,6 +6408,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/me/professions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Professions
+         * @description The caller's ranked professions.
+         */
+        get: operations["admission_get_my_professions"];
+        /**
+         * Put My Professions
+         * @description Replace the caller's ranked professions (at most five).
+         */
+        put: operations["admission_put_my_professions"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/me/profile": {
         parameters: {
             query?: never;
@@ -6422,6 +6534,26 @@ export interface paths {
          * @description Mark my review as helpful or unfair.
          */
         post: operations["admission_review_feedback"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/me/season": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Season
+         * @description Fix the season (or null for automatic); returns the refreshed feed.
+         */
+        put: operations["admission_set_season"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -7060,6 +7192,26 @@ export interface paths {
          * @description Export the caller's admission data.
          */
         get: operations["admission_export_data"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/professions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Professions
+         * @description Search professions by name in any language.
+         */
+        get: operations["admission_search_professions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -8482,6 +8634,26 @@ export interface paths {
          * @description Mark a received result verified (staff with document review).
          */
         post: operations["admission_test_scores_verify"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/today": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Today
+         * @description My season, next steps, streak, readiness and nearest deadlines.
+         */
+        get: operations["admission_today"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -19988,6 +20160,24 @@ export interface components {
             user_id: string;
         };
         /**
+         * AssignedEssayOut
+         * @description The essay placed in a slot, as it is now; `over_limit` against the slot.
+         */
+        AssignedEssayOut: {
+            /** Essay Id */
+            essay_id: string;
+            /** Kind */
+            kind: string;
+            /** Over Limit */
+            over_limit: boolean;
+            /** Status */
+            status: string;
+            /** Title */
+            title: string;
+            /** Word Count */
+            word_count: number;
+        };
+        /**
          * AssignmentIn
          * @description Delegate a sub-role over one student or a class.
          */
@@ -20330,6 +20520,36 @@ export interface components {
             lesson: number | null;
             /** Midterm */
             midterm: number | null;
+        };
+        /**
+         * AxisFitOut
+         * @description One fit axis; `score` is null when its data is missing.
+         */
+        AxisFitOut: {
+            /** Key */
+            key: string;
+            /** Raise */
+            raise: components["schemas"]["RaiseOut"][];
+            /** Score */
+            score: number | null;
+            /** Weight */
+            weight: number;
+            /** Why */
+            why: string[];
+        };
+        /**
+         * AxisWeightsOut
+         * @description Weights of the four fit axes; they sum to 1.
+         */
+        AxisWeightsOut: {
+            /** Afford */
+            afford: number;
+            /** Goals */
+            goals: number;
+            /** Profile */
+            profile: number;
+            /** Traits */
+            traits: number;
         };
         /**
          * BalanceOut
@@ -21467,7 +21687,7 @@ export interface components {
             /** Minors */
             minors: string[];
             /** Professions */
-            professions: components["schemas"]["ProfessionOut"][];
+            professions: components["schemas"]["app__interfaces__http__v1__admission__routes_career__ProfessionOut"][];
             spike: components["schemas"]["SpikeOut"] | null;
             /**
              * Student Id
@@ -22316,6 +22536,22 @@ export interface components {
             ok: boolean;
         };
         /**
+         * ChecklistLineOut
+         * @description One line of the season checklist.
+         */
+        ChecklistLineOut: {
+            /** Done */
+            done: boolean;
+            /** Href */
+            href: string;
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Progress */
+            progress: string | null;
+        };
+        /**
          * ChecklistOut
          * @description One checklist item.
          */
@@ -22411,6 +22647,24 @@ export interface components {
             majors: string[];
             /** Minors */
             minors: string[];
+        };
+        /**
+         * ChosenIn
+         * @description One pick.
+         */
+        ChosenIn: {
+            /** Profession Id */
+            profession_id: string;
+            /** Rank */
+            rank: number;
+        };
+        /**
+         * ChosenListIn
+         * @description At most five picks.
+         */
+        ChosenListIn: {
+            /** Items */
+            items: components["schemas"]["ChosenIn"][];
         };
         /**
          * Citation
@@ -25749,6 +26003,14 @@ export interface components {
             items: components["schemas"]["EssaySummaryOut"][];
         };
         /**
+         * EssayMatchListOut
+         * @description The tables of every university on my list, soonest due first.
+         */
+        EssayMatchListOut: {
+            /** Items */
+            items: components["schemas"]["MatchTableOut"][];
+        };
+        /**
          * EssayOut
          * @description The owner's essay with its live draft.
          */
@@ -25853,6 +26115,16 @@ export interface components {
          */
         EssaySummaryOut: {
             /**
+             * Deep Read
+             * @description `stale` when the essay (or the UI language) changed since.
+             * @enum {string}
+             */
+            deep_read: "none" | "fresh" | "stale";
+            /** Deep Read At */
+            deep_read_at: string | null;
+            /** Forked From */
+            forked_from: string | null;
+            /**
              * Id
              * Format: uuid
              */
@@ -25863,8 +26135,15 @@ export interface components {
             list_entry_id: string | null;
             /** Status */
             status: string;
+            /** Targets */
+            targets: components["schemas"]["PromptTargetOut"][];
             /** Title */
             title: string;
+            /**
+             * Uniqueness
+             * @description The one score shown everywhere: deep-read uniqueness 0-100.
+             */
+            uniqueness: number | null;
             /** Updated At */
             updated_at: string | null;
             /** Word Count */
@@ -27262,6 +27541,20 @@ export interface components {
             url: string;
         };
         /**
+         * FitItemOut
+         * @description The fit of one list entry.
+         */
+        FitItemOut: {
+            /** Axes */
+            axes: components["schemas"]["AxisFitOut"][];
+            /** Institution Id */
+            institution_id: string;
+            /** List Entry Id */
+            list_entry_id: string;
+            /** Total */
+            total: number | null;
+        };
+        /**
          * FitOut
          * @description How well a major fits, 0 to 100.
          */
@@ -27272,6 +27565,23 @@ export interface components {
             reason: string;
             /** Score */
             score: number;
+        };
+        /**
+         * FitPreferencesIn
+         * @description The eight ratings the student saves.
+         */
+        FitPreferencesIn: {
+            ratings: components["schemas"]["RatingsBody"];
+        };
+        /**
+         * FitPreferencesOut
+         * @description Saved ratings (defaults when never saved) and the weights they give.
+         */
+        FitPreferencesOut: {
+            ratings: components["schemas"]["RatingsBody"];
+            /** Updated At */
+            updated_at: string | null;
+            weights: components["schemas"]["AxisWeightsOut"];
         };
         /**
          * FlashcardInput
@@ -28300,6 +28610,12 @@ export interface components {
          * @description An idea text to match against the prompts.
          */
         IdeaFitIn: {
+            /**
+             * Cached Only
+             * @description Return a stored fit only; `pending` when none exists.
+             * @default false
+             */
+            cached_only: boolean;
             /** Text */
             text: string;
         };
@@ -28310,10 +28626,20 @@ export interface components {
         IdeaFitOut: {
             /** Available */
             available: boolean;
+            /**
+             * Cached
+             * @description Served from the store; no model was called.
+             */
+            cached: boolean;
             /** Items */
             items: components["schemas"]["PromptFitOut"][];
             /** Model */
             model: string;
+            /**
+             * Pending
+             * @description `cached_only` was set and nothing is stored.
+             */
+            pending: boolean;
         };
         /**
          * IdeaIn
@@ -28414,6 +28740,20 @@ export interface components {
             /** Excused */
             excused: boolean;
             student: components["schemas"]["IdentifiedStudentOut"] | null;
+        };
+        /**
+         * IkigaiBody
+         * @description Free-text chips of the four ikigai questions.
+         */
+        IkigaiBody: {
+            /** Good At */
+            good_at?: string[];
+            /** Love */
+            love?: string[];
+            /** Needs */
+            needs?: string[];
+            /** Paid */
+            paid?: string[];
         };
         /**
          * ImportBody
@@ -31540,6 +31880,15 @@ export interface components {
             student_id: string;
         };
         /**
+         * ListFitOut
+         * @description Weights and the fit of every list entry.
+         */
+        ListFitOut: {
+            /** Items */
+            items: components["schemas"]["FitItemOut"][];
+            weights: components["schemas"]["AxisWeightsOut"];
+        };
+        /**
          * ListInsightsOut
          * @description `profile_used` is false when the profile was not readable or empty.
          */
@@ -32216,12 +32565,15 @@ export interface components {
          * @description One slot: `ps` (no prompt) or `supp:<position>`; candidates best first.
          */
         MatchSlotOut: {
+            assigned: components["schemas"]["AssignedEssayOut"] | null;
             /** Candidates */
             candidates: components["schemas"]["MatchCandidateOut"][];
             /** Essay Id */
             essay_id: string | null;
             /** Prompt */
             prompt: string | null;
+            /** Required */
+            required: boolean;
             /** Slot */
             slot: string;
             /** Word Limit */
@@ -32232,6 +32584,10 @@ export interface components {
          * @description The matching table of one university.
          */
         MatchTableOut: {
+            /** Due Predicted */
+            due_predicted: boolean;
+            /** Due Utc */
+            due_utc: string | null;
             /** Institution Id */
             institution_id: string;
             /** Institution Name */
@@ -33051,6 +33407,40 @@ export interface components {
             size: number;
         };
         /**
+         * MyProfessionListOut
+         * @description The caller's ranked picks.
+         */
+        MyProfessionListOut: {
+            /** Items */
+            items: components["schemas"]["MyProfessionOut"][];
+        };
+        /**
+         * MyProfessionOut
+         * @description A picked profession and its rank (1 = first choice).
+         */
+        MyProfessionOut: {
+            /** Ai Exposure */
+            ai_exposure: number;
+            /** Ai Risk */
+            ai_risk: string;
+            /** Group */
+            group: string;
+            /** Horizon */
+            horizon: string;
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Rank */
+            rank: number;
+            /** Related Fields */
+            related_fields: string[];
+            /** Salary Band */
+            salary_band: string | null;
+            /** Sources */
+            sources: components["schemas"]["ProfessionSourceOut"][];
+        };
+        /**
          * MySuggestionResponse
          * @description `MySuggestion`: one of the signed-in person's suggestions and its status.
          */
@@ -33257,6 +33647,24 @@ export interface components {
             personal_token: components["schemas"]["PersonalTokenResponse"];
             /** Token */
             token: string;
+        };
+        /**
+         * NextActionOut
+         * @description A ranked next step.
+         */
+        NextActionOut: {
+            /** Href */
+            href: string;
+            /** Key */
+            key: string;
+            /** List Entry Id */
+            list_entry_id: string | null;
+            /** Minutes */
+            minutes: number;
+            /** Title */
+            title: string;
+            /** Why */
+            why: string;
         };
         /**
          * NextSectionResponse
@@ -35555,6 +35963,8 @@ export interface components {
         PracticeListOut: {
             /** Items */
             items: components["schemas"]["PracticeEntryOut"][];
+            /** Streak */
+            streak: number;
         };
         /**
          * PracticeScoreOut
@@ -35584,6 +35994,11 @@ export interface components {
             entry: components["schemas"]["PracticeEntryOut"] | null;
             /** Prompt */
             prompt: string;
+            /**
+             * Streak
+             * @description Consecutive practice days, ending today or yesterday.
+             */
+            streak: number;
             /** Theme */
             theme: string;
         };
@@ -35892,16 +36307,22 @@ export interface components {
             title: string;
         };
         /**
-         * ProfessionOut
-         * @description A suggested profession; shortlisted ones stay across suggestions.
+         * ProfessionListOut
+         * @description Search result.
          */
-        ProfessionOut: {
-            /** Reason */
-            reason: string;
-            /** Shortlisted */
-            shortlisted: boolean;
-            /** Title */
-            title: string;
+        ProfessionListOut: {
+            /** Items */
+            items: components["schemas"]["app__interfaces__http__v1__admission__routes_fit__ProfessionOut"][];
+        };
+        /**
+         * ProfessionSourceOut
+         * @description A cited source.
+         */
+        ProfessionSourceOut: {
+            /** Label */
+            label: string;
+            /** Url */
+            url: string;
         };
         /**
          * ProfileDetailsOut
@@ -36210,6 +36631,26 @@ export interface components {
              * @description An essay or slot already answers a member.
              */
             covered: boolean;
+            /**
+             * Due Predicted
+             * @description `due_utc` is predicted, not confirmed.
+             */
+            due_predicted: boolean;
+            /**
+             * Due Utc
+             * @description Earliest application due date among those universities.
+             */
+            due_utc: string | null;
+            /**
+             * Essay Ids
+             * @description My essays targeting a member prompt.
+             */
+            essay_ids: string[];
+            /**
+             * In List Count
+             * @description Universities on my list with a prompt in the group.
+             */
+            in_list_count: number;
             /** Key */
             key: string;
             /**
@@ -36217,6 +36658,11 @@ export interface components {
              * @enum {string}
              */
             kind: "common" | "shared" | "unique";
+            /**
+             * Label
+             * @description Short name of the shared theme in the UI language, stored.
+             */
+            label: string;
             /** Prompts */
             prompts: components["schemas"]["PromptRefOut"][];
             /** Spread */
@@ -37082,6 +37528,18 @@ export interface components {
             used: number;
         };
         /**
+         * RaiseOut
+         * @description A step that moves an axis.
+         */
+        RaiseOut: {
+            /** Gain */
+            gain: number;
+            /** Href */
+            href: string;
+            /** Label */
+            label: string;
+        };
+        /**
          * RandomSpec
          * @description Variables and the formula of the answer; each attempt draws its own values.
          */
@@ -37131,6 +37589,52 @@ export interface components {
         RatingBookResponse: {
             /** Url */
             url: string;
+        };
+        /**
+         * RatingsBody
+         * @description How much each thing matters, 1 (little) to 10 (a lot).
+         */
+        RatingsBody: {
+            /**
+             * Academics
+             * @default 5
+             */
+            academics: number;
+            /**
+             * Ai Resilience
+             * @default 5
+             */
+            ai_resilience: number;
+            /**
+             * City
+             * @default 5
+             */
+            city: number;
+            /**
+             * Home
+             * @default 5
+             */
+            home: number;
+            /**
+             * Prestige
+             * @default 5
+             */
+            prestige: number;
+            /**
+             * Price
+             * @default 5
+             */
+            price: number;
+            /**
+             * Salary
+             * @default 5
+             */
+            salary: number;
+            /**
+             * Social
+             * @default 5
+             */
+            social: number;
         };
         /**
          * ReadinessComponentOut
@@ -39144,6 +39648,32 @@ export interface components {
             title: string;
         };
         /**
+         * SeasonIn
+         * @description The season to fix; null goes back to the automatic one.
+         */
+        SeasonIn: {
+            /** Key */
+            key: ("explore" | "build" | "choose" | "write" | "submit" | "results") | null;
+        };
+        /**
+         * SeasonOut
+         * @description The season in force; `source` says whether the student fixed it.
+         */
+        SeasonOut: {
+            /** Checklist */
+            checklist: components["schemas"]["ChecklistLineOut"][];
+            /**
+             * Key
+             * @enum {string}
+             */
+            key: "explore" | "build" | "choose" | "write" | "submit" | "results";
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "auto" | "override";
+        };
+        /**
          * SecondFactorResponse
          * @description A code was sent (otp), or the authenticator app is asked for (totp).
          */
@@ -40907,6 +41437,18 @@ export interface components {
             bytes: number;
             /** Files */
             files: number;
+        };
+        /**
+         * StreakOut
+         * @description Consecutive active days; `last7` runs oldest to today.
+         */
+        StreakOut: {
+            /** Days */
+            days: number;
+            /** Last7 */
+            last7: boolean[];
+            /** Today Done */
+            today_done: boolean;
         };
         /**
          * Student360ProfileResponse
@@ -43439,6 +43981,46 @@ export interface components {
             teacher_needed: number;
         };
         /**
+         * TodayDeadlineOut
+         * @description An upcoming deadline.
+         */
+        TodayDeadlineOut: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Href */
+            href: string;
+            /** Kind */
+            kind: string;
+            /** List Entry Id */
+            list_entry_id: string | null;
+            /** Title */
+            title: string;
+        };
+        /**
+         * TodayOut
+         * @description What the Today screen shows.
+         */
+        TodayOut: {
+            /** Deadlines */
+            deadlines: components["schemas"]["TodayDeadlineOut"][];
+            /** Next */
+            next: components["schemas"]["NextActionOut"][];
+            readiness: components["schemas"]["TodayReadinessOut"];
+            season: components["schemas"]["SeasonOut"];
+            streak: components["schemas"]["StreakOut"];
+        };
+        /**
+         * TodayReadinessOut
+         * @description The readiness percentage.
+         */
+        TodayReadinessOut: {
+            /** Percent */
+            percent: number;
+        };
+        /**
          * ToggleBody
          * @description Body of ``POST /v1/staff/journal/toggle``.
          */
@@ -45475,6 +46057,18 @@ export interface components {
             items: string[];
         };
         /**
+         * ProfessionOut
+         * @description A suggested profession; shortlisted ones stay across suggestions.
+         */
+        app__interfaces__http__v1__admission__routes_career__ProfessionOut: {
+            /** Reason */
+            reason: string;
+            /** Shortlisted */
+            shortlisted: boolean;
+            /** Title */
+            title: string;
+        };
+        /**
          * QuestionOut
          * @description One inventory question with its text in every language.
          */
@@ -45783,6 +46377,30 @@ export interface components {
             quote?: string | null;
             /** Token */
             token: string;
+        };
+        /**
+         * ProfessionOut
+         * @description An ISCO-08 occupation with its GenAI exposure.
+         */
+        app__interfaces__http__v1__admission__routes_fit__ProfessionOut: {
+            /** Ai Exposure */
+            ai_exposure: number;
+            /** Ai Risk */
+            ai_risk: string;
+            /** Group */
+            group: string;
+            /** Horizon */
+            horizon: string;
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Related Fields */
+            related_fields: string[];
+            /** Salary Band */
+            salary_band: string | null;
+            /** Sources */
+            sources: components["schemas"]["ProfessionSourceOut"][];
         };
         /**
          * MilestoneOut
@@ -56533,7 +57151,9 @@ export interface operations {
     admission_list_essays: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path?: never;
             cookie?: never;
         };
@@ -56546,6 +57166,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EssayListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -56652,6 +57281,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_essay_match_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EssayMatchListOut"];
                 };
             };
         };
@@ -56861,8 +57510,12 @@ export interface operations {
     };
     admission_essay_prompt_map: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: {
+                scope?: "list" | "all";
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path?: never;
             cookie?: never;
         };
@@ -56884,6 +57537,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -58758,6 +59420,37 @@ export interface operations {
             };
         };
     };
+    admission_get_list_fit: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListFitOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_list_insights: {
         parameters: {
             query?: {
@@ -59302,6 +59995,59 @@ export interface operations {
             };
         };
     };
+    admission_get_fit_preferences: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FitPreferencesOut"];
+                };
+            };
+        };
+    };
+    admission_put_fit_preferences: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FitPreferencesIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FitPreferencesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_list_honor_suggestions: {
         parameters: {
             query?: never;
@@ -59350,6 +60096,59 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_get_ikigai: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IkigaiBody"];
+                };
+            };
+        };
+    };
+    admission_put_ikigai: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IkigaiBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IkigaiBody"];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -59716,6 +60515,72 @@ export interface operations {
             };
         };
     };
+    admission_get_my_professions: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyProfessionListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_put_my_professions: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChosenListIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyProfessionListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_get_my_profile: {
         parameters: {
             query?: never;
@@ -59920,6 +60785,41 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_set_season: {
+        parameters: {
+            query?: never;
+            header?: {
+                "accept-language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SeasonIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodayOut"];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -61064,6 +61964,40 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DataExportOut"];
+                };
+            };
+        };
+    };
+    admission_search_professions: {
+        parameters: {
+            query?: {
+                q?: string;
+                limit?: number;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -64099,6 +65033,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ScoreEntryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_today: {
+        parameters: {
+            query?: never;
+            header?: {
+                "accept-language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodayOut"];
                 };
             };
             /** @description Validation Error */

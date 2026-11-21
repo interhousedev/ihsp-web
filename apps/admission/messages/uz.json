@@ -520,6 +520,71 @@
       "settings": "Maxfiylik sozlamalari"
     }
   },
+  "essayLedger": {
+    "emptyTitle": "Hozircha promptlar yoʻq",
+    "emptyList": "Roʻyxatga universitetlar qoʻshing, ularning promptlari shu yerda chiqadi.",
+    "emptyAll": "Katalogda hozircha promptlar yoʻq.",
+    "showAllPrompts": "Barcha promptlarni koʻrsatish",
+    "practiceTitle": "Bugungi mashq",
+    "practiceOpen": "Ochish",
+    "practiceWrite": "Yozish",
+    "practiceChecked": "Tekshirilgan",
+    "practiceWritten": "Yozilgan, tekshirilmagan",
+    "practiceTodo": "Hali yozilmagan",
+    "streak": "{count} kun ketma-ket",
+    "ideasHeading": "Gʻoyalar",
+    "ideasTitle": "Gʻoyalar · {count}",
+    "ideasEmpty": "Bank boʻsh. Faqat siz yoza oladigan lahzalarni qoʻshing.",
+    "ideasOpen": "Ochish",
+    "ideasAdd": "Qoʻshish",
+    "examplesTitle": "Namunalar",
+    "examplesOpen": "Koʻrish",
+    "examplesCounts": "{admitted} qabul qilingan esse · litsey oʻquvchilaridan {peers}",
+    "examplesAdmitted": "Qabul qilingan esselar",
+    "examplesAdmittedHint": "Xodimlar tanlagan, manbasi bilan.",
+    "optional": "Ixtiyoriy",
+    "required": "Majburiy",
+    "slotFilled": "“{title}”",
+    "slotFree": "Boʻsh joy",
+    "promptsCount": "{count} ta prompt",
+    "limitMin": "{count} soʻzdan",
+    "drawerEssays": "Esselaringiz",
+    "drawerNoEssays": "Bu guruh uchun hali hech narsa yozilmagan.",
+    "forked": "ixtisoslashuv",
+    "open": "Ochish",
+    "start": "Boshlash",
+    "startEssay": "Esse boshlash",
+    "startAnother": "Boshqa variantni boshlash",
+    "drawerPrompts": "Promptlar va joylar",
+    "alsoFits": "Yana mos keladi",
+    "summaryNeed": "{prompts} ta promptga {needed} ta esse kerak",
+    "summaryStarted": "{count} ta boshlangan",
+    "due": "muddat {date}",
+    "duePredicted": "taxminan {date}",
+    "lensLabel": "Koʻrinish",
+    "lensEssay": "Esse boʻyicha",
+    "lensUni": "Universitet boʻyicha",
+    "scopeLabel": "Promptlar",
+    "scopeList": "Mening roʻyxatim",
+    "scopeAllPlain": "Hammasi",
+    "scopeAll": "Hammasi · {count}",
+    "overLimit": "Limitdan oshgan",
+    "swapAria": "{slot} joyidagi esseni almashtirish",
+    "noCandidates": "Hozircha mos esse yoʻq",
+    "assign": "Esse tanlash",
+    "orDrop": "yoki shu yerga tashlang",
+    "trayLabel": "Esselaringiz",
+    "dragHint": "Esseni joyga sudrab olib boring.",
+    "boardEmptyTitle": "Roʻyxatda universitetlar yoʻq",
+    "boardEmptyText": "Joylarini koʻrish va esselar bilan toʻldirish uchun universitetlar qoʻshing.",
+    "boardEmptyLink": "Roʻyxatimni ochish",
+    "slotsFilled": "{total} tadan {done} tasi toʻldirilgan",
+    "pickTitle": "{uni} uchun esse",
+    "score": "Noyoblik: 100 dan {value}",
+    "notStarted": "Boshlanmagan",
+    "inListCount": "Roʻyxatingizda {count} ta",
+    "newEssay": "Boʻsh esse"
+  },
   "essayFlow": {
     "label": "Insho yoʻli",
     "next": "Keyingisi: {step}",
@@ -578,6 +643,8 @@
       "add": "Qoʻshish",
       "empty": "Hozircha gʻoya yoʻq. Oʻzingiznikini qoʻshing yoki bugungi mashqdan urugʻ oling.",
       "fitTitle": "Ochiq promptlar ichida eng mos",
+      "fitRun": "Hozir tekshirish",
+      "fitRunning": "Tekshirilmoqda…",
       "fitScore": "mosligi {score}/100",
       "fitScoreAria": "Bu mavzuga mosligi: 100 dan {score}",
       "fitNone": "Solishtirish uchun ochiq prompt yoʻq.",
@@ -1055,7 +1122,9 @@
       "settings": "Sozlamalar",
       "career": "Kasb",
       "essays": "Insho",
-      "apply": "Topshirish"
+      "apply": "Topshirish",
+      "today": "Bugun",
+      "profile": "Profil"
     },
     "home": "Bosh sahifa",
     "journey": "Yoʻl",
@@ -1085,9 +1154,12 @@
       "activities": "Faoliyat va yutuqlar",
       "universities": "Universitetlar va byudjet",
       "essays": "Insho",
-      "apply": "Hujjatlar va topshirish"
+      "apply": "Hujjatlar va topshirish",
+      "today": "Bugun",
+      "profile": "Profil"
     },
     "parts": {
+      "professions": "Kasblar",
       "explore": "Kashf etish",
       "field": "Yoʻnalish",
       "future": "Kelajak",
@@ -1108,7 +1180,9 @@
       "deadlines": "Muddatlar",
       "tasks": "Vazifalar",
       "review": "Tekshiruv",
-      "results": "Natijalar"
+      "results": "Natijalar",
+      "overview": "Umumiy",
+      "career": "Karyera"
     },
     "sectionParts": "{section}: boʻlimlar",
     "menu": "Yana",
@@ -4621,6 +4695,154 @@
       "draft": "Qoralama"
     }
   },
+  "uniList": {
+    "title": "Roʻyxatingiz",
+    "count": "{count, plural, one {# ta universitet} other {# ta universitet}}",
+    "fitFailed": "Moslik hozir mavjud emas, roʻyxat usiz koʻrsatilgan.",
+    "cap": "Roʻyxatda {count} ta universitet, tavsiya etilgan {cap} tadan koʻp: uzun roʻyxat zaif arizalar demak. Eng kam mos keladiganlarini olib tashlashni oʻylab koʻring.",
+    "emptyTitle": "Roʻyxatingiz boʻsh",
+    "emptyText": "Moslik, narx va muddatlarni solishtirish uchun tanlovdan universitetlar qoʻshing.",
+    "find": "Universitetlarni tanlash",
+    "col": {
+      "university": "Universitet",
+      "cost": "Yordamdan keyingi yillik narx",
+      "chance": "Imkoniyat",
+      "label": "Belgi",
+      "round": "Raund",
+      "deadline": "Muddat va vazifalar"
+    },
+    "unknown": "Nomaʼlum",
+    "approx": "≈ {amount}",
+    "sticker": "yordamsiz narx",
+    "over": "byudjetdan {amount} yuqori",
+    "under": "byudjetdan {amount} past",
+    "unverified": "tekshirilmagan · AI · {source}",
+    "unverifiedNoSource": "tekshirilmagan · AI · manbasiz",
+    "fit": "Moslik {value}",
+    "noLabel": "—",
+    "fitUnknown": "Moslik nomaʼlum",
+    "home": "Uyda ishonchli",
+    "labelFor": "Belgi: {name}",
+    "roundFor": "Raund: {name}",
+    "more": "Tafsilotlarni koʻrsatish: {name}",
+    "less": "Tafsilotlarni yashirish: {name}",
+    "tasks": "{done}/{total} vazifa",
+    "noTasks": "Hozircha vazifa yoʻq",
+    "research": "Oʻrganish",
+    "researchTitle": "Oʻrganish: {name}",
+    "researchMissing": "Yetishmaydi: {facts}. AI maʼlumotni topadi va manbalarni koʻrsatadi.",
+    "missing": {
+      "cost": "narx",
+      "deadline": "muddat",
+      "chance": "imkoniyat"
+    },
+    "totals": {
+      "title": "Jami",
+      "count": "{count, plural, one {# ta universitet} other {# ta universitet}}",
+      "noBudget": "Oila byudjeti kiritilmagan: farqni koʻrish uchun soʻrovnomada kiriting.",
+      "budget": "Oila byudjeti yiliga {amount}",
+      "within": "{count} tasi byudjet doirasida",
+      "over": "{count} tasi byudjetdan yuqori",
+      "overAvg": "{count} tasi byudjetdan yuqori, oʻrtacha {amount}ga",
+      "unknown": "{count} tasida narx yoʻq"
+    },
+    "scholarships": "Stipendiyalar va imkoniyatlar",
+    "plan": {
+      "create": "Ariza rejasini yaratish",
+      "offer": "{name} roʻyxatingizda. Ariza rejasini yarating: muddatdan hisoblangan oltita vazifa.",
+      "done": "{name} uchun reja yaratildi.",
+      "open": "Vazifalarni ochish",
+      "close": "Yopish",
+      "later": "Hozir emas",
+      "steps": {
+        "essays": {
+          "title": "{name} uchun esse yozish",
+          "text": "{name} soʻragan esselarni yozing, tahrir qiling va yakunlang."
+        },
+        "recommendations": {
+          "title": "{name} uchun tavsiyanomalar soʻrash",
+          "text": "Oʻqituvchilar va maslahatchidan oldindan soʻrang: ularga haftalar kerak."
+        },
+        "transcript": {
+          "title": "Transkriptni {name} ga yuborish",
+          "text": "Transkriptni buyurtma qilib, maktab hisoboti bilan yuboring."
+        },
+        "aid": {
+          "title": "{name} uchun moliyaviy yordam hujjatlarini topshirish",
+          "text": "{name} talab qilgan yordam shakllarini toʻldiring va muddatni tekshiring."
+        },
+        "fee": {
+          "title": "{name} uchun ariza toʻlovini toʻlash",
+          "text": "Toʻlovni toʻlang yoki ozod qilishni soʻrang."
+        },
+        "submit": {
+          "title": "{name} ga arizani yuborish",
+          "text": "Hammasini yana bir bor tekshirib, muddatdan oldin yuboring."
+        }
+      }
+    },
+    "graph": {
+      "table": "Jadval",
+      "graph": "Grafik",
+      "viewLabel": "Roʻyxat koʻrinishi",
+      "chartLabel": "Qabul ehtimoli va grantdan keyingi yillik narx",
+      "yAxis": "Grantdan keyingi yillik narx",
+      "xAxis": "Qabul ehtimoli",
+      "budgetLine": "Oila byudjeti {value}",
+      "home": "Uyda ishonchli",
+      "unlabelled": "guruhlanmagan",
+      "balance": "Reach, target, safety",
+      "why": "Nega mos keldi",
+      "noWhy": "Hozircha sabab yoʻq. Soʻrovnoma va maqsadlarni toʻldiring.",
+      "chance": "{value}% ehtimol",
+      "sticker": "grantsiz",
+      "title": "Ehtimol va narx",
+      "hint": "Chap tomon qiyinroq, tepa qimmatroq. Mosligini koʻrish uchun logotipni bosing.",
+      "empty": "Grafik uchun ehtimol va narx maʼlumotlarini qoʻshing. Universitetni ochib, yetishmayotgan maʼlumotni qidiring.",
+      "noBudget": "Byudjet chizigʻi uchun soʻrovnomada oila byudjetini koʻrsating.",
+      "hidden": "{count} ta universitet koʻrsatilmadi: ehtimol yoki USDdagi narx nomaʼlum.",
+      "whyTitle": "Nega ular mos keldi"
+    },
+    "brief": {
+      "title": "AI xulosasi",
+      "refresh": "Yangilash",
+      "loading": "Xulosa yozilmoqda",
+      "steps": "Keyingi qadamlar",
+      "suggestions": "Qoʻshishga arziydi",
+      "generated": "Yozilgan vaqt: {time}",
+      "stale": "shundan beri roʻyxat oʻzgargan",
+      "emptyList": "Roʻyxat boʻyicha xulosa olish uchun universitet qoʻshing.",
+      "none": "Hozircha xulosa yoʻq. «Yangilash»ni bosing."
+    },
+    "detail": {
+      "title": "Sizga mosligi",
+      "afterAid": "Grantdan keyin, yiliga:",
+      "noCost": "nomaʼlum",
+      "sticker": "{value} grantsiz",
+      "over": "byudjetdan {value} yuqori",
+      "within": "byudjetdan {value} past"
+    }
+  },
+  "uniFlow": {
+    "label": "Universitet tanlash bosqichlari",
+    "locked": "Yopiq",
+    "stages": {
+      "quiz": "So‘rovnoma",
+      "match": "Tanlash",
+      "list": "Mening ro‘yxatim"
+    },
+    "lockedWhy": {
+      "match": "Avval so‘rovnomani tugating",
+      "list": "Birinchi universitetni qo‘shing"
+    },
+    "tray": {
+      "title": "Sizning ro‘yxatingiz",
+      "count": "Ro‘yxatda: {count}",
+      "empty": "Universitetni o‘ngga suring, u shu yerga tushadi.",
+      "open": "Ro‘yxatni ochish",
+      "unknown": "Mosligi noma’lum"
+    }
+  },
   "flow": {
     "label": "Universitet tanlash bosqichlari",
     "title": "Universitetlar va byudjet",
@@ -4710,6 +4932,7 @@
     }
   },
   "fit": {
+    "raiseGoals": "Maqsadlarni oshirish: kasblarni tanlang",
     "title": "Mosligi",
     "ringHelp": "Har bir rang — bitta mezon. Yoy uzunligi — mezon bahosi va uning ogʻirligi.",
     "open": "{name} bilan mosligi: 100 dan {value}. Nimadan tashkil topganini koʻrsatish",
@@ -4787,7 +5010,10 @@
         "mid": "oʻrtacha",
         "high": "yuqori"
       }
-    }
+    },
+    "changeWeights": "Muhimini o‘zgartirish",
+    "none": "Baholash uchun ma’lumot yetarli emas",
+    "openNone": "Universitetni ochish"
   },
   "today": {
     "title": "Bugun",
@@ -4824,7 +5050,8 @@
       "why": "Nega",
       "later": "Hozir emas",
       "queued": "Soʻng",
-      "min": "~{n} daq"
+      "min": "~{n} daq",
+      "open": "Ochish"
     },
     "action": {
       "quiz": {
@@ -4884,6 +5111,7 @@
       "title": "Tayyorlik"
     },
     "check": {
+      "professions": "Oʻrganish uchun kasblarni tanlang",
       "title": "Fasl roʻyxati",
       "quiz": "Oʻzingiz haqingizda 10 savolga javob bering",
       "activities": "3 ta yutuqni yozing",
@@ -4911,7 +5139,9 @@
         "rejected": "Rad etildi"
       },
       "days": "{n} kun",
-      "pastDays": "muddat oʻtdi"
+      "pastDays": "muddat oʻtdi",
+      "empty": "Ro‘yxatda hali universitet yo‘q.",
+      "add": "Universitet tanlash"
     },
     "prof": {
       "title": "Siz uchun 3 ta kasb",
@@ -4944,67 +5174,195 @@
       "essays": "Insho",
       "apply": "Topshirish",
       "label": "Boʻlimlar (demo)"
-    }
+    },
+    "error": "Yuklab bo‘lmadi",
+    "retry": "Qayta urinish"
   },
   "weightsLab": {
-    "title": "Siz uchun nima muhim",
-    "mock": "maket",
-    "intro": "Nima muhimligini oʻzingizga qulay usulda ayting. Ikkala usul ham moslikning bir xil toʻrt ogʻirligini beradi, quyidagi universitetlar esa darhol qayta saralanadi.",
-    "tabsLabel": "Tanlash usuli",
-    "tabs": {
-      "triangle": "Uchburchak",
-      "radar": "Radar"
-    },
-    "triangle": {
-      "label": "Ustuvorliklar uchburchagi",
-      "hint": "Nuqtani suring, uchburchakning istalgan joyiga bosing yoki strelkalardan foydalaning. Nuqta markaz, burchak va tomonlarga yopishadi.",
-      "value": "Ijtimoiy hayot {social}%, oʻqish {study}%, kasb {profession}%",
-      "chipsLabel": "Tez tanlash",
-      "balanced": "Teng",
-      "corner": {
-        "social": "Ijtimoiy hayot",
-        "study": "Oʻqish",
-        "profession": "Kasb"
-      }
-    },
+    "error": "Yuklab bo‘lmadi",
+    "saving": "Saqlanmoqda…",
+    "saved": "Saqlandi",
+    "saveError": "Saqlab bo‘lmadi",
+    "balanced": "Siz uchun hammasi taxminan bir xil muhim.",
+    "lead": "Siz uchun eng muhimi: {list}.",
+    "and": "va",
     "radar": {
-      "label": "Xususiyatlar radari",
-      "hint": "Xususiyatni 1 dan 10 gacha baholash uchun nuqtani suring yoki halqaga bosing. Klaviaturada: Tab bilan nuqtaga, keyin strelkalar.",
+      "label": "Radar: siz uchun nima muhim",
+      "hint": "Nuqtani suring yoki halqaga tegib 1 dan 10 gacha baholang. Klaviatura: Tab bilan nuqtaga, so‘ng strelkalar.",
       "value": "{trait}: 10 dan {value}",
       "reset": "Tiklash"
     },
     "trait": {
-      "money": "Pul",
+      "price": "O‘qish narxi",
+      "salary": "Dastlabki yillardagi maosh",
+      "ai_resilience": "SIga chidamlilik",
       "prestige": "Nufuz",
-      "city": "Shahar va iqlim",
-      "home": "Uyga yaqinlik",
-      "career": "Karyera va AI xatarlari",
+      "academics": "Akademik kuch",
       "social": "Ijtimoiy hayot",
-      "academics": "Oʻquv yuklamasi"
+      "city": "Shahar va iqlim",
+      "home": "Uyga yaqinlik"
     },
     "word": {
-      "social": "ijtimoiy hayot",
-      "study": "oʻqish",
-      "profession": "kasb",
-      "money": "pul",
+      "price": "o‘qish narxi",
+      "salary": "dastlabki yillardagi maosh",
+      "ai_resilience": "SIga chidamlilik",
       "prestige": "nufuz",
+      "academics": "akademik kuch",
+      "social": "ijtimoiy hayot",
       "city": "shahar va iqlim",
-      "home": "uyga yaqinlik",
-      "career": "karyera va AI xatarlari",
-      "academics": "oʻquv yuklamasi"
-    },
-    "summary": {
-      "title": "Oddiy soʻzlar bilan",
-      "quote": "“{x}”",
-      "lead": "Siz uchun eng muhimi: {list}.",
-      "balanced": "Siz uchun hammasi taxminan bir xil muhim.",
-      "and": "{a} va {b}",
-      "weights": "Moslik halqasidagi ogʻirliklar"
-    },
-    "top": {
-      "title": "Hozirgi top-5",
-      "note": "Demo universitetlar va oʻylab topilgan baholar; ogʻirliklarga qarab faqat tartib oʻzgaradi.",
-      "score": "100 dan {value}"
+      "home": "uyga yaqinlik"
     }
+  },
+  "professions": {
+    "title": "Kasblar",
+    "subtitle": "Oʻzingizga mos kasbni toping va u universitetlarga mosligingizni qanday oʻzgartirishini koʻring.",
+    "step": {
+      "ikigai": {
+        "title": "Sizning ikigaingiz",
+        "hint": "Toʻrt doira: nimani yaxshi koʻrasiz, nimani uddalaysiz, dunyoga nima kerak va nima uchun pul toʻlashadi. Har biriga bir nechta soʻz qoʻshing."
+      },
+      "browse": {
+        "title": "Kasblar katalogi",
+        "hint": "Nomi boʻyicha qidiring yoki katalogni koʻring."
+      },
+      "mine": {
+        "title": "Tanlovingiz tartib bilan",
+        "hint": "{max} tagacha. Eng xohlaganingizni tepaga sudrang."
+      },
+      "fit": {
+        "title": "Bu moslikka qanday taʼsir qiladi"
+      }
+    },
+    "circle": {
+      "love": "Yaxshi koʻraman",
+      "good_at": "Uddalayman",
+      "needs": "Dunyoga kerak",
+      "paid": "Buning uchun toʻlashadi"
+    },
+    "question": {
+      "love": "Nima bilan shugʻullanishni yaxshi koʻrasiz?",
+      "good_at": "Nimada kuchlisiz?",
+      "needs": "Dunyoga nima kerak?",
+      "paid": "Nima uchun sizga pul toʻlashi mumkin?"
+    },
+    "venn": {
+      "label": "Ikigai: toʻrt doira",
+      "center": "Ikigai",
+      "placeholder": "Yozing va Enter bosing",
+      "remove": "{tag} ni olib tashlash",
+      "saved": "Saqlandi",
+      "saveError": "Saqlab boʻlmadi. Qayta urinib koʻring.",
+      "hint": "4 ta doiradan {count} tasi toʻldirilgan. Kesishmalar kasb qayerda yashashi mumkinligini koʻrsatadi."
+    },
+    "search": {
+      "placeholder": "Kasblarni qidirish",
+      "results": "Kasblar",
+      "empty": "Kasb topilmadi. Boshqa soʻz sinab koʻring.",
+      "error": "Kasblarni yuklab boʻlmadi"
+    },
+    "risk": {
+      "low": "AI ulushi past",
+      "medium": "AI ulushi oʻrta",
+      "high": "AI ulushi yuqori"
+    },
+    "horizon": {
+      "now": "hozirdayoq",
+      "5y": "taxminan 5 yil ichida",
+      "10y+": "10 yil va undan keyin"
+    },
+    "exposure": {
+      "share": "Vazifalarining taxminan {pct}%i.",
+      "note": "Bu AI hozirdayoq bajara oladigan vazifalar ulushi, ishdan boʻshatish prognozi emas."
+    },
+    "salary": {
+      "label": "Maosh: {band}",
+      "low": "pastroq",
+      "medium": "oʻrtacha",
+      "high": "yuqoriroq"
+    },
+    "card": {
+      "add": "Qoʻshish",
+      "picked": "Tanlandi",
+      "addLabel": "“{name}” ni tanlovga qoʻshish",
+      "fields": "Tegishli yoʻnalishlar",
+      "sources": "Manbalar"
+    },
+    "mine": {
+      "title": "Kasblar tartib bilan",
+      "drag": "Sudrab oʻtkazish",
+      "remove": "“{name}” ni olib tashlash",
+      "empty": "Hali hech narsa tanlanmadi. Yuqoridagi roʻyxatdan {max} tagacha kasb qoʻshing.",
+      "saving": "Saqlanmoqda…",
+      "error": "Tanlovni saqlab boʻlmadi",
+      "count": "{max} tadan {count} tasi tanlandi"
+    },
+    "impact": {
+      "title": "Universitetlarga moslikdagi maqsadlar",
+      "noPicks": "Kasblarni tanlang: har bir universitet moslikdagi “maqsadlar” qismi ularni hisobga ola boshlaydi.",
+      "noList": "Tanlovingiz ({count}) saqlandi. Maqsadlar bahosini koʻrish uchun roʻyxatga universitet qoʻshing.",
+      "avg": "Roʻyxatingizdagi {count} ta universitet boʻyicha maqsadlar oʻrtacha bahosi: 100 dan {value}.",
+      "link": "Universitetlaringizga"
+    }
+  },
+  "profileHub": {
+    "title": "Profil",
+    "career": "Karyera va kasblar",
+    "weights": "Siz uchun nima muhim",
+    "weightsHint": "Har bir sifatni 1 dan 10 gacha baholang: universitetlarning mosligi siz uchun qayta hisoblanadi.",
+    "doing": "Nima qilyapsiz",
+    "link": {
+      "career": {
+        "title": "Karyera",
+        "hint": "Yo‘nalishlar, kasblar kelajagi va tanlovingiz."
+      },
+      "professions": {
+        "title": "Kasblar",
+        "hint": "Ikigai va katalog: uchtagacha tanlang."
+      },
+      "done": {
+        "title": "Bajarilgan",
+        "hint": "Faoliyat va yutuqlar."
+      },
+      "planned": {
+        "title": "Reja",
+        "hint": "Nimani rejalashtirgansiz."
+      },
+      "ideas": {
+        "title": "G‘oyalar",
+        "hint": "Sizga mos imkoniyatlar."
+      },
+      "tests": {
+        "title": "Testlar",
+        "hint": "Natijalar va tayyorgarlik."
+      },
+      "courses": {
+        "title": "Kurslarim",
+        "hint": "Kurslar va maktab fanlari."
+      }
+    }
+  },
+  "essayEditor": {
+    "more": "Yana",
+    "textLabel": "Insho matni",
+    "stripe": "{n}-abzas: {role}, {strength}",
+    "tabsLabel": "Insho yon paneli",
+    "dockLabel": "Insho tahlili",
+    "tab": {
+      "read": "Tahlil",
+      "unis": "OTMlar",
+      "examples": "Namunalar",
+      "ideas": "Gʻoyalar"
+    },
+    "score": "Noyoblik",
+    "scoreLabel": "Noyoblik: 100 dan {value}",
+    "scoreStale": "tahrirlardan oldin",
+    "readNow": "Chuqur tahlil",
+    "fitChips": "OTMlarga mosligi",
+    "chipsMore": "yana {count}",
+    "readNone": "Chuqur tahlilni ishga tushiring: u har bir abzas nima qilishini va qaysi lahzalar faqat sizniki ekanini koʻrsatadi. Chiziqlar matn ustida paydo boʻladi.",
+    "staleBanner": "Tahlildan keyin inshoni tahrirladingiz, shuning uchun chiziqlar mos kelmasligi mumkin.",
+    "staleAction": "Qayta tahlil qilish",
+    "fork": "{name} uchun versiya yaratish",
+    "detailedReview": "OTMlar boʻyicha batafsil tahlil"
   }
 }

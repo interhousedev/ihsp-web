@@ -3,22 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { cn, Icons } from "@ihsp/ui"
 import Link from "next/link"
-import { composite, METRIC_STYLE, normalise, type Line, type MetricId, type MetricResult, type UniFit } from "../fit-model"
-
-/** Translates a line of `fit.<prefix>`; a placeholder value `@x.y` is replaced by the term `fit.terms.x.y`. */
-export function useLineText() {
-  const t = useT("fit")
-  return (prefix: "why" | "moves", line: Line) =>
-    t(
-      `${prefix}.${line.key}`,
-      Object.fromEntries(
-        Object.entries(line.params ?? {}).map(([key, value]) => [
-          key,
-          typeof value === "string" && value.startsWith("@") ? t(`terms.${value.slice(1)}`) : value,
-        ]),
-      ),
-    )
-}
+import { knownShare, METRIC_STYLE, type MetricId, type MetricResult, type UniFit } from "../fit-model"
 
 /** The icon tile of a metric in its token colour (the legend mark). */
 export function MetricIcon({ id, className }: { id: MetricId; className?: string }) {
@@ -33,26 +18,11 @@ export function MetricIcon({ id, className }: { id: MetricId; className?: string
   )
 }
 
-function MetricRow({
-  metric,
-  weight,
-  full,
-  onHover,
-}: {
-  metric: MetricResult
-  weight: number
-  full: boolean
-  onHover?: (id: MetricId | null) => void
-}) {
+function MetricRow({ metric, full, onHover }: { metric: MetricResult; full: boolean; onHover?: (id: MetricId | null) => void }) {
   const t = useT("fit")
-  const text = useLineText()
   const missing = metric.score === null
   return (
-    <li
-      className="flex items-start gap-3"
-      onMouseEnter={() => onHover?.(metric.id)}
-      onMouseLeave={() => onHover?.(null)}
-    >
+    <li className="flex items-start gap-3" onMouseEnter={() => onHover?.(metric.id)} onMouseLeave={() => onHover?.(null)}>
       <MetricIcon id={metric.id} className={cn(missing && "bg-muted! text-muted-foreground")} />
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-baseline justify-between gap-2 text-sm">
@@ -63,7 +33,7 @@ function MetricRow({
             ) : (
               <>
                 {metric.score}
-                <span className="ms-1.5 opacity-70">· {t("weight", { pct: Math.round(weight * 100) })}</span>
+                <span className="ms-1.5 opacity-70">· {t("weight", { pct: Math.round(metric.weight * 100) })}</span>
               </>
             )}
           </span>
@@ -76,13 +46,11 @@ function MetricRow({
           aria-valuemax={100}
           aria-valuenow={metric.score ?? undefined}
         >
-          {missing ? null : (
-            <div className="h-full rounded-full" style={{ width: `${metric.score}%`, background: METRIC_STYLE[metric.id].color }} />
-          )}
+          {missing ? null : <div className="h-full rounded-full" style={{ width: `${metric.score}%`, background: METRIC_STYLE[metric.id].color }} />}
         </div>
-        {metric.why.slice(0, full ? 2 : 1).map((line) => (
-          <p key={line.key} className="text-muted-foreground text-xs leading-snug">
-            {text("why", line)}
+        {metric.why.slice(0, full ? 3 : 1).map((line) => (
+          <p key={line} className="text-muted-foreground text-xs leading-snug">
+            {line}
           </p>
         ))}
       </div>
@@ -92,60 +60,55 @@ function MetricRow({
 
 /**
  * The per-segment explanation. `compact` (desktop hover) shows one "why" line per metric; `full` (the sheet) shows
- * two and the "what moves it" actions.
+ * all of them, the steps that raise each metric and the link to the weights.
  */
 export function FitBreakdown({
   name,
   fit,
-  weights,
   full,
   onHover,
 }: {
   name: string
   fit: UniFit
-  weights: Record<MetricId, number>
   full?: boolean
   onHover?: (id: MetricId | null) => void
 }) {
   const t = useT("fit")
-  const text = useLineText()
-  const w = normalise(weights)
-  const total = composite(fit.metrics, weights)
+  const known = knownShare(fit)
+  const raises = fit.metrics.flatMap((metric) => metric.raise.map((raise) => ({ ...raise, metric: metric.id })))
+  raises.sort((a, b) => b.gain - a.gain)
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-baseline justify-between gap-3">
         <p className="text-sm font-medium">{name}</p>
         <p className="text-muted-foreground text-xs">
-          <span className="text-foreground text-2xl font-semibold tabular-nums">{total.value ?? "—"}</span>
-          {total.value === null ? "" : "/100"}
+          <span className="text-foreground text-2xl font-semibold tabular-nums">{fit.total ?? "—"}</span>
+          {fit.total === null ? "" : "/100"}
         </p>
       </div>
-      {total.known < 0.999 ? (
-        <p className="text-muted-foreground -mt-2 text-xs">{t("known", { pct: Math.round(total.known * 100) })}</p>
+      {fit.total === null ? (
+        <p className="text-muted-foreground -mt-2 text-xs">{t("none")}</p>
+      ) : known < 0.999 ? (
+        <p className="text-muted-foreground -mt-2 text-xs">{t("known", { pct: Math.round(known * 100) })}</p>
       ) : null}
       <ul className="flex flex-col gap-3.5">
         {fit.metrics.map((metric) => (
-          <MetricRow key={metric.id} metric={metric} weight={w[metric.id]} full={!!full} onHover={onHover} />
+          <MetricRow key={metric.id} metric={metric} full={!!full} onHover={onHover} />
         ))}
       </ul>
-      {full && fit.moves.length > 0 ? (
+      {full && raises.length > 0 ? (
         <section className="flex flex-col gap-2 border-t pt-3">
           <h3 className="text-sm font-semibold">{t("moves.title")}</h3>
           <ul className="flex flex-col gap-1.5">
-            {fit.moves.map((move) => (
-              <li key={move.id}>
+            {raises.slice(0, 4).map((raise) => (
+              <li key={`${raise.metric}-${raise.href}-${raise.label}`}>
                 <Link
-                  href={move.href}
+                  href={raise.href}
                   className="hover:bg-muted/60 focus-visible:ring-ring flex min-h-11 items-center gap-3 rounded-xl border px-3 py-2 text-sm outline-none focus-visible:ring-2"
                 >
-                  <MetricIcon id={move.metric} className="size-6" />
-                  <span className="min-w-0 flex-1">
-                    {text("moves", move.line)}
-                    <span className="text-muted-foreground block text-xs">{t(`time.${move.time.unit}`, { n: move.time.n })}</span>
-                  </span>
-                  <span className="bg-success/15 text-success rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums">
-                    +{move.gain}
-                  </span>
+                  <MetricIcon id={raise.metric} className="size-6" />
+                  <span className="min-w-0 flex-1">{raise.label}</span>
+                  <span className="bg-success/15 text-success rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums">+{raise.gain}</span>
                   <Icons.chevronRight aria-hidden className="text-muted-foreground size-4 shrink-0" />
                 </Link>
               </li>
@@ -153,7 +116,19 @@ export function FitBreakdown({
           </ul>
         </section>
       ) : null}
-      {full ? <p className="text-muted-foreground text-xs">{t("disclaimer")}</p> : null}
+      {full ? (
+        <div className="flex flex-col gap-2 border-t pt-3">
+          <Link href="/profile/professions/" className="text-primary inline-flex min-h-9 items-center gap-1.5 text-sm font-medium hover:underline">
+            <Icons.arrowRight aria-hidden className="size-4" />
+            {t("raiseGoals")}
+          </Link>
+          <Link href="/profile/#weights" className="text-primary inline-flex min-h-9 items-center gap-1.5 text-sm font-medium hover:underline">
+            <Icons.settings aria-hidden className="size-4" />
+            {t("changeWeights")}
+          </Link>
+          <p className="text-muted-foreground text-xs">{t("disclaimer")}</p>
+        </div>
+      ) : null}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { cn } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import "../fit.css"
-import { METRIC_STYLE, normalise, type MetricResult, type MetricId } from "../fit-model"
+import { METRIC_STYLE, normalise, type MetricId, type MetricResult } from "../fit-model"
 
 const RADIUS = 44
 const STROKE = 9
@@ -18,26 +18,24 @@ function arcPath(startDeg: number, sweepDeg: number) {
 
 /**
  * A segmented donut. Each metric owns a slot as wide as its weight; the coloured part of the slot is the sub-score,
- * so the filled arc is `sub-score × weight` and the whole coloured ring is the composite. Missing data is a dashed
+ * so the filled arc is `sub-score × weight` and the whole coloured ring is the total. Missing data is a dashed
  * outline, not an empty slot. The centre holds `children` (the university logo). Presentation only.
  */
 export function FitRing({
   metrics,
-  weights,
   size = 52,
   active,
   children,
   className,
 }: {
   metrics: MetricResult[]
-  weights: Record<MetricId, number>
   size?: number
   /** A metric to emphasise (hovered row in a breakdown). */
   active?: MetricId | null
   children?: ReactNode
   className?: string
 }) {
-  const w = normalise(weights)
+  const w = normalise(Object.fromEntries(metrics.map((metric) => [metric.id, metric.weight])) as Record<MetricId, number>)
   let cursor = -90
   const arcs = metrics.map((metric) => {
     const sweep = w[metric.id] * 360
@@ -51,13 +49,7 @@ export function FitRing({
       <svg viewBox="0 0 100 100" className="absolute inset-0 size-full overflow-visible" aria-hidden>
         {arcs.map(({ metric, start, sweep, slot, fill }) => {
           const dim = active && active !== metric.id
-          const common = {
-            cx: 50,
-            cy: 50,
-            r: RADIUS,
-            fill: "none",
-            transform: `rotate(${start} 50 50)`,
-          }
+          const common = { cx: 50, cy: 50, r: RADIUS, fill: "none", transform: `rotate(${start} 50 50)` }
           return (
             <g key={metric.id} className={cn("transition-opacity duration-200", dim && "opacity-35")}>
               {metric.score === null ? (
@@ -70,19 +62,8 @@ export function FitRing({
                 />
               ) : (
                 <>
-                  <circle
-                    {...common}
-                    strokeWidth={STROKE}
-                    strokeDasharray={`${slot} ${CIRCUMFERENCE}`}
-                    stroke={METRIC_STYLE[metric.id].color}
-                    opacity={0.2}
-                  />
-                  <circle
-                    {...common}
-                    strokeWidth={STROKE}
-                    strokeDasharray={`${fill} ${CIRCUMFERENCE}`}
-                    stroke={METRIC_STYLE[metric.id].color}
-                  />
+                  <circle {...common} strokeWidth={STROKE} strokeDasharray={`${slot} ${CIRCUMFERENCE}`} stroke={METRIC_STYLE[metric.id].color} opacity={0.2} />
+                  <circle {...common} strokeWidth={STROKE} strokeDasharray={`${fill} ${CIRCUMFERENCE}`} stroke={METRIC_STYLE[metric.id].color} />
                 </>
               )}
             </g>

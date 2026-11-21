@@ -1,69 +1,89 @@
 "use client"
 
 import { useLocale, useT } from "@ihsp/i18n"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { buttonVariants, Skeleton } from "@ihsp/ui"
+import { useMemo } from "react"
 import { pageClass } from "../../../components/lib/page"
 import { ScreenSummary } from "../../assistant/screen-context"
+import { useFitRows } from "../../fit/use-fit-rows"
 import { AdmissionShell } from "../../shell/components/admission-shell"
-import { daysBetween, shortDate } from "../dates"
-import { TODAY_DATA, TODAY_STATES, type TodayStateId } from "../today-mock"
+import { useToday } from "../api"
+import { shortDate } from "../dates"
 import { DeadlineStrip } from "./deadline-strip"
-import { MockBottomBar } from "./mock-bottom-bar"
 import { NextActionCard } from "./next-action-card"
 import { Rhythm } from "./rhythm"
 import { SeasonCard } from "./season-card"
-import { StateSwitcher } from "./state-switcher"
 import { UniSection } from "./uni-section"
 
+/** The local calendar day as an ISO date (the server's list of deadlines is date-only). */
+function localIso(now = new Date()) {
+  const pad = (n: number) => String(n).padStart(2, "0")
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
+}
+
 /**
- * "Сегодня": the new home. One viewport at 1280×800: the next action (≤3 ranked), the season checklist with streak
- * and readiness, my universities with fit rings, and the deadline strip. MOCK: data comes from `today-mock.ts`.
+ * "Сегодня": the home. The next action (≤3 ranked), the season checklist with streak and readiness, my universities
+ * with fit rings, and the deadline strip. Data: `GET /today` and the fit rows of `GET /list/fit`.
  */
 export function TodayPage() {
   const t = useT("today")
   const locale = useLocale()
-  const router = useRouter()
-  const pathname = usePathname()
-  const param = useSearchParams().get("state")
-  const id: TodayStateId = TODAY_STATES.find((state) => state === param) ?? "g11-november"
-  const data = TODAY_DATA[id]
-  const reply = data.season === "results" ? daysBetween(data.today, "2027-05-01") : null
+  const today = useToday()
+  const fit = useFitRows()
+  const iso = useMemo(() => localIso(), [])
+  const data = today.data
   return (
     <AdmissionShell home>
-      <ScreenSummary title={t("title")} summary={`Today (mock). State ${id}, season ${data.season}.`} />
+      <ScreenSummary
+        title={t("title")}
+        summary={data ? `Today. Season ${data.season.key}, ${data.next.length} next steps, readiness ${data.readiness.percent}%.` : "Today."}
+      />
       <div className={pageClass("gap-3 md:gap-3.5 lg:pb-3")}>
-        <header className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
-          <div className="min-w-0">
-            <h1 className="flex items-center gap-2 text-2xl font-semibold tracking-tight md:text-3xl">
-              {t("title")}
-              <span className="text-muted-foreground rounded-full border border-dashed px-2 py-0.5 text-[11px] leading-4 font-normal tracking-normal">
-                {t("mock")}
-              </span>
-            </h1>
-            <p className="text-muted-foreground text-sm">
-              {shortDate(data.today, locale)} · {t(`season.name.${data.season}`)}
-              {reply !== null ? ` · ${t("replyDeadline", { n: reply })}` : ""}
-            </p>
-          </div>
-          <StateSwitcher value={id} onChange={(next) => router.replace(`${pathname}?state=${next}`, { scroll: false })} />
+        <header className="min-w-0">
+          <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">{t("title")}</h1>
+          <p className="text-muted-foreground text-sm">
+            {shortDate(iso, locale)}
+            {data ? ` · ${t(`season.name.${data.season.key}`)}` : ""}
+          </p>
         </header>
-        <div className="grid gap-3 md:gap-3.5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-          <NextActionCard actions={data.actions} className="order-1 lg:col-start-1 lg:row-start-1" />
-          <div className="bg-card rounded-card order-2 border px-3.5 py-2 lg:hidden">
-            <Rhythm streak={data.streak} readiness={data.readiness} />
+        {today.isPending ? (
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]" aria-busy>
+            <Skeleton className="h-44 rounded-xl" />
+            <Skeleton className="h-44 rounded-xl" />
           </div>
-          <UniSection unis={data.unis} professions={data.professions} today={data.today} className="order-3 lg:order-0 lg:col-span-2 lg:row-start-2" />
-          <DeadlineStrip items={data.deadlines} today={data.today} later={data.grade === 10} className="order-4 lg:order-0 lg:col-span-2 lg:row-start-3" />
-          <SeasonCard
-            season={data.season}
-            checks={data.checks}
-            streak={data.streak}
-            readiness={data.readiness}
-            className="order-5 lg:order-0 lg:col-start-2 lg:row-start-1"
-          />
-        </div>
+        ) : !data ? (
+          <div className="bg-card rounded-card flex flex-wrap items-center gap-3 border p-4 text-sm">
+            <span className="text-muted-foreground">{t("error")}</span>
+            <button type="button" onClick={() => void today.refetch()} className={buttonVariants({ variant: "outline", size: "sm" })}>
+              {t("retry")}
+            </button>
+          </div>
+        ) : (
+          <div className="grid gap-3 md:gap-3.5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+            <NextActionCard actions={data.next} className="order-1 lg:col-start-1 lg:row-start-1" />
+            <div className="bg-card rounded-card order-2 border px-3.5 py-2 lg:hidden">
+              <Rhythm streak={data.streak} readiness={data.readiness.percent} />
+            </div>
+            <UniSection
+              rows={fit.rows}
+              deadlines={data.deadlines}
+              today={iso}
+              loading={fit.isPending}
+              failed={Boolean(fit.error)}
+              onRetry={fit.refetch}
+              className="order-3 lg:order-0 lg:col-span-2 lg:row-start-2"
+            />
+            <DeadlineStrip items={data.deadlines} today={iso} className="order-4 lg:order-0 lg:col-span-2 lg:row-start-3" />
+            <SeasonCard
+              season={data.season.key}
+              checks={data.season.checklist}
+              streak={data.streak}
+              readiness={data.readiness.percent}
+              className="order-5 lg:order-0 lg:col-start-2 lg:row-start-1"
+            />
+          </div>
+        )}
       </div>
-      <MockBottomBar />
     </AdmissionShell>
   )
 }

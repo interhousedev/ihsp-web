@@ -520,6 +520,71 @@
       "settings": "Privacy settings"
     }
   },
+  "essayLedger": {
+    "emptyTitle": "No prompts yet",
+    "emptyList": "Add universities to your list and their essay prompts appear here.",
+    "emptyAll": "No prompts in the catalog yet.",
+    "showAllPrompts": "Show all prompts",
+    "practiceTitle": "Today's practice",
+    "practiceOpen": "Open",
+    "practiceWrite": "Write",
+    "practiceChecked": "Checked",
+    "practiceWritten": "Written, not checked",
+    "practiceTodo": "Not written yet",
+    "streak": "{count, plural, one {# day} other {# days}} in a row",
+    "ideasHeading": "Ideas",
+    "ideasTitle": "Ideas · {count}",
+    "ideasEmpty": "Your bank is empty. Add moments only you could write about.",
+    "ideasOpen": "Open",
+    "ideasAdd": "Add",
+    "examplesTitle": "Examples",
+    "examplesOpen": "Browse",
+    "examplesCounts": "{admitted} admitted essays · {peers} from lyceum peers",
+    "examplesAdmitted": "Admitted essays",
+    "examplesAdmittedHint": "Curated by staff, with the source.",
+    "optional": "Optional",
+    "required": "Required",
+    "slotFilled": "“{title}”",
+    "slotFree": "Free slot",
+    "promptsCount": "{count, plural, one {# prompt} other {# prompts}}",
+    "limitMin": "from {count} words",
+    "drawerEssays": "Your essays",
+    "drawerNoEssays": "Nothing written for this group yet.",
+    "forked": "specialization",
+    "open": "Open",
+    "start": "Start",
+    "startEssay": "Start an essay",
+    "startAnother": "Start another version",
+    "drawerPrompts": "Prompts and slots",
+    "alsoFits": "Also fits",
+    "summaryNeed": "{needed, plural, one {# essay} other {# essays}} for {prompts, plural, one {# prompt} other {# prompts}}",
+    "summaryStarted": "{count} started",
+    "due": "due {date}",
+    "duePredicted": "expected {date}",
+    "lensLabel": "View",
+    "lensEssay": "By essay",
+    "lensUni": "By university",
+    "scopeLabel": "Prompts",
+    "scopeList": "My list",
+    "scopeAllPlain": "All",
+    "scopeAll": "All · {count}",
+    "overLimit": "Over the limit",
+    "swapAria": "Change essay in slot {slot}",
+    "noCandidates": "No essay fits yet",
+    "assign": "Assign an essay",
+    "orDrop": "or drop one here",
+    "trayLabel": "Your essays",
+    "dragHint": "Drag an essay onto a slot.",
+    "boardEmptyTitle": "No universities on your list",
+    "boardEmptyText": "Add universities to see their slots and fill them with essays.",
+    "boardEmptyLink": "Open my list",
+    "slotsFilled": "{done} of {total} filled",
+    "pickTitle": "Essay for {uni}",
+    "score": "Uniqueness {value} of 100",
+    "notStarted": "Not started",
+    "inListCount": "{count} in your list",
+    "newEssay": "Blank essay"
+  },
   "essayFlow": {
     "label": "Essay path",
     "next": "Next: {step}",
@@ -578,6 +643,8 @@
       "add": "Add",
       "empty": "No ideas yet. Add one, or take a seed from today's practice.",
       "fitTitle": "Best fit among open prompts",
+      "fitRun": "Check fit now",
+      "fitRunning": "Checking…",
       "fitScore": "fit {score}/100",
       "fitScoreAria": "Fit with this prompt: {score} out of 100",
       "fitNone": "No open prompt to compare with.",
@@ -1055,7 +1122,9 @@
       "settings": "Settings",
       "career": "Career",
       "essays": "Essays",
-      "apply": "Apply"
+      "apply": "Apply",
+      "today": "Today",
+      "profile": "Profile"
     },
     "home": "Home",
     "journey": "Journey",
@@ -1085,9 +1154,12 @@
       "activities": "Activities & honors",
       "universities": "Universities & budget",
       "essays": "Essays",
-      "apply": "Documents & applying"
+      "apply": "Documents & applying",
+      "today": "Today",
+      "profile": "Profile"
     },
     "parts": {
+      "professions": "Professions",
       "explore": "Explore",
       "field": "Field of study",
       "future": "Future",
@@ -1108,7 +1180,9 @@
       "deadlines": "Deadlines",
       "tasks": "Tasks",
       "review": "Review",
-      "results": "Results"
+      "results": "Results",
+      "overview": "Overview",
+      "career": "Career"
     },
     "sectionParts": "{section}: parts",
     "menu": "More",
@@ -4621,6 +4695,154 @@
       "draft": "Draft"
     }
   },
+  "uniList": {
+    "title": "Your list",
+    "count": "{count, plural, one {# university} other {# universities}}",
+    "fitFailed": "Fit is not available right now; the list is shown without it.",
+    "cap": "{count} universities, more than the {cap} we suggest: a long list means thin applications. Consider dropping the weakest fits.",
+    "emptyTitle": "Your list is empty",
+    "emptyText": "Add universities from matching to compare fit, cost and deadlines.",
+    "find": "Find universities",
+    "col": {
+      "university": "University",
+      "cost": "Cost a year after aid",
+      "chance": "Chance",
+      "label": "Label",
+      "round": "Round",
+      "deadline": "Deadline and tasks"
+    },
+    "unknown": "Unknown",
+    "approx": "≈ {amount}",
+    "sticker": "sticker price",
+    "over": "{amount} over budget",
+    "under": "{amount} under budget",
+    "unverified": "unverified · AI · {source}",
+    "unverifiedNoSource": "unverified · AI · no source",
+    "fit": "Fit {value}",
+    "noLabel": "—",
+    "fitUnknown": "Fit unknown",
+    "home": "Safe at home",
+    "labelFor": "Label of {name}",
+    "roundFor": "Round of {name}",
+    "more": "Show details of {name}",
+    "less": "Hide details of {name}",
+    "tasks": "{done}/{total} tasks",
+    "noTasks": "No tasks yet",
+    "research": "Research",
+    "researchTitle": "Research: {name}",
+    "researchMissing": "Missing: {facts}. The AI looks them up and cites its sources.",
+    "missing": {
+      "cost": "cost",
+      "deadline": "deadline",
+      "chance": "chance"
+    },
+    "totals": {
+      "title": "Totals",
+      "count": "{count, plural, one {# university} other {# universities}}",
+      "noBudget": "Family budget not set: add it in the survey to see the gap.",
+      "budget": "Family budget {amount} a year",
+      "within": "{count} within budget",
+      "over": "{count} over budget",
+      "overAvg": "{count} over budget, on average by {amount}",
+      "unknown": "{count} without a cost"
+    },
+    "scholarships": "Scholarships and opportunities",
+    "plan": {
+      "create": "Create application plan",
+      "offer": "{name} is on your list. Create its application plan: six tasks counted back from the deadline.",
+      "done": "Plan for {name} created.",
+      "open": "Open tasks",
+      "close": "Close",
+      "later": "Not now",
+      "steps": {
+        "essays": {
+          "title": "Write the essays for {name}",
+          "text": "Draft, revise and finish the essays {name} asks for."
+        },
+        "recommendations": {
+          "title": "Ask for recommendations for {name}",
+          "text": "Ask your teachers and counselor early; they need weeks."
+        },
+        "transcript": {
+          "title": "Send the transcript to {name}",
+          "text": "Order the transcript and send it with the school report."
+        },
+        "aid": {
+          "title": "File the financial aid forms for {name}",
+          "text": "Fill in the aid forms {name} requires and check the aid deadline."
+        },
+        "fee": {
+          "title": "Pay the application fee for {name}",
+          "text": "Pay the fee or request a waiver."
+        },
+        "submit": {
+          "title": "Submit the application to {name}",
+          "text": "Check everything once more and submit before the deadline."
+        }
+      }
+    },
+    "graph": {
+      "table": "Table",
+      "graph": "Graph",
+      "viewLabel": "List view",
+      "chartLabel": "Admission chance against yearly cost after aid",
+      "yAxis": "Cost a year after aid",
+      "xAxis": "Admission chance",
+      "budgetLine": "Family budget {value}",
+      "home": "Safe at home",
+      "unlabelled": "not sorted",
+      "balance": "Reach, target, safety",
+      "why": "Why matched",
+      "noWhy": "No match reasons yet. Fill in the survey and goals.",
+      "chance": "{value}% chance",
+      "sticker": "before aid",
+      "title": "Chance and cost",
+      "hint": "Left is harder, up is more expensive. Tap a logo for its fit.",
+      "empty": "Add chance and cost data to see the chart. Open a university to research the missing facts.",
+      "noBudget": "Set your family budget in the survey to see the budget line.",
+      "hidden": "{count, plural, one {# university} other {# universities}} not plotted: chance or cost in USD is unknown.",
+      "whyTitle": "Why they matched"
+    },
+    "brief": {
+      "title": "AI brief",
+      "refresh": "Refresh",
+      "loading": "Writing the brief",
+      "steps": "Next steps",
+      "suggestions": "Worth adding",
+      "generated": "Written {time}",
+      "stale": "the list changed since",
+      "emptyList": "Add a university to get a brief on your list.",
+      "none": "No brief yet. Press Refresh to write one."
+    },
+    "detail": {
+      "title": "Fit with you",
+      "afterAid": "After aid, a year:",
+      "noCost": "unknown",
+      "sticker": "{value} before aid",
+      "over": "{value} over your budget",
+      "within": "{value} under your budget"
+    }
+  },
+  "uniFlow": {
+    "label": "University search stages",
+    "locked": "Locked",
+    "stages": {
+      "quiz": "Survey",
+      "match": "Matching",
+      "list": "My list"
+    },
+    "lockedWhy": {
+      "match": "Finish the survey first",
+      "list": "Add your first university"
+    },
+    "tray": {
+      "title": "Your list",
+      "count": "{count} on the list",
+      "empty": "Swipe right on a university and it lands here.",
+      "open": "Open the list",
+      "unknown": "Fit unknown"
+    }
+  },
   "flow": {
     "label": "University search steps",
     "title": "Universities and budget",
@@ -4710,6 +4932,7 @@
     }
   },
   "fit": {
+    "raiseGoals": "Raise goals: choose professions",
     "title": "Fit",
     "ringHelp": "Each colour is one criterion. The arc length is the criterion score times its weight.",
     "open": "Fit for {name}: {value} of 100. Show what it is made of",
@@ -4787,7 +5010,10 @@
         "mid": "medium",
         "high": "high"
       }
-    }
+    },
+    "changeWeights": "Change what matters",
+    "none": "Not enough data to score yet",
+    "openNone": "Open university"
   },
   "today": {
     "title": "Today",
@@ -4824,7 +5050,8 @@
       "why": "Why",
       "later": "Not now",
       "queued": "Then",
-      "min": "~{n} min"
+      "min": "~{n} min",
+      "open": "Open"
     },
     "action": {
       "quiz": {
@@ -4884,6 +5111,7 @@
       "title": "Readiness"
     },
     "check": {
+      "professions": "Pick professions to explore",
       "title": "Season checklist",
       "quiz": "Answer 10 questions about yourself",
       "activities": "Log 3 achievements",
@@ -4911,7 +5139,9 @@
         "rejected": "Rejected"
       },
       "days": "{n} d",
-      "pastDays": "deadline passed"
+      "pastDays": "deadline passed",
+      "empty": "Your list has no universities yet.",
+      "add": "Find universities"
     },
     "prof": {
       "title": "3 careers for you",
@@ -4944,67 +5174,195 @@
       "essays": "Essays",
       "apply": "Apply",
       "label": "Sections (demo)"
-    }
+    },
+    "error": "Could not load this",
+    "retry": "Retry"
   },
   "weightsLab": {
-    "title": "What matters to you",
-    "mock": "mock",
-    "intro": "Say what matters in the way that feels easiest. Both ways give the same four fit weights, and the universities below re-rank at once.",
-    "tabsLabel": "Way to choose",
-    "tabs": {
-      "triangle": "Triangle",
-      "radar": "Radar"
-    },
-    "triangle": {
-      "label": "Triangle of priorities",
-      "hint": "Drag the dot, tap anywhere in the triangle, or use the arrow keys. It snaps to the centre, the corners and the edges.",
-      "value": "Social life {social}%, study {study}%, profession {profession}%",
-      "chipsLabel": "Quick picks",
-      "balanced": "Equal",
-      "corner": {
-        "social": "Social life",
-        "study": "Study",
-        "profession": "Profession"
-      }
-    },
+    "error": "Could not load",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "saveError": "Could not save",
+    "balanced": "Everything matters about equally to you.",
+    "lead": "Most important to you: {list}.",
+    "and": "and",
     "radar": {
-      "label": "Radar of traits",
-      "hint": "Drag a point or tap a ring to rate a trait from 1 to 10. With the keyboard: Tab to a point, then arrows.",
+      "label": "Radar: what matters to you",
+      "hint": "Drag a dot or tap a ring to rate from 1 to 10. Keyboard: Tab to a dot, then arrow keys.",
       "value": "{trait}: {value} of 10",
       "reset": "Reset"
     },
     "trait": {
-      "money": "Money",
+      "price": "Tuition cost",
+      "salary": "Early-career salary",
+      "ai_resilience": "AI resilience",
       "prestige": "Prestige",
-      "city": "City and climate",
-      "home": "Closeness to home",
-      "career": "Career and AI risks",
+      "academics": "Academic strength",
       "social": "Social life",
-      "academics": "Academic workload"
+      "city": "City and climate",
+      "home": "Closeness to home"
     },
     "word": {
-      "social": "social life",
-      "study": "study",
-      "profession": "profession",
-      "money": "money",
+      "price": "tuition cost",
+      "salary": "early-career salary",
+      "ai_resilience": "AI resilience",
       "prestige": "prestige",
+      "academics": "academic strength",
+      "social": "social life",
       "city": "city and climate",
-      "home": "closeness to home",
-      "career": "career and AI risks",
-      "academics": "academic workload"
-    },
-    "summary": {
-      "title": "In plain words",
-      "quote": "“{x}”",
-      "lead": "What matters most to you: {list}.",
-      "balanced": "Everything matters about equally to you.",
-      "and": "{a} and {b}",
-      "weights": "Weights in the fit ring"
-    },
-    "top": {
-      "title": "Your top 5 now",
-      "note": "Demo universities and invented scores; only the order changes with your weights.",
-      "score": "{value} of 100"
+      "home": "closeness to home"
     }
+  },
+  "professions": {
+    "title": "Professions",
+    "subtitle": "Find what fits you, then see how it moves your university fit.",
+    "step": {
+      "ikigai": {
+        "title": "Your ikigai",
+        "hint": "Four circles: what you love, what you are good at, what the world needs, what pays. Add a few words to each."
+      },
+      "browse": {
+        "title": "Browse professions",
+        "hint": "Search by name or scroll through the catalogue."
+      },
+      "mine": {
+        "title": "Your ranked picks",
+        "hint": "Up to {max}. Drag to put the one you want most first."
+      },
+      "fit": {
+        "title": "What it does to your fit"
+      }
+    },
+    "circle": {
+      "love": "I love",
+      "good_at": "I am good at",
+      "needs": "World needs",
+      "paid": "Paid for"
+    },
+    "question": {
+      "love": "What do you love doing?",
+      "good_at": "What are you good at?",
+      "needs": "What does the world need?",
+      "paid": "What can you be paid for?"
+    },
+    "venn": {
+      "label": "Ikigai: four circles",
+      "center": "Ikigai",
+      "placeholder": "Type and press Enter",
+      "remove": "Remove {tag}",
+      "saved": "Saved",
+      "saveError": "Could not save. Try again.",
+      "hint": "{count} of 4 circles filled. Overlaps show where a profession can live."
+    },
+    "search": {
+      "placeholder": "Search professions",
+      "results": "Professions",
+      "empty": "No professions found. Try another word.",
+      "error": "Could not load professions"
+    },
+    "risk": {
+      "low": "Low AI exposure",
+      "medium": "Medium AI exposure",
+      "high": "High AI exposure"
+    },
+    "horizon": {
+      "now": "already today",
+      "5y": "within about 5 years",
+      "10y+": "in 10 years or more"
+    },
+    "exposure": {
+      "share": "About {pct}% of its tasks.",
+      "note": "This is the share of tasks AI can already do, not a forecast of layoffs."
+    },
+    "salary": {
+      "label": "Pay: {band}",
+      "low": "lower",
+      "medium": "middle",
+      "high": "higher"
+    },
+    "card": {
+      "add": "Add",
+      "picked": "Picked",
+      "addLabel": "Add {name} to your picks",
+      "fields": "Related fields",
+      "sources": "Sources"
+    },
+    "mine": {
+      "title": "Ranked professions",
+      "drag": "Drag to reorder",
+      "remove": "Remove {name}",
+      "empty": "Nothing picked yet. Add up to {max} professions from the list above.",
+      "saving": "Saving…",
+      "error": "Could not save your picks",
+      "count": "{count} of {max} picked"
+    },
+    "impact": {
+      "title": "Goals in your university fit",
+      "noPicks": "Pick professions and the goals part of every university's fit starts counting them.",
+      "noList": "Your {count} picks are saved. Add universities to your list to see the goals score.",
+      "avg": "Average goals score across {count} universities in your list: {value} of 100.",
+      "link": "See your universities"
+    }
+  },
+  "profileHub": {
+    "title": "Profile",
+    "career": "Career and professions",
+    "weights": "What matters to you",
+    "weightsHint": "Rate each quality from 1 to 10: university fit is recalculated for you.",
+    "doing": "What you do",
+    "link": {
+      "career": {
+        "title": "Career",
+        "hint": "Fields, the future of professions and your choice."
+      },
+      "professions": {
+        "title": "Professions",
+        "hint": "Ikigai and the catalogue: pick up to three."
+      },
+      "done": {
+        "title": "Done",
+        "hint": "Activities and achievements."
+      },
+      "planned": {
+        "title": "Plan",
+        "hint": "What you plan to do."
+      },
+      "ideas": {
+        "title": "Ideas",
+        "hint": "Opportunities that suit you."
+      },
+      "tests": {
+        "title": "Tests",
+        "hint": "Results and preparation."
+      },
+      "courses": {
+        "title": "My courses",
+        "hint": "Courses and school subjects."
+      }
+    }
+  },
+  "essayEditor": {
+    "more": "More",
+    "textLabel": "Essay text",
+    "stripe": "Paragraph {n}: {role}, {strength}",
+    "tabsLabel": "Essay side panel",
+    "dockLabel": "Essay analysis",
+    "tab": {
+      "read": "Read",
+      "unis": "Universities",
+      "examples": "Examples",
+      "ideas": "Ideas"
+    },
+    "score": "Uniqueness",
+    "scoreLabel": "Uniqueness {value} out of 100",
+    "scoreStale": "before your edits",
+    "readNow": "Deep read",
+    "fitChips": "Fit per university",
+    "chipsMore": "+{count} more",
+    "readNone": "Run a deep read to see what each paragraph does and which moments are yours. The stripes appear on the text.",
+    "staleBanner": "You edited the essay after the read, so the stripes may no longer match.",
+    "staleAction": "Read again",
+    "fork": "Make a version for {name}",
+    "detailedReview": "Detailed review"
   }
 }

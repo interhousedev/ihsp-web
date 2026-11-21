@@ -1,8 +1,9 @@
 import type { Icons } from "@ihsp/ui"
+import type { AxisKey, FitItem, FitRaise } from "./types"
 
 /** The four metrics of the fit ring, in ring order (clockwise from 12 o'clock). */
-export const METRIC_IDS = ["afford", "goals", "profile", "traits"] as const
-export type MetricId = (typeof METRIC_IDS)[number]
+export const METRIC_IDS = ["afford", "goals", "profile", "traits"] as const satisfies readonly AxisKey[]
+export type MetricId = AxisKey
 
 /** Icon and token colour of a metric. Colours are `--fit-*` tokens (Okabe-Ito based, colour-blind safe, see fit.css). */
 export const METRIC_STYLE: Record<MetricId, { icon: keyof typeof Icons; color: string }> = {
@@ -12,63 +13,56 @@ export const METRIC_STYLE: Record<MetricId, { icon: keyof typeof Icons; color: s
   traits: { icon: "heart", color: "var(--fit-traits)" },
 }
 
-/** Default weights of the model (ikigai research §3). The student changes them on the weights page. */
-export const DEFAULT_WEIGHTS: Record<MetricId, number> = { afford: 0.25, goals: 0.3, profile: 0.3, traits: 0.15 }
-
-/** A translated line: `key` under the `fit` namespace plus its placeholders. */
-export type Line = { key: string; params?: Record<string, string | number> }
-
-/** One step that would raise a metric: the gain is in points of the composite, `href` is where the work is done. */
-export type Move = {
-  id: string
-  metric: MetricId
-  line: Line
-  gain: number
-  time: { n: number; unit: "min" | "week" }
-  href: string
-}
+export type Weights = Record<MetricId, number>
 
 export type MetricResult = {
   id: MetricId
   /** 0-100, or `null` when the data is missing (drawn distinctly, never as zero). */
   score: number | null
-  /** The "why" lines; at most two. */
-  why: Line[]
+  /** Share of the ring this metric owns (the four sum to 1). */
+  weight: number
+  why: string[]
+  raise: FitRaise[]
 }
 
-export type UniFit = { metrics: MetricResult[]; moves: Move[] }
+export type UniFit = { total: number | null; metrics: MetricResult[] }
 
-export function normalise(weights: Record<MetricId, number>): Record<MetricId, number> {
-  const total = METRIC_IDS.reduce((sum, id) => sum + weights[id], 0) || 1
-  return Object.fromEntries(METRIC_IDS.map((id) => [id, weights[id] / total])) as Record<MetricId, number>
+export function normalise(weights: Weights): Weights {
+  const sum = METRIC_IDS.reduce((acc, id) => acc + weights[id], 0) || 1
+  return Object.fromEntries(METRIC_IDS.map((id) => [id, weights[id] / sum])) as Weights
 }
 
-/** The composite over the known metrics (weights renormalised), 0-100, and the share of the weight that is known. */
-export function composite(metrics: MetricResult[], weights: Record<MetricId, number>) {
+/** The ring view of an API item: the metrics in ring order, a missing axis kept as `null`. */
+export function toUniFit(item: Pick<FitItem, "total" | "axes">): UniFit {
+  const metrics = METRIC_IDS.map((id): MetricResult => {
+    const axis = item.axes.find((candidate) => candidate.key === id)
+    return { id, score: axis?.score ?? null, weight: axis?.weight ?? 0, why: axis?.why ?? [], raise: axis?.raise ?? [] }
+  })
+  return { total: item.total, metrics }
+}
+
+/** The weighted mean over the known metrics (weights renormalised): the total for other weights, e.g. a live preview. */
+export function totalFor(fit: UniFit, weights: Weights): number | null {
   const w = normalise(weights)
   let sum = 0
   let known = 0
-  for (const metric of metrics) {
+  for (const metric of fit.metrics) {
     if (metric.score === null) continue
     sum += w[metric.id] * metric.score
     known += w[metric.id]
   }
-  return { value: known > 0 ? Math.round(sum / known) : null, known }
+  return known > 0 ? Math.round(sum / known) : null
 }
 
-/** Points the composite gains if `metric` rises by `delta` sub-score points (known weights renormalised). */
-export function gainOf(metrics: MetricResult[], weights: Record<MetricId, number>, metric: MetricId, delta: number) {
-  const w = normalise(weights)
-  const known = metrics.reduce((sum, m) => sum + (m.score === null ? 0 : w[m.id]), 0) || 1
-  return Math.round((w[metric] * delta) / known)
+/** Share of the ring weight whose data is known, 0..1. */
+export function knownShare(fit: UniFit): number {
+  return fit.metrics.reduce((sum, metric) => sum + (metric.score === null ? 0 : metric.weight), 0)
 }
 
-/** Points the composite gains when a missing metric becomes known at `assumed`, or a known one rises by `delta`. */
-export function gainIfFilled(metrics: MetricResult[], weights: Record<MetricId, number>, id: MetricId, assumed: number) {
-  const before = composite(metrics, weights).value ?? 0
-  const after = composite(
-    metrics.map((m) => (m.id === id ? { ...m, score: assumed } : m)),
-    weights,
-  ).value
-  return Math.max((after ?? 0) - before, 0)
+/** `total` desc, unknown last, list order kept among equals. */
+export function byTotal<T>(rows: readonly T[], total: (row: T) => number | null): T[] {
+  return rows
+    .map((row, index) => ({ row, index, value: total(row) }))
+    .sort((a, b) => (b.value ?? -1) - (a.value ?? -1) || a.index - b.index)
+    .map((entry) => entry.row)
 }

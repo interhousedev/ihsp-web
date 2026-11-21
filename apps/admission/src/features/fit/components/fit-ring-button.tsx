@@ -3,7 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { cn, HoverCard, HoverCardContent, HoverCardTrigger, Icons, ResponsiveDialog } from "@ihsp/ui"
 import { useState, type ReactNode } from "react"
-import { composite, type MetricId, type UniFit } from "../fit-model"
+import type { MetricId, UniFit } from "../fit-model"
 import { FitBreakdown } from "./fit-breakdown"
 import { FitRing } from "./fit-ring"
 
@@ -15,14 +15,12 @@ import { FitRing } from "./fit-ring"
 export function FitRingButton({
   name,
   fit,
-  weights,
   size = 52,
   children,
   className,
 }: {
   name: string
   fit: UniFit
-  weights: Record<MetricId, number>
   size?: number
   /** The logo. */
   children?: ReactNode
@@ -31,7 +29,7 @@ export function FitRingButton({
   const t = useT("fit")
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<MetricId | null>(null)
-  const total = composite(fit.metrics, weights).value
+  const total = fit.total
   return (
     <>
       <HoverCard>
@@ -53,7 +51,7 @@ export function FitRingButton({
             />
           }
         >
-          <FitRing metrics={fit.metrics} weights={weights} size={size}>
+          <FitRing metrics={fit.metrics} size={size}>
             {children}
           </FitRing>
           <span
@@ -68,17 +66,17 @@ export function FitRingButton({
           </span>
         </HoverCardTrigger>
         <HoverCardContent className="w-80 max-md:hidden" side="right" align="start" sideOffset={10}>
-          <FitBreakdown name={name} fit={fit} weights={weights} onHover={setActive} />
+          <FitBreakdown name={name} fit={fit} onHover={setActive} />
         </HoverCardContent>
       </HoverCard>
       <ResponsiveDialog open={open} onOpenChange={setOpen} title={t("title")} description={name} size="sm">
         <div className="flex items-center gap-4">
-          <FitRing metrics={fit.metrics} weights={weights} size={72} active={active}>
+          <FitRing metrics={fit.metrics} size={72} active={active}>
             {children}
           </FitRing>
           <p className="text-muted-foreground text-sm">{t("ringHelp")}</p>
         </div>
-        <FitBreakdown name={name} fit={fit} weights={weights} full onHover={setActive} />
+        <FitBreakdown name={name} fit={fit} full onHover={setActive} />
       </ResponsiveDialog>
     </>
   )

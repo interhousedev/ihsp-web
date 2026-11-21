@@ -2,7 +2,8 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn, Icons } from "@ihsp/ui"
-import { SEASONS, type Check, type SeasonId } from "../today-mock"
+import Link from "next/link"
+import { SEASONS, type SeasonId, type TodayCheck } from "../api"
 import { Rhythm } from "./rhythm"
 
 /** Six dots, one per season; the current one carries the name. The strip is the "where am I in the 14 months". */
@@ -38,8 +39,8 @@ export function SeasonCard({
   className,
 }: {
   season: SeasonId
-  checks: Check[]
-  streak: { days: number; week: boolean[] }
+  checks: TodayCheck[]
+  streak: { days: number; last7: boolean[] }
   readiness: number
   className?: string
 }) {
@@ -51,7 +52,7 @@ export function SeasonCard({
       <h2 className="sr-only">{t("check.title")}</h2>
       <ul className="flex flex-col gap-1.5">
         {checks.map((check) => (
-          <li key={check.id} className="flex items-center gap-2.5 text-sm">
+          <li key={check.key} className="flex items-center gap-2.5 text-sm">
             <span
               aria-hidden
               className={cn(
@@ -62,7 +63,13 @@ export function SeasonCard({
               {check.done ? <Icons.check className="size-3.5" /> : null}
             </span>
             <span className={cn("min-w-0 flex-1", check.done && "text-muted-foreground line-through")}>
-              {t(`check.${check.id}`)}
+              {check.href && !check.done ? (
+                <Link href={check.href} className="hover:text-primary focus-visible:ring-ring rounded-sm font-medium underline-offset-2 outline-none hover:underline focus-visible:ring-2">
+                  {check.label}
+                </Link>
+              ) : (
+                check.label
+              )}
             </span>
             {check.progress ? <span className="text-muted-foreground text-xs tabular-nums">{check.progress}</span> : null}
           </li>

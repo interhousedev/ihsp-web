@@ -6,8 +6,8 @@ import { useT } from "@ihsp/i18n"
 import { type BottomNavItem, type NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
 
-/** The five student sections, in sidebar and phone-bar order (see the IA: Career, Activities, Universities, Essays, Apply). */
-export const SECTION_IDS = ["career", "activities", "universities", "essays", "apply"] as const
+/** The five student sections, in sidebar and phone-bar order (Today, Profile, Universities, Essays, Apply). */
+export const SECTION_IDS = ["today", "profile", "universities", "essays", "apply"] as const
 export type SectionId = (typeof SECTION_IDS)[number]
 
 /** One part of a section: a route (`/plan/`) or a query tab (`/career/?tab=field`). Titles: `nav.parts.<id>`. */
@@ -17,30 +17,31 @@ export type Section = {
   id: SectionId
   /** Where the sidebar and the phone bar lead. */
   url: string
-  icon: "discover" | "sparkles" | "search" | "post" | "files"
+  icon: "today" | "user2" | "search" | "post" | "files"
   /** Path prefixes that belong to the section; the longest match wins. */
   prefixes: readonly string[]
   parts: readonly SectionPart[]
 }
 
 export const SECTIONS: Record<SectionId, Section> = {
-  career: {
-    id: "career",
-    url: "/career/",
-    icon: "discover",
-    prefixes: ["/career"],
-    parts: [
-      { id: "explore", url: "/career/?tab=explore", isDefault: true },
-      { id: "field", url: "/career/?tab=field" },
-      { id: "future", url: "/career/?tab=future" },
-    ],
+  today: {
+    id: "today",
+    url: "/",
+    icon: "today",
+    // Only the root itself: `/settings/` and the like stay outside every section.
+    prefixes: ["/"],
+    parts: [],
   },
-  activities: {
-    id: "activities",
-    url: "/activities/",
-    icon: "sparkles",
-    prefixes: ["/activities", "/plan", "/opportunities", "/tests", "/courses"],
+  profile: {
+    id: "profile",
+    url: "/profile/",
+    icon: "user2",
+    // Career, activities, tests and plan live inside the profile: one place for "who I am and what I have done".
+    prefixes: ["/profile", "/career", "/activities", "/plan", "/opportunities", "/tests", "/courses"],
     parts: [
+      { id: "overview", url: "/profile/", isDefault: true },
+      { id: "professions", url: "/profile/professions/" },
+      { id: "career", url: "/career/" },
       { id: "done", url: "/activities/" },
       { id: "ideas", url: "/opportunities/" },
       { id: "planned", url: "/plan/" },
@@ -202,7 +203,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       title: t(`sections.${id}`),
       url: SECTIONS[id].url,
       icon: SECTIONS[id].icon,
-      matchPrefixes: SECTIONS[id].prefixes,
+      ...(id === "today" ? { match: "exact" as const } : { matchPrefixes: SECTIONS[id].prefixes }),
     }))
     const groups: NavGroup[] = [
       { items: sections },

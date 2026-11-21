@@ -41,8 +41,8 @@ describe("AdmissionShell", () => {
     )
     expect(await screen.findByText("page body")).toBeInTheDocument()
     expect(labels()).toEqual([
-      "Career & study",
-      "Activities & honors",
+      "Today",
+      "Profile",
       "Universities & budget",
       "Essays",
       "Documents & applying",

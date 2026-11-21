@@ -4,16 +4,16 @@ import { useT } from "@ihsp/i18n"
 import { buttonVariants, cn, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
-import type { NextAction } from "../today-mock"
+import type { TodayAction } from "../api"
 
 /**
  * The one feed of "what to do now": a big top item and at most two queued ones, each with a "why" line and a time
  * estimate. "Не сейчас" only hides the top item locally (the real snooze is a server rule: 3 days, twice at most).
  */
-export function NextActionCard({ actions, className }: { actions: NextAction[]; className?: string }) {
+export function NextActionCard({ actions, className }: { actions: TodayAction[]; className?: string }) {
   const t = useT("today")
   const [snoozed, setSnoozed] = useState<string[]>([])
-  const queue = actions.filter((action) => !snoozed.includes(action.id)).slice(0, 3)
+  const queue = actions.filter((action) => !snoozed.includes(action.key)).slice(0, 3)
   const [top, ...rest] = queue
   if (!top) return null
   return (
@@ -35,23 +35,23 @@ export function NextActionCard({ actions, className }: { actions: NextAction[]; 
           </span>
         </div>
         <h2 className="text-lg leading-tight font-semibold tracking-tight text-balance md:text-2xl">
-          {t(`action.${top.id}.title`, top.params)}
+          {top.title}
         </h2>
         <p className="text-muted-foreground flex items-start gap-2 text-sm leading-snug">
           <Icons.info aria-hidden className="mt-0.5 size-4 shrink-0" />
           <span>
             <span className="text-foreground font-medium">{t("next.why")}: </span>
-            {t(`action.${top.id}.why`, top.params)}
+            {top.why}
           </span>
         </p>
         <div className="flex flex-wrap items-center gap-2">
           <Link href={top.href} className={cn(buttonVariants({ size: "lg" }), "max-md:h-10 max-sm:flex-1")}>
-            {t(`action.${top.id}.cta`)}
+            {t("next.open")}
             <Icons.arrowRight aria-hidden />
           </Link>
           <button
             type="button"
-            onClick={() => setSnoozed((ids) => [...ids, top.id])}
+            onClick={() => setSnoozed((ids) => [...ids, top.key])}
             className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "max-md:h-10")}
           >
             {t("next.later")}
@@ -61,7 +61,7 @@ export function NextActionCard({ actions, className }: { actions: NextAction[]; 
       {rest.length > 0 ? (
         <ol className="divide-y border-t" aria-label={t("next.queued")}>
           {rest.map((action, index) => (
-            <li key={action.id}>
+            <li key={action.key}>
               <Link
                 href={action.href}
                 className="hover:bg-muted/50 focus-visible:ring-ring flex min-h-12 items-center gap-3 px-3.5 py-1.5 md:min-h-14 md:py-2 outline-none focus-visible:ring-2 focus-visible:ring-inset md:px-5"
@@ -70,9 +70,9 @@ export function NextActionCard({ actions, className }: { actions: NextAction[]; 
                   {index + 2}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-medium">{t(`action.${action.id}.title`, action.params)}</span>
+                  <span className="block truncate text-sm font-medium">{action.title}</span>
                   <span className="text-muted-foreground block truncate text-xs">
-                    {t(`action.${action.id}.why`, action.params)}
+                    {action.why}
                   </span>
                 </span>
                 <span className="text-muted-foreground shrink-0 text-xs tabular-nums">{t("next.min", { n: action.minutes })}</span>
