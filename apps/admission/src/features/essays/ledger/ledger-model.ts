@@ -1,6 +1,6 @@
 import type { EssaySummary } from "../api"
 import type { PromptGroup, PromptRef, PromptScope } from "../flow/api"
-import { groupLabel } from "../flow/group-label"
+import { groupLabel, groupWordLimit } from "../flow/group-label"
 
 /** One line of the ledger: a prompt group, the essays written for it and what is due. */
 export type LedgerRow = {
@@ -17,7 +17,6 @@ export type LedgerRow = {
 
 export type LedgerSummary = {
   needed: number
-  prompts: number
   started: number
   due: { date: string; predicted: boolean } | null
 }
@@ -56,22 +55,93 @@ export function buildLedger(groups: PromptGroup[], essays: EssaySummary[], scope
   })
 }
 
-export function summarize(rows: LedgerRow[]): LedgerSummary {
+/** The kinds of essay the ledger groups its rows by, in display order. */
+export const ESSAY_TYPES = ["personal", "whyUs", "community", "academic", "activity", "short", "other"] as const
+export type EssayType = (typeof ESSAY_TYPES)[number]
+
+/** A prompt's wording says what it asks; the server stores no category, so the type is read from the text. */
+const TOPICS: readonly [EssayType, RegExp][] = [
+  ["whyUs", /\bwhy\b.{0,60}\b(us|university|college|school|institute|program|major)\b|почему|nima uchun/i],
+  ["community", /\b(communit|diversity|diverse|background|identity|belong)|сообществ|jamiyat/i],
+  ["academic", /\b(academic|intellectual|major|field of study|curios|scholar|research)|академ/i],
+  ["activity", /\b(activit|extracurricular|club|team|work experience|hobby)|активност|faoliyat/i],
+]
+
+/** The type of one prompt group: the Common App essay, a topic read from the prompts, or a short answer by its limit. */
+export function essayType(group: PromptGroup): EssayType {
+  if (group.kind === "common" || group.prompts.every((p) => p.institution_id === null)) return "personal"
+  const text = `${group.label} ${group.prompts.map((p) => p.prompt).join(" ")}`
+  const topic = TOPICS.find(([, re]) => re.test(text))
+  if (topic) return topic[0]
+  const limit = groupWordLimit(group)
+  return limit !== null && limit <= 100 ? "short" : "other"
+}
+
+/** One section of the ledger: the rows of one essay type and how many essays that type needs. */
+export type LedgerSection = {
+  type: EssayType
+  rows: LedgerRow[]
+  /** Essays to write: the Common App prompts are alternatives, so they count as one. */
+  needed: number
+  filled: number
+  /** Rows to choose from when only one of them is written (the Common App personal essay), else null. */
+  pickOne: number | null
+  due: LedgerRow["due"]
+}
+
+/** Rows grouped by essay type, each section in the order of its rows (soonest deadline first). */
+export function buildSections(rows: LedgerRow[]): LedgerSection[] {
+  return ESSAY_TYPES.flatMap((type) => {
+    const mine = rows.filter((r) => essayType(r.group) === type)
+    if (mine.length === 0) return []
+    const started = mine.filter((r) => r.essays.length > 0).length
+    const personal = type === "personal"
+    return [
+      {
+        type,
+        rows: personal ? [...mine].sort((a, b) => b.essays.length - a.essays.length) : mine,
+        needed: personal ? 1 : mine.length,
+        filled: personal ? Math.min(started, 1) : started,
+        pickOne: personal ? mine.length : null,
+        due: mine.reduce<LedgerRow["due"]>((acc, r) => earlier(acc, r.due), null),
+      },
+    ]
+  })
+}
+
+/** Rows whose label, prompt text or university contains the query. */
+export function filterRows(rows: LedgerRow[], query: string): LedgerRow[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return rows
+  return rows.filter(
+    (r) =>
+      r.label.toLowerCase().includes(q) ||
+      r.group.prompts.some((p) => p.prompt.toLowerCase().includes(q) || p.institution_name.toLowerCase().includes(q)),
+  )
+}
+
+/** The distinct universities of a row (the Common App has no university), soonest list entries first. */
+export function rowUniversities(row: LedgerRow): { id: string; name: string }[] {
+  const seen = new Map<string, string>()
+  for (const p of row.group.prompts) if (p.institution_id && !seen.has(p.institution_id)) seen.set(p.institution_id, p.institution_name)
+  return [...seen].map(([id, name]) => ({ id, name }))
+}
+
+export function summarize(sections: LedgerSection[]): LedgerSummary {
   return {
-    needed: rows.length,
-    prompts: rows.reduce((n, r) => n + r.prompts.length, 0),
-    started: rows.filter((r) => r.essays.length > 0).length,
-    due: rows.reduce<LedgerRow["due"]>((acc, r) => earlier(acc, r.due), null),
+    needed: sections.reduce((n, s) => n + s.needed, 0),
+    started: sections.reduce((n, s) => n + s.filled, 0),
+    due: sections.reduce<LedgerRow["due"]>((acc, s) => earlier(acc, s.due), null),
   }
 }
 
 /** The legacy `?step=` / `?tab=` addresses of the six-step flow and where each one lands now. */
-export type LegacyTarget = { lens: "essay" | "uni"; drawer: "practice" | "ideas" | "examples" | null }
+export type LegacyTarget = { lens: "essay" | "uni"; drawer: "ideas" | "examples" | null }
 
 const LEGACY: Record<string, LegacyTarget> = {
   map: { lens: "essay", drawer: null },
   colleges: { lens: "essay", drawer: null },
-  practice: { lens: "essay", drawer: "practice" },
+  practice: { lens: "essay", drawer: null },
   ideas: { lens: "essay", drawer: "ideas" },
   essays: { lens: "essay", drawer: null },
   story: { lens: "essay", drawer: "ideas" },

@@ -115,7 +115,7 @@ describe("essay editor shell", () => {
     await screen.findByRole("dialog")
   })
 
-  test("the side has the four tabs and Universities shows the fit and the prompts", async () => {
+  test("the side has one tab row (Read, Universities, Plan, Versions, More) and Universities shows the fit and the prompts", async () => {
     server.use(
       http.get(apiUrl(`${A}/essays/e1/reviews`), () =>
         HttpResponse.json({
@@ -137,9 +137,11 @@ describe("essay editor shell", () => {
       ...handlers(),
     )
     renderAdmissionApp(<EssayEditor essay={essay} />)
-    for (const name of ["Read", "Universities", "Examples", "Ideas"]) {
+    for (const name of ["Read", "Universities", "Plan", "Versions"]) {
       expect(screen.getByRole("tab", { name })).toBeTruthy()
     }
+    expect(screen.getByTestId("dock-more")).toBeTruthy()
+    expect(screen.queryByRole("button", { name: "Plan & tools" })).toBeNull()
     // The chip in the header and the card in the tab carry the same fit.
     await screen.findByText("81")
     fireEvent.click(screen.getByRole("tab", { name: "Universities" }))

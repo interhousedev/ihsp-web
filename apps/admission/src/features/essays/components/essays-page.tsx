@@ -6,7 +6,6 @@ import { Button, buttonVariants, cn, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { Suspense } from "react"
-import { NextStep } from "../../../components/next-step"
 import { useScreenContext } from "../../assistant/screen-context"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { EssayLedger, useLedger } from "../ledger/essay-ledger"
@@ -31,7 +30,11 @@ export function EssaysBody() {
       .join("; ")}`,
   })
   return (
-    <div className={pageClass()}>
+    <div className={pageClass(
+        ledger.view.lens === "uni"
+          ? "md:h-[calc(100dvh-var(--shell-top-reserve,0px))] md:min-h-0 md:pb-4"
+          : "lg:h-[calc(100dvh-var(--shell-top-reserve,0px))] lg:min-h-0 lg:pb-4",
+      )}>
       {entryId ? (
         <Link
           data-testid="essays-back"
@@ -53,10 +56,10 @@ export function EssaysBody() {
           </Button>
         }
       />
-      <EssayLedger ledger={ledger} />
-      <NextStep
-        href={entryId ? `/documents/?entry=${encodeURIComponent(entryId)}` : "/documents/"}
-        label={t("nextStep")}
+      <EssayLedger
+        ledger={ledger}
+        nextHref={entryId ? `/documents/?entry=${encodeURIComponent(entryId)}` : "/documents/"}
+        nextLabel={t("nextStep")}
       />
     </div>
   )

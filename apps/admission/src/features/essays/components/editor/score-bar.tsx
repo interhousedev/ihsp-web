@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Pill } from "@ihsp/ui"
+import { Button, cn, Icons, Pill } from "@ihsp/ui"
 import { useStoredReviews } from "../../flow/steps-api"
 import type { ReadState } from "./read-state"
 
@@ -48,11 +48,12 @@ export function ScoreBar({ essayId, state, onUnis, onRead }: { essayId: string; 
           className="flex items-center gap-2 rounded-full text-left"
           aria-label={t("scoreLabel", { value: read.uniqueness })}
         >
-          <ScoreRing value={read.uniqueness} label={t("scoreLabel", { value: read.uniqueness })} className="size-10" />
-          <span className="flex flex-col leading-tight">
-            <span className="text-sm font-medium">{t("score")}</span>
-            {stale ? <span className="text-warning text-xs">{t("scoreStale")}</span> : null}
-          </span>
+          <ScoreRing
+            value={read.uniqueness}
+            label={t("scoreLabel", { value: read.uniqueness })}
+            className={cn("size-10", stale && "opacity-40 grayscale")}
+          />
+          <span className="text-sm font-medium">{t("score")}</span>
         </button>
       ) : (
         <Button type="button" size="sm" variant="outline" onClick={onRead}>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Pill, Skeleton } from "@ihsp/ui"
+import { Button, cn, Icons, Skeleton } from "@ihsp/ui"
 import { CoachError } from "../coach-error"
 import { useGroupCritique, useStoredReviews, type UniEntry } from "../../flow/steps-api"
 import type { Essay } from "../../api"
@@ -11,10 +11,9 @@ function UniCard({ entry }: { entry: UniEntry }) {
   const t = useT("essayFlow")
   const r = entry.review
   return (
-    <li className="bg-card border-hairline rounded-card flex flex-col gap-2 border p-3">
+    <li className={cn("bg-card border-hairline rounded-card flex flex-col gap-2 border p-3", entry.stale && "opacity-60 grayscale")}>
       <div className="flex items-center justify-between gap-2">
         <h4 className="min-w-0 truncate text-sm font-semibold">{entry.name}</h4>
-        {entry.stale ? <Pill tone="warning">{t("deep.stale")}</Pill> : null}
       </div>
       <div className="flex items-center gap-2" role="img" aria-label={t("deep.alignment", { value: r.alignment })}>
         <div className="bg-hairline h-2 flex-1 overflow-hidden rounded-full">

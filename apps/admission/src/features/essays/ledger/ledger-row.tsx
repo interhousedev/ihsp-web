@@ -2,8 +2,8 @@
 
 import { formatDate, useT } from "@ihsp/i18n"
 import { cn, Icons } from "@ihsp/ui"
-import { groupLabel } from "../flow/group-label"
-import type { LedgerRow as Row } from "./ledger-model"
+import { rowUniversities, type LedgerRow as Row } from "./ledger-model"
+import { UniLogoStack } from "./uni-logo"
 
 /** A uniqueness score as a small number in a ring: the one score the ledger shows. */
 export function ScoreDot({ value, className }: { value: number; className?: string }) {
@@ -20,13 +20,19 @@ export function ScoreDot({ value, className }: { value: number; className?: stri
   )
 }
 
-/** One prompt group as a line of the ledger: what the essay is about, where it is needed, how far it is. */
+/** A deadline as a short date ("1 Jan"), with "≈" when the server only predicts it. */
+export function DueText({ due }: { due: NonNullable<Row["due"]> }) {
+  const t = useT("essayLedger")
+  return <span className="shrink-0 tabular-nums">{t(due.predicted ? "dueShortPredicted" : "dueShort", { date: formatDate(due.date, undefined, { day: "numeric", month: "short" }) })}</span>
+}
+
+/** One prompt group as a line of the ledger: status, theme, universities, deadline, the essay written or the way to start. */
 export function LedgerRowButton({ row, onOpen }: { row: Row; onOpen: () => void }) {
   const t = useT("essayLedger")
   const te = useT("essays")
   const started = row.essays.length > 0
   const first = row.essays[0]
-  const unis = new Set(row.prompts.map((p) => p.institution_name))
+  const unis = rowUniversities(row)
   return (
     <li>
       <button
@@ -34,19 +40,20 @@ export function LedgerRowButton({ row, onOpen }: { row: Row; onOpen: () => void 
         data-testid={`ledger-row-${row.group.key}`}
         aria-haspopup="dialog"
         onClick={onOpen}
-        className="bg-card hover:bg-accent/50 focus-visible:ring-ring rounded-card flex w-full min-w-0 items-center gap-3 border p-3 text-left transition-colors focus-visible:ring-2 focus-visible:outline-none md:p-4"
+        className="hover:bg-accent/50 focus-visible:ring-ring flex w-full min-w-0 items-center gap-3 rounded-md px-2 py-2 text-left transition-colors focus-visible:ring-2 focus-visible:outline-none md:px-3"
       >
-        <span
-          aria-hidden
-          className={cn("size-3 shrink-0 rounded-full border-2", started ? "bg-primary border-primary" : "border-hairline-strong")}
-        />
+        <span aria-hidden className={cn("size-3 shrink-0 rounded-full border-2", started ? "bg-primary border-primary" : "border-hairline-strong")} />
         <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <span className="flex min-w-0 items-baseline gap-2">
-            <span className="min-w-0 truncate font-semibold">{row.label}</span>
-            <span className="text-muted-foreground shrink-0 text-xs">{t("promptsCount", { count: row.prompts.length })}</span>
+          <span className="flex min-w-0 items-center gap-2">
+            <span className="min-w-0 truncate text-sm font-medium">{row.label}</span>
+            {unis.length > 0 ? <UniLogoStack unis={unis} /> : <span className="text-muted-foreground shrink-0 text-xs">{t("commonApp")}</span>}
+            {row.due ? (
+              <span className="text-muted-foreground ml-auto hidden text-xs sm:inline">
+                <DueText due={row.due} />
+              </span>
+            ) : null}
           </span>
-          <span className="text-muted-foreground truncate text-xs">{groupLabel({ ...row.group, prompts: row.prompts })}</span>
-          <span className="text-muted-foreground flex min-w-0 flex-wrap items-center gap-x-3 gap-y-0.5 text-xs">
+          <span className="text-muted-foreground flex min-w-0 items-center gap-2 text-xs">
             {first ? (
               <span className="min-w-0 truncate">
                 <span className="text-foreground font-medium">{first.title || te("untitled")}</span>
@@ -55,20 +62,17 @@ export function LedgerRowButton({ row, onOpen }: { row: Row; onOpen: () => void 
                 {row.essays.length > 1 ? ` · +${row.essays.length - 1}` : ""}
               </span>
             ) : (
-              <span>{t("notStarted")}</span>
+              <span className="truncate">{row.group.prompts[0]?.prompt}</span>
             )}
             {row.due ? (
-              <span className="shrink-0">
-                {t(row.due.predicted ? "duePredicted" : "due", { date: formatDate(row.due.date) })}
+              <span className="sm:hidden">
+                <DueText due={row.due} />
               </span>
-            ) : null}
-            {unis.size > 0 && row.group.in_list_count > 0 ? (
-              <span className="shrink-0">{t("inListCount", { count: row.group.in_list_count })}</span>
             ) : null}
           </span>
         </span>
-        {row.best !== null ? <ScoreDot value={row.best} /> : null}
-        <span className="text-primary hidden shrink-0 text-sm font-medium sm:inline">{t(started ? "open" : "start")}</span>
+        {row.best !== null ? <ScoreDot value={row.best} className="size-8 text-xs" /> : null}
+        <span className={cn("hidden shrink-0 text-sm font-medium sm:inline", started ? "text-muted-foreground" : "text-primary")}>{t(started ? "open" : "start")}</span>
         <Icons.chevronRight aria-hidden className="text-muted-foreground size-4 shrink-0" />
       </button>
     </li>

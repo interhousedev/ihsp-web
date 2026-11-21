@@ -8,6 +8,9 @@ import type { ReadState } from "./read-state"
 import { ScoreRing } from "./score-bar"
 
 const TONE = { strong: "success", ok: "neutral", weak: "warning" } as const
+/** The dimensions the model names for the weakest spot; an unknown one is left out rather than shown in English. */
+const DIMENSIONS = ["detail", "voice", "structure", "originality", "imagery"]
+
 const BAR: Record<ParagraphStrength, string> = { strong: "bg-success", ok: "bg-muted-foreground/50", weak: "bg-warning" }
 
 function Uniqueness({ read }: { read: DeepRead }) {
@@ -64,18 +67,27 @@ export function ReadPanel({
         {button}
       </div>
     )
+  const weakest = read.paragraphs.find((p) => p.paragraph === read.fix_paragraph)?.strength === "weak"
+  const dimension = read.fix_dimension.trim().toLowerCase()
+  const fixWhere = weakest
+    ? DIMENSIONS.includes(dimension)
+      ? te("fixWhereDim", { paragraph: read.fix_paragraph, dimension: te(`dim.${dimension}` as "dim.detail") })
+      : te("fixWhere", { paragraph: read.fix_paragraph })
+    : null
   return (
     <div className="flex flex-col gap-4" data-testid="read-panel">
       <Uniqueness read={read} />
       <div className="bg-warning-muted/40 border-hairline rounded-card flex flex-col gap-1.5 border p-3">
         <h3 className="text-sm font-semibold">{t("deep.fix")}</h3>
-        <button
-          type="button"
-          onClick={() => onSelect(read.fix_paragraph)}
-          className="text-muted-foreground text-left text-xs underline"
-        >
-          {t("deep.fixWhere", { paragraph: read.fix_paragraph, dimension: read.fix_dimension })}
-        </button>
+        {fixWhere ? (
+          <button
+            type="button"
+            onClick={() => onSelect(read.fix_paragraph)}
+            className="text-muted-foreground text-left text-xs underline"
+          >
+            {fixWhere}
+          </button>
+        ) : null}
         <p className="text-sm">{read.fix_problem}</p>
         <p className="text-sm">
           <span className="font-semibold">{t("deep.fixTry")} </span>

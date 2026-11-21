@@ -1,7 +1,8 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, cn, Icons, Pill, Skeleton } from "@ihsp/ui"
+import { Button, buttonVariants, cn, Icons, Pill, Skeleton } from "@ihsp/ui"
+import Link from "next/link"
 import type { ReactNode } from "react"
 import { useExemplars, useIdeas } from "../api"
 import { usePracticeToday } from "../flow/api"
@@ -34,22 +35,27 @@ function AsideCard({
   )
 }
 
-/** Today's writing practice: the theme, the streak and whether today is done. */
-export function PracticeCard({ onOpen }: { onOpen: () => void }) {
+/** The sum of the four practice criteria, out of 20; null while today is not evaluated. */
+export function practiceTotal(scores: { score: number }[] | undefined): number | null {
+  return scores && scores.length > 0 ? scores.reduce((n, s) => n + s.score, 0) : null
+}
+
+/** Today's writing practice: the theme, the streak, the total and the link to the practice page. */
+export function PracticeCard() {
   const t = useT("essayLedger")
   const query = usePracticeToday()
   const today = query.data
   const written = (today?.entry?.word_count ?? 0) > 0
-  const evaluated = !!today?.entry?.evaluation
+  const total = practiceTotal(today?.entry?.evaluation?.scores)
   return (
     <AsideCard
       testId="practice-card"
       icon={<Icons.today aria-hidden className="size-4" />}
       title={t("practiceTitle")}
       action={
-        <Button type="button" size="sm" variant={written ? "outline" : "default"} onClick={onOpen}>
+        <Link href="/essays/practice/" className={buttonVariants({ size: "sm", variant: written ? "outline" : "default" })}>
           {t(written ? "practiceOpen" : "practiceWrite")}
-        </Button>
+        </Link>
       }
     >
       {query.isPending ? (
@@ -62,8 +68,8 @@ export function PracticeCard({ onOpen }: { onOpen: () => void }) {
           </p>
           <div className="flex flex-wrap items-center gap-2">
             <Pill tone={today.streak > 0 ? "primary" : "neutral"}>{t("streak", { count: today.streak })}</Pill>
-            <Pill tone={evaluated ? "success" : written ? "warning" : "neutral"}>
-              {t(evaluated ? "practiceChecked" : written ? "practiceWritten" : "practiceTodo")}
+            <Pill tone={total !== null ? "success" : written ? "warning" : "neutral"}>
+              {total !== null ? t("practiceScore", { total }) : t(written ? "practiceWritten" : "practiceTodo")}
             </Pill>
           </div>
         </>

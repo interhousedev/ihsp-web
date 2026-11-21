@@ -442,7 +442,11 @@
       "future": "Kelajak"
     },
     "nextActivities": "Faoliyatlarni topish: {fields}",
-    "bannerActivities": "Faoliyatlarni topish: {fields}"
+    "bannerActivities": "Faoliyatlarni topish: {fields}",
+    "quizTake": "Testdan oʻtish (2 daq)",
+    "quizAgain": "Testdan qayta oʻtish",
+    "quizTitle": "Kasb tanlash",
+    "quizHint": "10 ta qisqa savol: javoblarga qarab yoʻnalishlar taklif qilamiz."
   },
   "app": {
     "name": "{appAdmission}",
@@ -544,8 +548,7 @@
     "examplesAdmittedHint": "Xodimlar tanlagan, manbasi bilan.",
     "optional": "Ixtiyoriy",
     "required": "Majburiy",
-    "slotFilled": "“{title}”",
-    "slotFree": "Boʻsh joy",
+    "slotFree": "Bo‘sh",
     "promptsCount": "{count} ta prompt",
     "limitMin": "{count} soʻzdan",
     "drawerEssays": "Esselaringiz",
@@ -557,7 +560,7 @@
     "startAnother": "Boshqa variantni boshlash",
     "drawerPrompts": "Promptlar va joylar",
     "alsoFits": "Yana mos keladi",
-    "summaryNeed": "{prompts} ta promptga {needed} ta esse kerak",
+    "summaryNeed": "{needed, plural, one {# ta esse kerak} other {# ta esse kerak}}",
     "summaryStarted": "{count} ta boshlangan",
     "due": "muddat {date}",
     "duePredicted": "taxminan {date}",
@@ -567,12 +570,7 @@
     "scopeLabel": "Promptlar",
     "scopeList": "Mening roʻyxatim",
     "scopeAllPlain": "Hammasi",
-    "scopeAll": "Hammasi · {count}",
     "overLimit": "Limitdan oshgan",
-    "swapAria": "{slot} joyidagi esseni almashtirish",
-    "noCandidates": "Hozircha mos esse yoʻq",
-    "assign": "Esse tanlash",
-    "orDrop": "yoki shu yerga tashlang",
     "trayLabel": "Esselaringiz",
     "dragHint": "Esseni joyga sudrab olib boring.",
     "boardEmptyTitle": "Roʻyxatda universitetlar yoʻq",
@@ -583,20 +581,109 @@
     "score": "Noyoblik: 100 dan {value}",
     "notStarted": "Boshlanmagan",
     "inListCount": "Roʻyxatingizda {count} ta",
-    "newEssay": "Boʻsh esse"
+    "newEssay": "Boʻsh esse",
+    "nextDue": "eng yaqin muddat {date}",
+    "nextDuePredicted": "eng yaqin muddat ≈ {date}",
+    "dueShort": "{date}",
+    "dueShortPredicted": "≈ {date}",
+    "commonApp": "Common App",
+    "searchPlaceholder": "Mavzu yoki universitet bo‘yicha qidirish",
+    "scopeShowList": "Faqat mening ro‘yxatim",
+    "scopeShowAll": "Barcha mavzular",
+    "type": {
+      "personal": "Shaxsiy esse",
+      "whyUs": "Nega aynan bu universitet",
+      "community": "Jamiyat",
+      "academic": "Akademik qiziqishlar",
+      "activity": "Faoliyat",
+      "short": "Qisqa javoblar",
+      "other": "Boshqa"
+    },
+    "pickOne": "Common App · {count} tadan 1 tasini tanlang",
+    "showMore": "yana {count} ta",
+    "showFewer": "Yig‘ish",
+    "noMatch": "Hech narsa topilmadi",
+    "noMatchText": "“{query}” bo‘yicha esse yo‘q.",
+    "practiceScore": "Baho {total}/20",
+    "copied": "Nusxalandi · {count} ta so‘z",
+    "copyFailed": "Nusxalab bo‘lmadi",
+    "copy": "Nusxalash",
+    "preview": "Ko‘rish",
+    "previewCount": "{words} ta so‘z · {chars} ta belgi",
+    "previewCountLimit": "{words} / {limit} ta so‘z · {chars} ta belgi",
+    "overBy": "limitdan {count} ta so‘z ortiq",
+    "needsPersonal": "faqat shaxsiy esse",
+    "noEssays": "Hozircha esseingiz yo‘q.",
+    "slotPersonal": "Shaxsiy esse · Common App",
+    "slotExtra": "Qo‘shimcha esse",
+    "limitUpTo": "{count} ta so‘zgacha",
+    "sharedCommonApp": "Barcha Common App universitetlari uchun bitta esse.",
+    "promptMore": "To‘liq savol",
+    "promptLess": "Yig‘ish",
+    "change": "Almashtirish",
+    "clearAria": "“{title}” ni slotdan olib tashlash",
+    "slotEmpty": "Bo‘sh",
+    "chooseEssay": "Esse tanlash",
+    "writeNew": "Yozish",
+    "backToUnis": "Universitetlar",
+    "noSlots": "Bu universitet esse talab qilmaydi.",
+    "shortGroup": "Qisqa javoblar ({count})",
+    "noEssaysGroup": "Esse yo‘q ({count})"
+  },
+  "essayPractice": {
+    "title": "Yozish mashqi",
+    "streak": "{count} kun ketma-ket",
+    "history": "Tarix",
+    "writing": "Bugun",
+    "score": "Baho",
+    "pane": {
+      "write": "Yozish",
+      "score": "Baho",
+      "history": "Tarix"
+    },
+    "todayShort": "Bugun",
+    "todayLabel": "Bugun · {date}",
+    "historyEmpty": "Oldingi kunlar shu yerda ko‘rinadi.",
+    "scoreEmpty": "Kamida beshta so‘z yozing va fikr so‘rang: baho shu yerda chiqadi.",
+    "words": "{count} ta so‘z"
   },
   "essayFlow": {
     "label": "Insho yoʻli",
     "next": "Keyingisi: {step}",
     "locked": "Avval «{step}» bosqichini tugating",
-    "status": { "done": "Tayyor", "current": "Ochiq", "locked": "Yopiq" },
+    "status": {
+      "done": "Tayyor",
+      "current": "Ochiq",
+      "locked": "Yopiq"
+    },
     "steps": {
-      "map": { "title": "Promptlar xaritasi", "hint": "Bitta insho qaysi savollarga javob beradi", "summary": "Prompt guruhlari: {groups}, yopilgani: {covered}" },
-      "practice": { "title": "Mashq", "hint": "Kun mavzusida bir necha erkin daqiqa", "summary": "Bugun: {count} soʻz" },
-      "ideas": { "title": "Gʻoyalar va qoralamalar", "hint": "Gʻoyalarni baholang, prompt guruhiga yozing", "summary": "Insholar: {count}" },
-      "gallery": { "title": "Boshqalarning insholari", "hint": "Boshqa oʻquvchilar ulashgan insholar" },
-      "deep": { "title": "Baholash", "hint": "Abzatsma-abzats tahlil" },
-      "match": { "title": "Universitetlarga moslash", "hint": "Insholarni har bir universitet oʻrinlariga joylang" }
+      "map": {
+        "title": "Promptlar xaritasi",
+        "hint": "Bitta insho qaysi savollarga javob beradi",
+        "summary": "Prompt guruhlari: {groups}, yopilgani: {covered}"
+      },
+      "practice": {
+        "title": "Mashq",
+        "hint": "Kun mavzusida bir necha erkin daqiqa",
+        "summary": "Bugun: {count} soʻz"
+      },
+      "ideas": {
+        "title": "Gʻoyalar va qoralamalar",
+        "hint": "Gʻoyalarni baholang, prompt guruhiga yozing",
+        "summary": "Insholar: {count}"
+      },
+      "gallery": {
+        "title": "Boshqalarning insholari",
+        "hint": "Boshqa oʻquvchilar ulashgan insholar"
+      },
+      "deep": {
+        "title": "Baholash",
+        "hint": "Abzatsma-abzats tahlil"
+      },
+      "match": {
+        "title": "Universitetlarga moslash",
+        "hint": "Insholarni har bir universitet oʻrinlariga joylang"
+      }
     },
     "map": {
       "intro": "Koʻp universitetlar deyarli bir xil savol beradi. Promptlar maʼnosi boʻyicha guruhlangan, shunda bitta insho bir nechtasiga yaraydi.",
@@ -610,22 +697,41 @@
       "open": "Ochiq",
       "showAll": "Hammasini koʻrsatish ({count})",
       "showLess": "Yigʻish",
-      "common": { "title": "Eng keng tarqalgan", "hint": "Common App promptlari: deyarli hammaga beriladi." },
-      "shared": { "title": "Bir nechta universitet uchun umumiy", "hint": "Oʻxshash promptlar: bitta insho butun guruhga javob beradi." },
-      "unique": { "title": "Noyob", "hint": "Alohida insho talab qiladigan promptlar." }
+      "common": {
+        "title": "Eng keng tarqalgan",
+        "hint": "Common App promptlari: deyarli hammaga beriladi."
+      },
+      "shared": {
+        "title": "Bir nechta universitet uchun umumiy",
+        "hint": "Oʻxshash promptlar: bitta insho butun guruhga javob beradi."
+      },
+      "unique": {
+        "title": "Noyob",
+        "hint": "Alohida insho talab qiladigan promptlar."
+      }
     },
     "practice": {
       "today": "Bugun, {day}",
       "label": "Erkin matningiz",
       "placeholder": "Xayolingizga kelganini toʻxtamay yozing…",
-      "status": { "saving": "Saqlanmoqda…", "pending": "Saqlanmagan", "saved": "Saqlandi", "idle": "Boshlanmagan" },
+      "status": {
+        "saving": "Saqlanmoqda…",
+        "pending": "Saqlanmagan",
+        "saved": "Saqlandi",
+        "idle": "Boshlanmagan"
+      },
       "wordCount": "{count} soʻz",
       "dictate": "Diktovka",
       "dictateStop": "Toʻxtatish",
       "evaluate": "Fikr olish",
       "reevaluate": "Yana fikr olish",
       "evaluating": "Oʻqilmoqda…",
-      "score": { "imagery": "Obrazlilik", "voice": "Ovoz", "structure": "Tuzilma", "originality": "Orijinallik" },
+      "score": {
+        "imagery": "Obrazlilik",
+        "voice": "Ovoz",
+        "structure": "Tuzilma",
+        "originality": "Orijinallik"
+      },
       "scoreOf": "5 dan {score}",
       "praise": "Nima yaxshi chiqdi",
       "tryNext": "Keyingi urinish",
@@ -2248,8 +2354,8 @@
     },
     "view": {
       "label": "Koʻrinish",
-      "list": "Roʻyxat",
-      "discover": "Tanlash"
+      "list": "Katalog",
+      "discover": "Kartochkalar"
     },
     "prefs": {
       "open": "Afzalliklar",
@@ -3170,7 +3276,7 @@
       "dayCount": "{date}: {count, plural, one {# ta band} other {# ta band}}",
       "zoom": "Shkala masshtabi",
       "zoomLevel": {
-        "year": "Yil",
+        "fit": "Butun davr",
         "month": "Oy",
         "week": "Hafta"
       },
@@ -3180,7 +3286,17 @@
       "mine": "Mening vazifalarim",
       "addTaskTo": "Vazifa qoʻshish: {name}",
       "noDeadline": "muddatsiz",
-      "createTask": "Shu muddat uchun vazifa yaratish"
+      "createTask": "Shu muddat uchun vazifa yaratish",
+      "undated": "Sanasiz",
+      "short": {
+        "early": "ED/EA",
+        "regular": "RD",
+        "aid": "Moliya",
+        "test": "Test",
+        "registration": "Ro‘yxat",
+        "document": "Hujjat",
+        "opportunity": "Imkon"
+      }
     },
     "title": "Muddatlar",
     "view": {
@@ -4077,14 +4193,12 @@
       "reach": "Qiyin"
     },
     "stats": {
-      "admissionRate": "Qabul foizi",
-      "match": "Umumiy moslik",
-      "type": "Turi",
-      "cost": "Yordamdan keyingi narx"
+      "admissionRate": "Chet elliklar qabuli",
+      "cost": "≈ yiliga, yordamdan keyin"
     },
     "overlap": {
       "label": "Mos kelgan joylar",
-      "title": "{total} tegdan {count} tasi"
+      "why": "Nega: {tags}"
     },
     "context": {
       "empty": "Lentada kollejlar qolmadi.",
@@ -4721,6 +4835,7 @@
     "fit": "Moslik {value}",
     "noLabel": "—",
     "fitUnknown": "Moslik nomaʼlum",
+    "fitPartial": "Moslik {value} · maʼlumotning {share} % i asosida",
     "home": "Uyda ishonchli",
     "labelFor": "Belgi: {name}",
     "roundFor": "Raund: {name}",
@@ -4748,6 +4863,9 @@
     },
     "scholarships": "Stipendiyalar va imkoniyatlar",
     "plan": {
+      "created": "{count} ta vazifa yaratildi",
+      "undo": "Bekor qilish",
+      "undone": "Vazifalar oʻchirildi",
       "create": "Ariza rejasini yaratish",
       "offer": "{name} roʻyxatingizda. Ariza rejasini yarating: muddatdan hisoblangan oltita vazifa.",
       "done": "{name} uchun reja yaratildi.",
@@ -4791,7 +4909,7 @@
       "budgetLine": "Oila byudjeti {value}",
       "home": "Uyda ishonchli",
       "unlabelled": "guruhlanmagan",
-      "balance": "Reach, target, safety",
+      "balance": "Ambitsiyali, mos, ishonchli",
       "why": "Nega mos keldi",
       "noWhy": "Hozircha sabab yoʻq. Soʻrovnoma va maqsadlarni toʻldiring.",
       "chance": "{value}% ehtimol",
@@ -4804,6 +4922,7 @@
       "whyTitle": "Nega ular mos keldi"
     },
     "brief": {
+      "open": "AI sharhi",
       "title": "AI xulosasi",
       "refresh": "Yangilash",
       "loading": "Xulosa yozilmoqda",
@@ -5051,7 +5170,12 @@
       "later": "Hozir emas",
       "queued": "Soʻng",
       "min": "~{n} daq",
-      "open": "Ochish"
+      "open": "Ochish",
+      "action": {
+        "task": "Vazifani ochish",
+        "essay": "Esse yozish",
+        "opportunity": "Stipendiyani koʻrish"
+      }
     },
     "action": {
       "quiz": {
@@ -5141,7 +5265,8 @@
       "days": "{n} kun",
       "pastDays": "muddat oʻtdi",
       "empty": "Ro‘yxatda hali universitet yo‘q.",
-      "add": "Universitet tanlash"
+      "add": "Universitet tanlash",
+      "more": "+{n}"
     },
     "prof": {
       "title": "Siz uchun 3 ta kasb",
@@ -5164,7 +5289,8 @@
       "meeting": "Maslahatchi bilan uchrashuv",
       "reply": "Javob: {name}",
       "replyAll": "Javob muddati",
-      "doc": "Maʼlumotnoma: {name}"
+      "doc": "Maʼlumotnoma: {name}",
+      "all": "Barcha muddatlar →"
     },
     "replyDeadline": "Universitetlarga javob: {n} kun",
     "bar": {
@@ -5176,7 +5302,8 @@
       "label": "Boʻlimlar (demo)"
     },
     "error": "Yuklab bo‘lmadi",
-    "retry": "Qayta urinish"
+    "retry": "Qayta urinish",
+    "seasonSub": "mavsum: {season}"
   },
   "weightsLab": {
     "error": "Yuklab bo‘lmadi",
@@ -5211,6 +5338,11 @@
       "social": "ijtimoiy hayot",
       "city": "shahar va iqlim",
       "home": "uyga yaqinlik"
+    },
+    "now": "Hozirgi ogʻirlik",
+    "stepper": {
+      "down": "Kamroq: {trait}",
+      "up": "Koʻproq: {trait}"
     }
   },
   "professions": {
@@ -5258,7 +5390,9 @@
       "placeholder": "Kasblarni qidirish",
       "results": "Kasblar",
       "empty": "Kasb topilmadi. Boshqa soʻz sinab koʻring.",
-      "error": "Kasblarni yuklab boʻlmadi"
+      "error": "Kasblarni yuklab boʻlmadi",
+      "groups": "Kasblar guruhlari",
+      "allGroups": "Hammasi"
     },
     "risk": {
       "low": "AI ulushi past",
@@ -5294,7 +5428,8 @@
       "empty": "Hali hech narsa tanlanmadi. Yuqoridagi roʻyxatdan {max} tagacha kasb qoʻshing.",
       "saving": "Saqlanmoqda…",
       "error": "Tanlovni saqlab boʻlmadi",
-      "count": "{max} tadan {count} tasi tanlandi"
+      "count": "{max} tadan {count} tasi tanlandi",
+      "bar": "Tanlandi: {n}/{max}"
     },
     "impact": {
       "title": "Universitetlarga moslikdagi maqsadlar",
@@ -5302,6 +5437,21 @@
       "noList": "Tanlovingiz ({count}) saqlandi. Maqsadlar bahosini koʻrish uchun roʻyxatga universitet qoʻshing.",
       "avg": "Roʻyxatingizdagi {count} ta universitet boʻyicha maqsadlar oʻrtacha bahosi: 100 dan {value}.",
       "link": "Universitetlaringizga"
+    },
+    "ikigaiRow": {
+      "title": "Ikigai",
+      "count": "{total} doiradan {n}",
+      "fill": "Toʻldirish",
+      "edit": "Oʻzgartirish"
+    },
+    "suggest": {
+      "title": "Sizga mos",
+      "run": "Tanlash",
+      "again": "Yangilash",
+      "error": "Tanlab boʻlmadi. Keyinroq urinib koʻring.",
+      "byQuiz": "Test boʻyicha sizga mos: {majors}.",
+      "toField": "Yoʻnalish →",
+      "notInCatalogue": "«{title}» katalogda yoʻq: qidiruv orqali oʻxshash kasbni toping."
     }
   },
   "profileHub": {
@@ -5313,11 +5463,11 @@
     "link": {
       "career": {
         "title": "Karyera",
-        "hint": "Yo‘nalishlar, kasblar kelajagi va tanlovingiz."
+        "hint": "Yo‘nalishlar va karyera testi tavsiyalari."
       },
       "professions": {
         "title": "Kasblar",
-        "hint": "Ikigai va katalog: uchtagacha tanlang."
+        "hint": "Ikigai va katalog: beshtagacha tanlang."
       },
       "done": {
         "title": "Bajarilgan",
@@ -5350,12 +5500,33 @@
     "tab": {
       "read": "Tahlil",
       "unis": "OTMlar",
+      "plan": "Reja",
+      "versions": "Versiyalar",
+      "more": "Yana",
       "examples": "Namunalar",
-      "ideas": "Gʻoyalar"
+      "ideas": "Gʻoyalar",
+      "comments": "Izohlar"
     },
     "score": "Noyoblik",
     "scoreLabel": "Noyoblik: 100 dan {value}",
-    "scoreStale": "tahrirlardan oldin",
+    "copyFinal": "Yakuniy matnni nusxalash",
+    "copied": "Nusxalandi · {count} ta soʻz",
+    "copyFailed": "Matnni nusxalab boʻlmadi",
+    "preview": "Koʻrish",
+    "previewTitle": "Yakuniy matn",
+    "previewEmpty": "Hozircha koʻrsatadigan narsa yoʻq.",
+    "previewCount": "{words} ta soʻz · {chars} belgi",
+    "previewCountLimit": "{limit} tadan {words} ta soʻz · {chars} belgi",
+    "overBy": "limitdan {count} ta soʻz ortiq",
+    "fixWhere": "Eng zaif joy: {paragraph}-abzas.",
+    "fixWhereDim": "Eng zaif tomoni — {dimension}: {paragraph}-abzas.",
+    "dim": {
+      "detail": "tafsilotlar",
+      "voice": "ovoz",
+      "structure": "tuzilma",
+      "originality": "originallik",
+      "imagery": "obrazlilik"
+    },
     "readNow": "Chuqur tahlil",
     "fitChips": "OTMlarga mosligi",
     "chipsMore": "yana {count}",

@@ -37,9 +37,9 @@ function PromptItem({ prompt, slot, dimmed }: { prompt: PromptRef; slot: MatchSl
       <span className="text-muted-foreground text-sm break-words">{prompt.prompt}</span>
       {slot ? (
         <span className="flex items-center gap-1.5 text-xs">
-          <Icons.check aria-hidden className={slot.assigned ? "text-success size-3.5" : "text-muted-foreground size-3.5 opacity-40"} />
+          {slot.assigned ? <Icons.check aria-hidden className="text-success size-3.5" /> : null}
           {slot.assigned ? (
-            <span className="min-w-0 truncate">{t("slotFilled", { title: slot.assigned.title })}</span>
+            <span className="min-w-0 truncate">“{slot.assigned.title}”</span>
           ) : (
             <span className="text-muted-foreground">{t("slotFree")}</span>
           )}

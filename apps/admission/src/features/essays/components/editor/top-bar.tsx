@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Input, cn } from "@ihsp/ui"
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Icons, Input, cn } from "@ihsp/ui"
 import Link from "next/link"
 import type { ReactNode } from "react"
 
@@ -15,11 +15,13 @@ export type TopBarProps = {
   saveState: "saved" | "dirty" | "saving" | "conflict" | "error"
   onUndo: () => void
   onRedo: () => void
-  onTools: () => void
+  onCopy: () => void
+  onPreview: () => void
   onVersions: () => void
   onComments: () => void
   onShare: () => void
   commentsOpen: boolean
+  copyDisabled: boolean
 }
 
 const DOT = {
@@ -31,8 +33,8 @@ const DOT = {
 } as const
 
 /**
- * One row at every width: back, the title, the word count and the save state. From the lg width the actions follow;
- * on a phone they live in the "more" sheet so the row stays one line.
+ * One row at every width: back, the title, the word count and the save state. From 768 the actions follow as icons
+ * (Copy final text, Preview, Share); on a phone they live in the "more" menu so the row stays one line.
  */
 export function TopBar({
   title,
@@ -43,11 +45,13 @@ export function TopBar({
   saveState,
   onUndo,
   onRedo,
-  onTools,
+  onCopy,
+  onPreview,
   onVersions,
   onComments,
   onShare,
   commentsOpen,
+  copyDisabled,
 }: TopBarProps) {
   const t = useT("essays")
   const te = useT("essayEditor")
@@ -66,7 +70,7 @@ export function TopBar({
         value={title ?? ""}
         maxLength={120}
         onChange={(event) => onTitle(event.target.value)}
-        className="h-8 min-w-0 flex-1 border-transparent bg-transparent px-2 text-base font-medium shadow-none hover:border-input focus-visible:bg-background"
+        className="h-8 min-w-0 flex-1 border-transparent bg-transparent px-2 text-base font-medium text-ellipsis shadow-none hover:border-input focus-visible:bg-background"
       />
       <span
         id="essay-count"
@@ -83,7 +87,7 @@ export function TopBar({
         <span aria-hidden className={cn("size-2 rounded-full", DOT[saveState])} />
         <span className={saveState === "saved" ? "sr-only sm:not-sr-only" : "sr-only md:not-sr-only"}>{status}</span>
       </span>
-      <div className="hidden items-center gap-1 lg:flex">
+      <div className="hidden items-center gap-0.5 md:flex">
         <Button type="button" size="icon-sm" variant="ghost" aria-label={t("editor.undo")} onClick={onUndo}>
           <Icons.undo aria-hidden />
         </Button>
@@ -103,24 +107,47 @@ export function TopBar({
         >
           <Icons.chat aria-hidden />
         </Button>
-        <Button type="button" size="sm" variant="outline" onClick={onTools}>
-          {t("editor.tools")}
+        <Button type="button" size="icon-sm" variant="ghost" aria-label={te("copyFinal")} disabled={copyDisabled} onClick={onCopy}>
+          <Icons.copy aria-hidden />
         </Button>
-        <Button type="button" size="sm" className="rounded-full px-4" onClick={onShare}>
+        <Button type="button" size="icon-sm" variant="ghost" aria-label={te("preview")} onClick={onPreview}>
+          <Icons.eye aria-hidden />
+        </Button>
+        <Button type="button" size="sm" className="rounded-full px-3 lg:px-4" aria-label={t("editor.share")} onClick={onShare}>
           <Icons.share aria-hidden />
-          {t("editor.share")}
+          <span className="hidden lg:inline">{t("editor.share")}</span>
         </Button>
       </div>
-      <Button
-        type="button"
-        size="icon-sm"
-        variant="ghost"
-        className="lg:hidden"
-        aria-label={te("more")}
-        onClick={onTools}
-      >
-        <Icons.moreHorizontal aria-hidden />
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          aria-label={te("more")}
+          render={<Button type="button" size="icon-sm" variant="ghost" className="md:hidden" />}
+        >
+          <Icons.moreHorizontal aria-hidden />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem disabled={copyDisabled} onClick={onCopy}>
+            <Icons.copy aria-hidden />
+            {te("copyFinal")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={onPreview}>
+            <Icons.eye aria-hidden />
+            {te("preview")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={onShare}>
+            <Icons.share aria-hidden />
+            {t("editor.share")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={onVersions}>
+            <Icons.clock aria-hidden />
+            {t("editor.versions")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={onComments}>
+            <Icons.chat aria-hidden />
+            {t("tabs.comments")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </header>
   )
 }

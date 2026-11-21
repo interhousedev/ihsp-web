@@ -442,7 +442,11 @@
       "future": "Future"
     },
     "nextActivities": "Find activities for {fields}",
-    "bannerActivities": "Find activities: {fields}"
+    "bannerActivities": "Find activities: {fields}",
+    "quizTake": "Take the test (2 min)",
+    "quizAgain": "Retake the test",
+    "quizTitle": "Choosing a profession",
+    "quizHint": "10 short questions; your answers suggest fields of study."
   },
   "app": {
     "name": "{appAdmission}",
@@ -544,8 +548,7 @@
     "examplesAdmittedHint": "Curated by staff, with the source.",
     "optional": "Optional",
     "required": "Required",
-    "slotFilled": "“{title}”",
-    "slotFree": "Free slot",
+    "slotFree": "Empty",
     "promptsCount": "{count, plural, one {# prompt} other {# prompts}}",
     "limitMin": "from {count} words",
     "drawerEssays": "Your essays",
@@ -557,7 +560,7 @@
     "startAnother": "Start another version",
     "drawerPrompts": "Prompts and slots",
     "alsoFits": "Also fits",
-    "summaryNeed": "{needed, plural, one {# essay} other {# essays}} for {prompts, plural, one {# prompt} other {# prompts}}",
+    "summaryNeed": "{needed, plural, one {# essay needed} other {# essays needed}}",
     "summaryStarted": "{count} started",
     "due": "due {date}",
     "duePredicted": "expected {date}",
@@ -567,12 +570,7 @@
     "scopeLabel": "Prompts",
     "scopeList": "My list",
     "scopeAllPlain": "All",
-    "scopeAll": "All · {count}",
     "overLimit": "Over the limit",
-    "swapAria": "Change essay in slot {slot}",
-    "noCandidates": "No essay fits yet",
-    "assign": "Assign an essay",
-    "orDrop": "or drop one here",
     "trayLabel": "Your essays",
     "dragHint": "Drag an essay onto a slot.",
     "boardEmptyTitle": "No universities on your list",
@@ -583,20 +581,109 @@
     "score": "Uniqueness {value} of 100",
     "notStarted": "Not started",
     "inListCount": "{count} in your list",
-    "newEssay": "Blank essay"
+    "newEssay": "Blank essay",
+    "nextDue": "next deadline {date}",
+    "nextDuePredicted": "next deadline ≈ {date}",
+    "dueShort": "{date}",
+    "dueShortPredicted": "≈ {date}",
+    "commonApp": "Common App",
+    "searchPlaceholder": "Search by topic or university",
+    "scopeShowList": "Show only my list",
+    "scopeShowAll": "Show all prompts",
+    "type": {
+      "personal": "Personal essay",
+      "whyUs": "Why this university",
+      "community": "Community",
+      "academic": "Academic interests",
+      "activity": "Activities",
+      "short": "Short answers",
+      "other": "Other"
+    },
+    "pickOne": "Common App · choose 1 of {count}",
+    "showMore": "+{count} more",
+    "showFewer": "Show fewer",
+    "noMatch": "Nothing found",
+    "noMatchText": "No essay matches “{query}”.",
+    "practiceScore": "Score {total}/20",
+    "copied": "Copied · {count, plural, one {# word} other {# words}}",
+    "copyFailed": "Could not copy",
+    "copy": "Copy",
+    "preview": "Preview",
+    "previewCount": "{words} words · {chars} characters",
+    "previewCountLimit": "{words} of {limit} words · {chars} characters",
+    "overBy": "over by {count, plural, one {# word} other {# words}}",
+    "needsPersonal": "personal essay only",
+    "noEssays": "You have no essays yet.",
+    "slotPersonal": "Personal essay · Common App",
+    "slotExtra": "Additional essay",
+    "limitUpTo": "up to {count} words",
+    "sharedCommonApp": "One essay for all Common App universities.",
+    "promptMore": "Full prompt",
+    "promptLess": "Less",
+    "change": "Change",
+    "clearAria": "Remove “{title}” from the slot",
+    "slotEmpty": "Empty",
+    "chooseEssay": "Choose an essay",
+    "writeNew": "Write",
+    "backToUnis": "Universities",
+    "noSlots": "This university asks for no essays.",
+    "shortGroup": "Short answers ({count})",
+    "noEssaysGroup": "No essays ({count})"
+  },
+  "essayPractice": {
+    "title": "Writing practice",
+    "streak": "{count, plural, one {# day} other {# days}} in a row",
+    "history": "History",
+    "writing": "Today",
+    "score": "Score",
+    "pane": {
+      "write": "Write",
+      "score": "Score",
+      "history": "History"
+    },
+    "todayShort": "Today",
+    "todayLabel": "Today · {date}",
+    "historyEmpty": "Earlier days will appear here.",
+    "scoreEmpty": "Write at least five words and ask for feedback: the score appears here.",
+    "words": "{count, plural, one {# word} other {# words}}"
   },
   "essayFlow": {
     "label": "Essay path",
     "next": "Next: {step}",
     "locked": "Finish “{step}” first",
-    "status": { "done": "Done", "current": "Open", "locked": "Locked" },
+    "status": {
+      "done": "Done",
+      "current": "Open",
+      "locked": "Locked"
+    },
     "steps": {
-      "map": { "title": "Prompt map", "hint": "Which prompts one essay can answer", "summary": "{groups} prompt groups, {covered} covered" },
-      "practice": { "title": "Practice", "hint": "A few free minutes on today's theme", "summary": "Today: {count} words" },
-      "ideas": { "title": "Ideas and drafts", "hint": "Score ideas, write for a prompt group", "summary": "{count} essays" },
-      "gallery": { "title": "Other essays", "hint": "Essays shared by other students" },
-      "deep": { "title": "Evaluation", "hint": "Paragraph by paragraph reading" },
-      "match": { "title": "Match to universities", "hint": "Put essays into each university's slots" }
+      "map": {
+        "title": "Prompt map",
+        "hint": "Which prompts one essay can answer",
+        "summary": "{groups} prompt groups, {covered} covered"
+      },
+      "practice": {
+        "title": "Practice",
+        "hint": "A few free minutes on today's theme",
+        "summary": "Today: {count} words"
+      },
+      "ideas": {
+        "title": "Ideas and drafts",
+        "hint": "Score ideas, write for a prompt group",
+        "summary": "{count} essays"
+      },
+      "gallery": {
+        "title": "Other essays",
+        "hint": "Essays shared by other students"
+      },
+      "deep": {
+        "title": "Evaluation",
+        "hint": "Paragraph by paragraph reading"
+      },
+      "match": {
+        "title": "Match to universities",
+        "hint": "Put essays into each university's slots"
+      }
     },
     "map": {
       "intro": "Many universities ask almost the same question. Prompts are grouped by meaning so one essay can serve several of them.",
@@ -610,22 +697,41 @@
       "open": "Open",
       "showAll": "Show all {count}",
       "showLess": "Show less",
-      "common": { "title": "Most common", "hint": "Common App prompts, asked of almost everyone." },
-      "shared": { "title": "Shared across universities", "hint": "Similar prompts: one essay can answer the whole group." },
-      "unique": { "title": "Unique", "hint": "Prompts that need an essay of their own." }
+      "common": {
+        "title": "Most common",
+        "hint": "Common App prompts, asked of almost everyone."
+      },
+      "shared": {
+        "title": "Shared across universities",
+        "hint": "Similar prompts: one essay can answer the whole group."
+      },
+      "unique": {
+        "title": "Unique",
+        "hint": "Prompts that need an essay of their own."
+      }
     },
     "practice": {
       "today": "Today, {day}",
       "label": "Your free writing",
       "placeholder": "Write whatever comes, without stopping…",
-      "status": { "saving": "Saving…", "pending": "Unsaved", "saved": "Saved", "idle": "Not started" },
+      "status": {
+        "saving": "Saving…",
+        "pending": "Unsaved",
+        "saved": "Saved",
+        "idle": "Not started"
+      },
       "wordCount": "{count} words",
       "dictate": "Dictate",
       "dictateStop": "Stop",
       "evaluate": "Get feedback",
       "reevaluate": "Get feedback again",
       "evaluating": "Reading…",
-      "score": { "imagery": "Imagery", "voice": "Voice", "structure": "Structure", "originality": "Originality" },
+      "score": {
+        "imagery": "Imagery",
+        "voice": "Voice",
+        "structure": "Structure",
+        "originality": "Originality"
+      },
       "scoreOf": "{score} out of 5",
       "praise": "What works",
       "tryNext": "Try next",
@@ -1023,7 +1129,6 @@
     "editor": {
       "share": "Share",
       "versions": "Version history",
-      "tools": "Plan & tools",
       "toolbar": "Editor toolbar",
       "undo": "Undo",
       "redo": "Redo",
@@ -2248,8 +2353,8 @@
     },
     "view": {
       "label": "View",
-      "list": "List",
-      "discover": "Discover"
+      "list": "Catalog",
+      "discover": "Cards"
     },
     "prefs": {
       "open": "Preferences",
@@ -3170,7 +3275,7 @@
       "dayCount": "{date}: {count, plural, one {# item} other {# items}}",
       "zoom": "Timeline scale",
       "zoomLevel": {
-        "year": "Year",
+        "fit": "Whole span",
         "month": "Month",
         "week": "Week"
       },
@@ -3180,7 +3285,17 @@
       "mine": "My tasks",
       "addTaskTo": "Add a task to {name}",
       "noDeadline": "No due date",
-      "createTask": "Create task for this deadline"
+      "createTask": "Create task for this deadline",
+      "undated": "No dates",
+      "short": {
+        "early": "ED/EA",
+        "regular": "RD",
+        "aid": "Aid",
+        "test": "Test",
+        "registration": "Reg.",
+        "document": "Doc",
+        "opportunity": "Opp."
+      }
     },
     "title": "Deadlines",
     "view": {
@@ -4077,14 +4192,12 @@
       "reach": "Reach"
     },
     "stats": {
-      "admissionRate": "Admission rate",
-      "match": "Overall match",
-      "type": "Type",
-      "cost": "Cost after aid"
+      "admissionRate": "Intl admit rate",
+      "cost": "≈ per year after aid"
     },
     "overlap": {
       "label": "Where you overlap",
-      "title": "{count} out of {total} tags"
+      "why": "Why: {tags}"
     },
     "context": {
       "empty": "No colleges left in your feed.",
@@ -4721,6 +4834,7 @@
     "fit": "Fit {value}",
     "noLabel": "—",
     "fitUnknown": "Fit unknown",
+    "fitPartial": "Fit {value} · from {share}% of the data",
     "home": "Safe at home",
     "labelFor": "Label of {name}",
     "roundFor": "Round of {name}",
@@ -4748,6 +4862,9 @@
     },
     "scholarships": "Scholarships and opportunities",
     "plan": {
+      "created": "{count} tasks created",
+      "undo": "Undo",
+      "undone": "Tasks removed",
       "create": "Create application plan",
       "offer": "{name} is on your list. Create its application plan: six tasks counted back from the deadline.",
       "done": "Plan for {name} created.",
@@ -4804,6 +4921,7 @@
       "whyTitle": "Why they matched"
     },
     "brief": {
+      "open": "AI overview",
       "title": "AI brief",
       "refresh": "Refresh",
       "loading": "Writing the brief",
@@ -5051,7 +5169,12 @@
       "later": "Not now",
       "queued": "Then",
       "min": "~{n} min",
-      "open": "Open"
+      "open": "Open",
+      "action": {
+        "task": "Open the task",
+        "essay": "Write the essay",
+        "opportunity": "See the scholarship"
+      }
     },
     "action": {
       "quiz": {
@@ -5141,7 +5264,8 @@
       "days": "{n} d",
       "pastDays": "deadline passed",
       "empty": "Your list has no universities yet.",
-      "add": "Find universities"
+      "add": "Find universities",
+      "more": "+{n}"
     },
     "prof": {
       "title": "3 careers for you",
@@ -5164,7 +5288,8 @@
       "meeting": "Counselor meeting",
       "reply": "Reply: {name}",
       "replyAll": "Reply deadline",
-      "doc": "Certificate: {name}"
+      "doc": "Certificate: {name}",
+      "all": "All deadlines →"
     },
     "replyDeadline": "Reply to universities: {n} d",
     "bar": {
@@ -5176,7 +5301,8 @@
       "label": "Sections (demo)"
     },
     "error": "Could not load this",
-    "retry": "Retry"
+    "retry": "Retry",
+    "seasonSub": "{season} season"
   },
   "weightsLab": {
     "error": "Could not load",
@@ -5211,6 +5337,11 @@
       "social": "social life",
       "city": "city and climate",
       "home": "closeness to home"
+    },
+    "now": "Weights now",
+    "stepper": {
+      "down": "Less: {trait}",
+      "up": "More: {trait}"
     }
   },
   "professions": {
@@ -5258,7 +5389,9 @@
       "placeholder": "Search professions",
       "results": "Professions",
       "empty": "No professions found. Try another word.",
-      "error": "Could not load professions"
+      "error": "Could not load professions",
+      "groups": "Profession groups",
+      "allGroups": "All"
     },
     "risk": {
       "low": "Low AI exposure",
@@ -5294,7 +5427,8 @@
       "empty": "Nothing picked yet. Add up to {max} professions from the list above.",
       "saving": "Saving…",
       "error": "Could not save your picks",
-      "count": "{count} of {max} picked"
+      "count": "{count} of {max} picked",
+      "bar": "{n} of {max} picked"
     },
     "impact": {
       "title": "Goals in your university fit",
@@ -5302,6 +5436,21 @@
       "noList": "Your {count} picks are saved. Add universities to your list to see the goals score.",
       "avg": "Average goals score across {count} universities in your list: {value} of 100.",
       "link": "See your universities"
+    },
+    "ikigaiRow": {
+      "title": "Ikigai",
+      "count": "{n} of {total} circles",
+      "fill": "Fill in",
+      "edit": "Edit"
+    },
+    "suggest": {
+      "title": "Suits you",
+      "run": "Suggest",
+      "again": "Refresh",
+      "error": "Could not suggest. Try again later.",
+      "byQuiz": "The test points to: {majors}.",
+      "toField": "Field of study →",
+      "notInCatalogue": "“{title}” is not in the catalogue: look for a similar profession with search."
     }
   },
   "profileHub": {
@@ -5313,11 +5462,11 @@
     "link": {
       "career": {
         "title": "Career",
-        "hint": "Fields, the future of professions and your choice."
+        "hint": "Fields of study and what the career test suggests."
       },
       "professions": {
         "title": "Professions",
-        "hint": "Ikigai and the catalogue: pick up to three."
+        "hint": "Ikigai and the catalogue: pick up to five."
       },
       "done": {
         "title": "Done",
@@ -5350,12 +5499,33 @@
     "tab": {
       "read": "Read",
       "unis": "Universities",
+      "plan": "Plan",
+      "versions": "Versions",
+      "more": "More",
       "examples": "Examples",
-      "ideas": "Ideas"
+      "ideas": "Ideas",
+      "comments": "Comments"
     },
     "score": "Uniqueness",
     "scoreLabel": "Uniqueness {value} out of 100",
-    "scoreStale": "before your edits",
+    "copyFinal": "Copy final text",
+    "copied": "Copied · {count, plural, one {# word} other {# words}}",
+    "copyFailed": "Could not copy the text",
+    "preview": "Preview",
+    "previewTitle": "Final text",
+    "previewEmpty": "Nothing to preview yet.",
+    "previewCount": "{words, plural, one {# word} other {# words}} · {chars} characters",
+    "previewCountLimit": "{words} of {limit} words · {chars} characters",
+    "overBy": "over by {count, plural, one {# word} other {# words}}",
+    "fixWhere": "Weakest spot: paragraph {paragraph}.",
+    "fixWhereDim": "Weakest on {dimension}: paragraph {paragraph}.",
+    "dim": {
+      "detail": "detail",
+      "voice": "voice",
+      "structure": "structure",
+      "originality": "originality",
+      "imagery": "imagery"
+    },
     "readNow": "Deep read",
     "fitChips": "Fit per university",
     "chipsMore": "+{count} more",
