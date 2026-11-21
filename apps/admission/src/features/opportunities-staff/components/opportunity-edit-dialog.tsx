@@ -102,7 +102,7 @@ export function OpportunityEditDialog({
     if (!reg || !exam) return setBadDates(true)
     const orNull = (v: string) => v.trim() || null
     const fields: StaffOppFields = {
-      ...(detail.data?.fields ?? {}),
+      ...detail.data?.fields,
       kind: form.kind,
       title: form.title.trim(),
       provider: orNull(form.provider),

@@ -15,15 +15,7 @@ import { useOptionLabel } from "./option-label"
 const ROLE_TONE = { safety: "success", target: "success", reach: "warning" } as const
 
 /** Not-yet-allowed AI, a spent limit, a failure: the body of the panel instead of the brief. */
-function BriefState({
-  error,
-  onRetry,
-  onGranted,
-}: {
-  error: unknown
-  onRetry: () => void
-  onGranted: () => void
-}) {
+function BriefState({ error, onRetry, onGranted }: { error: unknown; onRetry: () => void; onGranted: () => void }) {
   const t = useT("brief")
   const errorMessage = useErrorMessage()
   const client = useQueryClient()
@@ -53,8 +45,7 @@ function BriefState({
         </div>
       </BriefCard>
     )
-  if (type === "ai/limit-reached")
-    return <BriefCard title={t("limit.title")} description={t("limit.text")} />
+  if (type === "ai/limit-reached") return <BriefCard title={t("limit.title")} description={t("limit.text")} />
   return (
     <BriefCard title={t("error.title")} description={errorMessage(error)}>
       <div className="pt-1">
@@ -130,7 +121,11 @@ function useBriefSections(brief: ListBrief | undefined): BriefSectionSpec[] {
               key={item.institution_id}
               title={item.name}
               description={item.reason}
-              status={{ tone: ROLE_TONE[item.role], label: role(item.role), detail: `${country(item.country)} · ${admit}` }}
+              status={{
+                tone: ROLE_TONE[item.role],
+                label: role(item.role),
+                detail: `${country(item.country)} · ${admit}`,
+              }}
               action={<AddToListButton institutionId={item.institution_id} />}
             />
           )
@@ -150,9 +145,8 @@ export function ListBriefButton({ className }: { className?: string }) {
   const brief = useListBrief()
   const sections = useBriefSections(brief.data)
   const [open, setOpen] = useState(false)
-  const date = new Intl.DateTimeFormat(locale, { day: "numeric", month: "long", timeZone: "Asia/Tashkent" }).format(
-    new Date(),
-  )
+  const [now] = useState(() => new Date())
+  const date = new Intl.DateTimeFormat(locale, { day: "numeric", month: "long", timeZone: "Asia/Tashkent" }).format(now)
   const start = () => {
     if (!brief.isPending) brief.mutate()
   }

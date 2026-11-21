@@ -21,7 +21,7 @@ const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
 }
 
 /** Apps that are installed separately: in the installed app their links go to the apps hub, to the app's install steps. */
-const HUB_ANCHORS: readonly PlatformKey[] = ["lms", "library", "staff", "admin"]
+const HUB_ANCHORS: readonly PlatformKey[] = ["lms", "library", "admission", "staff", "admin"]
 
 /** `https://app.ihsu.uz` + `lms` → `https://app.ihsu.uz/install/?app=lms`, the hub's install page of that app. */
 export function installAnchorUrl(hub: string, key: PlatformKey): string {

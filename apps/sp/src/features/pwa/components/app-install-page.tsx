@@ -15,7 +15,7 @@ import {
 import Link from "next/link"
 import { useState } from "react"
 import { useHubApps, type HubApp } from "../hooks/use-hub-apps"
-import { HUB_ICONS } from "./apps-hub"
+import { HubAppIcon } from "./apps-hub"
 import { StepList, type Step } from "./step-list"
 
 /** The app the address names: `/install/?app=library` → `library`. */
@@ -50,12 +50,11 @@ function AppInstallContent({ app }: { app: HubApp & { href: string } }) {
   const t = useT("pwa")
   const [environment] = useState(readPageEnvironment)
   const steps = useSteps(environment.platform, app.name)
-  const Icon = HUB_ICONS[app.key]
   return (
     <>
       <header className="flex flex-col items-center gap-3 text-center">
         <span className="bg-card flex size-18 items-center justify-center rounded-2xl border shadow-sm">
-          <Icon aria-hidden className="text-primary size-10" />
+          <HubAppIcon src={app.iconSrc} className="size-14" />
         </span>
         <h1 className="text-2xl font-bold tracking-tight">{t("appInstall.title", { name: app.name })}</h1>
         <p className="text-muted-foreground text-sm">{app.description}</p>
@@ -105,7 +104,13 @@ export function AppInstallPage() {
             {t("appInstall.unknown")}
           </p>
         )}
-        <Link href="/" className={buttonVariants({ variant: "ghost", className: "min-h-11 w-full" })}>
+        <Link
+          href="/"
+          className={buttonVariants({
+            variant: "ghost",
+            className: "min-h-11 w-full",
+          })}
+        >
           {t("appInstall.back")}
         </Link>
       </div>

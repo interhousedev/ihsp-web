@@ -11,11 +11,15 @@ describe("AppsHub", () => {
     renderPwa(<AppsHub />)
 
     const items = screen.getAllByRole("listitem")
-    expect(items).toHaveLength(5)
+    expect(items).toHaveLength(6)
     expect(within(items[0] as HTMLElement).getByText("my.iht")).toBeInTheDocument()
     expect(within(items[0] as HTMLElement).getByText("Install with the steps above")).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Install lms.iht" })).toHaveAttribute("href", "/install/?app=lms")
     expect(screen.getByRole("link", { name: "Install library.iht" })).toHaveAttribute("href", "/install/?app=library")
+    expect(screen.getByRole("link", { name: "Install admission.iht" })).toHaveAttribute(
+      "href",
+      "/install/?app=admission",
+    )
     expect(screen.getByRole("link", { name: "Install IHT Учителям" })).toHaveAttribute("href", "/install/?app=staff")
     expect(screen.getByRole("link", { name: "Install admin.iht" })).toHaveAttribute("href", "/install/?app=admin")
   })
@@ -38,6 +42,17 @@ describe("AppsHub", () => {
     renderPwa(<AppsHub />)
 
     expect(screen.queryByRole("link", { name: "Install library.iht" })).not.toBeInTheDocument()
-    expect(screen.getAllByRole("listitem")).toHaveLength(4)
+    expect(screen.getAllByRole("listitem")).toHaveLength(5)
+  })
+
+  test("shows each app's own manifest icon", () => {
+    renderPwa(<AppsHub />)
+
+    const sources = screen.getAllByRole("listitem").map((item) => item.querySelector("img")?.getAttribute("src"))
+    expect(sources[0]).toBe("/icons/icon-192.png")
+    expect(sources.slice(1)).toEqual(
+      ["lms", "library", "admission", "staff", "admin"].map((key) => `/icons/apps/${key}.png`),
+    )
+    expect(new Set(sources).size).toBe(sources.length)
   })
 })

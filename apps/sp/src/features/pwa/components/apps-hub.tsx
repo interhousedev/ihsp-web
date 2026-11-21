@@ -2,23 +2,18 @@
 
 import { useT } from "@ihsp/i18n"
 import { buttonVariants, cn } from "@ihsp/ui"
-import { IconBook2, IconBooks, IconSchool, IconShieldLock, IconUsers } from "@ihsp/ui"
 import { hubInstallUrl } from "@ihsp/features-core/pwa"
-import { useEffect, useState, type ComponentType } from "react"
+import { useEffect, useState } from "react"
 import { useHubApps, type HubAppKey } from "../hooks/use-hub-apps"
 
-/** The icon of each app on the hub and on its install page. */
-export const HUB_ICONS: Record<HubAppKey, ComponentType<{ className?: string }>> = {
-  sp: IconSchool,
-  lms: IconBook2,
-  library: IconBooks,
-  staff: IconUsers,
-  admin: IconShieldLock,
+/** The app's real icon (its manifest's 192px icon), as the home screen shows it. */
+export function HubAppIcon({ src, className }: { src: string; className?: string }) {
+  return <img src={src} alt="" aria-hidden width={48} height={48} className={cn("rounded-xl", className)} />
 }
 
 /** The card an address like `/#install-lms` points to, or `null`. */
 export function hubAnchorKey(hash: string): HubAppKey | null {
-  const match = /^#install-(sp|lms|library|staff|admin)$/.exec(hash)
+  const match = /^#install-(sp|lms|library|admission|staff|admin)$/.exec(hash)
   return (match?.[1] as HubAppKey | undefined) ?? null
 }
 
@@ -57,7 +52,6 @@ export function AppsHub() {
       </div>
       <ul className="flex flex-col gap-2">
         {apps.map((app) => {
-          const Icon = HUB_ICONS[app.key]
           return (
             <li
               key={app.key}
@@ -68,7 +62,7 @@ export function AppsHub() {
                 highlighted === app.key && "ring-primary border-primary ring-2",
               )}
             >
-              <Icon aria-hidden className="text-primary size-6 shrink-0" />
+              <HubAppIcon src={app.iconSrc} className="size-10 shrink-0" />
               <div className="flex min-w-0 flex-1 flex-col">
                 <span className="flex items-center gap-2 text-sm font-medium">
                   {app.name}
@@ -84,7 +78,10 @@ export function AppsHub() {
                 <a
                   href={hubInstallUrl("", app.key)}
                   aria-label={t("hub.installLabel", { name: app.name })}
-                  className={buttonVariants({ variant: "outline", className: "min-h-11 shrink-0" })}
+                  className={buttonVariants({
+                    variant: "outline",
+                    className: "min-h-11 shrink-0",
+                  })}
                 >
                   {t("hub.install")}
                 </a>

@@ -30,23 +30,30 @@ export function GradePill({
   const t = useT("items")
   const id = useId()
   const text = [descriptor, tip].filter(Boolean).join(" — ")
+  const pill = (
+    <span
+      role="img"
+      aria-label={t("grade.label", { part, grade })}
+      title={text || undefined}
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full font-medium",
+        large ? "h-8 px-3 text-sm" : "h-6 px-2.5 text-xs",
+        TONE[grade] ?? "bg-muted text-muted-foreground",
+      )}
+    >
+      {part}
+      <span className="font-semibold">{grade}</span>
+    </span>
+  )
   return (
     <span className="group relative inline-flex">
-      <span
-        role="img"
-        tabIndex={text ? 0 : undefined}
-        aria-label={t("grade.label", { part, grade })}
-        aria-describedby={text ? id : undefined}
-        title={text || undefined}
-        className={cn(
-          "inline-flex items-center gap-1.5 rounded-full font-medium",
-          large ? "h-8 px-3 text-sm" : "h-6 px-2.5 text-xs",
-          TONE[grade] ?? "bg-muted text-muted-foreground",
-        )}
-      >
-        {part}
-        <span className="font-semibold">{grade}</span>
-      </span>
+      {text ? (
+        <button type="button" aria-describedby={id} className="inline-flex rounded-full">
+          {pill}
+        </button>
+      ) : (
+        pill
+      )}
       {text ? (
         <span
           id={id}
@@ -72,8 +79,16 @@ export function ItemGrades({ item, tips = false, large = false }: { item: Item; 
       <div className="flex flex-wrap items-center gap-1.5">
         {g ? (
           <>
-            <GradePill part={t("grade.title")} grade={g.title_grade} tip={g.title_tip} descriptor={g.title_descriptor} large={large} />
-            <GradePill part={t("grade.description")} grade={g.description_grade}
+            <GradePill
+              part={t("grade.title")}
+              grade={g.title_grade}
+              tip={g.title_tip}
+              descriptor={g.title_descriptor}
+              large={large}
+            />
+            <GradePill
+              part={t("grade.description")}
+              grade={g.description_grade}
               tip={g.description_tip}
               descriptor={g.description_descriptor}
               large={large}

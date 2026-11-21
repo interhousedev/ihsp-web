@@ -9,6 +9,18 @@ import type {
 import { HttpResponse, http } from "msw"
 import { apiUrl, param, problem, readJson } from "./utils"
 
+const tracingFixture = {
+  source: "none",
+  host: "",
+  public_key: null,
+  has_secret: false,
+  secret_last4: null,
+  env_configured: false,
+  env_host: "",
+  capture_default: false,
+  updated_at: null,
+}
+
 export const aiConnectorsFixture: AiConnector[] = [
   {
     id: "openrouter",
@@ -125,19 +137,11 @@ export const adminAiHarnessHandlers = [
     return HttpResponse.json({ ...base, route: { ...base.route, ...body } })
   }),
   http.delete(apiUrl("/v1/admin/ai/pipelines/:pipeline"), () => new HttpResponse(null, { status: 204 })),
-  http.get(apiUrl("/v1/admin/ai/tracing"), () =>
-    HttpResponse.json({
-      source: "none",
-      host: "",
-      public_key: null,
-      has_secret: false,
-      secret_last4: null,
-      env_configured: false,
-      env_host: "",
-      capture_default: false,
-      updated_at: null,
-    }),
+  http.get(apiUrl("/v1/admin/ai/tracing"), () => HttpResponse.json(tracingFixture)),
+  http.put(apiUrl("/v1/admin/ai/tracing"), async ({ request }) =>
+    HttpResponse.json({ ...tracingFixture, ...(await readJson<Record<string, unknown>>(request)) }),
   ),
+  http.delete(apiUrl("/v1/admin/ai/tracing"), () => HttpResponse.json(tracingFixture)),
   http.get(apiUrl("/v1/admin/ai/requests"), () => HttpResponse.json({ items: aiRequestsFixture })),
   http.get(apiUrl("/v1/admin/ai/prompts/:task/:name/versions"), () => HttpResponse.json({ items: [] })),
   http.get(apiUrl("/v1/admin/ai/prompts/:task/:name/diff"), ({ params }) =>

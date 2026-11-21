@@ -24,7 +24,9 @@ function linksFor(
 ): PlatformLink[] {
   setClient(client)
   let seen: PlatformLink[] = []
-  renderWithProviders(<Links onLinks={(links) => (seen = links)} />, { session: { user: { ...userMe, roles } } })
+  renderWithProviders(<Links onLinks={(links) => (seen = links)} />, {
+    session: { user: { ...userMe, roles } },
+  })
   return seen
 }
 
@@ -86,7 +88,11 @@ describe("usePlatformLinks", () => {
   })
 
   it("sends the separately installed apps to their install steps on the apps hub in the installed app", () => {
-    window.__ENV__ = { ...(window.__ENV__ as object), APP_MODE: "pwa", APP_URL: "https://app.ihsu.uz/" }
+    window.__ENV__ = {
+      ...(window.__ENV__ as object),
+      APP_MODE: "pwa",
+      APP_URL: "https://app.ihsu.uz/",
+    }
     try {
       const links = linksFor(["student"], "sp")
 
@@ -94,11 +100,15 @@ describe("usePlatformLinks", () => {
         ["sp", "http://localhost:3002"],
         ["lms", "https://app.ihsu.uz/install/?app=lms"],
         ["library", "https://app.ihsu.uz/install/?app=library"],
-        ["admission", "http://localhost:3009"],
+        ["admission", "https://app.ihsu.uz/install/?app=admission"],
         ["id", "http://localhost:3001"],
       ])
     } finally {
-      window.__ENV__ = { ...(window.__ENV__ as object), APP_MODE: "sp", APP_URL: undefined }
+      window.__ENV__ = {
+        ...(window.__ENV__ as object),
+        APP_MODE: "sp",
+        APP_URL: undefined,
+      }
       resetConfig()
     }
   })
@@ -112,7 +122,9 @@ describe("usePlatformLinks", () => {
   it("is empty for an anonymous visitor", () => {
     setClient("share")
     let seen: PlatformLink[] = [{ key: "id", name: "x", description: "x", href: "x", current: false }]
-    renderWithProviders(<Links onLinks={(links) => (seen = links)} />, { session: null })
+    renderWithProviders(<Links onLinks={(links) => (seen = links)} />, {
+      session: null,
+    })
 
     expect(seen).toEqual([])
   })
