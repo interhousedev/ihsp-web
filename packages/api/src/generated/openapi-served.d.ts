@@ -8660,6 +8660,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/today/snooze": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Snooze
+         * @description Hide a next action from `/today` for three days.
+         */
+        post: operations["admission_snooze_today"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/transcripts": {
         parameters: {
             query?: never;
@@ -27549,6 +27569,8 @@ export interface components {
             axes: components["schemas"]["AxisFitOut"][];
             /** Institution Id */
             institution_id: string;
+            /** Known Share */
+            known_share: number;
             /** List Entry Id */
             list_entry_id: string;
             /** Total */
@@ -33657,6 +33679,8 @@ export interface components {
             href: string;
             /** Key */
             key: string;
+            /** Kind */
+            kind: string;
             /** List Entry Id */
             list_entry_id: string | null;
             /** Minutes */
@@ -40463,6 +40487,14 @@ export interface components {
             lock_version: number;
             /** Name */
             name?: string | null;
+        };
+        /**
+         * SnoozeIn
+         * @description The next action to hide for three days (twice at most when dated).
+         */
+        SnoozeIn: {
+            /** Key */
+            key: string;
         };
         /**
          * SourceDetailResponse
@@ -65065,6 +65097,37 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TodayOut"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_snooze_today: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SnoozeIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
