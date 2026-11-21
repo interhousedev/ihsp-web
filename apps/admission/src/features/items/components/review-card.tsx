@@ -1,8 +1,10 @@
 "use client"
 
+import { ApiError } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, GradeChip, GRADES, Icons, type Grade } from "@ihsp/ui"
 import { AiTabCard } from "@/components/ai-tab-card"
+import Link from "next/link"
 import { useState } from "react"
 import { DIMENSIONS, useReview, useReviewFeedback, type Review } from "../api"
 
@@ -145,7 +147,23 @@ export function ReviewSection({ itemId, review, stale }: { itemId: string; revie
       </div>
       {run.isError ? (
         <p role="alert" className="text-destructive text-sm">
-          {errorMessage(run.error)}
+          {run.error instanceof ApiError && run.error.type === "admission/words_not_set" ? (
+            <>
+              {t("review.noWords")}{" "}
+              <Link href="/essays/?tab=story#words" className="underline">
+                {t("review.goWords")}
+              </Link>
+            </>
+          ) : run.error instanceof ApiError && run.error.type === "admission/consent_required" ? (
+            <>
+              {t("review.noConsent")}{" "}
+              <Link href="/settings/#consent" className="underline">
+                {t("review.goConsent")}
+              </Link>
+            </>
+          ) : (
+            errorMessage(run.error)
+          )}
         </p>
       ) : null}
       {current ? (

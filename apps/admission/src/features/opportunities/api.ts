@@ -335,3 +335,41 @@ export function useDismissReport() {
     onSuccess: () => client.invalidateQueries({ queryKey: REPORTS_KEY }),
   })
 }
+
+/** The researched draft of a "not in the list" line (`IntakeDraftIO`). */
+export type IntakeDraft = {
+  title: string
+  summary: string
+  provider: string
+  kind: string
+  registration_deadlines: string[]
+  event_dates: string[]
+  recurrence: string
+  subject_ids: string[]
+  url: string
+  materials: { title: string; url: string }[]
+  missing: string[]
+  blocked: string[]
+}
+export type OpportunityBrief = {
+  title: string
+  provider: string | null
+  kind: string
+  url: string | null
+  summary: string | null
+}
+export type OpportunityLookup = {
+  draft: IntakeDraft
+  matches: (OpportunityBrief & { id: string })[]
+  pending_submission_id: string | null
+}
+/** The longest line the lookup accepts. */
+export const LOOKUP_MAX = 300
+
+/** Research one line (a link, or a name and an organization); needs AI consent. */
+export function useOpportunityLookup() {
+  return useMutation({
+    mutationFn: (body: { query: string; locale: string }) =>
+      getApiClient().post<OpportunityLookup>(`${BASE}/lookup`, body),
+  })
+}

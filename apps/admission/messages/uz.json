@@ -1301,7 +1301,9 @@
     "sectionParts": "{section}: boʻlimlar",
     "menu": "Yana",
     "exemplars": "Namunaviy insholar",
-    "promptStudio": "Prompt studiyasi"
+    "promptStudio": "Prompt studiyasi",
+    "manageOpportunities": "Imkoniyatlarni boshqarish",
+    "manageUniversities": "Universitetlar roʻyxatini boshqarish"
   },
   "outcomes": {
     "title": "Natijalar",
@@ -2921,7 +2923,8 @@
       "drop": "«{title}» «{column}» ga qoʻyildi.",
       "cancel": "«{title}» ni koʻchirish bekor qilindi.",
       "incomplete": "«{title}» ni tayyor deb belgilash uchun yana bir nechta maydonni toʻldiring.",
-      "addDetails": "Toʻldirish"
+      "addDetails": "Toʻldirish",
+      "movedIncomplete": "Tayyorga o‘tkazildi, lekin yetishmaydi: {fields}."
     },
     "empty": {
       "activity": {
@@ -2967,7 +2970,21 @@
       "no": "Yoʻq",
       "required": "«Tayyor» uchun majburiy",
       "category": "Kategoriya",
-      "level": "Eʼtirof darajasi"
+      "level": "Eʼtirof darajasi",
+      "longHint": "Common App faqat dastlabki {warn} belgini ko‘rsatadi; qisqaroq yozing.",
+      "incompleteHint": "To‘liq emas, yetishmaydi: {fields}. Baribir tayyorga o‘tkazish mumkin.",
+      "missing": {
+        "category": "turi",
+        "level": "e’tirof darajasi",
+        "title": "nomi",
+        "organization": "tashkilot",
+        "description": "tavsif",
+        "grades": "sinflar",
+        "timing": "davri",
+        "hours_per_week": "haftasiga soat",
+        "weeks_per_year": "yiliga hafta",
+        "intend_in_college": "kollejdagi rejalar"
+      }
     },
     "delete": {
       "button": "Oʻchirish",
@@ -2986,7 +3003,8 @@
       "remove": "{n}-raqamni olib tashlash",
       "addCurrent": "Joriy raqam qoʻshish",
       "addProjected": "Rejalashtirilgan raqam qoʻshish",
-      "save": "Raqamlarni saqlash"
+      "save": "Raqamlarni saqlash",
+      "helper": "Raqamlar tavsif yozishga yordam beradi; aniq yozing."
     },
     "review": {
       "tab": "SI tahlili",
@@ -3010,7 +3028,11 @@
       "missing": "Qoʻshiladigan faktlar",
       "helpful": "Foydali",
       "disagree": "Rozi emasmisiz?",
-      "thanks": "Fikringiz uchun rahmat."
+      "thanks": "Fikringiz uchun rahmat.",
+      "noWords": "Sharhni ishga tushirish uchun avval soʼzlaringizni qoʻshing.",
+      "goWords": "Soʼzlarga oʻtish",
+      "noConsent": "Sharh uchun AI qayta ishlashiga rozilik kerak.",
+      "goConsent": "Sozlamalarni ochish"
     },
     "interview": {
       "tab": "SI intervyu",
@@ -3117,7 +3139,17 @@
       "next": "Keyingi",
       "back": "Orqaga",
       "ofHours": "168 dan",
-      "ofWeeks": "52 dan"
+      "ofWeeks": "52 dan",
+      "numbersIntro": "Barcha raqamlarni to‘ldiring: sinflar, haftasiga soat, yiliga hafta va asosiy natijalar. Raqamlar tavsif yozishga yordam beradi.",
+      "factsTitle": "Asosiy raqamlar",
+      "factsHint": "Qamrab olingan odamlar, yig‘ilgan mablag‘, natijalar, a’zolar, tadbirlar.",
+      "factValue": "Raqam",
+      "factLabel": "Nimani bildiradi",
+      "factPlaceholder": "qamrab olingan odamlar",
+      "addFact": "Raqam qo‘shish",
+      "useInDescription": "Tavsifga qo‘shish",
+      "numbersHelper": "Tavsifga raqamlardan iborat qisqa ibora qo‘shadi; uni tahrirlash mumkin.",
+      "proofsLater": "Tasdiqlarni (sertifikat, havola, fayl) keyinroq faoliyatning o‘zidan qo‘shishingiz mumkin."
     },
     "honorsScroll": "Mukofotlaringiz",
     "analytics": {
@@ -3969,6 +4001,27 @@
     "delivery": {
       "local": "Litseyda (LMS)",
       "external": "Tashqi"
+    },
+    "notInList": {
+      "title": "Yangi imkoniyat / roʻyxatda yoʻq",
+      "hint": "Havolani qoʻying yoki nomi va tashkilotchini yozing. Maʼlumotni topamiz va katalogni tekshiramiz.",
+      "inputLabel": "Havola yoki nomi va tashkilotchi",
+      "placeholder": "https://… yoki “IOI 2027, IOI Committee”",
+      "research": "Qidirish",
+      "matches": "Katalogda allaqachon bor",
+      "pick": "Tanlash",
+      "untitled": "Nomsiz",
+      "pendingTwin": "Buni allaqachon taklif qilishgan; moderatsiyani kutmoqda.",
+      "propose": "Profilga qoʻshish",
+      "linked": "Imkoniyat bogʻlandi",
+      "linkTitle": "Imkoniyat",
+      "open": "Imkoniyatni bogʻlash",
+      "unlink": "Bogʻlashni bekor qilish",
+      "status": {
+        "pending": "Tekshiruvda",
+        "verified": "Tasdiqlangan",
+        "rejected": "Rad etilgan"
+      }
     }
   },
   "opportunitiesStaff": {
@@ -5258,7 +5311,18 @@
     },
     "changeWeights": "Muhimini o‘zgartirish",
     "none": "Baholash uchun ma’lumot yetarli emas",
-    "openNone": "Universitetni ochish"
+    "openNone": "Universitetni ochish",
+    "analysis": {
+      "title": "Moslikning AI tahlili",
+      "run": "Tahlil qilish",
+      "rerun": "Yangilash",
+      "running": "Tahlil qilinmoqda…",
+      "failed": "Hozir moslikni tahlil qilib boʼlmadi. Keyinroq urinib koʼring.",
+      "noConsent": "Yozma tahlil olish uchun maxfiylik sozlamalarida AI qayta ishlashiga ruxsat bering.",
+      "strengths": "Kuchli tomonlar",
+      "risks": "Xavflar",
+      "next": "Keyingi qadam:"
+    }
   },
   "today": {
     "title": "Bugun",
@@ -5668,7 +5732,12 @@
     "onList": "Roʻyxatingizda",
     "inCatalog": "Katalog",
     "untitled": "Nomsiz",
-    "sections": { "pages": "Boʻlimlar", "universities": "OTMlar", "essays": "Esselar", "tasks": "Vazifalar" },
+    "sections": {
+      "pages": "Boʻlimlar",
+      "universities": "OTMlar",
+      "essays": "Esselar",
+      "tasks": "Vazifalar"
+    },
     "pages": {
       "practice": "Esse mashqi",
       "byUniversity": "OTMlar boʻyicha esselar",
@@ -5678,6 +5747,108 @@
       "graph": "Roʻyxat grafigi",
       "gantt": "Muddatlar va vazifalar",
       "opportunities": "Imkoniyatlar va stipendiyalar"
+    }
+  },
+  "opportunitiesManage": {
+    "title": "Imkoniyatlarni boshqarish",
+    "add": "Imkoniyat qoʻshish",
+    "search": "Nomi yoki tashkilotchi boʻyicha qidirish",
+    "kind": "Turi",
+    "allKinds": "Barcha turlar",
+    "state": "Holat",
+    "country": "Davlat (2 harf)",
+    "titleField": "Nomi",
+    "provider": "Tashkilotchi",
+    "url": "Havola",
+    "logoUrl": "Logotip havolasi",
+    "registrationDeadlines": "Roʻyxatdan oʻtish muddatlari (YYYY-MM-DD, vergul bilan)",
+    "examDates": "Imtihon sanalari (YYYY-MM-DD, vergul bilan)",
+    "badDates": "Sanalarni 2026-05-02 koʻrinishida, vergul bilan yozing.",
+    "summary": "Tavsif",
+    "note": "Izoh",
+    "createTitle": "Yangi imkoniyat",
+    "editTitle": "Imkoniyatni tahrirlash",
+    "save": "Saqlash",
+    "saved": "Saqlandi",
+    "stale": "Yozuv boshqa tomonidan oʻzgartirilgan. Yopib, qayta oching.",
+    "edit": "Tahrirlash",
+    "archive": "Arxivlash",
+    "unarchive": "Qaytarish",
+    "archived": "Arxivda",
+    "delete": "Oʻchirish",
+    "deleteTitle": "Bu imkoniyat oʻchirilsinmi?",
+    "inUse": "Oʻquvchilar bu yozuvdan foydalanmoqda, uni oʻchirib boʻlmaydi. Uning oʻrniga arxivlang.",
+    "empty": "Hech narsa topilmadi",
+    "total": "Jami: {count}",
+    "prev": "Orqaga",
+    "next": "Keyingi",
+    "pageOf": "{page} / {pages}",
+    "kinds": {
+      "exam": "Imtihon",
+      "certification": "Sertifikat",
+      "course": "Kurs",
+      "event": "Tadbir",
+      "recurring": "Takrorlanuvchi",
+      "program": "Dastur",
+      "scholarship": "Stipendiya",
+      "research": "Tadqiqot"
+    },
+    "states": {
+      "all": "Hammasi",
+      "live": "Faol",
+      "archived": "Arxivda"
+    }
+  },
+  "universitiesManage": {
+    "title": "Universitetlar roʻyxatini boshqarish",
+    "add": "Universitet qoʻshish",
+    "search": "Nomi, shahri yoki domeni boʻyicha qidirish",
+    "country": "Davlat (2 harf)",
+    "allCountries": "Barcha davlatlar",
+    "status": "Holat",
+    "allStatuses": "Barcha holatlar",
+    "name": "Nomi",
+    "nameLocal": "Mahalliy nomi",
+    "city": "Shahar",
+    "domain": "Sayt domeni",
+    "kind": "Turi",
+    "setting": "Muhit",
+    "none": "Koʻrsatilmagan",
+    "aliases": "Boshqa nomlari (vergul bilan)",
+    "languages": "Tillar (vergul bilan)",
+    "logoUrl": "Logotip havolasi",
+    "coverUrl": "Muqova havolasi",
+    "createTitle": "Yangi universitet",
+    "editTitle": "Universitetni tahrirlash",
+    "save": "Saqlash",
+    "saved": "Saqlandi",
+    "conflict": "Yozuv oʻzgartirilgan yoki bunday maktab allaqachon bor. Sahifani yangilab, qayta urining.",
+    "edit": "Tahrirlash",
+    "hide": "Yashirish",
+    "show": "Koʻrsatish",
+    "delete": "Oʻchirish",
+    "deleteTitle": "Bu universitet oʻchirilsinmi?",
+    "inUse": "Oʻquvchilar bu universitetdan foydalanmoqda, uni oʻchirib boʻlmaydi. Uning oʻrniga yashiring.",
+    "empty": "Hech narsa topilmadi",
+    "total": "Jami: {count}",
+    "prev": "Orqaga",
+    "next": "Keyingi",
+    "pageOf": "{page} / {pages}",
+    "kinds": {
+      "university": "Universitet",
+      "college": "Kollej",
+      "foundation_provider": "Tayyorlov dasturi"
+    },
+    "settings": {
+      "big_city": "Katta shahar",
+      "college_town": "Talabalar shaharchasi",
+      "campus": "Kampus",
+      "small_city": "Kichik shahar"
+    },
+    "statuses": {
+      "published": "Eʼlon qilingan",
+      "provisional": "Qoralama",
+      "archived": "Yashirin"
     }
   }
 }

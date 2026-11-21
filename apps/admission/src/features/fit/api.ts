@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getApiClient } from "@ihsp/api"
 import { useLocale } from "@ihsp/i18n"
-import type { FitList, FitPreferences, Ratings } from "./types"
+import type { FitAnalysis, FitList, FitPreferences, Ratings } from "./types"
 
 const BASE = "/v1/admission"
 
@@ -36,5 +36,14 @@ export function useSaveFitPreferences() {
       client.setQueryData(PREFERENCES_KEY, saved)
       void client.invalidateQueries({ queryKey: FIT_KEY })
     },
+  })
+}
+
+/** A quick AI read of the fit for one university; cached on the server by its inputs, so a repeat is free. */
+export function useFitAnalysis(institutionId: string) {
+  const locale = useLocale()
+  return useMutation({
+    mutationFn: () =>
+      getApiClient().post<FitAnalysis>(`${BASE}/fit/${institutionId}/analysis`, undefined, { headers: { "Accept-Language": locale } }),
   })
 }

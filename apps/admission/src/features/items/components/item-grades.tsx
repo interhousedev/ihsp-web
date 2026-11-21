@@ -2,6 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, cn, Icons } from "@ihsp/ui"
+import { useId } from "react"
 import { useGradeItem, type Item } from "../api"
 
 const TONE: Record<string, string> = {
@@ -13,26 +14,55 @@ const TONE: Record<string, string> = {
 }
 
 /** A rounded letter pill: `A`–`E`, green to red; `C` is amber. */
-export function GradePill({ part, grade, tip }: { part: string; grade: string; tip?: string }) {
+export function GradePill({
+  part,
+  grade,
+  tip,
+  descriptor,
+  large = false,
+}: {
+  part: string
+  grade: string
+  tip?: string
+  descriptor?: string | null
+  large?: boolean
+}) {
   const t = useT("items")
+  const id = useId()
+  const text = [descriptor, tip].filter(Boolean).join(" — ")
   return (
-    <span
-      role="img"
-      aria-label={t("grade.label", { part, grade })}
-      title={tip}
-      className={cn(
-        "inline-flex h-6 items-center gap-1.5 rounded-full px-2.5 text-xs font-medium",
-        TONE[grade] ?? "bg-muted text-muted-foreground",
-      )}
-    >
-      {part}
-      <span className="font-semibold">{grade}</span>
+    <span className="group relative inline-flex">
+      <span
+        role="img"
+        tabIndex={text ? 0 : undefined}
+        aria-label={t("grade.label", { part, grade })}
+        aria-describedby={text ? id : undefined}
+        title={text || undefined}
+        className={cn(
+          "inline-flex items-center gap-1.5 rounded-full font-medium",
+          large ? "h-8 px-3 text-sm" : "h-6 px-2.5 text-xs",
+          TONE[grade] ?? "bg-muted text-muted-foreground",
+        )}
+      >
+        {part}
+        <span className="font-semibold">{grade}</span>
+      </span>
+      {text ? (
+        <span
+          id={id}
+          role="tooltip"
+          className="bg-popover text-popover-foreground border-hairline pointer-events-none absolute start-0 top-full z-20 mt-1 hidden w-64 rounded-md border p-2 text-xs shadow-md group-focus-within:block group-hover:block"
+        >
+          {descriptor ? <span className="block font-medium">{descriptor}</span> : null}
+          {tip ? <span className="text-muted-foreground block">{tip}</span> : null}
+        </span>
+      ) : null}
     </span>
   )
 }
 
 /** The grade pills of one item with a regrade button; `tips` also prints the one-line advice under them. */
-export function ItemGrades({ item, tips = false }: { item: Item; tips?: boolean }) {
+export function ItemGrades({ item, tips = false, large = false }: { item: Item; tips?: boolean; large?: boolean }) {
   const t = useT("items")
   const grade = useGradeItem(item.id)
   const g = item.grade
@@ -42,8 +72,12 @@ export function ItemGrades({ item, tips = false }: { item: Item; tips?: boolean 
       <div className="flex flex-wrap items-center gap-1.5">
         {g ? (
           <>
-            <GradePill part={t("grade.title")} grade={g.title_grade} tip={g.title_tip} />
-            <GradePill part={t("grade.description")} grade={g.description_grade} tip={g.description_tip} />
+            <GradePill part={t("grade.title")} grade={g.title_grade} tip={g.title_tip} descriptor={g.title_descriptor} large={large} />
+            <GradePill part={t("grade.description")} grade={g.description_grade}
+              tip={g.description_tip}
+              descriptor={g.description_descriptor}
+              large={large}
+            />
           </>
         ) : (
           <span className="text-muted-foreground text-xs">{t("grade.none")}</span>

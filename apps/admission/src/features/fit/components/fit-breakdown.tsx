@@ -66,11 +66,14 @@ export function FitBreakdown({
   name,
   fit,
   full,
+  approx,
   onHover,
 }: {
   name: string
   fit: UniFit
   full?: boolean
+  /** The total is an estimate (not researched yet): written with "≈". */
+  approx?: boolean
   onHover?: (id: MetricId | null) => void
 }) {
   const t = useT("fit")
@@ -82,7 +85,7 @@ export function FitBreakdown({
       <div className="flex items-baseline justify-between gap-3">
         <p className="text-sm font-medium">{name}</p>
         <p className="text-muted-foreground text-xs">
-          <span className="text-foreground text-2xl font-semibold tabular-nums">{fit.total ?? "—"}</span>
+          <span className="text-foreground text-2xl font-semibold tabular-nums">{fit.total !== null && approx ? "≈ " : ""}{fit.total ?? "—"}</span>
           {fit.total === null ? "" : "/100"}
         </p>
       </div>

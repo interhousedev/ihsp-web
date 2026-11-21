@@ -1301,7 +1301,9 @@
     "sectionParts": "{section}: parts",
     "menu": "More",
     "exemplars": "Exemplars",
-    "promptStudio": "Prompt studio"
+    "promptStudio": "Prompt studio",
+    "manageOpportunities": "Manage opportunities",
+    "manageUniversities": "Manage universities"
   },
   "outcomes": {
     "title": "Outcomes",
@@ -2921,7 +2923,8 @@
       "drop": "{title} dropped in {column}.",
       "cancel": "Move of {title} cancelled.",
       "incomplete": "{title} needs a few more details before it can be marked ready.",
-      "addDetails": "Add details"
+      "addDetails": "Add details",
+      "movedIncomplete": "Moved to ready, but still missing: {fields}."
     },
     "empty": {
       "activity": {
@@ -2967,7 +2970,21 @@
       "no": "No",
       "required": "Required to mark as ready",
       "category": "Category",
-      "level": "Level of recognition"
+      "level": "Level of recognition",
+      "longHint": "Common App shows only the first {warn} characters; keep it short.",
+      "incompleteHint": "Not complete yet, missing: {fields}. You can still move it to ready.",
+      "missing": {
+        "category": "activity type",
+        "level": "recognition level",
+        "title": "title",
+        "organization": "organization",
+        "description": "description",
+        "grades": "grade levels",
+        "timing": "timing",
+        "hours_per_week": "hours per week",
+        "weeks_per_year": "weeks per year",
+        "intend_in_college": "college plans"
+      }
     },
     "delete": {
       "button": "Delete",
@@ -2986,7 +3003,8 @@
       "remove": "Remove number {n}",
       "addCurrent": "Add current number",
       "addProjected": "Add planned number",
-      "save": "Save numbers"
+      "save": "Save numbers",
+      "helper": "Numbers are a helper for writing the description; keep them accurate."
     },
     "review": {
       "tab": "AI review",
@@ -3010,7 +3028,11 @@
       "missing": "Facts to add",
       "helpful": "Helpful",
       "disagree": "Disagree?",
-      "thanks": "Thanks for the feedback."
+      "thanks": "Thanks for the feedback.",
+      "noWords": "Add your words first to run the review.",
+      "goWords": "Go to words",
+      "noConsent": "The review needs your consent to AI processing.",
+      "goConsent": "Open settings"
     },
     "interview": {
       "tab": "AI interview",
@@ -3117,7 +3139,17 @@
       "next": "Next",
       "back": "Back",
       "ofHours": "of 168",
-      "ofWeeks": "of 52"
+      "ofWeeks": "of 52",
+      "numbersIntro": "Fill in all your numbers: grade levels, hours per week, weeks per year and key results. Numbers help you write the description.",
+      "factsTitle": "Key numbers",
+      "factsHint": "People reached, money raised, results, members, events.",
+      "factValue": "Number",
+      "factLabel": "What it measures",
+      "factPlaceholder": "people reached",
+      "addFact": "Add a number",
+      "useInDescription": "Use in description",
+      "numbersHelper": "Appends a short numeric phrase to the description; you can edit it.",
+      "proofsLater": "You can add proofs (certificates, links, files) later from the activity."
     },
     "honorsScroll": "Your honors",
     "analytics": {
@@ -3969,6 +4001,27 @@
     "delivery": {
       "local": "At the lyceum (LMS)",
       "external": "External"
+    },
+    "notInList": {
+      "title": "New opportunity / not in the list",
+      "hint": "Paste a link, or type the name and the organizer. We look it up and check the catalog.",
+      "inputLabel": "Link or name and organizer",
+      "placeholder": "https://… or “IOI 2027, IOI Committee”",
+      "research": "Look up",
+      "matches": "Already in the catalog",
+      "pick": "Choose",
+      "untitled": "Untitled",
+      "pendingTwin": "Someone already proposed this; it is waiting for moderation.",
+      "propose": "Add to profile",
+      "linked": "Opportunity linked",
+      "linkTitle": "Opportunity",
+      "open": "Link an opportunity",
+      "unlink": "Unlink",
+      "status": {
+        "pending": "Pending",
+        "verified": "Verified",
+        "rejected": "Rejected"
+      }
     }
   },
   "opportunitiesStaff": {
@@ -5258,7 +5311,18 @@
     },
     "changeWeights": "Change what matters",
     "none": "Not enough data to score yet",
-    "openNone": "Open university"
+    "openNone": "Open university",
+    "analysis": {
+      "title": "AI read of your fit",
+      "run": "Analyse",
+      "rerun": "Refresh",
+      "running": "Analysing…",
+      "failed": "Could not analyse the fit now. Try again later.",
+      "noConsent": "Allow AI processing in your privacy settings to get the written analysis.",
+      "strengths": "Strengths",
+      "risks": "Risks",
+      "next": "Next step:"
+    }
   },
   "today": {
     "title": "Today",
@@ -5668,7 +5732,12 @@
     "onList": "On your list",
     "inCatalog": "Catalog",
     "untitled": "Untitled",
-    "sections": { "pages": "Pages", "universities": "Universities", "essays": "Essays", "tasks": "Tasks" },
+    "sections": {
+      "pages": "Pages",
+      "universities": "Universities",
+      "essays": "Essays",
+      "tasks": "Tasks"
+    },
     "pages": {
       "practice": "Essay practice",
       "byUniversity": "Essays by university",
@@ -5678,6 +5747,108 @@
       "graph": "List graph",
       "gantt": "Deadlines and tasks",
       "opportunities": "Opportunities and scholarships"
+    }
+  },
+  "opportunitiesManage": {
+    "title": "Manage opportunities",
+    "add": "Add opportunity",
+    "search": "Search by title or provider",
+    "kind": "Type",
+    "allKinds": "All types",
+    "state": "Status",
+    "country": "Country (2 letters)",
+    "titleField": "Title",
+    "provider": "Provider",
+    "url": "Link",
+    "logoUrl": "Logo link",
+    "registrationDeadlines": "Registration deadlines (YYYY-MM-DD, comma-separated)",
+    "examDates": "Exam dates (YYYY-MM-DD, comma-separated)",
+    "badDates": "Use dates like 2026-05-02, separated by commas.",
+    "summary": "Summary",
+    "note": "Note",
+    "createTitle": "New opportunity",
+    "editTitle": "Edit opportunity",
+    "save": "Save",
+    "saved": "Saved",
+    "stale": "Someone else changed this entry. Close and reopen it.",
+    "edit": "Edit",
+    "archive": "Archive",
+    "unarchive": "Restore",
+    "archived": "Archived",
+    "delete": "Delete",
+    "deleteTitle": "Delete this opportunity?",
+    "inUse": "Students use this entry, so it cannot be deleted. Archive it instead.",
+    "empty": "Nothing found",
+    "total": "{count} total",
+    "prev": "Back",
+    "next": "Next",
+    "pageOf": "{page} of {pages}",
+    "kinds": {
+      "exam": "Exam",
+      "certification": "Certification",
+      "course": "Course",
+      "event": "Event",
+      "recurring": "Recurring",
+      "program": "Program",
+      "scholarship": "Scholarship",
+      "research": "Research"
+    },
+    "states": {
+      "all": "All",
+      "live": "Live",
+      "archived": "Archived"
+    }
+  },
+  "universitiesManage": {
+    "title": "Manage universities",
+    "add": "Add university",
+    "search": "Search by name, city or domain",
+    "country": "Country (2 letters)",
+    "allCountries": "All countries",
+    "status": "Status",
+    "allStatuses": "All statuses",
+    "name": "Name",
+    "nameLocal": "Local name",
+    "city": "City",
+    "domain": "Website domain",
+    "kind": "Type",
+    "setting": "Setting",
+    "none": "Not set",
+    "aliases": "Other names (comma-separated)",
+    "languages": "Languages (comma-separated)",
+    "logoUrl": "Logo link",
+    "coverUrl": "Cover image link",
+    "createTitle": "New university",
+    "editTitle": "Edit university",
+    "save": "Save",
+    "saved": "Saved",
+    "conflict": "Changed by someone else, or this school already exists. Reload and try again.",
+    "edit": "Edit",
+    "hide": "Hide",
+    "show": "Show",
+    "delete": "Delete",
+    "deleteTitle": "Delete this university?",
+    "inUse": "Students use this university, so it cannot be deleted. Hide it instead.",
+    "empty": "Nothing found",
+    "total": "{count} total",
+    "prev": "Back",
+    "next": "Next",
+    "pageOf": "{page} of {pages}",
+    "kinds": {
+      "university": "University",
+      "college": "College",
+      "foundation_provider": "Foundation programme"
+    },
+    "settings": {
+      "big_city": "Big city",
+      "college_town": "College town",
+      "campus": "Campus",
+      "small_city": "Small city"
+    },
+    "statuses": {
+      "published": "Published",
+      "provisional": "Provisional",
+      "archived": "Hidden"
     }
   }
 }

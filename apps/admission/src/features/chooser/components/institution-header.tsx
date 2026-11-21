@@ -86,6 +86,9 @@ export function InstitutionHeader({
           <InstitutionAskSheet institutionId={institution.id} name={name} />
         </div>
       </div>
+      {institution.description ? (
+        <p className="text-muted-foreground max-w-prose text-sm leading-relaxed">{institution.description}</p>
+      ) : null}
     </header>
   )
 }
