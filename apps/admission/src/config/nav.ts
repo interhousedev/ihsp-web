@@ -41,7 +41,7 @@ export const SECTIONS: Record<SectionId, Section> = {
     parts: [
       { id: "overview", url: "/profile/", isDefault: true },
       { id: "professions", url: "/profile/professions/" },
-      { id: "career", url: "/career/" },
+      { id: "field", url: "/career/" },
       { id: "done", url: "/activities/" },
       { id: "ideas", url: "/opportunities/" },
       { id: "planned", url: "/plan/" },

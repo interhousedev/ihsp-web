@@ -8,11 +8,12 @@
  *   profile <- academics + prestige
  *   traits  <- social + city + home
  *
- * then normalised to sum 1. Price and near-future salary are separate axes on purpose: a student can want a cheap
+ * each group's mean rating scales its default weight, then normalised to sum 1.
+ * (The old sum-of-ratings rule over-weighted groups with more traits.) Price and near-future salary are separate axes on purpose: a student can want a cheap
  * degree, a well-paid first job, or both.
  */
 import { RATING_KEYS, type RatingKey, type Ratings } from "../fit/types"
-import { METRIC_IDS, normalise, type Weights } from "../fit/fit-model"
+import { METRIC_IDS, normalise, type MetricId, type Weights } from "../fit/fit-model"
 
 export type { Ratings } from "../fit/types"
 export const TRAITS = RATING_KEYS
@@ -23,13 +24,34 @@ export const RATING_MAX = 10
 export const RATING_DEFAULT = 5
 export const DEFAULT_RATINGS: Ratings = Object.fromEntries(RATING_KEYS.map((key) => [key, RATING_DEFAULT])) as Ratings
 
+/** Server default split (backend `DEFAULT_WEIGHTS`); all-5 ratings give exactly this. */
+export const DEFAULT_WEIGHTS: Weights = { afford: 0.25, goals: 0.3, profile: 0.3, traits: 0.15 }
+
+const mean = (...values: number[]) => values.reduce((a, b) => a + b, 0) / values.length
+
+/** `raw[group] = DEFAULT[group] x mean(group ratings) / 5`, normalised. */
 export function ratingsToWeights(r: Ratings): Weights {
-  return normalise({
-    afford: r.price,
-    goals: r.salary + r.ai_resilience,
-    profile: r.academics + r.prestige,
-    traits: r.social + r.city + r.home,
-  })
+  const groups: Weights = {
+    afford: mean(r.price),
+    goals: mean(r.salary, r.ai_resilience),
+    profile: mean(r.academics, r.prestige),
+    traits: mean(r.social, r.city, r.home),
+  }
+  return normalise(
+    Object.fromEntries(METRIC_IDS.map((id) => [id, (DEFAULT_WEIGHTS[id] * groups[id]) / RATING_DEFAULT])) as Weights,
+  )
+}
+
+/** The fit axis a trait feeds (the colour of its vertex). */
+export const TRAIT_AXIS: Record<TraitId, MetricId> = {
+  price: "afford",
+  salary: "goals",
+  ai_resilience: "goals",
+  academics: "profile",
+  prestige: "profile",
+  social: "traits",
+  city: "traits",
+  home: "traits",
 }
 
 export function clampRating(value: number) {

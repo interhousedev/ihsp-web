@@ -1,13 +1,13 @@
 "use client"
 
-import { useLocale, useT } from "@ihsp/i18n"
+import { useT } from "@ihsp/i18n"
 import { buttonVariants, cn, Icons, Skeleton } from "@ihsp/ui"
 import Link from "next/link"
 import { FitRingButton } from "../../fit/components/fit-ring-button"
 import { RingLogo } from "../../fit/components/ring-logo"
 import type { FitRow } from "../../fit/use-fit-rows"
 import type { TodayDeadline } from "../api"
-import { dayTone, daysBetween, shortDate } from "../dates"
+import { dayTone, daysBetween } from "../dates"
 
 const STATUS_STYLE: Record<string, string> = {
   pending: "bg-muted text-muted-foreground",
@@ -37,46 +37,21 @@ function Ring({ row, size }: { row: FitRow; size: number }) {
   )
 }
 
-function Deadline({ item, today }: { item: TodayDeadline | undefined; today: string }) {
-  const t = useT("today")
-  const locale = useLocale()
-  if (!item) return null
-  const days = daysBetween(today, item.date)
-  return (
-    <span className="text-muted-foreground">
-      {shortDate(item.date, locale)} · <span className={cn("font-medium", dayTone(days))}>{t("unis.days", { n: days })}</span>
-    </span>
-  )
-}
+const MAX_TILES = 8
 
-/** One university as a desktop row: ring around the logo, name and status, nearest deadline. */
-function UniRow({ row, today, deadline }: { row: FitRow; today: string; deadline: TodayDeadline | undefined }) {
-  const { entry } = row
-  return (
-    <li className="flex min-w-0 items-center gap-3 py-2">
-      <Ring row={row} size={60} />
-      <Link href="/chooser/" className="focus-visible:ring-ring min-w-0 flex-1 rounded-md outline-none focus-visible:ring-2">
-        <span className="flex items-center gap-2">
-          <span className="truncate text-sm font-semibold">{entry.institution.name}</span>
-          {entry.round ? <span className="text-muted-foreground rounded border px-1 text-[10px] leading-4">{entry.round}</span> : null}
-          <StatusChip status={entry.status} />
-        </span>
-        <span className="block truncate text-xs">
-          <Deadline item={deadline} today={today} />
-        </span>
-      </Link>
-    </li>
-  )
-}
-
-/** One university as a phone tile of the horizontal rail. */
+/** One university as a tile: ring around the logo (opens the fit sheet), the name (links to the page), the days chip. */
 function UniTile({ row, today, deadline }: { row: FitRow; today: string; deadline: TodayDeadline | undefined }) {
   const t = useT("today")
   const days = deadline ? daysBetween(today, deadline.date) : null
   return (
-    <li className="flex w-[76px] shrink-0 snap-start flex-col items-center gap-1.5 pt-1.5 text-center">
-      <Ring row={row} size={64} />
-      <span className="w-full truncate text-xs font-semibold">{row.entry.institution.name}</span>
+    <li className="flex w-[88px] shrink-0 snap-start flex-col items-center gap-1 pt-1 text-center">
+      <Ring row={row} size={56} />
+      <Link
+        href={`/chooser/institution/?id=${row.entry.institution.id}`}
+        className="focus-visible:ring-ring line-clamp-2 min-h-8 w-full rounded-sm text-xs leading-4 font-semibold outline-none hover:underline focus-visible:ring-2"
+      >
+        {row.entry.institution.name}
+      </Link>
       {days !== null ? (
         <span className={cn("text-[11px] leading-none font-medium tabular-nums", dayTone(days))}>{t("unis.days", { n: days })}</span>
       ) : (
@@ -104,8 +79,13 @@ export function UniSection({
   className?: string
 }) {
   const t = useT("today")
+  // Nearest deadline first, undated last (the list order is kept among equals).
+  const ordered = rows
+    .map((row, index) => ({ row, index, due: nextFor(row.entry.id, deadlines)?.date ?? "9999" }))
+    .sort((a, b) => a.due.localeCompare(b.due) || a.index - b.index)
+    .map((x) => x.row)
   return (
-    <section className={cn("bg-card rounded-card flex min-w-0 flex-col gap-1 border px-3.5 py-3 md:px-5 md:py-4", className)}>
+    <section className={cn("bg-card rounded-card flex min-w-0 flex-col gap-1 border px-3.5 py-3 md:px-5 md:py-3", className)}>
       <div className="flex items-center justify-between gap-2">
         <h2 className="text-base font-semibold tracking-tight">{t("unis.title")}</h2>
         <Link href="/chooser/" className="text-primary inline-flex items-center gap-1 text-sm font-medium hover:underline">
@@ -134,18 +114,18 @@ export function UniSection({
           </Link>
         </div>
       ) : (
-        <>
-          <ul className="-mx-4 flex snap-x scroll-px-4 gap-1 overflow-x-auto px-4 pb-1 md:hidden [scrollbar-width:none]">
-            {rows.map((row) => (
-              <UniTile key={row.entry.id} row={row} today={today} deadline={nextFor(row.entry.id, deadlines)} />
-            ))}
-          </ul>
-          <ul className="hidden grid-cols-2 gap-x-6 divide-y md:grid [&>li]:border-0 [&>li:nth-child(n+3)]:border-t">
-            {rows.map((row) => (
-              <UniRow key={row.entry.id} row={row} today={today} deadline={nextFor(row.entry.id, deadlines)} />
-            ))}
-          </ul>
-        </>
+        <ul className="-mx-4 flex snap-x scroll-px-4 gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0 [scrollbar-width:none]">
+          {ordered.slice(0, MAX_TILES).map((row) => (
+            <UniTile key={row.entry.id} row={row} today={today} deadline={nextFor(row.entry.id, deadlines)} />
+          ))}
+          {ordered.length > MAX_TILES ? (
+            <li className="flex w-[88px] shrink-0 items-center justify-center">
+              <Link href="/chooser/" className="text-primary text-sm font-medium hover:underline">
+                {t("unis.more", { n: ordered.length - MAX_TILES })}
+              </Link>
+            </li>
+          ) : null}
+        </ul>
       )}
     </section>
   )

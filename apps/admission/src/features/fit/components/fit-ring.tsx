@@ -18,8 +18,8 @@ function arcPath(startDeg: number, sweepDeg: number) {
 
 /**
  * A segmented donut. Each metric owns a slot as wide as its weight; the coloured part of the slot is the sub-score,
- * so the filled arc is `sub-score × weight` and the whole coloured ring is the total. Missing data is a dashed
- * outline, not an empty slot. The centre holds `children` (the university logo). Presentation only.
+ * so the filled arc is `sub-score × weight` and the whole coloured ring is the total. Missing data is a tinted
+ * track with a dashed overlay in the axis colour ("fill me"), never grey. The centre holds `children` (the university logo). Presentation only.
  */
 export function FitRing({
   metrics,
@@ -53,13 +53,16 @@ export function FitRing({
           return (
             <g key={metric.id} className={cn("transition-opacity duration-200", dim && "opacity-35")}>
               {metric.score === null ? (
-                <path
-                  d={arcPath(start, sweep)}
-                  fill="none"
-                  strokeWidth={STROKE * 0.4}
-                  strokeDasharray="3.5 4.5"
-                  className="stroke-muted-foreground/80"
-                />
+                <>
+                  <circle {...common} strokeWidth={STROKE} strokeDasharray={`${slot} ${CIRCUMFERENCE}`} stroke={METRIC_STYLE[metric.id].color} opacity={0.2} />
+                  <path
+                    d={arcPath(start, sweep)}
+                    fill="none"
+                    strokeWidth={STROKE * 0.4}
+                    strokeDasharray="3.5 4.5"
+                    stroke={METRIC_STYLE[metric.id].color}
+                  />
+                </>
               ) : (
                 <>
                   <circle {...common} strokeWidth={STROKE} strokeDasharray={`${slot} ${CIRCUMFERENCE}`} stroke={METRIC_STYLE[metric.id].color} opacity={0.2} />

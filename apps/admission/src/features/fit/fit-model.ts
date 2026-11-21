@@ -25,7 +25,12 @@ export type MetricResult = {
   raise: FitRaise[]
 }
 
-export type UniFit = { total: number | null; metrics: MetricResult[] }
+export type UniFit = {
+  total: number | null
+  metrics: MetricResult[]
+  /** Share of the ring weight with data, as the server counted it; `knownShare()` falls back to the metrics. */
+  knownShare?: number
+}
 
 export function normalise(weights: Weights): Weights {
   const sum = METRIC_IDS.reduce((acc, id) => acc + weights[id], 0) || 1
@@ -33,12 +38,12 @@ export function normalise(weights: Weights): Weights {
 }
 
 /** The ring view of an API item: the metrics in ring order, a missing axis kept as `null`. */
-export function toUniFit(item: Pick<FitItem, "total" | "axes">): UniFit {
+export function toUniFit(item: Pick<FitItem, "total" | "axes" | "known_share">): UniFit {
   const metrics = METRIC_IDS.map((id): MetricResult => {
     const axis = item.axes.find((candidate) => candidate.key === id)
     return { id, score: axis?.score ?? null, weight: axis?.weight ?? 0, why: axis?.why ?? [], raise: axis?.raise ?? [] }
   })
-  return { total: item.total, metrics }
+  return { total: item.total, metrics, knownShare: item.known_share }
 }
 
 /** The weighted mean over the known metrics (weights renormalised): the total for other weights, e.g. a live preview. */
@@ -56,6 +61,7 @@ export function totalFor(fit: UniFit, weights: Weights): number | null {
 
 /** Share of the ring weight whose data is known, 0..1. */
 export function knownShare(fit: UniFit): number {
+  if (fit.knownShare !== undefined) return fit.knownShare
   return fit.metrics.reduce((sum, metric) => sum + (metric.score === null ? 0 : metric.weight), 0)
 }
 

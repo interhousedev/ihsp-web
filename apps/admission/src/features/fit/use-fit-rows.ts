@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import { useList } from "../chooser/hooks"
 import type { ListEntry } from "../chooser/types"
 import { useListFit } from "./api"
-import { byTotal, toUniFit, type UniFit, type Weights } from "./fit-model"
+import { byTotal, knownShare, toUniFit, type UniFit, type Weights } from "./fit-model"
 
 export type FitRow = { entry: ListEntry; fit: UniFit }
 
@@ -21,7 +21,9 @@ export function useFitRows() {
       const item = byEntry.get(entry.id)
       return { entry, fit: item ? toUniFit(item) : toUniFit({ total: null, axes: [] }) }
     })
-    return byTotal(all, (row) => row.fit.total)
+    return byTotal(all, (row) =>
+      row.fit.total === null ? null : row.fit.total * (0.5 + 0.5 * knownShare(row.fit)),
+    )
   }, [list.data, fit.data])
   const weights: Weights | undefined = fit.data?.weights
   return {

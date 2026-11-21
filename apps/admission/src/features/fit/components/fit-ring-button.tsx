@@ -45,7 +45,7 @@ export function FitRingButton({
               className={cn(
                 "group focus-visible:ring-ring relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                 "transition-[transform,filter] duration-200 ease-(--ease-standard) motion-reduce:transition-none",
-                "hover:scale-110 hover:drop-shadow-md active:scale-95",
+                "ring-foreground/10 ring-1 hover:scale-110 hover:drop-shadow-md active:scale-95",
                 className,
               )}
             />
@@ -60,7 +60,7 @@ export function FitRingButton({
           />
           <span
             aria-hidden
-            className="bg-foreground text-background ring-card pointer-events-none absolute -end-1 -bottom-1 hidden size-4 items-center justify-center rounded-full ring-2 max-md:flex pointer-coarse:flex"
+            className="bg-foreground text-background ring-card pointer-events-none absolute -end-1 -bottom-1 flex size-4 items-center justify-center rounded-full opacity-60 ring-2 transition-opacity group-hover:opacity-100 max-md:opacity-100 pointer-coarse:opacity-100"
           >
             <Icons.chevronUp className="size-3" />
           </span>

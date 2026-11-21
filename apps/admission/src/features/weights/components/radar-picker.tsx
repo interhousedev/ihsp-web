@@ -1,27 +1,27 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button } from "@ihsp/ui"
+import { METRIC_STYLE } from "../../fit/fit-model"
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from "react"
 import {
   clampRating,
-  DEFAULT_RATINGS,
   pickAxis,
   radarPoint,
   RATING_MAX,
   RATING_MIN,
+  TRAIT_AXIS,
   TRAITS,
   type Pt,
   type Ratings,
   type TraitId,
 } from "../weights-model"
 
-/** Scale at 375px is about 0.78 of these units, so labels are 16 units (12.5px) and wrap on spaces. */
-const CX = 220
-const CY = 150
-const R = 84
+/** Scale at 375px is about 0.7 of these units, so labels are 16 units and wrap on spaces. */
+const CX = 260
+const CY = 180
+const R = 110
 const LABEL_GAP = 14
-const VB = { x: 0, y: 0, w: 440, h: 300 }
+const VB = { x: 0, y: 0, w: 520, h: 360 }
 const RINGS = Array.from({ length: RATING_MAX }, (_, i) => i + 1)
 
 /** Wraps a label into at most two lines of about 13 characters, on spaces. */
@@ -86,11 +86,11 @@ export function RadarPicker({ value, onChange }: { value: Ratings; onChange: (ne
 
   const shape = TRAITS.map((trait, i) => radarPoint(i, value[trait], R, CX, CY))
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2">
       <svg
         ref={svg}
         viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`}
-        className="mx-auto w-full max-w-[30rem] touch-none select-none"
+        className="mx-auto w-full max-w-[34rem] touch-none select-none"
         onPointerDown={onDown}
         onPointerMove={onMove}
         onPointerUp={end}
@@ -111,7 +111,7 @@ export function RadarPicker({ value, onChange }: { value: Ratings; onChange: (ne
         })}
         <polygon
           points={shape.map((p) => `${p.x},${p.y}`).join(" ")}
-          className="fill-primary/15 stroke-primary transition-[points] duration-150"
+          className="fill-foreground/5 stroke-foreground/60 transition-[points] duration-150"
           strokeWidth={2}
           strokeLinejoin="round"
         />
@@ -146,10 +146,11 @@ export function RadarPicker({ value, onChange }: { value: Ratings; onChange: (ne
                   cx={p.x}
                   cy={p.y}
                   r={dragIndex === i ? 14 : 12}
-                  className="fill-primary stroke-background group-focus-visible:stroke-ring transition-[r] duration-150"
+                  className="stroke-background group-focus-visible:stroke-ring transition-[r] duration-150"
+                  style={{ fill: METRIC_STYLE[TRAIT_AXIS[trait]].color }}
                   strokeWidth={2.5}
                 />
-                <text x={p.x} y={p.y + 4} textAnchor="middle" className="fill-primary-foreground pointer-events-none text-[12px] font-semibold">
+                <text x={p.x} y={p.y + 4} textAnchor="middle" className="fill-white pointer-events-none text-[12px] font-semibold">
                   {value[trait]}
                 </text>
               </g>
@@ -157,12 +158,7 @@ export function RadarPicker({ value, onChange }: { value: Ratings; onChange: (ne
           )
         })}
       </svg>
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-muted-foreground text-xs">{t("radar.hint")}</p>
-        <Button type="button" variant="outline" size="sm" onClick={() => onChange(DEFAULT_RATINGS)}>
-          {t("radar.reset")}
-        </Button>
-      </div>
+      <p className="text-muted-foreground text-xs">{t("radar.hint")}</p>
     </div>
   )
 }

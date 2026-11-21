@@ -2,15 +2,14 @@
 
 import { useLocale, useT } from "@ihsp/i18n"
 import { buttonVariants, Skeleton } from "@ihsp/ui"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { pageClass } from "../../../components/lib/page"
 import { ScreenSummary } from "../../assistant/screen-context"
 import { useFitRows } from "../../fit/use-fit-rows"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useToday } from "../api"
 import { shortDate } from "../dates"
-import { DeadlineStrip } from "./deadline-strip"
-import { NextActionCard } from "./next-action-card"
+import { NextActionCard, QueuedActions } from "./next-action-card"
 import { Rhythm } from "./rhythm"
 import { SeasonCard } from "./season-card"
 import { UniSection } from "./uni-section"
@@ -32,6 +31,7 @@ export function TodayPage() {
   const fit = useFitRows()
   const iso = useMemo(() => localIso(), [])
   const data = today.data
+  const [snoozed, setSnoozed] = useState<string[]>([])
   return (
     <AdmissionShell home>
       <ScreenSummary
@@ -43,7 +43,7 @@ export function TodayPage() {
           <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">{t("title")}</h1>
           <p className="text-muted-foreground text-sm">
             {shortDate(iso, locale)}
-            {data ? ` · ${t(`season.name.${data.season.key}`)}` : ""}
+            {data ? ` · ${t("seasonSub", { season: t(`season.name.${data.season.key}`) })}` : ""}
           </p>
         </header>
         {today.isPending ? (
@@ -59,11 +59,14 @@ export function TodayPage() {
             </button>
           </div>
         ) : (
-          <div className="grid gap-3 md:gap-3.5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-            <NextActionCard actions={data.next} className="order-1 lg:col-start-1 lg:row-start-1" />
-            <div className="bg-card rounded-card order-2 border px-3.5 py-2 lg:hidden">
-              <Rhythm streak={data.streak} readiness={data.readiness.percent} />
-            </div>
+          <div className="grid gap-3 md:gap-3.5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:grid-rows-[auto_auto]">
+            <NextActionCard
+              actions={data.next}
+              snoozed={snoozed}
+              onSnooze={(key) => setSnoozed((ids) => [...ids, key])}
+              className="order-1 lg:col-start-1 lg:row-start-1"
+            />
+            <QueuedActions actions={data.next} snoozed={snoozed} className="order-3 lg:hidden" />
             <UniSection
               rows={fit.rows}
               deadlines={data.deadlines}
@@ -71,15 +74,19 @@ export function TodayPage() {
               loading={fit.isPending}
               failed={Boolean(fit.error)}
               onRetry={fit.refetch}
-              className="order-3 lg:order-0 lg:col-span-2 lg:row-start-2"
+              className="order-2 lg:col-span-2 lg:row-start-2"
             />
-            <DeadlineStrip items={data.deadlines} today={iso} className="order-4 lg:order-0 lg:col-span-2 lg:row-start-3" />
+            <div className="bg-card rounded-card order-4 border px-3.5 py-2 lg:hidden">
+              <Rhythm streak={data.streak} readiness={data.readiness.percent} />
+            </div>
             <SeasonCard
               season={data.season.key}
               checks={data.season.checklist}
               streak={data.streak}
               readiness={data.readiness.percent}
-              className="order-5 lg:order-0 lg:col-start-2 lg:row-start-1"
+              deadlines={data.deadlines}
+              today={iso}
+              className="order-5 lg:col-start-2 lg:row-start-1"
             />
           </div>
         )}

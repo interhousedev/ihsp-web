@@ -11,7 +11,7 @@ const RISK_TONE = { low: "success", medium: "warning", high: "danger" } as const
 export function RiskBadge({ profession }: { profession: Profession }) {
   const t = useT("professions")
   return (
-    <Pill tone={RISK_TONE[profession.ai_risk]}>
+    <Pill tone={RISK_TONE[profession.ai_risk]} className="h-auto max-w-full py-0.5 text-start whitespace-normal">
       <PillIndicator tone={RISK_TONE[profession.ai_risk]} />
       {t(`risk.${profession.ai_risk}`)} · {t(`horizon.${profession.horizon}`)}
     </Pill>
@@ -44,7 +44,7 @@ export function ProfessionCard({
 }) {
   const t = useT("professions")
   return (
-    <li className="bg-card rounded-card flex min-w-0 flex-col gap-2 border p-3.5">
+    <li className="bg-card rounded-card flex min-w-0 flex-col gap-1.5 border p-3">
       <div className="flex items-start gap-2">
         <div className="min-w-0 flex-1">
           <p className="font-semibold leading-snug">{profession.name}</p>
@@ -69,16 +69,6 @@ export function ProfessionCard({
       {profession.related_fields.length > 0 ? (
         <p className="text-muted-foreground text-xs">
           {t("card.fields")}: {profession.related_fields.map(fieldLabel).join(", ")}
-        </p>
-      ) : null}
-      {profession.sources.length > 0 ? (
-        <p className="text-muted-foreground flex flex-wrap gap-x-2 text-xs">
-          {t("card.sources")}:
-          {profession.sources.map((s) => (
-            <a key={s.url} href={s.url} target="_blank" rel="noreferrer" className="text-primary underline-offset-2 hover:underline">
-              {s.label}
-            </a>
-          ))}
         </p>
       ) : null}
     </li>

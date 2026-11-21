@@ -39,11 +39,11 @@ export const professionKeys = {
   fit: () => ["admission", "list", "fit"] as const,
 }
 
-export const searchProfessionsQuery = (q: string, locale: string) =>
+export const searchProfessionsQuery = (q: string, locale: string, limit = 100) =>
   queryOptions({
-    queryKey: professionKeys.search(q, locale),
+    queryKey: [...professionKeys.search(q, locale), limit] as const,
     queryFn: ({ signal }) =>
-      api.get<{ items: Profession[] }>(`/v1/admission/professions?q=${encodeURIComponent(q)}&limit=20`, {
+      api.get<{ items: Profession[] }>(`/v1/admission/professions?q=${encodeURIComponent(q)}&limit=${limit}`, {
         signal,
         ...lang(locale),
       }),

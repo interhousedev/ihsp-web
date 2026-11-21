@@ -22,6 +22,7 @@ export function Rhythm({
           <span className="text-muted-foreground font-normal">{t("streak.title")}: </span>
           {t("streak.days", { n: streak.days })}
         </p>
+        {streak.last7.some(Boolean) ? (
         <ul className="flex gap-1.5" aria-label={t("streak.week")}>
           {streak.last7.map((done, index) => (
             <li
@@ -33,6 +34,7 @@ export function Rhythm({
             </li>
           ))}
         </ul>
+        ) : null}
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <span className="text-muted-foreground text-xs">{t("readiness.title")}</span>

@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { AppPageHeader, PageSection, pageClass } from "../../../components/lib/page"
+import { AdmissionShell } from "../../shell/components/admission-shell"
 import { WeightsEditor } from "../../weights/components/weights-editor"
 
 const LINKS = [
@@ -39,6 +40,7 @@ function HubLink({ id, href }: { id: string; href: string }) {
 export function ProfileHub() {
   const t = useT("profileHub")
   return (
+    <AdmissionShell>
     <div className={pageClass()}>
       <AppPageHeader icon="user2" title={t("title")} />
       <PageSection title={t("career")}>
@@ -67,5 +69,6 @@ export function ProfileHub() {
         </div>
       </PageSection>
     </div>
+    </AdmissionShell>
   )
 }

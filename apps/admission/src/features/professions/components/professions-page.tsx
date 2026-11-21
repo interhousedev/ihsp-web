@@ -2,40 +2,27 @@
 
 import { useLocale, useT } from "@ihsp/i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import type { ReactNode } from "react"
+import { Icons, ResponsiveDialog } from "@ihsp/ui"
+import { useState } from "react"
 import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useStudyFields } from "../../chooser/hooks"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { myProfessionsQuery, professionKeys, putMyProfessions, type MyProfession, type Profession } from "../api"
 import { addPick, MAX_PICKS } from "../model"
+import { careerPlanQuery } from "../../career/api"
+import { CareerQuizButton } from "../../career/components/career-quiz-dialog"
 import { FitImpact } from "./fit-impact"
-import { IkigaiStep } from "./ikigai-step"
+import { IkigaiRow } from "./ikigai-row"
+import { SuggestedRow } from "./suggested-row"
 import { MyProfessions } from "./my-professions"
 import { ProfessionSearch } from "./profession-search"
-
-function Step({ n, title, hint, children }: { n: number; title: string; hint?: string; children: ReactNode }) {
-  return (
-    <section aria-labelledby={`prof-step-${n}`} className="flex min-w-0 flex-col gap-3">
-      <div className="flex items-start gap-3">
-        <span aria-hidden className="bg-primary text-primary-foreground flex size-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
-          {n}
-        </span>
-        <div>
-          <h2 id={`prof-step-${n}`} className="text-lg font-semibold leading-7">
-            {title}
-          </h2>
-          {hint ? <p className="text-muted-foreground text-sm">{hint}</p> : null}
-        </div>
-      </div>
-      {children}
-    </section>
-  )
-}
 
 export function ProfessionsPage() {
   const t = useT("professions")
   const locale = useLocale()
   const client = useQueryClient()
+  const [sheet, setSheet] = useState(false)
+  const plan = useQuery(careerPlanQuery())
   const mine = useQuery(myProfessionsQuery(locale))
   const { groups } = useStudyFields()
   const labels = new Map(groups.flatMap((g) => g.items.map((i) => [i.id, i.label] as const)))
@@ -56,34 +43,64 @@ export function ProfessionsPage() {
     const ids = addPick(picks.map((x) => x.id), p.id)
     if (ids.length > picks.length) save.mutate([...picks, p])
   }
+  const ranking = (
+    <div className="flex flex-col gap-3">
+      <MyProfessions
+        picks={picks}
+        saving={save.isPending}
+        error={save.isError}
+        onReorder={(next) => save.mutate(next)}
+        onRemove={(id) => save.mutate(picks.filter((p) => p.id !== id))}
+      />
+      <FitImpact picks={picks.length} />
+    </div>
+  )
   return (
     <AdmissionShell>
-      <div className={pageClass("gap-8 md:gap-10")}>
+      <div className={pageClass("gap-3 md:gap-3.5")}>
         <AppPageHeader icon="user2" title={t("title")} meta={t("subtitle")} />
-        <Step n={1} title={t("step.ikigai.title")} hint={t("step.ikigai.hint")}>
-          <IkigaiStep />
-        </Step>
-        <Step n={2} title={t("step.browse.title")} hint={t("step.browse.hint")}>
-          <ProfessionSearch
-            pickedIds={picks.map((p) => p.id)}
-            full={picks.length >= MAX_PICKS}
-            fieldLabel={(key) => labels.get(key) ?? key}
-            onAdd={add}
-          />
-        </Step>
-        <Step n={3} title={t("step.mine.title")} hint={t("step.mine.hint", { max: MAX_PICKS })}>
-          <MyProfessions
-            picks={picks}
-            saving={save.isPending}
-            error={save.isError}
-            onReorder={(next) => save.mutate(next)}
-            onRemove={(id) => save.mutate(picks.filter((p) => p.id !== id))}
-          />
-        </Step>
-        <Step n={4} title={t("step.fit.title")}>
-          <FitImpact picks={picks.length} />
-        </Step>
+        <section className="bg-card rounded-card flex min-w-0 flex-col gap-2.5 border p-3 md:px-4">
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <IkigaiRow />
+            <CareerQuizButton />
+          </div>
+          <SuggestedRow pickedIds={picks.map((p) => p.id)} pickedFull={picks.length >= MAX_PICKS} onAdd={add} />
+        </section>
+        <div className="grid min-w-0 items-start gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+          <section aria-labelledby="prof-browse" className="flex min-w-0 flex-col gap-2">
+            <h2 id="prof-browse" className="text-base font-semibold">
+              {t("step.browse.title")}
+            </h2>
+            <ProfessionSearch
+              pickedIds={picks.map((p) => p.id)}
+              full={picks.length >= MAX_PICKS}
+              fieldIds={plan.data?.study_focus?.field_ids ?? []}
+              fieldLabel={(key) => labels.get(key) ?? key}
+              onAdd={add}
+            />
+          </section>
+          <section aria-labelledby="prof-mine" className="hidden min-w-0 flex-col gap-2 lg:sticky lg:top-3 lg:flex">
+            <h2 id="prof-mine" className="text-base font-semibold">
+              {t("step.mine.title")}
+            </h2>
+            <p className="text-muted-foreground -mt-1 text-xs">{t("step.mine.hint", { max: MAX_PICKS })}</p>
+            {ranking}
+          </section>
+        </div>
       </div>
+      <div className="bg-background/95 fixed inset-x-0 bottom-[calc(var(--safe-bottom)+4.75rem)] z-20 border-t px-4 py-2 backdrop-blur lg:hidden">
+        <button
+          type="button"
+          onClick={() => setSheet(true)}
+          className="focus-visible:ring-ring flex min-h-11 w-full items-center justify-between gap-2 rounded-xl text-sm font-semibold outline-none focus-visible:ring-2"
+        >
+          {t("mine.bar", { n: picks.length, max: MAX_PICKS })}
+          <Icons.chevronUp aria-hidden className="size-4" />
+        </button>
+      </div>
+      <ResponsiveDialog open={sheet} onOpenChange={setSheet} title={t("step.mine.title")} description={t("step.mine.hint", { max: MAX_PICKS })} size="md">
+        {ranking}
+      </ResponsiveDialog>
     </AdmissionShell>
   )
 }

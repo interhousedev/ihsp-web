@@ -21,6 +21,8 @@ export type FitItem = {
   institution_id: string
   /** 0..100 over the known axes; `null` when no axis is known. */
   total: number | null
+  /** 0..1 share of the ring weight whose data is known; absent from older servers. */
+  known_share?: number
   axes: FitAxis[]
 }
 

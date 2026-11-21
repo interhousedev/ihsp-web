@@ -19,12 +19,13 @@ describe("radar", () => {
     expect(TRAITS).toContain("salary")
   })
 
-  test("weights sum to one; the defaults give the server's 0.2/0.25/0.25/0.3 split of equal ratings", () => {
+  test("all-5 ratings equal the server default 0.25/0.30/0.30/0.15", () => {
     const w = ratingsToWeights(DEFAULT_RATINGS)
     expect(sum(w)).toBeCloseTo(1, 6)
-    expect(w.afford).toBeCloseTo(5 / 40, 6)
-    expect(w.goals).toBeCloseTo(10 / 40, 6)
-    expect(w.traits).toBeCloseTo(15 / 40, 6)
+    expect(w.afford).toBeCloseTo(0.25, 6)
+    expect(w.goals).toBeCloseTo(0.3, 6)
+    expect(w.profile).toBeCloseTo(0.3, 6)
+    expect(w.traits).toBeCloseTo(0.15, 6)
   })
 
   test("price raises afford only; salary raises goals only", () => {

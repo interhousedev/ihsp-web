@@ -4,6 +4,8 @@ import { useT } from "@ihsp/i18n"
 import { cn, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { SEASONS, type SeasonId, type TodayCheck } from "../api"
+import type { TodayDeadline } from "../api"
+import { DeadlineStrip } from "./deadline-strip"
 import { Rhythm } from "./rhythm"
 
 /** Six dots, one per season; the current one carries the name. The strip is the "where am I in the 14 months". */
@@ -36,12 +38,16 @@ export function SeasonCard({
   checks,
   streak,
   readiness,
+  deadlines,
+  today,
   className,
 }: {
   season: SeasonId
   checks: TodayCheck[]
   streak: { days: number; last7: boolean[] }
   readiness: number
+  deadlines: TodayDeadline[]
+  today: string
   className?: string
 }) {
   const t = useT("today")
@@ -76,6 +82,9 @@ export function SeasonCard({
         ))}
       </ul>
       <div className="mt-auto hidden border-t pt-3 lg:block">
+        <DeadlineStrip items={deadlines} today={today} />
+      </div>
+      <div className="hidden border-t pt-3 lg:block">
         <Rhythm streak={streak} readiness={readiness} />
       </div>
     </section>
