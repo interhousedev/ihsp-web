@@ -6,25 +6,35 @@ import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { useAddIdea, type Idea } from "../api"
 import { IdeaCard } from "../components/ideas-board"
-import type { IdeaFit, PromptGroup } from "./api"
+import { useRunIdeaFit, type IdeaFit, type PromptGroup } from "./api"
 import { groupLabel } from "./group-label"
 
 const SHOWN = 3
 
 /** The prompts one idea answers best, with a score; each can start a draft for its whole prompt group. */
 function FitList({
+  text,
   fit,
   pending,
   groupOf,
   onDraft,
 }: {
+  text: string
   fit: IdeaFit | undefined
   pending: boolean
   groupOf: (promptKey: string) => PromptGroup | undefined
   onDraft: (group: PromptGroup) => void
 }) {
   const t = useT("essayFlow")
+  const run = useRunIdeaFit(text)
   if (pending) return <Skeleton className="h-10 w-full" />
+  if (fit?.pending)
+    return (
+      <Button type="button" size="sm" variant="outline" className="self-start" disabled={run.isPending} onClick={() => run.mutate()}>
+        <Icons.sparkles aria-hidden />
+        {run.isPending ? t("ideas.fitRunning") : t("ideas.fitRun")}
+      </Button>
+    )
   if (!fit?.items.length) return <p className="text-muted-foreground text-xs">{t("ideas.fitNone")}</p>
   const top = [...fit.items].sort((a, b) => b.score - a.score).slice(0, SHOWN)
   return (
@@ -110,6 +120,7 @@ export function IdeaBank({
             <IdeaCard key={idea.id} idea={idea}>
               {aiGranted ? (
                 <FitList
+                  text={idea.body}
                   fit={fits[idea.body]?.data}
                   pending={fits[idea.body]?.pending ?? false}
                   groupOf={groupOf}

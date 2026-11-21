@@ -21,7 +21,8 @@ import { useState } from "react"
 import { consentKeys, consentQuery, putConsent } from "../../consent/api"
 import { useEssays } from "../api"
 import { type GalleryItem, SHARING_PURPOSE, usePublish, useGallery, useUnpublish } from "./steps-api"
-import { Section, StepHead, StepNext } from "./step-parts"
+import { ExemplarsTab } from "../components/exemplars-tab"
+import { Section } from "./section"
 
 function useSharingConsent() {
   const qc = useQueryClient()
@@ -179,50 +180,21 @@ function Publisher({ mine, sharing }: { mine: GalleryItem[]; sharing: boolean })
   )
 }
 
-/** Step 4: read what other students share, anonymously, and publish or withdraw your own. */
-export function GalleryStep({ onNext }: { onNext?: () => void }) {
+/** Examples: admitted essays from the staff library (first those of the given universities), what other students shared, and the way to share your own. */
+export function ExamplesPanel({ institutionIds }: { institutionIds?: string[] }) {
   const t = useT("essayFlow")
+  const tl = useT("essayLedger")
   const gallery = useGallery()
   const unpublish = useUnpublish()
   const sharing = useSharingConsent()
   const [open, setOpen] = useState<GalleryItem | null>(null)
   const mine = gallery.data?.mine ?? []
   const others = gallery.data?.items ?? []
-  const publishedIds = new Set(mine.map((m) => m.essay_id))
 
   return (
-    <div className="flex flex-col gap-5" data-testid="gallery-step">
-      <StepHead title={t("gallery.title")} intro={t("gallery.intro")} />
-      <ConsentBar
-        granted={sharing.granted}
-        loading={sharing.loading}
-        onGrant={() => sharing.grant.mutate()}
-        busy={sharing.grant.isPending}
-      />
-
-      <Section title={t("gallery.mine")} hint={t("gallery.mineHint")}>
-        <Publisher mine={mine} sharing={sharing.granted} />
-        {mine.length > 0 ? (
-          <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {mine.map((item) => (
-              <GalleryCard
-                key={item.essay_id}
-                item={item}
-                onOpen={() => setOpen(item)}
-                action={
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    disabled={unpublish.isPending}
-                    onClick={() => unpublish.mutate(item.essay_id)}
-                  >
-                    {t("gallery.unpublish")}
-                  </Button>
-                }
-              />
-            ))}
-          </ul>
-        ) : null}
+    <div className="flex flex-col gap-6" data-testid="examples-panel">
+      <Section title={tl("examplesAdmitted")} hint={tl("examplesAdmittedHint")}>
+        <ExemplarsTab institutionIds={institutionIds} />
       </Section>
 
       <Section title={t("gallery.others")} hint={t("gallery.othersHint")}>
@@ -233,7 +205,7 @@ export function GalleryStep({ onNext }: { onNext?: () => void }) {
         ) : others.length === 0 ? (
           <StateView state="empty" emptyText={t("gallery.empty")} />
         ) : (
-          <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid gap-3 sm:grid-cols-2">
             {others.map((item) => (
               <GalleryCard key={item.essay_id} item={item} onOpen={() => setOpen(item)} />
             ))}
@@ -241,8 +213,33 @@ export function GalleryStep({ onNext }: { onNext?: () => void }) {
         )}
       </Section>
 
+      <Section title={t("gallery.mine")} hint={t("gallery.mineHint")}>
+        <ConsentBar
+          granted={sharing.granted}
+          loading={sharing.loading}
+          onGrant={() => sharing.grant.mutate()}
+          busy={sharing.grant.isPending}
+        />
+        <Publisher mine={mine} sharing={sharing.granted} />
+        {mine.length > 0 ? (
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {mine.map((item) => (
+              <GalleryCard
+                key={item.essay_id}
+                item={item}
+                onOpen={() => setOpen(item)}
+                action={
+                  <Button size="sm" variant="ghost" disabled={unpublish.isPending} onClick={() => unpublish.mutate(item.essay_id)}>
+                    {t("gallery.unpublish")}
+                  </Button>
+                }
+              />
+            ))}
+          </ul>
+        ) : null}
+      </Section>
+
       <ReadDialog item={open} onClose={() => setOpen(null)} />
-      <StepNext label={t("gallery.next")} onNext={onNext} />
     </div>
   )
 }

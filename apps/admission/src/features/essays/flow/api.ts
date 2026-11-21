@@ -22,29 +22,48 @@ export type IdeaFit = AdmissionIdeaFit
 export type PracticeToday = AdmissionPracticeToday
 export type PracticeEntry = AdmissionPracticeEntry
 
+export type PromptScope = "list" | "all"
+
 export const flowKeys = {
   map: [...essayKeys.all, "prompt-map"] as const,
+  scopedMap: (scope: PromptScope, locale: string) => [...essayKeys.all, "prompt-map", scope, locale] as const,
   fit: (text: string) => ["admission", "essay-fit", text] as const,
   today: [...essayKeys.all, "practice", "today"] as const,
   practice: [...essayKeys.all, "practice", "list"] as const,
 }
 
-export function usePromptMap() {
+/** The prompt groups of one scope: `list` is my universities plus the Common App, `all` the whole catalog. */
+export function usePromptMap(scope: PromptScope = "all") {
+  const locale = useLocale()
   return useQuery({
-    queryKey: flowKeys.map,
-    queryFn: ({ signal }) => getApiClient().get<PromptMap>(`${BASE}/prompt-map`, { signal }),
+    queryKey: flowKeys.scopedMap(scope, locale),
+    queryFn: ({ signal }) =>
+      getApiClient().get<PromptMap>(`${BASE}/prompt-map`, {
+        query: { scope },
+        headers: { "Accept-Language": locale },
+        signal,
+      }),
   })
 }
 
-/** How well one idea fits each prompt that no essay covers yet; asks the AI, so it waits for the consent. */
+/** The stored fit of one idea to the prompts no essay covers yet; opening the page never calls the model. */
 export function ideaFitOptions(text: string, enabled: boolean) {
   return {
     queryKey: flowKeys.fit(text),
     enabled: enabled && text.trim().length > 0,
     staleTime: 5 * 60_000,
     retry: false,
-    queryFn: () => getApiClient().post<IdeaFit>(`${BASE}/ideas/fit`, { text }),
+    queryFn: () => getApiClient().post<IdeaFit>(`${BASE}/ideas/fit`, { text, cached_only: true }),
   }
+}
+
+/** Scores one idea with the model (AI consent) and stores the result where the cached read finds it. */
+export function useRunIdeaFit(text: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: () => getApiClient().post<IdeaFit>(`${BASE}/ideas/fit`, { text }),
+    onSuccess: (fit) => qc.setQueryData(flowKeys.fit(text), fit),
+  })
 }
 
 export function useIdeaFit(text: string, enabled: boolean) {

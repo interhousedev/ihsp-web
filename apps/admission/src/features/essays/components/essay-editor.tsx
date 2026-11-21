@@ -2,10 +2,10 @@
 
 import { ApiError } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, StateView } from "@ihsp/ui"
+import { Alert, AlertDescription, Button, Icons, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import { useList } from "../../chooser/hooks"
 import { ShareDialog } from "../../essay-invites/components/share-dialog"
 import { EssayReviewPanel } from "../../essay-review"
@@ -16,14 +16,13 @@ import { CoachPanel } from "./coach-panel"
 import { RefinePanel } from "./refine-panel"
 import { CheckPanel } from "./check-panel"
 import { EssayMeta } from "./essay-meta"
-import { SuppInfo } from "./supp-info"
 import { IdeasBoard } from "./ideas-board"
 import { PlanPane } from "./plan-pane"
 import { VersionsPanel } from "./versions-panel"
-import { CommentsDrawer, DocumentRail, Paper, SidePanel, Toolbar, ToolsPanel, TopBar, type ToolTab } from "./editor"
+import { AnnotatedText, CommentsDrawer, Dock, ReadPanel, ScoreBar, ToolsPanel, TopBar, UnisPanel, useReadState, type DockView, type ToolTab } from "./editor"
+import { ExamplesPanel } from "../flow/examples-panel"
+import { IdeasPanel } from "../flow/ideas-panel"
 import { useWide } from "./editor/use-wide"
-
-type Panel = "comments" | "review" | "tools" | null
 
 /** Quiet time after the last keystroke before the draft is saved. */
 export const AUTOSAVE_MS = 1500
@@ -69,9 +68,9 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const body = useRef<HTMLTextAreaElement>(null)
   const wide = useWide()
   const list = useList()
-  const [panel, setPanel] = useState<Panel>(null)
+  const te = useT("essayEditor")
+  const [view, setView] = useState<DockView | null>(null)
   const [tab, setTab] = useState<ToolTab>("plan")
-  const [railOpen, setRailOpen] = useState(false)
   const [shareOpen, setShareOpen] = useState(false)
 
   /** Saves the current draft when it has changes; resolves to the lock version to use next. */
@@ -163,23 +162,76 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             ? t("save.conflict")
             : t("save.saved")
 
-  const openPanel = (next: Panel, nextTab?: ToolTab) => {
-    if (nextTab) setTab(nextTab)
-    setPanel((current) => (current === next && !nextTab ? null : next))
-  }
   const history = (command: "undo" | "redo") => {
     body.current?.focus()
     document.execCommand(command)
   }
   const entry = list.data?.find((item) => item.id === essay.list_entry_id)
-  const panelTitle =
-    panel === "comments" ? t("tabs.comments") : panel === "review" ? t("tabs.review") : t("editor.tools")
+  const targets = essay.targets ?? []
+  const institutionIds = [
+    ...new Set([...targets.map((tg) => tg.institution_id), entry?.institution.id].filter((id): id is string => !!id)),
+  ]
+  const readState = useReadState(essay.id, draft.body, flush)
+  const [selected, setSelected] = useState<number | null>(null)
+  const openView = (next: DockView) => setView(next)
+  const dockTitle =
+    view === "comments" ? t("tabs.comments") : view === "review" ? t("tabs.review") : t("editor.tools")
+
+  const panes: Record<DockView, ReactNode> = {
+    read: <ReadPanel state={readState} selected={selected} onSelect={setSelected} />,
+    unis: <UnisPanel essay={essay} onReview={() => openView("review")} />,
+    examples: <ExamplesPanel institutionIds={institutionIds.length > 0 ? institutionIds : undefined} />,
+    ideas: <IdeasPanel />,
+    comments: <CommentsDrawer essayId={essay.id} />,
+    review: <EssayReviewPanel essayId={essay.id} entryInstitutionIds={entry ? [entry.institution.id] : []} />,
+    tools: (
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-wrap gap-2 lg:hidden">
+          <Button type="button" size="sm" variant="outline" onClick={() => setShareOpen(true)}>
+            <Icons.share aria-hidden />
+            {t("editor.share")}
+          </Button>
+          <Button type="button" size="sm" variant="outline" onClick={() => openView("comments")}>
+            <Icons.chat aria-hidden />
+            {t("tabs.comments")}
+          </Button>
+        </div>
+        <ToolsPanel
+          tab={tab}
+          onTab={setTab}
+          panes={{
+            plan: (
+              <div className="flex flex-col gap-3">
+                <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
+                <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
+              </div>
+            ),
+            check: <CheckPanel essayId={essay.id} beforeRun={flush} />,
+            refine: <RefinePanel essayId={essay.id} />,
+            versions: (
+              <VersionsPanel
+                essay={essay}
+                draftBody={draft.body}
+                beforeChange={flush}
+                onRestore={(v) => void onRestore(v)}
+                restoring={restore.isPending}
+              />
+            ),
+            ideas: <IdeasBoard essayId={essay.id} />,
+          }}
+        />
+      </div>
+    ),
+  }
 
   return (
     <div className="bg-muted/40 flex min-h-[calc(100dvh-4rem)] flex-col">
       <TopBar
         title={draft.title}
         onTitle={(title) => update({ title })}
+        words={words}
+        wordLimit={draft.word_limit}
+        saveState={state}
         status={
           <>
             {status}
@@ -190,53 +242,65 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             ) : null}
           </>
         }
-        onRail={() => setRailOpen(true)}
-        onVersions={() => openPanel("tools", "versions")}
-        onComments={() => openPanel("comments")}
+        onUndo={() => history("undo")}
+        onRedo={() => history("redo")}
+        onTools={() => openView("tools")}
+        onVersions={() => {
+          setTab("versions")
+          openView("tools")
+        }}
+        onComments={() => setView(view === "comments" ? "read" : "comments")}
         onShare={() => setShareOpen(true)}
-        commentsOpen={panel === "comments"}
+        commentsOpen={view === "comments"}
       />
-      <div data-testid="editor-toolbar-bar" className="bg-background sticky top-[calc(var(--safe-top,0px)+4rem)] z-20">
-        <Toolbar
-          words={words}
-          wordLimit={draft.word_limit}
-          onUndo={() => history("undo")}
-          onRedo={() => history("redo")}
-          onReview={() => openPanel("review")}
-          onTools={() => openPanel("tools")}
-        />
-      </div>
       <div className="flex min-w-0 flex-1 items-start gap-4 p-3 md:p-4">
-        <SidePanel
-          side="left"
-          title={t("editor.rail.title")}
-          open={wide || railOpen}
-          onOpenChange={setRailOpen}
-          className="w-52 shrink-0"
-        >
-          <DocumentRail currentId={essay.id} liveTitle={draft.title} onNavigate={() => setRailOpen(false)} />
-        </SidePanel>
         <div className="flex min-w-0 flex-1 flex-col gap-3">
-          {essay.kind === "supplemental" || (essay.targets?.length ?? 0) > 0 ? <SuppInfo essay={essay} /> : null}
-          <EssayMeta
-            prompt={draft.prompt_text}
-            showPrompt={(essay.targets?.length ?? 0) === 0}
-            wordLimit={draft.word_limit}
-            words={words}
-            status={essay.status === "final" ? "final" : "draft"}
-            onPrompt={(prompt_text) => update({ prompt_text })}
-            onWordLimit={(word_limit) => update({ word_limit })}
-          />
-          <Paper
-            title={draft.title}
-            prompt=""
-            body={draft.body}
-            readOnly={state === "conflict"}
-            onBody={(next) => update({ body: next })}
-            textareaRef={body}
-          />
+          <div className="mx-auto flex w-full max-w-3xl flex-col gap-3">
+            <ScoreBar
+              essayId={essay.id}
+              state={readState}
+              onRead={() => setView("read")}
+              onUnis={() => setView("unis")}
+            />
+            <EssayMeta
+              prompt={draft.prompt_text}
+              summary={targets.length > 0 ? targets.map((tg) => tg.prompt).join(" · ") : undefined}
+              showPrompt={targets.length === 0}
+              wordLimit={draft.word_limit}
+              words={words}
+              onPrompt={(prompt_text) => update({ prompt_text })}
+              onWordLimit={(word_limit) => update({ word_limit })}
+            />
+          </div>
+          {readState.stale ? (
+            <p
+              role="status"
+              data-testid="editor-stale-banner"
+              className="bg-warning-muted text-warning mx-auto flex w-full max-w-3xl flex-wrap items-center gap-x-3 gap-y-1 rounded-md px-3 py-2 text-sm"
+            >
+              <span className="min-w-0 flex-1">{te("staleBanner")}</span>
+              <Button type="button" size="sm" variant="outline" disabled={readState.run.isPending} onClick={() => void readState.start()}>
+                {te("staleAction")}
+              </Button>
+            </p>
+          ) : null}
+          <article className="bg-card text-card-foreground ring-border mx-auto w-full max-w-3xl rounded-sm px-8 py-8 shadow-md ring-1 md:px-14 md:py-12">
+            <AnnotatedText
+              body={draft.body}
+              readOnly={state === "conflict"}
+              onBody={(next) => update({ body: next })}
+              textareaRef={body}
+              read={readState.read}
+              stale={readState.stale}
+              selected={selected}
+              onSelect={(n) => {
+                setSelected(n)
+                setView("read")
+              }}
+            />
+          </article>
           {state === "conflict" ? (
-            <Alert variant="destructive">
+            <Alert variant="destructive" className="mx-auto w-full max-w-3xl">
               <AlertDescription className="flex flex-col gap-2">
                 {t("save.conflictText")}
                 <Button type="button" size="sm" className="self-start" onClick={() => void reload()}>
@@ -246,7 +310,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             </Alert>
           ) : null}
           {lost && state !== "conflict" ? (
-            <details className="border-hairline rounded-card border p-3 text-sm">
+            <details className="border-hairline rounded-card mx-auto w-full max-w-3xl border p-3 text-sm">
               <summary className="cursor-pointer">{t("save.lost")}</summary>
               <p className="mt-2 whitespace-pre-wrap select-all">{lost}</p>
               <Button type="button" size="sm" variant="ghost" onClick={() => setLost(null)}>
@@ -260,44 +324,14 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             </p>
           ) : null}
         </div>
-        <SidePanel
-          side="right"
-          title={panelTitle}
-          open={panel !== null}
-          onOpenChange={(next) => setPanel(next ? panel : null)}
-          className="bg-background border-hairline rounded-card w-96 max-w-[40%] shrink-0 border p-4"
-        >
-          {panel === "comments" ? <CommentsDrawer essayId={essay.id} /> : null}
-          {panel === "review" ? (
-            <EssayReviewPanel essayId={essay.id} entryInstitutionIds={entry ? [entry.institution.id] : []} />
-          ) : null}
-          {panel === "tools" ? (
-            <ToolsPanel
-              tab={tab}
-              onTab={setTab}
-              panes={{
-                plan: (
-                  <div className="flex flex-col gap-3">
-                    <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
-                    <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
-                  </div>
-                ),
-                check: <CheckPanel essayId={essay.id} beforeRun={flush} />,
-                refine: <RefinePanel essayId={essay.id} />,
-                versions: (
-                  <VersionsPanel
-                    essay={essay}
-                    draftBody={draft.body}
-                    beforeChange={flush}
-                    onRestore={(v) => void onRestore(v)}
-                    restoring={restore.isPending}
-                  />
-                ),
-                ideas: <IdeasBoard essayId={essay.id} />,
-              }}
-            />
-          ) : null}
-        </SidePanel>
+        <Dock
+          wide={wide}
+          view={view}
+          onView={setView}
+          onClose={() => setView(null)}
+          title={dockTitle}
+          panes={panes}
+        />
       </div>
       <ShareDialog essayId={essay.id} open={shareOpen} onOpenChange={setShareOpen} />
     </div>

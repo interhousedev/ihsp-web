@@ -14,7 +14,6 @@ import {
   useSavePractice,
   type PracticeEntry,
 } from "./api"
-import { StepFooter } from "./step-footer"
 
 const SAVE_DELAY = 1000
 const SPEECH_LANG: Record<string, string> = { en: "en-US", ru: "ru-RU", uz: "uz-UZ" }
@@ -144,7 +143,7 @@ function History({ today }: { today: string }) {
 }
 
 /** Step 2: a few free minutes on today's theme; the text saves itself, the AI answers as a writing coach. */
-export function PracticeStep({ onNext }: { onNext?: () => void }) {
+export function PracticeStep() {
   const t = useT("essayFlow")
   const errorMessage = useErrorMessage()
   const locale = useLocale()
@@ -220,7 +219,6 @@ export function PracticeStep({ onNext }: { onNext?: () => void }) {
       </div>
       {today.entry ? <Evaluation entry={today.entry} seeds /> : null}
       <History today={today.day} />
-      <StepFooter next="ideas" onNext={onNext} />
     </div>
   )
 }

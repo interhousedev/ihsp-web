@@ -2,27 +2,31 @@
 
 import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
-import { buttonVariants, cn, Icons } from "@ihsp/ui"
+import { Button, buttonVariants, cn, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 import { NextStep } from "../../../components/next-step"
 import { useScreenContext } from "../../assistant/screen-context"
 import { AdmissionShell } from "../../shell/components/admission-shell"
-import { useEssays } from "../api"
-import { EssayFlow } from "../flow/essay-flow"
+import { EssayLedger, useLedger } from "../ledger/essay-ledger"
+import { LedgerSentence } from "../ledger/ledger-controls"
+import { useStartEssay } from "../ledger/use-start-essay"
 
-/** The essays section: one linear path from the prompt map down to matching essays to universities. */
+/** The essays home: a ledger of what is owed (one row per prompt group), a university board, and today's practice. */
 export function EssaysBody() {
   const t = useT("essays")
+  const tl = useT("essayLedger")
   const entryId = useSearchParams().get("entry")
-  const essays = useEssays().data?.items ?? []
+  const ledger = useLedger()
+  const blank = useStartEssay()
+  const essays = ledger.essays.data?.items ?? []
   useScreenContext({
     title: t("title"),
     summary: `Essays: ${essays.length}. ${essays
       .map(
         (e) =>
-          `"${e.title || t("untitled")}" (${e.kind}, ${e.status}, ${e.word_count}${e.word_limit ? `/${e.word_limit}` : ""} words)`,
+          `"${e.title || t("untitled")}" (${e.kind}, ${e.status}, ${e.word_count}${e.word_limit ? `/${e.word_limit}` : ""} words${e.uniqueness === null ? "" : `, uniqueness ${e.uniqueness}`})`,
       )
       .join("; ")}`,
   })
@@ -38,8 +42,18 @@ export function EssaysBody() {
           {t("backToList")}
         </Link>
       ) : null}
-      <AppPageHeader icon="post" title={t("title")} />
-      <EssayFlow />
+      <AppPageHeader
+        icon="post"
+        title={t("title")}
+        meta={ledger.ready ? <LedgerSentence summary={ledger.summary} /> : undefined}
+        actions={
+          <Button type="button" disabled={blank.pending} onClick={blank.startBlank}>
+            <Icons.add aria-hidden />
+            {tl("newEssay")}
+          </Button>
+        }
+      />
+      <EssayLedger ledger={ledger} />
       <NextStep
         href={entryId ? `/documents/?entry=${encodeURIComponent(entryId)}` : "/documents/"}
         label={t("nextStep")}

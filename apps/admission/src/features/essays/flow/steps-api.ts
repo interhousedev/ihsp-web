@@ -36,6 +36,7 @@ export const flowKeys = {
   reviews: (id: string) => ["admission", "essays", "reviews", id] as const,
   top: ["admission", "essays", "top"] as const,
   match: (universityId: string) => ["admission", "essays", "match", universityId] as const,
+  matchList: ["admission", "essays", "match", "list"] as const,
 }
 
 export function useGallery() {
@@ -147,14 +148,23 @@ export type MatchCandidate = {
   alignment: number | null
   target_match: boolean
 }
+export type AssignedEssay = { essay_id: string; kind: string; over_limit: boolean; status: string; title: string; word_count: number }
 export type MatchSlot = {
   slot: string
   prompt: string | null
   word_limit: number | null
+  required: boolean
   essay_id: string | null
+  assigned: AssignedEssay | null
   candidates: MatchCandidate[]
 }
-export type MatchTable = { institution_id: string; institution_name: string; slots: MatchSlot[] }
+export type MatchTable = {
+  institution_id: string
+  institution_name: string
+  due_utc: string | null
+  due_predicted: boolean
+  slots: MatchSlot[]
+}
 
 export function useTopEssays() {
   return useQuery({
@@ -172,17 +182,27 @@ export function useMatchTable(universityId: string | null) {
   })
 }
 
-export function useAssignSlot(universityId: string) {
+/** Every listed university's slots at once, with the application due date. */
+export function useMatchList() {
+  return useQuery({
+    queryKey: flowKeys.matchList,
+    queryFn: ({ signal }) => getApiClient().get<{ items: MatchTable[] }>(`${BASE}/essays/match`, { signal }),
+  })
+}
+
+/** Puts an essay into a university's slot, or empties the slot when `essayId` is null. */
+export function useAssignSlot() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ slot, essayId }: { slot: string; essayId: string | null }) => {
+    mutationFn: ({ universityId, slot, essayId }: { universityId: string; slot: string; essayId: string | null }) => {
       const url = `${BASE}/essays/match/${seg(universityId)}/slots/${seg(slot)}`
       return essayId
         ? getApiClient().put<MatchTable>(url, { essay_id: essayId })
         : getApiClient().delete<MatchTable>(url)
     },
-    onSuccess: (data) => {
+    onSuccess: (data, { universityId }) => {
       qc.setQueryData(flowKeys.match(universityId), data)
+      void qc.invalidateQueries({ queryKey: flowKeys.matchList })
       void qc.invalidateQueries({ queryKey: PROMPT_MAP_KEY })
       void qc.invalidateQueries({ queryKey: IDEA_FIT_KEY })
     },

@@ -2,9 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useQuery } from "@tanstack/react-query"
 import { Suspense } from "react"
-import { careerPlanQuery } from "../features/career/api"
 import { sectionFor, type Section, type SectionPart } from "../config/nav"
 import { PAGE_FRAME } from "./lib/page"
 import { UnderlineTabs } from "./lib/underline-tabs"
@@ -29,15 +27,11 @@ function Tabs({ section }: { section: Section }) {
   const pathname = usePathname()
   const tab = useSearchParams().get("tab")
   const current = activePart(section, pathname, tab)
-  // The profile's study-field count rides on the Career "Field of study" tab.
-  const plan = useQuery({ ...careerPlanQuery(), enabled: section.id === "career" })
-  const countOf = (id: string) =>
-    section.id === "career" && id === "field" ? (plan.data?.study_focus?.field_ids.length ?? 0) : undefined
   return (
     <div className={`${PAGE_FRAME} pt-2 print:hidden`} data-testid="section-tabs">
       <UnderlineTabs
         label={t("sectionParts", { section: t(`sections.${section.id}`) })}
-        tabs={section.parts.map((part) => ({ value: part.id, label: t(`parts.${part.id}`), count: countOf(part.id) }))}
+        tabs={section.parts.map((part) => ({ value: part.id, label: t(`parts.${part.id}`) }))}
         value={current?.id ?? ""}
         onValueChange={(id) => {
           const part = section.parts.find((candidate) => candidate.id === id)
