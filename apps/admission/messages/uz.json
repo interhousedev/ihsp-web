@@ -1756,6 +1756,56 @@
     }
   },
   "staff": {
+    "denied": {
+      "title": "Oʻquvchi hali «{section}» boʻlimini ulashmagan",
+      "text": "Oʻquvchi rozilik bergach, boʻlim ochiladi."
+    },
+    "scope": {
+      "mine": "Meniki",
+      "all": "Barcha oʻquvchilar",
+      "search": "Oʻquvchi ismi boʻyicha qidirish",
+      "assigned": "Biriktirilgan",
+      "noneAssigned": "Biriktirilmagan",
+      "actions": "Amallar"
+    },
+    "pin": {
+      "title": "Mahkamlangan amal",
+      "none": "Hech narsa mahkamlanmagan",
+      "by": "Mahkamladi: {name}",
+      "expires": "{date} gacha",
+      "titleField": "Nima qilish kerak",
+      "noteField": "Izoh (ixtiyoriy)",
+      "linkField": "Qayerga olib boradi",
+      "noLink": "Havolasiz",
+      "submit": "Mahkamlash",
+      "replace": "Almashtirish",
+      "unpin": "Mahkamlashni bekor qilish",
+      "done": "14 kunga mahkamlandi",
+      "removed": "Mahkamlash bekor qilindi",
+      "links": {
+        "today": "Bugun",
+        "tasks": "Vazifalar",
+        "documents": "Hujjatlar",
+        "deadlines": "Muddatlar",
+        "essays": "Esselar",
+        "list": "Oliygohlar roʻyxati",
+        "tests": "Testlar",
+        "profile": "Profil",
+        "review": "SI tahlili"
+      }
+    },
+    "tasksTab": {
+      "add": "Vazifa qoʻyish",
+      "empty": "Oʻquvchida hali vazifa yoʻq",
+      "by": "{name} tomonidan"
+    },
+    "documentsTab": {
+      "empty": "Oʻquvchining hujjatlari hali yoʻq"
+    },
+    "budget": {
+      "title": "Oila budjeti",
+      "notShared": "Oila budjetni ulashmagan"
+    },
     "caseload": {
       "title": "Oʻquvchilarim",
       "columns": {
@@ -1802,6 +1852,9 @@
       "limitReachedPlain": "Saqlangan koʻrinishlar chegarasiga yetildi."
     },
     "tabs": {
+      "tasks": "Vazifalar",
+      "documents": "Hujjatlar",
+      "readiness": "Tayyorlik",
       "profile": "Profil",
       "words": "Soʻzlar",
       "alignment": "Mosligi",
@@ -1834,6 +1887,10 @@
       "listEmpty": "Roʻyxat boʻsh"
     },
     "assign": {
+      "manage": "Boshqarish",
+      "revoke": "Olib tashlash",
+      "revoked": "Biriktirish bekor qilindi",
+      "current": "Hozir biriktirilgan",
       "open": "Xodim biriktirish",
       "title": "Xodimni biriktirish",
       "submit": "Biriktirish",
@@ -1908,7 +1965,8 @@
     "deadlines": {
       "title": "Hujjat topshirish muddatlari",
       "binding": "Majburiy"
-    }
+    },
+    "sourceLine": "Manba"
   },
   "chooser": {
     "title": "Universitet tanlash",
@@ -2033,7 +2091,7 @@
       "missingTitle": "Universitet topilmadi",
       "back": "Qidiruvga qaytish",
       "seeChances": "Imkoniyatlarim",
-      "suggested": "Tavsiya etilgan kollejlar",
+      "suggested": "Oʻxshash universitetlar",
       "stats": {
         "status": "Holat",
         "admissionRate": "Qabul foizi",
@@ -2045,7 +2103,19 @@
       "sources": "Manbalar",
       "outcomes": "{brand} oʻquvchilari qayerga topshirgan",
       "perYear": "{value} / yil",
-      "sourceLabel": "Rasmiy veb-sayt"
+      "sourceLabel": "Rasmiy veb-sayt",
+      "backList": "Roʻyxatim",
+      "backCatalog": "Katalog",
+      "roundFor": "{name} uchun raund",
+      "inListRound": "Roʻyxatda · {round}",
+      "fitHint": "Moslik va yordamdan keyingi narxni koʻrish uchun universitetni roʻyxatga qoʻshing.",
+      "tab": {
+        "fit": "Moslik",
+        "facts": "Faktlar",
+        "money": "Pul",
+        "apply": "Topshirish",
+        "iht": "{brand}"
+      }
     },
     "estimate": {
       "range": "Taxminiy imkoniyat {low}–{high}%",
@@ -2319,7 +2389,7 @@
     "sort": {
       "label": "Saralash",
       "deadline": "Eng yaqin muddat",
-      "relevance": "Mosligi boʻyicha",
+      "relevance": "Avval tekshirilganlar",
       "name": "Nomi boʻyicha",
       "cost": "Narxi boʻyicha"
     },
@@ -2368,6 +2438,25 @@
     },
     "nextStep": {
       "review": "Roʻyxatimni koʻrib chiqish ({count})"
+    },
+    "strip": {
+      "label": "Chet ellik uchun",
+      "admit": "Qabul",
+      "admitOverall": "Qabul (umumiy)",
+      "fullNeed": "Ehtiyojni toʻliq qoplaydi",
+      "avgAid": "Oʻrtacha yordam",
+      "cost": "≈ yiliga, yordamdan keyin"
+    },
+    "ask": {
+      "open": "AIdan soʻrash",
+      "title": "{name} haqida AI",
+      "questions": "Nimani soʻrash kerak"
+    },
+    "apply": {
+      "title": "Nima qilish kerak",
+      "notInList": "Topshirishni yuritish uchun universitetni roʻyxatga qoʻshing.",
+      "essays": "Esselar",
+      "documents": "Hujjatlar"
     }
   },
   "chooserPicker": {
@@ -3337,6 +3426,22 @@
     "quietTo": "Tinch vaqt tugashi",
     "save": "Saqlash",
     "staffTitle": "Muddatlar katalogi",
+    "staffPageTitle": "Muddatlar",
+    "staffTimeline": {
+      "tabs": "Muddat boʻlimlari",
+      "students": "Oʻquvchilar muddatlari",
+      "label": "Oʻquvchilar muddatlari sanalar boʻyicha",
+      "scope": "Kimning oʻquvchilari",
+      "scopeMine": "Meniki",
+      "scopeAll": "Hammasi",
+      "empty": "Oʻquvchilaringizda yaqin muddat va vazifalar yoʻq.",
+      "emptyAll": "Oʻquvchilarda hozircha muddat va vazifalar yoʻq.",
+      "unknownStudent": "Oʻquvchi",
+      "open": "Ochish",
+      "openStudent": "Oʻquvchi sahifasini ochish: {name}",
+      "byStaff": "Xodim qoʻygan vazifa",
+      "staffShort": "X"
+    },
     "staffEmpty": "Katalogda muddatlar yoʻq.",
     "edit": "Tahrirlash",
     "editTitle": "Muddatni tahrirlash",
@@ -3829,6 +3934,8 @@
     "openPlan": "Rejamni ochish",
     "nextPlanHint": "Saqlangan imkoniyatlar va muddatlar rejada.",
     "place": "Rejaga qoʻyish",
+    "placeGrade": "Sinfni tanlang",
+    "currentGrade": "sizning sinfingiz",
     "termNotSet": "Semestr tanlanmagan",
     "unplacedTitle": "Hali joylashtirilmagan",
     "boardTitle": "Sinflar va semestrlar boʻyicha rejangiz",
@@ -3943,6 +4050,7 @@
     "emptyFiltered": "Bu filtrlarga mos vazifa yoʻq.",
     "overdue": "Muddati oʻtgan",
     "noDeadline": "Muddatsiz",
+    "assignedBy": "{name} tomonidan",
     "statusOf": "{title} vazifasining holati",
     "open": "{title} ni ochish",
     "delete": "Oʻchirish",
@@ -4193,7 +4301,8 @@
     },
     "stats": {
       "admissionRate": "Chet elliklar qabuli",
-      "cost": "≈ yiliga, yordamdan keyin"
+      "cost": "≈ yiliga, yordamdan keyin",
+      "deadline": "Eng yaqin muddat"
     },
     "overlap": {
       "label": "Mos kelgan joylar",

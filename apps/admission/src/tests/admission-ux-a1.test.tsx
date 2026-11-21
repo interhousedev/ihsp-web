@@ -355,7 +355,7 @@ describe("ADM-UX-A1-N4 rejecting a proposal", () => {
 describe("ADM-UX-A2 institution detail", () => {
   afterEach(() => setSystemTime())
 
-  function showDetail(school: { id: string }, scholarships: unknown[] = []) {
+  function showDetail(school: { id: string }, scholarships: unknown[] = [], tab = "money") {
     mockChooser()
     server.use(
       http.get(apiUrl(`/v1/admission/universities/${school.id}/chances`), () =>
@@ -367,7 +367,7 @@ describe("ADM-UX-A2 institution detail", () => {
       http.get(apiUrl(`/v1/admission/catalog/institutions/${school.id}`), () => HttpResponse.json(school)),
       http.get(apiUrl("/v1/admission/catalog/scholarships"), () => HttpResponse.json(scholarships)),
     )
-    renderAdmissionApp(<InstitutionDetail />, { route: `/chooser/institution/?id=${school.id}` })
+    renderAdmissionApp(<InstitutionDetail />, { route: `/chooser/institution/?id=${school.id}&tab=${tab}` })
   }
 
   test("ADM-UX-A2-S2: sources read as a label and a year, and scholarships have a heading", async () => {

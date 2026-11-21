@@ -51,5 +51,5 @@ export function sortInstitutions(items: Institution[], sort: SortKey): Instituti
       const right = b.coa_total === null ? Infinity : Number(b.coa_total)
       return left - right
     })
-  return items
+  return items.toSorted((a, b) => Number(b.verified) - Number(a.verified))
 }

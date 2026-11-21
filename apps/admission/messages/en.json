@@ -1756,6 +1756,56 @@
     }
   },
   "staff": {
+    "denied": {
+      "title": "The student has not shared “{section}” yet",
+      "text": "It opens once the student gives consent."
+    },
+    "scope": {
+      "mine": "Mine",
+      "all": "All students",
+      "search": "Search by student name",
+      "assigned": "Assigned",
+      "noneAssigned": "Not assigned",
+      "actions": "Actions"
+    },
+    "pin": {
+      "title": "Pinned action",
+      "none": "Nothing is pinned",
+      "by": "Pinned by {name}",
+      "expires": "until {date}",
+      "titleField": "What to do",
+      "noteField": "Note (optional)",
+      "linkField": "Where it leads",
+      "noLink": "No link",
+      "submit": "Pin",
+      "replace": "Replace",
+      "unpin": "Unpin",
+      "done": "Pinned for 14 days",
+      "removed": "Unpinned",
+      "links": {
+        "today": "Today",
+        "tasks": "Tasks",
+        "documents": "Documents",
+        "deadlines": "Deadlines",
+        "essays": "Essays",
+        "list": "College list",
+        "tests": "Tests",
+        "profile": "Profile",
+        "review": "AI review"
+      }
+    },
+    "tasksTab": {
+      "add": "Set a task",
+      "empty": "The student has no tasks yet",
+      "by": "from {name}"
+    },
+    "documentsTab": {
+      "empty": "The student has no documents yet"
+    },
+    "budget": {
+      "title": "Family budget",
+      "notShared": "The family has not shared a budget"
+    },
     "caseload": {
       "title": "Caseload",
       "columns": {
@@ -1802,6 +1852,9 @@
       "limitReachedPlain": "You have reached the saved views limit."
     },
     "tabs": {
+      "tasks": "Tasks",
+      "documents": "Documents",
+      "readiness": "Readiness",
       "profile": "Profile",
       "words": "Words",
       "alignment": "Alignment",
@@ -1834,6 +1887,10 @@
       "listEmpty": "The list is empty"
     },
     "assign": {
+      "manage": "Manage",
+      "revoke": "Revoke",
+      "revoked": "Assignment revoked",
+      "current": "Currently assigned",
       "open": "Assign staff",
       "title": "Assign staff member",
       "submit": "Assign",
@@ -1908,7 +1965,8 @@
     "deadlines": {
       "title": "Application deadlines",
       "binding": "Binding"
-    }
+    },
+    "sourceLine": "Source"
   },
   "chooser": {
     "title": "Choose a university",
@@ -2033,7 +2091,7 @@
       "missingTitle": "University not found",
       "back": "Back to search",
       "seeChances": "See my chances",
-      "suggested": "Suggested colleges",
+      "suggested": "Similar universities",
       "stats": {
         "status": "Status",
         "admissionRate": "Admission rate",
@@ -2045,7 +2103,19 @@
       "sources": "Sources",
       "outcomes": "Where {brand} students applied",
       "perYear": "{value} / year",
-      "sourceLabel": "Official website"
+      "sourceLabel": "Official website",
+      "backList": "My list",
+      "backCatalog": "Catalog",
+      "roundFor": "Round for {name}",
+      "inListRound": "In list · {round}",
+      "fitHint": "Add the university to your list to see fit and cost after aid.",
+      "tab": {
+        "fit": "Fit",
+        "facts": "Facts",
+        "money": "Money",
+        "apply": "Apply",
+        "iht": "{brand}"
+      }
     },
     "estimate": {
       "range": "Estimated chance {low}–{high}%",
@@ -2319,7 +2389,7 @@
     "sort": {
       "label": "Sort by",
       "deadline": "Nearest deadline",
-      "relevance": "Relevance",
+      "relevance": "Verified first",
       "name": "Name",
       "cost": "Cost"
     },
@@ -2368,6 +2438,25 @@
     },
     "nextStep": {
       "review": "Review my list ({count})"
+    },
+    "strip": {
+      "label": "For an international",
+      "admit": "Admit rate",
+      "admitOverall": "Admit rate (overall)",
+      "fullNeed": "Meets full need",
+      "avgAid": "Avg aid",
+      "cost": "≈ per year after aid"
+    },
+    "ask": {
+      "open": "Ask AI",
+      "title": "AI on {name}",
+      "questions": "What to ask"
+    },
+    "apply": {
+      "title": "What to do",
+      "notInList": "Add the university to your list to run the application.",
+      "essays": "Essays",
+      "documents": "Documents"
     }
   },
   "chooserPicker": {
@@ -3337,6 +3426,22 @@
     "quietTo": "Quiet until",
     "save": "Save",
     "staffTitle": "Deadline catalog",
+    "staffPageTitle": "Deadlines",
+    "staffTimeline": {
+      "tabs": "Deadline sections",
+      "students": "Student deadlines",
+      "label": "Student deadlines by date",
+      "scope": "Whose students",
+      "scopeMine": "Mine",
+      "scopeAll": "All",
+      "empty": "Your students have no upcoming deadlines or tasks.",
+      "emptyAll": "No student has deadlines or tasks yet.",
+      "unknownStudent": "Student",
+      "open": "Open",
+      "openStudent": "Open the student page: {name}",
+      "byStaff": "Task set by staff",
+      "staffShort": "S"
+    },
     "staffEmpty": "No deadlines in the catalog.",
     "edit": "Edit",
     "editTitle": "Edit the deadline",
@@ -3829,6 +3934,8 @@
     "openPlan": "Open my plan",
     "nextPlanHint": "Your saved opportunities and deadlines are in the plan.",
     "place": "Place in plan",
+    "placeGrade": "Choose a grade",
+    "currentGrade": "your grade",
     "termNotSet": "Term not set",
     "unplacedTitle": "Not placed yet",
     "boardTitle": "Your plan by grade and term",
@@ -3943,6 +4050,7 @@
     "emptyFiltered": "No tasks match these filters.",
     "overdue": "Overdue",
     "noDeadline": "No deadline",
+    "assignedBy": "from {name}",
     "statusOf": "Status of {title}",
     "open": "Open {title}",
     "delete": "Delete",
@@ -4193,7 +4301,8 @@
     },
     "stats": {
       "admissionRate": "Intl admit rate",
-      "cost": "≈ per year after aid"
+      "cost": "≈ per year after aid",
+      "deadline": "Next deadline"
     },
     "overlap": {
       "label": "Where you overlap",

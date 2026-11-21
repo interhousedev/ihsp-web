@@ -1,9 +1,9 @@
 /** Search filters: the address is the source of truth; every value maps to one query parameter of the catalog. */
 
 export type SortKey = "deadline" | "relevance" | "name" | "cost"
-export const SORTS: SortKey[] = ["deadline", "relevance", "name", "cost"]
-/** Approaching application deadlines first, unless the student picks another order. */
-export const DEFAULT_SORT: SortKey = "deadline"
+export const SORTS: SortKey[] = ["relevance", "deadline", "name", "cost"]
+/** Verified universities first, unless the student picks another order. */
+export const DEFAULT_SORT: SortKey = "relevance"
 
 export type Filters = {
   q: string

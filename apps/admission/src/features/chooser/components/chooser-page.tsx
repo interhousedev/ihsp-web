@@ -9,7 +9,16 @@ import { AdmissionShell } from "../../shell/components/admission-shell"
 import { ScreenSummary } from "../../assistant/screen-context"
 
 /** The frame of the chooser's detail pages (a university, the programs): title and body. The flow lives at /chooser/. */
-export function ChooserPage({ children, title }: { children: ReactNode; title?: string }) {
+export function ChooserPage({
+  children,
+  title,
+  bare = false,
+}: {
+  children: ReactNode
+  title?: string
+  /** No page title: the page brings its own header (a university). */
+  bare?: boolean
+}) {
   const t = useT("chooser")
   const pathname = usePathname()
   const inPrograms = pathname.startsWith("/chooser/programs/")
@@ -21,7 +30,7 @@ export function ChooserPage({ children, title }: { children: ReactNode; title?: 
         summary={`University chooser, page ${pathname}. ${inPrograms ? "Programs" : "Universities"} tab.`}
       />
       <div className={pageClass()}>
-        <AppPageHeader icon="search" title={heading} />
+        {bare ? null : <AppPageHeader icon="search" title={heading} />}
         <Suspense>{children}</Suspense>
       </div>
     </AdmissionShell>

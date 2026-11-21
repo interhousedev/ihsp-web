@@ -11,7 +11,6 @@ import {
   SheetTitle,
   SheetTrigger,
   StateView,
-  useIsMobile,
 } from "@ihsp/ui"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
@@ -33,7 +32,8 @@ import { ActiveChips } from "./active-chips"
 import { FieldFocus } from "./field-focus"
 import { FiltersPanel } from "./filters-panel"
 import { ListTray } from "./list-tray"
-import { InstitutionCard } from "./institution-card"
+import { InstitutionRow } from "./institution-row"
+import { useListRows } from "../use-list-rows"
 
 const VIEWS = ["list", "discover"] as const
 type View = (typeof VIEWS)[number]
@@ -44,7 +44,6 @@ export function SearchView() {
   const pathname = usePathname()
   const params = useSearchParams()
   const filters = useMemo(() => filtersFromParams(new URLSearchParams(params.toString())), [params])
-  const isMobile = useIsMobile()
   const [sheetOpen, setSheetOpen] = useState(false)
   const view: View = params.get("view") === "list" ? "list" : "discover"
   const [text, setText] = useState(filters.q ?? "")
@@ -52,6 +51,7 @@ export function SearchView() {
   const { groups } = useStudyFields()
   const search = useInstitutionSearch(filters)
   const list = useList()
+  const listRows = useListRows().rows
   const items = useMemo(
     () => sortInstitutions(search.data?.pages.flatMap((page) => page.items) ?? [], filters.sort),
     [search.data, filters.sort],
@@ -92,10 +92,13 @@ export function SearchView() {
   else
     results = (
       <div className="flex min-w-0 flex-col gap-3">
-        <ul className="grid min-w-0 gap-3 lg:grid-cols-2" aria-label={t("resultsLabel")}>
+        <ul className="flex min-w-0 flex-col" aria-label={t("resultsLabel")}>
           {items.map((institution) => (
             <li key={institution.id} className="min-w-0">
-              <InstitutionCard institution={institution} />
+              <InstitutionRow
+                institution={institution}
+                row={listRows.find((item) => item.entry.institution.id === institution.id)}
+              />
             </li>
           ))}
         </ul>
@@ -147,12 +150,10 @@ export function SearchView() {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
-      {isMobile ? null : (
-        <aside className="flex flex-col gap-3 md:sticky md:top-4 md:max-h-[calc(100dvh-9rem)] md:self-start md:overflow-y-auto md:pr-1">
-          {panel}
-        </aside>
-      )}
+    <div className="grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">
+      <aside className="hidden flex-col gap-3 lg:sticky lg:top-4 lg:flex lg:max-h-[calc(100dvh-9rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+        {panel}
+      </aside>
       <div className="flex min-w-0 flex-col gap-4">
         {toolbar}
         <FieldFocus />
@@ -173,7 +174,7 @@ export function SearchView() {
           />
           <Button type="submit">{t("searchButton")}</Button>
         </form>
-        {isMobile ? (
+        <div className="lg:hidden">
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger render={<Button type="button" variant="outline" />}>
               <Icons.adjustments aria-hidden />
@@ -186,7 +187,7 @@ export function SearchView() {
               {panel}
             </SheetContent>
           </Sheet>
-        ) : null}
+        </div>
         <ActiveChips
           filters={filters}
           active={active}
@@ -216,7 +217,7 @@ export function SearchView() {
             </label>
           </div>
         ) : null}
-        <ScrollFade maxHeight={isMobile ? undefined : "calc(100dvh - 22rem)"} className="pr-1">
+        <ScrollFade maxHeight="calc(100dvh - 22rem)" className="pr-1">
           {results}
         </ScrollFade>
       </div>

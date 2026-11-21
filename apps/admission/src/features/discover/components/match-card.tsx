@@ -3,7 +3,8 @@
 import { useLocale, useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { LogoAvatar } from "../../../components/lib/photo-header"
+import { RingLogo } from "../../fit/components/ring-logo"
+import { useInstitution } from "../../chooser/hooks"
 import type { AdmissionMatch as Match } from "@ihsp/api"
 import { preferencesQuery } from "../../algorithm/api"
 import { familyBudgetUsd } from "../../chooser/list-model"
@@ -23,7 +24,7 @@ function Stat({ label, value, note, noteTone }: { label: string; value: string; 
   )
 }
 
-/** One university of the swipe deck: name, the facts that decide (admission rate, yearly cost after aid against the budget) and why it matches. */
+/** One university of the swipe deck: the facts that decide (intl admit rate, cost after aid against the budget, next deadline) and why it matches. */
 export function MatchCard({ match }: { match: Match }) {
   const t = useT("discover")
   const list = useT("uniList")
@@ -31,6 +32,7 @@ export function MatchCard({ match }: { match: Match }) {
   const countryLabel = useOptionLabel("country")
   const tagLabel = useTagLabel()
   const preferences = useQuery(preferencesQuery())
+  const detail = useInstitution(match.university_id).data
   const budget = familyBudgetUsd(preferences.data?.answers.budget)
   const place = [match.city, countryLabel(match.country)].filter(Boolean).join(", ")
   const dash = "—"
@@ -38,49 +40,42 @@ export function MatchCard({ match }: { match: Match }) {
   const gap = cost !== null && budget !== null ? cost - budget : null
   const money = (value: number) => formatCompactCurrency(value, "USD", locale)
   const why = match.overlap.tags.map(tagLabel).join(" · ")
+  const intlRate = detail?.facts.intl_acceptance_rate?.value
+  const rate = typeof intlRate === "number" ? intlRate : match.admission_rate
+  const today = new Date().toISOString().slice(0, 10)
+  const next = detail?.deadlines.filter((item) => item.date >= today).sort((a, b) => a.date.localeCompare(b.date))[0]
+  const deadline = next
+    ? new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(next.date))
+    : null
   return (
-    <article className="bg-card border-hairline-strong rounded-card flex h-full flex-col overflow-hidden border shadow-sm">
-      <div
-        data-testid="match-cover"
-        className="from-primary/30 to-primary/5 relative h-20 shrink-0 bg-gradient-to-br bg-cover bg-center md:h-24"
-        style={match.cover_url ? { backgroundImage: `url(${JSON.stringify(encodeURI(match.cover_url))})` } : undefined}
-      >
-        {match.status ? (
-          <div className="absolute top-3 right-3">
-            <StatusPill status={match.status} />
-          </div>
-        ) : null}
-      </div>
-      <div className="flex min-h-0 flex-1 flex-col gap-3 px-4 pb-4 md:px-5">
-        <LogoAvatar name={match.name} src={match.logo_url} className="-mt-8 size-16" />
-        <div className="min-w-0">
-          <h3 className="text-lg leading-tight font-semibold">{match.name}</h3>
-          <p className="text-muted-foreground text-sm">{place}</p>
+    <article className="bg-card border-hairline-strong rounded-card flex h-full flex-col gap-3 border p-4 shadow-sm md:p-5">
+      <div className="flex items-center gap-3">
+        <div className="size-12 shrink-0">
+          <RingLogo name={match.name} src={match.logo_url} />
         </div>
-        <dl className="grid grid-cols-2 gap-3">
-          <Stat
-            label={t("stats.admissionRate")}
-            value={match.admission_rate == null ? dash : percent(match.admission_rate)}
-          />
-          <Stat
-            label={t("stats.cost")}
-            value={cost === null ? dash : list("approx", { amount: money(cost) })}
-            note={
-              gap === null
-                ? undefined
-                : gap > 0
-                  ? list("over", { amount: money(gap) })
-                  : list("under", { amount: money(-gap) })
-            }
-            noteTone={gap !== null && gap > 0 ? "text-destructive" : "text-success"}
-          />
-        </dl>
-        {why ? (
-          <p aria-label={t("overlap.label")} className="text-muted-foreground line-clamp-2 text-sm">
-            {t("overlap.why", { tags: why })}
-          </p>
-        ) : null}
+        <div className="min-w-0 flex-1">
+          <h3 className="text-lg leading-tight font-semibold">{match.name}</h3>
+          <p className="text-muted-foreground truncate text-sm">{place}</p>
+        </div>
+        {match.status ? <StatusPill status={match.status} /> : null}
       </div>
+      <dl className="grid grid-cols-2 gap-3">
+        <Stat label={t("stats.admissionRate")} value={rate == null ? dash : percent(rate)} />
+        <Stat label={t("stats.deadline")} value={deadline ?? dash} />
+        <Stat
+          label={t("stats.cost")}
+          value={cost === null ? dash : list("approx", { amount: money(cost) })}
+          note={
+            gap === null ? undefined : gap > 0 ? list("over", { amount: money(gap) }) : list("under", { amount: money(-gap) })
+          }
+          noteTone={gap !== null && gap > 0 ? "text-destructive" : "text-success"}
+        />
+      </dl>
+      {why ? (
+        <p aria-label={t("overlap.label")} className="text-muted-foreground line-clamp-2 text-sm">
+          {t("overlap.why", { tags: why })}
+        </p>
+      ) : null}
     </article>
   )
 }

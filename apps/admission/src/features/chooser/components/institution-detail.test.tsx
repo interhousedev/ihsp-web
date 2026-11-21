@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { http, HttpResponse } from "msw"
 import { mockChooser, richInstitution } from "../../../tests/chooser-handlers"
 import { renderAdmissionApp } from "../../../tests/helpers"
@@ -40,10 +40,10 @@ describe("institution detail with rich details", () => {
         ]),
       ),
     )
-    renderAdmissionApp(<InstitutionDetail />, { route: "/chooser/institution/?id=i2" })
+    renderAdmissionApp(<InstitutionDetail />, { route: "/chooser/institution/?id=i2&tab=facts" })
     await screen.findByText("4-6%")
-    expect(await screen.findByText("Founders Grant")).toBeTruthy()
     expect(screen.getByText("Guaranteed 4 years")).toBeTruthy()
-    expect(screen.getByRole("region", { name: "AI summary" })).toBeTruthy()
+    fireEvent.click(await screen.findByRole("button", { name: "Ask AI" }))
+    expect(await screen.findByRole("region", { name: "AI summary" })).toBeTruthy()
   })
 })

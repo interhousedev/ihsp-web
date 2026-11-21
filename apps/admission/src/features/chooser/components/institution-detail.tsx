@@ -1,31 +1,29 @@
 "use client"
 
 import { useLocale, useT } from "@ihsp/i18n"
-import { Button, Icons, StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
+import { StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import type { ReactNode } from "react"
-import { PhotoHeader, LogoAvatar } from "../../../components/lib/photo-header"
-import { percent } from "../../discover/format"
-import { StatusPill } from "../../discover/components/status-pill"
-import { useChances, useMatches } from "../../discover/hooks"
-import { useInstitution, useScholarships } from "../hooks"
-import type { Deadline as DeadlineItem, Fact, Institution } from "../types"
+import { LogoAvatar } from "../../../components/lib/photo-header"
+import { useMatches } from "../../discover/hooks"
 import { OutcomeSummary } from "../../outcomes/components/outcome-summary"
+import { useInstitution, useList, useScholarships } from "../hooks"
+import type { Deadline as DeadlineItem, Fact, Institution } from "../types"
 import { AddToListButton } from "./add-to-list-button"
-import { AiSummary } from "./ai-summary"
-import { FactRows } from "./fact-rows"
-import { VerifiedBadge } from "./fact-source"
 import { ChancesView } from "./chances-view"
-import { ScholarshipList } from "./scholarships-table"
-import { useOptionLabel } from "./option-label"
-import { rowText } from "./detail/groups"
-import { RichDetail } from "./detail/rich-detail"
-import { sectionId } from "./detail/section-id"
-import { InstitutionFit, CostText, useInstitutionRow } from "./institution-fit"
+import { hasSections, RichSections } from "./detail/rich-detail"
+import { FactRows } from "./fact-rows"
+import { ApplyActions } from "./institution-apply"
+import { InstitutionFit } from "./institution-fit"
+import { InstitutionHeader } from "./institution-header"
+import { IntlStrip } from "./institution-intl-strip"
+import { useIntlFigures } from "./intl-figures"
 import { currencyOf, formatCurrency } from "./money"
+import { useOptionLabel } from "./option-label"
+import { ScholarshipList } from "./scholarships-table"
 
-/** Which recorded facts each tab shows; facts outside the lists go to "Campus & outcomes". */
+/** Which recorded facts each tab shows; facts outside the lists go to "Facts". */
 const TAB_FACTS = {
   admission: ["acceptance_rate", "test_policy"],
   cost: ["intl_tuition_usd", "intl_coa_usd", "aid_basis", "merit_for_internationals"],
@@ -35,7 +33,7 @@ const TAB_FACTS = {
 /** Raw keys that are shown elsewhere (or are internal) and never as a fact row. */
 const HIDDEN_FACTS = ["deadlines", "city_type", "fields", "institution_type"]
 
-const TABS = ["cost", "admission", "campus", "chances"] as const
+const TABS = ["fit", "facts", "money", "apply", "iht"] as const
 type Tab = (typeof TABS)[number]
 
 function isTab(value: string | null): value is Tab {
@@ -78,14 +76,6 @@ function Deadlines({ items }: { items: DeadlineItem[] }) {
   )
 }
 
-function Panel({ value, children }: { value: Tab; children: ReactNode }) {
-  return (
-    <TabsContent value={value} className="pt-2">
-      {children}
-    </TabsContent>
-  )
-}
-
 function firstDeadline(institution: Institution): DeadlineItem | undefined {
   const now = new Date()
   const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`
@@ -94,19 +84,15 @@ function firstDeadline(institution: Institution): DeadlineItem | undefined {
     .sort((a, b) => a.date.localeCompare(b.date))[0]
 }
 
-function Stat({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <div className="flex min-w-0 flex-col gap-0.5">
-      <dt className="text-muted-foreground text-xs">{label}</dt>
-      <dd className="text-sm font-semibold">{children}</dd>
-    </div>
-  )
-}
-
-function SuggestedColleges({ currentId }: { currentId: string }) {
+/** Universities of the same country that fit: from the matching feed, at least half matching. */
+function SuggestedColleges({ institution }: { institution: Institution }) {
   const t = useT("chooser")
   const matches = useMatches()
-  const items = (matches.data?.items ?? []).filter((match) => match.university_id !== currentId)
+  const country = institution.country.trim().toLowerCase()
+  const items = (matches.data?.items ?? []).filter(
+    (match) =>
+      match.university_id !== institution.id && match.country.trim().toLowerCase() === country && match.match_pct >= 50,
+  )
   if (items.length === 0) return null
   return (
     <section aria-label={t("detail.suggested")} className="flex flex-col gap-2">
@@ -131,36 +117,37 @@ function SuggestedColleges({ currentId }: { currentId: string }) {
   )
 }
 
+function Panel({ value, children }: { value: Tab; children: ReactNode }) {
+  return (
+    <TabsContent value={value} className="flex flex-col gap-4 pt-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
+      {children}
+    </TabsContent>
+  )
+}
+
 function DetailBody({ institution }: { institution: Institution }) {
   const t = useT("chooser")
+  const tDetails = useT("chooserDetails")
+  const locale = useLocale()
   const countryLabel = useOptionLabel("country")
   const router = useRouter()
   const pathname = usePathname()
   const params = useSearchParams()
   const requested = params.get("tab")
-  const tab: Tab = isTab(requested) ? requested : "cost"
+  const tab: Tab = isTab(requested) ? requested : "fit"
   const scholarships = useScholarships({ institution_id: institution.id })
-  const chances = useChances(institution.id)
-  const listRow = useInstitutionRow(institution.id)
+  const list = useList()
+  const figures = useIntlFigures(institution)
+  const { row } = figures
+  /** Estimates are off until the student sees a chance range on any of the list entries. */
+  const estimatesOn = (list.data ?? []).some((entry) => entry.estimate.range_visible)
+  const rich = institution.details.length > 0
   const shown = new Set<string>([...Object.values(TAB_FACTS).flat(), ...HIDDEN_FACTS])
   const other = Object.entries(institution.facts).filter(([key]) => !shown.has(key.toLowerCase()))
-  const rate = pick(institution, ["acceptance_rate"])[0]?.[1]
-  const rateValue = typeof rate?.value === "number" ? rate.value : null
-  const kind = institution.facts.institution_type ?? pick(institution, ["institution_type"])[0]?.[1]
-  const deadline = firstDeadline(institution)
   const costFacts = pick(institution, TAB_FACTS.cost).filter(([, fact]) => hasValue(fact))
   const admissionFacts = pick(institution, TAB_FACTS.admission).filter(([, fact]) => hasValue(fact))
   const campusFacts = [...pick(institution, TAB_FACTS.safety), ...other].filter(([, fact]) => hasValue(fact))
-  const locale = useLocale()
-  const tDetails = useT("chooserDetails")
-  const rich = institution.details.length > 0
-  const intlCost = rowText(institution.details, "intl_coa_usd")
-  const aidBasis = rowText(institution.details, "aid_basis")
-  const testPolicy = rowText(institution.details, "test_policy")
-  const loose = t as unknown as { (key: string): string; has: (key: string) => boolean }
-  const kindLabel = (value: string) =>
-    loose.has(`options.studyType.${value.toLowerCase()}`) ? loose(`options.studyType.${value.toLowerCase()}`) : value
-  const hasDeadlines = institution.deadlines.length > 0
+  const deadline = firstDeadline(institution)
   const aid = scholarships.data ?? []
   const scholarshipBlock = scholarships.isLoading ? (
     <StateView state="loading" rows={2} />
@@ -172,9 +159,9 @@ function DetailBody({ institution }: { institution: Institution }) {
   const highlightText = (highlight: { key: string; value_text: string }) => {
     if (highlight.key !== "intl_tuition") return highlight.value_text
     for (const group of institution.details) {
-      const row = group.rows.find((item) => item.key === "intl_tuition_usd")
-      if (!row) continue
-      const amount = formatCurrency(row.value, currencyOf(row.value_text), locale)
+      const detail = group.rows.find((item) => item.key === "intl_tuition_usd")
+      if (!detail) continue
+      const amount = formatCurrency(detail.value, currencyOf(detail.value_text), locale)
       if (amount) return t("detail.perYear", { value: amount })
     }
     return highlight.value_text
@@ -190,6 +177,16 @@ function DetailBody({ institution }: { institution: Institution }) {
         ))}
       </dl>
     ) : null
+  const empty = <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
+  const factGroups = ["overview", "selectivity", "english", "credentials"] as const
+  const moneyGroups = ["costs"] as const
+  const applyGroups = ["application", "visa"] as const
+  const factsEmpty = rich ? !hasSections(institution, factGroups) : admissionFacts.length + campusFacts.length === 0
+  const moneyEmpty =
+    (rich ? !hasSections(institution, moneyGroups) : costFacts.length === 0) &&
+    !scholarships.isLoading &&
+    !scholarships.isError &&
+    aid.length === 0
 
   function select(next: string) {
     const nextParams = new URLSearchParams(params.toString())
@@ -198,122 +195,72 @@ function DetailBody({ institution }: { institution: Institution }) {
   }
 
   return (
-    <div className="flex flex-col gap-4 pb-20 md:pb-0">
-      <PhotoHeader
-        name={institution.name}
-        coverUrl={institution.cover_url}
-        logoUrl={institution.logo_url}
-        logoFit={institution.logo_fit}
-        logoZoom={institution.logo_zoom}
-        title={institution.name}
-        subtitle={[institution.city, countryLabel(institution.country)].filter(Boolean).join(", ")}
-        actions={
-          <>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                rich
-                  ? document
-                      .getElementById(sectionId("chances"))
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                  : select("chances")
-              }
-            >
-              <Icons.target aria-hidden />
-              {t("detail.seeChances")}
-            </Button>
-            <AddToListButton
-              institutionId={institution.id}
-              className="bg-background fixed inset-x-0 bottom-0 z-20 border-t p-3 md:static md:border-0 md:bg-transparent md:p-0"
-            />
-          </>
-        }
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <VerifiedBadge verified={institution.verified} />
-        </div>
-        <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5" data-testid="key-stats">
-          {chances.data?.status ? (
-            <Stat label={t("detail.stats.status")}>
-              <StatusPill status={chances.data.status} />
-            </Stat>
+    <div className="flex flex-col gap-4 pb-20 md:pb-0 lg:h-[calc(100dvh-3rem)] lg:pb-0">
+      <InstitutionHeader
+        institution={institution}
+        place={[institution.city, countryLabel(institution.country)].filter(Boolean).join(", ")}
+        row={row}
+      />
+      <IntlStrip figures={figures} deadline={deadline ? deadlineText(deadline, locale) : t("list.noDeadline")} />
+      <Tabs value={tab} onValueChange={(value) => select(String(value))} className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+        <TabsList className="max-w-full justify-start overflow-x-auto">
+          {TABS.map((name) => (
+            <TabsTrigger key={name} value={name}>
+              {t(`detail.tab.${name}`)}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        <Panel value="fit">
+          {row ? (
+            <InstitutionFit row={row} />
+          ) : (
+            <section className="bg-card flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-4">
+              <p className="text-muted-foreground min-w-0 flex-1 basis-60 text-sm">{t("detail.fitHint")}</p>
+              <AddToListButton institutionId={institution.id} />
+            </section>
+          )}
+          {estimatesOn ? (
+            <section aria-label={t("detail.seeChances")} className="flex flex-col gap-2">
+              <h3 className="text-base font-semibold">{t("detail.seeChances")}</h3>
+              <ChancesView institutionId={institution.id} showQuestions={false} />
+            </section>
           ) : null}
-          {rateValue !== null ? <Stat label={t("detail.stats.admissionRate")}>{percent(rateValue)}</Stat> : null}
-          {kind && hasValue(kind) ? <Stat label={t("detail.stats.type")}>{kindLabel(String(kind.value))}</Stat> : null}
-          {listRow?.cost ? (
-            <Stat label={t("detail.stats.cost")}>
-              <CostText row={listRow} />
-            </Stat>
-          ) : institution.cost_after_aid ? (
-            <Stat label={t("detail.stats.cost")}>
-              ≈ {formatCurrency(institution.cost_after_aid, institution.coa_currency, locale) ?? institution.cost_after_aid}
-            </Stat>
+          <SuggestedColleges institution={institution} />
+        </Panel>
+        <Panel value="facts">
+          {rich ? <RichSections institution={institution} groups={factGroups} /> : null}
+          {!rich && admissionFacts.length + campusFacts.length > 0 ? (
+            <FactRows facts={[...admissionFacts, ...campusFacts]} sources={institution.sources} />
           ) : null}
-          <Stat label={t("detail.stats.deadline")}>
-            {deadline ? deadlineText(deadline, locale) : t("list.noDeadline")}
-          </Stat>
-          {rich && intlCost ? <Stat label={tDetails("stats.intlCost")}>{intlCost}</Stat> : null}
-          {rich && aidBasis ? <Stat label={tDetails("stats.aid")}>{aidBasis}</Stat> : null}
-          {rich && testPolicy ? <Stat label={tDetails("stats.testPolicy")}>{testPolicy}</Stat> : null}
-        </dl>
-      </PhotoHeader>
-      {listRow ? <InstitutionFit row={listRow} /> : null}
-      {rich ? <RichDetail institution={institution} chances={<ChancesView institutionId={institution.id} />} /> : null}
-      {rich ? (
-        <div className="flex flex-col gap-4">
-          {scholarshipBlock}
-          <AiSummary institutionId={institution.id} />
           {highlightBlock}
-        </div>
-      ) : (
-        <Tabs value={tab} onValueChange={(value) => select(String(value))}>
-          <TabsList className="max-w-full overflow-x-auto">
-            {TABS.map((name) => (
-              <TabsTrigger key={name} value={name}>
-                {t(`tabs.${name}`)}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          <Panel value="cost">
-            <div className="flex flex-col gap-4">
-              {costFacts.length > 0 ? <FactRows facts={costFacts} sources={institution.sources} /> : null}
-              {scholarshipBlock}
-              {costFacts.length === 0 && !scholarships.isLoading && !scholarships.isError && aid.length === 0 ? (
-                <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
-              ) : null}
-            </div>
-          </Panel>
-          <Panel value="admission">
-            <div className="flex flex-col gap-4">
-              {admissionFacts.length > 0 ? <FactRows facts={admissionFacts} sources={institution.sources} /> : null}
-              {hasDeadlines ? <Deadlines items={institution.deadlines} /> : null}
-              {admissionFacts.length === 0 && !hasDeadlines ? (
-                <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
-              ) : null}
-            </div>
-          </Panel>
-          <Panel value="campus">
-            <div className="flex flex-col gap-4">
-              <AiSummary institutionId={institution.id} />
-              {highlightBlock}
-              {campusFacts.length > 0 ? <FactRows facts={campusFacts} sources={institution.sources} /> : null}
-            </div>
-          </Panel>
-          <Panel value="chances">
-            <ChancesView institutionId={institution.id} />
-          </Panel>
-        </Tabs>
-      )}
-      <section aria-label={t("detail.outcomes")} className="flex flex-col gap-2">
-        <h3 className="text-base font-semibold">{t("detail.outcomes")}</h3>
-        <OutcomeSummary institutionId={institution.id} />
-      </section>
+          {factsEmpty && !highlightBlock ? empty : null}
+        </Panel>
+        <Panel value="money">
+          {rich ? <RichSections institution={institution} groups={moneyGroups} /> : null}
+          {!rich && costFacts.length > 0 ? <FactRows facts={costFacts} sources={institution.sources} /> : null}
+          {scholarshipBlock}
+          {moneyEmpty ? empty : null}
+        </Panel>
+        <Panel value="apply">
+          {rich ? <RichSections institution={institution} groups={applyGroups} /> : null}
+          {!rich && admissionFacts.length > 0 ? (
+            <FactRows facts={admissionFacts} sources={institution.sources} />
+          ) : null}
+          {!rich && institution.deadlines.length > 0 ? <Deadlines items={institution.deadlines} /> : null}
+          <ApplyActions row={row} />
+        </Panel>
+        <Panel value="iht">
+          <section aria-label={t("detail.outcomes")} className="flex flex-col gap-2">
+            <h3 className="text-base font-semibold">{t("detail.outcomes")}</h3>
+            <OutcomeSummary institutionId={institution.id} />
+          </section>
+        </Panel>
+      </Tabs>
       {institution.sources.length > 0 ? (
         <p className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" data-testid="sources">
           <span>{t("detail.sources")}</span>
           {institution.sources
-            .filter((source) => source.url)
+            .filter((source, index, all) => source.url && all.findIndex((other) => other.url === source.url) === index)
             .map((source) => (
               <a
                 key={`${source.key}-${source.url}`}
@@ -327,7 +274,6 @@ function DetailBody({ institution }: { institution: Institution }) {
             ))}
         </p>
       ) : null}
-      <SuggestedColleges currentId={institution.id} />
     </div>
   )
 }
