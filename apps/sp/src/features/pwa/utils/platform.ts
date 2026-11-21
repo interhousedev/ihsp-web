@@ -6,4 +6,4 @@ export {
   type DisplayEnv,
   type NavigatorSnapshot,
   type Platform,
-} from "@ihsp/features-core/pwa"
+} from "@ihsp/features-core/pwa";

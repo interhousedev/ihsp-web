@@ -8,4 +8,4 @@ export {
   shouldCheckVersion,
   writeForcedReload,
   type ForcedReload,
-} from "@ihsp/features-core/pwa"
+} from "@ihsp/features-core/pwa";

@@ -8,4 +8,4 @@ export {
   PWA_HEAD_SCRIPT,
   PWA_THEME_COLOR_DARK,
   PWA_THEME_COLOR_LIGHT,
-} from "@ihsp/features-core/pwa/head"
+} from "@ihsp/features-core/pwa/head";

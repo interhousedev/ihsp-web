@@ -9,4 +9,4 @@ export {
   parseSwMessage,
   type SwEvent,
   type SwMessage,
-} from "@ihsp/features-core/pwa/sw"
+} from "@ihsp/features-core/pwa/sw";

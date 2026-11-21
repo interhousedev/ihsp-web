@@ -4,4 +4,4 @@ export {
   useInstallPrompt,
   type InstallOutcome,
   type InstallPromptEvent,
-} from "@ihsp/features-core/pwa"
+} from "@ihsp/features-core/pwa";

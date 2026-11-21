@@ -4,7 +4,11 @@
  * (`runServiceWorker` in `@ihsp/features-core/pwa/sw`); this entry gives it what is specific to the student app: the pages
  * to precache and the API answers to keep for offline use (today, timetable, homework, grades), see `cache-keys.ts`.
  */
-import { runServiceWorker } from "@ihsp/features-core/pwa/sw"
-import { PRECACHE_PAGES, SWR_API_PATHS } from "./cache-keys"
+import { runServiceWorker } from "@ihsp/features-core/pwa/sw";
+import { PRECACHE_PAGES, SWR_API_PATHS } from "./cache-keys";
 
-runServiceWorker({ appId: "sp", precachePages: PRECACHE_PAGES, swrApiPaths: SWR_API_PATHS })
+runServiceWorker({
+  appId: "sp",
+  precachePages: PRECACHE_PAGES,
+  swrApiPaths: SWR_API_PATHS,
+});

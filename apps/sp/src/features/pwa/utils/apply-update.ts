@@ -5,4 +5,4 @@ export {
   purgeShellCaches,
   waitForWaitingWorker,
   type UpdateDeps,
-} from "@ihsp/features-core/pwa"
+} from "@ihsp/features-core/pwa";
