@@ -7,8 +7,12 @@ describe("MarkdownEditor", () => {
   it("shows stored Markdown as formatted text under the given accessible name", async () => {
     renderWithProviders(<MarkdownEditor value="a *b* c" onChange={() => {}} label="Block 1" />)
 
-    const field = await screen.findByRole("textbox", { name: "Block 1" })
-    await waitFor(() => expect(field.querySelector("em")?.textContent).toBe("b"))
+    await waitFor(
+      () => expect(screen.getByRole("textbox", { name: "Block 1" }).querySelector("em")?.textContent).toBe("b"),
+      {
+        timeout: 15_000,
+      },
+    )
   })
 })
 

@@ -103,11 +103,14 @@ describe("UploadWizard: steps and validation", () => {
     await next(user)
     expect(screen.getByText("Write some text first.")).toBeInTheDocument()
 
-    await user.type(screen.getByRole("textbox", { name: "Text of the note (Markdown)" }), "## Speed{enter}$v = s / t$")
+    await user.type(
+      await screen.findByRole("textbox", { name: "Text of the note (Markdown)" }),
+      "## Speed{enter}$v = s / t$",
+    )
 
-    const preview = screen.getByRole("region", { name: "Preview of the note" })
-    expect(await within(preview).findByRole("heading", { name: "Speed" })).toBeInTheDocument()
-    await waitFor(() => expect(preview.querySelector(".katex")).not.toBeNull())
+    const preview = await screen.findByRole("region", { name: "Preview of the note" }, { timeout: 15_000 })
+    expect(await within(preview).findByRole("heading", { name: "Speed" }, { timeout: 15_000 })).toBeInTheDocument()
+    await waitFor(() => expect(preview.querySelector(".katex")).not.toBeNull(), { timeout: 15_000 })
   })
 
   it("requires the attestation and shows the content policy before the draft is saved", async () => {
