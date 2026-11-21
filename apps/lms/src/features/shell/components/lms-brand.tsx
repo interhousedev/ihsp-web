@@ -5,10 +5,5 @@ import { SidebarBrand } from "@ihsp/ui"
 
 export function LmsBrand() {
   const t = useT("app")
-  return (
-    <SidebarBrand
-      name={t("name")}
-      platform="lms"
-    />
-  )
+  return <SidebarBrand name={t("name")} platform="lms" />
 }

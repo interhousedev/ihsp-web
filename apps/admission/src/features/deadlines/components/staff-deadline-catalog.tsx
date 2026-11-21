@@ -111,44 +111,44 @@ export function StaffDeadlineCatalog() {
         </Button>
       </div>
       {creating && <CreateDeadlineDialog open onOpenChange={setCreating} />}
-        <SplitLayout
-          aside={
-            <>
-              <AsideCard title={t("view.summaryTitle")} icon={<Icons.calendarEvent aria-hidden className="size-4" />}>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="bg-success/10 flex flex-col rounded-lg p-3">
-                    <span className="text-lg font-semibold tabular-nums">{confirmed.length}</span>
-                    <span className="text-muted-foreground text-xs">{t("status.confirmed")}</span>
-                  </div>
-                  <div className="bg-warning/10 flex flex-col rounded-lg p-3">
-                    <span className="text-lg font-semibold tabular-nums">{pending.length}</span>
-                    <span className="text-muted-foreground text-xs">{t("view.pending")}</span>
-                  </div>
+      <SplitLayout
+        aside={
+          <>
+            <AsideCard title={t("view.summaryTitle")} icon={<Icons.calendarEvent aria-hidden className="size-4" />}>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="bg-success/10 flex flex-col rounded-lg p-3">
+                  <span className="text-lg font-semibold tabular-nums">{confirmed.length}</span>
+                  <span className="text-muted-foreground text-xs">{t("status.confirmed")}</span>
                 </div>
-              </AsideCard>
-              {undated > 0 ? (
-                <Alert>
-                  <Icons.warning aria-hidden />
-                  <AlertDescription>{t("view.undated", { count: undated })}</AlertDescription>
-                </Alert>
-              ) : null}
-            </>
-          }
-        >
-          <div className="flex flex-col gap-4">
-            <UnderlineTabs
-              label={t("view.tabs")}
-              value={tab}
-              onValueChange={setTab}
-              tabs={[
-                { value: "all", label: t("view.all"), count: items.length, tone: "neutral" },
-                { value: "confirmed", label: t("status.confirmed"), count: confirmed.length, tone: "success" },
-                { value: "pending", label: t("view.pending"), count: pending.length, tone: "warning" },
-              ]}
-            />
-            {body}
-          </div>
-        </SplitLayout>
+                <div className="bg-warning/10 flex flex-col rounded-lg p-3">
+                  <span className="text-lg font-semibold tabular-nums">{pending.length}</span>
+                  <span className="text-muted-foreground text-xs">{t("view.pending")}</span>
+                </div>
+              </div>
+            </AsideCard>
+            {undated > 0 ? (
+              <Alert>
+                <Icons.warning aria-hidden />
+                <AlertDescription>{t("view.undated", { count: undated })}</AlertDescription>
+              </Alert>
+            ) : null}
+          </>
+        }
+      >
+        <div className="flex flex-col gap-4">
+          <UnderlineTabs
+            label={t("view.tabs")}
+            value={tab}
+            onValueChange={setTab}
+            tabs={[
+              { value: "all", label: t("view.all"), count: items.length, tone: "neutral" },
+              { value: "confirmed", label: t("status.confirmed"), count: confirmed.length, tone: "success" },
+              { value: "pending", label: t("view.pending"), count: pending.length, tone: "warning" },
+            ]}
+          />
+          {body}
+        </div>
+      </SplitLayout>
     </div>
   )
 }

@@ -27,7 +27,11 @@ export type IkigaiCircle = keyof Ikigai
 
 export type GoalsFit = {
   weights: Record<string, number>
-  items: { list_entry_id: string; institution_id: string; axes: { key: string; score: number | null; weight: number }[] }[]
+  items: {
+    list_entry_id: string
+    institution_id: string
+    axes: { key: string; score: number | null; weight: number }[]
+  }[]
 }
 
 const lang = (locale: string) => ({ headers: { "Accept-Language": locale } })
@@ -53,7 +57,8 @@ export const searchProfessionsQuery = (q: string, locale: string, limit = 100) =
 export const myProfessionsQuery = (locale: string) =>
   queryOptions({
     queryKey: professionKeys.mine(locale),
-    queryFn: ({ signal }) => api.get<{ items: MyProfession[] }>("/v1/admission/me/professions", { signal, ...lang(locale) }),
+    queryFn: ({ signal }) =>
+      api.get<{ items: MyProfession[] }>("/v1/admission/me/professions", { signal, ...lang(locale) }),
   })
 
 export const putMyProfessions = (ids: string[], locale: string) =>

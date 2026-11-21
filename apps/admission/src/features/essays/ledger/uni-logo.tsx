@@ -7,11 +7,24 @@ import { useInstitution } from "../../chooser/hooks"
 const SIZES = { sm: "size-5 text-[8px]", md: "size-8 text-[10px]", lg: "size-11 text-xs" } as const
 
 /** The round logo of a university from the catalog; a monogram while it loads or when it has none. */
-export function UniLogo({ id, name, size = "sm", className }: { id: string; name: string; size?: keyof typeof SIZES; className?: string }) {
+export function UniLogo({
+  id,
+  name,
+  size = "sm",
+  className,
+}: {
+  id: string
+  name: string
+  size?: keyof typeof SIZES
+  className?: string
+}) {
   const query = useInstitution(id)
   const src = query.data?.logo_url
   return (
-    <Avatar className={cn("bg-card ring-card shrink-0 overflow-hidden ring-1 ring-offset-0", SIZES[size], className)} title={name}>
+    <Avatar
+      className={cn("bg-card ring-card shrink-0 overflow-hidden ring-1 ring-offset-0", SIZES[size], className)}
+      title={name}
+    >
       {src ? <AvatarImage src={src} alt="" className="rounded-none bg-white object-contain p-0.5" /> : null}
       <AvatarFallback className="bg-primary/10 text-primary font-semibold">{monogram(name)}</AvatarFallback>
     </Avatar>

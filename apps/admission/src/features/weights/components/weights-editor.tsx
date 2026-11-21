@@ -28,7 +28,11 @@ function TraitRow({ trait, value, onSet }: { trait: TraitId; value: number; onSe
   const name = t(`trait.${trait}`)
   return (
     <li className="flex min-h-11 items-center gap-2.5">
-      <span aria-hidden className="size-2.5 shrink-0 rounded-full" style={{ background: METRIC_STYLE[TRAIT_AXIS[trait]].color }} />
+      <span
+        aria-hidden
+        className="size-2.5 shrink-0 rounded-full"
+        style={{ background: METRIC_STYLE[TRAIT_AXIS[trait]].color }}
+      />
       <span className="min-w-0 flex-1 text-sm">{name}</span>
       <div className="flex items-center">
         <button
@@ -78,11 +82,22 @@ export function WeightsEditor() {
   }
 
   if (prefs.isPending) return <Skeleton className="h-72 w-full" />
-  if (prefs.isError) return <p role="alert" className="text-destructive text-sm">{t("error")}</p>
+  if (prefs.isError)
+    return (
+      <p role="alert" className="text-destructive text-sm">
+        {t("error")}
+      </p>
+    )
 
   const top = topTraits(value)
   const dirty = draft !== null && !sameRatings(draft, saved ?? DEFAULT_RATINGS)
-  const status = save.isError ? t("saveError") : save.isPending || dirty ? t("saving") : save.isSuccess ? t("saved") : ""
+  const status = save.isError
+    ? t("saveError")
+    : save.isPending || dirty
+      ? t("saving")
+      : save.isSuccess
+        ? t("saved")
+        : ""
   const weights = ratingsToWeights(value)
   const nowList = METRIC_IDS.map((id) => `${tf(`metric.${id}.name`)} ${Math.round(weights[id] * 100)}%`).join(" · ")
   return (
@@ -91,7 +106,12 @@ export function WeightsEditor() {
       <div className="flex flex-col gap-3">
         <ul className="flex flex-col divide-y">
           {TRAITS.map((trait) => (
-            <TraitRow key={trait} trait={trait} value={value[trait]} onSet={(next) => change({ ...value, [trait]: clampRating(next) })} />
+            <TraitRow
+              key={trait}
+              trait={trait}
+              value={value[trait]}
+              onSet={(next) => change({ ...value, [trait]: clampRating(next) })}
+            />
           ))}
         </ul>
         <p className="text-sm">
@@ -100,8 +120,18 @@ export function WeightsEditor() {
         </p>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p aria-live="polite" className={cn("min-w-0 text-sm font-medium")}>
-            {top.length === 0 ? t("balanced") : t("lead", { list: top.map((trait) => t(`word.${trait}`)).join(` ${t("and")} `) })}
-            {status ? <span className={save.isError ? "text-destructive ml-2 font-normal" : "text-muted-foreground ml-2 font-normal"}>{status}</span> : null}
+            {top.length === 0
+              ? t("balanced")
+              : t("lead", { list: top.map((trait) => t(`word.${trait}`)).join(` ${t("and")} `) })}
+            {status ? (
+              <span
+                className={
+                  save.isError ? "text-destructive ml-2 font-normal" : "text-muted-foreground ml-2 font-normal"
+                }
+              >
+                {status}
+              </span>
+            ) : null}
           </p>
           <Button type="button" variant="outline" size="sm" onClick={() => change({ ...DEFAULT_RATINGS })}>
             {t("radar.reset")}

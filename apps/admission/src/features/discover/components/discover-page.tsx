@@ -23,7 +23,6 @@ const serverSnapshot = () => true
 
 type Decided = { match: Match; direction: SwipeDirection }
 
-
 /** The Kollegio-style matching feed, embedded in the chooser (no page chrome): settings, swipe deck and assistant context. */
 export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNode }) {
   const t = useT("discover")
@@ -108,7 +107,9 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
           className="h-[min(34rem,calc(100dvh-19rem))] min-h-[16rem] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
           items={remaining}
           getKey={(match) => match.university_id}
-          getExitDirection={(match) => history.find((entry) => entry.match.university_id === match.university_id)?.direction}
+          getExitDirection={(match) =>
+            history.find((entry) => entry.match.university_id === match.university_id)?.direction
+          }
           renderCard={(match) => <MatchCard match={match} />}
           onSwipe={onSwipe}
           rightStamp={t("stamp.interested")}
@@ -117,10 +118,14 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
           empty={<StateView state="empty" title={t("empty.title")} description={t("empty.text")} />}
         />
       </div>
-      <p role="status" aria-live="polite" className={cn(
+      <p
+        role="status"
+        aria-live="polite"
+        className={cn(
           "h-5 text-center text-sm font-medium",
           history[history.length - 1]?.direction === "left" ? "text-muted-foreground" : "text-success",
-        )}>
+        )}
+      >
         {stamp}
       </p>
       <div className="bg-background/90 sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 flex items-center justify-center gap-3 py-2 pr-16 backdrop-blur md:static md:bg-transparent md:p-0 md:backdrop-blur-none">

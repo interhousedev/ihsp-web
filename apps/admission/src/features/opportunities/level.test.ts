@@ -2,10 +2,16 @@ import { describe, expect, test as it } from "bun:test"
 import type { Opportunity } from "./api"
 import { bySchoolLevel, isGraduateLevel } from "./level"
 
-const make = (title: string, grades: number[] = []) => ({ id: title, fields: { title, grades } }) as unknown as Opportunity
+const make = (title: string, grades: number[] = []) =>
+  ({ id: title, fields: { title, grades } }) as unknown as Opportunity
 
 describe("school level first", () => {
-  const items = [make("PhD fellowship in physics"), make("Olympiad", [10, 11]), make("Master's scholarship"), make("Summer camp")]
+  const items = [
+    make("PhD fellowship in physics"),
+    make("Olympiad", [10, 11]),
+    make("Master's scholarship"),
+    make("Summer camp"),
+  ]
 
   it("detects graduate entries only without grades", () => {
     expect(isGraduateLevel(items[0]!)).toBe(true)

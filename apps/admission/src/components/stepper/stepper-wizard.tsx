@@ -157,11 +157,22 @@ export function StepperWizard({
             </p>
           ) : null}
           <div className="bg-background/95 sticky bottom-0 -mx-4 flex items-center justify-between gap-2 border-t px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0">
-            <Button type="button" variant="outline" className="transition-none" disabled={step === 0 || busy} onClick={() => setStep(step - 1)}>
+            <Button
+              type="button"
+              variant="outline"
+              className="transition-none"
+              disabled={step === 0 || busy}
+              onClick={() => setStep(step - 1)}
+            >
               <Icons.chevronLeft />
               {labels.back}
             </Button>
-            <Button key={busy ? "saving" : last ? "finish" : "next"} type="submit" disabled={!ready} className="transition-none">
+            <Button
+              key={busy ? "saving" : last ? "finish" : "next"}
+              type="submit"
+              disabled={!ready}
+              className="transition-none"
+            >
               {busy ? labels.saving : last ? labels.finish : labels.next}
               {busy ? null : <Icons.chevronRight />}
             </Button>

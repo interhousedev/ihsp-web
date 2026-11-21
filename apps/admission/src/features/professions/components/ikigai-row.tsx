@@ -26,7 +26,13 @@ export function IkigaiRow() {
           {t(filled > 0 ? "ikigaiRow.edit" : "ikigaiRow.fill")}
         </Button>
       </div>
-      <ResponsiveDialog open={open} onOpenChange={setOpen} title={t("step.ikigai.title")} description={t("step.ikigai.hint")} size="lg">
+      <ResponsiveDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={t("step.ikigai.title")}
+        description={t("step.ikigai.hint")}
+        size="lg"
+      >
         <IkigaiStep />
       </ResponsiveDialog>
     </>

@@ -285,7 +285,14 @@ export function SubmitDialog({
           </label>
           <label className="flex flex-col gap-1 text-sm">
             {t("hoursLabel")}
-            <Input type="number" min={0.5} max={80} step={0.5} value={hours} onChange={(e) => setHours(e.target.value)} />
+            <Input
+              type="number"
+              min={0.5}
+              max={80}
+              step={0.5}
+              value={hours}
+              onChange={(e) => setHours(e.target.value)}
+            />
           </label>
           <label className="flex flex-col gap-1 text-sm">
             {t("costLabel")}

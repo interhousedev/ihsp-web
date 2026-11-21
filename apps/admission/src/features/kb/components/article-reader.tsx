@@ -22,7 +22,11 @@ export function ArticleReader({ id }: { id: string }) {
     const used = new Set<string>()
     const found = [...root.querySelectorAll<HTMLElement>("h1, h2, h3")].map((node) => {
       const title = node.textContent?.trim() ?? ""
-      const base = title.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-|-$/g, "") || "section"
+      const base =
+        title
+          .toLowerCase()
+          .replace(/[^\p{L}\p{N}]+/gu, "-")
+          .replace(/^-|-$/g, "") || "section"
       let slug = base
       for (let n = 2; used.has(slug); n += 1) slug = `${base}-${n}`
       used.add(slug)
@@ -62,12 +66,7 @@ export function ArticleReader({ id }: { id: string }) {
                     {section.title}
                   </a>
                   <span className="shrink-0">
-                    <CopyButton
-                      value={link(section.slug)}
-                      label={undefined}
-                      variant="ghost"
-                      size="icon"
-                    />
+                    <CopyButton value={link(section.slug)} label={undefined} variant="ghost" size="icon" />
                   </span>
                 </li>
               ))}
@@ -75,12 +74,14 @@ export function ArticleReader({ id }: { id: string }) {
           </nav>
         ) : null}
         <div ref={body_}>
-        <MessageWithOpenUi
-          text={article.body}
-          library={kbLibrary}
-          links="kb"
-          renderMarkdown={(part) => <Markdown allowLink={(href) => safeLinkUrl(href, "kb") !== null}>{part}</Markdown>}
-        />
+          <MessageWithOpenUi
+            text={article.body}
+            library={kbLibrary}
+            links="kb"
+            renderMarkdown={(part) => (
+              <Markdown allowLink={(href) => safeLinkUrl(href, "kb") !== null}>{part}</Markdown>
+            )}
+          />
         </div>
       </article>
     )

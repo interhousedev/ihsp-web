@@ -32,7 +32,15 @@ export const isDockView = (value: string | null): value is DockView =>
 const isMore = (view: DockView): view is DockMore => (DOCK_MORE as readonly string[]).includes(view)
 
 /** The one tab row of the panel: exactly one entry is active, "More" holds the rest and shows the one that is open. */
-function TabStrip({ view, onView, className }: { view: DockView; onView: (view: DockView) => void; className?: string }) {
+function TabStrip({
+  view,
+  onView,
+  className,
+}: {
+  view: DockView
+  onView: (view: DockView) => void
+  className?: string
+}) {
   const t = useT("essayEditor")
   const active = view === "review" ? "unis" : isMore(view) ? "more" : view
   return (
@@ -50,7 +58,9 @@ function TabStrip({ view, onView, className }: { view: DockView; onView: (view: 
             className={cn(
               "press relative inline-flex h-full min-h-7 min-w-0 flex-1 items-center justify-center gap-1 rounded-full border border-transparent px-2 py-0.5 text-sm font-medium whitespace-nowrap",
               "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none",
-              active === "more" ? "bg-primary text-primary-foreground shadow-sm" : "text-foreground/60 hover:text-foreground",
+              active === "more"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-foreground/60 hover:text-foreground",
             )}
           >
             <span className="truncate">{isMore(view) ? t(`tab.${view}`) : t("tab.more")}</span>
@@ -129,7 +139,11 @@ export function Dock({
         <TabStrip view={view ?? "read"} onView={onView} />
       </nav>
       <Sheet open={view !== null} onOpenChange={(open) => (open ? undefined : onClose())}>
-        <SheetContent side="bottom" showCloseButton={false} className="flex data-[side=bottom]:h-[78dvh] flex-col gap-3 p-3">
+        <SheetContent
+          side="bottom"
+          showCloseButton={false}
+          className="flex data-[side=bottom]:h-[78dvh] flex-col gap-3 p-3"
+        >
           <div aria-hidden className="bg-muted-foreground/40 mx-auto h-1 w-10 shrink-0 rounded-full" />
           <SheetHeader className="sr-only">
             <SheetTitle>{title}</SheetTitle>

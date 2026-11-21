@@ -32,7 +32,13 @@ function FieldError({ message }: { message?: string }) {
 }
 
 /** Starting values of a new task (a deadline or a university it is about). */
-export type TaskPrefill = { title?: string; start_date?: string | null; deadline?: string | null; links?: TaskLink[]; list_entry_id?: string | null }
+export type TaskPrefill = {
+  title?: string
+  start_date?: string | null
+  deadline?: string | null
+  links?: TaskLink[]
+  list_entry_id?: string | null
+}
 
 /** Create (no `task`) or edit a task: title, description, dates, priority, steps and links. */
 export function TaskFormDialog({

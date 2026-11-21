@@ -52,7 +52,8 @@ export function ShellSearch({ nav }: { nav: NavGroup[] }) {
       const listed = new Set(list.map((entry) => entry.institution.id))
       const results: CommandPaletteResult[] = []
       for (const [key, url] of PAGES)
-        if (hit(t(`pages.${key}`))) results.push({ id: `page:${key}`, title: t(`pages.${key}`), section: t("sections.pages"), url })
+        if (hit(t(`pages.${key}`)))
+          results.push({ id: `page:${key}`, title: t(`pages.${key}`), section: t("sections.pages"), url })
       for (const entry of list)
         if (hit(entry.institution.name))
           results.push({
@@ -81,7 +82,12 @@ export function ShellSearch({ nav }: { nav: NavGroup[] }) {
           })
       for (const task of tasks.items ?? [])
         if (hit(task.title))
-          results.push({ id: `task:${task.id}`, title: task.title, section: t("sections.tasks"), url: `/tasks/?task=${encodeURIComponent(task.id)}` })
+          results.push({
+            id: `task:${task.id}`,
+            title: task.title,
+            section: t("sections.tasks"),
+            url: `/tasks/?task=${encodeURIComponent(task.id)}`,
+          })
       return results
     },
     [client, locale, t],

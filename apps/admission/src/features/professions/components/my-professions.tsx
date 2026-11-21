@@ -22,7 +22,11 @@ export function MyProfessions({
 }) {
   const t = useT("professions")
   if (picks.length === 0) {
-    return <p className="text-muted-foreground rounded-card border border-dashed p-4 text-sm">{t("mine.empty", { max: MAX_PICKS })}</p>
+    return (
+      <p className="text-muted-foreground rounded-card border border-dashed p-4 text-sm">
+        {t("mine.empty", { max: MAX_PICKS })}
+      </p>
+    )
   }
   return (
     <div className="flex flex-col gap-2">
@@ -40,7 +44,13 @@ export function MyProfessions({
               <span className="truncate text-sm font-medium">{p.name}</span>
               <RiskBadge profession={p} />
             </div>
-            <Button type="button" size="icon" variant="ghost" aria-label={t("mine.remove", { name: p.name })} onClick={() => onRemove(p.id)}>
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              aria-label={t("mine.remove", { name: p.name })}
+              onClick={() => onRemove(p.id)}
+            >
               <Icons.close aria-hidden className="size-4" />
             </Button>
           </div>

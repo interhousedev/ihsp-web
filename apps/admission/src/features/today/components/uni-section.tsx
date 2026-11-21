@@ -20,7 +20,11 @@ function StatusChip({ status }: { status: string }) {
   const t = useT("today")
   const style = STATUS_STYLE[status]
   if (!style) return null
-  return <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-medium whitespace-nowrap", style)}>{t(`unis.status.${status}`)}</span>
+  return (
+    <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-medium whitespace-nowrap", style)}>
+      {t(`unis.status.${status}`)}
+    </span>
+  )
 }
 
 /** The nearest dated step of an entry, from the Today deadlines. */
@@ -53,7 +57,9 @@ function UniTile({ row, today, deadline }: { row: FitRow; today: string; deadlin
         {row.entry.institution.name}
       </Link>
       {days !== null ? (
-        <span className={cn("text-[11px] leading-none font-medium tabular-nums", dayTone(days))}>{t("unis.days", { n: days })}</span>
+        <span className={cn("text-[11px] leading-none font-medium tabular-nums", dayTone(days))}>
+          {t("unis.days", { n: days })}
+        </span>
       ) : (
         <StatusChip status={row.entry.status} />
       )}
@@ -85,10 +91,15 @@ export function UniSection({
     .sort((a, b) => a.due.localeCompare(b.due) || a.index - b.index)
     .map((x) => x.row)
   return (
-    <section className={cn("bg-card rounded-card flex min-w-0 flex-col gap-1 border px-3.5 py-3 md:px-5 md:py-3", className)}>
+    <section
+      className={cn("bg-card rounded-card flex min-w-0 flex-col gap-1 border px-3.5 py-3 md:px-5 md:py-3", className)}
+    >
       <div className="flex items-center justify-between gap-2">
         <h2 className="text-base font-semibold tracking-tight">{t("unis.title")}</h2>
-        <Link href="/chooser/" className="text-primary inline-flex items-center gap-1 text-sm font-medium hover:underline">
+        <Link
+          href="/chooser/"
+          className="text-primary inline-flex items-center gap-1 text-sm font-medium hover:underline"
+        >
           {t("unis.all")}
           <Icons.arrowRight aria-hidden className="size-3.5" />
         </Link>

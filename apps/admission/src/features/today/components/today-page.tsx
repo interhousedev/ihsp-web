@@ -36,7 +36,11 @@ export function TodayPage() {
     <AdmissionShell home>
       <ScreenSummary
         title={t("title")}
-        summary={data ? `Today. Season ${data.season.key}, ${data.next.length} next steps, readiness ${data.readiness.percent}%.` : "Today."}
+        summary={
+          data
+            ? `Today. Season ${data.season.key}, ${data.next.length} next steps, readiness ${data.readiness.percent}%.`
+            : "Today."
+        }
       />
       <div className={pageClass("gap-3 md:gap-3.5 lg:pb-3")}>
         <header className="min-w-0">
@@ -54,7 +58,11 @@ export function TodayPage() {
         ) : !data ? (
           <div className="bg-card rounded-card flex flex-wrap items-center gap-3 border p-4 text-sm">
             <span className="text-muted-foreground">{t("error")}</span>
-            <button type="button" onClick={() => void today.refetch()} className={buttonVariants({ variant: "outline", size: "sm" })}>
+            <button
+              type="button"
+              onClick={() => void today.refetch()}
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
               {t("retry")}
             </button>
           </div>

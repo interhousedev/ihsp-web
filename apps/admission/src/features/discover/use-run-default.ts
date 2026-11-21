@@ -23,47 +23,44 @@ export function useRunDefault(chat: AdmissionUniChat | undefined) {
   const chatId = chat?.chat_id
   const institutionId = chat?.institution_id
 
-  const run = useCallback(
-    async () => {
-      if (!institutionId || !chatId) return
-      // A run goes on in the background when the student swipes on; its state belongs to its university.
-      const setState = (next: RunState | ((current: RunState) => RunState)) =>
-        setRuns((all) => ({
-          ...all,
-          [institutionId]: typeof next === "function" ? next(all[institutionId] ?? IDLE) : next,
-        }))
-      setState({ status: "running", text: "" })
-      try {
-        const response = await streamRunDefault(institutionId, false, locale)
-        if (isStream(response)) {
-          for await (const event of readAiChatStream(response)) {
-            if (event.event === "delta")
-              setState((s) => (s.status === "running" ? { ...s, text: s.text + event.data.text } : s))
-            else if (event.event === "round_end") setState({ status: "running", text: "" })
-            else if (event.event === "error")
-              // Keep the problem type (a limit, revoked access) so the panel can say why the run stopped.
-              throw new ApiError({
-                type: event.data.type ?? "",
-                status: 0,
-                title: event.data.title ?? "Research failed",
-                message_key: event.data.message_key,
-                params: event.data.params,
-              })
-          }
+  const run = useCallback(async () => {
+    if (!institutionId || !chatId) return
+    // A run goes on in the background when the student swipes on; its state belongs to its university.
+    const setState = (next: RunState | ((current: RunState) => RunState)) =>
+      setRuns((all) => ({
+        ...all,
+        [institutionId]: typeof next === "function" ? next(all[institutionId] ?? IDLE) : next,
+      }))
+    setState({ status: "running", text: "" })
+    try {
+      const response = await streamRunDefault(institutionId, false, locale)
+      if (isStream(response)) {
+        for await (const event of readAiChatStream(response)) {
+          if (event.event === "delta")
+            setState((s) => (s.status === "running" ? { ...s, text: s.text + event.data.text } : s))
+          else if (event.event === "round_end") setState({ status: "running", text: "" })
+          else if (event.event === "error")
+            // Keep the problem type (a limit, revoked access) so the panel can say why the run stopped.
+            throw new ApiError({
+              type: event.data.type ?? "",
+              status: 0,
+              title: event.data.title ?? "Research failed",
+              message_key: event.data.message_key,
+              params: event.data.params,
+            })
         }
-        setState({ status: "idle" })
-      } catch (error) {
-        setState({ status: "error", error })
-      } finally {
-        // The server claims the one-off run up front, so it is spent on failure too; this re-enables "Run research".
-        client.setQueryData<AdmissionUniChat>(uniChatKey(institutionId), (current) =>
-          current ? { ...current, auto_run_pending: false } : current,
-        )
-        void client.invalidateQueries({ queryKey: keys.ai.chat(chatId) })
       }
-    },
-    [chatId, institutionId, client, locale],
-  )
+      setState({ status: "idle" })
+    } catch (error) {
+      setState({ status: "error", error })
+    } finally {
+      // The server claims the one-off run up front, so it is spent on failure too; this re-enables "Run research".
+      client.setQueryData<AdmissionUniChat>(uniChatKey(institutionId), (current) =>
+        current ? { ...current, auto_run_pending: false } : current,
+      )
+      void client.invalidateQueries({ queryKey: keys.ai.chat(chatId) })
+    }
+  }, [chatId, institutionId, client, locale])
 
   const state = (institutionId ? runs[institutionId] : undefined) ?? IDLE
   return { state, run }

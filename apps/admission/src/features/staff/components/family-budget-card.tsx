@@ -11,10 +11,7 @@ export function FamilyBudgetCard({ studentId }: { studentId: string }) {
   if (!profile.data) return null
   const shared = profile.data.budget_shared && !!profile.data.family_budget
   return (
-    <section
-      aria-label={t("budget.title")}
-      className="bg-card rounded-card flex items-center gap-3 border p-4 text-sm"
-    >
+    <section aria-label={t("budget.title")} className="bg-card rounded-card flex items-center gap-3 border p-4 text-sm">
       {shared ? <Icons.badgeCheck aria-hidden className="size-4" /> : <Icons.lock aria-hidden className="size-4" />}
       <div className="flex flex-col">
         <span className="text-muted-foreground text-xs">{t("budget.title")}</span>
@@ -25,4 +22,3 @@ export function FamilyBudgetCard({ studentId }: { studentId: string }) {
     </section>
   )
 }
-

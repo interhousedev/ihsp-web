@@ -16,7 +16,9 @@ export const dayTone = (days: number) =>
   days <= 14 ? "text-destructive" : days <= 30 ? "text-warning" : "text-muted-foreground"
 
 /** The nearest date per (entry, title): "Stanford RD" twice keeps the first one. */
-export function dedupeDeadlines<T extends { date: string; list_entry_id: string | null; title: string }>(items: readonly T[]): T[] {
+export function dedupeDeadlines<T extends { date: string; list_entry_id: string | null; title: string }>(
+  items: readonly T[],
+): T[] {
   const best = new Map<string, T>()
   for (const item of items) {
     const key = `${item.list_entry_id ?? ""}|${item.title}`

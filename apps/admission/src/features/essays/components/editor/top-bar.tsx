@@ -1,7 +1,16 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Icons, Input, cn } from "@ihsp/ui"
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Icons,
+  Input,
+  cn,
+} from "@ihsp/ui"
 import Link from "next/link"
 import type { ReactNode } from "react"
 
@@ -74,7 +83,10 @@ export function TopBar({
       />
       <span
         id="essay-count"
-        className={cn("shrink-0 text-xs tabular-nums sm:text-sm", over ? "text-destructive font-medium" : "text-muted-foreground")}
+        className={cn(
+          "shrink-0 text-xs tabular-nums sm:text-sm",
+          over ? "text-destructive font-medium" : "text-muted-foreground",
+        )}
       >
         {wordLimit ? t("wordsOf", { count: words, limit: wordLimit }) : t("words", { count: words })}
       </span>
@@ -107,13 +119,26 @@ export function TopBar({
         >
           <Icons.chat aria-hidden />
         </Button>
-        <Button type="button" size="icon-sm" variant="ghost" aria-label={te("copyFinal")} disabled={copyDisabled} onClick={onCopy}>
+        <Button
+          type="button"
+          size="icon-sm"
+          variant="ghost"
+          aria-label={te("copyFinal")}
+          disabled={copyDisabled}
+          onClick={onCopy}
+        >
           <Icons.copy aria-hidden />
         </Button>
         <Button type="button" size="icon-sm" variant="ghost" aria-label={te("preview")} onClick={onPreview}>
           <Icons.eye aria-hidden />
         </Button>
-        <Button type="button" size="sm" className="rounded-full px-3 lg:px-4" aria-label={t("editor.share")} onClick={onShare}>
+        <Button
+          type="button"
+          size="sm"
+          className="rounded-full px-3 lg:px-4"
+          aria-label={t("editor.share")}
+          onClick={onShare}
+        >
           <Icons.share aria-hidden />
           <span className="hidden lg:inline">{t("editor.share")}</span>
         </Button>

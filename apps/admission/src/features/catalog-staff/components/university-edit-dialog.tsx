@@ -111,7 +111,8 @@ export function UniversityEditDialog({
       if (isApiError(error) && error.status === 409) toast.error(t("conflict"))
       else toast.error(errorMessage(error))
     }
-    if (institution) update.mutate({ id: institution.id, body, lock_version: institution.lock_version }, { onSuccess, onError })
+    if (institution)
+      update.mutate({ id: institution.id, body, lock_version: institution.lock_version }, { onSuccess, onError })
     else create.mutate(body, { onSuccess, onError })
   }
 

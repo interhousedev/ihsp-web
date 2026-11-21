@@ -47,7 +47,11 @@ export function EssayMeta({
         </button>
         <span
           data-testid="essay-meta-count"
-          className={over ? "text-warning hidden shrink-0 font-medium sm:inline" : "text-muted-foreground hidden shrink-0 sm:inline"}
+          className={
+            over
+              ? "text-warning hidden shrink-0 font-medium sm:inline"
+              : "text-muted-foreground hidden shrink-0 sm:inline"
+          }
           aria-live="polite"
         >
           {wordLimit ? t("metaWordsOf", { count: words, limit: wordLimit }) : t("words", { count: words })}

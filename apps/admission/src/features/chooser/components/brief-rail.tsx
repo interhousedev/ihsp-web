@@ -21,7 +21,9 @@ function readCache(userId: string): Cached | null {
   try {
     const raw = window.localStorage.getItem(storageKey(userId))
     const value = raw ? (JSON.parse(raw) as Partial<Cached>) : null
-    return value?.brief && typeof value.at === "number" && typeof value.signature === "string" ? (value as Cached) : null
+    return value?.brief && typeof value.at === "number" && typeof value.signature === "string"
+      ? (value as Cached)
+      : null
   } catch {
     return null
   }
@@ -39,7 +41,12 @@ function writeCache(userId: string, cached: Cached) {
  * Whether to ask the model for a new brief without the student asking: never for an empty list, always when nothing is
  * kept yet, otherwise only when the list changed since the kept brief and it is a day old. Manual refresh is separate.
  */
-export function shouldAutoGenerate(cached: Pick<Cached, "at" | "signature"> | null, signature: string, entries: number, now: number): boolean {
+export function shouldAutoGenerate(
+  cached: Pick<Cached, "at" | "signature"> | null,
+  signature: string,
+  entries: number,
+  now: number,
+): boolean {
   if (entries === 0) return false
   if (!cached) return true
   return cached.signature !== signature && now - cached.at >= DAY_MS
@@ -75,7 +82,9 @@ function BriefError({ error, onRetry }: { error: unknown; onRetry: () => void })
   return (
     <div role="alert" className="flex flex-col gap-2">
       <p className="text-sm font-medium">{type === "ai/limit-reached" ? t("limit.title") : t("error.title")}</p>
-      <p className="text-muted-foreground text-sm">{type === "ai/limit-reached" ? t("limit.text") : errorMessage(error)}</p>
+      <p className="text-muted-foreground text-sm">
+        {type === "ai/limit-reached" ? t("limit.text") : errorMessage(error)}
+      </p>
       {type === "ai/limit-reached" ? null : (
         <Button type="button" size="sm" variant="outline" className="self-start" onClick={onRetry}>
           {t("retry")}
@@ -174,9 +183,13 @@ export function useBrief() {
 
   const stale = cached !== null && cached.signature !== signature
   const written = cached
-    ? new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Tashkent" }).format(
-        new Date(cached.at),
-      )
+    ? new Intl.DateTimeFormat(locale, {
+        day: "numeric",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "Asia/Tashkent",
+      }).format(new Date(cached.at))
     : null
 
   return { entries, generate, cached, stale, written, run }
@@ -191,7 +204,10 @@ export function BriefRail({ brief, embedded = false }: { brief: BriefState; embe
   return (
     <aside
       aria-label={t("brief.title")}
-      className={cn("flex flex-col gap-4", embedded ? null : "bg-card rounded-3xl border p-4 max-lg:hidden lg:sticky lg:top-4")}
+      className={cn(
+        "flex flex-col gap-4",
+        embedded ? null : "bg-card rounded-3xl border p-4 max-lg:hidden lg:sticky lg:top-4",
+      )}
     >
       <header className={cn("flex items-center gap-2", embedded ? "justify-end" : "justify-between")}>
         <h2 className={cn("flex items-center gap-2 text-base font-semibold", embedded ? "sr-only" : null)}>

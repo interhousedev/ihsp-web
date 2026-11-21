@@ -63,7 +63,11 @@ export function IkigaiVenn({
                 {line}
               </tspan>
             ))}
-            <tspan x={c.lx} y={c.ly + (lines.length * 15) / 2 + 6} className="fill-muted-foreground text-[11px] font-normal">
+            <tspan
+              x={c.lx}
+              y={c.ly + (lines.length * 15) / 2 + 6}
+              className="fill-muted-foreground text-[11px] font-normal"
+            >
               {ikigai[id].length}/8
             </tspan>
           </text>

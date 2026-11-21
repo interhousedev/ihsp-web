@@ -83,7 +83,9 @@ describe("useNav", () => {
     }
     renderAdmissionApp(<Prefixes />, { session: { user: { ...userMe, roles: ["student"] } } })
     return screen.findByTestId("prefixes").then((node) => {
-      expect(node.textContent).toBe(["", ...SECTION_IDS.slice(1).map((id) => SECTIONS[id].prefixes.join(","))].join("|"))
+      expect(node.textContent).toBe(
+        ["", ...SECTION_IDS.slice(1).map((id) => SECTIONS[id].prefixes.join(","))].join("|"),
+      )
     })
   })
 

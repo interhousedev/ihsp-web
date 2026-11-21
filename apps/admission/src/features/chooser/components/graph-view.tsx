@@ -74,17 +74,35 @@ function Scatter({ points, budget, max }: { points: Point[]; budget: number | nu
           />
         ) : null}
         {TICKS.map((tick) => (
-          <div key={`y${tick}`} aria-hidden className="border-border absolute inset-x-0 border-t" style={{ bottom: `${tick * 100}%` }}>
-            <span className="text-muted-foreground absolute -start-1 -translate-x-full -translate-y-1/2 text-xs tabular-nums">{usd(tick * max)}</span>
+          <div
+            key={`y${tick}`}
+            aria-hidden
+            className="border-border absolute inset-x-0 border-t"
+            style={{ bottom: `${tick * 100}%` }}
+          >
+            <span className="text-muted-foreground absolute -start-1 -translate-x-full -translate-y-1/2 text-xs tabular-nums">
+              {usd(tick * max)}
+            </span>
           </div>
         ))}
         {TICKS.map((tick) => (
-          <div key={`x${tick}`} aria-hidden className="border-border absolute inset-y-0 border-s" style={{ left: `${tick * 100}%` }}>
-            <span className="text-muted-foreground absolute top-full pt-2 text-xs -translate-x-1/2 tabular-nums">{Math.round(tick * 100)}%</span>
+          <div
+            key={`x${tick}`}
+            aria-hidden
+            className="border-border absolute inset-y-0 border-s"
+            style={{ left: `${tick * 100}%` }}
+          >
+            <span className="text-muted-foreground absolute top-full pt-2 text-xs -translate-x-1/2 tabular-nums">
+              {Math.round(tick * 100)}%
+            </span>
           </div>
         ))}
         {budget !== null ? (
-          <div aria-hidden className="border-destructive absolute inset-x-0 border-t-2 border-dashed" style={{ bottom: `${(budget / max) * 100}%` }}>
+          <div
+            aria-hidden
+            className="border-destructive absolute inset-x-0 border-t-2 border-dashed"
+            style={{ bottom: `${(budget / max) * 100}%` }}
+          >
             <span className="bg-background text-destructive absolute end-0 bottom-1 rounded-full border px-2 py-0.5 text-xs font-medium">
               {t("graph.budgetLine", { value: usd(budget) })}
             </span>
@@ -118,7 +136,11 @@ function BalanceBar({ rows }: { rows: ListRow[] }) {
   const t = useT("uniList")
   const role = useOptionLabel("bucket")
   const segments = (["reach", "target", "safety", "home"] as const)
-    .map((key) => ({ key, value: rows.filter((row) => row.label === key).length, label: key === "home" ? t("graph.home") : role(key) }))
+    .map((key) => ({
+      key,
+      value: rows.filter((row) => row.label === key).length,
+      label: key === "home" ? t("graph.home") : role(key),
+    }))
     .filter((segment) => segment.value > 0)
   const unlabelled = rows.filter((row) => row.label === null).length
   const total = segments.reduce((sum, segment) => sum + segment.value, 0)
@@ -132,7 +154,11 @@ function BalanceBar({ rows }: { rows: ListRow[] }) {
       >
         {total === 0 ? <span className="bg-muted flex-1 rounded-full" /> : null}
         {segments.map((segment) => (
-          <span key={segment.key} className={cn("min-w-3 rounded-full", TONE[segment.key])} style={{ flex: segment.value }} />
+          <span
+            key={segment.key}
+            className={cn("min-w-3 rounded-full", TONE[segment.key])}
+            style={{ flex: segment.value }}
+          />
         ))}
       </div>
       <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
@@ -171,7 +197,7 @@ function WhyCard({ row }: { row: ListRow }) {
   const tags = whyTags(row.fit.metrics)
   const label = row.label === null ? null : row.label === "home" ? t("graph.home") : role(row.label)
   return (
-    <li className="bg-card flex flex-col gap-3 rounded-2xl border p-4">
+    <li className="bg-card flex flex-col gap-3 rounded-card border p-4">
       <div className="flex items-center gap-3">
         <FitRingButton name={institution.name} fit={row.fit} size={44}>
           <RingLogo name={institution.name} src={institution.logo_url} />
@@ -245,7 +271,9 @@ export function GraphView() {
           <p className="text-muted-foreground py-10 text-center text-sm">{t("graph.empty")}</p>
         )}
         {familyBudget === null ? <p className="text-muted-foreground text-xs">{t("graph.noBudget")}</p> : null}
-        {hidden > 0 && points.length > 0 ? <p className="text-muted-foreground text-xs">{t("graph.hidden", { count: hidden })}</p> : null}
+        {hidden > 0 && points.length > 0 ? (
+          <p className="text-muted-foreground text-xs">{t("graph.hidden", { count: hidden })}</p>
+        ) : null}
       </section>
       <BalanceBar rows={rows} />
       <section aria-label={t("graph.whyTitle")} className="flex flex-col gap-3">

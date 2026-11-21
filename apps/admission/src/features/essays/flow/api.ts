@@ -100,7 +100,11 @@ export function useEvaluatePractice() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: () =>
-      getApiClient().post<PracticeToday>(`${BASE}/practice/today/evaluate`, {}, { headers: { "Accept-Language": locale } }),
+      getApiClient().post<PracticeToday>(
+        `${BASE}/practice/today/evaluate`,
+        {},
+        { headers: { "Accept-Language": locale } },
+      ),
     onSuccess: (today) => {
       qc.setQueryData(flowKeys.today, today)
       void qc.invalidateQueries({ queryKey: flowKeys.practice })

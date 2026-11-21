@@ -40,7 +40,9 @@ export function StudentTasksTab({ studentId }: { studentId: string }) {
                   {task.deadline ? date(task.deadline) : tasksT("noDeadline")}
                 </span>
                 {task.assigned_by_name ? (
-                  <span className="text-muted-foreground text-xs">{t("tasksTab.by", { name: task.assigned_by_name })}</span>
+                  <span className="text-muted-foreground text-xs">
+                    {t("tasksTab.by", { name: task.assigned_by_name })}
+                  </span>
                 ) : null}
               </div>
             </li>

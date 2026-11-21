@@ -5,7 +5,15 @@ import { Button, ConfirmDialog, Icons } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
 import { RequestConsultationButton } from "../../consultations/components/request-dialog"
 import { ProofList } from "../../proofs/components/proof-list"
-import { incompleteFields, useDeleteItem, useGradeItem, usePatchItem, type Item, type ItemKind, type Rewrite } from "../api"
+import {
+  incompleteFields,
+  useDeleteItem,
+  useGradeItem,
+  usePatchItem,
+  type Item,
+  type ItemKind,
+  type Rewrite,
+} from "../api"
 import { formValid, ItemFields, toForm, toInput, type FormState } from "./item-fields"
 import { InterviewPanel } from "./interview-panel"
 import { MetricsEditor } from "./metrics-editor"

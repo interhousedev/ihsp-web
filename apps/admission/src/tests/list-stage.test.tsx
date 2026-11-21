@@ -11,7 +11,11 @@ afterEach(() => server.resetHandlers())
 const axes = (score: number) =>
   (["afford", "goals", "profile", "traits"] as const).map((key) => ({ key, score, weight: 0.25, why: [], raise: [] }))
 
-function serve(entries: ReturnType<typeof listEntry>[], totals: Record<string, number | null>, answers: object = { budget: "under_30k" }) {
+function serve(
+  entries: ReturnType<typeof listEntry>[],
+  totals: Record<string, number | null>,
+  answers: object = { budget: "under_30k" },
+) {
   server.use(
     http.get(apiUrl("/v1/admission/list/fit"), () =>
       HttpResponse.json({
@@ -29,9 +33,18 @@ function serve(entries: ReturnType<typeof listEntry>[], totals: Record<string, n
   )
 }
 
-const cheap = listEntry({ id: "a", institution: institution({ id: "ia", name: "Alpha U", cost_after_aid: "12000", coa_total: "50000" }) })
-const dear = listEntry({ id: "b", institution: institution({ id: "ib", name: "Beta U", cost_after_aid: "45000", coa_total: "60000" }) })
-const home = listEntry({ id: "c", institution: institution({ id: "ic", name: "Gamma U", country: "Uzbekistan", cost_after_aid: null, coa_total: null }) })
+const cheap = listEntry({
+  id: "a",
+  institution: institution({ id: "ia", name: "Alpha U", cost_after_aid: "12000", coa_total: "50000" }),
+})
+const dear = listEntry({
+  id: "b",
+  institution: institution({ id: "ib", name: "Beta U", cost_after_aid: "45000", coa_total: "60000" }),
+})
+const home = listEntry({
+  id: "c",
+  institution: institution({ id: "ic", name: "Gamma U", country: "Uzbekistan", cost_after_aid: null, coa_total: null }),
+})
 
 describe("list stage", () => {
   it("sorts by fit with unknown last, shows the cost after aid with the gap, and tags a home university", async () => {
@@ -39,7 +52,9 @@ describe("list stage", () => {
     serve([home, dear, cheap], { a: 80, b: 55, c: null })
     renderAdmissionApp(<UniListStage />)
     await screen.findByText("Alpha U")
-    const names = within(screen.getByRole("list", { name: "Your list" })).getAllByRole("link", { name: /U$/ }).map((l) => l.textContent)
+    const names = within(screen.getByRole("list", { name: "Your list" }))
+      .getAllByRole("link", { name: /U$/ })
+      .map((l) => l.textContent)
     expect(names).toEqual(["Alpha U", "Beta U", "Gamma U"])
     expect(screen.getByText(/Fit 80/)).toBeTruthy()
     const alpha = screen.getAllByRole("listitem").find((li) => within(li).queryByRole("link", { name: "Alpha U" }))!
@@ -61,7 +76,10 @@ describe("list stage", () => {
   })
 
   it("warns past the soft cap of 12 and not at 12", async () => {
-    const many = (n: number) => Array.from({ length: n }, (_, i) => listEntry({ id: `e${i}`, institution: institution({ id: `i${i}`, name: `Uni ${i}` }) }))
+    const many = (n: number) =>
+      Array.from({ length: n }, (_, i) =>
+        listEntry({ id: `e${i}`, institution: institution({ id: `i${i}`, name: `Uni ${i}` }) }),
+      )
     mockChooser({ list: many(13) })
     serve(many(13), {})
     renderAdmissionApp(<UniListStage />)

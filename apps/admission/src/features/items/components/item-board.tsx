@@ -149,9 +149,7 @@ export function ItemBoard({
     const fresh = seen.current ? all.find((i) => !seen.current?.has(i.id)) : undefined
     seen.current = ids
     if (fresh) {
-      document
-        .querySelector(`[data-item-id="${fresh.id}"]`)
-        ?.scrollIntoView({ block: "nearest", behavior: "smooth" })
+      document.querySelector(`[data-item-id="${fresh.id}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" })
     }
   })
   const sensors = useSensors(
@@ -193,7 +191,9 @@ export function ItemBoard({
           onSuccess: () => {
             const missing = status === "ready" ? missingFields(toForm(item), item.kind as ItemKind) : []
             if (missing.length > 0)
-              toast.message(t("board.movedIncomplete", { fields: missing.map((k) => t(`form.missing.${k}`)).join(", ") }))
+              toast.message(
+                t("board.movedIncomplete", { fields: missing.map((k) => t(`form.missing.${k}`)).join(", ") }),
+              )
           },
           onError: (error) => {
             if (incompleteFields(error).length > 0) {

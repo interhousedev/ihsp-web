@@ -103,7 +103,15 @@ describe("items", () => {
 
   const graded = (stale = false): Item => ({
     ...item("a", "Robotics", 0),
-    grade: { title_grade: "A", title_tip: "Crisp", description_grade: "C", description_tip: "Add detail", model: "m", title_descriptor: null, description_descriptor: null },
+    grade: {
+      title_grade: "A",
+      title_tip: "Crisp",
+      description_grade: "C",
+      description_tip: "Add detail",
+      model: "m",
+      title_descriptor: null,
+      description_descriptor: null,
+    },
     grade_stale: stale,
   })
 

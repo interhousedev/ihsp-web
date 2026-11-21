@@ -38,7 +38,9 @@ export function FitRing({
   children?: ReactNode
   className?: string
 }) {
-  const w = normalise(Object.fromEntries(metrics.map((metric) => [metric.id, metric.weight])) as Record<MetricId, number>)
+  const w = normalise(
+    Object.fromEntries(metrics.map((metric) => [metric.id, metric.weight])) as Record<MetricId, number>,
+  )
   let cursor = -90
   const arcs = metrics.map((metric) => {
     const sweep = w[metric.id] * 360
@@ -48,7 +50,10 @@ export function FitRing({
     return { metric, start, sweep: sweep - GAP_DEG, slot, fill: slot * ((metric.score ?? 0) / 100) }
   })
   return (
-    <span className={cn("relative inline-flex shrink-0 items-center justify-center", className)} style={{ width: size, height: size }}>
+    <span
+      className={cn("relative inline-flex shrink-0 items-center justify-center", className)}
+      style={{ width: size, height: size }}
+    >
       <svg viewBox="0 0 100 100" className="absolute inset-0 size-full overflow-visible" aria-hidden>
         {metrics.length === 0 ? (
           <>
@@ -75,7 +80,13 @@ export function FitRing({
             <g key={metric.id} className={cn("transition-opacity duration-200", dim && "opacity-35")}>
               {metric.score === null ? (
                 <>
-                  <circle {...common} strokeWidth={STROKE} strokeDasharray={`${slot} ${CIRCUMFERENCE}`} stroke={METRIC_STYLE[metric.id].color} opacity={0.2} />
+                  <circle
+                    {...common}
+                    strokeWidth={STROKE}
+                    strokeDasharray={`${slot} ${CIRCUMFERENCE}`}
+                    stroke={METRIC_STYLE[metric.id].color}
+                    opacity={0.2}
+                  />
                   <path
                     d={arcPath(start, sweep)}
                     fill="none"
@@ -86,8 +97,19 @@ export function FitRing({
                 </>
               ) : (
                 <>
-                  <circle {...common} strokeWidth={STROKE} strokeDasharray={`${slot} ${CIRCUMFERENCE}`} stroke={METRIC_STYLE[metric.id].color} opacity={0.2} />
-                  <circle {...common} strokeWidth={STROKE} strokeDasharray={`${fill} ${CIRCUMFERENCE}`} stroke={METRIC_STYLE[metric.id].color} />
+                  <circle
+                    {...common}
+                    strokeWidth={STROKE}
+                    strokeDasharray={`${slot} ${CIRCUMFERENCE}`}
+                    stroke={METRIC_STYLE[metric.id].color}
+                    opacity={0.2}
+                  />
+                  <circle
+                    {...common}
+                    strokeWidth={STROKE}
+                    strokeDasharray={`${fill} ${CIRCUMFERENCE}`}
+                    stroke={METRIC_STYLE[metric.id].color}
+                  />
                 </>
               )}
             </g>

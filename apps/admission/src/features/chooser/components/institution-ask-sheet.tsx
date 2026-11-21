@@ -31,7 +31,10 @@ export function InstitutionAskSheet({ institutionId, name }: { institutionId: st
         <Icons.sparkles aria-hidden />
         {t("ask.open")}
       </SheetTrigger>
-      <SheetContent side={mobile ? "bottom" : "right"} className="max-h-[85dvh] overflow-y-auto p-4 md:max-h-none md:w-[28rem]">
+      <SheetContent
+        side={mobile ? "bottom" : "right"}
+        className="max-h-[85dvh] overflow-y-auto p-4 md:max-h-none md:w-[28rem]"
+      >
         <SheetHeader>
           <SheetTitle>{t("ask.title", { name })}</SheetTitle>
         </SheetHeader>

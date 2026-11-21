@@ -64,7 +64,9 @@ export function ProfessionCard({
       </div>
       <div className="flex flex-wrap items-center gap-1.5">
         <RiskBadge profession={profession} />
-        {profession.salary_band ? <Pill>{t("salary.label", { band: t(`salary.${profession.salary_band}`) })}</Pill> : null}
+        {profession.salary_band ? (
+          <Pill>{t("salary.label", { band: t(`salary.${profession.salary_band}`) })}</Pill>
+        ) : null}
       </div>
       {profession.related_fields.length > 0 ? (
         <p className="text-muted-foreground text-xs">

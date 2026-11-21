@@ -20,7 +20,10 @@ export function SeasonStrip({ season }: { season: SeasonId }) {
             key={id}
             aria-current={index === current ? "step" : undefined}
             title={t(`season.name.${id}`)}
-            className={cn("h-1.5 flex-1 rounded-full", index < current ? "bg-primary" : index === current ? "bg-primary" : "bg-muted")}
+            className={cn(
+              "h-1.5 flex-1 rounded-full",
+              index < current ? "bg-primary" : index === current ? "bg-primary" : "bg-muted",
+            )}
             style={index === current ? { flexGrow: 2.2 } : index < current ? { opacity: 0.45 } : undefined}
           />
         ))}
@@ -70,14 +73,19 @@ export function SeasonCard({
             </span>
             <span className={cn("min-w-0 flex-1", check.done && "text-muted-foreground line-through")}>
               {check.href && !check.done ? (
-                <Link href={check.href} className="hover:text-primary focus-visible:ring-ring rounded-sm font-medium underline-offset-2 outline-none hover:underline focus-visible:ring-2">
+                <Link
+                  href={check.href}
+                  className="hover:text-primary focus-visible:ring-ring rounded-sm font-medium underline-offset-2 outline-none hover:underline focus-visible:ring-2"
+                >
                   {check.label}
                 </Link>
               ) : (
                 check.label
               )}
             </span>
-            {check.progress ? <span className="text-muted-foreground text-xs tabular-nums">{check.progress}</span> : null}
+            {check.progress ? (
+              <span className="text-muted-foreground text-xs tabular-nums">{check.progress}</span>
+            ) : null}
           </li>
         ))}
       </ul>
@@ -90,4 +98,3 @@ export function SeasonCard({
     </section>
   )
 }
-

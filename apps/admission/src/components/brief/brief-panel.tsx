@@ -140,7 +140,12 @@ export function BriefCard({ title, description, status, action, children, classN
   )
 }
 
-export type BriefBarSegment = { key: string; label: string; value: number; tone: "success" | "warning" | "primary" | "muted" }
+export type BriefBarSegment = {
+  key: string
+  label: string
+  value: number
+  tone: "success" | "warning" | "primary" | "muted"
+}
 
 const BAR_TONE = {
   success: "bg-success text-success",

@@ -121,34 +121,38 @@ export function CoursesPage() {
           ))}
         </nav>
         <div className="grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-x-8 lg:gap-y-3 md:gap-6">
-        <section id="courses-academic" className="flex flex-col gap-3 lg:col-start-1 lg:row-start-1 lg:gap-2" aria-labelledby="courses-academic-title">
-          <div>
-            <h2 id="courses-academic-title" className="text-lg font-semibold">
-              {t("academic.title")}
-            </h2>
-            <p className="text-muted-foreground text-sm">{t("academic.hint")}</p>
+          <section
+            id="courses-academic"
+            className="flex flex-col gap-3 lg:col-start-1 lg:row-start-1 lg:gap-2"
+            aria-labelledby="courses-academic-title"
+          >
+            <div>
+              <h2 id="courses-academic-title" className="text-lg font-semibold">
+                {t("academic.title")}
+              </h2>
+              <p className="text-muted-foreground text-sm">{t("academic.hint")}</p>
+            </div>
+            {query.isPending ? (
+              <Skeleton className="h-40 w-full" />
+            ) : query.isError ? (
+              <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
+            ) : (
+              COURSE_SOURCES.map((source) => (
+                <SourceSection
+                  key={source}
+                  source={source}
+                  courses={query.data.items.filter((c) => c.source === source)}
+                  onFind={() => open("lms")}
+                />
+              ))
+            )}
+          </section>
+          <div id="courses-toTake" className="scroll-mt-20 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+            <ToTake />
           </div>
-        {query.isPending ? (
-          <Skeleton className="h-40 w-full" />
-        ) : query.isError ? (
-          <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
-        ) : (
-          COURSE_SOURCES.map((source) => (
-            <SourceSection
-              key={source}
-              source={source}
-              courses={query.data.items.filter((c) => c.source === source)}
-              onFind={() => open("lms")}
-            />
-          ))
-        )}
-        </section>
-        <div id="courses-toTake" className="scroll-mt-20 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-          <ToTake />
-        </div>
-        <div id="courses-events" className="scroll-mt-20 lg:col-start-1 lg:row-start-2">
-          <EventsPointer />
-        </div>
+          <div id="courses-events" className="scroll-mt-20 lg:col-start-1 lg:row-start-2">
+            <EventsPointer />
+          </div>
         </div>
         <AddCourseDialog
           open={picking}

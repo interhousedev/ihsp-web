@@ -17,7 +17,12 @@ describe("list model", () => {
       currency: "USD",
       kind: "net",
     })
-    expect(netCost(entry, row({ annual_cost: "60000", aid_estimate: null, currency: "USD", gap: null }, { avg_aid: "50000" }))?.amount).toBe(10000)
+    expect(
+      netCost(
+        entry,
+        row({ annual_cost: "60000", aid_estimate: null, currency: "USD", gap: null }, { avg_aid: "50000" }),
+      )?.amount,
+    ).toBe(10000)
     expect(netCost(entry, undefined)).toEqual({ amount: 60000, currency: "USD", kind: "sticker" })
     expect(netCost(listEntry({ institution: institution({ coa_total: null }) }), undefined)).toBeNull()
   })

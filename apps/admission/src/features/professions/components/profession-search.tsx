@@ -33,14 +33,20 @@ export function ProfessionSearch({
   const [group, setGroup] = useState<string | null>(null)
   const term = useDebounce(q.trim(), 300)
   const list = useQuery(searchProfessionsQuery(term, locale))
-  const all = useMemo(() => (term ? (list.data?.items ?? []) : rankByFields(list.data?.items ?? [], fieldIds)), [list.data, term, fieldIds])
+  const all = useMemo(
+    () => (term ? (list.data?.items ?? []) : rankByFields(list.data?.items ?? [], fieldIds)),
+    [list.data, term, fieldIds],
+  )
   const groups = useMemo(() => groupsOf(all), [all])
   const items = group && groups.includes(group) ? all.filter((p) => p.group === group) : all
   const sources = uniqueSources(items)
   return (
     <div className={cn("flex min-h-0 min-w-0 flex-col gap-2.5", className)}>
       <div className="relative">
-        <Icons.search aria-hidden className="text-muted-foreground pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2" />
+        <Icons.search
+          aria-hidden
+          className="text-muted-foreground pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2"
+        />
         <Input
           type="search"
           value={q}
@@ -51,7 +57,11 @@ export function ProfessionSearch({
         />
       </div>
       {groups.length > 1 ? (
-        <div role="group" aria-label={t("search.groups")} className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 md:mx-0 md:px-0 [scrollbar-width:none]">
+        <div
+          role="group"
+          aria-label={t("search.groups")}
+          className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 md:mx-0 md:px-0 [scrollbar-width:none]"
+        >
           {[null, ...groups].map((id) => (
             <button
               key={id ?? "all"}
@@ -95,7 +105,13 @@ export function ProfessionSearch({
               <p className="text-muted-foreground flex flex-wrap gap-x-2 text-xs">
                 {t("card.sources")}:
                 {sources.map((s) => (
-                  <a key={s.url} href={s.url} target="_blank" rel="noreferrer" className="text-primary underline-offset-2 hover:underline">
+                  <a
+                    key={s.url}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary underline-offset-2 hover:underline"
+                  >
                     {s.label}
                   </a>
                 ))}

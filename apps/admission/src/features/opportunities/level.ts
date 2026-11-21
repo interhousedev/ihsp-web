@@ -1,6 +1,7 @@
 import type { Opportunity } from "./api"
 
-const GRADUATE = /\b(ph\.?d|doctoral|doctorate|master'?s?|msc|mba|postgraduate|graduate (?:school|program))\b|магистр|докторант|аспирант|magistr|doktorant/i
+const GRADUATE =
+  /\b(ph\.?d|doctoral|doctorate|master'?s?|msc|mba|postgraduate|graduate (?:school|program))\b|магистр|докторант|аспирант|magistr|doktorant/i
 
 /**
  * Entries for people past a bachelor's degree. The catalog has no level field: an entry that names a grade is school

@@ -6,7 +6,13 @@ import { usePracticeHistory, usePracticeToday } from "../../flow/api"
 import { totalOf } from "./practice-score"
 
 /** Every day written so far, newest first, today on top; picking a day loads it read-only (today stays editable). */
-export function PracticeHistory({ selected, onSelect }: { selected: string | null; onSelect: (day: string | null) => void }) {
+export function PracticeHistory({
+  selected,
+  onSelect,
+}: {
+  selected: string | null
+  onSelect: (day: string | null) => void
+}) {
   const t = useT("essayPractice")
   const today = usePracticeToday()
   const history = usePracticeHistory()
@@ -43,7 +49,19 @@ export function PracticeHistory({ selected, onSelect }: { selected: string | nul
   )
 }
 
-function DayButton({ active, label, theme, total, onClick }: { active: boolean; label: string; theme: string; total: number | null; onClick: () => void }) {
+function DayButton({
+  active,
+  label,
+  theme,
+  total,
+  onClick,
+}: {
+  active: boolean
+  label: string
+  theme: string
+  total: number | null
+  onClick: () => void
+}) {
   return (
     <button
       type="button"
@@ -54,12 +72,20 @@ function DayButton({ active, label, theme, total, onClick }: { active: boolean; 
         active && "bg-accent",
       )}
     >
-      <span aria-hidden className={cn("size-2.5 shrink-0 rounded-full border-2", total !== null ? "bg-primary border-primary" : "border-hairline-strong")} />
+      <span
+        aria-hidden
+        className={cn(
+          "size-2.5 shrink-0 rounded-full border-2",
+          total !== null ? "bg-primary border-primary" : "border-hairline-strong",
+        )}
+      />
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate font-medium">{label}</span>
         <span className="text-muted-foreground truncate text-xs">{theme}</span>
       </span>
-      <span className="text-muted-foreground shrink-0 text-xs tabular-nums">{total !== null ? `${total}/20` : "—"}</span>
+      <span className="text-muted-foreground shrink-0 text-xs tabular-nums">
+        {total !== null ? `${total}/20` : "—"}
+      </span>
     </button>
   )
 }

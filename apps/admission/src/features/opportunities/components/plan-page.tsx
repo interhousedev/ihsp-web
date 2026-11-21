@@ -170,7 +170,10 @@ function Placement({ item, entry }: { item: Opportunity; entry: Plan["entries"][
   const current = entry.planned_grade === null ? "" : `${entry.planned_grade}:${entry.planned_term ?? UNSET}`
   return (
     <li className="bg-card flex flex-col gap-2 rounded-card border p-2 text-sm">
-      <Link href={`/opportunities/view/?id=${encodeURIComponent(item.id)}`} className="line-clamp-2 break-words font-medium hover:underline">
+      <Link
+        href={`/opportunities/view/?id=${encodeURIComponent(item.id)}`}
+        className="line-clamp-2 break-words font-medium hover:underline"
+      >
         {item.fields.title}
       </Link>
       <div className="flex items-center gap-1">
@@ -180,13 +183,19 @@ function Placement({ item, entry }: { item: Opportunity; entry: Plan["entries"][
             if (!v) return
             const [grade, term] = v.split(":")
             save.mutate(
-              { id: item.id, planned_grade: Number(grade), planned_term: term === UNSET ? null : (term as (typeof TERMS)[number]) },
+              {
+                id: item.id,
+                planned_grade: Number(grade),
+                planned_term: term === UNSET ? null : (term as (typeof TERMS)[number]),
+              },
               { onError },
             )
           }}
         >
           <SelectTrigger aria-label={t("place")} className="h-8 min-w-0 flex-1">
-            <SelectValue>{current ? placeLabel(t, entry.planned_grade, entry.planned_term) : t("placeGrade")}</SelectValue>
+            <SelectValue>
+              {current ? placeLabel(t, entry.planned_grade, entry.planned_term) : t("placeGrade")}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {options.map((o) => (

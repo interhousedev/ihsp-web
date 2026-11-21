@@ -1,12 +1,16 @@
-import { describe, expect, it, mock } from "bun:test"
+import { afterAll, describe, expect, it, mock } from "bun:test"
 import { apiUrl, citation1, nbIds, problem, server, sourceDetailOf, sourceText } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderNotebook } from "../test-support"
-import { NoteEditor } from "./note-editor"
 
 // ProseMirror cannot take pasted text in jsdom; the editor itself is covered in rich-text/.
+// `mock.module` is global to the process: keep the real module and put it back when this file is done, or the
+// textarea stand-in would replace the editor in every test file that runs afterwards (the file order differs
+// between machines).
+const realRichText = { ...(await import("../../rich-text")) }
 mock.module("../../rich-text", () => ({
+  ...realRichText,
   RichTextEditor: (props: { id?: string; value: string; ariaLabel: string; onChange: (value: string) => void }) => (
     <textarea
       id={props.id}
@@ -16,6 +20,10 @@ mock.module("../../rich-text", () => ({
     />
   ),
 }))
+afterAll(() => {
+  mock.module("../../rich-text", () => realRichText)
+})
+const { NoteEditor } = await import("./note-editor")
 
 allowSlowRenders()
 

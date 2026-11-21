@@ -117,31 +117,31 @@ export function ItemList() {
           </Button>
         </div>
         <div className="flex min-w-0 flex-col gap-5 md:gap-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-2">
-        {kind === "honor" ? <HonorSuggestionsRow /> : null}
-        {items.isPending ? <StateView state="loading" /> : null}
-        {items.isError ? <StateView state="error" error={items.error} onRetry={() => items.refetch()} /> : null}
-        {items.isSuccess && ofKind.length === 0 ? (
-          <div className="md:hidden">
-            <StateView
-              state="empty"
-              title={t(`empty.${kind}.title`)}
-              description={t(`empty.${kind}.text`)}
-              icon={kind === "honor" ? <Icons.certificates aria-hidden /> : <Icons.sparkles aria-hidden />}
-            />
-          </div>
-        ) : null}
-        {items.isSuccess ? (
-          <div key={kind} className={ofKind.length === 0 ? "hidden md:block" : undefined}>
-            <ItemBoard drafts={drafts} ready={ready} onEdit={openItem} onDelete={setDeleting} />
-          </div>
-        ) : null}
-        {items.isSuccess && (kind === "activity" || items.data.length === 0) ? (
-          <EmptySuggestions collapsed={items.data.length > 0} />
-        ) : null}
-        {kind === "honor" && items.isSuccess ? <HonorDistribution items={ofKind} /> : null}
-        {kind === "activity" && ofKind.length > 0 ? <ItemAnalytics items={ofKind} /> : null}
-        {kind === "activity" ? <WhatIfCard /> : null}
-        <NextStep href="/chooser/?step=match" label={t("nextStep.explore")} hint={t("nextStep.exploreHint")} />
+          {kind === "honor" ? <HonorSuggestionsRow /> : null}
+          {items.isPending ? <StateView state="loading" /> : null}
+          {items.isError ? <StateView state="error" error={items.error} onRetry={() => items.refetch()} /> : null}
+          {items.isSuccess && ofKind.length === 0 ? (
+            <div className="md:hidden">
+              <StateView
+                state="empty"
+                title={t(`empty.${kind}.title`)}
+                description={t(`empty.${kind}.text`)}
+                icon={kind === "honor" ? <Icons.certificates aria-hidden /> : <Icons.sparkles aria-hidden />}
+              />
+            </div>
+          ) : null}
+          {items.isSuccess ? (
+            <div key={kind} className={ofKind.length === 0 ? "hidden md:block" : undefined}>
+              <ItemBoard drafts={drafts} ready={ready} onEdit={openItem} onDelete={setDeleting} />
+            </div>
+          ) : null}
+          {items.isSuccess && (kind === "activity" || items.data.length === 0) ? (
+            <EmptySuggestions collapsed={items.data.length > 0} />
+          ) : null}
+          {kind === "honor" && items.isSuccess ? <HonorDistribution items={ofKind} /> : null}
+          {kind === "activity" && ofKind.length > 0 ? <ItemAnalytics items={ofKind} /> : null}
+          {kind === "activity" ? <WhatIfCard /> : null}
+          <NextStep href="/chooser/?step=match" label={t("nextStep.explore")} hint={t("nextStep.exploreHint")} />
         </div>
       </div>
       {creating ? (

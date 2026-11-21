@@ -30,11 +30,13 @@ export function EssaysBody() {
       .join("; ")}`,
   })
   return (
-    <div className={pageClass(
+    <div
+      className={pageClass(
         ledger.view.lens === "uni"
           ? "md:h-[calc(100dvh-var(--shell-top-reserve,0px))] md:min-h-0 md:pb-4"
           : "lg:h-[calc(100dvh-var(--shell-top-reserve,0px))] lg:min-h-0 lg:pb-4",
-      )}>
+      )}
+    >
       {entryId ? (
         <Link
           data-testid="essays-back"

@@ -38,7 +38,11 @@ export function InstitutionFit({ row }: { row: ListRow }) {
   /** Until the research has filled the facts the number is an estimate over the known axes. */
   const approx = !researched || (row.fit.knownShare ?? 1) < 0.999
   return (
-    <section aria-label={t("detail.title")} className="bg-card flex flex-col gap-4 rounded-3xl border p-4 md:p-6" data-testid="institution-fit">
+    <section
+      aria-label={t("detail.title")}
+      className="bg-card flex flex-col gap-4 rounded-3xl border p-4 md:p-6"
+      data-testid="institution-fit"
+    >
       <div className="flex items-center gap-4">
         <FitRing metrics={fit.metrics} size={88}>
           <RingLogo name={institution.name} src={institution.logo_url} />

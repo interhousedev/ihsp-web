@@ -26,7 +26,7 @@ export function IntlStrip({ figures, deadline }: { figures: IntlFigures; deadlin
   const { admit, fullNeed, avgAid, cost, gap } = figures
   const money = (amount: number, currency: string) => formatCompactCurrency(amount, currency, locale)
   return (
-    <section aria-label={t("strip.label")} className="bg-card flex flex-col gap-2 rounded-2xl border px-4 py-3">
+    <section aria-label={t("strip.label")} className="bg-card flex flex-col gap-2 rounded-card border px-4 py-3">
       <h2 className="text-muted-foreground text-xs font-medium">{t("strip.label")}</h2>
       <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3 lg:grid-cols-5" data-testid="key-stats">
         {admit ? (
@@ -39,7 +39,9 @@ export function IntlStrip({ figures, deadline }: { figures: IntlFigures; deadlin
         {cost ? (
           <Item label={t("strip.cost")} className="col-span-2 sm:col-span-1">
             <span>
-              {cost.kind === "net" ? list("approx", { amount: money(cost.amount, cost.currency) }) : money(cost.amount, cost.currency)}
+              {cost.kind === "net"
+                ? list("approx", { amount: money(cost.amount, cost.currency) })
+                : money(cost.amount, cost.currency)}
             </span>
             {gap !== null ? (
               <span className={cn("block text-xs font-normal", gap > 0 ? "text-destructive" : "text-success")}>

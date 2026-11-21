@@ -11,13 +11,21 @@ function UniCard({ entry }: { entry: UniEntry }) {
   const t = useT("essayFlow")
   const r = entry.review
   return (
-    <li className={cn("bg-card border-hairline rounded-card flex flex-col gap-2 border p-3", entry.stale && "opacity-60 grayscale")}>
+    <li
+      className={cn(
+        "bg-card border-hairline rounded-card flex flex-col gap-2 border p-3",
+        entry.stale && "opacity-60 grayscale",
+      )}
+    >
       <div className="flex items-center justify-between gap-2">
         <h4 className="min-w-0 truncate text-sm font-semibold">{entry.name}</h4>
       </div>
       <div className="flex items-center gap-2" role="img" aria-label={t("deep.alignment", { value: r.alignment })}>
         <div className="bg-hairline h-2 flex-1 overflow-hidden rounded-full">
-          <div className="bg-primary h-full rounded-full" style={{ width: `${Math.min(100, Math.max(0, r.alignment))}%` }} />
+          <div
+            className="bg-primary h-full rounded-full"
+            style={{ width: `${Math.min(100, Math.max(0, r.alignment))}%` }}
+          />
         </div>
         <span className="text-sm font-semibold tabular-nums">{r.alignment}</span>
       </div>
@@ -65,7 +73,12 @@ export function UnisPanel({ essay, onReview }: { essay: Essay; onReview: () => v
           <p className="text-muted-foreground text-sm">{t("deep.fitEmpty")}</p>
         ) : null}
         <div className="flex flex-wrap gap-2">
-          <Button type="button" variant="outline" disabled={critique.isPending} onClick={() => critique.mutate(unis.length > 0)}>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={critique.isPending}
+            onClick={() => critique.mutate(unis.length > 0)}
+          >
             <Icons.sparkles aria-hidden />
             {critique.isPending ? t("deep.running") : unis.length > 0 ? t("deep.fitRerun") : t("deep.fitRun")}
           </Button>

@@ -27,7 +27,12 @@ export function EssayPicker({
   const te = useT("essays")
   const { label } = useEssayLabel()
   return (
-    <ResponsiveDialog open={slot !== undefined} onOpenChange={(open) => !open && onClose()} title={title} description={slot?.prompt ?? undefined}>
+    <ResponsiveDialog
+      open={slot !== undefined}
+      onOpenChange={(open) => !open && onClose()}
+      title={title}
+      description={slot?.prompt ?? undefined}
+    >
       {slot ? (
         <ul className="flex flex-col gap-2" data-testid="essay-picker">
           {essays.map((e) => {
@@ -46,7 +51,9 @@ export function EssayPicker({
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-medium">{label(e)}</span>
                     <span className="text-muted-foreground block text-xs">
-                      {slot.word_limit !== null ? te("wordsOf", { count: e.word_count, limit: slot.word_limit }) : te("words", { count: e.word_count })}
+                      {slot.word_limit !== null
+                        ? te("wordsOf", { count: e.word_count, limit: slot.word_limit })
+                        : te("words", { count: e.word_count })}
                       {why === "over" ? ` · ${t("overBy", { count: e.word_count - (slot.word_limit ?? 0) })}` : ""}
                       {why === "kind" ? ` · ${t("needsPersonal")}` : ""}
                     </span>

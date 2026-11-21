@@ -14,11 +14,30 @@ import { PastDay, PracticeWriter } from "./practice-writer"
 type Pane = "write" | "score" | "history"
 
 /** The card clips its corners; a column that scrolls does it inside, so the rounded corners and the scrollbar stay whole. */
-function Column({ title, children, className, scroll }: { title: string; children: React.ReactNode; className?: string; scroll?: boolean }) {
+function Column({
+  title,
+  children,
+  className,
+  scroll,
+}: {
+  title: string
+  children: React.ReactNode
+  className?: string
+  scroll?: boolean
+}) {
   return (
-    <section aria-label={title} className={cn("bg-card rounded-card flex min-h-0 min-w-0 flex-col overflow-hidden border", className)}>
-      <h2 className="text-muted-foreground border-hairline shrink-0 border-b px-4 py-2 text-xs font-semibold tracking-wide uppercase">{title}</h2>
-      {scroll ? <div className="flex min-h-0 flex-1 flex-col lg:overflow-y-auto lg:[scrollbar-gutter:stable]">{children}</div> : children}
+    <section
+      aria-label={title}
+      className={cn("bg-card rounded-card flex min-h-0 min-w-0 flex-col overflow-hidden border", className)}
+    >
+      <h2 className="text-muted-foreground border-hairline shrink-0 border-b px-4 py-2 text-xs font-semibold tracking-wide uppercase">
+        {title}
+      </h2>
+      {scroll ? (
+        <div className="flex min-h-0 flex-1 flex-col lg:overflow-y-auto lg:[scrollbar-gutter:stable]">{children}</div>
+      ) : (
+        children
+      )}
     </section>
   )
 }
@@ -55,7 +74,13 @@ export function PracticeBody() {
         <h1 className="min-w-0 flex-1 text-xl font-semibold tracking-tight lg:text-2xl">{t("title")}</h1>
         <Pill tone={streak > 0 ? "primary" : "neutral"}>{t("streak", { count: streak })}</Pill>
       </header>
-      <ToggleGroup value={[pane]} onValueChange={(v) => v[0] && setPane(v[0] as Pane)} aria-label={t("title")} variant="outline" className="w-full lg:hidden">
+      <ToggleGroup
+        value={[pane]}
+        onValueChange={(v) => v[0] && setPane(v[0] as Pane)}
+        aria-label={t("title")}
+        variant="outline"
+        className="w-full lg:hidden"
+      >
         {(["write", "score", "history"] as const).map((p) => (
           <ToggleGroupItem key={p} value={p} className="min-h-11 flex-1">
             {t(`pane.${p}`)}

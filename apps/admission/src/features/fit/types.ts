@@ -28,7 +28,16 @@ export type FitItem = {
 
 export type FitList = { weights: Record<AxisKey, number>; items: FitItem[] }
 
-export const RATING_KEYS = ["price", "salary", "ai_resilience", "prestige", "academics", "social", "city", "home"] as const
+export const RATING_KEYS = [
+  "price",
+  "salary",
+  "ai_resilience",
+  "prestige",
+  "academics",
+  "social",
+  "city",
+  "home",
+] as const
 export type RatingKey = (typeof RATING_KEYS)[number]
 export type Ratings = Record<RatingKey, number>
 

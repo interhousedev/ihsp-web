@@ -4,7 +4,16 @@ import { useT } from "@ihsp/i18n"
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
 import type { BaseReview } from "./api"
 
-const REVIEW_DIMS = ["responsiveness", "hook", "theme", "detail", "voice", "authenticity", "reflection", "writing"] as const
+const REVIEW_DIMS = [
+  "responsiveness",
+  "hook",
+  "theme",
+  "detail",
+  "voice",
+  "authenticity",
+  "reflection",
+  "writing",
+] as const
 
 /** The review of the essay itself; it is the same for every university, so it is shown once. */
 export function BaseReviewCard({ review, stale }: { review: BaseReview; stale: boolean }) {

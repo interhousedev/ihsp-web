@@ -1,7 +1,19 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, Icons, Pill, Sheet, SheetContent, SheetHeader, SheetTitle, StateView, useIsMobile } from "@ihsp/ui"
+import {
+  Alert,
+  AlertDescription,
+  Button,
+  Icons,
+  Pill,
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  StateView,
+  useIsMobile,
+} from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -52,7 +64,13 @@ export function UniListStage({ brief }: { brief?: BriefState }) {
         <Pill tone="primary">{t("count", { count: rows.length })}</Pill>
         <ViewToggle value={view} onChange={setView} />
         {brief ? (
-          <Button type="button" size="sm" variant="outline" className="ms-auto lg:hidden" onClick={() => setBriefOpen(true)}>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="ms-auto lg:hidden"
+            onClick={() => setBriefOpen(true)}
+          >
             <Icons.sparkles aria-hidden />
             {t("brief.open")}
           </Button>
@@ -84,7 +102,10 @@ export function UniListStage({ brief }: { brief?: BriefState }) {
           title={t("emptyTitle")}
           description={t("emptyText")}
           action={
-            <Link href="/chooser/?step=match" className="text-primary inline-flex min-h-11 items-center text-sm underline-offset-2 hover:underline">
+            <Link
+              href="/chooser/?step=match"
+              className="text-primary inline-flex min-h-11 items-center text-sm underline-offset-2 hover:underline"
+            >
               {t("find")}
             </Link>
           }
@@ -103,7 +124,10 @@ export function UniListStage({ brief }: { brief?: BriefState }) {
         </div>
       )}
       <AddSchoolRow onAdded={setAdded} />
-      <Link href="/opportunities/scholarships/" className="text-muted-foreground inline-flex min-h-11 w-fit items-center text-sm underline underline-offset-2">
+      <Link
+        href="/opportunities/scholarships/"
+        className="text-muted-foreground inline-flex min-h-11 w-fit items-center text-sm underline underline-offset-2"
+      >
         {t("scholarships")}
       </Link>
       {brief ? (

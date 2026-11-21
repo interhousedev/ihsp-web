@@ -8,7 +8,15 @@ import type { Stage, StageId } from "../flow"
  * The thin rail of the three stages: survey, matching, list. A done stage shows a check, the open one is filled, a
  * locked one (first run only) says why. The page owns the state; this draws it.
  */
-export function StageRail({ stages, open, onSelect }: { stages: readonly Stage[]; open: StageId; onSelect: (id: StageId) => void }) {
+export function StageRail({
+  stages,
+  open,
+  onSelect,
+}: {
+  stages: readonly Stage[]
+  open: StageId
+  onSelect: (id: StageId) => void
+}) {
   const t = useT("uniFlow")
   return (
     <nav aria-label={t("label")}>
@@ -31,13 +39,21 @@ export function StageRail({ stages, open, onSelect }: { stages: readonly Stage[]
                 )}
               >
                 <span aria-hidden className="flex size-5 shrink-0 items-center justify-center text-xs">
-                  {stage.locked ? <Icons.lock className="size-3.5" /> : stage.done && !current ? <Icons.check className="text-success size-4" /> : stage.number}
+                  {stage.locked ? (
+                    <Icons.lock className="size-3.5" />
+                  ) : stage.done && !current ? (
+                    <Icons.check className="text-success size-4" />
+                  ) : (
+                    stage.number
+                  )}
                 </span>
                 <span className="truncate max-sm:hidden">{t(`stages.${stage.id}`)}</span>
                 <span className="truncate sm:hidden">{t(`stagesShort.${stage.id}`)}</span>
                 {stage.locked ? <span className="sr-only">{t("locked")}</span> : null}
               </button>
-              {index < stages.length - 1 ? <span aria-hidden className="bg-border h-px w-3 shrink-0 max-sm:hidden" /> : null}
+              {index < stages.length - 1 ? (
+                <span aria-hidden className="bg-border h-px w-3 shrink-0 max-sm:hidden" />
+              ) : null}
             </li>
           )
         })}
