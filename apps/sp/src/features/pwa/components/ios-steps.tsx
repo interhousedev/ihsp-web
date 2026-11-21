@@ -1,25 +1,19 @@
-"use client";
+"use client"
 
-import { useT } from "@ihsp/i18n";
-import { IconSquarePlus, IconShare2, IconCheck } from "@ihsp/ui";
-import { StepList } from "./step-list";
+import { useT } from "@ihsp/i18n"
+import { IconSquarePlus, IconShare2, IconCheck } from "@ihsp/ui"
+import { StepList } from "./step-list"
 
 /** Safari on iPhone and iPad has no install button: Share → Add to Home Screen. */
 export function IosSteps({ openInSafari }: { openInSafari: boolean }) {
-  const t = useT("pwa");
+  const t = useT("pwa")
   return (
-    <section
-      className="flex flex-col gap-3"
-      aria-labelledby="pwa-platform-title"
-    >
+    <section className="flex flex-col gap-3" aria-labelledby="pwa-platform-title">
       <h2 id="pwa-platform-title" className="text-base font-semibold">
         {t("ios.title")}
       </h2>
       {openInSafari ? (
-        <p
-          role="note"
-          className="bg-muted text-muted-foreground rounded-lg p-3 text-sm"
-        >
+        <p role="note" className="bg-muted text-muted-foreground rounded-lg p-3 text-sm">
           {t("ios.openInSafari")}
         </p>
       ) : null}
@@ -32,5 +26,5 @@ export function IosSteps({ openInSafari }: { openInSafari: boolean }) {
         ]}
       />
     </section>
-  );
+  )
 }

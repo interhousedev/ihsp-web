@@ -3,4 +3,4 @@ export {
   getServiceWorkerRegistration,
   resetServiceWorkerRegistration,
   trackServiceWorkerRegistration,
-} from "@ihsp/features-core/pwa";
+} from "@ihsp/features-core/pwa"

@@ -1,57 +1,37 @@
-"use client";
+"use client"
 
-import { useT } from "@ihsp/i18n";
-import { buttonVariants, cn } from "@ihsp/ui";
-import { hubInstallUrl } from "@ihsp/features-core/pwa";
-import { useEffect, useState } from "react";
-import { useHubApps, type HubAppKey } from "../hooks/use-hub-apps";
+import { useT } from "@ihsp/i18n"
+import { buttonVariants, cn } from "@ihsp/ui"
+import { hubInstallUrl } from "@ihsp/features-core/pwa"
+import { useEffect, useState } from "react"
+import { useHubApps, type HubAppKey } from "../hooks/use-hub-apps"
 
 /** The app's real icon (its manifest's 192px icon), as the home screen shows it. */
-export function HubAppIcon({
-  src,
-  className,
-}: {
-  src: string;
-  className?: string;
-}) {
-  return (
-    <img
-      src={src}
-      alt=""
-      aria-hidden
-      width={48}
-      height={48}
-      className={cn("rounded-xl", className)}
-    />
-  );
+export function HubAppIcon({ src, className }: { src: string; className?: string }) {
+  return <img src={src} alt="" aria-hidden width={48} height={48} className={cn("rounded-xl", className)} />
 }
 
 /** The card an address like `/#install-lms` points to, or `null`. */
 export function hubAnchorKey(hash: string): HubAppKey | null {
-  const match = /^#install-(sp|lms|library|admission|staff|admin)$/.exec(hash);
-  return (match?.[1] as HubAppKey | undefined) ?? null;
+  const match = /^#install-(sp|lms|library|admission|staff|admin)$/.exec(hash)
+  return (match?.[1] as HubAppKey | undefined) ?? null
 }
 
 /** The app the address hash names: follows `hashchange`, scrolls that card into view and keeps it highlighted. */
-function useHighlightedApp(
-  apps: readonly { key: HubAppKey }[],
-): HubAppKey | null {
-  const [active, setActive] = useState<HubAppKey | null>(null);
-  const listed = apps.map((app) => app.key).join(",");
+function useHighlightedApp(apps: readonly { key: HubAppKey }[]): HubAppKey | null {
+  const [active, setActive] = useState<HubAppKey | null>(null)
+  const listed = apps.map((app) => app.key).join(",")
   useEffect(() => {
     function sync() {
-      const key = hubAnchorKey(window.location.hash);
-      setActive(key);
-      if (key)
-        document
-          .getElementById(`install-${key}`)
-          ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      const key = hubAnchorKey(window.location.hash)
+      setActive(key)
+      if (key) document.getElementById(`install-${key}`)?.scrollIntoView({ behavior: "smooth", block: "center" })
     }
-    sync();
-    window.addEventListener("hashchange", sync);
-    return () => window.removeEventListener("hashchange", sync);
-  }, [listed]);
-  return active;
+    sync()
+    window.addEventListener("hashchange", sync)
+    return () => window.removeEventListener("hashchange", sync)
+  }, [listed])
+  return active
 }
 
 /**
@@ -59,9 +39,9 @@ function useHighlightedApp(
  * app installs on this page (the steps above); each other app's "Install" opens its install page here (`/install/?app=lms`). Staff and admin are marked, an app without a configured address is not listed.
  */
 export function AppsHub() {
-  const t = useT("pwa");
-  const apps = useHubApps();
-  const highlighted = useHighlightedApp(apps);
+  const t = useT("pwa")
+  const apps = useHubApps()
+  const highlighted = useHighlightedApp(apps)
   return (
     <section className="flex flex-col gap-3" aria-labelledby="pwa-hub-title">
       <div className="flex flex-col gap-1">
@@ -92,9 +72,7 @@ export function AppsHub() {
                     </span>
                   ) : null}
                 </span>
-                <span className="text-muted-foreground text-xs">
-                  {app.description}
-                </span>
+                <span className="text-muted-foreground text-xs">{app.description}</span>
               </div>
               {app.href ? (
                 <a
@@ -108,14 +86,12 @@ export function AppsHub() {
                   {t("hub.install")}
                 </a>
               ) : (
-                <span className="text-muted-foreground max-w-28 text-right text-xs">
-                  {t("hub.thisApp")}
-                </span>
+                <span className="text-muted-foreground max-w-28 text-right text-xs">{t("hub.thisApp")}</span>
               )}
             </li>
-          );
+          )
         })}
       </ul>
     </section>
-  );
+  )
 }

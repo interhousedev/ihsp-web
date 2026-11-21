@@ -1,1 +1,1 @@
-export * from "@ihsp/features-core/pwa/lock";
+export * from "@ihsp/features-core/pwa/lock"

@@ -1,1 +1,1 @@
-export { AppLockSection } from "@ihsp/features-core/pwa/lock";
+export { AppLockSection } from "@ihsp/features-core/pwa/lock"

@@ -8,4 +8,4 @@ export {
   parsePushPayload,
   type ClickTarget,
   type PushPayload,
-} from "@ihsp/features-core/pwa/sw";
+} from "@ihsp/features-core/pwa/sw"

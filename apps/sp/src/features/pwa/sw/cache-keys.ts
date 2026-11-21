@@ -9,7 +9,7 @@ import {
   isCacheableApiPath as isCacheableApiPathFor,
   type RequestFacts,
   type RequestKind,
-} from "@ihsp/features-core/pwa/sw";
+} from "@ihsp/features-core/pwa/sw"
 
 export {
   API_MAX_STALE_MS,
@@ -27,7 +27,7 @@ export {
   portalOriginFromSearch,
   type RequestFacts,
   type RequestKind,
-} from "@ihsp/features-core/pwa/sw";
+} from "@ihsp/features-core/pwa/sw"
 
 /** API answers the worker keeps for offline use (stale-while-revalidate): today, timetable, homework, grades. */
 export const SWR_API_PATHS: readonly string[] = [
@@ -36,30 +36,24 @@ export const SWR_API_PATHS: readonly string[] = [
   "/v1/me/homework",
   "/v1/me/grades",
   "/v1/me/record-book",
-];
+]
 
 /** Pages fetched when the worker installs, so the main screens work offline right after the first visit. */
-export const PRECACHE_PAGES: readonly string[] = [
-  "/",
-  "/today/",
-  "/timetable/",
-  "/homework/",
-  "/grades/",
-];
+export const PRECACHE_PAGES: readonly string[] = ["/", "/today/", "/timetable/", "/homework/", "/grades/"]
 
-const keys = createCacheKeys("sp");
+const keys = createCacheKeys("sp")
 
-export const shellCacheName = keys.shellCacheName;
-export const staticCacheName = keys.staticCacheName;
-export const apiCacheName = keys.apiCacheName;
-export const cachesToDelete = keys.cachesToDelete;
-export const apiCaches = keys.apiCaches;
+export const shellCacheName = keys.shellCacheName
+export const staticCacheName = keys.staticCacheName
+export const apiCacheName = keys.apiCacheName
+export const cachesToDelete = keys.cachesToDelete
+export const apiCaches = keys.apiCaches
 
 /** True when the path is one of `SWR_API_PATHS` or below it (`/v1/me/grades/day`). */
 export function isCacheableApiPath(pathname: string): boolean {
-  return isCacheableApiPathFor(pathname, SWR_API_PATHS);
+  return isCacheableApiPathFor(pathname, SWR_API_PATHS)
 }
 
 export function classifyRequest(request: RequestFacts): RequestKind {
-  return classifyRequestFor(request, SWR_API_PATHS);
+  return classifyRequestFor(request, SWR_API_PATHS)
 }

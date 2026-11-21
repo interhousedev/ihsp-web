@@ -1,17 +1,14 @@
-"use client";
+"use client"
 
-import { useT } from "@ihsp/i18n";
-import { IconCheck, IconDeviceMobileDown, IconDotsVertical } from "@ihsp/ui";
-import { StepList } from "./step-list";
+import { useT } from "@ihsp/i18n"
+import { IconCheck, IconDeviceMobileDown, IconDotsVertical } from "@ihsp/ui"
+import { StepList } from "./step-list"
 
 /** Android browsers that did not offer the install dialog (Firefox, Samsung Internet, or a dialog that was dismissed). */
 export function AndroidManualSteps() {
-  const t = useT("pwa");
+  const t = useT("pwa")
   return (
-    <section
-      className="flex flex-col gap-3"
-      aria-labelledby="pwa-platform-title"
-    >
+    <section className="flex flex-col gap-3" aria-labelledby="pwa-platform-title">
       <h2 id="pwa-platform-title" className="text-base font-semibold">
         {t("android.manual.title")}
       </h2>
@@ -23,5 +20,5 @@ export function AndroidManualSteps() {
         ]}
       />
     </section>
-  );
+  )
 }

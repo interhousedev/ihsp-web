@@ -4,4 +4,4 @@ export {
   registerServiceWorker,
   serviceWorkerUrl,
   type RegisterOptions,
-} from "@ihsp/features-core/pwa";
+} from "@ihsp/features-core/pwa"

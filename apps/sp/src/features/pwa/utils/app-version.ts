@@ -6,4 +6,4 @@ export {
   parseVersion,
   type AppVersionInfo,
   type UpdateDecision,
-} from "@ihsp/features-core/pwa";
+} from "@ihsp/features-core/pwa"

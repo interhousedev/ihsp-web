@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import { useAuthStore } from "@ihsp/auth";
-import { BRAND, getConfig, type AppEnv } from "@ihsp/config";
-import { useLocale, useT, type Locale } from "@ihsp/i18n";
-import { isMiniApp } from "@ihsp/telegram/core";
-import type { PlatformLink } from "@ihsp/ui";
-import type { MouseEvent } from "react";
-import { installAppUrl, isPwaMode } from "../pwa/utils/app-mode";
-import { hubInstallUrl } from "../pwa/utils/hub-install";
-import { platformKeysFor, type PlatformKey } from "./platform-keys";
+import { useAuthStore } from "@ihsp/auth"
+import { BRAND, getConfig, type AppEnv } from "@ihsp/config"
+import { useLocale, useT, type Locale } from "@ihsp/i18n"
+import { isMiniApp } from "@ihsp/telegram/core"
+import type { PlatformLink } from "@ihsp/ui"
+import type { MouseEvent } from "react"
+import { installAppUrl, isPwaMode } from "../pwa/utils/app-mode"
+import { hubInstallUrl } from "../pwa/utils/hub-install"
+import { platformKeysFor, type PlatformKey } from "./platform-keys"
 
 const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
   sp: "SP_URL",
@@ -18,32 +18,26 @@ const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
   library: "LIBRARY_URL",
   admission: "ADMISSION_URL",
   id: "ID_URL",
-};
+}
 
 /** Apps that are installed separately: in the installed app their links go to the apps hub, to the app's install steps. */
-const HUB_ANCHORS: readonly PlatformKey[] = [
-  "lms",
-  "library",
-  "admission",
-  "staff",
-  "admin",
-];
+const HUB_ANCHORS: readonly PlatformKey[] = ["lms", "library", "admission", "staff", "admin"]
 
 /** `https://app.ihsu.uz` + `lms` → `https://app.ihsu.uz/install/?app=lms`, the hub's install page of that app. */
 export function installAnchorUrl(hub: string, key: PlatformKey): string {
-  return hubInstallUrl(hub, key);
+  return hubInstallUrl(hub, key)
 }
 
 /** Inside Telegram another platform leaves through the SDK: the webview would lose the signed launch parameters. */
 export function leaveMiniApp(href: string) {
   return (event: MouseEvent) => {
-    event.preventDefault();
+    event.preventDefault()
     import("@ihsp/telegram")
       .then(({ openExternalLink }) => {
-        if (!openExternalLink(href)) window.location.assign(href);
+        if (!openExternalLink(href)) window.location.assign(href)
       })
-      .catch(() => window.location.assign(href));
-  };
+      .catch(() => window.location.assign(href))
+  }
 }
 
 /**
@@ -52,32 +46,27 @@ export function leaveMiniApp(href: string) {
  * the auth store directly, so a page without `AuthProvider` (the public share viewer) never starts a login by asking.
  */
 export function usePlatformLinks(): PlatformLink[] {
-  const t = useT("platforms");
-  const locale = useLocale();
-  const roles = useAuthStore((state) => state.user?.roles);
-  if (!roles) return [];
+  const t = useT("platforms")
+  const locale = useLocale()
+  const roles = useAuthStore((state) => state.user?.roles)
+  if (!roles) return []
 
-  const config = getConfig();
-  const hub = isPwaMode() ? installAppUrl() : null;
-  const miniApp = isMiniApp();
+  const config = getConfig()
+  const hub = isPwaMode() ? installAppUrl() : null
+  const miniApp = isMiniApp()
   // An optional address (`LIBRARY_URL`) that is not configured hides its entry.
   return platformKeysFor(roles)
     .filter((key) => config[URL_KEYS[key]])
     .map((key) => {
-      const href =
-        hub && HUB_ANCHORS.includes(key)
-          ? installAnchorUrl(hub, key)
-          : String(config[URL_KEYS[key]]);
+      const href = hub && HUB_ANCHORS.includes(key) ? installAnchorUrl(hub, key) : String(config[URL_KEYS[key]])
       return {
         key,
         name: BRAND.displayName[key][locale as Locale],
         description: t(`${key}.description`),
         href,
         // The installable app (client `app`) is the student portal in another host.
-        current:
-          (config.OAUTH_CLIENT_ID === "app" ? "sp" : config.OAUTH_CLIENT_ID) ===
-          key,
+        current: (config.OAUTH_CLIENT_ID === "app" ? "sp" : config.OAUTH_CLIENT_ID) === key,
         ...(miniApp ? { onClick: leaveMiniApp(href) } : {}),
-      };
-    });
+      }
+    })
 }
