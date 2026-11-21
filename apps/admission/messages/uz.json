@@ -5645,5 +5645,21 @@
     "staleAction": "Qayta tahlil qilish",
     "fork": "{name} uchun versiya yaratish",
     "detailedReview": "OTMlar boʻyicha batafsil tahlil"
+  },
+  "shellSearch": {
+    "onList": "Roʻyxatingizda",
+    "inCatalog": "Katalog",
+    "untitled": "Nomsiz",
+    "sections": { "pages": "Boʻlimlar", "universities": "OTMlar", "essays": "Esselar", "tasks": "Vazifalar" },
+    "pages": {
+      "practice": "Esse mashqi",
+      "byUniversity": "OTMlar boʻyicha esselar",
+      "professions": "Kasblar",
+      "weights": "Men uchun muhim narsalar (radar)",
+      "catalog": "OTMlar katalogi",
+      "graph": "Roʻyxat grafigi",
+      "gantt": "Muddatlar va vazifalar",
+      "opportunities": "Imkoniyatlar va stipendiyalar"
+    }
   }
 }

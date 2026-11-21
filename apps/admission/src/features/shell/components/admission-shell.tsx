@@ -5,6 +5,7 @@ import { RequireAuth, RequireRole, useSession } from "@ihsp/auth"
 import { MaintenanceBanner, NotificationBell, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { AppShell, buttonVariants, CommandPalette, Icons, OfflineBadge, StateView } from "@ihsp/ui"
+import { ShellSearch } from "./shell-search"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Suspense, useEffect, type ReactNode } from "react"
@@ -91,7 +92,7 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
   return (
     <AppShell
       history={<ShellNavControls />}
-      search={<CommandPalette nav={nav.groups} />}
+      search={sectionNav ? <ShellSearch nav={nav.groups} /> : <CommandPalette nav={nav.groups} />}
       nav={nav.groups}
       bottomNav={sectionNav ? undefined : nav.bottom}
       bottomBar={sectionNav ? <SectionBottomBar items={nav.bottom} /> : undefined}

@@ -5645,5 +5645,21 @@
     "staleAction": "Разобрать заново",
     "fork": "Сделать версию для {name}",
     "detailedReview": "Подробный разбор по вузам"
+  },
+  "shellSearch": {
+    "onList": "В вашем списке",
+    "inCatalog": "Каталог",
+    "untitled": "Без названия",
+    "sections": { "pages": "Разделы", "universities": "Вузы", "essays": "Эссе", "tasks": "Задачи" },
+    "pages": {
+      "practice": "Практика эссе",
+      "byUniversity": "Эссе по вузам",
+      "professions": "Профессии",
+      "weights": "Что для меня важно (радар)",
+      "catalog": "Каталог вузов",
+      "graph": "График списка",
+      "gantt": "Сроки и задачи",
+      "opportunities": "Возможности и стипендии"
+    }
   }
 }

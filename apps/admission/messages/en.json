@@ -5645,5 +5645,21 @@
     "staleAction": "Read again",
     "fork": "Make a version for {name}",
     "detailedReview": "Detailed review"
+  },
+  "shellSearch": {
+    "onList": "On your list",
+    "inCatalog": "Catalog",
+    "untitled": "Untitled",
+    "sections": { "pages": "Pages", "universities": "Universities", "essays": "Essays", "tasks": "Tasks" },
+    "pages": {
+      "practice": "Essay practice",
+      "byUniversity": "Essays by university",
+      "professions": "Professions",
+      "weights": "What matters to me (radar)",
+      "catalog": "University catalog",
+      "graph": "List graph",
+      "gantt": "Deadlines and tasks",
+      "opportunities": "Opportunities and scholarships"
+    }
   }
 }

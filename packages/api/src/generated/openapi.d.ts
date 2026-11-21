@@ -4054,7 +4054,8 @@ export interface paths {
          * @description Search and filter the catalog; name and alias matches come first.
          *
          *     `setting` is the campus setting (`city_type` is the same filter). `sort=deadline`
-         *     lists the soonest next deadline first, institutions without one last.
+         *     lists the soonest next deadline first, institutions without one last;
+         *     `sort=fit` lists the highest fit for the caller first, unscored last.
          */
         get: operations["admission_search_institutions"];
         put?: never;
@@ -4960,6 +4961,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/essays/match/common-app": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Essay Match Common App
+         * @description Fill or empty the shared personal statement of every Common App university.
+         */
+        put: operations["admission_essay_match_common_app"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/essays/match/{university_id}": {
         parameters: {
             query?: never;
@@ -5081,6 +5102,30 @@ export interface paths {
          */
         get: operations["admission_essay_prompt_map"];
         put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/essays/short-answers/{slot_key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Essay Short Answer
+         * @description My short answer to a supplemental prompt (`slot_key` is the prompt key).
+         */
+        get: operations["admission_essay_short_answer"];
+        /**
+         * Essay Short Answer Put
+         * @description Store the short answer sealed; 422 above 150 words or the prompt's limit.
+         */
+        put: operations["admission_essay_short_answer_put"];
         post?: never;
         delete?: never;
         options?: never;
@@ -19158,6 +19203,12 @@ export interface components {
         AdmissionMeOut: {
             /** Entitlement Kind */
             entitlement_kind: string | null;
+            /**
+             * Estimates Visible
+             * @description Whether admission estimates are shown to this caller.
+             * @default true
+             */
+            estimates_visible?: boolean;
             /** Grade */
             grade: number | null;
             /** Ineligible Reason */
@@ -23173,6 +23224,14 @@ export interface components {
             target_kind: string;
             /** Visibility */
             visibility: string;
+        };
+        /**
+         * CommonAppIn
+         * @description The personal statement for every Common App university; null empties it.
+         */
+        CommonAppIn: {
+            /** Essay Id */
+            essay_id: string | null;
         };
         /**
          * CommonWorkOffBody
@@ -29091,6 +29150,11 @@ export interface components {
             facts: {
                 [key: string]: components["schemas"]["FactOut"];
             };
+            /**
+             * Fit Total
+             * @description Fit for the caller (as /list/fit); null when not computable.
+             */
+            fit_total?: number | null;
             /** Highlights */
             highlights: components["schemas"]["HighlightOut"][];
             /**
@@ -29098,6 +29162,8 @@ export interface components {
              * Format: uuid
              */
             id: string;
+            /** Known Share */
+            known_share?: number | null;
             /**
              * Logo Fit
              * @enum {string}
@@ -32650,6 +32716,11 @@ export interface components {
         MatchOut: {
             /** Admission Rate */
             admission_rate?: number | null;
+            /**
+             * Avg Aid Intl
+             * @description Average aid for international students, USD.
+             */
+            avg_aid_intl?: number | null;
             /** City */
             city: string | null;
             /** Cost After Aid Usd */
@@ -32658,14 +32729,23 @@ export interface components {
             country: string;
             /** Cover Url */
             cover_url: string | null;
+            /** Fit Total */
+            fit_total?: number | null;
             /** Institution Type */
             institution_type: string | null;
+            /** Intl Acceptance Rate */
+            intl_acceptance_rate?: number | null;
+            /** Known Share */
+            known_share?: number | null;
             /** Logo Url */
             logo_url: string | null;
             /** Match Pct */
             match_pct: number;
+            /** Meets Full Need */
+            meets_full_need?: boolean | null;
             /** Name */
             name: string;
+            next_deadline?: components["schemas"]["NextDeadlineOut"] | null;
             overlap: components["schemas"]["OverlapOut"];
             /** Status */
             status: ("reach" | "target" | "safety") | null;
@@ -32683,12 +32763,29 @@ export interface components {
             assigned: components["schemas"]["AssignedEssayOut"] | null;
             /** Candidates */
             candidates: components["schemas"]["MatchCandidateOut"][];
+            /**
+             * Category
+             * @description Prompt category (see the prompt map); null for no prompt.
+             */
+            category: string | null;
             /** Essay Id */
             essay_id: string | null;
             /** Prompt */
             prompt: string | null;
+            /**
+             * Prompt Key
+             * @description Key of the prompt; null for `ps`.
+             */
+            prompt_key: string | null;
             /** Required */
             required: boolean;
+            /**
+             * Shared
+             * @description The personal statement of a Common App university: set once for all of them with `PUT /essays/match/common-app`.
+             */
+            shared: boolean;
+            /** @description My short text; only on `short_answer` slots, null until written. */
+            short_answer: components["schemas"]["ShortAnswerOut"] | null;
             /** Slot */
             slot: string;
             /** Word Limit */
@@ -33787,6 +33884,19 @@ export interface components {
             title: string;
             /** Why */
             why: string;
+        };
+        /**
+         * NextDeadlineOut
+         * @description The soonest upcoming deadline and its round (plan code).
+         */
+        NextDeadlineOut: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Round */
+            round: string;
         };
         /**
          * NextSectionResponse
@@ -36795,6 +36905,12 @@ export interface components {
          */
         PromptGroupOut: {
             /**
+             * Category
+             * @description What the prompts ask, derived on the server from the prompt text, the stored group label and the word limit.
+             * @enum {string}
+             */
+            category: "personal_statement" | "why_us" | "community" | "academic" | "activity" | "short_answer" | "other";
+            /**
              * Covered
              * @description An essay or slot already answers a member.
              */
@@ -36833,6 +36949,11 @@ export interface components {
             label: string;
             /** Prompts */
             prompts: components["schemas"]["PromptRefOut"][];
+            /**
+             * Short Answers
+             * @description My short texts for member prompts; only for `short_answer`.
+             */
+            short_answers: components["schemas"]["ShortAnswerOut"][];
             /** Spread */
             spread: number;
         };
@@ -40501,6 +40622,28 @@ export interface components {
          * @enum {string}
          */
         ShelfState: "want" | "reading" | "done";
+        /**
+         * ShortAnswerIn
+         * @description The short text (at most 150 words and the prompt's own limit).
+         */
+        ShortAnswerIn: {
+            /** Text */
+            text: string;
+        };
+        /**
+         * ShortAnswerOut
+         * @description A short answer to one prompt; `word_count` counts whitespace-separated words.
+         */
+        ShortAnswerOut: {
+            /** Prompt Key */
+            prompt_key: string;
+            /** Text */
+            text: string;
+            /** Updated At */
+            updated_at: string | null;
+            /** Word Count */
+            word_count: number;
+        };
         /**
          * ShortlistIn
          * @description The professions the student keeps.
@@ -55925,7 +56068,7 @@ export interface operations {
                 aid?: string | null;
                 scholarships?: boolean | null;
                 max_cost?: number | string | null;
-                sort?: "deadline" | null;
+                sort?: ("deadline" | "fit") | null;
                 cursor?: number;
                 limit?: number;
             };
@@ -57530,6 +57673,39 @@ export interface operations {
             };
         };
     };
+    admission_essay_match_common_app: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CommonAppIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EssayMatchListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_essay_match: {
         parameters: {
             query?: never;
@@ -57762,6 +57938,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_essay_short_answer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slot_key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShortAnswerOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_essay_short_answer_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slot_key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShortAnswerIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShortAnswerOut"];
                 };
             };
             /** @description Validation Error */
@@ -59970,7 +60212,9 @@ export interface operations {
             query?: {
                 limit?: number;
             };
-            header?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path?: never;
             cookie?: never;
         };
