@@ -32,6 +32,7 @@ import {
   type Opportunity,
   type Plan,
 } from "../api"
+import { useStudentGrade } from "../../../config/applicant"
 import { useSchoolGrades } from "../../../lib/config"
 
 const TERMS = ["fall", "spring", "summer"] as const
@@ -162,7 +163,10 @@ function Placement({ item, entry }: { item: Opportunity; entry: Plan["entries"][
   const save = useSaveToPlan()
   const remove = useRemoveFromPlan()
   const onError = (error: unknown) => toast.error(errorMessage(error))
-  const options: Cell[] = GRADES.flatMap((grade) => TERMS.map((term) => ({ grade, term })))
+  const myGrade = useStudentGrade()
+  // The student's own grade comes first, so the common choice is at the top of the list.
+  const ordered = [...GRADES].sort((a, b) => Number(b === myGrade) - Number(a === myGrade))
+  const options: Cell[] = ordered.flatMap((grade) => TERMS.map((term) => ({ grade, term })))
   const current = entry.planned_grade === null ? "" : `${entry.planned_grade}:${entry.planned_term ?? UNSET}`
   return (
     <li className="bg-card flex flex-col gap-2 rounded-card border p-2 text-sm">
@@ -182,12 +186,13 @@ function Placement({ item, entry }: { item: Opportunity; entry: Plan["entries"][
           }}
         >
           <SelectTrigger aria-label={t("place")} className="h-8 min-w-0 flex-1">
-            <SelectValue>{current ? placeLabel(t, entry.planned_grade, entry.planned_term) : t("place")}</SelectValue>
+            <SelectValue>{current ? placeLabel(t, entry.planned_grade, entry.planned_term) : t("placeGrade")}</SelectValue>
           </SelectTrigger>
           <SelectContent>
             {options.map((o) => (
               <SelectItem key={`${o.grade}:${o.term}`} value={`${o.grade}:${o.term}`}>
                 {placeLabel(t, o.grade, o.term)}
+                {o.grade === myGrade ? ` · ${t("currentGrade")}` : ""}
               </SelectItem>
             ))}
           </SelectContent>

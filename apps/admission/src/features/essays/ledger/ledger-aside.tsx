@@ -25,9 +25,9 @@ function AsideCard({
 }) {
   return (
     <section data-testid={testId} className={cn("bg-card rounded-card flex min-w-0 flex-col gap-2 border p-3 md:p-4", className)}>
-      <header className="flex min-w-0 items-center gap-2">
+      <header className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
         <span className="bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-lg">{icon}</span>
-        <h2 className="min-w-0 flex-1 truncate text-sm font-semibold">{title}</h2>
+        <h2 className="min-w-[8rem] flex-1 text-sm leading-tight font-semibold break-words">{title}</h2>
         {action}
       </header>
       {children}

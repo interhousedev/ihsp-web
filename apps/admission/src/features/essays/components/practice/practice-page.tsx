@@ -13,11 +13,12 @@ import { PastDay, PracticeWriter } from "./practice-writer"
 
 type Pane = "write" | "score" | "history"
 
-function Column({ title, children, className }: { title: string; children: React.ReactNode; className?: string }) {
+/** The card clips its corners; a column that scrolls does it inside, so the rounded corners and the scrollbar stay whole. */
+function Column({ title, children, className, scroll }: { title: string; children: React.ReactNode; className?: string; scroll?: boolean }) {
   return (
-    <section aria-label={title} className={cn("bg-card rounded-card flex min-h-0 min-w-0 flex-col border", className)}>
+    <section aria-label={title} className={cn("bg-card rounded-card flex min-h-0 min-w-0 flex-col overflow-hidden border", className)}>
       <h2 className="text-muted-foreground border-hairline shrink-0 border-b px-4 py-2 text-xs font-semibold tracking-wide uppercase">{title}</h2>
-      {children}
+      {scroll ? <div className="flex min-h-0 flex-1 flex-col lg:overflow-y-auto lg:[scrollbar-gutter:stable]">{children}</div> : children}
     </section>
   )
 }
@@ -62,13 +63,13 @@ export function PracticeBody() {
         ))}
       </ToggleGroup>
       <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_22rem]">
-        <Column title={t("history")} className={cn(pane !== "history" && "max-lg:hidden", "lg:overflow-y-auto lg:[scrollbar-gutter:stable]")}>
+        <Column title={t("history")} scroll className={cn(pane !== "history" && "max-lg:hidden")}>
           <PracticeHistory selected={day} onSelect={pick} />
         </Column>
         <Column title={t("writing")} className={cn(pane !== "write" && "max-lg:hidden")}>
           {writer}
         </Column>
-        <Column title={t("score")} className={cn(pane !== "score" && "max-lg:hidden", "lg:overflow-y-auto lg:[scrollbar-gutter:stable]")}>
+        <Column title={t("score")} scroll className={cn(pane !== "score" && "max-lg:hidden")}>
           <PracticeScore entry={entry} canSeed={!past} />
         </Column>
       </div>

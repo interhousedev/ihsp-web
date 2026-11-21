@@ -38,6 +38,7 @@ import {
 import { careerPlanQuery } from "../../career/api"
 import { CategoryTabs, RelevanceBar, parseCategory, parseSort, type Category } from "./catalog-controls"
 import { NextStep } from "../../../components/next-step"
+import { bySchoolLevel } from "../level"
 import { OpportunityCard, SaveButton } from "./opportunity-card"
 import { SubmitDialog } from "./submit-dialog"
 
@@ -165,10 +166,11 @@ export function CatalogBody() {
       )
   }
 
+  const shownItems = useMemo(() => bySchoolLevel(list.data?.items ?? [], myGrade), [list.data, myGrade])
   let body
   if (list.isPending) body = <Skeleton className="h-40 w-full" />
   else if (list.isError) body = <StateView state="error" onRetry={() => void list.refetch()} />
-  else if (list.data.items.length === 0)
+  else if (shownItems.length === 0)
     body = (
       <StateView
         state="empty"
@@ -180,7 +182,7 @@ export function CatalogBody() {
   else
     body = (
       <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
-        {list.data.items.map((item) => (
+        {shownItems.map((item) => (
           <OpportunityCard
             key={item.id}
             item={item}
@@ -293,7 +295,7 @@ export function CatalogBody() {
                 </div>
                 {list.data ? (
                   <Pill tone="primary" className="self-start">
-                    {t("view.results", { count: list.data.items.length })}
+                    {t("view.results", { count: shownItems.length })}
                   </Pill>
                 ) : null}
               </AsideCard>
