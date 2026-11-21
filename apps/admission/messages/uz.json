@@ -3101,7 +3101,12 @@
         "week": "Hafta"
       },
       "reminders": "Eslatmalar",
-      "openItem": "Ochish"
+      "openItem": "Ochish",
+      "general": "Umumiy",
+      "mine": "Mening vazifalarim",
+      "addTaskTo": "Vazifa qoʻshish: {name}",
+      "noDeadline": "muddatsiz",
+      "createTask": "Shu muddat uchun vazifa yaratish"
     },
     "title": "Muddatlar",
     "view": {
@@ -3765,7 +3770,7 @@
       "label": "Koʻrinish",
       "list": "Roʻyxat",
       "board": "Doska",
-      "timeline": "Taymlayn"
+      "deadlines": "Muddatlar"
     },
     "filters": {
       "status": "Holat",

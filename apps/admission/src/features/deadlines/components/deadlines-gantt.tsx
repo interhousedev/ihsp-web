@@ -1,6 +1,7 @@
 "use client"
 
 import { useFormatters, useLocale, useNow, useT } from "@ihsp/i18n"
+import type { ReactNode } from "react"
 import {
   Button,
   Gantt,
@@ -16,27 +17,56 @@ import {
 } from "@ihsp/ui"
 import Link from "next/link"
 import { useMemo, useState } from "react"
+import { useList } from "../../chooser/hooks"
 import { useTasks } from "../../tasks/api"
+import type { TaskPrefill } from "../../tasks/components/task-form-dialog"
 import { scoreName, useScoreCatalog, useScores } from "../../test-scores/api"
 import { useCalendar } from "../calendar-api"
-import { type Block, type Entry, toBlocks, chartRange, utcDay, utcDayToIso } from "../gantt-model"
+import {
+  type Block,
+  type Entry,
+  chartRange,
+  institutionUrl,
+  toBlocks,
+  utcDay,
+  utcDayToIso,
+} from "../gantt-model"
+import { PrefsForm } from "./prefs-form"
+import { CalendarFeed } from "./calendar-feed"
 
 const DAY = 86_400_000
 const ZOOM = { year: 8, month: 22, week: 44 } as const
 type Zoom = keyof typeof ZOOM
 
-/** The deadlines page body: tasks, exams and every dated deadline as blocks on one timeline (the library Gantt). */
-export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
+const GENERAL = "general"
+const MINE = "mine"
+const uniGroup = (entryId: string) => `uni:${entryId}`
+
+/**
+ * The default view of the tasks page: every dated thing as blocks on one timeline (the library Gantt), grouped per
+ * university on the list (its deadlines and its tasks), general (exams, scholarships, documents) and the student's
+ * own tasks. A bar opens its task; a deadline offers to become a task. `onCreate` opens the new-task form.
+ */
+export function DeadlinesGantt({
+  onOpenTask,
+  onCreate,
+}: {
+  onOpenTask: (id: string) => void
+  onCreate: (prefill: TaskPrefill) => void
+}) {
   const t = useT("deadlines.gantt")
   const tc = useT("deadlines.calendar")
   const tt = useT("tasks")
+  const tp = useT("deadlines")
   const locale = useLocale()
   const { date } = useFormatters()
   const now = useNow({ updateInterval: 60_000 })
   const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
   const [zoom, setZoom] = useState<Zoom>("month")
   const [selected, setSelected] = useState<string | null>(null)
+  const [settings, setSettings] = useState(false)
   const tasks = useTasks()
+  const list = useList()
   const scores = useScores()
   const catalog = useScoreCatalog()
   const range = useMemo(
@@ -51,22 +81,26 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
 
   const blocks = useMemo(() => {
     const names = new Map((catalog.data?.items ?? []).map((test) => [test.id, scoreName(test.names, locale)]))
+    const listed = new Set((list.data ?? []).map((entry) => entry.id))
     const entries: Entry[] = []
     for (const task of tasks.data?.items ?? []) {
-      if (!task.deadline) continue
-      const end = utcDay(task.deadline)
+      const uni = task.list_entry_id && listed.has(task.list_entry_id) ? task.list_entry_id : null
+      // An undated task of a university stays visible at the start of the chart, tagged "no due date".
+      if (!task.deadline && !uni) continue
+      const end = task.deadline ? utcDay(task.deadline) : today - 30 * DAY
       entries.push({
         id: `task:${task.id}`,
         rowId: `task:${task.id}`,
         rowLabel: task.title,
-        group: "tasks",
+        group: uni ? uniGroup(uni) : MINE,
         kind: "task",
+        taskId: task.id,
         title: task.title,
         start: task.start_date ? Math.min(utcDay(task.start_date), end) : end,
         end,
         tone: task.overdue ? "danger" : task.status === "done" ? "success" : "primary",
         href: "/tasks/",
-        caption: tt(`status.${task.status}`),
+        caption: task.deadline ? tt(`status.${task.status}`) : `${tt(`status.${task.status}`)} · ${t("noDeadline")}`,
       })
     }
     for (const entry of scores.data?.entries ?? []) {
@@ -79,7 +113,7 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
           id: `test:${entry.id}`,
           rowId: `test:${entry.id}`,
           rowLabel: title,
-          group: "tests",
+          group: GENERAL,
           kind: "test",
           title,
           start: at,
@@ -95,7 +129,7 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
           id: `reg:${entry.id}`,
           rowId: `test:${entry.id}`,
           rowLabel: title,
-          group: "tests",
+          group: GENERAL,
           kind: "registration",
           title,
           start: at,
@@ -108,11 +142,13 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
     }
     for (const item of calendar.data?.items ?? []) {
       const at = utcDay(item.day)
+      const uni = item.list_entry_id ?? null
+      const inList = uni !== null && listed.has(uni)
       entries.push({
         id: `cal:${item.key}`,
-        rowId: `cal:${item.source}`,
-        rowLabel: tc(`sources.${item.source}`),
-        group: "deadlines",
+        rowId: inList ? `${uniGroup(uni)}:deadlines` : `cal:${item.source}`,
+        rowLabel: inList ? t("deadlines") : tc(`sources.${item.source}`),
+        group: inList ? uniGroup(uni) : GENERAL,
         kind: "deadline",
         title: item.title,
         start: at,
@@ -125,21 +161,27 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
     }
     return toBlocks(entries)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tasks.data, scores.data, catalog.data, calendar.data, locale])
+  }, [tasks.data, scores.data, catalog.data, calendar.data, list.data, locale])
 
+  const universities = useMemo(
+    () => (list.data ?? []).map((entry) => ({ id: uniGroup(entry.id), entry: entry.id, name: entry.institution.name, institution: entry.institution })),
+    [list.data],
+  )
+  const order = useMemo(() => [...universities.map((uni) => uni.id), GENERAL, MINE], [universities])
   const view = useMemo(() => {
-    const order = ["tasks", "tests", "deadlines"] as const
     const byRow = new Map<string, Block[]>()
     for (const block of blocks) byRow.set(block.rowId, [...(byRow.get(block.rowId) ?? []), block])
+    const first = (list: Block[]) => Math.min(...list.map((block) => block.start))
     const rows = [...byRow.values()]
       .sort(
         (a, b) =>
           order.indexOf(a[0]!.group) - order.indexOf(b[0]!.group) ||
-          Math.min(...a.map((block) => block.start)) - Math.min(...b.map((block) => block.start)),
+          Number(b[0]!.rowId.endsWith(":deadlines")) - Number(a[0]!.rowId.endsWith(":deadlines")) ||
+          first(a) - first(b),
       )
       .map((list) => ({ list, first: list[0]! }))
     return { rows, blocks: new Map(blocks.map((block) => [block.id, block])), ...chartRange(blocks, today) }
-  }, [blocks, today])
+  }, [blocks, order, today])
 
   const kindLabel = (entry: Entry) =>
     entry.kind === "registration" ? t("registrationCloses") : entry.kind === "test" ? t("exam") : entry.caption
@@ -183,9 +225,63 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
     group: first.group,
     items: list.map(item),
   }))
+  // A university with nothing dated yet still gets its heading, so its (+) is reachable.
+  const withRows = new Set(rows.map((row) => row.group))
+  const empty = universities.filter((uni) => !withRows.has(uni.id))
+  const allRows: GanttRow[] = [
+    ...empty.map((uni) => ({ id: `${uni.id}:none`, label: "", group: uni.id, items: [] })),
+    ...rows,
+  ].sort((a, b) => order.indexOf(a.group) - order.indexOf(b.group))
+  const groups: Record<string, string> = {
+    [GENERAL]: t("general"),
+    [MINE]: t("mine"),
+    ...Object.fromEntries(universities.map((uni) => [uni.id, uni.name])),
+  }
+  const addTo = (label: string, prefill: TaskPrefill) => (
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon"
+      className="size-9 md:size-7"
+      aria-label={t("addTaskTo", { name: label })}
+      title={t("addTaskTo", { name: label })}
+      onClick={() => onCreate(prefill)}
+    >
+      <Icons.add aria-hidden className="size-4" />
+    </Button>
+  )
+  // The nearest upcoming dated item of that university, so a new task is dated.
+  const nearestDeadline = (entryId: string): string | null => {
+    const from = utcDayToIso(today)
+    const days = (calendar.data?.items ?? [])
+      .filter((item) => item.list_entry_id === entryId && item.day >= from)
+      .map((item) => item.day)
+      .sort()
+    return days[0] ?? null
+  }
+  const groupActions: Record<string, ReactNode> = {
+    [MINE]: addTo(t("mine"), {}),
+    ...Object.fromEntries(
+      universities.map((uni) => [
+        uni.id,
+        addTo(uni.name, { list_entry_id: uni.entry, deadline: nearestDeadline(uni.entry), links: [{ kind: "internal", label: uni.name, url: institutionUrl(uni.institution.id) }] }),
+      ]),
+    ),
+  }
+  const uniLinks = (entry: Entry): TaskPrefill["links"] => {
+    const uni = universities.find((candidate) => candidate.id === entry.group)
+    return uni ? [{ kind: "internal", label: uni.name, url: institutionUrl(uni.institution.id) }] : []
+  }
+  const uniEntry = (entry: Entry) => universities.find((candidate) => candidate.id === entry.group)?.entry ?? null
+  function select(id: string) {
+    const block = view.blocks.get(id)
+    const taskId = block?.entries.length === 1 ? block.entries[0]!.taskId : undefined
+    if (taskId) onOpenTask(taskId)
+    else setSelected(id)
+  }
   const open = selected ? view.blocks.get(selected) : undefined
 
-  if (tasks.isPending || scores.isPending) return <Skeleton className="h-[60dvh] w-full" />
+  if (tasks.isPending || scores.isPending || list.isPending) return <Skeleton className="h-[60dvh] w-full" />
   if (tasks.isError) return <StateView state="error" error={tasks.error} onRetry={() => void tasks.refetch()} />
 
   return (
@@ -203,20 +299,21 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
-        <Button variant="outline" onClick={onSettings} className="min-h-11 md:min-h-8">
+        <Button variant="outline" onClick={() => setSettings(true)} className="min-h-11 md:min-h-8">
           <Icons.notification aria-hidden />
           {t("reminders")}
         </Button>
       </div>
-      {rows.length === 0 ? (
+      {allRows.length === 0 ? (
         <StateView state="empty" title={t("empty")} />
       ) : (
         <TooltipProvider delay={120}>
           <Gantt
             key={zoom}
             className="min-h-[360px] flex-1 md:max-h-[calc(100dvh-14rem)]"
-            rows={rows}
-            groups={{ tasks: t("tasks"), tests: t("tests"), deadlines: t("deadlines") }}
+            rows={allRows}
+            groups={groups}
+            groupActions={groupActions}
             start={view.start}
             end={view.end}
             today={today}
@@ -227,7 +324,7 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
             monthLabel={(time) => fmt(time, { month: "long", year: "numeric" }).replace(/^\p{L}/u, (c) => c.toLocaleUpperCase(locale))}
             dayLabel={day}
             weekdayLabel={(time) => fmt(time, { weekday: "short" })}
-            onSelect={setSelected}
+            onSelect={select}
           />
         </TooltipProvider>
       )}
@@ -244,15 +341,41 @@ export function DeadlinesGantt({ onSettings }: { onSettings: () => void }) {
                 <span className="text-muted-foreground text-xs">
                   {kindLabel(entry)} · {entry.start === entry.end ? day(entry.start) : `${day(entry.start)} – ${day(entry.end)}`}
                 </span>
-                {entry.href ? (
-                  <Link href={entry.href} className="text-primary mt-1 w-fit text-sm font-medium hover:underline">
-                    {t("openItem")}
-                  </Link>
-                ) : null}
+                <div className="mt-1 flex flex-wrap items-center gap-2">
+                  {entry.href ? (
+                    <Link href={entry.href} className="text-primary min-h-11 content-center text-sm font-medium hover:underline md:min-h-0">
+                      {t("openItem")}
+                    </Link>
+                  ) : null}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="min-h-11 md:min-h-8"
+                    onClick={() => {
+                      setSelected(null)
+                      onCreate({
+                        title: entry.kind === "registration" ? `${entry.title}: ${t("registrationCloses")}` : entry.title,
+                        deadline: utcDayToIso(entry.end),
+                        links: uniLinks(entry),
+                        list_entry_id: uniEntry(entry),
+                      })
+                    }}
+                  >
+                    <Icons.add aria-hidden />
+                    {t("createTask")}
+                  </Button>
+                </div>
               </li>
             ))}
           </ul>
         ) : null}
+      </ResponsiveDialog>
+      <ResponsiveDialog open={settings} onOpenChange={setSettings} title={tp("prefsTitle")}>
+        <div className="flex flex-col gap-4">
+          <PrefsForm />
+          <CalendarFeed />
+        </div>
       </ResponsiveDialog>
     </div>
   )

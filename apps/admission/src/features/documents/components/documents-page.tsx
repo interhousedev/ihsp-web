@@ -104,7 +104,7 @@ function DocumentsContent() {
                   {t("backToList")}
                 </Button>
               ) : null}
-              <Button variant="outline" size="sm" render={<Link href="/deadlines/" />} nativeButton={false}>
+              <Button variant="outline" size="sm" render={<Link href="/tasks/" />} nativeButton={false}>
                 <Icons.calendarEvent data-icon="inline-start" aria-hidden />
                 {t("deadlinesLink")}
               </Button>

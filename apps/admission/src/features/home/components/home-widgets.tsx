@@ -452,7 +452,7 @@ export function DeadlinesWidget() {
     <Widget
       title={t("deadlines")}
       icon={<Icons.calendar aria-hidden className="text-warning size-4" />}
-      href="/deadlines/"
+      href="/tasks/"
     >
       {calendar.isPending ? (
         <Loading />

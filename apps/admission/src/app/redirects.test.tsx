@@ -5,6 +5,7 @@ import { redirectUrl } from "../components/route-redirect"
 import Alignment from "./alignment/page"
 import Algorithm from "./colleges/algorithm/page"
 import Colleges from "./colleges/page"
+import Deadlines from "./deadlines/page"
 import ActivityView from "./activities/view/page"
 import Profile from "./profile/page"
 import Words from "./words/page"
@@ -47,6 +48,12 @@ describe("old routes", () => {
     open("/alignment/?entry=e1")
     render(<Alignment />)
     await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/essays/?tab=alignment&entry=e1"))
+  })
+
+  test("/deadlines/ opens the tasks page, where deadlines are the default view", async () => {
+    open("/deadlines/")
+    render(<Deadlines />)
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/tasks/"))
   })
 
   test("/profile/ turns the old tab into a section of the settings tab", async () => {

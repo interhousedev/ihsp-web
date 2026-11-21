@@ -3101,7 +3101,12 @@
         "week": "Week"
       },
       "reminders": "Reminders",
-      "openItem": "Open"
+      "openItem": "Open",
+      "general": "General",
+      "mine": "My tasks",
+      "addTaskTo": "Add a task to {name}",
+      "noDeadline": "No due date",
+      "createTask": "Create task for this deadline"
     },
     "title": "Deadlines",
     "view": {
@@ -3765,7 +3770,7 @@
       "label": "View",
       "list": "List",
       "board": "Board",
-      "timeline": "Timeline"
+      "deadlines": "Deadlines"
     },
     "filters": {
       "status": "Status",

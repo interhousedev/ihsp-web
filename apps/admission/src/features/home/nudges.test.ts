@@ -6,6 +6,7 @@ import { buildNudges, isUndecided } from "./nudges"
 const entry = (id: string, status: string) =>
   ({ id, status, institution: { id: `i-${id}`, name: id } }) as unknown as ListEntry
 const cal = (id: string, day: string): CalendarEntry => ({
+  list_entry_id: id,
   key: `uni:${id}:rd:${day}`,
   source: "university",
   title: id,

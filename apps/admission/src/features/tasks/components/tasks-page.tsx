@@ -16,27 +16,27 @@ import {
   type TaskFilters,
   type TaskStatus,
 } from "../api"
+import { DeadlinesGantt } from "../../deadlines/components/deadlines-gantt"
 import { SuggestDialog } from "./suggest-dialog"
 import { OptionSelect } from "./task-common"
 import { TaskBoard } from "./task-board"
 import { TaskDrawer } from "./task-drawer"
-import { TaskFormDialog } from "./task-form-dialog"
+import { TaskFormDialog, type TaskPrefill } from "./task-form-dialog"
 import { TaskList } from "./task-list"
-import { TaskTimeline } from "./task-timeline"
 
-type View = "list" | "board" | "timeline"
-const VIEWS: View[] = ["list", "board", "timeline"]
-const VIEW_KEY = "admission.tasks.view"
+type View = "deadlines" | "board" | "list"
+const VIEWS: View[] = ["deadlines", "board", "list"]
+const VIEW_KEY = "admission.tasks.view.v3"
 
-/** Tasks of the signed-in student: filters, list / board / timeline views, drawer and dialogs. */
+/** Tasks of the signed-in student: the deadlines timeline (default), board and list, with filters, drawer and dialogs. */
 export function TasksBody() {
   const t = useT("tasks")
   const vocab = useTaskVocab()
   const errorMessage = useErrorMessage()
-  const [view, setView] = useState<View>("list")
+  const [view, setView] = useState<View>("deadlines")
   const [filters, setFilters] = useState<TaskFilters>({})
   const [openId, setOpenId] = useState<string | null>(null)
-  const [creating, setCreating] = useState(false)
+  const [creating, setCreating] = useState<TaskPrefill | null>(null)
   const [suggesting, setSuggesting] = useState(false)
   const [removing, setRemoving] = useState<Task | null>(null)
   const tasks = useTasks(filters)
@@ -58,6 +58,8 @@ export function TasksBody() {
 
   function chooseView(next: View) {
     setView(next)
+    // The timeline always shows every task, so a filter left over from another view cannot hide the opened one.
+    if (next === "deadlines") setFilters({})
     try {
       localStorage.setItem(VIEW_KEY, next)
     } catch {
@@ -143,12 +145,13 @@ export function TasksBody() {
               <Icons.sparkles aria-hidden />
               {t("suggest")}
             </Button>
-            <Button type="button" onClick={() => setCreating(true)}>
+            <Button type="button" onClick={() => setCreating({})}>
               <Icons.add aria-hidden />
               {t("add")}
             </Button>
           </div>
         </div>
+        {view === "deadlines" ? null : (
         <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
           {filterSpecs.map(({ key, values }) => (
             <div key={key} className="flex flex-col gap-1">
@@ -163,21 +166,15 @@ export function TasksBody() {
             </div>
           ))}
         </div>
-        {tasks.isPending ? (
+        )}
+        {view === "deadlines" ? (
+          <DeadlinesGantt onOpenTask={setOpenId} onCreate={setCreating} />
+        ) : tasks.isPending ? (
           <StateView state="loading" />
         ) : tasks.isError ? (
           <StateView state="error" error={tasks.error} onRetry={() => void tasks.refetch()} />
         ) : items.length === 0 ? (
           <StateView state="empty" emptyText={filtered ? t("emptyFiltered") : t("empty")} />
-        ) : view === "list" ? (
-          <ScrollFade maxHeight="70vh">
-            <TaskList
-              tasks={items}
-              onOpen={(task) => setOpenId(task.id)}
-              onStatus={(task, status) => void move(task, status as TaskStatus)}
-              onDelete={setRemoving}
-            />
-          </ScrollFade>
         ) : view === "board" ? (
           <TaskBoard
             tasks={items}
@@ -186,12 +183,17 @@ export function TasksBody() {
           />
         ) : (
           <ScrollFade maxHeight="70vh">
-            <TaskTimeline tasks={items} onOpen={(task) => setOpenId(task.id)} />
+            <TaskList
+              tasks={items}
+              onOpen={(task) => setOpenId(task.id)}
+              onStatus={(task, status) => void move(task, status as TaskStatus)}
+              onDelete={setRemoving}
+            />
           </ScrollFade>
         )}
       </div>
       {opened ? <TaskDrawer task={opened} open onOpenChange={(open) => !open && setOpenId(null)} /> : null}
-      {creating ? <TaskFormDialog open onOpenChange={setCreating} /> : null}
+      {creating ? <TaskFormDialog open prefill={creating} onOpenChange={(open) => !open && setCreating(null)} /> : null}
       {suggesting ? <SuggestDialog open onOpenChange={setSuggesting} /> : null}
       <ConfirmDialog
         open={removing !== null}

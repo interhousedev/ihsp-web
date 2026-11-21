@@ -27,17 +27,20 @@ function Card({ task, onOpen, overlay }: { task: Task; onOpen?: (task: Task) => 
   const { date } = useFormatters()
   const drag = useDraggable({ id: task.id, disabled: overlay })
   const { done, total } = task.progress
+  // The whole card is the drag surface (pointer and touch); the grip is the keyboard handle, so Enter and Space on
+  // the title still open the task instead of lifting the card.
   return (
     <div
       ref={drag.setNodeRef}
-      className={`bg-card rounded-card flex flex-col gap-2 border p-3 text-sm shadow-xs ${drag.isDragging && !overlay ? "opacity-40" : ""}`}
+      {...drag.listeners}
+      className={`bg-card rounded-card flex cursor-grab flex-col gap-2 border p-3 text-sm shadow-xs active:cursor-grabbing ${drag.isDragging && !overlay ? "opacity-40" : ""}`}
     >
       <div className="flex items-start gap-2">
         <button
           type="button"
-          className="text-muted-foreground mt-0.5 cursor-grab touch-none"
+          ref={drag.setActivatorNodeRef}
+          className="text-muted-foreground focus-visible:ring-ring -m-1 mt-0 rounded p-1 focus-visible:ring-2 focus-visible:outline-none"
           aria-label={t("dragHandle", { title: task.title })}
-          {...drag.listeners}
           {...drag.attributes}
         >
           <Icons.gripVertical aria-hidden className="size-4" />

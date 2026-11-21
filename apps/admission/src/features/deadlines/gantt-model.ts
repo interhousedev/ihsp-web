@@ -8,7 +8,8 @@ export type Entry = {
   /** Row it sits on; rows appear in first-seen order inside their group. */
   rowId: string
   rowLabel: string
-  group: "tasks" | "tests" | "deadlines"
+  /** Group heading id: `uni:<list entry id>`, `general` or `mine`. */
+  group: string
   kind: "task" | "test" | "registration" | "deadline"
   title: string
   start: number
@@ -17,6 +18,8 @@ export type Entry = {
   href: string | null
   /** Caption under the title: the source or the task status. */
   caption: string
+  /** The task this entry draws, when it is one. */
+  taskId?: string
   predicted?: boolean
 }
 
@@ -45,8 +48,9 @@ export function toBlocks(entries: Entry[]): Block[] {
   const blocks: Block[] = []
   const flags = new Map<string, Block>()
   for (const entry of entries) {
+    const single = entry.kind === "test" || entry.kind === "registration"
     const bar = entry.kind === "task" || (entry.kind === "test" && entry.end > entry.start)
-    if (bar || entry.group === "tests") {
+    if (bar || single) {
       blocks.push({ ...head(entry), id: entry.id, shape: bar ? "bar" : "flag", entries: [entry] })
       continue
     }
@@ -80,4 +84,9 @@ export function chartRange(blocks: Block[], today: number): { start: number; end
   const first = Math.min(today - 30 * DAY, ...blocks.map((block) => block.start))
   const last = Math.max(today + 120 * DAY, ...blocks.map((block) => block.end))
   return { start: first, end: Math.min(last, today + 400 * DAY) }
+}
+
+/** Where a task about one university points: the institution page of the chooser (a plain link, not a grouping key). */
+export function institutionUrl(institutionId: string): string {
+  return `/chooser/institution/?id=${institutionId}`
 }

@@ -1,7 +1,10 @@
 "use client"
 
-import { DeadlinesPage } from "../../features/deadlines/components/deadlines-page"
+import { RouteRedirect, type RedirectTarget } from "../../components/route-redirect"
+
+// Deadlines became the default view of the tasks page.
+const target: RedirectTarget = () => ({ to: "/tasks/" })
 
 export default function Page() {
-  return <DeadlinesPage />
+  return <RouteRedirect target={target} />
 }

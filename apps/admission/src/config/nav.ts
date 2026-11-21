@@ -70,7 +70,6 @@ export const SECTIONS: Record<SectionId, Section> = {
     prefixes: ["/documents", "/deadlines", "/tasks", "/review", "/outcomes"],
     parts: [
       { id: "applications", url: "/documents/" },
-      { id: "deadlines", url: "/deadlines/" },
       { id: "tasks", url: "/tasks/" },
       { id: "review", url: "/review/" },
       { id: "results", url: "/outcomes/" },

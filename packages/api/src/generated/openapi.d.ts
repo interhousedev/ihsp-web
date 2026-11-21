@@ -21271,6 +21271,8 @@ export interface components {
             due_utc: string;
             /** Key */
             key: string;
+            /** List Entry Id */
+            list_entry_id: string | null;
             /** Predicted */
             predicted: boolean;
             /** Remind */
@@ -42340,6 +42342,8 @@ export interface components {
             description?: string;
             /** Links */
             links?: components["schemas"]["LinkIO"][];
+            /** List Entry Id */
+            list_entry_id?: string | null;
             /**
              * Priority
              * @default medium
@@ -42380,6 +42384,8 @@ export interface components {
             id: string;
             /** Links */
             links: components["schemas"]["LinkIO"][];
+            /** List Entry Id */
+            list_entry_id: string | null;
             /** Lock Version */
             lock_version: number;
             /** Overdue */
@@ -42420,6 +42426,8 @@ export interface components {
             description?: string | null;
             /** Links */
             links?: components["schemas"]["LinkIO"][] | null;
+            /** List Entry Id */
+            list_entry_id?: string | null;
             /** Lock Version */
             lock_version: number;
             /** Priority */

@@ -34,6 +34,7 @@ export type GanttItem = {
 
 export type GanttRow = {
   id: string
+  /** Empty together with no items: the row draws nothing but its group heading. */
   label: string
   /** Rows with the same group value are listed under one group heading. */
   group: string
@@ -65,6 +66,7 @@ const HEAD_PX = 56
 export function Gantt({
   rows,
   groups,
+  groupActions,
   start,
   end,
   today,
@@ -81,6 +83,8 @@ export function Gantt({
   rows: GanttRow[]
   /** Group id to heading. Rows of a group missing here render without a heading. */
   groups: Record<string, string>
+  /** Optional control (for example an add button) shown next to a group heading. */
+  groupActions?: Record<string, ReactNode>
   start: number
   end: number
   today: number
@@ -135,17 +139,22 @@ export function Gantt({
   for (const row of rows) {
     if (row.group !== lastGroup && groups[row.group]) {
       content.push(
-        <div key={`g:${row.group}`} className="relative flex h-8" style={{ width: sidebarWidth + width }}>
+        <div key={`g:${row.group}`} className="relative flex h-10" style={{ width: sidebarWidth + width }}>
           <div
-            className="bg-muted/70 text-muted-foreground sticky left-0 z-20 flex w-full items-center px-3 text-xs font-semibold tracking-wide uppercase"
+            className="bg-muted/70 text-muted-foreground sticky left-0 z-20 flex w-full items-center px-3 text-xs"
             style={{ width: sidebarWidth + width }}
           >
-            <span className="sticky left-3">{groups[row.group]}</span>
+            <span className="sticky left-3 flex items-center gap-1 normal-case">
+              <span className="font-semibold tracking-wide uppercase">{groups[row.group]}</span>
+              {groupActions?.[row.group]}
+            </span>
           </div>
         </div>,
       )
     }
     lastGroup = row.group
+    // A row without label and items only stands for its group heading.
+    if (row.items.length === 0 && !row.label) continue
     content.push(
       <div key={row.id} className="relative flex" style={{ height: ROW_PX, width: sidebarWidth + width }}>
         <div

@@ -1,7 +1,7 @@
 import { apiUrl, server } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { describe, expect, test } from "bun:test"
+import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { renderAdmissionApp } from "../../tests/helpers"
 import type { Task } from "./api"
 import { TaskDrawer } from "./components/task-drawer"
@@ -24,6 +24,7 @@ const task: Task = {
   priority: "high",
   start_date: "2026-01-01",
   deadline: "2026-02-01",
+  list_entry_id: null,
   created_by: "mentor",
   creator_id: "m1",
   steps: [
@@ -42,14 +43,41 @@ const task: Task = {
   updated_at: "2025-12-01T00:00:00Z",
 }
 
-function serve(items: Task[] = [task]) {
+const VIEW_KEY = "admission.tasks.view.v3"
+
+const uniLink = { label: "MIT", url: "/chooser/institution/?id=inst1", kind: "internal" } as const
+const uniTask: Task = { ...task, id: "t2", title: "MIT supplement", links: [uniLink], overdue: false }
+const listEntry = { id: "e1", institution: { id: "inst1", name: "MIT" } }
+
+function serve(items: Task[] = [task], list: unknown[] = []) {
   server.use(
+    http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json(list)),
+    http.get(apiUrl("/v1/admission/test-scores"), () => HttpResponse.json({ entries: [], summaries: [] })),
+    http.get(apiUrl("/v1/admission/test-scores/catalog"), () => HttpResponse.json({ items: [] })),
+    http.get(apiUrl("/v1/admission/calendar"), () =>
+      HttpResponse.json({
+        items: [
+          {
+            key: "uni:e1:ED:2026-12-01",
+            source: "university",
+            title: "Early Decision: MIT",
+            day: "2026-12-01",
+            due_utc: "2026-12-01T18:59:59Z",
+            predicted: false,
+            url_path: "/chooser/institution/?id=inst1",
+          },
+        ],
+      }),
+    ),
     http.get(apiUrl("/v1/admission/config"), () => HttpResponse.json({ workflow: vocab })),
     http.get(apiUrl("/v1/admission/tasks"), () => HttpResponse.json({ items })),
   )
 }
 
 describe("tasks list", () => {
+  beforeEach(() => localStorage.setItem(VIEW_KEY, "list"))
+  afterEach(() => localStorage.removeItem(VIEW_KEY))
+
   test("shows name, source, overdue badge and priority", async () => {
     serve()
     renderAdmissionApp(<TasksBody />)
@@ -61,11 +89,11 @@ describe("tasks list", () => {
 
   test("the chosen view is remembered", async () => {
     serve()
-    localStorage.removeItem("admission.tasks.view")
+    localStorage.removeItem(VIEW_KEY)
     const { user } = renderAdmissionApp(<TasksBody />)
     await user.click(await screen.findByRole("tab", { name: "Board" }))
-    expect(localStorage.getItem("admission.tasks.view")).toBe("board")
-    localStorage.removeItem("admission.tasks.view")
+    expect(localStorage.getItem(VIEW_KEY)).toBe("board")
+    localStorage.removeItem(VIEW_KEY)
   })
 
   test("the inline status select patches the task with its lock version", async () => {
@@ -112,12 +140,41 @@ describe("tasks board", () => {
   })
 })
 
-describe("tasks timeline", () => {
-  test("draws a bar for a dated task", async () => {
-    serve()
+describe("tasks deadlines view", () => {
+  beforeEach(() => localStorage.removeItem(VIEW_KEY))
+
+  test("is the default and groups per university, general and own tasks", async () => {
+    serve([task, uniTask], [listEntry])
     renderAdmissionApp(<TasksBody />)
-    fireEvent.click(await screen.findByRole("tab", { name: "Timeline" }))
     expect(await screen.findByRole("button", { name: /Draft the Common App essay/ })).toBeTruthy()
+    expect(screen.getByRole("tab", { name: "Deadlines", selected: true })).toBeTruthy()
+    expect(screen.getByText("MIT")).toBeTruthy()
+    expect(screen.getByText("My tasks")).toBeTruthy()
+    expect(screen.getByRole("button", { name: "Add a task to MIT" })).toBeTruthy()
+    expect(screen.getByRole("button", { name: "Add a task to My tasks" })).toBeTruthy()
+  })
+
+  test("a bar opens the task", async () => {
+    serve([uniTask], [listEntry])
+    const { user } = renderAdmissionApp(<TasksBody />)
+    await user.click(await screen.findByRole("button", { name: /MIT supplement/ }))
+    expect(await screen.findByText("1 of 2 steps")).toBeTruthy()
+  })
+
+  test("the (+) of a university opens the form with that university linked", async () => {
+    serve([], [listEntry])
+    let body: Record<string, unknown> | null = null
+    server.use(
+      http.post(apiUrl("/v1/admission/tasks"), async ({ request }) => {
+        body = (await request.json()) as Record<string, unknown>
+        return HttpResponse.json({ ...task, id: "new" })
+      }),
+    )
+    const { user } = renderAdmissionApp(<TasksBody />)
+    await user.click(await screen.findByRole("button", { name: "Add a task to MIT" }))
+    await user.type(await screen.findByLabelText("Name"), "Visit campus")
+    await user.click(screen.getByRole("button", { name: "Save" }))
+    await waitFor(() => expect(body?.links).toEqual([uniLink]))
   })
 })
 

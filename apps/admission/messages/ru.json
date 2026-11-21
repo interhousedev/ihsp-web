@@ -3101,7 +3101,12 @@
         "week": "Неделя"
       },
       "reminders": "Напоминания",
-      "openItem": "Открыть"
+      "openItem": "Открыть",
+      "general": "Общее",
+      "mine": "Мои задачи",
+      "addTaskTo": "Добавить задачу: {name}",
+      "noDeadline": "без срока",
+      "createTask": "Создать задачу по этому дедлайну"
     },
     "title": "Дедлайны",
     "view": {
@@ -3765,7 +3770,7 @@
       "label": "Вид",
       "list": "Список",
       "board": "Доска",
-      "timeline": "Таймлайн"
+      "deadlines": "Сроки"
     },
     "filters": {
       "status": "Статус",
