@@ -13,6 +13,6 @@ describe("header cluster", () => {
 
     const grid = await screen.findByTestId("app-switcher")
     expect(within(grid).getAllByRole("menuitem").length).toBeGreaterThan(1)
-    expect(grid.querySelectorAll("img").length).toBeGreaterThan(1)
+    expect(grid.querySelectorAll("svg").length).toBeGreaterThan(1)
   })
 })

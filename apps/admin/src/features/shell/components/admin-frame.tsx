@@ -1,9 +1,14 @@
 "use client"
-import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { AssistantEntry, ShellNavControls } from "@ihsp/features-core"
-import { AppHeaderActions, AppShell, StateView, ThemeToggle } from "@ihsp/ui"
+import {
+  AssistantEntry,
+  LegalGate,
+  MaintenanceBanner,
+  ShellNavControls,
+  usePlatformLinks,
+} from "@ihsp/features-core"
+import { AppShell, CommandPalette, StateView, ThemeToggle } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { AdminBrand } from "./admin-brand"
@@ -24,19 +29,21 @@ function PageLoading() {
  */
 export function AdminFrame({ children }: { children: ReactNode }) {
   const nav = useNav()
+  const platforms = usePlatformLinks()
   return (
     <RequireAuth>
       <RequireRole role="admin">
         <AppShell
           nav={nav.groups}
           brand={<AdminBrand />}
+          platforms={platforms}
+          history={<ShellNavControls />}
+          search={<CommandPalette nav={nav.groups} />}
+          ai={<AssistantEntry href="/assistant/" />}
+          tools={<ThemeToggle />}
+          settingsHref="/settings/"
+          profile={<ProfileMenu />}
           sidebarFooter={<ProfileMenu variant="row" />}
-          controlsLeading={<ShellNavControls />}
-          controls={
-            <AppHeaderActions ai={<AssistantEntry href="/assistant/" />} profile={<ProfileMenu />}>
-              <ThemeToggle />
-            </AppHeaderActions>
-          }
         >
           <div className="p-4 pb-0 md:px-6 md:pt-6" data-shell-flush>
             <VaultSealedBanner />

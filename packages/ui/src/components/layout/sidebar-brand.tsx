@@ -6,6 +6,8 @@ import type { ReactNode } from "react"
 import { cn } from "../../lib/utils"
 import { Icons } from "../icons"
 import { useSidebar } from "../ui/sidebar"
+import { PlatformIcon } from "./platform-icon"
+import type { PlatformLink } from "./user-menu"
 
 const FADE =
   "transition-[opacity,scale] duration-(--motion-duration-base) ease-(--ease-standard) motion-reduce:transition-none"
@@ -18,8 +20,10 @@ const CONCEAL =
 const LOGO_BOX = "flex size-6 shrink-0 overflow-hidden rounded-lg [&>img]:size-full [&>svg]:size-full"
 
 export type SidebarBrandProps = {
-  /** The logo image or glyph (decorative); clipped to rounded corners here. */
-  logo: ReactNode
+  /** The logo image or glyph (decorative); clipped to rounded corners here. Ignored when `platform` is set. */
+  logo?: ReactNode
+  /** The app's platform: its unified tile (the same as in the app switcher) is the mark. */
+  platform?: PlatformLink["key"]
   name: ReactNode
   /** The app's home. */
   href?: string
@@ -29,7 +33,8 @@ export type SidebarBrandProps = {
  * The sidebar's header. From 768 px the logo is the sidebar toggle (it crossfades to the panel icon on hover or focus)
  * and the name, shown when expanded, stays the home link. In the phone sheet the logo and name are one home link.
  */
-export function SidebarBrand({ logo, name, href = "/" }: SidebarBrandProps) {
+export function SidebarBrand({ logo: customLogo, platform, name, href = "/" }: SidebarBrandProps) {
+  const logo = platform ? <PlatformIcon platform={{ key: platform }} className="size-6 rounded-lg" /> : customLogo
   const t = useT()
   const { isMobile, open, toggleSidebar } = useSidebar()
   if (isMobile) {

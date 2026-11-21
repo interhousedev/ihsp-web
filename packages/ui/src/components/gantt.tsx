@@ -188,7 +188,7 @@ export function Gantt({
       role="region"
       aria-label={ariaLabel}
       tabIndex={0}
-      className={cn("bg-card relative isolate overflow-auto rounded-xl border overscroll-contain", className)}
+      className={cn("bg-card rounded-card relative isolate overflow-auto border overscroll-contain", className)}
     >
       <div className="relative" style={{ width: sidebarWidth + width }}>
         <div

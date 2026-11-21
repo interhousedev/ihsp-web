@@ -120,6 +120,8 @@
     "more": "More",
     "moreTitle": "All sections",
     "toggleSidebar": "Toggle the sidebar",
+    "accountTools": "Account and tools",
+    "settings": "Settings",
     "back": "Back",
     "forward": "Forward",
     "recentPages": "Recent pages"
@@ -183,6 +185,7 @@
   },
   "command": {
     "placeholder": "Type a command or search…",
+    "search": "Search",
     "empty": "No results found.",
     "searching": "Searching…",
     "navigation": "Go to",

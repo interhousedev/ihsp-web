@@ -120,6 +120,8 @@
     "more": "Yana",
     "moreTitle": "Barcha boʻlimlar",
     "toggleSidebar": "Yon menyuni koʻrsatish yoki yashirish",
+    "accountTools": "Hisob va vositalar",
+    "settings": "Sozlamalar",
     "back": "Orqaga",
     "forward": "Oldinga",
     "recentPages": "Oxirgi sahifalar"
@@ -183,6 +185,7 @@
   },
   "command": {
     "placeholder": "Buyruq yoki soʻrov kiriting…",
+    "search": "Qidiruv",
     "empty": "Hech narsa topilmadi.",
     "searching": "Qidirilmoqda…",
     "navigation": "Oʻtish",

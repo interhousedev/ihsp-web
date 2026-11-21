@@ -1,33 +1,34 @@
-"use client"
-
-import { useState } from "react"
-import { NavIconView } from "./nav-icon"
-import { PLATFORM_ICONS } from "./platform-icons"
+import { cn } from "../../lib/utils"
+import { PLATFORM_MARKS } from "./platform-marks"
 import type { PlatformLink } from "./user-menu"
 
-/** The app's own icon file, or the registry icon of the platform in a tile when the file is missing or fails to load. */
-export function PlatformIcon({ platform }: { platform: Pick<PlatformLink, "key" | "iconSrc"> }) {
-  const [failed, setFailed] = useState(false)
-  if (platform.iconSrc && !failed) {
-    return (
-      // oxlint-disable-next-line nextjs/no-img-element -- static export, the icon is a plain file of that app
-      <img
-        src={platform.iconSrc}
-        alt=""
-        width={28}
-        height={28}
-        className="size-7 shrink-0 rounded-md"
-        data-testid={`platform-icon-${platform.key}`}
-        onError={() => setFailed(true)}
-      />
-    )
-  }
+/**
+ * The app's mark: exactly the glyph of its favicon and PWA icon (`apps/<app>/public/icons/logo.svg`, generated into
+ * `platform-marks.ts`) on the brand tile, the same in the sidebar, the app switcher and the phone "More" sheet.
+ * `sm` is the 28 px tile of lists, `md` the 36 px tile of the app switcher.
+ */
+export function PlatformIcon({
+  platform,
+  size = "sm",
+  className,
+}: {
+  platform: Pick<PlatformLink, "key">
+  size?: "sm" | "md"
+  className?: string
+}) {
+  const mark = PLATFORM_MARKS[platform.key]
   return (
     <span
-      className="bg-primary/10 text-primary flex size-7 shrink-0 items-center justify-center rounded-md"
+      aria-hidden
+      className={cn("flex shrink-0 overflow-hidden rounded-lg", size === "md" ? "size-9" : "size-7", className)}
       data-testid={`platform-icon-${platform.key}`}
     >
-      <NavIconView icon={PLATFORM_ICONS[platform.key]} className="size-4" />
+      <svg viewBox="0 0 500 500" className="size-full" fill="none">
+        <rect width="500" height="500" fill="var(--brand)" />
+        {mark.paths.map((d) => (
+          <path key={d} d={d} fill="white" fillRule={mark.evenodd ? "evenodd" : undefined} />
+        ))}
+      </svg>
     </span>
   )
 }

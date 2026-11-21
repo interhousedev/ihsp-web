@@ -1,9 +1,15 @@
 "use client"
-import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { useSession } from "@ihsp/auth"
-import { AssistantEntry, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
-import { AppHeaderActions, AppShell, OfflineBadge } from "@ihsp/ui"
+import {
+  AssistantEntry,
+  LegalGate,
+  MaintenanceBanner,
+  PageLoading,
+  ShellNavControls,
+  usePlatformLinks,
+} from "@ihsp/features-core"
+import { AppShell, CommandPalette, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { AccessGate, type Access } from "./access-gate"
@@ -27,12 +33,15 @@ export function LmsShell({ children, access = "auth" }: { children: ReactNode; a
         platforms={platforms}
         brand={<LmsBrand />}
         sidebarFooter={<ProfileMenu variant="row" />}
-        controlsLeading={<ShellNavControls />}
-        controls={
-          <AppHeaderActions ai={<AssistantEntry />} profile={status === "anonymous" ? null : <ProfileMenu />}>
+        history={<ShellNavControls />}
+        search={<CommandPalette nav={nav.groups} />}
+        ai={<AssistantEntry />}
+        profile={status === "anonymous" ? null : <ProfileMenu />}
+        tools={
+          <>
             {status === "anonymous" ? <SignInButton /> : null}
             <OfflineBadge />
-          </AppHeaderActions>
+          </>
         }
       >
         <MaintenanceBanner />

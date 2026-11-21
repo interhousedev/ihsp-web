@@ -6,8 +6,10 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEve
 import { useDebounce } from "../hooks/use-debounce"
 import { Icons } from "./icons"
 import { NavIconView } from "./layout/nav-icon"
+import { useShellSlot } from "./layout/shell-slot"
 import type { NavGroup, NavIcon } from "./layout/nav-types"
 import { IconButton } from "./ui/icon-button"
+import { useSidebar } from "./ui/sidebar"
 import {
   Command,
   CommandDialog,
@@ -35,8 +37,11 @@ export type CommandPaletteProps = {
   search?: (query: string) => Promise<CommandPaletteResult[]>
   /** Defaults to `router.push` (`window.location.assign` for an absolute `https://` URL of another app). */
   onNavigate?: (url: string) => void
-  /** Trigger button; a search icon button by default. */
-  trigger?: ReactNode
+  /**
+   * Trigger button. By default the shell's: a search icon button in the phone bar, a labelled search button in the
+   * sidebar. A function receives the handler that opens the palette.
+   */
+  trigger?: ReactNode | ((open: (event: MouseEvent<HTMLElement>) => void) => ReactNode)
 }
 
 const MIN_QUERY = 2
@@ -46,6 +51,43 @@ export function groupResults(results: CommandPaletteResult[]): { section: string
   const groups = new Map<string, CommandPaletteResult[]>()
   for (const result of results) groups.set(result.section, [...(groups.get(result.section) ?? []), result])
   return [...groups].map(([section, items]) => ({ section, items }))
+}
+
+/** The sidebar's search button: icon and label in the open panel, the icon alone in the rail. */
+function SidebarSearchTrigger({ onOpen }: { onOpen: (event: MouseEvent<HTMLElement>) => void }) {
+  const t = useT()
+  const { state } = useSidebar()
+  if (state === "collapsed") {
+    return (
+      <IconButton
+        icon={Icons.search}
+        variant="ghost"
+        onClick={onOpen}
+        aria-label={t("command.open")}
+        data-slot="search-trigger"
+      />
+    )
+  }
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={t("command.open")}
+      data-slot="search-trigger"
+      className="text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-sidebar-ring flex h-8 min-w-0 flex-1 items-center gap-2 rounded-lg px-2.5 text-sm outline-none focus-visible:ring-2"
+    >
+      <Icons.search aria-hidden className="size-4 shrink-0" />
+      <span className="truncate">{t("command.search")}</span>
+    </button>
+  )
+}
+
+/** The shell's search button: the sidebar's labelled button on desktop, the icon in the phone bar. */
+function DefaultTrigger({ onOpen }: { onOpen: (event: MouseEvent<HTMLElement>) => void }) {
+  const t = useT()
+  const slot = useShellSlot()
+  if (slot === "sidebar") return <SidebarSearchTrigger onOpen={onOpen} />
+  return <IconButton icon={Icons.search} variant="ghost" onClick={onOpen} aria-label={t("command.open")} />
 }
 
 /**
@@ -160,8 +202,10 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
         enterKeyHint="search"
         className="pointer-events-none fixed start-0 top-0 size-px opacity-0"
       />
-      {trigger ?? (
-        <IconButton icon={Icons.search} variant="ghost" onClick={openSearch} aria-label={t("command.open")} />
+      {typeof trigger === "function" ? (
+        trigger(openSearch)
+      ) : (
+        (trigger ?? <DefaultTrigger onOpen={openSearch} />)
       )}
       <CommandDialog
         open={open}

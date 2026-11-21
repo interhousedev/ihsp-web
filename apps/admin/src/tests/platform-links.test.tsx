@@ -14,7 +14,7 @@ function openAs(client: "admin"): void {
 }
 
 async function openMenu(user: Awaited<ReturnType<typeof renderAdmin>>["user"]): Promise<HTMLElement> {
-  await user.click((await screen.findAllByRole("button", { name: "Account menu" }))[0])
+  await user.click(await screen.findByRole("button", { name: /platforms/i }))
   return screen.findByRole("menu")
 }
 

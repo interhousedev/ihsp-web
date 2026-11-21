@@ -1,10 +1,15 @@
 "use client"
-import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
-
 import { patchPreferences } from "@ihsp/api"
 import { logout, useSession } from "@ihsp/auth"
-import { ShellNavControls, fullName, useLicenseMenu, usePlatformLinks } from "@ihsp/features-core"
-import { AppShell, SidebarBrand, UserMenu } from "@ihsp/ui"
+import {
+  LegalGate,
+  MaintenanceBanner,
+  ShellNavControls,
+  fullName,
+  useLicenseMenu,
+  usePlatformLinks,
+} from "@ihsp/features-core"
+import { AppShell, CommandPalette, SidebarBrand, UserMenu } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useTr } from "@ihsp/features-core/id-account"
 import { useIdBottom, useIdNav } from "../hooks/use-id-nav"
@@ -27,11 +32,11 @@ export function AccountShell({ children }: { children: ReactNode }) {
       brand={
         <SidebarBrand
           name={t("idCommon.brand")}
-          // oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public
-          logo={<img src="/icons/logo.svg" alt="" width={24} height={24} className="rounded-md" />}
+          platform="id"
         />
       }
-      controlsLeading={<ShellNavControls home="/security/" />}
+      history={<ShellNavControls home="/security/" />}
+      search={<CommandPalette nav={nav} />}
       sidebarFooter={
         user ? (
           <>

@@ -9,7 +9,7 @@ import { Icons } from "../icons"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet"
 import { NavIconView } from "./nav-icon"
 import { isActivePath, type BottomNavItem, type NavGroup } from "./nav-types"
-import { PLATFORM_ICONS } from "./platform-icons"
+import { PlatformIcon } from "./platform-icon"
 import type { PlatformLink } from "./user-menu"
 
 const MAX_ITEMS = 5
@@ -168,7 +168,7 @@ export function BottomNav({
                       onClick={platform.onClick}
                       className="press hover:bg-accent flex min-h-12 items-center gap-3 rounded-full px-3 text-sm"
                     >
-                      <NavIconView icon={PLATFORM_ICONS[platform.key]} className="size-5" />
+                      <PlatformIcon platform={platform} />
                       <span className="flex min-w-0 flex-col">
                         <span className="font-medium">{platform.name}</span>
                         <span className="text-muted-foreground truncate text-xs">{platform.description}</span>

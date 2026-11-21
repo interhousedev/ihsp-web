@@ -1,7 +1,7 @@
 import type { IconName } from "./nav-types"
 import type { PlatformLink } from "./user-menu"
 
-/** One icon per platform, the same in the menu of every app and in the phone's "More" sheet. */
+/** One nav-icon name per platform (for places that need a plain icon; the app mark is `PlatformIcon`). */
 export const PLATFORM_ICONS: Record<PlatformLink["key"], IconName> = {
   sp: "grades",
   staff: "journal",

@@ -20,9 +20,13 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  useSidebar,
 } from "../ui/sidebar"
 import { NavIconView } from "./nav-icon"
 import { isActivePath, type NavGroup, type NavItem } from "./nav-types"
+import { PlatformMenu } from "./platform-menu"
+import { ShellSlotContext } from "./shell-slot"
+import type { PlatformLink } from "./user-menu"
 
 /**
  * Geometry shared by every nav row, expanded and collapsed: the icon is the first child and never moves (the row keeps
@@ -84,27 +88,65 @@ function NavBranch({ item, pathname }: { item: NavItem; pathname: string | null 
   )
 }
 
-/**
- * The side navigation: a floating glass rail from 768 px (a pill of circular icon buttons when collapsed), a sheet on
- * phones (handled by `Sidebar`). The bottom of the panel is the account row (`footer`: the app's profile menu in its
- * `row` variant), separated from the navigation by a hairline.
- */
-export function AppSidebar({
-  nav,
-  brand,
-  footer,
-  search,
-}: {
+export type AppSidebarProps = {
   nav: NavGroup[]
+  /** Top of the panel: `SidebarBrand` with the logo and the app name. */
   brand?: ReactNode
-  footer?: ReactNode
+  /** The user's platforms: the app switcher beside the brand. */
+  platforms?: PlatformLink[]
+  /** Back and forward, first in the row under the brand (desktop panel only). */
+  history?: ReactNode
+  /** The search button, after the history buttons (desktop panel only). */
   search?: ReactNode
-}) {
+  /** Space for the app's own components between the search row and the navigation (desktop panel only). */
+  slot?: ReactNode
+  /** The tool row above the account row (desktop panel only). */
+  bottomMenu?: ReactNode
+  /** The account row at the bottom; in the phone sheet it is the only footer. */
+  footer?: ReactNode
+}
+
+/**
+ * The side navigation. From 768 px a floating glass panel (a pill of circular icon buttons when collapsed), top to
+ * bottom: the brand with the app switcher, the history and search row, the app's slot, the navigation, then the pinned
+ * bottom menu and the account row. On phones the sheet holds the brand, the navigation and the account row only; the
+ * rest lives in the phone top bar.
+ */
+export function AppSidebar({ nav, brand, platforms = [], history, search, slot, bottomMenu, footer }: AppSidebarProps) {
   const pathname = usePathname()
+  const { isMobile } = useSidebar()
+  const desktop = !isMobile
+  const hasToolbar = desktop && Boolean(history || search)
   return (
     <Sidebar collapsible="icon" variant="floating">
-      {brand ? <SidebarHeader>{brand}</SidebarHeader> : null}
-      {search ? <div className="px-2 group-data-[collapsible=icon]:hidden">{search}</div> : null}
+      {brand ? (
+        <SidebarHeader>
+          <div className="flex items-center gap-1">
+            <div className="min-w-0 flex-1">{brand}</div>
+            {desktop ? (
+              <div className="group-data-[collapsible=icon]:hidden">
+                <PlatformMenu platforms={platforms} />
+              </div>
+            ) : null}
+          </div>
+          {hasToolbar ? (
+            <ShellSlotContext.Provider value="sidebar">
+              <div
+                data-slot="sidebar-toolbar"
+                className="flex items-center gap-1 group-data-[collapsible=icon]:flex-col group-data-[collapsible=icon]:[&_[data-slot=history-buttons]]:flex-col"
+              >
+                {history}
+                {search}
+              </div>
+            </ShellSlotContext.Provider>
+          ) : null}
+        </SidebarHeader>
+      ) : null}
+      {desktop && slot ? (
+        <div data-slot="sidebar-slot" className="px-2 group-data-[collapsible=icon]:hidden">
+          {slot}
+        </div>
+      ) : null}
       <SidebarContent className="overflow-x-hidden">
         {nav.map((group, index) => (
           <SidebarGroup key={group.label ?? `group-${index}`} className="py-0">
@@ -126,8 +168,11 @@ export function AppSidebar({
           </SidebarGroup>
         ))}
       </SidebarContent>
-      {footer ? (
+      {(desktop && bottomMenu) || footer ? (
         <SidebarFooter data-slot="sidebar-account" className="border-t border-hairline">
+          {desktop && bottomMenu ? (
+            <ShellSlotContext.Provider value="sidebar">{bottomMenu}</ShellSlotContext.Provider>
+          ) : null}
           {footer}
         </SidebarFooter>
       ) : null}
