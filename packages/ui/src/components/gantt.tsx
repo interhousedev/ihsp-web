@@ -183,7 +183,8 @@ export function Gantt({
   const grid: CSSProperties = {
     backgroundImage: "linear-gradient(to right, var(--color-border) 1px, transparent 1px)",
     backgroundSize: `${gridStep}px 100%`,
-    backgroundPosition: dayWidth >= 18 ? "0 0" : `${(((7 - ((new Date(start).getUTCDay() + 6) % 7)) % 7) * dayWidth)}px 0`,
+    backgroundPosition:
+      dayWidth >= 18 ? "0 0" : `${((7 - ((new Date(start).getUTCDay() + 6) % 7)) % 7) * dayWidth}px 0`,
     opacity: 0.6,
   }
   const todayInRange = today >= start && today <= end
@@ -274,6 +275,7 @@ export function Gantt({
       ref={scroller}
       role="region"
       aria-label={ariaLabel}
+      // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scrollable region must be focusable to scroll by keyboard
       tabIndex={0}
       className={cn("bg-card rounded-card relative isolate overflow-auto border overscroll-contain", className)}
     >
@@ -406,7 +408,8 @@ function GanttBlock({
     const current = press.current
     press.current = null
     if (!current) return
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
+    if (event.currentTarget.hasPointerCapture(event.pointerId))
+      event.currentTarget.releasePointerCapture(event.pointerId)
     if (!current.moved) return
     justDragged.current = true
     setTimeout(() => (justDragged.current = false), 0)

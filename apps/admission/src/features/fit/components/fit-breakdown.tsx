@@ -18,11 +18,23 @@ export function MetricIcon({ id, className }: { id: MetricId; className?: string
   )
 }
 
-function MetricRow({ metric, full, onHover }: { metric: MetricResult; full: boolean; onHover?: (id: MetricId | null) => void }) {
+function MetricRow({
+  metric,
+  full,
+  onHover,
+}: {
+  metric: MetricResult
+  full: boolean
+  onHover?: (id: MetricId | null) => void
+}) {
   const t = useT("fit")
   const missing = metric.score === null
   return (
-    <li className="flex items-start gap-3" onMouseEnter={() => onHover?.(metric.id)} onMouseLeave={() => onHover?.(null)}>
+    <li
+      className="flex items-start gap-3"
+      onPointerEnter={() => onHover?.(metric.id)}
+      onPointerLeave={() => onHover?.(null)}
+    >
       <MetricIcon id={metric.id} className={cn(missing && "bg-muted! text-muted-foreground")} />
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-baseline justify-between gap-2 text-sm">
@@ -46,7 +58,12 @@ function MetricRow({ metric, full, onHover }: { metric: MetricResult; full: bool
           aria-valuemax={100}
           aria-valuenow={metric.score ?? undefined}
         >
-          {missing ? null : <div className="h-full rounded-full" style={{ width: `${metric.score}%`, background: METRIC_STYLE[metric.id].color }} />}
+          {missing ? null : (
+            <div
+              className="h-full rounded-full"
+              style={{ width: `${metric.score}%`, background: METRIC_STYLE[metric.id].color }}
+            />
+          )}
         </div>
         {metric.why.slice(0, full ? 3 : 1).map((line) => (
           <p key={line} className="text-muted-foreground text-xs leading-snug">
@@ -85,7 +102,10 @@ export function FitBreakdown({
       <div className="flex items-baseline justify-between gap-3">
         <p className="text-sm font-medium">{name}</p>
         <p className="text-muted-foreground text-xs">
-          <span className="text-foreground text-2xl font-semibold tabular-nums">{fit.total !== null && approx ? "≈ " : ""}{fit.total ?? "—"}</span>
+          <span className="text-foreground text-2xl font-semibold tabular-nums">
+            {fit.total !== null && approx ? "≈ " : ""}
+            {fit.total ?? "—"}
+          </span>
           {fit.total === null ? "" : "/100"}
         </p>
       </div>
@@ -111,7 +131,9 @@ export function FitBreakdown({
                 >
                   <MetricIcon id={raise.metric} className="size-6" />
                   <span className="min-w-0 flex-1">{raise.label}</span>
-                  <span className="bg-success/15 text-success rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums">+{raise.gain}</span>
+                  <span className="bg-success/15 text-success rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums">
+                    +{raise.gain}
+                  </span>
                   <Icons.chevronRight aria-hidden className="text-muted-foreground size-4 shrink-0" />
                 </Link>
               </li>
@@ -121,11 +143,17 @@ export function FitBreakdown({
       ) : null}
       {full ? (
         <div className="flex flex-col gap-2 border-t pt-3">
-          <Link href="/profile/professions/" className="text-primary inline-flex min-h-9 items-center gap-1.5 text-sm font-medium hover:underline">
+          <Link
+            href="/profile/professions/"
+            className="text-primary inline-flex min-h-9 items-center gap-1.5 text-sm font-medium hover:underline"
+          >
             <Icons.arrowRight aria-hidden className="size-4" />
             {t("raiseGoals")}
           </Link>
-          <Link href="/profile/#weights" className="text-primary inline-flex min-h-9 items-center gap-1.5 text-sm font-medium hover:underline">
+          <Link
+            href="/profile/#weights"
+            className="text-primary inline-flex min-h-9 items-center gap-1.5 text-sm font-medium hover:underline"
+          >
             <Icons.settings aria-hidden className="size-4" />
             {t("changeWeights")}
           </Link>

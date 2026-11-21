@@ -71,7 +71,9 @@ function CostCell({ row }: { row: ListRow }) {
     <>
       <span className="text-sm font-medium tabular-nums">
         {cost.kind === "net" ? t("approx", { amount }) : amount}
-        {cost.kind === "sticker" ? <span className="text-muted-foreground ms-1 text-xs font-normal">{t("sticker")}</span> : null}
+        {cost.kind === "sticker" ? (
+          <span className="text-muted-foreground ms-1 text-xs font-normal">{t("sticker")}</span>
+        ) : null}
       </span>
       {gap !== null ? (
         <span className={cn("text-xs tabular-nums", gap > 0 ? "text-destructive" : "text-success")}>
@@ -97,7 +99,7 @@ export function ListRowView({ row, onResearch }: { row: ListRow; onResearch: (ro
   const chooser = useT("chooser")
   const errorMessage = useErrorMessage()
   const roundLabel = useOptionLabel("round")
-    const workflow = useWorkflow()
+  const workflow = useWorkflow()
   const patch = usePatchEntry()
   const plan = usePlanTasks()
   const [open, setOpen] = useState(false)
@@ -108,8 +110,9 @@ export function ListRowView({ row, onResearch }: { row: ListRow; onResearch: (ro
   const gate = isApiError(patch.error) && patch.error.type === "admission/affordability_gate" ? patch.error : null
   const detailsId = `entry-${entry.id}`
   const locale = useLocale()
+  const [now] = useState(() => new Date())
   const share = knownShare(row.fit)
-  const days = row.deadline ? (Date.parse(row.deadline) - Date.parse(todayIso(new Date()))) / 86_400_000 : null
+  const days = row.deadline ? (Date.parse(row.deadline) - Date.parse(todayIso(now))) / 86_400_000 : null
   const showInline = row.tasks.total > 0 || (days !== null && days >= 0 && days <= 30)
   const summary = [
     row.cost
@@ -119,7 +122,9 @@ export function ListRowView({ row, onResearch }: { row: ListRow; onResearch: (ro
       : null,
     row.chance === null ? null : `${Math.round(row.chance)}%`,
     row.deadline
-      ? new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(row.deadline))
+      ? new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", timeZone: "UTC" }).format(
+          new Date(row.deadline),
+        )
       : null,
   ]
     .filter(Boolean)
@@ -158,7 +163,15 @@ export function ListRowView({ row, onResearch }: { row: ListRow; onResearch: (ro
         </div>
         <div className="col-start-2 row-start-1 flex items-center justify-end gap-1 @min-[30rem]:col-start-4 @min-[38rem]:col-start-6">
           {row.missing.length > 0 ? (
-            <Button type="button" variant="outline" size="icon" className="size-8" title={t("research")} aria-label={t("research")} onClick={() => onResearch(row)}>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="size-8"
+              title={t("research")}
+              aria-label={t("research")}
+              onClick={() => onResearch(row)}
+            >
               <Icons.sparkles aria-hidden />
             </Button>
           ) : null}
@@ -174,7 +187,11 @@ export function ListRowView({ row, onResearch }: { row: ListRow; onResearch: (ro
             {open ? <Icons.chevronUp aria-hidden /> : <Icons.chevronDown aria-hidden />}
           </Button>
         </div>
-        <div className={cn(open ? "col-span-full grid grid-cols-2 gap-2 @min-[38rem]:contents" : "hidden @min-[38rem]:contents")}>
+        <div
+          className={cn(
+            open ? "col-span-full grid grid-cols-2 gap-2 @min-[38rem]:contents" : "hidden @min-[38rem]:contents",
+          )}
+        >
           <Cell label={t("col.label")}>
             {row.label === "home" ? (
               <Pill tone="success" className="h-6 w-fit px-2 text-xs">

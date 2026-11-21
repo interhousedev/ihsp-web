@@ -1,6 +1,7 @@
 "use client"
 
 import { todayIso } from "@ihsp/i18n"
+import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { preferencesQuery } from "../algorithm/api"
 import { useBudget } from "../budget/hooks"
@@ -79,7 +80,8 @@ export function useListRows(): ListRows {
     if (task.status === "done") count.done += 1
     counts.set(task.list_entry_id, count)
   }
-  const today = todayIso(new Date())
+  const [now] = useState(() => new Date())
+  const today = todayIso(now)
   const rows = fit.rows.map(({ entry, fit: ring }): ListRow => {
     const row = budgetByEntry.get(entry.id)
     const cost = netCost(entry, row)
