@@ -24,8 +24,7 @@ export type StudyGroup = AdmissionStudyGroup
 export type Source = AdmissionSource
 export type Highlight = AdmissionHighlight
 export type Deadline = AdmissionInstitutionDeadline
-/** `description` is the locale-picked blurb; drop the intersection once `@ihsp/api` is synced with the contract. */
-export type Institution = AdmissionInstitution & { description?: string | null }
+export type Institution = AdmissionInstitution
 export type InstitutionPage = AdmissionInstitutionPage
 export type Summary = AdmissionSummary
 export type Scholarship = AdmissionScholarship

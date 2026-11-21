@@ -50,6 +50,7 @@ const item = (id: string, title: string, position: number): Item => ({
   level: null,
   certificate_entry_id: null,
   grade_stale: false,
+  missing: [],
 })
 
 const review: Review = {
