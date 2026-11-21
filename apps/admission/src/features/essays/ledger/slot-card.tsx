@@ -46,7 +46,7 @@ export function SlotCard({
   const a = slot.assigned
   const tooLong = a?.over_limit === true
   const personal = isPersonalSlot(slot)
-  const title = personal ? t("slotPersonal") : (promptHead(slot.prompt) ?? t("slotExtra"))
+  const title = slot.shared ? t("commonApp") : personal ? t("slotPersonal") : (promptHead(slot.prompt) ?? t("slotExtra"))
   const words = a?.word_count ?? 0
   return (
     <li

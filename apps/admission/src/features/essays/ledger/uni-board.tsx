@@ -107,10 +107,10 @@ export function UniBoard() {
     )
   const onList = view.uni === null || !selected
   return (
-    <div className="grid min-h-0 gap-4 md:h-full md:grid-cols-[15rem_minmax(0,1fr)] lg:grid-cols-[17rem_minmax(0,1fr)]" data-testid="uni-board">
+    <div className="grid min-h-0 grid-cols-[minmax(0,1fr)] gap-4 md:h-full md:grid-cols-[15rem_minmax(0,1fr)] lg:grid-cols-[17rem_minmax(0,1fr)]" data-testid="uni-board">
       <div className={cn("bg-card rounded-card min-h-0 border md:overflow-y-auto md:[scrollbar-gutter:stable]", !onList && "max-md:hidden")}>
         {sharedTable && shared ? (
-          <ul className="border-hairline border-b p-2" data-testid="shared-slot">
+          <ul className="border-hairline min-w-0 border-b p-2" data-testid="shared-slot">
             <SlotCard
               table={sharedTable}
               slot={shared}
@@ -165,7 +165,7 @@ export function UniBoard() {
       ) : null}
       <EssayPicker
         slot={picking ? pickSlot : undefined}
-        title={pickTable ? t("pickTitle", { uni: pickTable.institution_name }) : ""}
+        title={pickTable ? t("pickTitle", { uni: pickSlot?.shared ? t("commonApp") : pickTable.institution_name }) : ""}
         essays={mine}
         currentId={pickSlot?.essay_id ?? null}
         onClose={() => setPicking(null)}

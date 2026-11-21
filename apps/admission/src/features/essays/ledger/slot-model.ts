@@ -7,7 +7,8 @@ export const isShortSlot = (slot: MatchSlot) => slot.category === "short_answer"
 export const isSharedSlot = (slot: MatchSlot) => slot.shared
 
 /** A slot counts as filled only when its essay fits the limit. */
-export const isFilled = (slot: MatchSlot) => slot.assigned !== null && !slot.assigned.over_limit
+export const isFilled = (slot: MatchSlot) =>
+  isShortSlot(slot) ? (slot.short_answer?.word_count ?? 0) > 0 : slot.assigned !== null && !slot.assigned.over_limit
 
 export const filledCount = (table: MatchTable) => table.slots.filter(isFilled).length
 
