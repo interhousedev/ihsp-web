@@ -4,6 +4,18 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-11-21
+
+### Added
+
+- Admission: soft length warnings for activities and honors, numbers as a writing helper with a proofs hint, A–E grade badges with hover descriptors, "not in the list" opportunity lookup, approximate fit ring and fit analysis text, university descriptions.
+- Admission staff: opportunity and university management pages.
+- Admin: Langfuse tracing card and per-pipeline tracing toggles.
+
+### Fixed
+
+- Activities can move from draft to ready while partly filled; review works without a word limit.
+
 ## [1.9.0] - 2026-11-20
 
 ### Added

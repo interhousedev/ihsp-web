@@ -674,6 +674,34 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/ai/tracing": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Tracing
+         * @description The Langfuse project calls are traced to; the secret key is never shown.
+         */
+        get: operations["get_tracing_v1_admin_ai_tracing_get"];
+        /**
+         * Set Tracing
+         * @description Set the Langfuse project; the secret key goes to Vault, never back out.
+         */
+        put: operations["set_tracing_v1_admin_ai_tracing_put"];
+        post?: never;
+        /**
+         * Remove Tracing
+         * @description Remove the stored project and its key; the environment's applies again.
+         */
+        delete: operations["remove_tracing_v1_admin_ai_tracing_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/ai/usage": {
         parameters: {
             query?: never;
@@ -5649,6 +5677,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/fit/{institution_id}/analysis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Fit Analysis
+         * @description A quick AI read of the caller's fit for one university (cached, limited).
+         */
+        post: operations["admission_post_fit_analysis"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/goal-plan": {
         parameters: {
             query?: never;
@@ -6433,6 +6481,34 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/me/items/{item_id}/opportunity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Item Opportunity
+         * @description The opportunity linked to the caller's activity, with current data.
+         */
+        get: operations["admission_get_item_opportunity"];
+        /**
+         * Put Item Opportunity
+         * @description Link an entry, or propose a draft (a pending twin proposal is reused).
+         */
+        put: operations["admission_put_item_opportunity"];
+        post?: never;
+        /**
+         * Delete Item Opportunity
+         * @description Unlink (the proposal stays in moderation).
+         */
+        delete: operations["admission_delete_item_opportunity"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/me/items/{item_id}/review": {
         parameters: {
             query?: never;
@@ -6851,6 +6927,26 @@ export interface paths {
         get: operations["admission_list_opportunities"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/opportunities/lookup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Lookup Opportunity
+         * @description Research one line ("not in the list"); needs `admission_ai` consent.
+         */
+        post: operations["admission_lookup_opportunity"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7541,6 +7637,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/staff/catalog/institutions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Staff Institutions
+         * @description Every institution of any status, searchable by name, city or domain.
+         */
+        get: operations["admission_staff_institutions_list"];
+        put?: never;
+        /**
+         * Create Staff Institution
+         * @description Add an institution directly (published unless `status` says otherwise).
+         */
+        post: operations["admission_staff_institutions_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/catalog/institutions/{institution_id}": {
         parameters: {
             query?: never;
@@ -7553,9 +7673,17 @@ export interface paths {
          * @description Raw facts with their notes (staff and catalog curators only).
          */
         get: operations["admission_staff_catalog_institution"];
-        put?: never;
+        /**
+         * Put Staff Institution
+         * @description Edit an institution; omitted fields stay, `null` clears (409 if stale).
+         */
+        put: operations["admission_staff_institutions_put"];
         post?: never;
-        delete?: never;
+        /**
+         * Delete Staff Institution
+         * @description Delete an unused institution (409 `admission/catalog_in_use` otherwise).
+         */
+        delete: operations["admission_staff_institutions_delete"];
         options?: never;
         head?: never;
         /**
@@ -7769,6 +7897,30 @@ export interface paths {
         patch: operations["admission_patch_exemplar"];
         trace?: never;
     };
+    "/v1/admission/staff/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Staff Opportunities
+         * @description Every entry, live and hidden, searchable by title or provider.
+         */
+        get: operations["admission_staff_opportunities_list"];
+        put?: never;
+        /**
+         * Create Staff Opportunity
+         * @description Publish a new entry without moderation.
+         */
+        post: operations["admission_staff_opportunities_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/opportunities/reports": {
         parameters: {
             query?: never;
@@ -7873,6 +8025,34 @@ export interface paths {
         patch: operations["admission_update_opportunity_taxonomy_node"];
         trace?: never;
     };
+    "/v1/admission/staff/opportunities/{opportunity_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Staff Opportunity
+         * @description One entry with all its fields.
+         */
+        get: operations["admission_staff_opportunities_get"];
+        /**
+         * Put Staff Opportunity
+         * @description Overwrite every field of an entry (409 when `lock_version` is stale).
+         */
+        put: operations["admission_staff_opportunities_put"];
+        post?: never;
+        /**
+         * Delete Staff Opportunity
+         * @description Delete an unused entry (409 `admission/catalog_in_use` otherwise).
+         */
+        delete: operations["admission_staff_opportunities_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/opportunities/{opportunity_id}/archive": {
         parameters: {
             query?: never;
@@ -7887,6 +8067,26 @@ export interface paths {
          * @description Hide or restore a published entry.
          */
         post: operations["admission_archive_opportunity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/opportunities/{opportunity_id}/visibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Set Staff Opportunity Visibility
+         * @description Hide an entry from students or bring it back.
+         */
+        post: operations["admission_staff_opportunities_visibility"];
         delete?: never;
         options?: never;
         head?: never;
@@ -27713,6 +27913,43 @@ export interface components {
             url: string;
         };
         /**
+         * FitAnalysisAxisOut
+         * @description One axis before and after the AI correction.
+         */
+        FitAnalysisAxisOut: {
+            /** Base Score */
+            base_score: number | null;
+            /** Key */
+            key: string;
+            /** Score */
+            score: number | null;
+        };
+        /**
+         * FitAnalysisOut
+         * @description The corrected fit ring of one university and a short text.
+         */
+        FitAnalysisOut: {
+            /**
+             * Ai
+             * @description False without AI consent: rule-based values.
+             */
+            ai: boolean;
+            /** Axes */
+            axes: components["schemas"]["FitAnalysisAxisOut"][];
+            /** Base Total */
+            base_total: number | null;
+            /** Known Share */
+            known_share: number;
+            /** Next Step */
+            next_step: string;
+            /** Risks */
+            risks: string[];
+            /** Strengths */
+            strengths: string[];
+            /** Total */
+            total: number | null;
+        };
+        /**
          * FitItemOut
          * @description The fit of one list entry.
          */
@@ -29139,6 +29376,11 @@ export interface components {
             /** Deadlines */
             deadlines: components["schemas"]["app__interfaces__http__v1__admission__routes_chooser__DeadlineOut"][];
             /**
+             * Description
+             * @description Short description in the request locale (en fallback).
+             */
+            description?: string | null;
+            /**
              * Details
              * @default []
              */
@@ -29203,6 +29445,53 @@ export interface components {
             items: components["schemas"]["InstitutionOut"][];
             /** Next Cursor */
             next_cursor: number | null;
+        };
+        /**
+         * IntakeDraftIO
+         * @description A researched draft; the student may edit it before linking.
+         */
+        IntakeDraftIO: {
+            /** Blocked */
+            blocked?: string[];
+            /** Event Dates */
+            event_dates?: string[];
+            /**
+             * Kind
+             * @default event
+             */
+            kind?: string;
+            /** Materials */
+            materials?: {
+                [key: string]: string;
+            }[];
+            /** Missing */
+            missing?: string[];
+            /**
+             * Provider
+             * @default
+             */
+            provider?: string;
+            /**
+             * Recurrence
+             * @default
+             */
+            recurrence?: string;
+            /** Registration Deadlines */
+            registration_deadlines?: string[];
+            /** Subject Ids */
+            subject_ids?: string[];
+            /**
+             * Summary
+             * @default
+             */
+            summary?: string;
+            /** Title */
+            title: string;
+            /**
+             * Url
+             * @default
+             */
+            url?: string;
         };
         /**
          * Interaction
@@ -29581,12 +29870,18 @@ export interface components {
          * @description An A-E grade with a one-line tip for the title and the description.
          */
         ItemGradeOut: {
+            /** Description Descriptor */
+            description_descriptor?: string | null;
             /** Description Grade */
             description_grade: string;
             /** Description Tip */
             description_tip: string;
             /** Model */
             model: string;
+            /** Overall */
+            overall?: string | null;
+            /** Title Descriptor */
+            title_descriptor?: string | null;
             /** Title Grade */
             title_grade: string;
             /** Title Tip */
@@ -29626,6 +29921,45 @@ export interface components {
              * @enum {string}
              */
             status: "draft" | "ready";
+        };
+        /**
+         * ItemOpportunityEnvelope
+         * @description The link, or null.
+         */
+        ItemOpportunityEnvelope: {
+            link: components["schemas"]["ItemOpportunityOut"] | null;
+        };
+        /**
+         * ItemOpportunityIn
+         * @description Exactly one: an existing entry or a new (researched) draft.
+         */
+        ItemOpportunityIn: {
+            draft?: components["schemas"]["IntakeDraftIO"] | null;
+            /** Opportunity Id */
+            opportunity_id?: string | null;
+        };
+        /**
+         * ItemOpportunityOut
+         * @description The opportunity of an activity; `verified` once a moderator approved it.
+         */
+        ItemOpportunityOut: {
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            opportunity: components["schemas"]["OpportunityBriefOut"];
+            /** Opportunity Id */
+            opportunity_id: string | null;
+            /** Reason */
+            reason: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending" | "verified" | "rejected";
+            /** Submission Id */
+            submission_id: string | null;
         };
         /**
          * ItemOrderIn
@@ -29668,6 +30002,8 @@ export interface components {
             lock_version: number;
             /** Metrics */
             metrics: components["schemas"]["MetricOut"][];
+            /** Missing */
+            missing: string[];
             /** Organization */
             organization: string;
             /** Position */
@@ -34519,6 +34855,22 @@ export interface components {
             reporter_name: string;
         };
         /**
+         * OpportunityBriefOut
+         * @description The current basics of an entry or a proposal.
+         */
+        OpportunityBriefOut: {
+            /** Kind */
+            kind: string;
+            /** Provider */
+            provider: string | null;
+            /** Summary */
+            summary: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string | null;
+        };
+        /**
          * OpportunityDetailOut
          * @description An entry with its organization and published comments.
          */
@@ -34679,6 +35031,52 @@ export interface components {
             sort: "title" | "ranking" | "acceptance" | "tuition" | "relevance" | "deadline";
             /** Total */
             total: number;
+        };
+        /**
+         * OpportunityLookupIn
+         * @description One line: a link, or a name and an organization.
+         */
+        OpportunityLookupIn: {
+            /**
+             * Locale
+             * @default en
+             * @enum {string}
+             */
+            locale?: "uz" | "ru" | "en";
+            /** Query */
+            query: string;
+        };
+        /**
+         * OpportunityLookupOut
+         * @description The draft, similar catalog entries and a pending twin proposal.
+         */
+        OpportunityLookupOut: {
+            draft: components["schemas"]["IntakeDraftIO"];
+            /** Matches */
+            matches: components["schemas"]["OpportunityMatchOut"][];
+            /** Pending Submission Id */
+            pending_submission_id: string | null;
+        };
+        /**
+         * OpportunityMatchOut
+         * @description A catalog entry that looks like the lookup.
+         */
+        OpportunityMatchOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Provider */
+            provider: string | null;
+            /** Summary */
+            summary: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string | null;
         };
         /**
          * OpportunityOut
@@ -35657,18 +36055,35 @@ export interface components {
             route: components["schemas"]["RouteOut"];
             /** Tasks */
             tasks: string[];
+            tracing: components["schemas"]["PipelineTracingOut"];
         };
         /**
          * PipelineRouteBody
          * @description PUT /pipelines/{pipeline}: each field null falls through to the environment.
          */
         PipelineRouteBody: {
+            /** Capture Content */
+            capture_content?: boolean | null;
             /** Connector Id */
             connector_id?: string | null;
             /** Model */
             model?: string | null;
             /** Reasoning Effort */
             reasoning_effort?: ("none" | "minimal" | "low" | "medium" | "high") | null;
+            /** Tracing Enabled */
+            tracing_enabled?: boolean | null;
+        };
+        /**
+         * PipelineTracingOut
+         * @description Whether a pipeline's calls are traced to Langfuse, and with content.
+         */
+        PipelineTracingOut: {
+            /** Capture Content */
+            capture_content: boolean;
+            /** Default Enabled */
+            default_enabled: boolean;
+            /** Enabled */
+            enabled: boolean;
         };
         /**
          * PipelinesResponse
@@ -39240,12 +39655,16 @@ export interface components {
          * @description The runtime route of a pipeline.
          */
         RouteOut: {
+            /** Capture Content */
+            capture_content?: boolean | null;
             /** Connector Id */
             connector_id: string | null;
             /** Model */
             model: string | null;
             /** Reasoning Effort */
             reasoning_effort: string | null;
+            /** Tracing Enabled */
+            tracing_enabled?: boolean | null;
             /** Updated At */
             updated_at: string | null;
         };
@@ -41311,6 +41730,42 @@ export interface components {
             text: string;
         };
         /**
+         * StaffInstitutionCreateIn
+         * @description A new institution: `name` and `country` are required.
+         */
+        StaffInstitutionCreateIn: {
+            /** Aliases */
+            aliases?: string[] | null;
+            /** City */
+            city?: string | null;
+            /** Country */
+            country: string;
+            /** Cover Url */
+            cover_url?: string | null;
+            /** Kind */
+            kind?: ("university" | "college" | "foundation_provider") | null;
+            /** Languages */
+            languages?: string[] | null;
+            /** Logo Fit */
+            logo_fit?: ("circle" | "contain") | null;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Logo Zoom */
+            logo_zoom?: number | null;
+            /** Name */
+            name: string;
+            /** Name Local */
+            name_local?: string | null;
+            /** Setting */
+            setting?: ("big_city" | "college_town" | "campus" | "small_city") | null;
+            /** Size Band */
+            size_band?: string | null;
+            /** Status */
+            status?: ("published" | "provisional" | "archived") | null;
+            /** Website Domain */
+            website_domain?: string | null;
+        };
+        /**
          * StaffInstitutionOut
          * @description Raw catalog view with notes; the student payload never carries them.
          */
@@ -41332,6 +41787,116 @@ export interface components {
             name: string;
         };
         /**
+         * StaffInstitutionPageOut
+         * @description One page of institutions and the countries the filter offers.
+         */
+        StaffInstitutionPageOut: {
+            /** Countries */
+            countries: string[];
+            /** Items */
+            items: components["schemas"]["StaffInstitutionRowOut"][];
+            /** Page */
+            page: number;
+            /** Page Size */
+            page_size: number;
+            /** Total */
+            total: number;
+        };
+        /**
+         * StaffInstitutionPutIn
+         * @description An edit under the optimistic lock the form was loaded with.
+         */
+        StaffInstitutionPutIn: {
+            /** Aliases */
+            aliases?: string[] | null;
+            /** City */
+            city?: string | null;
+            /** Country */
+            country?: string | null;
+            /** Cover Url */
+            cover_url?: string | null;
+            /** Kind */
+            kind?: ("university" | "college" | "foundation_provider") | null;
+            /** Languages */
+            languages?: string[] | null;
+            /** Lock Version */
+            lock_version: number;
+            /** Logo Fit */
+            logo_fit?: ("circle" | "contain") | null;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Logo Zoom */
+            logo_zoom?: number | null;
+            /** Name */
+            name?: string | null;
+            /** Name Local */
+            name_local?: string | null;
+            /** Setting */
+            setting?: ("big_city" | "college_town" | "campus" | "small_city") | null;
+            /** Size Band */
+            size_band?: string | null;
+            /** Status */
+            status?: ("published" | "provisional" | "archived") | null;
+            /** Website Domain */
+            website_domain?: string | null;
+        };
+        /**
+         * StaffInstitutionRowOut
+         * @description An institution of any status, for the staff table and the edit form.
+         */
+        StaffInstitutionRowOut: {
+            /** Aliases */
+            aliases: string[];
+            /** City */
+            city: string | null;
+            /** Country */
+            country: string;
+            /** Cover Url */
+            cover_url: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** In Use */
+            in_use: boolean;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "university" | "college" | "foundation_provider";
+            /** Languages */
+            languages: string[];
+            /** Lock Version */
+            lock_version: number;
+            /** Logo Fit */
+            logo_fit: ("circle" | "contain") | null;
+            /** Logo Url */
+            logo_url: string | null;
+            /** Logo Zoom */
+            logo_zoom: number;
+            /** Name */
+            name: string;
+            /** Name Local */
+            name_local: string | null;
+            /** Setting */
+            setting: ("big_city" | "college_town" | "campus" | "small_city") | null;
+            /** Size Band */
+            size_band: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "published" | "provisional" | "archived";
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Website Domain */
+            website_domain: string | null;
+        };
+        /**
          * StaffLessonResponse
          * @description ``StaffLesson``.
          */
@@ -41343,6 +41908,111 @@ export interface components {
             lesson: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__LessonItemResponse"];
             /** Materials */
             materials: components["schemas"]["ResourceItemResponse"][];
+        };
+        /**
+         * StaffOpportunityIn
+         * @description Create an entry.
+         */
+        StaffOpportunityIn: {
+            fields: components["schemas"]["OpportunityFields"];
+        };
+        /**
+         * StaffOpportunityOut
+         * @description An entry with every editable field.
+         */
+        StaffOpportunityOut: {
+            /** Archived */
+            archived: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            fields: components["schemas"]["OpportunityFields"];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** In Use */
+            in_use: boolean;
+            /** Lock Version */
+            lock_version: number;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * StaffOpportunityPageOut
+         * @description One page of the staff table.
+         */
+        StaffOpportunityPageOut: {
+            /** Items */
+            items: components["schemas"]["StaffOpportunityRowOut"][];
+            /** Page */
+            page: number;
+            /** Page Size */
+            page_size: number;
+            /** Total */
+            total: number;
+        };
+        /**
+         * StaffOpportunityPutIn
+         * @description Overwrite an entry; `lock_version` is the one the form was loaded with.
+         */
+        StaffOpportunityPutIn: {
+            fields: components["schemas"]["OpportunityFields"];
+            /** Lock Version */
+            lock_version: number;
+        };
+        /**
+         * StaffOpportunityRowOut
+         * @description One line of the staff table.
+         */
+        StaffOpportunityRowOut: {
+            /** Archived */
+            archived: boolean;
+            /** Country */
+            country: string | null;
+            /** Exam Dates */
+            exam_dates: string[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research";
+            /** Lock Version */
+            lock_version: number;
+            /** Logo Url */
+            logo_url: string | null;
+            /** Provider */
+            provider: string | null;
+            /** Registration Deadlines */
+            registration_deadlines: string[];
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Url */
+            url: string | null;
+        };
+        /**
+         * StaffOpportunityVisibilityIn
+         * @description Hide (`archived`) or show an entry.
+         */
+        StaffOpportunityVisibilityIn: {
+            /** Archived */
+            archived: boolean;
         };
         /**
          * StaffRankingResponse
@@ -44635,6 +45305,45 @@ export interface components {
             otpauth_uri: string;
             /** Secret */
             secret: string;
+        };
+        /**
+         * TracingBody
+         * @description PUT /tracing: `secret_key` is write-only; omitted keeps the stored one.
+         */
+        TracingBody: {
+            /** Host */
+            host: string;
+            /** Public Key */
+            public_key: string;
+            /** Secret Key */
+            secret_key?: string | null;
+        };
+        /**
+         * TracingOut
+         * @description GET/PUT/DELETE /tracing: the Langfuse project, never its secret key.
+         */
+        TracingOut: {
+            /** Capture Default */
+            capture_default: boolean;
+            /** Env Configured */
+            env_configured: boolean;
+            /** Env Host */
+            env_host: string;
+            /** Has Secret */
+            has_secret: boolean;
+            /** Host */
+            host: string;
+            /** Public Key */
+            public_key: string | null;
+            /** Secret Last4 */
+            secret_last4: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "runtime" | "env" | "none";
+            /** Updated At */
+            updated_at: string | null;
         };
         /**
          * TranscriptRequestIn
@@ -49786,6 +50495,79 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_tracing_v1_admin_ai_tracing_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TracingOut"];
+                };
+            };
+        };
+    };
+    set_tracing_v1_admin_ai_tracing_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TracingBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TracingOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_tracing_v1_admin_ai_tracing_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TracingOut"];
                 };
             };
         };
@@ -59383,6 +60165,39 @@ export interface operations {
             };
         };
     };
+    admission_post_fit_analysis: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                institution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FitAnalysisOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_get_goal_plan: {
         parameters: {
             query?: never;
@@ -60953,6 +61768,101 @@ export interface operations {
             };
         };
     };
+    admission_get_item_opportunity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemOpportunityEnvelope"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_put_item_opportunity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ItemOpportunityIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemOpportunityOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_delete_item_opportunity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_review_item: {
         parameters: {
             query?: never;
@@ -61732,6 +62642,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["OpportunityListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_lookup_opportunity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OpportunityLookupIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OpportunityLookupOut"];
                 };
             };
             /** @description Validation Error */
@@ -62965,6 +63908,74 @@ export interface operations {
             };
         };
     };
+    admission_staff_institutions_list: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                country?: string | null;
+                status?: ("published" | "provisional" | "archived") | null;
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffInstitutionPageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_institutions_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffInstitutionCreateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffInstitutionRowOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_staff_catalog_institution: {
         parameters: {
             query?: never;
@@ -62984,6 +63995,70 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["StaffInstitutionOut"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_institutions_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                institution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffInstitutionPutIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffInstitutionRowOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_institutions_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                institution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -63640,6 +64715,74 @@ export interface operations {
             };
         };
     };
+    admission_staff_opportunities_list: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                kind?: ("exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research") | null;
+                state?: "all" | "live" | "archived";
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffOpportunityPageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_opportunities_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffOpportunityIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffOpportunityOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_list_opportunity_comment_reports: {
         parameters: {
             query?: never;
@@ -63821,6 +64964,101 @@ export interface operations {
             };
         };
     };
+    admission_staff_opportunities_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffOpportunityOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_opportunities_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffOpportunityPutIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffOpportunityOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_opportunities_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_archive_opportunity: {
         parameters: {
             query?: never;
@@ -63842,6 +65080,41 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_opportunities_visibility: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffOpportunityVisibilityIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffOpportunityOut"];
+                };
             };
             /** @description Validation Error */
             422: {

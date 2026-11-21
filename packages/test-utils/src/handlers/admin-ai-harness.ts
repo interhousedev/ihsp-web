@@ -46,6 +46,7 @@ export const aiPipelinesFixture: AiPipeline[] = [
       source: "env",
     },
     env_default: { connector_id: "openrouter", model: "anthropic/claude-haiku-5.5", reasoning_effort: "none" },
+    tracing: { enabled: false, capture_content: false, default_enabled: false },
   },
   {
     pipeline: "web_search",
@@ -53,6 +54,7 @@ export const aiPipelinesFixture: AiPipeline[] = [
     route: { connector_id: null, model: null, reasoning_effort: null, updated_at: null },
     effective: { connector_id: "exa", model: "", reasoning_effort: "none", source: "env" },
     env_default: { connector_id: "exa", model: "", reasoning_effort: "none" },
+    tracing: { enabled: false, capture_content: false, default_enabled: false },
   },
 ]
 
@@ -123,6 +125,19 @@ export const adminAiHarnessHandlers = [
     return HttpResponse.json({ ...base, route: { ...base.route, ...body } })
   }),
   http.delete(apiUrl("/v1/admin/ai/pipelines/:pipeline"), () => new HttpResponse(null, { status: 204 })),
+  http.get(apiUrl("/v1/admin/ai/tracing"), () =>
+    HttpResponse.json({
+      source: "none",
+      host: "",
+      public_key: null,
+      has_secret: false,
+      secret_last4: null,
+      env_configured: false,
+      env_host: "",
+      capture_default: false,
+      updated_at: null,
+    }),
+  ),
   http.get(apiUrl("/v1/admin/ai/requests"), () => HttpResponse.json({ items: aiRequestsFixture })),
   http.get(apiUrl("/v1/admin/ai/prompts/:task/:name/versions"), () => HttpResponse.json({ items: [] })),
   http.get(apiUrl("/v1/admin/ai/prompts/:task/:name/diff"), ({ params }) =>

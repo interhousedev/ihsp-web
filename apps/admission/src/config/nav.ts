@@ -154,6 +154,8 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       { title: t("transcripts"), url: "/staff/transcripts/", icon: "page", visible: isDocStaff },
       { title: t("deadlines"), url: "/staff/deadlines/", icon: "calendarEvent", visible: isStaff },
       { title: t("catalog"), url: "/staff/catalog/", icon: "search", visible: isCurator },
+      { title: t("manageOpportunities"), url: "/staff/opportunities/manage/", icon: "sparkles", visible: isCurator },
+      { title: t("manageUniversities"), url: "/staff/universities/", icon: "search", visible: isCurator },
       { title: t("exemplars"), url: "/staff/exemplars/", icon: "post", visible: isCurator },
       { title: t("promptStudio"), url: "/staff/prompt-studio/", icon: "sparkles", visible: isCurator },
       {

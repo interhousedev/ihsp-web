@@ -1,5 +1,5 @@
 import type { Icons } from "@ihsp/ui"
-import type { AxisKey, FitItem, FitRaise } from "./types"
+import type { AxisKey, FitAnalysis, FitItem, FitRaise } from "./types"
 
 /** The four metrics of the fit ring, in ring order (clockwise from 12 o'clock). */
 export const METRIC_IDS = ["afford", "goals", "profile", "traits"] as const satisfies readonly AxisKey[]
@@ -76,4 +76,13 @@ export function byTotal<T>(rows: readonly T[], total: (row: T) => number | null)
     .map((row, index) => ({ row, index, value: total(row) }))
     .sort((a, b) => (b.value ?? -1) - (a.value ?? -1) || a.index - b.index)
     .map((entry) => entry.row)
+}
+
+/** The ring with the AI-corrected axis scores and total; an unknown axis stays unknown. */
+export function withAnalysis(fit: UniFit, analysis: FitAnalysis): UniFit {
+  const metrics = fit.metrics.map((metric) => {
+    const axis = analysis.axes.find((candidate) => candidate.key === metric.id)
+    return metric.score === null || axis?.score == null ? metric : { ...metric, score: axis.score }
+  })
+  return { ...fit, total: analysis.total ?? fit.total, metrics }
 }

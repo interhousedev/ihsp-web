@@ -2780,6 +2780,13 @@
         "low": "Past",
         "medium": "Oʻrtacha",
         "high": "Yuqori"
+      },
+      "tracing": {
+        "enabled": "Soʻrovlarni Langfuseʼda kuzatish",
+        "defaultOn": "Odatda kuzatiladi",
+        "defaultOff": "Odatda kuzatilmaydi: esse kabi maxfiy maʼlumotlar",
+        "capture": "Soʻrov va javoblarni yuborish",
+        "captureHint": "Oʻchiq: faqat vaqt, model va tokenlar soni yuboriladi."
       }
     },
     "requests": {
@@ -2847,6 +2854,26 @@
         "answerChars": "Oʻrtacha javob uzunligi (belgi)",
         "toolCalls": "Vosita chaqiruvlari oʻrtachasi"
       }
+    },
+    "tracing": {
+      "title": "Langfuse kuzatuvi",
+      "description": "Soʻrovlar kuzatiladigan Langfuse loyihasi. Boʻsh maydonlar muhit sozlamalaridan olinadi. Oʻzgarishlar 30 soniya ichida kuchga kiradi.",
+      "source": {
+        "runtime": "Shu yerda berilgan",
+        "env": "Muhit",
+        "none": "Oʻchiq"
+      },
+      "host": "Manzil",
+      "publicKey": "Ochiq kalit",
+      "secretKey": "Maxfiy kalit",
+      "secretStored": "Saqlangan",
+      "secretStoredLast4": "Saqlangan, {last4} bilan tugaydi",
+      "secretMissing": "Berilmagan",
+      "secretHint": "Maxfiy kalit omborda saqlanadi va qayta koʻrsatilmaydi. Joriy kalitni saqlash uchun maydonni boʻsh qoldiring.",
+      "save": "Saqlash",
+      "remove": "Oʻchirish",
+      "saved": "Langfuse sozlamalari saqlandi.",
+      "removed": "Langfuse sozlamalari oʻchirildi. Muhit sozlamalari amal qiladi."
     }
   },
   "richText": {

@@ -37,3 +37,18 @@ export type FitPreferences = {
   weights: Record<AxisKey, number>
   updated_at: string | null
 }
+
+/** `POST /fit/{institution_id}/analysis`: the ring after the quick AI correction, and a short text. */
+export type FitAnalysisAxis = { key: AxisKey; base_score: number | null; score: number | null }
+
+export type FitAnalysis = {
+  base_total: number | null
+  total: number | null
+  known_share: number
+  axes: FitAnalysisAxis[]
+  strengths: string[]
+  risks: string[]
+  next_step: string
+  /** `false` without AI consent: the values are the rule-based ones and the text is empty. */
+  ai: boolean
+}

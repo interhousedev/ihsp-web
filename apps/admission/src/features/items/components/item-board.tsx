@@ -19,8 +19,9 @@ import { Pill } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { ScrollFade } from "@/components/scroll-fade"
-import { incompleteFields, useMoveItem, useReorderItems, type Item, type ItemStatus } from "../api"
+import { incompleteFields, useMoveItem, useReorderItems, type Item, type ItemKind, type ItemStatus } from "../api"
 import { ItemCard } from "./item-card"
+import { missingFields, toForm } from "./item-fields"
 
 const STATUSES: ItemStatus[] = ["draft", "ready"]
 const TONE = { draft: "warning", ready: "success" } as const
@@ -189,6 +190,11 @@ export function ItemBoard({
       move.mutate(
         { item, status },
         {
+          onSuccess: () => {
+            const missing = status === "ready" ? missingFields(toForm(item), item.kind as ItemKind) : []
+            if (missing.length > 0)
+              toast.message(t("board.movedIncomplete", { fields: missing.map((k) => t(`form.missing.${k}`)).join(", ") }))
+          },
           onError: (error) => {
             if (incompleteFields(error).length > 0) {
               toast.message(t("board.incomplete", { title: item.title }), {

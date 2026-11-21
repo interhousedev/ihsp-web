@@ -17,6 +17,9 @@ import {
 import { RichTextEditor } from "@ihsp/features-core/rich-text"
 import { useState, type FormEvent } from "react"
 import { StudyFieldsField } from "./study-fields-field"
+import { NotInList } from "./not-in-list"
+import { detailHref } from "./scholarship-card"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import {
   localName,
@@ -75,6 +78,7 @@ export function SubmitDialog({
   const t = useT("opportunities")
   const GRADES = useSchoolGrades()
   const locale = useLocale()
+  const router = useRouter()
   const errorMessage = useErrorMessage()
   const submit = useSubmitOpportunity()
   const taxonomy = useTaxonomy()
@@ -168,6 +172,25 @@ export function SubmitDialog({
       }
     >
       <div className="flex flex-col gap-3">
+        {!target && (
+          <NotInList
+            onPick={(id) => {
+              onOpenChange(false)
+              router.push(detailHref(id))
+            }}
+            onPropose={(d) => {
+              if (KINDS.includes(d.kind as OpportunityKind)) setKind(d.kind as OpportunityKind)
+              setTitle(d.title)
+              setSummary(d.summary)
+              setUrl(d.url)
+              setProvider(d.provider)
+              setSubjects(d.subject_ids)
+              setRegistration(d.registration_deadlines[0] ?? "")
+              setExam(d.event_dates[0] ?? "")
+              setRecurrence(d.recurrence)
+            }}
+          />
+        )}
         <Select value={kind} onValueChange={(v) => setKind(v as OpportunityKind)}>
           <SelectTrigger aria-label={t("kindLabel")}>
             <SelectValue />

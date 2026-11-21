@@ -15,8 +15,9 @@ import {
 } from "../api"
 import { useAdmissionConfig } from "../../../lib/config"
 
-/** Limits of the backend: title 60, description 150 (honors 100). */
-export const LIMITS = { title: 60, organization: 100, activityDescription: 150, honorDescription: 100 } as const
+/** Hard limits and the thresholds past which the counter warns (Common App shows only 150 description characters). */
+export const LIMITS = { title: 60, organization: 110, activityDescription: 600, honorDescription: 600 } as const
+export const WARN = { title: 50, organization: 100, description: 150 } as const
 /** Grade level 13 is "post-graduate". */
 export const POST_GRAD = 13
 
@@ -71,6 +72,40 @@ const num = (v: string) => (v.trim() === "" ? null : Number(v))
 
 export const descriptionMax = (kind: ItemKind) =>
   kind === "honor" ? LIMITS.honorDescription : LIMITS.activityDescription
+
+const FIELD_ORDER = ["category", "level", "title", "organization", "description", "grades", "timing", "hours_per_week", "weeks_per_year", "intend_in_college"] as const
+
+/** The fields a ready item still lacks (client-side hint only; the backend decides). */
+export function missingFields(f: FormState, kind: ItemKind): string[] {
+  const empty: Record<(typeof FIELD_ORDER)[number], boolean> = {
+    category: f.category.trim() === "",
+    level: kind === "honor" && f.level.trim() === "",
+    title: f.title.trim() === "",
+    organization: f.organization.trim() === "",
+    description: f.description.trim() === "",
+    grades: f.grades.length === 0,
+    timing: kind === "activity" && f.timing.length === 0,
+    hours_per_week: kind === "activity" && f.hours.trim() === "",
+    weeks_per_year: kind === "activity" && f.weeks.trim() === "",
+    intend_in_college: kind === "activity" && f.intend === "",
+  }
+  return FIELD_ORDER.filter((k) => empty[k])
+}
+
+/** Length counter: amber with a short hint past `warn`; the input's maxLength is the hard stop. */
+export function Counter({ text, max, warn }: { text: string; max: number; warn: number }) {
+  const t = useT("items")
+  const over = text.length > warn
+  return (
+    <span
+      className={`text-xs tabular-nums ${over ? "text-amber-600 dark:text-amber-400" : "text-muted-foreground"}`}
+      aria-live="off"
+    >
+      {text.length}/{max}
+      {over ? ` · ${t("form.longHint", { warn })}` : ""}
+    </span>
+  )
+}
 
 /** Drafts only need a title and valid numbers; completeness is judged by the backend. */
 export function formValid(f: FormState): boolean {
@@ -138,11 +173,6 @@ export function ItemFields({
   const grades = optionList(options, "item_grades").map(Number) as ItemGrade[]
   const timings = optionList(options, "activity_timing") as ItemTiming[]
   const set = (patch: Partial<FormState>) => onChange({ ...value, ...patch })
-  const counter = (text: string, max: number) => (
-    <span className="text-muted-foreground text-xs tabular-nums" aria-live="off">
-      {text.length}/{max}
-    </span>
-  )
   const err = (field: string) =>
     errors.includes(field) ? (
       <span role="alert" className="text-destructive text-xs">
@@ -152,6 +182,7 @@ export function ItemFields({
   const toggle = <T,>(list: T[], v: T, on: boolean) => (on ? [...list, v] : list.filter((x) => x !== v))
   const activity = kind === "activity"
   const dMax = descriptionMax(kind)
+  const missing = missingFields(value, kind)
   return (
     <div className="flex flex-col gap-3">
       <p className="text-muted-foreground text-xs">{t("form.english")}</p>
@@ -171,6 +202,11 @@ export function ItemFields({
             </label>
           ))}
         </div>
+        {value.status === "ready" && missing.length > 0 ? (
+          <span role="status" className="text-xs text-amber-600 dark:text-amber-400">
+            {t("form.incompleteHint", { fields: missing.map((k) => t(`form.missing.${k}`)).join(", ") })}
+          </span>
+        ) : null}
       </fieldset>
       <div className="flex flex-col gap-1">
         <Label htmlFor={`${idPrefix}-category`}>{t(activity ? "form.activityType" : "form.category")}</Label>
@@ -219,7 +255,7 @@ export function ItemFields({
           value={value.title ?? ""}
           onChange={(e) => set({ title: e.target.value })}
         />
-        {counter(value.title, LIMITS.title)}
+        <Counter text={value.title} max={LIMITS.title} warn={WARN.title} />
         {err("title")}
       </div>
       <div className="flex flex-col gap-1">
@@ -230,7 +266,7 @@ export function ItemFields({
           value={value.organization ?? ""}
           onChange={(e) => set({ organization: e.target.value })}
         />
-        {counter(value.organization, LIMITS.organization)}
+        <Counter text={value.organization} max={LIMITS.organization} warn={WARN.organization} />
         {err("organization")}
       </div>
       <div className="flex flex-col gap-1">
@@ -242,7 +278,7 @@ export function ItemFields({
           value={value.description ?? ""}
           onChange={(e) => set({ description: e.target.value })}
         />
-        {counter(value.description, dMax)}
+        <Counter text={value.description} max={dMax} warn={WARN.description} />
         {err("description")}
       </div>
       <fieldset className="flex flex-col gap-1">

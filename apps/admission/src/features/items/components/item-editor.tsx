@@ -2,13 +2,14 @@
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Icons } from "@ihsp/ui"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { RequestConsultationButton } from "../../consultations/components/request-dialog"
 import { ProofList } from "../../proofs/components/proof-list"
-import { incompleteFields, useDeleteItem, usePatchItem, type Item, type ItemKind, type Rewrite } from "../api"
+import { incompleteFields, useDeleteItem, useGradeItem, usePatchItem, type Item, type ItemKind, type Rewrite } from "../api"
 import { formValid, ItemFields, toForm, toInput, type FormState } from "./item-fields"
 import { InterviewPanel } from "./interview-panel"
 import { MetricsEditor } from "./metrics-editor"
+import { ItemOpportunity } from "./item-opportunity"
 import { ItemGrades } from "./item-grades"
 import { ReviewSection } from "./review-card"
 
@@ -26,15 +27,31 @@ export function ItemEditor({ item, onDeleted }: { item: Item; onDeleted: () => v
   const remove = useDeleteItem()
   const [form, setForm] = useState<FormState>(() => toForm(item))
   const [confirming, setConfirming] = useState(false)
+  const grade = useGradeItem(item.id)
+  const gradeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(
+    () => () => {
+      if (gradeTimer.current) clearTimeout(gradeTimer.current)
+    },
+    [],
+  )
+  /** Re-grades once after a save that changed the title or description; quota and consent errors stay silent (the stale badge shows). */
+  const scheduleGrade = (saved: Item) => {
+    const changed = saved.title !== item.title || saved.description !== item.description
+    if (!changed || !saved.grade_stale) return
+    if (gradeTimer.current) clearTimeout(gradeTimer.current)
+    gradeTimer.current = setTimeout(() => grade.mutate(undefined, { onError: () => undefined }), 1500)
+  }
 
   return (
     <div className="flex flex-col gap-8">
+      <ItemGrades item={item} tips large />
       <form
         className="flex flex-col gap-3"
         onSubmit={(e) => {
           e.preventDefault()
           const { certificate_entry_id: _linked, ...changes } = toInput(form, item.kind as ItemKind)
-          patch.mutate({ ...changes, lock_version: item.lock_version })
+          patch.mutate({ ...changes, lock_version: item.lock_version }, { onSuccess: scheduleGrade })
         }}
       >
         <ItemFields
@@ -66,7 +83,7 @@ export function ItemEditor({ item, onDeleted }: { item: Item; onDeleted: () => v
       </form>
       <InterviewPanel itemId={item.id} onApply={(field, value) => setForm((f) => ({ ...f, [FIELD[field]]: value }))} />
       <MetricsEditor key={item.lock_version} itemId={item.id} metrics={item.metrics} />
-      <ItemGrades item={item} tips />
+      {item.kind === "activity" ? <ItemOpportunity item={item} /> : null}
       <ReviewSection itemId={item.id} review={item.review} stale={item.review_stale} />
       <ProofList itemId={item.id} />
       <div>

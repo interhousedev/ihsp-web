@@ -105,7 +105,13 @@ describe("pipelines", () => {
     await selectDropdownValue(user, within(card).getByLabelText("Reasoning"), "low")
     fireEvent.click(within(card).getByRole("button", { name: "Save" }))
     await waitUntil(() => put !== null)
-    expect(put).toEqual({ connector_id: null, model: "google/gemini-3.8-flash", reasoning_effort: "low" })
+    expect(put).toEqual({
+      connector_id: null,
+      model: "google/gemini-3.8-flash",
+      reasoning_effort: "low",
+      tracing_enabled: null,
+      capture_content: null,
+    })
 
     const resetButton = await waitFor(() => {
       const button = within(screen.getByRole("group", { name: "studio" })).getByRole("button", {

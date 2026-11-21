@@ -48,6 +48,7 @@ export function MetricsEditor({ itemId, metrics }: { itemId: string; metrics: Me
   return (
     <section aria-label={t("metrics.title")} className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t("metrics.title")}</h2>
+      <p className="text-muted-foreground text-xs">{t("metrics.helper")}</p>
       {rows.length === 0 ? <p className="text-muted-foreground text-sm">{t("metrics.empty")}</p> : null}
       <ul className="flex flex-col gap-3">
         {rows.map((row, index) => {

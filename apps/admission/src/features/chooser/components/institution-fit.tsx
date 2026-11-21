@@ -1,6 +1,9 @@
 "use client"
 
 import { useLocale, useT } from "@ihsp/i18n"
+import { useFitAnalysis } from "../../fit/api"
+import { FitAnalysisPanel } from "../../fit/components/fit-analysis"
+import { withAnalysis } from "../../fit/fit-model"
 import { FitBreakdown } from "../../fit/components/fit-breakdown"
 import { FitRing } from "../../fit/components/fit-ring"
 import { RingLogo } from "../../fit/components/ring-logo"
@@ -29,10 +32,15 @@ export function InstitutionFit({ row }: { row: ListRow }) {
   const t = useT("uniList")
   const locale = useLocale()
   const { institution } = row.entry
+  const analysis = useFitAnalysis(institution.id)
+  const researched = row.missing.length === 0
+  const fit = analysis.data?.ai ? withAnalysis(row.fit, analysis.data) : row.fit
+  /** Until the research has filled the facts the number is an estimate over the known axes. */
+  const approx = !researched || (row.fit.knownShare ?? 1) < 0.999
   return (
     <section aria-label={t("detail.title")} className="bg-card flex flex-col gap-4 rounded-3xl border p-4 md:p-6" data-testid="institution-fit">
       <div className="flex items-center gap-4">
-        <FitRing metrics={row.fit.metrics} size={88}>
+        <FitRing metrics={fit.metrics} size={88}>
           <RingLogo name={institution.name} src={institution.logo_url} />
         </FitRing>
         <div className="flex min-w-0 flex-col gap-1">
@@ -52,7 +60,8 @@ export function InstitutionFit({ row }: { row: ListRow }) {
           ) : null}
         </div>
       </div>
-      <FitBreakdown name={institution.name} fit={row.fit} full />
+      <FitBreakdown name={institution.name} fit={fit} approx={approx} full />
+      <FitAnalysisPanel analysis={analysis} auto={researched} />
     </section>
   )
 }

@@ -10,6 +10,7 @@ import {
   seg,
 } from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import type { IntakeDraft, OpportunityBrief } from "../opportunities/api"
 
 export type ItemKind = AdmissionItemIn["kind"]
 export type ItemStatus = NonNullable<AdmissionItemIn["status"]>
@@ -70,8 +71,14 @@ export type Review = Omit<AdmissionItemReview, "payload" | "grades"> & {
   }
 }
 
-/** `kind` and `status` are plain strings in the response; `review` is narrowed below. */
-export type Item = Omit<AdmissionItem, "review"> & { review: Review | null }
+/** The grade of an item; the descriptors ("A — Excellent and well written") come from the backend. */
+export type ItemGradeResult = NonNullable<AdmissionItem["grade"]> & {
+  title_descriptor: string | null
+  description_descriptor: string | null
+}
+
+/** `kind` and `status` are plain strings in the response; `review` and `grade` are narrowed below. */
+export type Item = Omit<AdmissionItem, "review" | "grade"> & { review: Review | null; grade: ItemGradeResult | null }
 
 export type InterviewQuestion = { gap?: string; question: string; why_it_matters?: string; options?: string[] }
 /** The contract types questions, answers and proposal as open objects. */
@@ -192,7 +199,7 @@ export function useReview(id: string) {
 export function useGradeItem(id: string) {
   const invalidate = useInvalidate()
   return useMutation({
-    mutationFn: () => getApiClient().post<NonNullable<Item["grade"]>>(`${BASE}/items/${seg(id)}/grade`),
+    mutationFn: () => getApiClient().post<ItemGradeResult>(`${BASE}/items/${seg(id)}/grade`),
     onSuccess: invalidate,
   })
 }
@@ -243,5 +250,43 @@ export function useDismissSuggestion() {
   return useMutation({
     mutationFn: (entryId: string) => getApiClient().post<void>(`${BASE}/honor-suggestions/${seg(entryId)}/dismiss`),
     onSuccess: invalidate,
+  })
+}
+
+/** The opportunity of an activity; `verified` once a moderator approved it. */
+export type ItemOpportunityLink = {
+  item_id: string
+  status: "pending" | "verified" | "rejected"
+  opportunity_id: string | null
+  submission_id: string | null
+  opportunity: OpportunityBrief
+  reason: string | null
+}
+const linkKey = (itemId: string) => ["admission", "item-opportunity", itemId] as const
+
+export function useItemOpportunity(itemId: string) {
+  return useQuery({
+    queryKey: linkKey(itemId),
+    queryFn: ({ signal }) =>
+      getApiClient().get<{ link: ItemOpportunityLink | null }>(`${BASE}/items/${seg(itemId)}/opportunity`, { signal }),
+    select: (data) => data.link,
+  })
+}
+
+/** Link an existing entry (`opportunity_id`) or propose a researched draft. */
+export function useLinkItemOpportunity(itemId: string) {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: (body: { opportunity_id: string } | { draft: IntakeDraft }) =>
+      getApiClient().put<ItemOpportunityLink>(`${BASE}/items/${seg(itemId)}/opportunity`, body),
+    onSuccess: (link) => client.setQueryData(linkKey(itemId), { link }),
+  })
+}
+
+export function useUnlinkItemOpportunity(itemId: string) {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: () => getApiClient().delete<void>(`${BASE}/items/${seg(itemId)}/opportunity`),
+    onSuccess: () => client.setQueryData(linkKey(itemId), { link: null }),
   })
 }

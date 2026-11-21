@@ -50,6 +50,7 @@ const item = (id: string, title: string, position: number): Item => ({
   level: null,
   certificate_entry_id: null,
   grade_stale: false,
+  missing: [],
 })
 
 const review: Review = {
@@ -102,7 +103,7 @@ describe("items", () => {
 
   const graded = (stale = false): Item => ({
     ...item("a", "Robotics", 0),
-    grade: { title_grade: "A", title_tip: "Crisp", description_grade: "C", description_tip: "Add detail", model: "m" },
+    grade: { title_grade: "A", title_tip: "Crisp", description_grade: "C", description_tip: "Add detail", model: "m", title_descriptor: null, description_descriptor: null },
     grade_stale: stale,
   })
 

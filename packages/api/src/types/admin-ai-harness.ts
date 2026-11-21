@@ -33,7 +33,12 @@ export type AiPipelineRoute = {
   model: string | null
   reasoning_effort: ReasoningEffort | null
   updated_at?: string | null
+  /** null: the default (admission untraced, the rest traced). */
+  tracing_enabled?: boolean | null
+  /** null: the environment's LANGFUSE__CAPTURE_CONTENT. */
+  capture_content?: boolean | null
 }
+export type AiPipelineTracing = { enabled: boolean; capture_content: boolean; default_enabled: boolean }
 export type AiPipelineEffective = {
   connector_id: string
   model: string
@@ -46,9 +51,28 @@ export type AiPipeline = {
   route: AiPipelineRoute
   effective: AiPipelineEffective
   env_default: Omit<AiPipelineEffective, "source">
+  tracing: AiPipelineTracing
 }
 export type AiPipelinesResponse = { items: AiPipeline[] }
-export type AiPipelineBody = Pick<AiPipelineRoute, "connector_id" | "model" | "reasoning_effort">
+export type AiPipelineBody = Pick<AiPipelineRoute, "connector_id" | "model" | "reasoning_effort"> & {
+  tracing_enabled: boolean | null
+  capture_content: boolean | null
+}
+
+/** The Langfuse project calls are traced to; the secret key is write-only and never returned. */
+export type AiTracing = {
+  source: "runtime" | "env" | "none"
+  host: string
+  public_key: string | null
+  has_secret: boolean
+  secret_last4: string | null
+  env_configured: boolean
+  env_host: string
+  capture_default: boolean
+  updated_at: string | null
+}
+/** Omit `secret_key` to keep the stored one. */
+export type AiTracingBody = { host: string; public_key: string; secret_key?: string }
 
 export type AiRequestItem = {
   id: string

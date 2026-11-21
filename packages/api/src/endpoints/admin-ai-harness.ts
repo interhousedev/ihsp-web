@@ -24,6 +24,8 @@ import type {
   AiSpendDailyResponse,
   AiSpendParams,
   AiSpendResponse,
+  AiTracing,
+  AiTracingBody,
 } from "../types/admin-ai-harness"
 
 const BASE = "/v1/admin/ai"
@@ -33,6 +35,7 @@ export const aiHarnessKeys = {
   all: () => ["admin", "ai-harness"] as const,
   connectors: () => ["admin", "ai-harness", "connectors"] as const,
   pipelines: () => ["admin", "ai-harness", "pipelines"] as const,
+  tracing: () => ["admin", "ai-harness", "tracing"] as const,
   requests: (filters?: object) => ["admin", "ai-harness", "requests", filters ?? {}] as const,
   versions: (ref: object) => ["admin", "ai-harness", "versions", ref] as const,
   diff: (params: object) => ["admin", "ai-harness", "diff", params] as const,
@@ -72,6 +75,18 @@ export const putAiPipeline = (pipeline: string, body: AiPipelineBody, opts?: Req
 /** DELETE /v1/admin/ai/pipelines/{pipeline} — admin; back to the environment. */
 export const deleteAiPipeline = (pipeline: string, opts?: RequestOptions) =>
   api.delete<void>(`${BASE}/pipelines/${seg(pipeline)}`, opts)
+
+/** GET /v1/admin/ai/tracing — admin; the Langfuse project (never the secret key). */
+export const getAiTracing = (opts?: RequestOptions) => api.get<AiTracing>(`${BASE}/tracing`, opts)
+export const getAiTracingQuery = () =>
+  queryOptions({ queryKey: aiHarnessKeys.tracing(), queryFn: ({ signal }) => getAiTracing({ signal }) })
+
+/** PUT /v1/admin/ai/tracing — admin; the secret key goes to the vault, write-only. */
+export const putAiTracing = (body: AiTracingBody, opts?: RequestOptions) =>
+  api.put<AiTracing>(`${BASE}/tracing`, body, opts)
+
+/** DELETE /v1/admin/ai/tracing — admin; back to the environment's project. */
+export const deleteAiTracing = (opts?: RequestOptions) => api.delete<AiTracing>(`${BASE}/tracing`, opts)
 
 /** GET /v1/admin/ai/requests — admin; the registered AI requests. */
 export const getAiRequests = (params?: AiRequestsParams, opts?: RequestOptions) =>
