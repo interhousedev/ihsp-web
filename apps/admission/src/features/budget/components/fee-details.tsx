@@ -1,8 +1,6 @@
 "use client"
 
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
-import Link from "next/link"
-import { LogoAvatar } from "../../../components/lib/photo-header"
 import { SourceChip } from "../../chooser/components/fact-source"
 import { formatCurrency } from "../../chooser/components/money"
 import { AidFacts } from "./aid-facts"
@@ -12,33 +10,15 @@ import { FEE_STATUSES, type BudgetRow, type FeeStatus } from "../types"
 const SELECT =
   "border-input bg-background h-11 rounded-lg border px-2.5 text-sm md:h-9 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
 
-/** One list entry of "Cost to apply": logo, round, fee with its source, fee status, aid forms and the aid deadline. */
-export function FeeRow({ row }: { row: BudgetRow }) {
+/** The money of one list entry: application fee with its source and status, aid forms, aid deadline and aid facts. */
+export function FeeDetails({ row }: { row: BudgetRow }) {
   const t = useT("budget")
   const locale = useLocale()
   const errorMessage = useErrorMessage()
   const feeStatus = useFeeStatus()
   const fee = row.application_fee
   return (
-    <li className="bg-card border-hairline-strong rounded-card flex min-w-0 flex-col gap-3 border p-4">
-      <div className="flex min-w-0 items-center gap-3">
-        <LogoAvatar
-          name={row.institution.name}
-          src={row.institution.logo_url}
-          fit={row.institution.logo_fit}
-          zoom={row.institution.logo_zoom}
-          className="size-10 ring-0"
-        />
-        <div className="min-w-0 flex-1">
-          <Link
-            href={`/chooser/institution/?id=${encodeURIComponent(row.institution.id)}`}
-            className="font-medium hover:underline"
-          >
-            {row.institution.name}
-          </Link>
-          <p className="text-muted-foreground text-xs">{row.round}</p>
-        </div>
-      </div>
+    <div className="flex min-w-0 flex-col gap-3">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         {fee ? (
           <>
@@ -92,6 +72,6 @@ export function FeeRow({ row }: { row: BudgetRow }) {
         ) : null}
       </div>
       <AidFacts row={row} />
-    </li>
+    </div>
   )
 }

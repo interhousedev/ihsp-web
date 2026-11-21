@@ -32,6 +32,7 @@ import { useFacets, useInstitutionSearch, useList, useStudyFields } from "../hoo
 import { ActiveChips } from "./active-chips"
 import { FieldFocus } from "./field-focus"
 import { FiltersPanel } from "./filters-panel"
+import { ListTray } from "./list-tray"
 import { InstitutionCard } from "./institution-card"
 
 const VIEWS = ["list", "discover"] as const
@@ -133,6 +134,7 @@ export function SearchView() {
     return (
       <div className="flex min-w-0 flex-col gap-3">
         <DiscoverPage
+          tray={<ListTray onOpenList={() => router.replace(`${pathname}?step=list`)} />}
           lead={
             <>
               {toolbar}

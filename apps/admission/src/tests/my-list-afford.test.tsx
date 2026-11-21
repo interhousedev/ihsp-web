@@ -2,7 +2,7 @@ import { apiUrl, server } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { afterEach, describe, expect, it } from "bun:test"
 import { http, HttpResponse } from "msw"
-import { MyList } from "../features/chooser/components/my-list"
+import { UniListStage } from "../features/chooser/components/list-stage"
 import { institution, listEntry, mockChooser } from "./chooser-handlers"
 import { renderAdmissionApp } from "./helpers"
 
@@ -38,7 +38,7 @@ afterEach(() => server.resetHandlers())
 const profile = (answers: Record<string, unknown>) =>
   http.get(apiUrl("/v1/admission/me/profile"), () => HttpResponse.json({ answers, lock_version: 1 }))
 
-describe("my list planning, gate and deadline", () => {
+describe("list stage planning, gate and deadline", () => {
   it("ADM-LIST-2: the affordability gate shows its message and opens the panel", async () => {
     mockChooser({ list: [listEntry({ id: "e1", institution: institution({ id: "i1", name: "Alpha U" }) })] })
     server.use(
@@ -50,8 +50,8 @@ describe("my list planning, gate and deadline", () => {
         ),
       ),
     )
-    renderAdmissionApp(<MyList />, { messages })
-    const round = await screen.findByLabelText("Round")
+    renderAdmissionApp(<UniListStage />, { messages })
+    const round = await screen.findByLabelText("Round of Alpha U")
     fireEvent.change(round, { target: { value: "ED" } })
     expect(await screen.findByText(/Alpha U: a binding round needs a clear affordability check first/)).toBeTruthy()
     expect(screen.queryByRole("region", { name: "Affordability" })).toBeNull()
@@ -76,8 +76,8 @@ describe("my list planning, gate and deadline", () => {
         }),
       ),
     )
-    renderAdmissionApp(<MyList />, { messages })
-    fireEvent.click(await screen.findByRole("button", { name: "Notes and affordability" }))
+    renderAdmissionApp(<UniListStage />, { messages })
+    fireEvent.click(await screen.findByRole("button", { name: "Show details of Uni One" }))
     expect(await screen.findByText(/cost of this college is not in the catalog/)).toBeTruthy()
     const link = await screen.findByRole("link", { name: "Add your budget" })
     expect(link.getAttribute("href")).toBe("/setup?q=q32")
@@ -92,7 +92,7 @@ describe("my list planning, gate and deadline", () => {
       sources: [{ key: "site", url: "https://alpha.example/admissions", year: null }],
     })
     mockChooser({ list: [listEntry({ id: "e1", round: "ED", institution: inst })] })
-    renderAdmissionApp(<MyList />, { messages })
+    renderAdmissionApp(<UniListStage />, { messages })
     expect(await screen.findByText("ED deadline not on file")).toBeTruthy()
     const link = screen.getByRole("link", { name: "Official site" })
     expect(link.getAttribute("href")).toBe("https://alpha.example/admissions")
@@ -103,7 +103,7 @@ describe("my list planning, gate and deadline", () => {
     const dated = (plan: string, date: string) => ({ plan, date, notify_by: null, cycle: null, label_short: plan })
     const inst = institution({ id: "i2", deadlines: [dated("RD", "2020-01-05")], next_deadline: null })
     mockChooser({ list: [listEntry({ id: "e2", round: "RD", institution: inst })] })
-    renderAdmissionApp(<MyList />, { messages })
+    renderAdmissionApp(<UniListStage />, { messages })
     expect(await screen.findByText("No upcoming deadline")).toBeTruthy()
     expect(screen.queryByText(/2020/)).toBeNull()
   })

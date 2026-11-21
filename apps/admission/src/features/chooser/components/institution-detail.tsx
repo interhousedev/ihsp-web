@@ -22,6 +22,7 @@ import { useOptionLabel } from "./option-label"
 import { rowText } from "./detail/groups"
 import { RichDetail } from "./detail/rich-detail"
 import { sectionId } from "./detail/section-id"
+import { InstitutionFit, CostText, useInstitutionRow } from "./institution-fit"
 import { currencyOf, formatCurrency } from "./money"
 
 /** Which recorded facts each tab shows; facts outside the lists go to "Campus & outcomes". */
@@ -140,6 +141,7 @@ function DetailBody({ institution }: { institution: Institution }) {
   const tab: Tab = isTab(requested) ? requested : "cost"
   const scholarships = useScholarships({ institution_id: institution.id })
   const chances = useChances(institution.id)
+  const listRow = useInstitutionRow(institution.id)
   const shown = new Set<string>([...Object.values(TAB_FACTS).flat(), ...HIDDEN_FACTS])
   const other = Object.entries(institution.facts).filter(([key]) => !shown.has(key.toLowerCase()))
   const rate = pick(institution, ["acceptance_rate"])[0]?.[1]
@@ -239,7 +241,11 @@ function DetailBody({ institution }: { institution: Institution }) {
           ) : null}
           {rateValue !== null ? <Stat label={t("detail.stats.admissionRate")}>{percent(rateValue)}</Stat> : null}
           {kind && hasValue(kind) ? <Stat label={t("detail.stats.type")}>{kindLabel(String(kind.value))}</Stat> : null}
-          {institution.cost_after_aid ? (
+          {listRow?.cost ? (
+            <Stat label={t("detail.stats.cost")}>
+              <CostText row={listRow} />
+            </Stat>
+          ) : institution.cost_after_aid ? (
             <Stat label={t("detail.stats.cost")}>
               ≈ {formatCurrency(institution.cost_after_aid, institution.coa_currency, locale) ?? institution.cost_after_aid}
             </Stat>
@@ -252,6 +258,7 @@ function DetailBody({ institution }: { institution: Institution }) {
           {rich && testPolicy ? <Stat label={tDetails("stats.testPolicy")}>{testPolicy}</Stat> : null}
         </dl>
       </PhotoHeader>
+      {listRow ? <InstitutionFit row={listRow} /> : null}
       {rich ? <RichDetail institution={institution} chances={<ChancesView institutionId={institution.id} />} /> : null}
       {rich ? (
         <div className="flex flex-col gap-4">

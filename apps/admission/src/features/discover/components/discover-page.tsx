@@ -25,7 +25,7 @@ type Decided = { match: Match; direction: SwipeDirection }
 
 
 /** The Kollegio-style matching feed, embedded in the chooser (no page chrome): settings, swipe deck and assistant context. */
-export function DiscoverPage({ lead }: { lead?: ReactNode }) {
+export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNode }) {
   const t = useT("discover")
   const tChat = useT("uniChat")
   const errorMessage = useErrorMessage()
@@ -104,10 +104,9 @@ export function DiscoverPage({ lead }: { lead?: ReactNode }) {
     <StateView state="error" error={matches.error} onRetry={() => void matches.refetch()} />
   ) : (
     <div className="mx-auto flex w-full min-w-0 max-w-md flex-col gap-4">
-      <SwipeExplainer />
       <div className="rounded-card relative isolate z-0 min-w-0 overflow-hidden">
         <SwipeDeck
-          className="h-[min(34rem,calc(100dvh-30rem))] min-h-[16rem] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
+          className="h-[min(34rem,calc(100dvh-28.5rem))] min-h-[16rem] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
           items={remaining}
           getKey={(match) => match.university_id}
           getExitDirection={(match) => history.find((entry) => entry.match.university_id === match.university_id)?.direction}
@@ -144,6 +143,7 @@ export function DiscoverPage({ lead }: { lead?: ReactNode }) {
           <kbd className="text-primary-foreground/70 hidden text-xs md:inline">→</kbd>
         </Button>
       </div>
+      <SwipeExplainer />
     </div>
   )
 
@@ -164,13 +164,15 @@ export function DiscoverPage({ lead }: { lead?: ReactNode }) {
       {wide ? (
         <div className="grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-6">
           {deck}
-          <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
+          <aside data-testid="discover-side-slot" className="relative z-10 flex min-w-0 flex-col gap-4">
+            {tray}
             {context}
           </aside>
         </div>
       ) : (
         <>
           {deck}
+          {tray}
           <ResponsiveDialog open={chatOpen} onOpenChange={setChatOpen} title={tChat("tab")}>
             {context}
           </ResponsiveDialog>

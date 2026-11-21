@@ -12,8 +12,11 @@ import { DefaultPromptDialog } from "./default-prompt-dialog"
 import { useUniChat, useUniChatSuggestions } from "../hooks"
 import { useRunDefault } from "../use-run-default"
 
+/** The university the panel talks about: a deck match, or an entry of the list. */
+export type ChatSubject = Pick<Match, "university_id" | "name" | "logo_url" | "city">
+
 /** The per-university AI chat on the side of the deck: persisted per student and university, with research and chips. */
-export function UniChatPanel({ match }: { match: Match | undefined }) {
+export function UniChatPanel({ match }: { match: ChatSubject | undefined }) {
   const t = useT("uniChat")
   const errorMessage = useErrorMessage()
   const [promptOpen, setPromptOpen] = useState(false)

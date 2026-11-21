@@ -2,7 +2,7 @@
 import { describe, expect, it } from "bun:test"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { InstitutionCombobox } from "../features/chooser/components/institution-combobox"
-import { MyList } from "../features/chooser/components/my-list"
+import { UniListStage } from "../features/chooser/components/list-stage"
 import { institution, mockChooser } from "./chooser-handlers"
 import { renderAdmissionApp } from "./helpers"
 
@@ -36,7 +36,7 @@ describe("institution combobox", () => {
 describe("my list add row", () => {
   it("opens the picker and posts the chosen university", async () => {
     const { listPosts } = mockChooser({ items: [institution()], list: [] })
-    renderAdmissionApp(<MyList />)
+    renderAdmissionApp(<UniListStage />)
     fireEvent.click(await screen.findByRole("button", { name: /Add a university/ }))
     const input = await screen.findByRole("combobox")
     fireEvent.change(input, { target: { value: "uni" } })
