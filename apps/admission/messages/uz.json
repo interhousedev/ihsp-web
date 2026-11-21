@@ -4708,5 +4708,303 @@
     "error": {
       "title": "Sharhni tayyorlab boʻlmadi"
     }
+  },
+  "fit": {
+    "title": "Mosligi",
+    "ringHelp": "Har bir rang — bitta mezon. Yoy uzunligi — mezon bahosi va uning ogʻirligi.",
+    "open": "{name} bilan mosligi: 100 dan {value}. Nimadan tashkil topganini koʻrsatish",
+    "weight": "ogʻirligi {pct}%",
+    "missing": "maʼlumot yoʻq",
+    "known": "Maʼlumotning {pct}% asosida hisoblandi, qolgani toʻldirilmagan.",
+    "disclaimer": "Bu sizning maqsad va maʼlumotlaringizga mosligi, qabul qilinish ehtimoli emas.",
+    "metric": {
+      "afford": {
+        "name": "Narx"
+      },
+      "goals": {
+        "name": "Maqsad va kasblar"
+      },
+      "profile": {
+        "name": "Profil"
+      },
+      "traits": {
+        "name": "Xarakter"
+      }
+    },
+    "time": {
+      "min": "{n} daq",
+      "week": "{n} hafta"
+    },
+    "moves": {
+      "title": "Moslikni nima oshiradi",
+      "career": "Yoʻnalish va 3 ta kasbni tanlash",
+      "traits": "Xarakter testini topshirish, 10 savol",
+      "ielts": "IELTSni {need} gacha oshirish",
+      "aid": "Xorijliklar uchun stipendiya va yordamni topish"
+    },
+    "why": {
+      "afford": {
+        "none": "Oila byudjeti kiritilmagan, narxni solishtirib boʻlmaydi.",
+        "ok": "Yordamdan keyin yiliga ≈ {net}: byudjet doirasida.",
+        "gap": "Yordamdan keyin yiliga ≈ {net}, byudjetdan {gap} yetmaydi.",
+        "aid": "Narxi {sticker} → xorijliklarga oʻrtacha yordamdan keyin ≈ {net}."
+      },
+      "goals": {
+        "none": "Yoʻnalish va kasblar hali tanlanmagan.",
+        "match": "Dastur «{prof}» kasbiga olib boradi.",
+        "risk": {
+          "low": "«{prof}»: sunʼiy intellekt almashtirish xavfi past, u koʻproq yordam beradi.",
+          "mid": "«{prof}»: sunʼiy intellekt vazifalarni sezilarli oʻzgartiradi, yangi koʻnikmalar kerak.",
+          "high": "«{prof}»: almashtirish xavfi yuqori, B rejasi kerak."
+        }
+      },
+      "profile": {
+        "none": "Solishtirish uchun baho va test ballari yoʻq.",
+        "ok": "Baho va testlar qabul qilinganlarning odatdagi darajasidan past emas.",
+        "reach": "IELTS {need} kerak, hozir {have}.",
+        "field": "Sizning yoʻnalishingiz universitet dasturlari orasida bor."
+      },
+      "traits": {
+        "none": "Xarakter testi topshirilmagan.",
+        "fit": "Xarakteringizga mos: {trait}.",
+        "mismatch": "Mos kelishi kam: {trait}."
+      }
+    },
+    "terms": {
+      "prof": {
+        "data": "Maʼlumotlar muhandisi",
+        "biomed": "Biomeditsina muhandisi",
+        "econ": "Iqtisodchi-tahlilchi",
+        "translator": "Tarjimon"
+      },
+      "trait": {
+        "promo": "oʻzini taqdim eta olish",
+        "team": "jamoada ishlash",
+        "small": "kichik guruhlar"
+      },
+      "risk": {
+        "low": "past",
+        "mid": "oʻrtacha",
+        "high": "yuqori"
+      }
+    }
+  },
+  "today": {
+    "title": "Bugun",
+    "mock": "demo maʼlumot",
+    "switchLabel": "Demo holati",
+    "states": {
+      "g10-autumn": "10-sinf · kuz",
+      "g11-november": "11-sinf · noyabr",
+      "g11-march": "11-sinf · mart"
+    },
+    "date": "{date}",
+    "season": {
+      "label": "Fasl",
+      "about": "Yoʻl taxminan 14 oy davom etadi: oltita fasl, har birining oʻz vazifasi bor.",
+      "name": {
+        "explore": "Tanishuv",
+        "build": "Rivojlanish",
+        "choose": "Tanlov",
+        "write": "Insho",
+        "submit": "Topshirish",
+        "results": "Natijalar"
+      },
+      "hint": {
+        "explore": "Kim boʻlishni xohlayotganingizni aniqlaymiz va birinchi yutuqlarni yigʻamiz.",
+        "build": "Profilni kuchaytiramiz: olimpiadalar, kurslar, birinchi test.",
+        "choose": "Universitetlar roʻyxatini tuzamiz va byudjetni hisoblaymiz.",
+        "write": "Insho yozamiz va tavsiyanomalar soʻraymiz.",
+        "submit": "Arizalarni yuboramiz va hujjatlarni yopamiz.",
+        "results": "Javoblarni kutamiz, takliflarni solishtiramiz, tanlaymiz."
+      }
+    },
+    "next": {
+      "title": "Keyingisi",
+      "why": "Nega",
+      "later": "Hozir emas",
+      "queued": "Soʻng",
+      "min": "~{n} daq"
+    },
+    "action": {
+      "quiz": {
+        "title": "Oʻzingiz haqingizda 10 savol",
+        "why": "Javoblarsiz kasblarni tanlab va mosligini hisoblab boʻlmaydi.",
+        "cta": "Boshlash"
+      },
+      "professions": {
+        "title": "Oʻrganish uchun 3 ta kasbni tanlang",
+        "why": "Sunʼiy intellekt ularni qanday oʻzgartirishini va qanday koʻnikmalar kerakligini koʻrsatamiz.",
+        "cta": "Tanlash"
+      },
+      "ieltsTrial": {
+        "title": "Sinov IELTSga yoziling",
+        "why": "Yozilish 5-noyabrda yopiladi, natija bir yildan keyin kerak boʻladi.",
+        "cta": "Yozilish"
+      },
+      "essays": {
+        "title": "{name}: {n} ta boʻsh inshoni yozish",
+        "why": "Roʻyxatingizdagi eng yaqin muddat: 5-dekabr, 14 kundan keyin.",
+        "cta": "Yozish"
+      },
+      "transcript": {
+        "title": "Transkriptga buyurtma bering",
+        "why": "Maktab uni 7 kunda tayyorlaydi, u {n} ta universitetga kerak.",
+        "cta": "Buyurtma"
+      },
+      "direction": {
+        "title": "Taʼlim yoʻnalishini tanlang",
+        "why": "«Maqsad» hamma universitetda kulrang, tanlash {n} tasida moslikni oshiradi.",
+        "cta": "Tanlash"
+      },
+      "compare": {
+        "title": "{a} va {b} takliflarini solishtiring",
+        "why": "1-maygacha javob berish kerak, asosiy farq — yordamdan keyingi narx.",
+        "cta": "Solishtirish"
+      },
+      "taxDoc": {
+        "title": "{name} uchun soliq maʼlumotnomasini yuklang",
+        "why": "Usiz yordam koʻrib chiqilmaydi, muddat 25-mart.",
+        "cta": "Yuklash"
+      },
+      "thanks": {
+        "title": "Tavsiya beruvchilarga natijani yozing",
+        "why": "Bu odobli, ular kichik oʻquvchilarga yordam bera oladi.",
+        "cta": "Yozish"
+      }
+    },
+    "streak": {
+      "title": "Seriya",
+      "days": "ketma-ket {n} kun",
+      "week": "Oxirgi 7 kun",
+      "done": "bajarilgan",
+      "missed": "oʻtkazib yuborilgan"
+    },
+    "readiness": {
+      "title": "Tayyorlik"
+    },
+    "check": {
+      "title": "Fasl roʻyxati",
+      "quiz": "Oʻzingiz haqingizda 10 savolga javob bering",
+      "activities": "3 ta yutuqni yozing",
+      "testBooked": "Ingliz tili testiga yoziling",
+      "field": "Yoʻnalishni tanlang",
+      "safety": "Roʻyxatda ishonchli universitet bor",
+      "personalEssay": "Shaxsiy insho tayyor",
+      "transcript": "Transkript buyurtma qilingan",
+      "submitted": "Har bir universitetga yuborilgan yoki olib tashlangan",
+      "allSent": "Barcha arizalar yuborilgan",
+      "resultsIn": "Natijalarni kiriting",
+      "decision": "Universitetni tanlang",
+      "reply": "1-maygacha universitetga javob bering"
+    },
+    "unis": {
+      "title": "Mening universitetlarim",
+      "all": "Barcha universitetlar",
+      "tasks": "{done}/{total} vazifa",
+      "home": "Uyda ishonchli variant",
+      "status": {
+        "draft": "Tayyorlanmoqda",
+        "pending": "Kutilmoqda",
+        "admitted": "Qabul qilindi",
+        "waitlist": "Kutish roʻyxati",
+        "rejected": "Rad etildi"
+      },
+      "days": "{n} kun",
+      "pastDays": "muddat oʻtdi"
+    },
+    "prof": {
+      "title": "Siz uchun 3 ta kasb",
+      "risk": "Sunʼiy intellekt almashtirish xavfi: {risk}",
+      "later": "Universitetlar yozda paydo boʻladi. Hozircha halqa kulrang: solishtiradigan narsa yoʻq.",
+      "note": {
+        "data": "Talab oshmoqda: sunʼiy intellekt oddiy ishni oladi, qarorlar odamda qoladi.",
+        "biomed": "Deyarli avtomatlashtirilmaydi: laboratoriya va masʼuliyat kerak.",
+        "translator": "Matnlarni modellar tarjima qiladi; ogʻzaki tarjima va lokalizatsiya qoladi."
+      }
+    },
+    "deadlines": {
+      "title": "Muddatlar",
+      "empty": "Yaqin muddatlar yoʻq",
+      "today": "bugun",
+      "days": "{n} kun",
+      "later": "Topshirish keyinroq, yozdan",
+      "apply": "{name}: topshirish",
+      "test": "IELTS: yozilish",
+      "meeting": "Maslahatchi bilan uchrashuv",
+      "reply": "Javob: {name}",
+      "replyAll": "Javob muddati",
+      "doc": "Maʼlumotnoma: {name}"
+    },
+    "replyDeadline": "Universitetlarga javob: {n} kun",
+    "bar": {
+      "today": "Bugun",
+      "profile": "Profil",
+      "unis": "Universitetlar",
+      "essays": "Insho",
+      "apply": "Topshirish",
+      "label": "Boʻlimlar (demo)"
+    }
+  },
+  "weightsLab": {
+    "title": "Siz uchun nima muhim",
+    "mock": "maket",
+    "intro": "Nima muhimligini oʻzingizga qulay usulda ayting. Ikkala usul ham moslikning bir xil toʻrt ogʻirligini beradi, quyidagi universitetlar esa darhol qayta saralanadi.",
+    "tabsLabel": "Tanlash usuli",
+    "tabs": {
+      "triangle": "Uchburchak",
+      "radar": "Radar"
+    },
+    "triangle": {
+      "label": "Ustuvorliklar uchburchagi",
+      "hint": "Nuqtani suring, uchburchakning istalgan joyiga bosing yoki strelkalardan foydalaning. Nuqta markaz, burchak va tomonlarga yopishadi.",
+      "value": "Ijtimoiy hayot {social}%, oʻqish {study}%, kasb {profession}%",
+      "chipsLabel": "Tez tanlash",
+      "balanced": "Teng",
+      "corner": {
+        "social": "Ijtimoiy hayot",
+        "study": "Oʻqish",
+        "profession": "Kasb"
+      }
+    },
+    "radar": {
+      "label": "Xususiyatlar radari",
+      "hint": "Xususiyatni 1 dan 10 gacha baholash uchun nuqtani suring yoki halqaga bosing. Klaviaturada: Tab bilan nuqtaga, keyin strelkalar.",
+      "value": "{trait}: 10 dan {value}",
+      "reset": "Tiklash"
+    },
+    "trait": {
+      "money": "Pul",
+      "prestige": "Nufuz",
+      "city": "Shahar va iqlim",
+      "home": "Uyga yaqinlik",
+      "career": "Karyera va AI xatarlari",
+      "social": "Ijtimoiy hayot",
+      "academics": "Oʻquv yuklamasi"
+    },
+    "word": {
+      "social": "ijtimoiy hayot",
+      "study": "oʻqish",
+      "profession": "kasb",
+      "money": "pul",
+      "prestige": "nufuz",
+      "city": "shahar va iqlim",
+      "home": "uyga yaqinlik",
+      "career": "karyera va AI xatarlari",
+      "academics": "oʻquv yuklamasi"
+    },
+    "summary": {
+      "title": "Oddiy soʻzlar bilan",
+      "quote": "“{x}”",
+      "lead": "Siz uchun eng muhimi: {list}.",
+      "balanced": "Siz uchun hammasi taxminan bir xil muhim.",
+      "and": "{a} va {b}",
+      "weights": "Moslik halqasidagi ogʻirliklar"
+    },
+    "top": {
+      "title": "Hozirgi top-5",
+      "note": "Demo universitetlar va oʻylab topilgan baholar; ogʻirliklarga qarab faqat tartib oʻzgaradi.",
+      "score": "100 dan {value}"
+    }
   }
 }

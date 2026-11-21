@@ -4708,5 +4708,303 @@
     "error": {
       "title": "The brief could not be prepared"
     }
+  },
+  "fit": {
+    "title": "Fit",
+    "ringHelp": "Each colour is one criterion. The arc length is the criterion score times its weight.",
+    "open": "Fit for {name}: {value} of 100. Show what it is made of",
+    "weight": "weight {pct}%",
+    "missing": "no data",
+    "known": "Based on {pct}% of the data; the rest is not filled in.",
+    "disclaimer": "This is fit with your goals and data, not a chance of admission.",
+    "metric": {
+      "afford": {
+        "name": "Cost"
+      },
+      "goals": {
+        "name": "Goals and careers"
+      },
+      "profile": {
+        "name": "Profile"
+      },
+      "traits": {
+        "name": "Personality"
+      }
+    },
+    "time": {
+      "min": "{n} min",
+      "week": "{n} wk"
+    },
+    "moves": {
+      "title": "What raises the fit",
+      "career": "Pick a field and 3 careers",
+      "traits": "Take the personality test, 10 questions",
+      "ielts": "Raise IELTS to {need}",
+      "aid": "Find scholarships and aid for international students"
+    },
+    "why": {
+      "afford": {
+        "none": "Family budget not set, so there is nothing to compare the cost with.",
+        "ok": "≈ {net} a year after aid: within budget.",
+        "gap": "≈ {net} a year after aid, {gap} over the budget.",
+        "aid": "Price {sticker} → ≈ {net} after average aid for international students."
+      },
+      "goals": {
+        "none": "Field and careers are not chosen yet.",
+        "match": "The programme leads to “{prof}”.",
+        "risk": {
+          "low": "“{prof}”: low risk of AI replacement, AI mostly helps.",
+          "mid": "“{prof}”: AI changes the tasks noticeably, new skills needed.",
+          "high": "“{prof}”: high risk of AI replacement, a plan B is needed."
+        }
+      },
+      "profile": {
+        "none": "No grades or test scores to compare.",
+        "ok": "Grades and tests at or above those of typical admits.",
+        "reach": "IELTS {need} needed, you have {have}.",
+        "field": "Your field is among the programmes."
+      },
+      "traits": {
+        "none": "Personality test not taken.",
+        "fit": "A good match: {trait}.",
+        "mismatch": "Few matches: {trait}."
+      }
+    },
+    "terms": {
+      "prof": {
+        "data": "Data engineer",
+        "biomed": "Biomedical engineer",
+        "econ": "Economic analyst",
+        "translator": "Translator"
+      },
+      "trait": {
+        "promo": "self-presentation",
+        "team": "teamwork",
+        "small": "small groups"
+      },
+      "risk": {
+        "low": "low",
+        "mid": "medium",
+        "high": "high"
+      }
+    }
+  },
+  "today": {
+    "title": "Today",
+    "mock": "demo data",
+    "switchLabel": "Demo state",
+    "states": {
+      "g10-autumn": "Gr 10 · autumn",
+      "g11-november": "Gr 11 · November",
+      "g11-march": "Gr 11 · March"
+    },
+    "date": "{date}",
+    "season": {
+      "label": "Season",
+      "about": "The path takes about 14 months: six seasons, each with its own job.",
+      "name": {
+        "explore": "Explore",
+        "build": "Build",
+        "choose": "Choose",
+        "write": "Write",
+        "submit": "Submit",
+        "results": "Results"
+      },
+      "hint": {
+        "explore": "Find out who you want to become and collect first achievements.",
+        "build": "Strengthen the profile: olympiads, courses, a first test.",
+        "choose": "Build a list of universities and check the budget.",
+        "write": "Write essays and ask for recommendations.",
+        "submit": "Send applications and close the documents.",
+        "results": "Wait for answers, compare offers, decide."
+      }
+    },
+    "next": {
+      "title": "Next",
+      "why": "Why",
+      "later": "Not now",
+      "queued": "Then",
+      "min": "~{n} min"
+    },
+    "action": {
+      "quiz": {
+        "title": "10 questions about you",
+        "why": "Without them we cannot suggest careers or compute fit.",
+        "cta": "Start"
+      },
+      "professions": {
+        "title": "Pick 3 careers to explore",
+        "why": "We show how AI changes them and which skills you will need.",
+        "cta": "Pick"
+      },
+      "ieltsTrial": {
+        "title": "Book a trial IELTS",
+        "why": "Booking closes on 5 November; you need the result in a year.",
+        "cta": "Book"
+      },
+      "essays": {
+        "title": "{name}: write {n} empty essays",
+        "why": "The nearest deadline on your list: 5 December, in 14 days.",
+        "cta": "Write"
+      },
+      "transcript": {
+        "title": "Order your transcript",
+        "why": "The school needs 7 days and {n} universities require it.",
+        "cta": "Order"
+      },
+      "direction": {
+        "title": "Choose a field of study",
+        "why": "“Goals” is grey for every university; choosing lifts fit for {n}.",
+        "cta": "Choose"
+      },
+      "compare": {
+        "title": "Compare the offers of {a} and {b}",
+        "why": "You must reply by 1 May; the main difference is the cost after aid.",
+        "cta": "Compare"
+      },
+      "taxDoc": {
+        "title": "Upload the tax certificate for {name}",
+        "why": "Without it aid is not considered, due 25 March.",
+        "cta": "Upload"
+      },
+      "thanks": {
+        "title": "Tell your recommenders the results",
+        "why": "It is polite, and they can help younger students.",
+        "cta": "Write"
+      }
+    },
+    "streak": {
+      "title": "Streak",
+      "days": "{n} days in a row",
+      "week": "Last 7 days",
+      "done": "done",
+      "missed": "missed"
+    },
+    "readiness": {
+      "title": "Readiness"
+    },
+    "check": {
+      "title": "Season checklist",
+      "quiz": "Answer 10 questions about yourself",
+      "activities": "Log 3 achievements",
+      "testBooked": "Book an English test",
+      "field": "Choose a field",
+      "safety": "The list has a safety university",
+      "personalEssay": "Personal essay is ready",
+      "transcript": "Transcript ordered",
+      "submitted": "Every university sent or dropped",
+      "allSent": "All applications sent",
+      "resultsIn": "Enter the results",
+      "decision": "Choose a university",
+      "reply": "Reply to the university by 1 May"
+    },
+    "unis": {
+      "title": "My universities",
+      "all": "All universities",
+      "tasks": "{done}/{total} tasks",
+      "home": "Safe choice at home",
+      "status": {
+        "draft": "In progress",
+        "pending": "Waiting",
+        "admitted": "Admitted",
+        "waitlist": "Waitlist",
+        "rejected": "Rejected"
+      },
+      "days": "{n} d",
+      "pastDays": "deadline passed"
+    },
+    "prof": {
+      "title": "3 careers for you",
+      "risk": "AI replacement risk: {risk}",
+      "later": "Universities appear in summer. The ring is grey for now: nothing to compare.",
+      "note": {
+        "data": "Demand grows: AI takes the routine, people keep the decisions.",
+        "biomed": "Hardly automated: labs and responsibility are needed.",
+        "translator": "Models translate texts; interpreting and localisation remain."
+      }
+    },
+    "deadlines": {
+      "title": "Deadlines",
+      "empty": "No upcoming deadlines",
+      "today": "today",
+      "days": "{n} d",
+      "later": "Applying comes later, from summer",
+      "apply": "{name}: apply",
+      "test": "IELTS: booking",
+      "meeting": "Counselor meeting",
+      "reply": "Reply: {name}",
+      "replyAll": "Reply deadline",
+      "doc": "Certificate: {name}"
+    },
+    "replyDeadline": "Reply to universities: {n} d",
+    "bar": {
+      "today": "Today",
+      "profile": "Profile",
+      "unis": "Universities",
+      "essays": "Essays",
+      "apply": "Apply",
+      "label": "Sections (demo)"
+    }
+  },
+  "weightsLab": {
+    "title": "What matters to you",
+    "mock": "mock",
+    "intro": "Say what matters in the way that feels easiest. Both ways give the same four fit weights, and the universities below re-rank at once.",
+    "tabsLabel": "Way to choose",
+    "tabs": {
+      "triangle": "Triangle",
+      "radar": "Radar"
+    },
+    "triangle": {
+      "label": "Triangle of priorities",
+      "hint": "Drag the dot, tap anywhere in the triangle, or use the arrow keys. It snaps to the centre, the corners and the edges.",
+      "value": "Social life {social}%, study {study}%, profession {profession}%",
+      "chipsLabel": "Quick picks",
+      "balanced": "Equal",
+      "corner": {
+        "social": "Social life",
+        "study": "Study",
+        "profession": "Profession"
+      }
+    },
+    "radar": {
+      "label": "Radar of traits",
+      "hint": "Drag a point or tap a ring to rate a trait from 1 to 10. With the keyboard: Tab to a point, then arrows.",
+      "value": "{trait}: {value} of 10",
+      "reset": "Reset"
+    },
+    "trait": {
+      "money": "Money",
+      "prestige": "Prestige",
+      "city": "City and climate",
+      "home": "Closeness to home",
+      "career": "Career and AI risks",
+      "social": "Social life",
+      "academics": "Academic workload"
+    },
+    "word": {
+      "social": "social life",
+      "study": "study",
+      "profession": "profession",
+      "money": "money",
+      "prestige": "prestige",
+      "city": "city and climate",
+      "home": "closeness to home",
+      "career": "career and AI risks",
+      "academics": "academic workload"
+    },
+    "summary": {
+      "title": "In plain words",
+      "quote": "“{x}”",
+      "lead": "What matters most to you: {list}.",
+      "balanced": "Everything matters about equally to you.",
+      "and": "{a} and {b}",
+      "weights": "Weights in the fit ring"
+    },
+    "top": {
+      "title": "Your top 5 now",
+      "note": "Demo universities and invented scores; only the order changes with your weights.",
+      "score": "{value} of 100"
+    }
   }
 }
