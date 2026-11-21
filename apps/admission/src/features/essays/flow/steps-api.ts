@@ -157,7 +157,13 @@ export type MatchSlot = {
   essay_id: string | null
   assigned: AssignedEssay | null
   candidates: MatchCandidate[]
+  category: string | null
+  prompt_key: string | null
+  /** The Common App personal statement: one essay for every Common App university. */
+  shared: boolean
+  short_answer: ShortAnswer | null
 }
+export type ShortAnswer = { prompt_key: string; text: string; word_count: number; updated_at: string | null }
 export type MatchTable = {
   institution_id: string
   institution_name: string
@@ -206,5 +212,26 @@ export function useAssignSlot() {
       void qc.invalidateQueries({ queryKey: PROMPT_MAP_KEY })
       void qc.invalidateQueries({ queryKey: IDEA_FIT_KEY })
     },
+  })
+}
+
+/** Fills or empties the one personal statement shared by every Common App university. */
+export function useAssignCommonApp() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (essayId: string | null) => getApiClient().put<unknown>(`${BASE}/essays/match/common-app`, { essay_id: essayId }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ["admission", "essays", "match"] })
+      void qc.invalidateQueries({ queryKey: PROMPT_MAP_KEY })
+      void qc.invalidateQueries({ queryKey: IDEA_FIT_KEY })
+    },
+  })
+}
+
+/** Stores a short answer; the server refuses more than 150 words or the prompt's limit with 422. */
+export function useSaveShortAnswer() {
+  return useMutation({
+    mutationFn: ({ promptKey, text }: { promptKey: string; text: string }) =>
+      getApiClient().put<ShortAnswer>(`${BASE}/essays/short-answers/${seg(promptKey)}`, { text }),
   })
 }

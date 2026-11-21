@@ -51,7 +51,7 @@ export function FitRingButton({
             />
           }
         >
-          <FitRing metrics={fit.metrics} size={size}>
+          <FitRing metrics={fit.metrics} total={fit.total} size={size}>
             {children}
           </FitRing>
           <span
@@ -71,10 +71,10 @@ export function FitRingButton({
       </HoverCard>
       <ResponsiveDialog open={open} onOpenChange={setOpen} title={t("title")} description={name} size="sm">
         <div className="flex items-center gap-4">
-          <FitRing metrics={fit.metrics} size={72} active={active}>
+          <FitRing metrics={fit.metrics} total={fit.total} size={72} active={active}>
             {children}
           </FitRing>
-          <p className="text-muted-foreground text-sm">{t("ringHelp")}</p>
+          <p className="text-muted-foreground text-sm">{t(fit.metrics.length === 0 ? "ringHelpTotal" : "ringHelp")}</p>
         </div>
         <FitBreakdown name={name} fit={fit} full onHover={setActive} />
       </ResponsiveDialog>

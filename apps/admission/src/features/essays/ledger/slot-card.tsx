@@ -7,7 +7,8 @@ import { useState } from "react"
 import { useEssayLabel } from "../components/supp-label"
 import type { EssaySummary } from "../api"
 import type { MatchSlot, MatchTable } from "../flow/steps-api"
-import { isPersonalSlot, promptHead } from "./slot-model"
+import { ShortAnswerField } from "./short-answer"
+import { isPersonalSlot, isShortSlot, promptHead } from "./slot-model"
 
 export const dropId = (universityId: string, slot: string) => `${universityId}::${slot}`
 
@@ -65,7 +66,7 @@ export function SlotCard({
         {slot.required ? <Pill tone="neutral" className="h-5 px-2 text-xs">{t("required")}</Pill> : <span className="text-muted-foreground text-xs">{t("optional")}</span>}
         {slot.word_limit ? <span className="text-muted-foreground text-xs">{t("limitUpTo", { count: slot.word_limit })}</span> : null}
       </div>
-      {personal ? <p className="text-muted-foreground text-xs">{t("sharedCommonApp")}</p> : null}
+      {slot.shared ? <p className="text-primary text-xs font-medium">{t("sharedAll")}</p> : personal ? <p className="text-muted-foreground text-xs">{t("sharedCommonApp")}</p> : null}
       {slot.prompt ? (
         <div className="flex flex-col items-start gap-0.5">
           <p className={cn("text-muted-foreground text-xs italic", !open && "line-clamp-2")}>{slot.prompt}</p>
@@ -76,7 +77,9 @@ export function SlotCard({
           ) : null}
         </div>
       ) : null}
-      {a ? (
+      {isShortSlot(slot) ? (
+        <ShortAnswerField slot={slot} />
+      ) : a ? (
         <>
           <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm">
             <Icons.check aria-hidden className={cn("size-4 shrink-0", tooLong ? "text-warning" : "text-success")} />

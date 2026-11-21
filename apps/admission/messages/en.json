@@ -617,6 +617,15 @@
     "slotPersonal": "Personal essay · Common App",
     "slotExtra": "Additional essay",
     "limitUpTo": "up to {count} words",
+    "shortAnswerLabel": "Short answer",
+    "shortAnswerPlaceholder": "Write your answer here",
+    "wordsOfLimit": "{count} / {limit} words",
+    "wordsCount": "{count, plural, one {# word} other {# words}}",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "saveFailed": "Could not save",
+    "shortOver": "Over the limit by {count, plural, one {# word} other {# words}}. Shorten it to save.",
+    "sharedAll": "One for all Common App universities",
     "sharedCommonApp": "One essay for all Common App universities.",
     "promptMore": "Full prompt",
     "promptLess": "Less",
@@ -2388,6 +2397,7 @@
     "resultsLabel": "Universities",
     "sort": {
       "label": "Sort by",
+      "fit": "Best fit",
       "deadline": "Nearest deadline",
       "relevance": "Verified first",
       "name": "Name",
@@ -4304,6 +4314,8 @@
       "cost": "≈ per year after aid",
       "deadline": "Next deadline"
     },
+    "fewFacts": "Little data",
+    "research": "Research",
     "overlap": {
       "label": "Where you overlap",
       "why": "Why: {tags}"
@@ -5058,6 +5070,11 @@
       "match": "Matching",
       "list": "My list"
     },
+    "stagesShort": {
+      "quiz": "Survey",
+      "match": "Match",
+      "list": "List"
+    },
     "lockedWhy": {
       "match": "Finish the survey first",
       "list": "Add your first university"
@@ -5162,6 +5179,7 @@
     "raiseGoals": "Raise goals: choose professions",
     "title": "Fit",
     "ringHelp": "Each colour is one criterion. The arc length is the criterion score times its weight.",
+    "ringHelpTotal": "The arc is the overall fit, from 0 to 100. Open the university to see what it is made of.",
     "open": "Fit for {name}: {value} of 100. Show what it is made of",
     "weight": "weight {pct}%",
     "missing": "no data",

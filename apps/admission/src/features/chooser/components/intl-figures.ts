@@ -1,5 +1,6 @@
 "use client"
 
+import { useMatches } from "../../discover/hooks"
 import { useListRows, type ListRow } from "../use-list-rows"
 import { budgetGap, type Cost } from "../list-model"
 import type { Institution } from "../types"
@@ -28,10 +29,11 @@ function fact(institution: Institution, key: string): unknown {
 
 /**
  * The figures of the "for an international" strip. The numbers of my list (budget row: admit rate, average aid) win;
- * a university that is not on the list falls back to the catalog's facts, so the average aid stays empty there.
+ * a university that is not on the list falls back to the catalog's facts and the matching feed (average aid for internationals).
  */
 export function useIntlFigures(institution: Institution): IntlFigures {
   const { rows, familyBudget } = useListRows()
+  const match = useMatches().data?.items.find((item) => item.university_id === institution.id)
   const row = rows.find((item) => item.entry.institution.id === institution.id)
   const budget = row?.budget
   const intlRate = num(fact(institution, "intl_acceptance_rate"))
@@ -42,8 +44,8 @@ export function useIntlFigures(institution: Institution): IntlFigures {
   else if (overallRate !== null) admit = { percent: overallRate * 100, overall: true }
   const profile = budget?.aid_profile
   const fullFact = fact(institution, "meets_full_need")
-  const fullNeed = profile?.meets_full_need ?? (typeof fullFact === "boolean" ? fullFact : null)
-  const aidAmount = num(profile?.avg_aid)
+  const fullNeed = profile?.meets_full_need ?? (typeof fullFact === "boolean" ? fullFact : (match?.meets_full_need ?? null))
+  const aidAmount = num(profile?.avg_aid) ?? num(match?.avg_aid_intl)
   const afterAid = num(institution.cost_after_aid)
   const cost: Cost | null =
     row?.cost ??

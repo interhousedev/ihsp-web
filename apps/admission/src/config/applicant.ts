@@ -4,7 +4,12 @@ import { getApiClient, isApiError } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { useQuery } from "@tanstack/react-query"
 
-type AdmissionMe = { kind: "applicant" | "staff" | "none"; entitlement_kind?: string | null }
+type AdmissionMe = {
+  kind: "applicant" | "staff" | "none"
+  entitlement_kind?: string | null
+  /** Whether admission estimates are shown to the caller; absent from older servers. */
+  estimates_visible?: boolean
+}
 
 /** The backend answers this problem type for self-only student endpoints when the caller is not an applicant. */
 export const NOT_APPLICANT_TYPE = "admission/not_applicant"
@@ -40,4 +45,15 @@ export function useStudentGrade(): number | null {
     retry: false,
   })
   return me.data?.grade ?? null
+}
+
+/** Whether the chance estimates are shown to the signed-in user (`estimates_visible` of `GET /v1/admission/me`); off until known. */
+export function useEstimatesVisible(): boolean {
+  const me = useQuery({
+    queryKey: ["admission", "me", "estimates"],
+    queryFn: ({ signal }) => getApiClient().get<AdmissionMe>("/v1/admission/me", { signal }),
+    staleTime: 5 * 60_000,
+    retry: false,
+  })
+  return me.data?.estimates_visible ?? false
 }

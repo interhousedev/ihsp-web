@@ -46,6 +46,11 @@ export function toUniFit(item: Pick<FitItem, "total" | "axes" | "known_share">):
   return { total: item.total, metrics, knownShare: item.known_share }
 }
 
+/** A fit known only as a total (catalogue rows and the match feed carry no per-axis data): the ring draws one arc. */
+export function totalFit(total: number | null | undefined, share: number | null | undefined): UniFit {
+  return { total: total ?? null, metrics: [], knownShare: share ?? undefined }
+}
+
 /** The weighted mean over the known metrics (weights renormalised): the total for other weights, e.g. a live preview. */
 export function totalFor(fit: UniFit, weights: Weights): number | null {
   const w = normalise(weights)

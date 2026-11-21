@@ -23,12 +23,15 @@ function arcPath(startDeg: number, sweepDeg: number) {
  */
 export function FitRing({
   metrics,
+  total = null,
   size = 52,
   active,
   children,
   className,
 }: {
   metrics: MetricResult[]
+  /** Only read when `metrics` is empty (a total without the per-axis breakdown): one arc in the primary colour. */
+  total?: number | null
   size?: number
   /** A metric to emphasise (hovered row in a breakdown). */
   active?: MetricId | null
@@ -47,6 +50,24 @@ export function FitRing({
   return (
     <span className={cn("relative inline-flex shrink-0 items-center justify-center", className)} style={{ width: size, height: size }}>
       <svg viewBox="0 0 100 100" className="absolute inset-0 size-full overflow-visible" aria-hidden>
+        {metrics.length === 0 ? (
+          <>
+            <circle cx={50} cy={50} r={RADIUS} fill="none" strokeWidth={STROKE} stroke="var(--primary)" opacity={0.2} />
+            {total === null ? null : (
+              <circle
+                cx={50}
+                cy={50}
+                r={RADIUS}
+                fill="none"
+                strokeWidth={STROKE}
+                stroke="var(--primary)"
+                strokeLinecap="round"
+                strokeDasharray={`${(total / 100) * CIRCUMFERENCE} ${CIRCUMFERENCE}`}
+                transform="rotate(-90 50 50)"
+              />
+            )}
+          </>
+        ) : null}
         {arcs.map(({ metric, start, sweep, slot, fill }) => {
           const dim = active && active !== metric.id
           const common = { cx: 50, cy: 50, r: RADIUS, fill: "none", transform: `rotate(${start} 50 50)` }

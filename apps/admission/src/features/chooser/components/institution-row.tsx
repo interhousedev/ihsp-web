@@ -3,6 +3,7 @@
 import { formatDate, useLocale, useT } from "@ihsp/i18n"
 import Link from "next/link"
 import { FitRingButton } from "../../fit/components/fit-ring-button"
+import { totalFit } from "../../fit/fit-model"
 import { RingLogo } from "../../fit/components/ring-logo"
 import { percent } from "../../discover/format"
 import type { Institution } from "../types"
@@ -12,7 +13,7 @@ import { VerifiedBadge } from "./fact-source"
 import { formatCompactCurrency } from "./money"
 import { useOptionLabel } from "./option-label"
 
-/** One university of the catalog as a compact row like the list's: ring (fit when it is on my list), name, ≈ cost, intl admit, deadline, add. */
+/** One university of the catalog as a compact row like the list's: fit ring (the list's breakdown when it is on my list, else the catalog's total), name, ≈ cost, intl admit, deadline, add. */
 export function InstitutionRow({ institution, row }: { institution: Institution; row?: ListRow }) {
   const t = useT("uniList")
   const locale = useLocale()
@@ -29,11 +30,12 @@ export function InstitutionRow({ institution, row }: { institution: Institution;
   ]
     .filter(Boolean)
     .join(" · ")
+  const fit = row?.fit ?? (institution.fit_total == null ? null : totalFit(institution.fit_total, institution.known_share))
   const logo = <RingLogo name={name} src={institution.logo_url} />
   return (
     <div className="flex min-w-0 items-center gap-3 border-b py-2.5">
-      {row ? (
-        <FitRingButton name={name} fit={row.fit} size={44}>
+      {fit ? (
+        <FitRingButton name={name} fit={fit} size={44}>
           {logo}
         </FitRingButton>
       ) : (

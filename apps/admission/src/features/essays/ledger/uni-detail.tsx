@@ -26,7 +26,7 @@ export type SlotHandlers = {
 export function UniDetail({ table, h, onBack }: { table: MatchTable; h: SlotHandlers; onBack: () => void }) {
   const t = useT("essayLedger")
   const [shortOpen, setShortOpen] = useState(false)
-  const main = table.slots.filter((s) => !isShortSlot(s))
+  const main = table.slots.filter((s) => !isShortSlot(s) && !s.shared)
   const short = table.slots.filter(isShortSlot)
   const ordered = [...main].sort((a, b) => Number(b.slot === "ps") - Number(a.slot === "ps"))
   const card = (slot: MatchTable["slots"][number]) => {

@@ -7,13 +7,14 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useCreateEssay, useEssays } from "../api"
-import { useAssignSlot, useMatchList, type MatchSlot, type MatchTable } from "../flow/steps-api"
+import { useAssignCommonApp, useAssignSlot, useMatchList, type MatchSlot, type MatchTable } from "../flow/steps-api"
 import { useDragAssign } from "../flow/use-drag-assign"
 import { EssayPicker } from "./essay-picker"
 import { EssayPreview } from "./essay-preview"
 import { useEssayText } from "./essay-text"
 import { EssayTray } from "./essay-tray"
 import { useLedgerView } from "./ledger-state"
+import { SlotCard, dropId } from "./slot-card"
 import { blocker, isPersonalSlot, promptHead, slotPosition, splitTables } from "./slot-model"
 import { UniDetail } from "./uni-detail"
 import { UniList } from "./uni-list"
@@ -34,7 +35,15 @@ export function UniBoard() {
   const view = useLedgerView()
   const match = useMatchList()
   const essays = useEssays()
-  const assign = useAssignSlot()
+  const assignSlot = useAssignSlot()
+  const assignCommon = useAssignCommonApp()
+  const assign = {
+    isPending: assignSlot.isPending || assignCommon.isPending,
+    isError: assignSlot.isError || assignCommon.isError,
+    error: assignSlot.error ?? assignCommon.error,
+    mutate: (v: { universityId: string; slot: string; essayId: string | null }, o?: { onSuccess?: () => void }) =>
+      slotAt(v.universityId, v.slot)?.shared ? assignCommon.mutate(v.essayId, o) : assignSlot.mutate(v, o),
+  }
   const create = useCreateEssay()
   const text = useEssayText()
   const [picking, setPicking] = useState<{ universityId: string; slot: string } | null>(null)
@@ -57,6 +66,8 @@ export function UniBoard() {
     },
     onDrop: (id, essayId) => assign.mutate({ ...splitDrop(id), essayId }),
   })
+  const sharedTable = tables.find((x) => x.slots.some((sl) => sl.shared))
+  const shared = sharedTable?.slots.find((sl) => sl.shared)
   const pickSlot = picking ? slotAt(picking.universityId, picking.slot) : undefined
   const pickTable = picking ? tables.find((x) => x.institution_id === picking.universityId) : undefined
 
@@ -98,6 +109,23 @@ export function UniBoard() {
   return (
     <div className="grid min-h-0 gap-4 md:h-full md:grid-cols-[15rem_minmax(0,1fr)] lg:grid-cols-[17rem_minmax(0,1fr)]" data-testid="uni-board">
       <div className={cn("bg-card rounded-card min-h-0 border md:overflow-y-auto md:[scrollbar-gutter:stable]", !onList && "max-md:hidden")}>
+        {sharedTable && shared ? (
+          <ul className="border-hairline border-b p-2" data-testid="shared-slot">
+            <SlotCard
+              table={sharedTable}
+              slot={shared}
+              essay={mine.find((e) => e.id === shared.assigned?.essay_id)}
+              busy={assign.isPending || create.isPending}
+              over={dnd.over === dropId(sharedTable.institution_id, shared.slot)}
+              droppable={dnd.drag !== null && dnd.over !== dropId(sharedTable.institution_id, shared.slot) && canDrop(sharedTable, shared, dnd.drag.essayId)}
+              onPick={() => setPicking({ universityId: sharedTable.institution_id, slot: shared.slot })}
+              onClear={() => assign.mutate({ universityId: sharedTable.institution_id, slot: shared.slot, essayId: null })}
+              onPreview={() => shared.assigned && setPreview({ id: shared.assigned.essay_id, title: shared.assigned.title, limit: shared.word_limit })}
+              onCopy={() => shared.assigned && void text.copy(shared.assigned.essay_id)}
+              onWrite={() => write(sharedTable, shared)}
+            />
+          </ul>
+        ) : null}
         <UniList tables={tables} selectedId={shown?.institution_id ?? null} onSelect={(id) => view.set({ uni: id })} />
       </div>
       <div className={cn("bg-card rounded-card flex min-h-0 min-w-0 flex-col overflow-hidden border", onList && "max-md:hidden")}>

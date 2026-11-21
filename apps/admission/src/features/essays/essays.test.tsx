@@ -166,6 +166,8 @@ describe("essay ledger", () => {
     key: "g1",
     label: "Your world",
     kind: "shared",
+    category: "other" as const,
+    short_answers: [],
     spread: 0.2,
     covered: true,
     prompts: [prompt, { ...prompt, key: "p2", institution_id: "i2", institution_name: "KAIST", word_limit: 300 }],
@@ -286,6 +288,10 @@ describe("essay ledger", () => {
       required: true,
       essay_id: null,
       assigned: null,
+      category: "why_us",
+      prompt_key: "supp1",
+      shared: false,
+      short_answer: null,
       candidates: [{ essay_id: "e1", title: "Why physics", kind: "supplemental", word_count: 200, alignment: 80, target_match: true }],
     }
     const table = { institution_id: "i1", institution_name: "MIT", due_utc: null, due_predicted: false, slots: [slot] }

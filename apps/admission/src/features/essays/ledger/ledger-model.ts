@@ -1,6 +1,6 @@
 import type { EssaySummary } from "../api"
 import type { PromptGroup, PromptRef, PromptScope } from "../flow/api"
-import { groupLabel, groupWordLimit } from "../flow/group-label"
+import { groupLabel } from "../flow/group-label"
 
 /** One line of the ledger: a prompt group, the essays written for it and what is due. */
 export type LedgerRow = {
@@ -59,23 +59,18 @@ export function buildLedger(groups: PromptGroup[], essays: EssaySummary[], scope
 export const ESSAY_TYPES = ["personal", "whyUs", "community", "academic", "activity", "short", "other"] as const
 export type EssayType = (typeof ESSAY_TYPES)[number]
 
-/** A prompt's wording says what it asks; the server stores no category, so the type is read from the text. */
-const TOPICS: readonly [EssayType, RegExp][] = [
-  ["whyUs", /\bwhy\b.{0,60}\b(us|university|college|school|institute|program|major)\b|почему|nima uchun/i],
-  ["community", /\b(communit|diversity|diverse|background|identity|belong)|сообществ|jamiyat/i],
-  ["academic", /\b(academic|intellectual|major|field of study|curios|scholar|research)|академ/i],
-  ["activity", /\b(activit|extracurricular|club|team|work experience|hobby)|активност|faoliyat/i],
-]
-
-/** The type of one prompt group: the Common App essay, a topic read from the prompts, or a short answer by its limit. */
-export function essayType(group: PromptGroup): EssayType {
-  if (group.kind === "common" || group.prompts.every((p) => p.institution_id === null)) return "personal"
-  const text = `${group.label} ${group.prompts.map((p) => p.prompt).join(" ")}`
-  const topic = TOPICS.find(([, re]) => re.test(text))
-  if (topic) return topic[0]
-  const limit = groupWordLimit(group)
-  return limit !== null && limit <= 100 ? "short" : "other"
+const TYPE_OF_CATEGORY: Record<PromptGroup["category"], EssayType> = {
+  personal_statement: "personal",
+  why_us: "whyUs",
+  community: "community",
+  academic: "academic",
+  activity: "activity",
+  short_answer: "short",
+  other: "other",
 }
+
+/** The type of one prompt group, as the server classifies it. */
+export const essayType = (group: PromptGroup): EssayType => TYPE_OF_CATEGORY[group.category]
 
 /** One section of the ledger: the rows of one essay type and how many essays that type needs. */
 export type LedgerSection = {

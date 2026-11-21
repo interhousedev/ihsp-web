@@ -617,6 +617,15 @@
     "slotPersonal": "Shaxsiy esse · Common App",
     "slotExtra": "Qo‘shimcha esse",
     "limitUpTo": "{count} ta so‘zgacha",
+    "shortAnswerLabel": "Qisqa javob",
+    "shortAnswerPlaceholder": "Javobingizni shu yerga yozing",
+    "wordsOfLimit": "{count} / {limit} ta so‘z",
+    "wordsCount": "{count} ta so‘z",
+    "saving": "Saqlanmoqda…",
+    "saved": "Saqlandi",
+    "saveFailed": "Saqlab bo‘lmadi",
+    "shortOver": "Limitdan {count} ta so‘z ortiq. Saqlanishi uchun qisqartiring.",
+    "sharedAll": "Barcha Common App universitetlari uchun bitta",
     "sharedCommonApp": "Barcha Common App universitetlari uchun bitta esse.",
     "promptMore": "To‘liq savol",
     "promptLess": "Yig‘ish",
@@ -2388,6 +2397,7 @@
     "resultsLabel": "Universitetlar",
     "sort": {
       "label": "Saralash",
+      "fit": "Mos kelishi boʻyicha",
       "deadline": "Eng yaqin muddat",
       "relevance": "Avval tekshirilganlar",
       "name": "Nomi boʻyicha",
@@ -4304,6 +4314,8 @@
       "cost": "≈ yiliga, yordamdan keyin",
       "deadline": "Eng yaqin muddat"
     },
+    "fewFacts": "Maʼlumot kam",
+    "research": "Oʻrganish",
     "overlap": {
       "label": "Mos kelgan joylar",
       "why": "Nega: {tags}"
@@ -5058,6 +5070,11 @@
       "match": "Tanlash",
       "list": "Mening ro‘yxatim"
     },
+    "stagesShort": {
+      "quiz": "So‘rov",
+      "match": "Tanlash",
+      "list": "Ro‘yxat"
+    },
     "lockedWhy": {
       "match": "Avval so‘rovnomani tugating",
       "list": "Birinchi universitetni qo‘shing"
@@ -5162,6 +5179,7 @@
     "raiseGoals": "Maqsadlarni oshirish: kasblarni tanlang",
     "title": "Mosligi",
     "ringHelp": "Har bir rang — bitta mezon. Yoy uzunligi — mezon bahosi va uning ogʻirligi.",
+    "ringHelpTotal": "Yoy — umumiy moslik, 0 dan 100 gacha. Nimadan tashkil topganini koʻrish uchun universitetni oching.",
     "open": "{name} bilan mosligi: 100 dan {value}. Nimadan tashkil topganini koʻrsatish",
     "weight": "ogʻirligi {pct}%",
     "missing": "maʼlumot yoʻq",

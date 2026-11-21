@@ -1,11 +1,10 @@
 import type { EssaySummary } from "../api"
 import type { MatchSlot, MatchTable } from "../flow/steps-api"
 
-/** A slot at or under this many words is a short answer; those collapse into one group. */
-export const SHORT_LIMIT = 50
-
 export const isPersonalSlot = (slot: MatchSlot) => slot.slot === "ps"
-export const isShortSlot = (slot: MatchSlot) => slot.word_limit !== null && slot.word_limit <= SHORT_LIMIT && !isPersonalSlot(slot)
+/** A short answer is typed in place; the server marks it with the `short_answer` category. */
+export const isShortSlot = (slot: MatchSlot) => slot.category === "short_answer"
+export const isSharedSlot = (slot: MatchSlot) => slot.shared
 
 /** A slot counts as filled only when its essay fits the limit. */
 export const isFilled = (slot: MatchSlot) => slot.assigned !== null && !slot.assigned.over_limit

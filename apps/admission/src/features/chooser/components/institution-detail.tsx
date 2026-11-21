@@ -8,7 +8,8 @@ import type { ReactNode } from "react"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { useMatches } from "../../discover/hooks"
 import { OutcomeSummary } from "../../outcomes/components/outcome-summary"
-import { useInstitution, useList, useScholarships } from "../hooks"
+import { useEstimatesVisible } from "../../../config/applicant"
+import { useInstitution, useScholarships } from "../hooks"
 import type { Deadline as DeadlineItem, Fact, Institution } from "../types"
 import { AddToListButton } from "./add-to-list-button"
 import { ChancesView } from "./chances-view"
@@ -84,14 +85,14 @@ function firstDeadline(institution: Institution): DeadlineItem | undefined {
     .sort((a, b) => a.date.localeCompare(b.date))[0]
 }
 
-/** Universities of the same country that fit: from the matching feed, at least half matching. */
+/** Universities of the same country that fit: from the matching feed, fit at least 50 (match percent when there is no fit). */
 function SuggestedColleges({ institution }: { institution: Institution }) {
   const t = useT("chooser")
   const matches = useMatches()
   const country = institution.country.trim().toLowerCase()
   const items = (matches.data?.items ?? []).filter(
     (match) =>
-      match.university_id !== institution.id && match.country.trim().toLowerCase() === country && match.match_pct >= 50,
+      match.university_id !== institution.id && match.country.trim().toLowerCase() === country && (match.fit_total ?? match.match_pct) >= 50,
   )
   if (items.length === 0) return null
   return (
@@ -136,11 +137,9 @@ function DetailBody({ institution }: { institution: Institution }) {
   const requested = params.get("tab")
   const tab: Tab = isTab(requested) ? requested : "fit"
   const scholarships = useScholarships({ institution_id: institution.id })
-  const list = useList()
   const figures = useIntlFigures(institution)
   const { row } = figures
-  /** Estimates are off until the student sees a chance range on any of the list entries. */
-  const estimatesOn = (list.data ?? []).some((entry) => entry.estimate.range_visible)
+  const estimatesOn = useEstimatesVisible()
   const rich = institution.details.length > 0
   const shown = new Set<string>([...Object.values(TAB_FACTS).flat(), ...HIDDEN_FACTS])
   const other = Object.entries(institution.facts).filter(([key]) => !shown.has(key.toLowerCase()))
