@@ -9,12 +9,7 @@ describe("MarkdownEditor", () => {
       <MarkdownEditor value="one **two** three" onChange={() => {}} label="Note text" defaultMode="visual" />,
     )
 
-    // The editor mounts after the first render and may replace its element, so the field is looked up again on each try.
-    await waitFor(
-      () => expect(screen.getByRole("textbox", { name: "Note text" }).querySelector("strong")?.textContent).toBe("two"),
-      {
-        timeout: 15_000,
-      },
-    )
+    const field = await screen.findByRole("textbox", { name: "Note text" })
+    await waitFor(() => expect(field.querySelector("strong")?.textContent).toBe("two"))
   })
 })
