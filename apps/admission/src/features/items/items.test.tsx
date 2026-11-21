@@ -24,7 +24,6 @@ mock.module("@dnd-kit/core", () => ({
 import { ItemBoard } from "./components/item-board"
 import { ItemCard } from "./components/item-card"
 import { ItemList } from "./components/item-list"
-import { PlanBody } from "./components/plan-page"
 import { ReviewCard } from "./components/review-card"
 import type { Item, Review } from "./api"
 
@@ -48,6 +47,8 @@ const item = (id: string, title: string, position: number): Item => ({
   timing: [],
   intend_in_college: null,
   grade: null,
+  level: null,
+  certificate_entry_id: null,
   grade_stale: false,
 })
 
@@ -351,82 +352,6 @@ describe("items", () => {
   })
 })
 
-describe("plan", () => {
-  test("lists milestones and creates one", async () => {
-    let body: unknown
-    server.use(
-      http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [] })),
-      http.get(apiUrl("/v1/admission/goal-plan"), () =>
-        HttpResponse.json({
-          items: [
-            {
-              id: "m1",
-              item_id: null,
-              title: "Sit the SAT",
-              due_month: "2026-10-01",
-              target_value: null,
-              status: "planned",
-              source: "student",
-              sort_order: 0,
-              lock_version: 1,
-            },
-          ],
-          next_cursor: null,
-        }),
-      ),
-      http.post(apiUrl("/v1/admission/goal-plan/milestones"), async ({ request }) => {
-        body = await request.json()
-        return HttpResponse.json({}, { status: 201 })
-      }),
-    )
-    renderAdmissionApp(<PlanBody />)
-    expect(await screen.findByText("Sit the SAT")).toBeTruthy()
-    fireEvent.change(screen.getByLabelText("Milestone"), { target: { value: "Essay draft" } })
-    fireEvent.change(screen.getByLabelText("Target number"), { target: { value: "1500" } })
-    fireEvent.click(screen.getByRole("button", { name: "Add milestone" }))
-    await waitFor(() => expect(body).toMatchObject({ title: "Essay draft", target_value: 1500 }))
-  })
-
-  test("changes status with lock_version and deletes", async () => {
-    let patch: unknown
-    let deleted = ""
-    server.use(
-      http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [] })),
-      http.get(apiUrl("/v1/admission/goal-plan"), () =>
-        HttpResponse.json({
-          items: [
-            {
-              id: "m1",
-              item_id: null,
-              title: "Sit the SAT",
-              due_month: null,
-              target_value: null,
-              status: "planned",
-              source: "student",
-              sort_order: 0,
-              lock_version: 3,
-            },
-          ],
-          next_cursor: null,
-        }),
-      ),
-      http.patch(apiUrl("/v1/admission/goal-plan/milestones/m1"), async ({ request }) => {
-        patch = await request.json()
-        return HttpResponse.json({})
-      }),
-      http.delete(apiUrl("/v1/admission/goal-plan/milestones/m1"), () => {
-        deleted = "m1"
-        return new HttpResponse(null, { status: 204 })
-      }),
-    )
-    renderAdmissionApp(<PlanBody />)
-    fireEvent.click(await screen.findByRole("button", { name: "Done" }))
-    await waitFor(() => expect(patch).toEqual({ lock_version: 3, status: "done" }))
-    fireEvent.click(screen.getByRole("button", { name: "Remove Sit the SAT" }))
-    await waitFor(() => expect(deleted).toBe("m1"))
-  })
-})
-
 describe("pathway links", () => {
   test("activities suggest exploring universities", async () => {
     server.use(http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [], next_cursor: null })))
@@ -434,90 +359,6 @@ describe("pathway links", () => {
       messages: { items: { nextStep: { explore: "Explore universities", exploreHint: "h" } } },
     })
     const link = await screen.findByRole("link", { name: /Explore universities/ })
-    expect(link.getAttribute("href")).toBe("/chooser/search")
-  })
-
-  test("a done milestone linked to an item offers adding it to achievements", async () => {
-    server.use(
-      http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [item("a", "Robotics", 0)] })),
-      http.get(apiUrl("/v1/admission/goal-plan"), () =>
-        HttpResponse.json({
-          items: [
-            {
-              id: "m1",
-              item_id: "a",
-              title: "Finish club",
-              due_month: null,
-              target_value: null,
-              status: "done",
-              source: "student",
-              sort_order: 0,
-              lock_version: 1,
-            },
-          ],
-          next_cursor: null,
-        }),
-      ),
-    )
-    renderAdmissionApp(<PlanBody />, { messages: { items: { plan: { addToAchievements: "Add to achievements" } } } })
-    const link = await screen.findByRole("link", { name: "Add to achievements" })
-    expect(link.getAttribute("href")).toBe("/activities?item=new&from=m1")
-  })
-})
-
-describe("plan suggest", () => {
-  const plan = http.get(apiUrl("/v1/admission/goal-plan"), () => HttpResponse.json({ items: [], next_cursor: null }))
-  const noItems = http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [] }))
-
-  test("accepts a proposal and puts the plan", async () => {
-    let put: unknown
-    server.use(
-      plan,
-      noItems,
-      http.post(apiUrl("/v1/admission/goal-plan/suggest"), () =>
-        HttpResponse.json({
-          items: [
-            { title: "Take IELTS", item_id: null, due_month: "2026-11-01" },
-            { title: "Skip me", item_id: null, due_month: "2026-12-01" },
-          ],
-        }),
-      ),
-      http.put(apiUrl("/v1/admission/goal-plan"), async ({ request }) => {
-        put = await request.json()
-        return HttpResponse.json({ items: [], next_cursor: null })
-      }),
-    )
-    renderAdmissionApp(<PlanBody />)
-    fireEvent.click(await screen.findByRole("button", { name: "Suggest milestones" }))
-    expect(await screen.findByText("Take IELTS")).toBeTruthy()
-    fireEvent.click(screen.getAllByRole("button", { name: "Dismiss" })[1])
-    fireEvent.click(screen.getByRole("button", { name: "Add" }))
-    fireEvent.click(await screen.findByRole("button", { name: "Save plan" }))
-    await waitFor(() =>
-      expect(put).toEqual({ items: [{ title: "Take IELTS", item_id: null, due_month: "2026-11-01" }] }),
-    )
-  })
-
-  test("shows the consent and quota errors", async () => {
-    let type = "admission/consent_required"
-    server.use(
-      plan,
-      noItems,
-      http.post(apiUrl("/v1/admission/goal-plan/suggest"), () =>
-        HttpResponse.json(
-          { type, title: "x", status: type.endsWith("quota_exceeded") ? 429 : 403, params: {} },
-          {
-            status: type.endsWith("quota_exceeded") ? 429 : 403,
-            headers: { "content-type": "application/problem+json" },
-          },
-        ),
-      ),
-    )
-    renderAdmissionApp(<PlanBody />)
-    fireEvent.click(await screen.findByRole("button", { name: "Suggest milestones" }))
-    expect(await screen.findByText("Open consents")).toBeTruthy()
-    type = "admission/quota_exceeded"
-    fireEvent.click(screen.getByRole("button", { name: "Suggest milestones" }))
-    expect(await screen.findByText(/suggestion limit reached/)).toBeTruthy()
+    expect(link.getAttribute("href")).toBe("/chooser?step=match")
   })
 })

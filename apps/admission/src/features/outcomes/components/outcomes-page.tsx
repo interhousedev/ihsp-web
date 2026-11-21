@@ -176,7 +176,7 @@ export function OutcomesPage() {
   const [presetOpen, setPresetOpen] = useState(true)
   return (
     <AdmissionShell>
-      <div className={pageClass("default")}>
+      <div className={pageClass()}>
         <AppPageHeader
           icon="target"
           title={t("title")}

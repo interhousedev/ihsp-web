@@ -107,7 +107,7 @@ export function AlignmentPage() {
   const t = useT("alignment")
   return (
     <AdmissionShell>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="route" title={t("title")} />
         <AlignmentBody />
       </div>

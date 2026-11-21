@@ -83,7 +83,7 @@ export function ReadinessWeightsBody() {
 export function ReadinessWeightsPage() {
   return (
     <AdmissionShell roles={["admin", "counselor"]}>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <ReadinessWeightsBody />
       </div>
     </AdmissionShell>

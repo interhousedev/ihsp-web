@@ -225,7 +225,7 @@ export function JourneyPage() {
         title={t("title")}
         summary={journey ? `Journey: ${journey.done} of ${journey.total} milestones done.` : "Journey."}
       />
-      <div className={pageClass("wide")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="route" title={t("title")} />
         {error ? (
           <p role="alert" className="text-destructive text-sm">

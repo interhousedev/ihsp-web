@@ -25,3 +25,18 @@ export function moneyText(row: { kind: string; value: unknown; value_text: strin
   if (row.kind !== "money") return row.value_text
   return formatCurrency(row.value, currencyOf(row.value_text), locale) ?? row.value_text
 }
+
+/** Like {@link formatCurrency} but short for tight cells ("$12.4K"); `signed` adds an explicit + or − sign. */
+export function formatCompactCurrency(value: number, currency: string, locale: string, signed = false): string {
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+      notation: "compact",
+      maximumFractionDigits: 1,
+      signDisplay: signed ? "exceptZero" : "auto",
+    }).format(value)
+  } catch {
+    return `${signed && value > 0 ? "+" : ""}${new Intl.NumberFormat(locale, { notation: "compact" }).format(value)}`
+  }
+}

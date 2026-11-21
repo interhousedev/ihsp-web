@@ -359,7 +359,7 @@ export function CatalogAdminBody() {
 export function CatalogAdminPage() {
   return (
     <AdmissionShell roles={["admin", "counselor"]}>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <CatalogAdminBody />
       </div>
     </AdmissionShell>

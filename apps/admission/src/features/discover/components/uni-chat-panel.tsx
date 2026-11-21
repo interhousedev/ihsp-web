@@ -12,8 +12,11 @@ import { DefaultPromptDialog } from "./default-prompt-dialog"
 import { useUniChat, useUniChatSuggestions } from "../hooks"
 import { useRunDefault } from "../use-run-default"
 
+/** The university the panel talks about: a deck match, or an entry of the list. */
+export type ChatSubject = Pick<Match, "university_id" | "name" | "logo_url" | "city">
+
 /** The per-university AI chat on the side of the deck: persisted per student and university, with research and chips. */
-export function UniChatPanel({ match }: { match: Match | undefined }) {
+export function UniChatPanel({ match }: { match: ChatSubject | undefined }) {
   const t = useT("uniChat")
   const errorMessage = useErrorMessage()
   const [promptOpen, setPromptOpen] = useState(false)
@@ -22,7 +25,7 @@ export function UniChatPanel({ match }: { match: Match | undefined }) {
   const chat = useUniChat(id)
   const suggestions = useUniChatSuggestions(id)
   const { state, run } = useRunDefault(chat.data)
-  const running = state.status === "running" || chat.data?.auto_run_pending === true
+  const running = state.status === "running"
 
   /** The panel's line for a limit, the problem's own copy (revoked access), or the generic failure. */
   const runErrorText = (error: unknown) => {
@@ -93,7 +96,7 @@ export function UniChatPanel({ match }: { match: Match | undefined }) {
       {chat.isError ? <StateView state="error" error={chat.error} onRetry={() => void chat.refetch()} /> : null}
       {chat.data ? (
         <>
-          <Button type="button" variant="outline" size="sm" disabled={running} onClick={() => void run(false)}>
+          <Button type="button" variant="outline" size="sm" disabled={running} onClick={() => void run()}>
             <Icons.search aria-hidden />
             {running ? t("researching") : t("run")}
           </Button>
@@ -107,7 +110,7 @@ export function UniChatPanel({ match }: { match: Match | undefined }) {
               {runErrorText(state.error)}
             </p>
           ) : null}
-          <div className="flex h-[26rem] min-h-0 flex-col">
+          <div className="flex h-[min(28rem,70dvh)] min-h-0 flex-col overflow-hidden">
             <AssistantProvider assistant="admission">
               <AssistantChatPane
                 key={chat.data.chat_id}
@@ -116,6 +119,7 @@ export function UniChatPanel({ match }: { match: Match | undefined }) {
                 navButtons={null}
                 bare
                 placeholder={t("placeholder")}
+                emptyText={t("emptyChat")}
                 prefill={prefill}
                 aboveComposer={above}
               />

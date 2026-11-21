@@ -5,15 +5,22 @@ import {
   type AdmissionAssignmentIn,
   type AdmissionCaseloadItem,
   type AdmissionListEntry,
+  type AdmissionPin,
+  type AdmissionPinIn,
   type AdmissionStudentAlignment,
   type AdmissionStudentCourse,
   type AdmissionStudentProfile,
   type AdmissionStudentWords,
+  ApiError,
   getApiClient,
 } from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
+export type CaseloadScope = "mine" | "all"
+
 export type CaseloadFilters = {
+  scope?: CaseloadScope
+  q?: string
   stage?: string | null
   risk?: boolean
   deadline_before?: string | null
@@ -53,6 +60,8 @@ export const staffKeys = {
 /** Only the filters that are set go into the query string. */
 export function caseloadQuery(filters: CaseloadFilters): Record<string, string | boolean> {
   const query: Record<string, string | boolean> = {}
+  if (filters.scope) query.scope = filters.scope
+  if (filters.q?.trim()) query.q = filters.q.trim()
   if (filters.stage) query.stage = filters.stage
   if (filters.risk) query.risk = true
   if (filters.deadline_before) query.deadline_before = filters.deadline_before
@@ -61,8 +70,9 @@ export function caseloadQuery(filters: CaseloadFilters): Record<string, string |
 }
 
 /** GET /v1/admission/staff/students. */
-export function useCaseload(filters: CaseloadFilters) {
+export function useCaseload(filters: CaseloadFilters, enabled = true) {
   return useQuery({
+    enabled,
     queryKey: staffKeys.caseload(filters),
     queryFn: () =>
       getApiClient().get<{ items: CaseloadItem[] }>("/v1/admission/staff/students", { query: caseloadQuery(filters) }),
@@ -200,4 +210,48 @@ export function useStudentSection<S extends StudentSection>(studentId: string, s
     queryFn: () => getApiClient().get<SectionData[S]>(`/v1/admission/students/${studentId}/${section}`),
     enabled: studentId !== "",
   })
+}
+
+export type Pin = AdmissionPin
+export type PinInput = AdmissionPinIn
+
+const pinPath = (studentId: string) => `/v1/admission/staff/students/${studentId}/pin`
+
+/** GET .../pin: the pinned action in force; a 404 means there is none (`null`). */
+export function usePin(studentId: string) {
+  return useQuery({
+    queryKey: ["admission", "staff", "pin", studentId] as const,
+    enabled: studentId !== "",
+    queryFn: async () => {
+      try {
+        return await getApiClient().get<Pin>(pinPath(studentId))
+      } catch (error) {
+        if (error instanceof ApiError && error.status === 404) return null
+        throw error
+      }
+    },
+  })
+}
+
+/** POST (pin or replace) and DELETE (unpin) .../pin. */
+export function usePinMutations(studentId: string) {
+  const client = useQueryClient()
+  const refresh = () => client.invalidateQueries({ queryKey: ["admission", "staff", "pin", studentId] })
+  const pin = useMutation({
+    mutationFn: (input: PinInput) => getApiClient().post<Pin>(pinPath(studentId), input),
+    onSuccess: refresh,
+  })
+  const unpin = useMutation({
+    mutationFn: () => getApiClient().delete<void>(pinPath(studentId)),
+    onSuccess: refresh,
+  })
+  return { pin, unpin }
+}
+
+/** The student's row in the caseload (name, limited); an admin falls back to the "all" scope. */
+export function useStudentRow(studentId: string, isAdmin: boolean) {
+  const mine = useCaseload({ scope: "mine" })
+  const found = mine.data?.items.find((item) => item.student_id === studentId)
+  const all = useCaseload({ scope: "all" }, isAdmin && !!mine.data && !found)
+  return found ?? all.data?.items.find((item) => item.student_id === studentId)
 }

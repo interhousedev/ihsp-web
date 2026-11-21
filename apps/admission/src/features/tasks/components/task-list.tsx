@@ -89,7 +89,9 @@ export function TaskList({
                     {task.title}
                   </button>
                 </TableCell>
-                <TableCell>{t(`source.${task.created_by}`)}</TableCell>
+                <TableCell>
+                  {task.assigned_by_name ? t("assignedBy", { name: task.assigned_by_name }) : t(`source.${task.created_by}`)}
+                </TableCell>
                 <TableCell>{task.created_at ? date(task.created_at) : ""}</TableCell>
                 <TableCell>
                   <div className="flex flex-wrap items-center gap-2">

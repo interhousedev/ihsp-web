@@ -1,9 +1,9 @@
 /** Search filters: the address is the source of truth; every value maps to one query parameter of the catalog. */
 
-export type SortKey = "deadline" | "relevance" | "name" | "cost"
-export const SORTS: SortKey[] = ["deadline", "relevance", "name", "cost"]
-/** Approaching application deadlines first, unless the student picks another order. */
-export const DEFAULT_SORT: SortKey = "deadline"
+export type SortKey = "fit" | "deadline" | "relevance" | "name" | "cost"
+export const SORTS: SortKey[] = ["fit", "relevance", "deadline", "name", "cost"]
+/** Best fit for the student first (the catalog sorts by `fit`), unless they pick another order. */
+export const DEFAULT_SORT: SortKey = "fit"
 
 export type Filters = {
   q: string
@@ -20,7 +20,7 @@ export type Filters = {
   aid: string
   scholarships: boolean
   maxCost: string
-  /** "deadline" is also sent to the catalog; name and cost only reorder the loaded results. */
+  /** "fit" and "deadline" are also sent to the catalog; name and cost only reorder the loaded results. */
   sort: SortKey
 }
 
@@ -85,13 +85,13 @@ export function filtersFromParams(params: URLSearchParams): Filters {
 const isSet = (key: FilterKey, value: string | boolean) =>
   key === "sort" ? value !== DEFAULT_SORT : value !== "" && value !== false
 
-/** Only the filters that are set, as the catalog's query parameters (sorting is done here, not by the catalog). */
+/** Only the filters that are set, as the catalog's query parameters (`fit` and `deadline` are sent; name, cost and relevance reorder the loaded results). */
 export function filtersToQuery(filters: Filters): Record<string, string | number | boolean> {
   const query: Record<string, string | number | boolean> = {}
   for (const key of Object.keys(FILTER_PARAM) as FilterKey[]) {
     const value = filters[key]
     if (key === "sort") {
-      if (value === "deadline") query.sort = "deadline"
+      if (value === "fit" || value === "deadline") query.sort = value
       continue
     }
     if (!isSet(key, value)) continue

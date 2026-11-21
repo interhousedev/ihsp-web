@@ -113,7 +113,7 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
 
   return (
     <AdmissionShell>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader
           icon="profile"
           title={t("title")}
@@ -205,7 +205,7 @@ export function SetupWizard() {
   if (config.isError || profile.isError) {
     return (
       <AdmissionShell>
-        <div className={pageClass("narrow")}>
+        <div className={pageClass()}>
           <StateView
             state="error"
             error={config.error ?? profile.error}
@@ -221,7 +221,7 @@ export function SetupWizard() {
   if (!config.data || !profile.data) {
     return (
       <AdmissionShell>
-        <div className={pageClass("narrow")}>
+        <div className={pageClass()}>
           <AppPageHeader icon="profile" title={t("title")} />
           <StateView state="loading" />
         </div>

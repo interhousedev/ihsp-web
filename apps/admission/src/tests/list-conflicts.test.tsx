@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it, spyOn } from "bun:test"
 import { MotionGlobalConfig } from "motion/react"
 import { http, HttpResponse } from "msw"
 import { toast } from "sonner"
-import { MyList } from "../features/chooser/components/my-list"
+import { UniListStage } from "../features/chooser/components/list-stage"
 import { institution, listEntry, mockChooser } from "./chooser-handlers"
 import { renderAdmissionApp } from "./helpers"
 
@@ -62,7 +62,7 @@ afterEach(() => {
 describe("list conflicts", () => {
   it("summarises distinct conflicts in a banner and badges the involved entries", async () => {
     mockChooser({ list: [A, B, C] })
-    renderAdmissionApp(<MyList />, { messages })
+    renderAdmissionApp(<UniListStage />, { messages })
     const banner = await screen.findByText("Check your early applications")
     const items = within(banner.closest("[data-slot=alert]") as HTMLElement).getAllByRole("listitem")
     expect(items).toHaveLength(2)
@@ -75,7 +75,7 @@ describe("list conflicts", () => {
 
   it("shows no banner without conflicts", async () => {
     mockChooser({ list: [listEntry({ id: "z", institution: institution({ id: "iz", name: "Zed U" }) })] })
-    renderAdmissionApp(<MyList />, { messages })
+    renderAdmissionApp(<UniListStage />, { messages })
     await screen.findByText("Zed U")
     expect(screen.queryByText("Check your early applications")).toBeNull()
   })
@@ -90,9 +90,9 @@ describe("list conflicts", () => {
         HttpResponse.json({ ...plain, round: "ED", notes: "x", conflicts: A.conflicts }),
       ),
     )
-    renderAdmissionApp(<MyList />, { messages })
+    renderAdmissionApp(<UniListStage />, { messages })
     await screen.findByText("Alpha U")
-    fireEvent.click(screen.getAllByRole("button", { name: "Notes and affordability" })[0] as HTMLElement)
+    fireEvent.click(screen.getByRole("button", { name: "Show details of Alpha U" }))
     const notes = screen.getAllByLabelText("Notes")[0] as HTMLTextAreaElement
     fireEvent.change(notes, { target: { value: "x" } })
     fireEvent.blur(notes)

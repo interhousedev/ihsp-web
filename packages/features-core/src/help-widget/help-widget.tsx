@@ -143,7 +143,7 @@ export function HelpWidget() {
 
   return (
     <div
-      className="fixed end-4 z-40 flex flex-col items-end gap-2 bottom-[calc(var(--bottom-nav-height,0px)+var(--safe-bottom,0px)+1rem)] md:bottom-4"
+      className="fixed end-4 z-40 flex flex-col items-end gap-2 bottom-[calc(var(--safe-bottom,0px)+5.25rem)] md:bottom-4"
       data-help-widget
     >
       {open ? (

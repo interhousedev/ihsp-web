@@ -20,6 +20,7 @@ const item = (over: object = {}) => ({
   open_help: 0,
   next_due: null,
   limited: false,
+  assigned_staff: [],
   ...over,
 })
 

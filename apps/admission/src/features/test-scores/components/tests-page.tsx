@@ -22,6 +22,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useScreenContext } from "../../assistant/screen-context"
 import { downloadDocument } from "../../documents/api"
+import { AccessDenied, isForbidden } from "../../shell/components/access-denied"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
   scoreName,
@@ -125,6 +126,7 @@ function ScoreCard({
             <Badge variant={STATUS_VARIANT[entry.status as ScoreStatus]}>{t(`statusValue.${entry.status}`)}</Badge>
             {isBest && summary?.best_total != null ? <Badge variant="success">{t("best")}</Badge> : null}
             {entry.verified_at ? <Badge variant="info">{t("verified")}</Badge> : null}
+            {entry.source === "certificate" ? <Badge variant="secondary">{t("fromCertificate")}</Badge> : null}
           </div>
         </div>
         {test.sections.map((section) => (
@@ -174,7 +176,7 @@ function ScoreCard({
               {entry.verified_at ? t("removeVerification") : t("markVerified")}
             </Button>
           ) : null}
-          {isOwner ? (
+          {isOwner && entry.source !== "certificate" ? (
             <>
               <Button type="button" variant="ghost" size="sm" className="min-h-11 md:min-h-9" onClick={onEdit}>
                 <Icons.edit aria-hidden />
@@ -245,6 +247,39 @@ function Cards({
         )
       })}
     </div>
+  )
+}
+
+/** Standard certificates of the platform no catalog test matches: read-only, edited in the profile. */
+function ExamCertificates({ exams }: { exams: ScoreOverview["exams"] }) {
+  const t = useT("testScores")
+  const locale = useLocale()
+  if (exams.length === 0) return null
+  return (
+    <section aria-label={t("examsTitle")} className="flex flex-col gap-2">
+      <div>
+        <h2 className="text-sm font-semibold">{t("examsTitle")}</h2>
+        <p className="text-muted-foreground text-xs">{t("examsHint")}</p>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        {exams.map((exam) => (
+          <Card key={exam.entry_id}>
+            <CardContent className="flex flex-col gap-1">
+              <h3 className="font-semibold">{scoreName(exam.name, locale)}</h3>
+              {exam.issued_at ? <p className="text-muted-foreground text-xs">{formatDate(exam.issued_at)}</p> : null}
+              <p className="text-sm">
+                {Object.entries(exam.values)
+                  .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(", ") : value}`)
+                  .join(" · ")}
+              </p>
+              <Badge variant="secondary" className="self-start">
+                {t("fromCertificate")}
+              </Badge>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
   )
 }
 
@@ -323,11 +358,13 @@ export function TestsBody({ studentId, staffEmpty }: { studentId?: string; staff
           {t("openPrepCalendar")}
         </Link>
       )}
-      {failed ? (
+      {failed && isForbidden(failed.error) ? (
+        <AccessDenied section="tests" />
+      ) : failed ? (
         <StateView state="error" error={failed.error} onRetry={() => void failed.refetch()} />
       ) : !overview || catalog.isPending ? (
         <StateView state="loading" rows={3} />
-      ) : overview.entries.length === 0 ? (
+      ) : overview.entries.length === 0 && overview.exams.length === 0 ? (
         <StateView
           state="empty"
           icon={<Icons.certificates aria-hidden />}
@@ -349,7 +386,8 @@ export function TestsBody({ studentId, staffEmpty }: { studentId?: string; staff
                 ))}
               </TabsList>
             </Tabs>
-            {shown.length === 0 ? (
+            {tab === "results" ? <ExamCertificates exams={overview.exams} /> : null}
+            {shown.length === 0 && !(tab === "results" && overview.exams.length > 0) ? (
               <StateView
                 state="empty"
                 icon={tab === "upcoming" ? <Icons.calendar aria-hidden /> : <Icons.exams aria-hidden />}
@@ -379,7 +417,7 @@ export function TestsBody({ studentId, staffEmpty }: { studentId?: string; staff
 export function TestsPage() {
   return (
     <AdmissionShell>
-      <div className={pageClass("wide")}>
+      <div className={pageClass()}>
         <TestsBody />
       </div>
     </AdmissionShell>

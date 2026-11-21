@@ -31,14 +31,19 @@ function FieldError({ message }: { message?: string }) {
   ) : null
 }
 
+/** Starting values of a new task (a deadline or a university it is about). */
+export type TaskPrefill = { title?: string; start_date?: string | null; deadline?: string | null; links?: TaskLink[]; list_entry_id?: string | null }
+
 /** Create (no `task`) or edit a task: title, description, dates, priority, steps and links. */
 export function TaskFormDialog({
   task,
+  prefill,
   studentId,
   open,
   onOpenChange,
 }: {
   task?: Task
+  prefill?: TaskPrefill
   studentId?: string
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -48,15 +53,15 @@ export function TaskFormDialog({
   const errorMessage = useErrorMessage()
   const create = useCreateTask(studentId)
   const update = useUpdateTask()
-  const [title, setTitle] = useState(task?.title ?? "")
+  const [title, setTitle] = useState(task?.title ?? prefill?.title ?? "")
   const [description, setDescription] = useState(task?.description ?? "")
   const [priority, setPriority] = useState<TaskPriority>(
     task?.priority ?? (vocab.task_priorities[1] as TaskPriority | undefined) ?? "medium",
   )
-  const [start, setStart] = useState(task?.start_date ?? "")
-  const [deadline, setDeadline] = useState(task?.deadline ?? "")
+  const [start, setStart] = useState(task?.start_date ?? prefill?.start_date ?? "")
+  const [deadline, setDeadline] = useState(task?.deadline ?? prefill?.deadline ?? "")
   const [steps, setSteps] = useState<TaskStepIn[]>(task?.steps ?? [])
-  const [links, setLinks] = useState<TaskLink[]>(task?.links ?? [])
+  const [links, setLinks] = useState<TaskLink[]>(task?.links ?? prefill?.links ?? [])
   const [problem, setProblem] = useState<FieldProblem | null>(null)
   const copy = {
     deadline: t("form.problems.deadline"),
@@ -85,6 +90,7 @@ export function TaskFormDialog({
       deadline: deadline || null,
       steps: steps.filter((step) => step.title.trim()).map((step) => ({ ...step, title: step.title.trim() })),
       links: links.filter((link) => link.url.trim() && link.label.trim()),
+      list_entry_id: task ? task.list_entry_id : (prefill?.list_entry_id ?? null),
     }
     setProblem(null)
     const badLink = links.find((link) => link.kind === "external" && !/^https?:\/\/\S+$/i.test(link.url.trim()))

@@ -4,6 +4,7 @@ import { HttpResponse, http } from "msw"
 import { describe, expect, test } from "bun:test"
 import { renderAdmissionApp } from "../../tests/helpers"
 import { CareerPage } from "./components/career-page"
+import { CareerQuizButton } from "./components/career-quiz-dialog"
 import { mockChooser } from "../../tests/chooser-handlers"
 import { mockQuizzes } from "../../tests/quiz-handlers"
 import { QUIZ, recommend } from "./quiz"
@@ -45,6 +46,12 @@ function setup(puts: unknown[]) {
   return quizzes
 }
 
+const FINISHED = Object.fromEntries(QUIZ.map((q) => [q.id, q.options[0]!.key]))
+
+async function openQuiz() {
+  fireEvent.click(await screen.findByRole("button", { name: "Take the test (2 min)" }))
+}
+
 async function answerAll() {
   for (let i = 0; i < QUIZ.length; i++) {
     const next = await screen.findByRole("button", { name: i === QUIZ.length - 1 ? "See my majors" : "Next" })
@@ -76,7 +83,8 @@ describe("career quiz", () => {
 
   test("walks ten single-choice questions with a progress bar", async () => {
     setup([])
-    renderAdmissionApp(<CareerPage />)
+    renderAdmissionApp(<CareerQuizButton />)
+    await openQuiz()
     const bar = await screen.findByRole("progressbar")
     expect(bar).toHaveAttribute("aria-valuenow", "1")
     expect(screen.getAllByRole("radio").length).toBe(4)
@@ -88,38 +96,36 @@ describe("career quiz", () => {
     await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1"))
   })
 
-  test("shows results, adds a major to the profile and redoes", async () => {
-    const puts: unknown[] = []
-    setup(puts)
-    renderAdmissionApp(<CareerPage />)
+  test("the test finishes from the button and stores the answers", async () => {
+    const store = setup([])
+    renderAdmissionApp(<CareerQuizButton />)
+    await openQuiz()
     await answerAll()
+    await waitFor(() => expect(store.quizzes.career.completed).toBe(true))
+    expect(Object.keys(store.quizzes.career.answers).length).toBe(QUIZ.length)
+  })
+
+  test("a finished test shows results on the field page and adds a major to the profile", async () => {
+    const puts: unknown[] = []
+    const store = setup(puts)
+    store.quizzes.career = { answers: FINISHED, completed: true }
+    renderAdmissionApp(<CareerPage />)
     expect(await screen.findByText("Here's what might be your thing")).toBeInTheDocument()
     const add = screen.getAllByRole("button", { name: "Add to profile" })
-    expect(add.length).toBeGreaterThan(0)
-    expect(screen.getByRole("link", { name: "Find my colleges" })).toHaveAttribute("href", "/colleges/discover")
     fireEvent.click(add[0]!)
     await waitFor(() =>
       expect(puts).toEqual([{ majors: ["computer science".replace(" ", "_")], minors: [], lock_version: 3 }]),
     )
     expect(await screen.findByTestId("profile-majors")).toBeInTheDocument()
-    fireEvent.click(screen.getByRole("button", { name: "Redo my recommendations" }))
-    await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1"))
   })
 })
 
 describe("career quiz persistence", () => {
-  test("restores finished results after a reload and clears them on redo", async () => {
+  test("redo clears the stored answers", async () => {
     const store = setup([])
-    const first = renderAdmissionApp(<CareerPage />)
-    await answerAll()
-    expect(await screen.findByText("Here's what might be your thing")).toBeInTheDocument()
-    await waitFor(() => expect(store.quizzes.career.completed).toBe(true))
-    expect(Object.keys(store.quizzes.career.answers).length).toBe(QUIZ.length)
-    first.unmount()
+    store.quizzes.career = { answers: FINISHED, completed: true }
     renderAdmissionApp(<CareerPage />)
-    expect(await screen.findByText("Here's what might be your thing")).toBeInTheDocument()
-    fireEvent.click(screen.getByRole("button", { name: "Redo my recommendations" }))
-    await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1"))
+    fireEvent.click(await screen.findByRole("button", { name: "Redo my recommendations" }))
     await waitFor(() => expect(store.quizzes.career).toEqual({ answers: {}, completed: false }))
   })
 
@@ -134,12 +140,6 @@ describe("career quiz persistence", () => {
     expect(store.quizzes.career.answers.study_fields).toEqual(["biology"])
   })
 
-  test("shows the saved career choice when there is no saved quiz", async () => {
-    setup([])
-    server.use(http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json(plan(["physics"]))))
-    renderAdmissionApp(<CareerPage />)
-    expect(await screen.findByTestId("profile-majors")).toBeInTheDocument()
-  })
 })
 
 describe("career tabs and field counter", () => {
@@ -177,13 +177,12 @@ describe("career tabs and field counter", () => {
     )
   }
 
-  test("ADM-TABS-1: the explore tab renders one tab bar, with the field badge on it", async () => {
+  test("ADM-TABS-1: the field page renders one tab bar, with the field tab on it", async () => {
     finished(["Computer Science"])
     renderAdmissionApp(<CareerPage />, { route: "/career/?tab=explore", messages: copy })
     await screen.findByTestId("profile-majors")
     expect(screen.getAllByRole("tablist")).toHaveLength(1)
     expect(screen.getAllByRole("tab", { name: /Field of study/ })).toHaveLength(1)
-    expect(screen.getByRole("tab", { name: /Field of study/ }).textContent).toContain("1")
   })
 
   test("ADM-CAREER-CTA-1: the results link to activities for the chosen field", async () => {

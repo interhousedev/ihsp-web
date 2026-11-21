@@ -1,8 +1,16 @@
 "use client"
-import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
-
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { ConnectAiDialogHost, OnboardingTour, PageLoading, ShellNavControls } from "@ihsp/features-core"
+import {
+  ConnectAiDialogHost,
+  LegalGate,
+  MaintenanceBanner,
+  NotificationBell,
+  OnboardingTour,
+  PageLoading,
+  QuickAssistant,
+  ShellNavControls,
+  usePlatformLinks,
+} from "@ihsp/features-core"
 import { isPwaMode } from "@ihsp/features-core/pwa"
 import { getConfig } from "@ihsp/config"
 import { AppShell } from "@ihsp/ui"
@@ -12,7 +20,8 @@ import { OnboardingGate, useOnboardingGatePending } from "../../onboarding/compo
 import { QueryPersistence } from "../../offline/components/query-persistence"
 import { SpBottomNav } from "./sp-bottom-nav"
 import { ProfileMenu } from "./profile-menu"
-import { ShellHeader } from "./shell-header"
+import { ShellSearch } from "./shell-search"
+import { OfflineIndicator } from "../../offline/components/offline-indicator"
 import { SpBrand } from "./sp-brand"
 import { TeacherScreen } from "./teacher-screen"
 
@@ -46,6 +55,7 @@ export function ShellTour() {
  */
 export function SpShell({ children, hideBottomNav = false }: { children: ReactNode; hideBottomNav?: boolean }) {
   const nav = useNav()
+  const platforms = usePlatformLinks()
   return (
     <RequireAuth>
       {/* oxlint-disable-next-line jsx-a11y/aria-role -- `role` is the IHSP role the user must have, not an ARIA role */}
@@ -57,8 +67,14 @@ export function SpShell({ children, hideBottomNav = false }: { children: ReactNo
             mobileSidebar={!isPwaMode()}
             brand={<SpBrand />}
             sidebarFooter={<ProfileMenu variant="row" />}
-            controlsLeading={<ShellNavControls />}
-            controls={<ShellHeader nav={[...nav.groups, ...nav.search]} />}
+            platforms={platforms}
+            history={<ShellNavControls />}
+            search={<ShellSearch nav={[...nav.groups, ...nav.search]} />}
+            ai={<QuickAssistant />}
+            bell={<NotificationBell />}
+            tools={<OfflineIndicator />}
+            settingsHref="/settings/"
+            profile={<ProfileMenu />}
           >
             <MaintenanceBanner />
             <Suspense fallback={<PageLoading />}>{children}</Suspense>

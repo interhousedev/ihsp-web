@@ -2,10 +2,10 @@
 
 import { ApiError } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, StateView } from "@ihsp/ui"
+import { Alert, AlertDescription, Button, Icons, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import { useList } from "../../chooser/hooks"
 import { ShareDialog } from "../../essay-invites/components/share-dialog"
 import { EssayReviewPanel } from "../../essay-review"
@@ -16,14 +16,25 @@ import { CoachPanel } from "./coach-panel"
 import { RefinePanel } from "./refine-panel"
 import { CheckPanel } from "./check-panel"
 import { EssayMeta } from "./essay-meta"
-import { SuppInfo } from "./supp-info"
-import { IdeasBoard } from "./ideas-board"
 import { PlanPane } from "./plan-pane"
 import { VersionsPanel } from "./versions-panel"
-import { CommentsDrawer, DocumentRail, Paper, SidePanel, Toolbar, ToolsPanel, TopBar, type ToolTab } from "./editor"
-import { useWide } from "./editor/use-wide"
-
-type Panel = "comments" | "review" | "tools" | null
+import {
+  AnnotatedText,
+  CommentsDrawer,
+  Dock,
+  isDockView,
+  PreviewDialog,
+  ReadPanel,
+  ScoreBar,
+  TopBar,
+  UnisPanel,
+  useReadState,
+  useSplit,
+  type DockView,
+} from "./editor"
+import { useCopyFinal } from "./editor/use-copy-final"
+import { ExamplesPanel } from "../flow/examples-panel"
+import { IdeasPanel } from "../flow/ideas-panel"
 
 /** Quiet time after the last keystroke before the draft is saved. */
 export const AUTOSAVE_MS = 1500
@@ -67,12 +78,14 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const dirty = useRef(false)
   const inFlight = useRef<Promise<number> | null>(null)
   const body = useRef<HTMLTextAreaElement>(null)
-  const wide = useWide()
+  const split = useSplit()
   const list = useList()
-  const [panel, setPanel] = useState<Panel>(null)
-  const [tab, setTab] = useState<ToolTab>("plan")
-  const [railOpen, setRailOpen] = useState(false)
+  const te = useT("essayEditor")
+  const tab = useSearchParams().get("tab")
+  const [view, setView] = useState<DockView | null>(isDockView(tab) ? tab : null)
   const [shareOpen, setShareOpen] = useState(false)
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const copyFinal = useCopyFinal(draft.body)
 
   /** Saves the current draft when it has changes; resolves to the lock version to use next. */
   const flush = useCallback(async (): Promise<number> => {
@@ -163,23 +176,63 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             ? t("save.conflict")
             : t("save.saved")
 
-  const openPanel = (next: Panel, nextTab?: ToolTab) => {
-    if (nextTab) setTab(nextTab)
-    setPanel((current) => (current === next && !nextTab ? null : next))
-  }
   const history = (command: "undo" | "redo") => {
     body.current?.focus()
     document.execCommand(command)
   }
   const entry = list.data?.find((item) => item.id === essay.list_entry_id)
-  const panelTitle =
-    panel === "comments" ? t("tabs.comments") : panel === "review" ? t("tabs.review") : t("editor.tools")
+  const targets = essay.targets ?? []
+  const institutionIds = [
+    ...new Set([...targets.map((tg) => tg.institution_id), entry?.institution.id].filter((id): id is string => !!id)),
+  ]
+  const readState = useReadState(essay.id, draft.body, flush)
+  const [selected, setSelected] = useState<number | null>(null)
+  const go = (next: DockView) => {
+    setView(next)
+    const url = new URL(window.location.href)
+    url.searchParams.set("tab", next)
+    window.history.replaceState(window.history.state, "", url)
+  }
+  const dockTitle = view === "review" ? t("tabs.review") : te(`tab.${view ?? "read"}`)
+
+  const panes: Record<DockView, ReactNode> = {
+    read: (
+      <div className="flex flex-col gap-5">
+        <ReadPanel state={readState} selected={selected} onSelect={setSelected} />
+        <CheckPanel essayId={essay.id} beforeRun={flush} />
+        <RefinePanel essayId={essay.id} />
+      </div>
+    ),
+    unis: <UnisPanel essay={essay} onReview={() => go("review")} />,
+    plan: (
+      <div className="flex flex-col gap-3">
+        <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
+        <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
+      </div>
+    ),
+    versions: (
+      <VersionsPanel
+        essay={essay}
+        draftBody={draft.body}
+        beforeChange={flush}
+        onRestore={(v) => void onRestore(v)}
+        restoring={restore.isPending}
+      />
+    ),
+    examples: <ExamplesPanel institutionIds={institutionIds.length > 0 ? institutionIds : undefined} />,
+    ideas: <IdeasPanel />,
+    comments: <CommentsDrawer essayId={essay.id} />,
+    review: <EssayReviewPanel essayId={essay.id} entryInstitutionIds={entry ? [entry.institution.id] : []} />,
+  }
 
   return (
-    <div className="bg-muted/40 flex min-h-[calc(100dvh-4rem)] flex-col">
+    <div className="bg-muted/40 flex min-h-[calc(100dvh-4rem)] flex-col md:h-[calc(100dvh-var(--shell-top-reserve,0px))] md:min-h-0">
       <TopBar
         title={draft.title}
         onTitle={(title) => update({ title })}
+        words={words}
+        wordLimit={draft.word_limit}
+        saveState={state}
         status={
           <>
             {status}
@@ -190,52 +243,64 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             ) : null}
           </>
         }
-        onRail={() => setRailOpen(true)}
-        onVersions={() => openPanel("tools", "versions")}
-        onComments={() => openPanel("comments")}
+        onUndo={() => history("undo")}
+        onRedo={() => history("redo")}
+        onCopy={() => void copyFinal()}
+        onPreview={() => setPreviewOpen(true)}
+        onVersions={() => go("versions")}
+        onComments={() => go(view === "comments" ? "read" : "comments")}
         onShare={() => setShareOpen(true)}
-        commentsOpen={panel === "comments"}
+        commentsOpen={view === "comments"}
+        copyDisabled={!draft.body.trim()}
       />
-      <div data-testid="editor-toolbar-bar" className="bg-background sticky top-[calc(var(--safe-top,0px)+4rem)] z-20">
-        <Toolbar
-          words={words}
-          wordLimit={draft.word_limit}
-          onUndo={() => history("undo")}
-          onRedo={() => history("redo")}
-          onReview={() => openPanel("review")}
-          onTools={() => openPanel("tools")}
-        />
-      </div>
-      <div className="flex min-w-0 flex-1 items-start gap-4 p-3 md:p-4">
-        <SidePanel
-          side="left"
-          title={t("editor.rail.title")}
-          open={wide || railOpen}
-          onOpenChange={setRailOpen}
-          className="w-52 shrink-0"
-        >
-          <DocumentRail currentId={essay.id} liveTitle={draft.title} onNavigate={() => setRailOpen(false)} />
-        </SidePanel>
-        <div className="flex min-w-0 flex-1 flex-col gap-3">
-          {essay.kind === "supplemental" ? <SuppInfo essay={essay} /> : null}
-          <EssayMeta
-            prompt={draft.prompt_text}
-            wordLimit={draft.word_limit}
-            words={words}
-            status={essay.status === "final" ? "final" : "draft"}
-            onPrompt={(prompt_text) => update({ prompt_text })}
-            onWordLimit={(word_limit) => update({ word_limit })}
-          />
-          <Paper
-            title={draft.title}
-            prompt=""
-            body={draft.body}
-            readOnly={state === "conflict"}
-            onBody={(next) => update({ body: next })}
-            textareaRef={body}
-          />
+      <div className="flex min-h-0 min-w-0 flex-1 gap-4 p-3 md:p-4">
+        <div className="flex min-w-0 flex-1 flex-col gap-3 md:overflow-y-auto md:pr-1 md:[scrollbar-gutter:stable]">
+          <div className="mx-auto flex w-full max-w-3xl flex-col gap-3">
+            <ScoreBar
+              essayId={essay.id}
+              state={readState}
+              onRead={() => go("read")}
+              onUnis={() => go("unis")}
+            />
+            <EssayMeta
+              prompt={draft.prompt_text}
+              summary={targets.length > 0 ? targets.map((tg) => tg.prompt).join(" · ") : undefined}
+              showPrompt={targets.length === 0}
+              wordLimit={draft.word_limit}
+              words={words}
+              onPrompt={(prompt_text) => update({ prompt_text })}
+              onWordLimit={(word_limit) => update({ word_limit })}
+            />
+          </div>
+          {readState.stale ? (
+            <p
+              role="status"
+              data-testid="editor-stale-banner"
+              className="bg-warning-muted text-warning mx-auto flex w-full max-w-3xl flex-wrap items-center gap-x-3 gap-y-1 rounded-md px-3 py-2 text-sm"
+            >
+              <span className="min-w-0 flex-1">{te("staleBanner")}</span>
+              <Button type="button" size="sm" variant="outline" disabled={readState.run.isPending} onClick={() => void readState.start()}>
+                {te("staleAction")}
+              </Button>
+            </p>
+          ) : null}
+          <article className="bg-card text-card-foreground ring-border mx-auto w-full max-w-3xl rounded-sm px-8 py-8 shadow-md ring-1 md:px-10 md:py-10 lg:px-14 lg:py-12">
+            <AnnotatedText
+              body={draft.body}
+              readOnly={state === "conflict"}
+              onBody={(next) => update({ body: next })}
+              textareaRef={body}
+              read={readState.read}
+              stale={readState.stale}
+              selected={selected}
+              onSelect={(n) => {
+                setSelected(n)
+                go("read")
+              }}
+            />
+          </article>
           {state === "conflict" ? (
-            <Alert variant="destructive">
+            <Alert variant="destructive" className="mx-auto w-full max-w-3xl">
               <AlertDescription className="flex flex-col gap-2">
                 {t("save.conflictText")}
                 <Button type="button" size="sm" className="self-start" onClick={() => void reload()}>
@@ -245,7 +310,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             </Alert>
           ) : null}
           {lost && state !== "conflict" ? (
-            <details className="border-hairline rounded-card border p-3 text-sm">
+            <details className="border-hairline rounded-card mx-auto w-full max-w-3xl border p-3 text-sm">
               <summary className="cursor-pointer">{t("save.lost")}</summary>
               <p className="mt-2 whitespace-pre-wrap select-all">{lost}</p>
               <Button type="button" size="sm" variant="ghost" onClick={() => setLost(null)}>
@@ -259,46 +324,23 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             </p>
           ) : null}
         </div>
-        <SidePanel
-          side="right"
-          title={panelTitle}
-          open={panel !== null}
-          onOpenChange={(next) => setPanel(next ? panel : null)}
-          className="bg-background border-hairline rounded-card w-96 max-w-[40%] shrink-0 border p-4"
-        >
-          {panel === "comments" ? <CommentsDrawer essayId={essay.id} /> : null}
-          {panel === "review" ? (
-            <EssayReviewPanel essayId={essay.id} entryInstitutionIds={entry ? [entry.institution.id] : []} />
-          ) : null}
-          {panel === "tools" ? (
-            <ToolsPanel
-              tab={tab}
-              onTab={setTab}
-              panes={{
-                plan: (
-                  <div className="flex flex-col gap-3">
-                    <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
-                    <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
-                  </div>
-                ),
-                check: <CheckPanel essayId={essay.id} beforeRun={flush} />,
-                refine: <RefinePanel essayId={essay.id} />,
-                versions: (
-                  <VersionsPanel
-                    essay={essay}
-                    draftBody={draft.body}
-                    beforeChange={flush}
-                    onRestore={(v) => void onRestore(v)}
-                    restoring={restore.isPending}
-                  />
-                ),
-                ideas: <IdeasBoard essayId={essay.id} />,
-              }}
-            />
-          ) : null}
-        </SidePanel>
+        <Dock
+          split={split}
+          view={view}
+          onView={go}
+          onClose={() => setView(null)}
+          title={dockTitle}
+          panes={panes}
+        />
       </div>
       <ShareDialog essayId={essay.id} open={shareOpen} onOpenChange={setShareOpen} />
+      <PreviewDialog
+        open={previewOpen}
+        onOpenChange={setPreviewOpen}
+        title={draft.title}
+        body={draft.body}
+        limit={draft.word_limit}
+      />
     </div>
   )
 }

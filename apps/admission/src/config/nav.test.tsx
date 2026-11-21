@@ -22,16 +22,19 @@ function Probe() {
 
 describe("sections", () => {
   it("keeps the order of the IA", () => {
-    expect(SECTION_IDS).toEqual(["career", "activities", "universities", "essays", "apply"])
+    expect(SECTION_IDS).toEqual(["today", "profile", "universities", "essays", "apply"])
   })
 
   it.each([
-    ["/career/", "career"],
-    ["/plan/", "activities"],
-    ["/opportunities/scholarships/", "activities"],
-    ["/opportunities/view/", "activities"],
-    ["/tests/", "activities"],
-    ["/courses/", "activities"],
+    ["/", "today"],
+    ["/profile/", "profile"],
+    ["/profile/professions/", "profile"],
+    ["/career/", "profile"],
+    ["/plan/", "profile"],
+    ["/opportunities/scholarships/", "profile"],
+    ["/opportunities/view/", "profile"],
+    ["/tests/", "profile"],
+    ["/courses/", "profile"],
     ["/chooser/institution/", "universities"],
     ["/chooser/budget/?view=scholarships", "universities"],
     ["/essays/edit/", "essays"],
@@ -45,17 +48,18 @@ describe("sections", () => {
   })
 
   it("belongs to no section on Home, Settings and the staff area", () => {
-    for (const path of ["/", "/settings/", "/faq/", "/help/", "/staff/", "/planet/"]) {
+    for (const path of ["/settings/", "/faq/", "/help/", "/staff/", "/planet/"]) {
       expect(sectionFor(path)).toBeNull()
     }
   })
 
   it("picks the active part from the route or from ?tab=", () => {
-    expect(activePart(SECTIONS.activities, "/opportunities/view/", null)?.id).toBe("ideas")
+    expect(activePart(SECTIONS.profile, "/opportunities/view/", null)?.id).toBe("ideas")
     expect(activePart(SECTIONS.apply, "/outcomes/", null)?.id).toBe("results")
-    expect(activePart(SECTIONS.career, "/career/", "future")?.id).toBe("future")
-    expect(activePart(SECTIONS.career, "/career/", null)?.id).toBe("explore")
-    expect(activePart(SECTIONS.essays, "/essays/", "alignment")?.id).toBe("alignment")
+    expect(activePart(SECTIONS.profile, "/profile/professions/", null)?.id).toBe("professions")
+    expect(activePart(SECTIONS.profile, "/profile/", null)?.id).toBe("overview")
+    expect(SECTIONS.essays.parts).toEqual([])
+    expect(activePart(SECTIONS.essays, "/essays/", "alignment")).toBeUndefined()
   })
 })
 
@@ -64,9 +68,9 @@ describe("useNav", () => {
     renderAdmissionApp(<Probe />, { session: { user: { ...userMe, roles: ["student"] } } })
     const bottom = (await screen.findByTestId("bottom")).textContent?.split("|")
     expect(bottom).toEqual([
-      "Career=/career/",
-      "Activities=/activities/",
-      "Universities=/chooser/list/",
+      "Today=/",
+      "Profile=/profile/",
+      "Universities=/chooser/",
       "Essays=/essays/",
       "Apply=/documents/",
     ])
@@ -79,7 +83,7 @@ describe("useNav", () => {
     }
     renderAdmissionApp(<Prefixes />, { session: { user: { ...userMe, roles: ["student"] } } })
     return screen.findByTestId("prefixes").then((node) => {
-      expect(node.textContent).toBe(SECTION_IDS.map((id) => SECTIONS[id].prefixes.join(",")).join("|"))
+      expect(node.textContent).toBe(["", ...SECTION_IDS.slice(1).map((id) => SECTIONS[id].prefixes.join(","))].join("|"))
     })
   })
 

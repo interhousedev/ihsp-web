@@ -14,11 +14,13 @@ export function AlgorithmSummary({
   sources,
   t,
   onEdit,
+  withContinue = true,
 }: {
   preferences: Preferences
   sources: QuestionSources
   t: Translate
   onEdit: () => void
+  withContinue?: boolean
 }) {
   const { answers } = preferences
   const major = sources.majors.find((item) => item.value === answers.major)?.label
@@ -38,9 +40,11 @@ export function AlgorithmSummary({
         <Button type="button" variant="outline" onClick={onEdit}>
           {t("summary.edit")}
         </Button>
-        <Button render={<Link href="/colleges/discover/" />} nativeButton={false}>
-          {t("summary.cta")}
-        </Button>
+        {withContinue ? (
+          <Button render={<Link href="/chooser/?step=match" />} nativeButton={false}>
+            {t("summary.cta")}
+          </Button>
+        ) : null}
       </div>
     </section>
   )

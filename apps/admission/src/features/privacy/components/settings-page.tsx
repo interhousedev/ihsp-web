@@ -41,9 +41,9 @@ function SettingsBody() {
   const setTab = (next: string) => router.replace(next === "privacy" ? "/settings/" : `/settings/?tab=${next}`)
   return (
     <AdmissionShell anyone>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="lock" title={t("title")} />
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           <UnderlineTabs
             label={t("view.tabs")}
             value={tab}
@@ -55,19 +55,17 @@ function SettingsBody() {
               { value: "activity", label: t("view.activity"), icon: "eye", tone: "neutral" },
             ]}
           />
-          {tab === "privacy" ? (
-            <div className="flex flex-col gap-8">
-              {isStaffOnly(session?.user.roles, alumnus) ? null : <PurposeConsents />}
-              <MentoringSwitches />
-            </div>
-          ) : null}
-          {tab === "profile" ? <ProfileBody base="/settings/?tab=profile&section=" /> : null}
-          {tab === "data" ? <DataControls /> : null}
-          {tab === "activity" ? (
-            <ScrollFade maxHeight="70vh">
-              <AuditList />
-            </ScrollFade>
-          ) : null}
+          <ScrollFade maxHeight="calc(100svh - 13.5rem)">
+            {tab === "privacy" ? (
+              <div className="flex flex-col gap-8">
+                {isStaffOnly(session?.user.roles, alumnus) ? null : <PurposeConsents />}
+                <MentoringSwitches />
+              </div>
+            ) : null}
+            {tab === "profile" ? <ProfileBody base="/settings/?tab=profile&section=" /> : null}
+            {tab === "data" ? <DataControls /> : null}
+            {tab === "activity" ? <AuditList /> : null}
+          </ScrollFade>
         </div>
       </div>
     </AdmissionShell>

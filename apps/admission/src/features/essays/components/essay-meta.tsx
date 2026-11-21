@@ -1,86 +1,84 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Badge, Icons, Input, Label, Textarea } from "@ihsp/ui"
-import { useState, type ReactNode } from "react"
-
-/** One property of the metadata header: a muted label on the left, the control on the right. */
-function PropRow({ label, htmlFor, children }: { label: string; htmlFor?: string; children: ReactNode }) {
-  return (
-    <div className="grid min-h-9 grid-cols-[7rem_minmax(0,1fr)] items-start gap-3 py-1 text-sm">
-      <Label htmlFor={htmlFor} className="text-muted-foreground pt-1.5 text-[13px] font-normal">
-        {label}
-      </Label>
-      <div className="min-w-0">{children}</div>
-    </div>
-  )
-}
+import { Icons, Input, Label, Textarea } from "@ihsp/ui"
+import { useState } from "react"
 
 /**
- * The properties of an essay above the text: prompt (collapsible), word limit, status and the live word count that
- * turns to the warning colour over the limit. Only fields the essay has.
+ * The prompt as one quiet line above the text (with the word count against the limit); it opens into the editable
+ * prompt and the word limit. Prompts that come from the prompt map are edited in the Вузы tab, so only the limit opens.
  */
 export function EssayMeta({
   prompt,
+  summary,
   wordLimit,
   words,
-  status,
   onPrompt,
   onWordLimit,
+  showPrompt = true,
 }: {
   prompt: string
+  /** The line shown when closed; defaults to the prompt text (attached prompts pass their own). */
+  summary?: string
+  /** False when the essay answers attached prompts. */
+  showPrompt?: boolean
   wordLimit: number | null
   words: number
-  status: "draft" | "final"
   onPrompt: (value: string) => void
   onWordLimit: (value: number | null) => void
 }) {
   const t = useT("essays")
   const [open, setOpen] = useState(false)
   const over = wordLimit !== null && words > wordLimit
+  const line = (summary ?? prompt).trim() || t("promptEmpty")
   return (
-    <div className="bg-card border-hairline rounded-card flex flex-col divide-y px-3 py-1" data-testid="essay-meta">
-      <PropRow label={t("promptLabel")} htmlFor="essay-prompt-edit">
+    <div className="flex min-w-0 flex-col gap-2" data-testid="essay-meta">
+      <div className="flex min-w-0 items-center gap-3 text-sm">
         <button
           type="button"
           aria-expanded={open}
-          aria-controls="essay-prompt-edit"
+          aria-controls="essay-meta-body"
           onClick={() => setOpen((v) => !v)}
-          className="text-muted-foreground hover:text-foreground flex w-full items-start gap-1.5 py-1 text-left"
+          className="text-muted-foreground hover:text-foreground flex min-w-0 flex-1 items-center gap-1.5 text-left"
         >
-          <Icons.chevronRight aria-hidden className={open ? "mt-0.5 size-4 rotate-90" : "mt-0.5 size-4"} />
-          <span className={open ? "sr-only" : "text-foreground line-clamp-2 min-w-0"}>
-            {prompt.trim() || t("promptEmpty")}
-          </span>
+          <Icons.chevronRight aria-hidden className={open ? "size-4 shrink-0 rotate-90" : "size-4 shrink-0"} />
+          <span className="text-foreground truncate">{line}</span>
           <span className="sr-only">{open ? t("promptHide") : t("promptShow")}</span>
         </button>
-        {open ? (
-          <Textarea id="essay-prompt-edit" rows={3} value={prompt} onChange={(e) => onPrompt(e.target.value)} />
-        ) : null}
-      </PropRow>
-      <PropRow label={t("wordLimit")} htmlFor="essay-limit-edit">
-        <Input
-          id="essay-limit-edit"
-          type="number"
-          min={1}
-          inputMode="numeric"
-          className="h-8 w-28"
-          value={wordLimit ?? ""}
-          onChange={(e) => onWordLimit(e.target.value === "" ? null : Math.floor(Number(e.target.value)))}
-        />
-      </PropRow>
-      <PropRow label={t("metaWords")}>
         <span
           data-testid="essay-meta-count"
-          className={over ? "text-warning font-medium" : "text-foreground"}
+          className={over ? "text-warning hidden shrink-0 font-medium sm:inline" : "text-muted-foreground hidden shrink-0 sm:inline"}
           aria-live="polite"
         >
           {wordLimit ? t("metaWordsOf", { count: words, limit: wordLimit }) : t("words", { count: words })}
         </span>
-      </PropRow>
-      <PropRow label={t("metaStatus")}>
-        <Badge variant={status === "final" ? "success" : "neutral"}>{t(`statusValue.${status}`)}</Badge>
-      </PropRow>
+      </div>
+      {open ? (
+        <div id="essay-meta-body" className="bg-card border-hairline rounded-card flex flex-col gap-3 border p-3">
+          {showPrompt ? (
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="essay-prompt-edit" className="text-muted-foreground text-xs font-normal">
+                {t("promptLabel")}
+              </Label>
+              <Textarea id="essay-prompt-edit" rows={3} value={prompt} onChange={(e) => onPrompt(e.target.value)} />
+            </div>
+          ) : null}
+          <div className="flex items-center gap-3">
+            <Label htmlFor="essay-limit-edit" className="text-muted-foreground text-xs font-normal">
+              {t("wordLimit")}
+            </Label>
+            <Input
+              id="essay-limit-edit"
+              type="number"
+              min={1}
+              inputMode="numeric"
+              className="h-8 w-28"
+              value={wordLimit ?? ""}
+              onChange={(e) => onWordLimit(e.target.value === "" ? null : Math.floor(Number(e.target.value)))}
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }

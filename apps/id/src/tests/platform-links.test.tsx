@@ -22,7 +22,7 @@ describe("account menu", () => {
       { session: LOGGED_IN },
     )
 
-    await user.click(await screen.findByRole("button", { name: "Account menu" }))
+    await user.click(await screen.findByRole("button", { name: /platforms/i }))
 
     const menu = await screen.findByRole("menu")
     expect(within(menu).getByRole("menuitem", { name: /IHT ID/ })).toHaveAttribute("aria-current", "page")

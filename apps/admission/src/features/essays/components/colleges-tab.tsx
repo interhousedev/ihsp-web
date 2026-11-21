@@ -22,7 +22,7 @@ export function CollegesTab({ entryId }: { entryId: string | null }) {
         title={t("colleges.emptyTitle")}
         description={t("colleges.emptyText")}
         action={
-          <Link href="/chooser/search/" className={buttonVariants()}>
+          <Link href="/chooser/?step=match" className={buttonVariants()}>
             {t("collegeOpen")}
           </Link>
         }

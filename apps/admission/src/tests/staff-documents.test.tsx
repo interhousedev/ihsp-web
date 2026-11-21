@@ -127,6 +127,7 @@ describe("staff deadlines", () => {
       }),
     )
     renderAdmissionApp(<StaffDeadlinesPage />, staff)
+    await userEvent.click(await screen.findByRole("tab", { name: "Deadline catalog" }))
     await userEvent.click(await screen.findByRole("button", { name: "Edit" }))
     const date = await screen.findByLabelText("Date")
     await userEvent.clear(date)
@@ -149,6 +150,7 @@ describe("staff deadlines", () => {
       }),
     )
     renderAdmissionApp(<StaffDeadlinesPage />, staff)
+    await userEvent.click(await screen.findByRole("tab", { name: "Deadline catalog" }))
     expect(await screen.findByText("MIT")).toBeTruthy()
     expect(screen.queryByText("2027-01-05")).toBeNull()
     expect(screen.getByText(/Regular Decision \(RD\)/)).toBeTruthy()
@@ -170,6 +172,7 @@ describe("staff deadlines", () => {
       }),
     )
     renderAdmissionApp(<StaffDeadlinesPage />, staff)
+    await userEvent.click(await screen.findByRole("tab", { name: "Deadline catalog" }))
     await userEvent.click(await screen.findByRole("button", { name: "Remove" }))
     const buttons = await screen.findAllByRole("button", { name: "Remove" })
     await userEvent.click(buttons[buttons.length - 1])

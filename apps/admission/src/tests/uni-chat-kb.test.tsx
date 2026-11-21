@@ -67,14 +67,13 @@ function serveUniChat(autoRunPending: boolean) {
 }
 
 describe("university chat", () => {
-  test("a new university runs the default research exactly once", async () => {
+  test("a new university never runs the research by itself", async () => {
     const runs = serveUniChat(true)
-    const view = renderAdmissionApp(<UniChatPanel match={match} />)
-    expect(await screen.findByText("What are the deadlines?")).toBeInTheDocument()
-    await waitFor(() => expect(runs).toEqual(["true"]))
-    view.rerender(<UniChatPanel match={{ ...match }} />)
+    renderAdmissionApp(<UniChatPanel match={match} />)
+    const button = await screen.findByRole("button", { name: "Run research" })
     await new Promise((resolve) => setTimeout(resolve, 200))
-    expect(runs).toEqual(["true"])
+    expect(runs).toEqual([])
+    expect(button).toBeEnabled()
   })
 
   test("a seen university waits for the manual Run research button", async () => {
@@ -95,6 +94,7 @@ describe("university chat", () => {
       ),
     )
     renderAdmissionApp(<UniChatPanel match={match} />)
+    fireEvent.click(await screen.findByRole("button", { name: "Run research" }))
     expect(await screen.findByRole("alert")).toHaveTextContent("You reached the assistant limit")
   })
 
@@ -106,6 +106,7 @@ describe("university chat", () => {
       ),
     )
     renderAdmissionApp(<UniChatPanel match={match} />)
+    fireEvent.click(await screen.findByRole("button", { name: "Run research" }))
     expect(await screen.findByRole("alert")).toHaveTextContent("You used this week's advanced AI requests")
   })
 

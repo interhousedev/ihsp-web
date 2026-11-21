@@ -3,7 +3,8 @@
 import { useT } from "@ihsp/i18n"
 import { StateView } from "@ihsp/ui"
 import type { Fact, Source } from "../types"
-import { FactSource, sourceOf } from "./fact-source"
+import { SectionSource } from "./detail/section-source"
+import { sourceOf } from "./fact-source"
 import { useOptionLabel } from "./option-label"
 
 type Loose = { (key: string, values?: Record<string, string | number>): string; has: (key: string) => boolean }
@@ -43,19 +44,23 @@ export function FactRows({ facts, sources }: { facts: [string, Fact][]; sources:
     return true
   })
   if (rows.length === 0) return <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
+  const sourced = rows.flatMap(([key]) => {
+    const source = sourceOf(sources, key)
+    return source ? [{ source_url: source.url, year: source.year }] : []
+  })
   return (
-    <dl className="flex flex-col divide-y">
-      {rows.map(([key, fact]) => (
-        <div key={key} className="flex flex-col gap-1 py-3 sm:flex-row sm:gap-4">
-          <dt className="text-muted-foreground w-52 shrink-0 text-sm">
-            {t.has(`facts.${key.toLowerCase()}`) ? t(`facts.${key.toLowerCase()}`) : key}
-          </dt>
-          <dd className="flex min-w-0 flex-col gap-1">
-            <span className="text-sm font-medium">{format(fact.value)}</span>
-            <FactSource fact={fact} source={sourceOf(sources, key)} />
-          </dd>
-        </div>
-      ))}
-    </dl>
+    <div className="flex flex-col gap-2">
+      <dl className="flex flex-col divide-y">
+        {rows.map(([key, fact]) => (
+          <div key={key} className="flex flex-col gap-0.5 py-2.5 sm:flex-row sm:gap-4">
+            <dt className="text-muted-foreground w-52 shrink-0 text-sm">
+              {t.has(`facts.${key.toLowerCase()}`) ? t(`facts.${key.toLowerCase()}`) : key}
+            </dt>
+            <dd className="min-w-0 text-sm font-medium">{format(fact.value)}</dd>
+          </div>
+        ))}
+      </dl>
+      <SectionSource rows={sourced.length > 0 ? sourced : [{ source_url: null, year: null }]} />
+    </div>
   )
 }

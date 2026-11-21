@@ -3,7 +3,7 @@
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, Input, Label, Skeleton, StateView } from "@ihsp/ui"
 import { AiTabCard } from "@/components/ai-tab-card"
-import { useState, type FormEvent } from "react"
+import { useState, type FormEvent, type ReactNode } from "react"
 import { toast } from "sonner"
 import {
   IDEA_STATUSES,
@@ -17,7 +17,8 @@ import {
 } from "../api"
 import { CoachError } from "./coach-error"
 
-function IdeaCard({ idea }: { idea: Idea }) {
+/** One idea with its status, expansion and delete; `children` sit under it (the flow adds the prompt fit there). */
+export function IdeaCard({ idea, children }: { idea: Idea; children?: ReactNode }) {
   const t = useT("essays")
   const errorMessage = useErrorMessage()
   const patch = usePatchIdea()
@@ -92,6 +93,7 @@ function IdeaCard({ idea }: { idea: Idea }) {
           </ul>
         </AiTabCard>
       ) : null}
+      {children}
     </li>
   )
 }

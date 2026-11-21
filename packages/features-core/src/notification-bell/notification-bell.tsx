@@ -2,7 +2,7 @@
 
 import { getNotificationsUnreadCountQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconButton, Icons, Popover, PopoverContent, PopoverTrigger } from "@ihsp/ui"
+import { IconButton, Icons, Popover, PopoverContent, PopoverTrigger, useShellSlot } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState } from "react"
@@ -15,6 +15,7 @@ export const UNREAD_POLL_MS = 60_000
 export function NotificationBell() {
   const t = useT("notifications")
   const [open, setOpen] = useState(false)
+  const inSidebar = useShellSlot() === "sidebar"
   const { data } = useQuery({ ...getNotificationsUnreadCountQuery(), refetchInterval: UNREAD_POLL_MS })
   const count = data?.count ?? 0
   const label = count > 0 ? t("bellWithCount", { count }) : t("bell")
@@ -32,7 +33,12 @@ export function NotificationBell() {
           </span>
         ) : null}
       </span>
-      <PopoverContent align="end" className="max-h-[75dvh] w-[min(24rem,calc(100vw-2rem))] gap-3 overflow-y-auto p-3">
+      <PopoverContent
+        side={inSidebar ? "right" : "bottom"}
+        align="end"
+        sideOffset={inSidebar ? 12 : 4}
+        className="max-h-[75dvh] w-[min(24rem,calc(100vw-2rem))] gap-3 overflow-y-auto p-3"
+      >
         <NotificationCenter compact />
         <Link
           href="/notifications/"

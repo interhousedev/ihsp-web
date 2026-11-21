@@ -10,8 +10,25 @@ export interface CertificateType {
   name: LocalizedName
   builtin: boolean
   position: number
+  /** A standardised exam (SAT, IELTS ...): listed among test scores, never suggested as an honor. */
+  standard: boolean
+  /** One of the honor categories shared with admission honors. */
+  category: HonorCategory | null
   custom_fields: CustomField[]
 }
+
+export const HONOR_CATEGORIES = [
+  "olympiad",
+  "award",
+  "scholarship",
+  "research",
+  "leadership",
+  "arts",
+  "sports",
+  "academic",
+  "other",
+] as const
+export type HonorCategory = (typeof HONOR_CATEGORIES)[number]
 
 export type CustomFieldKind = "text" | "number" | "single" | "multi"
 

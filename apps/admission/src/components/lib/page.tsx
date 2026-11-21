@@ -2,11 +2,15 @@ import { cn, Icons } from "@ihsp/ui"
 import { PageHeader, type PageHeaderProps } from "@ihsp/ui"
 import type { ReactNode } from "react"
 
-const WIDTHS = { narrow: "max-w-3xl", default: "max-w-4xl", wide: "max-w-6xl" } as const
+/**
+ * The one container of every admission page and section tab: full width up to `max-w-6xl`, `px-4`/`md:px-6`, a short
+ * gap under the section tabs. Pages never pick their own width or padding.
+ */
+export const PAGE_FRAME = "mx-auto w-full min-w-0 max-w-6xl px-4 md:px-6"
 
-/** The class of every page body: one max-width scale, generous padding and spacing between sections. */
-export function pageClass(width: keyof typeof WIDTHS = "narrow", extra?: string) {
-  return cn("mx-auto flex w-full min-w-0 flex-col gap-8 px-4 py-6 md:gap-10 md:px-8 md:py-10", WIDTHS[width], extra)
+/** The class of every page body (see `PAGE_FRAME`); `extra` adds only non-layout classes. */
+export function pageClass(extra?: string) {
+  return cn(PAGE_FRAME, "flex flex-col gap-5 pt-3 pb-6 md:gap-6 md:pt-4", extra)
 }
 
 /** The page title with a tinted icon tile before it: the one header pattern of every page. */

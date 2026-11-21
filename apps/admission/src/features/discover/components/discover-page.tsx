@@ -1,49 +1,41 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons, ResponsiveDialog, StateView } from "@ihsp/ui"
+import { Button, cn, Icons, ResponsiveDialog, StateView } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react"
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react"
 import { toast } from "sonner"
 import { SwipeDeck, type SwipeDirection } from "../../../components/lib/swipe-deck"
-import { ScrollFade } from "../../../components/scroll-fade"
 import type { AdmissionMatch as Match } from "@ihsp/api"
-import { AlgorithmPanel } from "../../algorithm/components/algorithm-panel"
 import { useDecide, useMatches, useUndoDecision } from "../hooks"
+import { DeckSettings } from "./deck-settings"
 import { MatchCard } from "./match-card"
 import { SwipeExplainer } from "./swipe-explainer"
 import { UniChatPanel } from "./uni-chat-panel"
 
-/** Three columns need 1440px; below that the algorithm moves into a dialog so deck and chat keep their width. */
-type Layout = "mobile" | "tablet" | "desktop" | "wide"
-
+/** The tray sits beside the deck from 1024px, under it when narrower. */
 function subscribe(onChange: () => void) {
   window.addEventListener("resize", onChange)
   return () => window.removeEventListener("resize", onChange)
 }
-const snapshot = (): Layout => {
-  const width = window.innerWidth
-  return width < 768 ? "mobile" : width < 1024 ? "tablet" : width < 1440 ? "desktop" : "wide"
-}
-const serverSnapshot = (): Layout => "wide"
+const snapshot = () => window.innerWidth >= 1024
+const serverSnapshot = () => true
 
 type Decided = { match: Match; direction: SwipeDirection }
 
-const COLUMN_HEIGHT = "calc(100dvh - 9rem)"
 
-/** The Kollegio-style matching feed, embedded in the chooser search (no page chrome): algorithm, swipe deck and assistant context. */
-export function DiscoverPage() {
+/** The Kollegio-style matching feed, embedded in the chooser (no page chrome): settings, swipe deck and assistant context. */
+export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNode }) {
   const t = useT("discover")
   const tChat = useT("uniChat")
   const errorMessage = useErrorMessage()
   const client = useQueryClient()
-  const layout = useSyncExternalStore(subscribe, snapshot, serverSnapshot)
+  const wide = useSyncExternalStore(subscribe, snapshot, serverSnapshot)
   const matches = useMatches()
   const decide = useDecide()
   const undo = useUndoDecision()
   const [history, setHistory] = useState<Decided[]>([])
   const [stamp, setStamp] = useState<string | null>(null)
-  const [panelOpen, setPanelOpen] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
 
   const remaining = useMemo(() => {
@@ -104,8 +96,6 @@ export function DiscoverPage() {
   }
 
   const refresh = () => void client.invalidateQueries({ queryKey: ["admission", "matches"] })
-  const algorithm = <AlgorithmPanel onSaved={refresh} />
-  const context = <UniChatPanel match={top} />
 
   const deck = matches.isLoading ? (
     <StateView state="loading" rows={4} />
@@ -113,12 +103,12 @@ export function DiscoverPage() {
     <StateView state="error" error={matches.error} onRetry={() => void matches.refetch()} />
   ) : (
     <div className="mx-auto flex w-full min-w-0 max-w-md flex-col gap-4">
-      <SwipeExplainer />
-      <div className="rounded-card relative isolate z-0 min-w-0 overflow-hidden">
+      <div className="rounded-card relative z-10 min-w-0">
         <SwipeDeck
-          className="h-[min(34rem,calc(100dvh-22rem))] min-h-[20rem] md:h-[min(34rem,calc(100dvh-16rem))] md:min-h-[26rem]"
+          className="h-[min(34rem,calc(100dvh-19rem))] min-h-[16rem] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
           items={remaining}
           getKey={(match) => match.university_id}
+          getExitDirection={(match) => history.find((entry) => entry.match.university_id === match.university_id)?.direction}
           renderCard={(match) => <MatchCard match={match} />}
           onSwipe={onSwipe}
           rightStamp={t("stamp.interested")}
@@ -127,7 +117,10 @@ export function DiscoverPage() {
           empty={<StateView state="empty" title={t("empty.title")} description={t("empty.text")} />}
         />
       </div>
-      <p role="status" aria-live="polite" className="text-success h-5 text-center text-sm font-medium">
+      <p role="status" aria-live="polite" className={cn(
+          "h-5 text-center text-sm font-medium",
+          history[history.length - 1]?.direction === "left" ? "text-muted-foreground" : "text-success",
+        )}>
         {stamp}
       </p>
       <div className="bg-background/90 sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 flex items-center justify-center gap-3 py-2 pr-16 backdrop-blur md:static md:bg-transparent md:p-0 md:backdrop-blur-none">
@@ -152,90 +145,45 @@ export function DiscoverPage() {
           <kbd className="text-primary-foreground/70 hidden text-xs md:inline">→</kbd>
         </Button>
       </div>
+      <SwipeExplainer />
     </div>
   )
 
   return (
-    <>
-      <div className="flex w-full min-w-0 flex-col gap-4">
-        <div className="flex flex-wrap items-center justify-end gap-2">
-          {layout === "mobile" ? (
-            <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="outline" size="sm" onClick={() => setChatOpen(true)}>
-                <Icons.sparkles aria-hidden />
-                {tChat("ask")}
-              </Button>
-              <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
-                <Icons.discover aria-hidden />
-                {t("algorithm.open")}
-              </Button>
-            </div>
-          ) : null}
-          {layout === "desktop" ? (
-            <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
-              <Icons.discover aria-hidden />
-              {t("algorithm.open")}
-            </Button>
-          ) : null}
-          {layout === "tablet" ? (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              aria-expanded={panelOpen}
-              onClick={() => setPanelOpen((open) => !open)}
-            >
-              <Icons.panelLeft aria-hidden />
-              {panelOpen ? t("algorithm.hide") : t("algorithm.show")}
-            </Button>
-          ) : null}
+    <div className="flex w-full min-w-0 flex-col gap-4">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">{lead}</div>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="max-md:size-11 max-md:px-0"
+            aria-label={tChat("ask")}
+            onClick={() => setChatOpen(true)}
+          >
+            <Icons.sparkles aria-hidden />
+            <span className="max-md:sr-only">{tChat("ask")}</span>
+          </Button>
+          <DeckSettings onSaved={refresh} />
         </div>
-        {layout === "wide" ? (
-          <div className="grid grid-cols-[20rem_minmax(0,1fr)_22rem] items-start gap-6">
-            <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
-              {algorithm}
-            </ScrollFade>
-            {deck}
-            <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
-              <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
-                {context}
-              </ScrollFade>
-            </aside>
-          </div>
-        ) : layout === "desktop" ? (
-          <div className="grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-6">
-            {deck}
-            <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
-              <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
-                {context}
-              </ScrollFade>
-            </aside>
-            <ResponsiveDialog open={panelOpen} onOpenChange={setPanelOpen} title={t("algorithm.title")}>
-              {algorithm}
-            </ResponsiveDialog>
-          </div>
-        ) : layout === "tablet" ? (
-          <div className={panelOpen ? "grid grid-cols-[minmax(0,1fr)_18rem] items-start gap-4" : "grid grid-cols-1"}>
-            {deck}
-            {panelOpen ? (
-              <ScrollFade maxHeight={COLUMN_HEIGHT} className="flex flex-col gap-6 pr-2">
-                {algorithm}
-                {context}
-              </ScrollFade>
-            ) : null}
-          </div>
-        ) : (
-          <>
-            {deck}
-            <ResponsiveDialog open={panelOpen} onOpenChange={setPanelOpen} title={t("algorithm.title")}>
-              {algorithm}
-            </ResponsiveDialog>
-            <ResponsiveDialog open={chatOpen} onOpenChange={setChatOpen} title={tChat("tab")}>
-              {context}
-            </ResponsiveDialog>
-          </>
-        )}
       </div>
-    </>
+      {wide ? (
+        <div className="grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-6">
+          {deck}
+          <aside data-testid="discover-side-slot" className="relative z-10 flex min-w-0 flex-col gap-4">
+            {tray}
+          </aside>
+        </div>
+      ) : (
+        <>
+          {deck}
+          {tray}
+        </>
+      )}
+      <ResponsiveDialog open={chatOpen} onOpenChange={setChatOpen} title={tChat("tab")}>
+        <UniChatPanel match={top} />
+      </ResponsiveDialog>
+    </div>
   )
 }

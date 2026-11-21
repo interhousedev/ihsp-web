@@ -1,12 +1,9 @@
 "use client"
 
-import { ChooserPage } from "../../../features/chooser/components/chooser-page"
-import { MyList } from "../../../features/chooser/components/my-list"
+import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/chooser/?step=list" })
 
 export default function Page() {
-  return (
-    <ChooserPage>
-      <MyList />
-    </ChooserPage>
-  )
+  return <RouteRedirect target={target} />
 }

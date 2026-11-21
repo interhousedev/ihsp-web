@@ -27,17 +27,20 @@ function Card({ task, onOpen, overlay }: { task: Task; onOpen?: (task: Task) => 
   const { date } = useFormatters()
   const drag = useDraggable({ id: task.id, disabled: overlay })
   const { done, total } = task.progress
+  // The whole card is the drag surface (pointer and touch); the grip is the keyboard handle, so Enter and Space on
+  // the title still open the task instead of lifting the card.
   return (
     <div
       ref={drag.setNodeRef}
-      className={`bg-card rounded-card flex flex-col gap-2 border p-3 text-sm shadow-xs ${drag.isDragging && !overlay ? "opacity-40" : ""}`}
+      {...drag.listeners}
+      className={`bg-card rounded-card flex cursor-grab flex-col gap-2 border p-3 text-sm shadow-xs active:cursor-grabbing ${drag.isDragging && !overlay ? "opacity-40" : ""}`}
     >
       <div className="flex items-start gap-2">
         <button
           type="button"
-          className="text-muted-foreground mt-0.5 cursor-grab touch-none"
+          ref={drag.setActivatorNodeRef}
+          className="text-muted-foreground focus-visible:ring-ring -m-1 mt-0 rounded p-1 focus-visible:ring-2 focus-visible:outline-none"
           aria-label={t("dragHandle", { title: task.title })}
-          {...drag.listeners}
           {...drag.attributes}
         >
           <Icons.gripVertical aria-hidden className="size-4" />
@@ -56,6 +59,9 @@ function Card({ task, onOpen, overlay }: { task: Task; onOpen?: (task: Task) => 
         {task.overdue ? <OverdueBadge /> : null}
         {task.deadline ? <span className="text-muted-foreground text-xs">{date(task.deadline)}</span> : null}
         {total > 0 ? <span className="text-muted-foreground text-xs">{`${done}/${total}`}</span> : null}
+        {task.assigned_by_name ? (
+          <span className="text-muted-foreground text-xs">{t("assignedBy", { name: task.assigned_by_name })}</span>
+        ) : null}
       </div>
     </div>
   )
@@ -68,7 +74,7 @@ function Column({ status, tasks, onOpen }: { status: string; tasks: Task[]; onOp
     <section
       ref={drop.setNodeRef}
       aria-label={t(`status.${status}`)}
-      className={`bg-muted/40 flex w-72 shrink-0 flex-col gap-2 rounded-2xl p-3 ${drop.isOver ? "ring-primary/50 ring-2" : ""}`}
+      className={`bg-muted/40 flex min-w-44 flex-1 basis-0 flex-col gap-2 rounded-2xl p-3 ${drop.isOver ? "ring-primary/50 ring-2" : ""}`}
     >
       <h3 className="flex items-center justify-between gap-2 text-sm font-medium">
         <StatusPill status={status} />

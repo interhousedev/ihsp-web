@@ -15,7 +15,7 @@ import { QueryError } from "../../shell/components/query-error"
 
 const FILTERS = ["none", "accepted", "rejected"] as const
 
-function QueueRow({ doc }: { doc: AdmissionDocument }) {
+export function QueueRow({ doc }: { doc: AdmissionDocument }) {
   const t = useT("documents")
   const errorMessage = useErrorMessage()
   const review = useReviewDocument()
@@ -76,7 +76,7 @@ export function StaffDocumentsPage() {
     )
   return (
     <AdmissionShell roles={[...DOCUMENT_ROLES]}>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="files" title={t("queueTitle")} />
         <Tabs value={filter} onValueChange={(value) => setFilter(value as (typeof FILTERS)[number])}>
           <ScrollTabsList>

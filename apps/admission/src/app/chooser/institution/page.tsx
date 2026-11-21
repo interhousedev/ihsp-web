@@ -5,7 +5,7 @@ import { InstitutionDetail } from "../../../features/chooser/components/institut
 
 export default function Page() {
   return (
-    <ChooserPage>
+    <ChooserPage bare>
       <InstitutionDetail />
     </ChooserPage>
   )

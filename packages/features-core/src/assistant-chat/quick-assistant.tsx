@@ -12,6 +12,7 @@ import {
   PopoverTrigger,
   Spinner,
   useOnline,
+  useShellSlot,
 } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
@@ -40,6 +41,7 @@ export function QuickAssistant({ basePath = "/assistant" }: QuickAssistantProps)
   const online = useOnline()
   const usage = useUsage("student")
   const createChat = useCreateChat("student")
+  const inSidebar = useShellSlot() === "sidebar"
   const [open, setOpen] = useState(false)
   const [text, setText] = useState("")
   const [phase, setPhase] = useState<Phase>("idle")
@@ -115,7 +117,12 @@ export function QuickAssistant({ basePath = "/assistant" }: QuickAssistantProps)
   return (
     <Popover open={open} onOpenChange={handleOpenChange} modal="trap-focus">
       <PopoverTrigger render={<IconButton icon={Icons.assistant} aria-label={t("open")} />} />
-      <PopoverContent align="end" className="max-h-[75dvh] w-[min(24rem,calc(100vw-1rem))] gap-3 overflow-y-auto p-3">
+      <PopoverContent
+        side={inSidebar ? "right" : "bottom"}
+        align="end"
+        sideOffset={inSidebar ? 12 : 4}
+        className="max-h-[75dvh] w-[min(24rem,calc(100vw-1rem))] gap-3 overflow-y-auto p-3"
+      >
         <form onSubmit={(event) => void handleSubmit(event)} className="flex items-center gap-2">
           <input
             aria-label={t("title")}

@@ -16,10 +16,10 @@ describe("header cluster", () => {
 
     await screen.findByText("page body")
     expect(await screen.findByRole("button", { name: "Quick AI helper" })).toBeInTheDocument()
-    await user.click(screen.getAllByRole("button", { name: "Account menu" })[0] as HTMLElement)
+    await user.click(screen.getByRole("button", { name: /platforms/i }))
 
     const grid = await screen.findByTestId("app-switcher")
     expect(within(grid).getAllByRole("menuitem").length).toBeGreaterThan(1)
-    expect(grid.querySelectorAll("img").length).toBeGreaterThan(1)
+    expect(grid.querySelectorAll("svg").length).toBeGreaterThan(1)
   })
 })

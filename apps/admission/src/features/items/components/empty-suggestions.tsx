@@ -11,12 +11,15 @@ const SUGGESTIONS = [
 ] as const
 
 /** Where to find a first activity when the list is empty, and a way to plan one instead. */
-export function EmptySuggestions() {
+export function EmptySuggestions({ collapsed }: { collapsed: boolean }) {
   const t = useT("items")
   return (
-    <section aria-label={t("suggest.title")} className="flex flex-col gap-3">
-      <h2 className="text-sm font-medium">{t("suggest.title")}</h2>
-      <ul className="grid gap-3 sm:grid-cols-3">
+    <details open={!collapsed} className="group flex flex-col gap-3">
+      <summary className="flex min-h-11 w-fit cursor-pointer list-none items-center gap-1.5 text-sm font-medium">
+        <Icons.chevronRight aria-hidden className="size-4 transition-transform group-open:rotate-90" />
+        {t("suggest.title")}
+      </summary>
+      <ul className="mt-1 grid gap-3 sm:grid-cols-3">
         {SUGGESTIONS.map(({ key, href, icon: Icon }) => (
           <li key={key}>
             <Link
@@ -34,6 +37,6 @@ export function EmptySuggestions() {
         <Icons.target aria-hidden />
         {t("suggest.plan")}
       </Link>
-    </section>
+    </details>
   )
 }

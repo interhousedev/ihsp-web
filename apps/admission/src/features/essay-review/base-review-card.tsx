@@ -4,6 +4,8 @@ import { useT } from "@ihsp/i18n"
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
 import type { BaseReview } from "./api"
 
+const REVIEW_DIMS = ["responsiveness", "hook", "theme", "detail", "voice", "authenticity", "reflection", "writing"] as const
+
 /** The review of the essay itself; it is the same for every university, so it is shown once. */
 export function BaseReviewCard({ review, stale }: { review: BaseReview; stale: boolean }) {
   const t = useT("essayReview")
@@ -21,7 +23,11 @@ export function BaseReviewCard({ review, stale }: { review: BaseReview; stale: b
         <ul aria-label={t("base.criteria")} className="flex flex-col gap-1">
           {review.dimensions.map((dimension) => (
             <li key={dimension.key} className="flex flex-wrap gap-x-2">
-              <span className="font-medium">{dimension.key}</span>
+              <span className="font-medium">
+                {(REVIEW_DIMS as readonly string[]).includes(dimension.key)
+                  ? t(`base.dim.${dimension.key as (typeof REVIEW_DIMS)[number]}`)
+                  : dimension.key}
+              </span>
               <span className="text-muted-foreground">{dimension.score}/5</span>
               <span>{dimension.comment}</span>
             </li>

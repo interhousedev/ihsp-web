@@ -7,14 +7,18 @@ import { useState } from "react"
 import { useList } from "../../chooser/hooks"
 import { useExemplars } from "../api"
 
-/** Admitted essays: an excerpt of about 80 words, its source and a link to the full text; defaults to the student's universities. */
-export function ExemplarsTab({ institutionId }: { institutionId: string | null }) {
+/**
+ * Admitted essays: an excerpt of about 80 words, its source and a link to the full text. Defaults to the given
+ * universities (those an essay is written for), else the student's own list; one button shows them all.
+ */
+export function ExemplarsTab({ institutionIds }: { institutionIds?: string[] }) {
   const t = useT("essays")
-  const query = useExemplars(institutionId)
+  const query = useExemplars(null)
   const list = useList()
   const [all, setAll] = useState(false)
-  const mine = new Set((list.data ?? []).map((e) => e.institution.id))
-  const filtered = !institutionId && !all && mine.size > 0
+  const focus = institutionIds?.length ? new Set(institutionIds) : null
+  const mine = focus ?? new Set((list.data ?? []).map((e) => e.institution.id))
+  const filtered = !all && mine.size > 0
   const items = (query.data?.items ?? []).filter(
     (x) => !filtered || (x.institution_id !== null && mine.has(x.institution_id)),
   )
@@ -22,7 +26,7 @@ export function ExemplarsTab({ institutionId }: { institutionId: string | null }
   if (query.isError) return <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
   return (
     <div className="flex flex-col gap-4">
-      {mine.size > 0 && !institutionId ? (
+      {mine.size > 0 ? (
         <Button type="button" size="sm" variant="outline" className="self-start" onClick={() => setAll(!all)}>
           {all ? t("examples.onlyMine") : t("examples.showAll")}
         </Button>
@@ -35,7 +39,7 @@ export function ExemplarsTab({ institutionId }: { institutionId: string | null }
           description={t("examples.emptyText")}
           action={
             mine.size === 0 ? (
-              <Link href="/chooser/search/" className={buttonVariants()}>
+              <Link href="/chooser/?step=match" className={buttonVariants()}>
                 {t("collegeOpen")}
               </Link>
             ) : undefined

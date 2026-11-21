@@ -19,6 +19,7 @@ import {
   getStudyFields,
   getUniSuggestions,
   patchListEntry,
+  postListBrief,
   postSummary,
   removeListEntry,
   requestSignOff,
@@ -226,4 +227,10 @@ export function useUniSuggestions(id: string) {
     queryFn: ({ signal }) => getUniSuggestions(id, locale, signal),
     staleTime: 10 * 60_000,
   })
+}
+
+/** Writes the brief on my list; the caller starts it (it is an AI call that counts against the limit). */
+export function useListBrief() {
+  const locale = useLocale()
+  return useMutation({ mutationFn: () => postListBrief(locale) })
 }

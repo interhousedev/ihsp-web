@@ -145,7 +145,7 @@ describe("LibraryShell", () => {
       { session: { user: { ...teacherMe, roles: ["teacher"] } } },
     )
 
-    await user.click((await screen.findAllByRole("button", { name: "Account menu" }))[0])
+    await user.click(await screen.findByRole("button", { name: /platforms/i }))
 
     const menu = await screen.findByRole("menu")
     expect(within(menu).getByRole("menuitem", { name: /library\.iht/ })).toHaveAttribute("aria-current", "page")

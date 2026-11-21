@@ -17,9 +17,11 @@ import {
 } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useId, useMemo, useState } from "react"
+import { useEffect, useId, useMemo, useState } from "react"
 import { toast } from "sonner"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
+import { useStudentGrade } from "../../../config/applicant"
+import { useSchoolGrades } from "../../../lib/config"
 import { OpportunityTabs } from "./opportunity-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { AdmissionShell } from "../../shell/components/admission-shell"
@@ -36,11 +38,25 @@ import {
 import { careerPlanQuery } from "../../career/api"
 import { CategoryTabs, RelevanceBar, parseCategory, parseSort, type Category } from "./catalog-controls"
 import { NextStep } from "../../../components/next-step"
+import { bySchoolLevel } from "../level"
 import { OpportunityCard, SaveButton } from "./opportunity-card"
 import { SubmitDialog } from "./submit-dialog"
 
-export const GRADES = [9, 10, 11, 12] as const
 const ANY = "any"
+const COSTS = ["free", "50", "200", "1000"] as const
+const HOURS = [3, 6, 10, 20] as const
+const WITHIN = [30, 90, 180, 365] as const
+const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
+
+/** The cost choice as API filters: "free" means a known zero cost, a number a ceiling in USD. */
+function costFilter(cost: string | undefined): Pick<CatalogFilter, "free" | "max_tuition"> {
+  if (!cost) return {}
+  return cost === "free" ? { free: true } : { max_tuition: Number(cost) }
+}
+
+function costLabel(t: ReturnType<typeof useT>, cost: string): string {
+  return cost === "free" ? t("filters.free") : t("filters.costUpTo", { amount: cost })
+}
 const PLAN_HREF = "/plan/?view=saved"
 
 export function FilterSelect({
@@ -84,6 +100,7 @@ export function FilterSelect({
 }
 
 export function CatalogBody() {
+  const GRADES = useSchoolGrades()
   const t = useT("opportunities")
   const locale = useLocale()
   const errorMessage = useErrorMessage()
@@ -91,12 +108,25 @@ export function CatalogBody() {
   const router = useRouter()
   const pathname = usePathname()
   const category = parseCategory(params.get("kind"))
+  const myGrade = useStudentGrade()
   const [other, setFilter] = useState<CatalogFilter>({})
+  const [gradeTouched, setGradeTouched] = useState(false)
+  // Until the student picks a grade, the catalog shows the opportunities of their own grade (school level first).
+  useEffect(() => {
+    if (myGrade !== null && !gradeTouched) setFilter((f) => (f.grade === undefined ? { ...f, grade: myGrade } : f))
+  }, [myGrade, gradeTouched])
+  const [cost, setCost] = useState<string | undefined>()
   const filter: CatalogFilter = {
     ...other,
+    ...costFilter(cost),
     kind: category === "all" ? undefined : category,
     sort: parseSort(params.get("sort")) ?? "deadline",
   }
+  const [text, setText] = useState("")
+  useEffect(() => {
+    const id = setTimeout(() => setFilter((f) => ({ ...f, q: text.trim() || undefined })), 300)
+    return () => clearTimeout(id)
+  }, [text])
   const [suggesting, setSuggesting] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
   const taxonomy = useTaxonomy()
@@ -125,7 +155,7 @@ export function CatalogBody() {
     if (saved.has(id)) remove.mutate(id, opts)
     else
       save.mutate(
-        { id, planned_grade: grades[0] ?? null },
+        { id, planned_grade: (myGrade !== null && grades.includes(myGrade) ? myGrade : grades[0]) ?? null },
         {
           ...opts,
           onSuccess: () =>
@@ -136,10 +166,11 @@ export function CatalogBody() {
       )
   }
 
+  const shownItems = useMemo(() => bySchoolLevel(list.data?.items ?? [], myGrade), [list.data, myGrade])
   let body
   if (list.isPending) body = <Skeleton className="h-40 w-full" />
   else if (list.isError) body = <StateView state="error" onRetry={() => void list.refetch()} />
-  else if (list.data.items.length === 0)
+  else if (shownItems.length === 0)
     body = (
       <StateView
         state="empty"
@@ -151,7 +182,7 @@ export function CatalogBody() {
   else
     body = (
       <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
-        {list.data.items.map((item) => (
+        {shownItems.map((item) => (
           <OpportunityCard
             key={item.id}
             item={item}
@@ -168,7 +199,7 @@ export function CatalogBody() {
     )
 
   return (
-    <div className={pageClass("wide")}>
+    <div className={pageClass()}>
       <AppPageHeader
         icon="courses"
         title={t("title")}
@@ -200,14 +231,14 @@ export function CatalogBody() {
                   <Input
                     aria-label={t("searchLabel")}
                     placeholder={t("searchLabel")}
-                    value={filter.q ?? ""}
-                    onChange={(e) => setFilter({ ...filter, q: e.target.value || undefined })}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
                   />
                   <FilterSelect
                     label={t("fieldLabel")}
                     value={filter.field_id}
                     onChange={(v) =>
-                      setFilter({ ...filter, field_id: v, subfield_id: undefined, subject_id: undefined })
+                      setFilter({ ...other, field_id: v, subfield_id: undefined, subject_id: undefined })
                     }
                     options={fields.map((f) => ({ value: f.id, label: localName(f.name, locale) }))}
                   />
@@ -215,20 +246,56 @@ export function CatalogBody() {
                     <FilterSelect
                       label={t("subfieldLabel")}
                       value={filter.subfield_id}
-                      onChange={(v) => setFilter({ ...filter, subfield_id: v, subject_id: undefined })}
+                      onChange={(v) => setFilter({ ...other, subfield_id: v, subject_id: undefined })}
                       options={subfields.map((s) => ({ value: s.id, label: localName(s.name, locale) }))}
                     />
                   )}
                   <FilterSelect
                     label={t("gradeLabel")}
                     value={filter.grade?.toString()}
-                    onChange={(v) => setFilter({ ...filter, grade: v ? Number(v) : undefined })}
+                    onChange={(v) => {
+                      setGradeTouched(true)
+                      setFilter({ ...other, grade: v ? Number(v) : undefined })
+                    }}
                     options={GRADES.map((g) => ({ value: String(g), label: t("gradeShort", { grade: g }) }))}
+                  />
+                  <FilterSelect
+                    label={t("filters.delivery")}
+                    value={filter.delivery}
+                    onChange={(v) => setFilter({ ...other, delivery: v as CatalogFilter["delivery"] })}
+                    options={(["local", "external"] as const).map((d) => ({ value: d, label: t(`delivery.${d}`) }))}
+                  />
+                  <FilterSelect
+                    label={t("filters.cost")}
+                    value={cost}
+                    onChange={setCost}
+                    options={COSTS.map((c) => ({ value: c, label: costLabel(t, c) }))}
+                  />
+                  <FilterSelect
+                    label={t("filters.hours")}
+                    value={filter.max_hours?.toString()}
+                    onChange={(v) => setFilter({ ...other, max_hours: v ? Number(v) : undefined })}
+                    options={HOURS.map((h) => ({ value: String(h), label: t("filters.hoursUpTo", { hours: h }) }))}
+                  />
+                  <FilterSelect
+                    label={t("filters.starts")}
+                    value={filter.starts_within?.toString()}
+                    onChange={(v) => setFilter({ ...other, starts_within: v ? Number(v) : undefined })}
+                    options={WITHIN.map((d) => ({ value: String(d), label: t("filters.startsWithin", { days: d }) }))}
+                  />
+                  <FilterSelect
+                    label={t("filters.startMonth")}
+                    value={filter.starts_month?.toString()}
+                    onChange={(v) => setFilter({ ...other, starts_month: v ? Number(v) : undefined })}
+                    options={MONTHS.map((m) => ({
+                      value: String(m),
+                      label: new Date(2000, m - 1, 1).toLocaleDateString(locale, { month: "long" }),
+                    }))}
                   />
                 </div>
                 {list.data ? (
                   <Pill tone="primary" className="self-start">
-                    {t("view.results", { count: list.data.items.length })}
+                    {t("view.results", { count: shownItems.length })}
                   </Pill>
                 ) : null}
               </AsideCard>
@@ -247,7 +314,7 @@ export function CatalogBody() {
             />
           ) : null}
           {suggesting && <SubmitDialog open onOpenChange={setSuggesting} />}
-          <ScrollFade maxHeight="75vh">{body}</ScrollFade>
+          <ScrollFade className="max-h-[75vh] xl:max-h-[calc(100dvh-25rem)]">{body}</ScrollFade>
           {saved.size > 0 ? <NextStep href={PLAN_HREF} label={t("openPlan")} hint={t("nextPlanHint")} /> : null}
         </div>
       </SplitLayout>

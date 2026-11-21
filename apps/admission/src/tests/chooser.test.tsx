@@ -16,7 +16,7 @@ describe("chooser search", () => {
   it("sends the URL filters as query params", async () => {
     const { catalogRequests } = mockChooser({ items: [institution()] })
     renderAdmissionApp(<SearchView />, {
-      route: "/chooser/search/?country=Testland&setting=urban&scholarships=true",
+      route: "/chooser/?step=match&view=list&country=Testland&setting=urban&scholarships=true",
     })
     await screen.findByText("Uni One")
     const filtered = catalogRequests.find((url) => url.searchParams.get("country") === "Testland")
@@ -29,7 +29,7 @@ describe("chooser search", () => {
 
   it("shows removable chips for active filters and a clear-all button", async () => {
     mockChooser({ items: [institution()] })
-    renderAdmissionApp(<SearchView />, { route: "/chooser/search/?country=Testland&setting=urban" })
+    renderAdmissionApp(<SearchView />, { route: "/chooser/?step=match&view=list&country=Testland&setting=urban" })
     await screen.findByText("Uni One")
     const list = await screen.findByRole("list", { name: "Active filters" })
     expect(list).toBeDefined()
@@ -39,7 +39,7 @@ describe("chooser search", () => {
 
   it("labels the facet filters", async () => {
     mockChooser({ items: [institution()] })
-    renderAdmissionApp(<SearchView />, { route: "/chooser/search/" })
+    renderAdmissionApp(<SearchView />, { route: "/chooser/?step=match&view=list" })
     await screen.findByText("Uni One")
     expect(await screen.findByLabelText("Setting")).toBeDefined()
   })

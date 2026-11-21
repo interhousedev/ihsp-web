@@ -67,7 +67,7 @@ export function OpportunityReportsBody() {
       </ul>
     )
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <AppPageHeader icon="flag" title={t("reports.title")} />
       {body}
     </div>

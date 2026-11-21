@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { COURSE_SOURCES, useAddLmsCourse, useCourseMutations, useCourses, type Course, type CourseSource } from "../api"
 import { AddCourseDialog, type AddCourseTab } from "./add-course-dialog"
-import { FreeCourses } from "./free-courses"
+import { EventsPointer, ToTake } from "./to-take"
 import { ManualCourseDialog } from "./manual-course-dialog"
 
 function CourseRow({ course }: { course: Course }) {
@@ -102,7 +102,7 @@ export function CoursesPage() {
   }
   return (
     <AdmissionShell>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader
           icon="courses"
           title={t("title")}
@@ -113,6 +113,21 @@ export function CoursesPage() {
             </Button>
           }
         />
+        <nav aria-label={t("path.label")} className="flex flex-wrap gap-2 text-sm">
+          {(["academic", "toTake", "events"] as const).map((step, i) => (
+            <a key={step} href={`#courses-${step}`} className="rounded-full border px-3 py-1 hover:bg-muted">
+              {i + 1}. {t(`path.${step}`)}
+            </a>
+          ))}
+        </nav>
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-x-8 lg:gap-y-3 md:gap-6">
+        <section id="courses-academic" className="flex flex-col gap-3 lg:col-start-1 lg:row-start-1 lg:gap-2" aria-labelledby="courses-academic-title">
+          <div>
+            <h2 id="courses-academic-title" className="text-lg font-semibold">
+              {t("academic.title")}
+            </h2>
+            <p className="text-muted-foreground text-sm">{t("academic.hint")}</p>
+          </div>
         {query.isPending ? (
           <Skeleton className="h-40 w-full" />
         ) : query.isError ? (
@@ -127,7 +142,14 @@ export function CoursesPage() {
             />
           ))
         )}
-        <FreeCourses />
+        </section>
+        <div id="courses-toTake" className="scroll-mt-20 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <ToTake />
+        </div>
+        <div id="courses-events" className="scroll-mt-20 lg:col-start-1 lg:row-start-2">
+          <EventsPointer />
+        </div>
+        </div>
         <AddCourseDialog
           open={picking}
           onOpenChange={setPicking}

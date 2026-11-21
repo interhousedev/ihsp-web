@@ -243,7 +243,7 @@ export function CareerSettingsBody() {
   const [majorDialog, setMajorDialog] = useState<{ major?: CareerMajor } | null>(null)
 
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <AppPageHeader icon="settings" title={t("title")} />
       <section className="flex flex-col gap-3" aria-labelledby="career-questions">
         <div className="flex items-center justify-between gap-2">

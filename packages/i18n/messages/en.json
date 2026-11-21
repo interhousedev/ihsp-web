@@ -120,6 +120,8 @@
     "more": "More",
     "moreTitle": "All sections",
     "toggleSidebar": "Toggle the sidebar",
+    "accountTools": "Account and tools",
+    "settings": "Settings",
     "back": "Back",
     "forward": "Forward",
     "recentPages": "Recent pages"
@@ -183,6 +185,7 @@
   },
   "command": {
     "placeholder": "Type a command or search…",
+    "search": "Search",
     "empty": "No results found.",
     "searching": "Searching…",
     "navigation": "Go to",
@@ -1845,7 +1848,11 @@
       "kindNumber": "Number",
       "kindSingle": "Single choice",
       "kindMulti": "Multiple choice",
-      "fieldsEmpty": "No custom fields yet."
+      "fieldsEmpty": "No custom fields yet.",
+      "standard": "Standard exam",
+      "standardHint": "Listed with test scores (SAT, IELTS...), not suggested as an honor.",
+      "category": "Category",
+      "categoryNone": "No category"
     },
     "customOther": "Other"
   },
@@ -2708,5 +2715,16 @@
     "description": "The platform is being moved to another server and is read-only. Changes are not saved.",
     "moved": "The platform has moved to a new server.",
     "open": "Open the new server"
+  },
+  "honorCategory": {
+    "olympiad": "Olympiads & competitions",
+    "award": "Awards & medals",
+    "scholarship": "Scholarships",
+    "research": "Research & publications",
+    "leadership": "Leadership & service",
+    "arts": "Arts",
+    "sports": "Sports",
+    "academic": "Academic achievement",
+    "other": "Other"
   }
 }

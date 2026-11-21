@@ -52,3 +52,12 @@ const EMPTY: AdmissionWorkflow = {
 export function useWorkflow(): AdmissionWorkflow {
   return { ...EMPTY, ...useAdmissionConfig().data?.workflow }
 }
+
+/** Grades fallback until the configuration loads. */
+const DEFAULT_SCHOOL_GRADES = [9, 10, 11, 12]
+
+/** School grades in force (`school_grades` of the admission config), ascending; never empty. */
+export function useSchoolGrades(): number[] {
+  const grades = useAdmissionConfig().data?.school_grades
+  return Array.isArray(grades) && grades.length > 0 ? (grades as number[]) : DEFAULT_SCHOOL_GRADES
+}

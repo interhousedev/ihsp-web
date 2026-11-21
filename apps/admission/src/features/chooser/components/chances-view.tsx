@@ -67,10 +67,19 @@ const STRENGTHEN_KEYS = ["academics", "course_rigor", "activities"] as const
  * "What to strengthen": the academic and activity factors that are not strong yet, each with what to do and a link to
  * the place to do it. Built from the factors the backend computed; nothing is invented here.
  */
-export function StrengthenCard({ factors, institutionId }: { factors: ChanceFactor[]; institutionId: string }) {
+export function StrengthenCard({
+  factors,
+  institutionId,
+  showQuestions = true,
+}: {
+  factors: ChanceFactor[]
+  institutionId: string
+  /** The questions to ask live in the «Спросить ИИ» sheet of the university page; the card shows them elsewhere. */
+  showQuestions?: boolean
+}) {
   const t = useT("chooser")
   const ai = useUniSuggestions(institutionId).data
-  const questions = ai?.questions ?? []
+  const questions = showQuestions ? (ai?.questions ?? []) : []
   const sections = [
     { key: "academic", items: ai?.academic ?? [] },
     { key: "activities", items: ai?.activities ?? [] },
@@ -139,7 +148,13 @@ export function StrengthenCard({ factors, institutionId }: { factors: ChanceFact
 }
 
 /** "What shapes your chances": status, five factor cards and the what-if chart. */
-export function ChancesView({ institutionId }: { institutionId: string }) {
+export function ChancesView({
+  institutionId,
+  showQuestions = true,
+}: {
+  institutionId: string
+  showQuestions?: boolean
+}) {
   const t = useT("chooser")
   const query = useChances(institutionId)
   if (query.isLoading) return <StateView state="loading" rows={3} />
@@ -158,7 +173,7 @@ export function ChancesView({ institutionId }: { institutionId: string }) {
           <FactorCard key={factor.key} factor={factor} />
         ))}
       </ul>
-      <StrengthenCard factors={chances.factors} institutionId={institutionId} />
+      <StrengthenCard factors={chances.factors} institutionId={institutionId} showQuestions={showQuestions} />
       <ChanceChart simulation={chances.simulation} />
     </div>
   )

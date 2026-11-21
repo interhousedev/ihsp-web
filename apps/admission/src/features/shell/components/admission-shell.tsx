@@ -2,9 +2,10 @@
 
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole, useSession } from "@ihsp/auth"
-import { MaintenanceBanner, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
+import { MaintenanceBanner, NotificationBell, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { AppHeaderActions, AppShell, buttonVariants, Icons, OfflineBadge, StateView } from "@ihsp/ui"
+import { AppShell, buttonVariants, CommandPalette, Icons, OfflineBadge, StateView } from "@ihsp/ui"
+import { ShellSearch } from "./shell-search"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Suspense, useEffect, type ReactNode } from "react"
@@ -90,20 +91,25 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
   const [, secondary, ...staff] = nav.groups
   return (
     <AppShell
-      controlsLeading={<ShellNavControls />}
+      history={<ShellNavControls />}
+      search={sectionNav ? <ShellSearch nav={nav.groups} /> : <CommandPalette nav={nav.groups} />}
       nav={nav.groups}
       bottomNav={sectionNav ? undefined : nav.bottom}
       bottomBar={sectionNav ? <SectionBottomBar items={nav.bottom} /> : undefined}
       platforms={platforms}
       brand={<AdmissionBrand />}
+      ai={<AssistantHeaderButton />}
+      bell={<NotificationBell />}
+      settingsHref="/settings/"
+      profile={<ProfileMenu />}
       sidebarFooter={<ProfileMenu variant="row" />}
-      controls={
-        <AppHeaderActions ai={<AssistantHeaderButton />} profile={<ProfileMenu />}>
+      tools={
+        <>
           <OfflineBadge />
           {sectionNav ? (
             <SecondaryMenu links={secondary?.items ?? []} staff={staff.flatMap((group) => group.items)} />
           ) : null}
-        </AppHeaderActions>
+        </>
       }
     >
       <ScreenContextProvider>

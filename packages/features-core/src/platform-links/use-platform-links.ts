@@ -64,7 +64,6 @@ export function usePlatformLinks(): PlatformLink[] {
         name: BRAND.displayName[key][locale as Locale],
         description: t(`${key}.description`),
         href,
-        iconSrc: `${String(config[URL_KEYS[key]]).replace(/\/+$/, "")}${BRAND.appIcon}`,
         // The installable app (client `app`) is the student portal in another host.
         current: (config.OAUTH_CLIENT_ID === "app" ? "sp" : config.OAUTH_CLIENT_ID) === key,
         ...(miniApp ? { onClick: leaveMiniApp(href) } : {}),

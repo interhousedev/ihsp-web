@@ -66,6 +66,8 @@ function SidebarProvider({
     try {
       const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY)
       if (stored !== null) _setOpen(stored === "true")
+      // No saved choice: a tablet (768-1023px) starts with the sidebar folded, so the page keeps its width.
+      else if (window.innerWidth < 1024) _setOpen(false)
     } catch {
       // Storage can be blocked; keep the default.
     }

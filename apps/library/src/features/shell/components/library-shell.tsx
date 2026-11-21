@@ -1,11 +1,19 @@
 "use client"
-import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
-
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { AssistantEntry, PageLoading, ShellNavControls, useLibraryAccess, usePlatformLinks } from "@ihsp/features-core"
-import { AppHeaderActions, AppShell, OfflineBadge } from "@ihsp/ui"
-import { Suspense, type ReactNode } from "react"
+import {
+  AssistantEntry,
+  LegalGate,
+  MaintenanceBanner,
+  PageLoading,
+  ShellNavControls,
+  browseHref,
+  useLibraryAccess,
+  usePlatformLinks,
+} from "@ihsp/features-core"
+import { useT } from "@ihsp/i18n"
+import { AppShell, CommandPalette, OfflineBadge, type CommandPaletteResult, type NavGroup } from "@ihsp/ui"
+import { Suspense, useCallback, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { LibraryBrand } from "./library-brand"
 import { CatalogueSearch } from "./catalogue-search"
@@ -20,29 +28,46 @@ import { SignInButton } from "./sign-in-button"
  */
 export type LibraryAccessRule = "public" | "auth" | { roles: Role[] }
 
-function Header() {
-  const { status } = useLibraryAccess()
-  return (
-    <AppHeaderActions ai={<AssistantEntry />} profile={status === "anonymous" ? null : <ProfileMenu />}>
-      <OfflineBadge />
-      {status === "anonymous" ? <SignInButton /> : null}
-    </AppHeaderActions>
+/** The search entry: the navigation, plus one result that runs the typed words as a catalogue search. */
+function LibrarySearch({ nav }: { nav: NavGroup[] }) {
+  const t = useT("shell")
+  const search = useCallback(
+    async (query: string): Promise<CommandPaletteResult[]> => [
+      {
+        id: `catalogue:${query}`,
+        title: `${t("searchLabel")}: ${query}`,
+        section: t("searchLabel"),
+        url: browseHref({ q: query }),
+        icon: "search",
+      },
+    ],
+    [t],
   )
+  return <CommandPalette nav={nav} search={search} />
 }
 
 function Frame({ children }: { children: ReactNode }) {
   const nav = useNav()
   const platforms = usePlatformLinks()
+  const { status } = useLibraryAccess()
   return (
     <AppShell
-      controlsLeading={<ShellNavControls />}
+      history={<ShellNavControls />}
+      search={<LibrarySearch nav={nav.groups} />}
+      moreSearch={<CatalogueSearch />}
+      ai={<AssistantEntry />}
+      profile={status === "anonymous" ? null : <ProfileMenu />}
+      tools={
+        <>
+          <OfflineBadge />
+          {status === "anonymous" ? <SignInButton /> : null}
+        </>
+      }
       nav={nav.groups}
       bottomNav={nav.bottom}
       platforms={platforms}
       brand={<LibraryBrand />}
-      sidebarSearch={<CatalogueSearch />}
       sidebarFooter={<ProfileMenu variant="row" />}
-      controls={<Header />}
     >
       <MaintenanceBanner />
       <Suspense fallback={<PageLoading />}>{children}</Suspense>

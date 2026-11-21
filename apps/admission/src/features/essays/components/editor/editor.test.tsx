@@ -23,12 +23,38 @@ const essay: Essay = {
   status: "draft",
   current_version: 0,
   lock_version: 3,
+  forked_from: null,
+  targets: [],
   updated_at: "2026-01-01T00:00:00Z",
 }
-const summary = ({ body: _b, notes: _n, plan: _p, links: _l, ...rest }: Essay): EssaySummary => rest
+const summary = ({ body: _b, notes: _n, plan: _p, links: _l, ...rest }: Essay): EssaySummary => ({
+  ...rest,
+  uniqueness: null,
+  deep_read: "none",
+  deep_read_at: null,
+})
 const supp: EssaySummary = { ...summary(essay), id: "e2", kind: "supplemental", title: "Supplement" }
 
+const read = {
+  paragraphs: [
+    { paragraph: 1, role: "hook", reveals: "Opens on a number", strength: "strong" },
+    { paragraph: 2, role: "close", reveals: "Ends on a shrug", strength: "weak" },
+  ],
+  uniqueness: 72,
+  uniqueness_note: "Specific voice",
+  tropes: [],
+  moments: [{ paragraph: 2, quote: "three  FOUR", kind: "fresh" }],
+  fix_paragraph: 2,
+  fix_dimension: "insight",
+  fix_problem: "No reflection",
+  fix_try: "Say what changed",
+}
+const withBody = { ...essay, body: "One two\n\nThree four" }
+const deepRead = (stale: boolean) =>
+  http.get(apiUrl(`${A}/essays/e1/deep-read`), () => HttpResponse.json({ read, cached: true, stale }))
+
 const handlers = () => [
+  http.get(apiUrl(`${A}/essays/e1/deep-read`), () => HttpResponse.json({ read: null, cached: false, stale: false })),
   http.get(apiUrl(`${A}/essays`), () => HttpResponse.json({ items: [summary(essay), supp] })),
   http.get(apiUrl(`${A}/essays/e1`), () => HttpResponse.json(essay)),
   http.get(apiUrl(`${A}/essays/e1/reviews`), () =>
@@ -51,14 +77,6 @@ describe("essay editor shell", () => {
     fireEvent.change(screen.getByLabelText("Title"), { target: { value: "Why math" } })
     await waitFor(() => expect(body).toMatchObject({ title: "Why math", lock_version: 3 }), { timeout: 4000 })
     await screen.findByText("Saved")
-  })
-
-  test("the document tabs switch between essays", async () => {
-    server.use(...handlers())
-    renderAdmissionApp(<EssayEditor essay={essay} />)
-    const other = await screen.findByRole("button", { name: /Supplement/ })
-    fireEvent.click(other)
-    expect(testRouter.push).toHaveBeenCalledWith("/essays/edit/?id=e2")
   })
 
   test("comments list the guest feedback", async () => {
@@ -95,5 +113,61 @@ describe("essay editor shell", () => {
     renderAdmissionApp(<EssayEditor essay={essay} />)
     fireEvent.click(screen.getByRole("button", { name: "Share" }))
     await screen.findByRole("dialog")
+  })
+
+  test("the side has one tab row (Read, Universities, Plan, Versions, More) and Universities shows the fit and the prompts", async () => {
+    server.use(
+      http.get(apiUrl(`${A}/essays/e1/reviews`), () =>
+        HttpResponse.json({
+          base: null,
+          base_cached: false,
+          base_stale: false,
+          universities: [
+            {
+              institution_id: "i1",
+              name: "MIT",
+              cached: true,
+              stale: false,
+              review: { alignment: 81, fit_summary: "Builder voice", goals: [], risks: [], sourced: true, supplement_tips: [] },
+            },
+          ],
+        }),
+      ),
+      http.get(apiUrl(`${A}/essays/prompt-map`), () => HttpResponse.json({ groups: [] })),
+      ...handlers(),
+    )
+    renderAdmissionApp(<EssayEditor essay={essay} />)
+    for (const name of ["Read", "Universities", "Plan", "Versions"]) {
+      expect(screen.getByRole("tab", { name })).toBeTruthy()
+    }
+    expect(screen.getByTestId("dock-more")).toBeTruthy()
+    expect(screen.queryByRole("button", { name: "Plan & tools" })).toBeNull()
+    // The chip in the header and the card in the tab carry the same fit.
+    await screen.findByText("81")
+    fireEvent.click(screen.getByRole("tab", { name: "Universities" }))
+    await screen.findByText("Builder voice")
+  })
+
+  test("a deep read lays moments on the text and lists paragraphs", async () => {
+    server.use(deepRead(false), ...handlers())
+    renderAdmissionApp(<EssayEditor essay={withBody} />)
+    await screen.findByText("Opens on a number")
+    const mark = document.querySelector("mark[data-moment]")
+    expect(mark?.textContent).toBe("Three four")
+    expect(screen.queryByTestId("editor-stale-banner")).toBeNull()
+    // The score sits in the header as the one number.
+    expect(screen.getByTestId("score-bar").textContent).toContain("72")
+  })
+
+  test("editing after the read shows the stale banner; a server-stale read shows it at once", async () => {
+    server.use(deepRead(false), ...handlers())
+    const { unmount } = renderAdmissionApp(<EssayEditor essay={withBody} />)
+    await screen.findByText("Opens on a number")
+    fireEvent.change(screen.getByLabelText("Essay text"), { target: { value: "One two\n\nThree four five" } })
+    await screen.findByTestId("editor-stale-banner")
+    unmount()
+    server.use(deepRead(true), ...handlers())
+    renderAdmissionApp(<EssayEditor essay={withBody} />)
+    await screen.findByTestId("editor-stale-banner")
   })
 })

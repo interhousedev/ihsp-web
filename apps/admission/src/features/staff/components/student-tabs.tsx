@@ -8,11 +8,20 @@ import { useOptionLabel } from "../../chooser/components/option-label"
 import { useWizardConfig } from "../../profile/api"
 import { useProfileText } from "../../profile/lib/use-profile-text"
 import { useStudentSection } from "../api"
+import type { DeniedSection } from "../../shell/components/access-denied"
 import { QueryError } from "../../shell/components/query-error"
 
-function Section<T>({ query, children }: { query: UseQueryResult<T>; children: (data: T) => ReactNode }) {
+function Section<T>({
+  query,
+  section,
+  children,
+}: {
+  query: UseQueryResult<T>
+  section: DeniedSection
+  children: (data: T) => ReactNode
+}) {
   if (query.isPending) return <Skeleton className="h-32 w-full" />
-  if (query.isError) return <QueryError error={query.error} onRetry={() => void query.refetch()} />
+  if (query.isError) return <QueryError error={query.error} onRetry={() => void query.refetch()} section={section} />
   return <>{children(query.data)}</>
 }
 
@@ -63,7 +72,7 @@ export function ProfileTab({ studentId }: { studentId: string }) {
   const config = useWizardConfig()
   const { text, display } = useAnswerText()
   return (
-    <Section query={useStudentSection(studentId, "profile")}>
+    <Section query={useStudentSection(studentId, "profile")} section="profile">
       {(profile) => {
         const questions = config.data?.questions ?? []
         const known = new Set(questions.map((question) => question.id))
@@ -107,7 +116,7 @@ export function ProfileTab({ studentId }: { studentId: string }) {
 export function WordsTab({ studentId }: { studentId: string }) {
   const t = useT("staff")
   return (
-    <Section query={useStudentSection(studentId, "words")}>
+    <Section query={useStudentSection(studentId, "words")} section="words">
       {(words) =>
         words.words.length === 0 ? (
           <StateView state="empty" title={t("student.wordsEmpty")} />
@@ -131,7 +140,7 @@ export function AlignmentTab({ studentId }: { studentId: string }) {
     return align.has(key) ? align(key) : text(value)
   }
   return (
-    <Section query={useStudentSection(studentId, "alignment")}>
+    <Section query={useStudentSection(studentId, "alignment")} section="alignment">
       {(alignment) =>
         alignment.overall === null && Object.keys(alignment.grades).length === 0 ? (
           <StateView state="empty" title={t("student.alignmentEmpty")} />
@@ -157,7 +166,7 @@ export function AlignmentTab({ studentId }: { studentId: string }) {
 export function CoursesTab({ studentId }: { studentId: string }) {
   const t = useT("staff")
   return (
-    <Section query={useStudentSection(studentId, "courses")}>
+    <Section query={useStudentSection(studentId, "courses")} section="courses">
       {({ items }) =>
         items.length === 0 ? (
           <StateView state="empty" title={t("student.coursesEmpty")} />
@@ -187,7 +196,7 @@ export function ListTab({ studentId }: { studentId: string }) {
   const bucket = useOptionLabel("bucket")
   const affordability = useOptionLabel("affordability")
   return (
-    <Section query={useStudentSection(studentId, "list")}>
+    <Section query={useStudentSection(studentId, "list")} section="list">
       {(entries) =>
         entries.length === 0 ? (
           <StateView state="empty" title={t("student.listEmpty")} />

@@ -83,7 +83,7 @@ export function StaffKbPage() {
 
   return (
     <AdmissionShell roles={[...CASELOAD_ROLES]}>
-      <div className={pageClass("default")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="help" title={t("title")} />
         {query.data && !canEdit ? <p className="text-muted-foreground text-sm">{t("readOnly")}</p> : null}
         {canEdit ? (

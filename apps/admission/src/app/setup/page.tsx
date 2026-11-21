@@ -8,7 +8,7 @@ import { SetupWizard } from "../../features/profile/components/setup-wizard"
 /** Questions that now live in a section page open there; every other `?q=` stays in the first-run wizard. */
 const MOVED: Record<string, string> = {
   q18: "/career/?tab=field",
-  q24: "/chooser/search/?prefs=1",
+  q24: "/chooser/?step=quiz",
   q05: "/settings/?tab=profile",
 }
 

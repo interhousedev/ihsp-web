@@ -65,7 +65,7 @@ describe("essay check", () => {
 describe("essay meta", () => {
   test("warns over the limit and toggles the prompt", async () => {
     renderAdmissionApp(
-      <EssayMeta prompt="Tell us" wordLimit={5} words={9} status="draft" onPrompt={() => {}} onWordLimit={() => {}} />,
+      <EssayMeta prompt="Tell us" wordLimit={5} words={9} onPrompt={() => {}} onWordLimit={() => {}} />,
     )
     const count = screen.getByTestId("essay-meta-count")
     expect(count.textContent).toContain("9 / 5")

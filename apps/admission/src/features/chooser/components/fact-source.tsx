@@ -72,12 +72,17 @@ export function safeHref(url: string): string | undefined {
   }
 }
 
-/** Small chip for one recorded row: "2025 · domain.com" linking out, or a muted "Unverified" without a source. */
-export function SourceChip({ url, year }: { url: string | null; year: number | null }) {
+/** Admission cycle from its start year: 2025 reads "2025–26". */
+export function cycleLabel(start: number): string {
+  return `${start}–${String((start + 1) % 100).padStart(2, "0")}`
+}
+
+/** Small chip for one recorded row: "2025 · domain.com" linking out, or a muted "Unverified" without a source. `cycle` shows the year as an admission cycle. */
+export function SourceChip({ url, year, cycle = false }: { url: string | null; year: number | null; cycle?: boolean }) {
   const t = useT("chooserDetails")
   if (!url) return <span className="text-muted-foreground text-xs">{t("unverified")}</span>
   const host = sourceHost(url)
-  const label = year != null ? `${year} · ${host}` : host
+  const label = year != null ? `${cycle ? cycleLabel(year) : year} · ${host}` : host
   const href = safeHref(url)
   if (!href) return <span className="text-muted-foreground max-w-full truncate text-xs">{label}</span>
   return (

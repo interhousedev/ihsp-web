@@ -12,6 +12,7 @@ export type CalendarEntry = {
   due_utc: string
   predicted: boolean
   url_path: string | null
+  list_entry_id: string | null
 }
 export type FeedStatus = { active: boolean; alarm_offsets: number[]; default_offsets: number[] }
 const BASE = "/v1/admission/calendar"

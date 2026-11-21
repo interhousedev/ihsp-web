@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
 import { useQuery } from "@tanstack/react-query"
-import { screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { http, HttpResponse } from "msw"
 import type { AdmissionUniChat } from "@ihsp/api"
 import { useTagLabel } from "../features/discover/components/tag-label"
@@ -59,12 +59,19 @@ const chat: AdmissionUniChat = {
 }
 
 function Runner({ value }: { value: AdmissionUniChat }) {
-  const { state } = useRunDefault(value)
-  return <p>{state.status}</p>
+  const { state, run } = useRunDefault(value)
+  return (
+    <>
+      <p>{state.status}</p>
+      <button type="button" onClick={() => void run()}>
+        go
+      </button>
+    </>
+  )
 }
 
-describe("discover auto research", () => {
-  test("a pending chat runs the research once, with auto=true", async () => {
+describe("discover research", () => {
+  test("a pending chat never runs by itself; the button runs it with auto=false", async () => {
     const calls: string[] = []
     server.use(
       http.post(apiUrl("/v1/admission/uni-chats/u1/run-default"), ({ request }) => {
@@ -72,41 +79,34 @@ describe("discover auto research", () => {
         return new HttpResponse(null, { status: 204 })
       }),
     )
-    const view = renderAdmissionApp(<Runner value={chat} />)
-    await waitFor(() => expect(calls).toEqual(["?auto=true"]))
-    view.rerender(<Runner value={{ ...chat }} />)
-    await waitFor(() => expect(screen.getByText("idle")).toBeInTheDocument())
-    expect(calls).toEqual(["?auto=true"])
-  })
-
-  test("a chat already researched does not run", async () => {
-    const calls: string[] = []
-    server.use(
-      http.post(apiUrl("/v1/admission/uni-chats/u1/run-default"), () => {
-        calls.push("run")
-        return new HttpResponse(null, { status: 204 })
-      }),
-    )
-    renderAdmissionApp(<Runner value={{ ...chat, created: false, auto_run_pending: false }} />)
+    renderAdmissionApp(<Runner value={chat} />)
     expect(await screen.findByText("idle")).toBeInTheDocument()
     await Bun.sleep(50)
     expect(calls).toEqual([])
+    fireEvent.click(screen.getByRole("button", { name: "go" }))
+    await waitFor(() => expect(calls).toEqual(["?auto=false"]))
   })
 
-  test("a failed auto-run clears the pending flag so the manual run is enabled", async () => {
+  test("a failed run clears the pending flag", async () => {
     server.use(
       http.post(apiUrl("/v1/admission/uni-chats/u1/run-default"), () => new HttpResponse(null, { status: 500 })),
     )
     function Cached() {
       const { data } = useQuery({ queryKey: uniChatKey("u1"), queryFn: () => chat, staleTime: Infinity })
-      const { state } = useRunDefault(data)
+      const { state, run } = useRunDefault(data)
       return (
-        <p>
-          {state.status}:{String(data?.auto_run_pending)}
-        </p>
+        <>
+          <p>
+            {state.status}:{String(data?.auto_run_pending)}
+          </p>
+          <button type="button" onClick={() => void run()}>
+            go
+          </button>
+        </>
       )
     }
     renderAdmissionApp(<Cached />)
+    fireEvent.click(await screen.findByRole("button", { name: "go" }))
     expect(await screen.findByText("error:false")).toBeInTheDocument()
   })
 })

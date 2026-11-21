@@ -41,8 +41,9 @@ export function toFacets(list: Facet[]): Facets {
 
 export type { Facet, StudyGroup }
 
-/** Sorts the loaded results; "relevance" keeps the order the catalog returned, "deadline" puts the soonest first. */
+/** Sorts the loaded results; "fit" keeps the catalog's order (best fit first), "deadline" puts the soonest first. */
 export function sortInstitutions(items: Institution[], sort: SortKey): Institution[] {
+  if (sort === "fit") return items
   if (sort === "deadline") return items.toSorted((a, b) => compareDeadline(a.next_deadline, b.next_deadline))
   if (sort === "name") return items.toSorted((a, b) => a.name.localeCompare(b.name))
   if (sort === "cost")
@@ -51,5 +52,5 @@ export function sortInstitutions(items: Institution[], sort: SortKey): Instituti
       const right = b.coa_total === null ? Infinity : Number(b.coa_total)
       return left - right
     })
-  return items
+  return items.toSorted((a, b) => Number(b.verified) - Number(a.verified))
 }

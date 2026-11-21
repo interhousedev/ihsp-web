@@ -11,13 +11,10 @@ import {
   SheetTitle,
   SheetTrigger,
   StateView,
-  useIsMobile,
 } from "@ihsp/ui"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
-import { NextStep } from "../../../components/next-step"
 import { ScrollFade } from "../../../components/scroll-fade"
-import { AlgorithmPanel } from "../../algorithm"
 import { DiscoverPage } from "../../discover/components/discover-page"
 import {
   activeFilterKeys,
@@ -34,7 +31,9 @@ import { useFacets, useInstitutionSearch, useList, useStudyFields } from "../hoo
 import { ActiveChips } from "./active-chips"
 import { FieldFocus } from "./field-focus"
 import { FiltersPanel } from "./filters-panel"
-import { InstitutionCard } from "./institution-card"
+import { ListTray } from "./list-tray"
+import { InstitutionRow } from "./institution-row"
+import { useListRows } from "../use-list-rows"
 
 const VIEWS = ["list", "discover"] as const
 type View = (typeof VIEWS)[number]
@@ -45,15 +44,14 @@ export function SearchView() {
   const pathname = usePathname()
   const params = useSearchParams()
   const filters = useMemo(() => filtersFromParams(new URLSearchParams(params.toString())), [params])
-  const isMobile = useIsMobile()
   const [sheetOpen, setSheetOpen] = useState(false)
-  const view: View = params.get("view") === "discover" ? "discover" : "list"
-  const prefsOpen = params.get("prefs") === "1"
+  const view: View = params.get("view") === "list" ? "list" : "discover"
   const [text, setText] = useState(filters.q ?? "")
   const { facets } = useFacets()
   const { groups } = useStudyFields()
   const search = useInstitutionSearch(filters)
   const list = useList()
+  const listRows = useListRows().rows
   const items = useMemo(
     () => sortInstitutions(search.data?.pages.flatMap((page) => page.items) ?? [], filters.sort),
     [search.data, filters.sort],
@@ -61,11 +59,11 @@ export function SearchView() {
   const active = activeFilterKeys(filters)
 
   /** The address for the filters, keeping the view and the preferences panel. */
-  function href(next: Filters, extra: { view?: View; prefs?: boolean } = {}) {
+  function href(next: Filters, extra: { view?: View } = {}) {
     const search = new URLSearchParams(filtersToSearch(next).slice(1))
     const nextView = extra.view ?? view
-    if (nextView === "discover") search.set("view", "discover")
-    if (extra.prefs ?? prefsOpen) search.set("prefs", "1")
+    search.set("step", "match")
+    if (nextView === "list") search.set("view", "list")
     const text = search.toString()
     return `${pathname}${text ? `?${text}` : ""}`
   }
@@ -94,10 +92,13 @@ export function SearchView() {
   else
     results = (
       <div className="flex min-w-0 flex-col gap-3">
-        <ul className="grid min-w-0 gap-3 lg:grid-cols-2" aria-label={t("resultsLabel")}>
+        <ul className="flex min-w-0 flex-col" aria-label={t("resultsLabel")}>
           {items.map((institution) => (
             <li key={institution.id} className="min-w-0">
-              <InstitutionCard institution={institution} />
+              <InstitutionRow
+                institution={institution}
+                row={listRows.find((item) => item.entry.institution.id === institution.id)}
+              />
             </li>
           ))}
         </ul>
@@ -129,42 +130,30 @@ export function SearchView() {
           </button>
         ))}
       </div>
-      <Button type="button" variant="outline" onClick={() => router.replace(href(filters, { prefs: true }))}>
-        <Icons.discover aria-hidden />
-        {t("prefs.open")}
-      </Button>
     </div>
-  )
-
-  const prefsSheet = (
-    <Sheet open={prefsOpen} onOpenChange={(open) => !open && router.replace(href(filters, { prefs: false }))}>
-      <SheetContent side={isMobile ? "bottom" : "right"} className="max-h-[100dvh] overflow-y-auto p-4">
-        <SheetHeader>
-          <SheetTitle>{t("prefs.title")}</SheetTitle>
-        </SheetHeader>
-        <AlgorithmPanel />
-      </SheetContent>
-    </Sheet>
   )
 
   if (view === "discover") {
     return (
-      <div className="flex min-w-0 flex-col gap-4">
-        {toolbar}
-        <FieldFocus />
-        <DiscoverPage />
-        {prefsSheet}
+      <div className="flex min-w-0 flex-col gap-3">
+        <DiscoverPage
+          tray={<ListTray onOpenList={() => router.replace(`${pathname}?step=list`)} />}
+          lead={
+            <>
+              {toolbar}
+              <FieldFocus />
+            </>
+          }
+        />
       </div>
     )
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
-      {isMobile ? null : (
-        <aside className="flex flex-col gap-3 md:sticky md:top-4 md:max-h-[calc(100dvh-9rem)] md:self-start md:overflow-y-auto md:pr-1">
-          {panel}
-        </aside>
-      )}
+    <div className="grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">
+      <aside className="hidden flex-col gap-3 lg:sticky lg:top-4 lg:flex lg:max-h-[calc(100dvh-9rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
+        {panel}
+      </aside>
       <div className="flex min-w-0 flex-col gap-4">
         {toolbar}
         <FieldFocus />
@@ -185,7 +174,7 @@ export function SearchView() {
           />
           <Button type="submit">{t("searchButton")}</Button>
         </form>
-        {isMobile ? (
+        <div className="lg:hidden">
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger render={<Button type="button" variant="outline" />}>
               <Icons.adjustments aria-hidden />
@@ -198,7 +187,7 @@ export function SearchView() {
               {panel}
             </SheetContent>
           </Sheet>
-        ) : null}
+        </div>
         <ActiveChips
           filters={filters}
           active={active}
@@ -228,12 +217,10 @@ export function SearchView() {
             </label>
           </div>
         ) : null}
-        <ScrollFade maxHeight={isMobile ? undefined : "calc(100dvh - 22rem)"} className="pr-1">
+        <ScrollFade maxHeight="calc(100dvh - 22rem)" className="pr-1">
           {results}
         </ScrollFade>
-        <NextStep href="/chooser/list/" label={t("nextStep.review", { count: list.data?.length ?? 0 })} />
       </div>
-      {prefsSheet}
     </div>
   )
 }

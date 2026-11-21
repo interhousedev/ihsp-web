@@ -61,6 +61,11 @@ function path(studentId: string | undefined) {
   return studentId ? `${BASE}/students/${studentId}/tasks` : `${BASE}/tasks`
 }
 
+/** Staff create a student's task through the staff endpoint; the task carries the creator's name. */
+function createPath(studentId: string | undefined) {
+  return studentId ? `${BASE}/staff/students/${studentId}/tasks` : `${BASE}/tasks`
+}
+
 function query(filters: TaskFilters): string {
   const params = new URLSearchParams()
   for (const [key, value] of Object.entries(filters)) if (value) params.set(key, value)
@@ -84,7 +89,7 @@ function useInvalidate() {
 export function useCreateTask(studentId?: string) {
   const invalidate = useInvalidate()
   return useMutation({
-    mutationFn: (body: TaskIn) => getApiClient().post<Task>(path(studentId), body),
+    mutationFn: (body: TaskIn) => getApiClient().post<Task>(createPath(studentId), body),
     onSuccess: invalidate,
   })
 }
@@ -95,6 +100,40 @@ export function useUpdateTask() {
     mutationFn: ({ id, ...body }: TaskPatch & { id: string }) =>
       getApiClient().patch<Task>(`${BASE}/tasks/${id}`, body),
     onSuccess: invalidate,
+  })
+}
+
+/** Moves a task's dates; the cached lists change at once and roll back when the server refuses. */
+export function useMoveTask() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, ...body }: TaskPatch & { id: string }) =>
+      getApiClient().patch<Task>(`${BASE}/tasks/${id}`, body),
+    onMutate: async ({ id, deadline, start_date }) => {
+      await client.cancelQueries({ queryKey: TASKS_KEY })
+      const previous = client.getQueriesData<TasksOut>({ queryKey: TASKS_KEY })
+      client.setQueriesData<TasksOut>({ queryKey: TASKS_KEY }, (data) =>
+        data
+          ? {
+              ...data,
+              items: data.items.map((task) =>
+                task.id === id
+                  ? {
+                      ...task,
+                      deadline: deadline === undefined ? task.deadline : deadline,
+                      start_date: start_date === undefined ? task.start_date : start_date,
+                    }
+                  : task,
+              ),
+            }
+          : data,
+      )
+      return { previous }
+    },
+    onError: (_error, _vars, context) => {
+      for (const [key, data] of context?.previous ?? []) client.setQueryData(key, data)
+    },
+    onSettled: () => client.invalidateQueries({ queryKey: TASKS_KEY }),
   })
 }
 

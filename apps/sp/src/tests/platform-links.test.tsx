@@ -22,7 +22,7 @@ describe("profile menu", () => {
     )
 
     // First match is the sidebar footer (rendered before the header in AppShell).
-    await user.click((await screen.findAllByRole("button", { name: "Account menu" }))[0])
+    await user.click(await screen.findByRole("button", { name: /platforms/i }))
 
     const menu = await screen.findByRole("menu")
     expect(within(menu).getByRole("menuitem", { name: /my\.iht/ })).toHaveAttribute("aria-current", "page")

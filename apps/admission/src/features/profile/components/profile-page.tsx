@@ -161,7 +161,7 @@ export function ProfilePage() {
   const t = useT("profilePage")
   return (
     <AdmissionShell>
-      <div className={pageClass("wide")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="profile" title={t("title")} />
         <ProfileBody />
       </div>

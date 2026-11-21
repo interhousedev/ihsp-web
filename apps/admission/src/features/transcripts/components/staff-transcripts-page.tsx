@@ -34,7 +34,7 @@ export function StaffTranscriptsPage() {
   const t = useT("transcripts")
   return (
     <AdmissionShell roles={[...DOCUMENT_ROLES]}>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="page" title={t("staffTitle")} />
         <Body />
       </div>

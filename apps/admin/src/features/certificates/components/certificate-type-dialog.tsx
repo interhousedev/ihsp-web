@@ -2,6 +2,7 @@
 
 import { useServerFieldErrors } from "@ihsp/features-core"
 import {
+  HONOR_CATEGORIES,
   keys,
   patchCertificateType,
   postCertificateType,
@@ -21,6 +22,9 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
   const t = useT("certificates.types")
   const [code, setCode] = useState(type?.code ?? "")
   const [names, setNames] = useState(type?.name ?? { uz: "", ru: "", en: "" })
+  const [standard, setStandard] = useState(type?.standard ?? false)
+  const [category, setCategory] = useState<string>(type?.category ?? "")
+  const tc = useT("honorCategory")
   const [customFields, setCustomFields] = useState<DraftField[]>((type?.custom_fields ?? []).map(toDraft))
   const save = useAdminMutation({
     mutationFn: (body: CertificateTypeInput) =>
@@ -41,6 +45,8 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
       code: code.trim(),
       name: { uz: names.uz.trim(), ru: names.ru.trim(), en: names.en.trim() },
       position: type?.position ?? 100,
+      standard,
+      category: HONOR_CATEGORIES.find((c) => c === category) ?? null,
       custom_fields: customFields.map(fromDraft),
     })
   return (
@@ -90,6 +96,35 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
             />
           </LabeledField>
         ))}
+        <LabeledField label={t("category")} htmlFor="cert-category">
+          <select
+            id="cert-category"
+            className={`border-input bg-background w-full rounded-md border px-2 text-sm ${TOUCH}`}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">{t("categoryNone")}</option>
+            {HONOR_CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {tc(c)}
+              </option>
+            ))}
+          </select>
+        </LabeledField>
+        <label className="flex min-h-11 items-start gap-3 text-sm md:min-h-8">
+          <input
+            type="checkbox"
+            role="switch"
+            aria-label={t("standard")}
+            className="mt-1 size-5 md:size-4"
+            checked={standard}
+            onChange={(e) => setStandard(e.target.checked)}
+          />
+          <span className="flex flex-col">
+            <span className="font-medium">{t("standard")}</span>
+            <span className="text-muted-foreground text-xs">{t("standardHint")}</span>
+          </span>
+        </label>
         <CustomFieldsEditor fields={customFields} onChange={setCustomFields} />
       </>
     </ResponsiveDialog>

@@ -21,6 +21,7 @@ const taxonomy: Taxonomy = {
 }
 
 const item = (id: string, title: string, forYou: boolean): Opportunity => ({
+  delivery: "external",
   next_deadline: null,
   id,
   fields: {

@@ -132,7 +132,7 @@ export function ExemplarsStaffBody() {
     )
 
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <AppPageHeader
         icon="post"
         title={t("title")}

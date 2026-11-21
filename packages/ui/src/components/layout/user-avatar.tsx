@@ -1,5 +1,5 @@
 import { cn } from "../../lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Avatar, AvatarImage } from "../ui/avatar"
 
 export type UserAvatarProps = {
   /** Full name; the initials of the first two words are shown without an image. */
@@ -24,8 +24,14 @@ export function UserAvatar({ name, imageUrl, subtitle, showInfo = false, classNa
   return (
     <div className="flex min-w-0 items-center gap-2">
       <Avatar className={cn("size-8 shrink-0", className)}>
-        {imageUrl ? <AvatarImage src={imageUrl} alt="" /> : null}
-        <AvatarFallback className="rounded-full text-xs">{initials(name)}</AvatarFallback>
+        {/* Initials stay under the photo: the fallback alone is empty while the image is still loading. */}
+        <span
+          aria-hidden
+          className="bg-primary/10 text-primary absolute inset-0 flex items-center justify-center rounded-full text-xs font-medium"
+        >
+          {initials(name)}
+        </span>
+        {imageUrl ? <AvatarImage src={imageUrl} alt="" className="absolute inset-0" /> : null}
       </Avatar>
       {showInfo ? (
         <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">

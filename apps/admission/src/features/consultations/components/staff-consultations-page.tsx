@@ -21,7 +21,7 @@ export function StaffConsultationsPage() {
   const query = useConsultationQueue(FILTERS[filter] ?? FILTERS.open)
   return (
     <AdmissionShell roles={[...CASELOAD_ROLES]}>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="chat" title={t("queueTitle")} />
         <Tabs value={filter} onValueChange={setFilter}>
           <TabsList>

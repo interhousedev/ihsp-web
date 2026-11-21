@@ -261,7 +261,7 @@ export function ChecklistSection() {
     return (
       <div className="flex flex-col gap-3">
         <StateView state="empty" title={t("checklistEmpty")} />
-        <NextStep href="/chooser/search/" label={t("nextSearch")} hint={t("nextSearchHint")} />
+        <NextStep href="/chooser/?step=match" label={t("nextSearch")} hint={t("nextSearchHint")} />
       </div>
     )
   }

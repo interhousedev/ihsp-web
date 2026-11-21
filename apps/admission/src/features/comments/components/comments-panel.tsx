@@ -6,6 +6,7 @@ import { AnimatedPresence, Reveal, Skeleton, StateView } from "@ihsp/ui"
 import { toast } from "sonner"
 import { useComments, useDeleteComment, usePostComment, type CommentTarget } from "../api"
 import { CommentForm } from "./comment-form"
+import { AccessDenied, isForbidden } from "../../shell/components/access-denied"
 import { CommentItem } from "./comment-item"
 
 /** The comments of one object (GET/POST/DELETE /comments) and a form to add one. */
@@ -28,6 +29,8 @@ export function CommentsPanel({ target }: { target: CommentTarget }) {
       />
       {query.isPending ? (
         <Skeleton className="h-20 w-full" />
+      ) : query.isError && isForbidden(query.error) ? (
+        <AccessDenied section="comments" />
       ) : query.isError ? (
         <StateView state="error" title={t("loadError")} onRetry={() => void query.refetch()} />
       ) : query.data.items.length === 0 ? (

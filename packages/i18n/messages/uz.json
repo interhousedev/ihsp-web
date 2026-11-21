@@ -120,6 +120,8 @@
     "more": "Yana",
     "moreTitle": "Barcha boʻlimlar",
     "toggleSidebar": "Yon menyuni koʻrsatish yoki yashirish",
+    "accountTools": "Hisob va vositalar",
+    "settings": "Sozlamalar",
     "back": "Orqaga",
     "forward": "Oldinga",
     "recentPages": "Oxirgi sahifalar"
@@ -183,6 +185,7 @@
   },
   "command": {
     "placeholder": "Buyruq yoki soʻrov kiriting…",
+    "search": "Qidiruv",
     "empty": "Hech narsa topilmadi.",
     "searching": "Qidirilmoqda…",
     "navigation": "Oʻtish",
@@ -1845,7 +1848,11 @@
       "kindNumber": "Son",
       "kindSingle": "Bitta tanlov",
       "kindMulti": "Bir nechta tanlov",
-      "fieldsEmpty": "QoÊ»shimcha maydonlar hali yoÊ»q."
+      "fieldsEmpty": "QoÊ»shimcha maydonlar hali yoÊ»q.",
+      "standard": "Standart imtihon",
+      "standardHint": "Test natijalari qatorida koʼrsatiladi (SAT, IELTS...), mukofot sifatida taklif qilinmaydi.",
+      "category": "Kategoriya",
+      "categoryNone": "Kategoriyasiz"
     },
     "customOther": "Boshqa"
   },
@@ -2708,5 +2715,16 @@
     "description": "Platforma boshqa serverga koʻchirilmoqda va faqat oʻqish rejimida. Oʻzgarishlar saqlanmaydi.",
     "moved": "Platforma yangi serverga koʻchdi.",
     "open": "Yangi serverni ochish"
+  },
+  "honorCategory": {
+    "olympiad": "Olimpiada va tanlovlar",
+    "award": "Mukofot va medallar",
+    "scholarship": "Stipendiyalar",
+    "research": "Tadqiqot va nashrlar",
+    "leadership": "Yetakchilik va xizmat",
+    "arts": "Sanʼat",
+    "sports": "Sport",
+    "academic": "Akademik yutuqlar",
+    "other": "Boshqa"
   }
 }

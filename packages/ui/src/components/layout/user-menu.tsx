@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import { NavIconView } from "./nav-icon"
+import { PlatformMenuGrid } from "./platform-menu"
 import type { NavIcon } from "./nav-types"
 import { UserAvatar } from "./user-avatar"
 
@@ -44,8 +45,6 @@ export type PlatformLink = {
   current: boolean
   /** Replaces the plain navigation where the page cannot follow the link itself (the Telegram mini app). */
   onClick?: (event: MouseEvent) => void
-  /** The app's own icon (its `icons/icon-192.png`), absolute address. */
-  iconSrc?: string
 }
 
 /**
@@ -66,7 +65,7 @@ export function UserMenu({
   subtitle?: string | null
   imageUrl?: string | null
   items?: UserMenuItem[]
-  /** Other IHSP platforms for this user (`usePlatformLinks()`); the current one is marked. */
+  /** Other IHSP platforms for this user (`usePlatformLinks()`), listed in the `avatar` menu; `row` leaves them to the sidebar's app switcher. */
   platforms?: PlatformLink[]
   onLogout: () => void
   /** Called after the language was changed (save it in the account with `patchPreferences`). */
@@ -135,52 +134,10 @@ export function UserMenu({
             </DropdownMenuGroup>
           </>
         ) : null}
-        {platforms.length > 0 ? (
+        {!row && platforms.length > 0 ? (
           <>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuLabel>{t("platforms.title")}</DropdownMenuLabel>
-              <div className="grid grid-cols-2 gap-1" data-testid="app-switcher">
-                {platforms.map((platform) => (
-                  <DropdownMenuItem
-                    key={platform.key}
-                    className="min-h-11 flex-col items-start gap-1.5 px-2 py-2 md:min-h-9"
-                    render={
-                      <a
-                        href={platform.href}
-                        aria-current={platform.current ? "page" : undefined}
-                        data-platform={platform.key}
-                        onClick={platform.onClick}
-                      />
-                    }
-                  >
-                    <span className="flex w-full items-center gap-2">
-                      {platform.iconSrc ? (
-                        // oxlint-disable-next-line nextjs/no-img-element -- static export, the icon is a plain file of that app
-                        <img
-                          src={platform.iconSrc}
-                          alt=""
-                          width={28}
-                          height={28}
-                          className="size-7 shrink-0 rounded-md"
-                          data-testid={`platform-icon-${platform.key}`}
-                        />
-                      ) : null}
-                      {platform.current ? (
-                        <>
-                          <Icons.check aria-hidden className="ms-auto" />
-                          <span className="sr-only">{t("platforms.current")}</span>
-                        </>
-                      ) : null}
-                    </span>
-                    <span className="flex min-w-0 flex-col">
-                      <span className="truncate font-medium">{platform.name}</span>
-                      <span className="text-muted-foreground truncate text-xs">{platform.description}</span>
-                    </span>
-                  </DropdownMenuItem>
-                ))}
-              </div>
-            </DropdownMenuGroup>
+            <PlatformMenuGrid platforms={platforms} label />
           </>
         ) : null}
         <DropdownMenuSeparator />
@@ -205,15 +162,16 @@ export function UserMenu({
         <DropdownMenuGroup>
           <DropdownMenuLabel>{t("common.theme")}</DropdownMenuLabel>
           <DropdownMenuRadioGroup
-            className="flex gap-1 px-1"
+            className="grid grid-cols-3 gap-1 px-1"
             value={theme}
             onValueChange={(value) => {
               if (isThemeChoice(value)) setTheme(value)
             }}
           >
             {THEME_CHOICES.map((mode) => (
-              <DropdownMenuRadioItem key={mode} value={mode} className="min-h-11 flex-1 justify-center md:min-h-8">
-                {t(`theme.${mode}`)}
+              <DropdownMenuRadioItem key={mode} value={mode} className="data-checked:bg-accent data-checked:font-medium min-h-11 min-w-0 justify-center px-1 pr-1 pl-1 text-xs md:min-h-8 [&_[data-slot=dropdown-menu-radio-item-indicator]]:hidden"
+              >
+                <span className="truncate">{t(`theme.${mode}`)}</span>
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>

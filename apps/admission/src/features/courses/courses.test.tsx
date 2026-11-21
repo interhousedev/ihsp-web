@@ -12,6 +12,14 @@ const noOpportunities = () =>
     http.get(apiUrl("/v1/admission/opportunities"), () =>
       HttpResponse.json({ items: [], total: 0, page: 1, size: 200 }),
     ),
+    http.get(apiUrl("/v1/admission/opportunities/plan"), () =>
+      HttpResponse.json({
+        entries: [],
+        opportunities: [],
+        analytics: { load: {}, coverage: {}, unplaced: 0, conflicts: [] },
+        deadlines: [],
+      }),
+    ),
   )
 
 describe("courses page", () => {
@@ -103,5 +111,39 @@ describe("courses page", () => {
     renderAdmissionApp(<CoursesPage />)
     fireEvent.click(await screen.findByRole("button", { name: "Add" }))
     await waitFor(() => expect(patched).toEqual({ included: true }))
+  })
+})
+
+describe("courses to take", () => {
+  test("splits lyceum and external ones and points events to Ideas", async () => {
+    noOpportunities()
+    const entry = (id: string, title: string, delivery: "local" | "external", kind: "course" | "certification") => ({
+      id,
+      delivery,
+      next_deadline: null,
+      archived: false,
+      comment_count: 0,
+      created_at: "2026-01-01T00:00:00Z",
+      updated_at: "2026-01-01T00:00:00Z",
+      lock_version: 0,
+      for_you: false,
+      upcoming: [],
+      fields: { kind, title, grades: [], tuition_usd: 0, hours_per_week: 4 },
+    })
+    server.use(
+      http.get(apiUrl("/v1/admission/courses"), () => HttpResponse.json({ items: [] })),
+      http.get(apiUrl("/v1/admission/opportunities"), ({ request }) => {
+        const kind = new URL(request.url).searchParams.get("kind")
+        const items =
+          kind === "course"
+            ? [entry("c1", "Derivatives 101", "local", "course")]
+            : [entry("c2", "IELTS Academic", "external", "certification")]
+        return HttpResponse.json({ items, total: 1, page: 1, size: 200, sort: "relevance" })
+      }),
+    )
+    renderAdmissionApp(<CoursesPage />)
+    expect(await screen.findByText("Derivatives 101")).toBeTruthy()
+    expect(await screen.findByText("IELTS Academic")).toBeTruthy()
+    expect(screen.getAllByRole("link", { name: /Open events/ })[0]?.getAttribute("href")).toBe("/opportunities?kind=event")
   })
 })

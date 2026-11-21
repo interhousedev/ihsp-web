@@ -2,7 +2,7 @@
 
 import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
 
-const target: RedirectTarget = () => ({ to: "/chooser/search/?view=discover" })
+const target: RedirectTarget = () => ({ to: "/chooser/?step=match" })
 
 export default function Page() {
   return <RouteRedirect target={target} />

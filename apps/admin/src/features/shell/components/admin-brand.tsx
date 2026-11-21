@@ -8,8 +8,7 @@ export function AdminBrand() {
   return (
     <SidebarBrand
       name={t("name")}
-      // oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public
-      logo={<img src="/icons/logo.svg" alt="" width={24} height={24} className="rounded-md" />}
+      platform="admin"
     />
   )
 }

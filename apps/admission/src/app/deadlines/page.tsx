@@ -1,7 +1,10 @@
 "use client"
 
-import { DeadlinesPage } from "../../features/deadlines/components/deadlines-page"
+import { RouteRedirect, type RedirectTarget } from "../../components/route-redirect"
+
+// Deadlines became the timeline view of the tasks page.
+const target: RedirectTarget = () => ({ to: "/tasks/?view=gantt" })
 
 export default function Page() {
-  return <DeadlinesPage />
+  return <RouteRedirect target={target} />
 }

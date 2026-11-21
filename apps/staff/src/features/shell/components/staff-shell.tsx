@@ -1,15 +1,23 @@
 "use client"
-import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
-
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { HelpWidget, OnboardingTour, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
+import {
+  AssistantEntry,
+  HelpWidget,
+  LegalGate,
+  MaintenanceBanner,
+  NotificationBell,
+  OnboardingTour,
+  PageLoading,
+  ShellNavControls,
+  usePlatformLinks,
+} from "@ihsp/features-core"
 import { getConfig } from "@ihsp/config"
-import { AppShell } from "@ihsp/ui"
+import { AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { CuratedGroupsError } from "./curated-groups-error"
 import { ProfileMenu } from "./profile-menu"
-import { ShellHeader } from "./shell-header"
+import { ShellSearch } from "./shell-search"
 import { StaffBrand } from "./staff-brand"
 
 /**
@@ -35,13 +43,18 @@ function StaffFrame({ children }: { children: ReactNode }) {
   const platforms = usePlatformLinks()
   return (
     <AppShell
-      controlsLeading={<ShellNavControls />}
+      history={<ShellNavControls />}
+      search={<ShellSearch nav={nav.groups} />}
+      ai={<AssistantEntry href="/assistant/" />}
+      bell={<NotificationBell />}
+      tools={<OfflineBadge />}
+      settingsHref="/settings/"
+      profile={<ProfileMenu />}
       nav={nav.groups}
       bottomNav={nav.bottom}
       platforms={platforms}
       brand={<StaffBrand />}
       sidebarFooter={<ProfileMenu variant="row" />}
-      controls={<ShellHeader nav={nav.groups} />}
     >
       <CuratedGroupsError />
       <MaintenanceBanner />

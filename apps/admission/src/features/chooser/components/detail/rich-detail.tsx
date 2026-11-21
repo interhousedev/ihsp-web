@@ -6,48 +6,50 @@ import type { Institution } from "../../types"
 import { DeadlinesTable } from "./deadlines-table"
 import { DetailRows } from "./detail-rows"
 import { FactorsTable } from "./factors-table"
-import { DETAIL_GROUPS, rowsOf } from "./groups"
-import { SectionNav } from "./section-nav"
-import { sectionId } from "./section-id"
+import { rowsOf, type DetailGroupKey } from "./groups"
+import { SectionSource } from "./section-source"
 
-/** Sections of a school with recorded details: key/value tables, admission factors and deadlines; empty sections are hidden. */
-export function RichDetail({ institution, chances }: { institution: Institution; chances: ReactNode }) {
+/** True when at least one of the groups has rows (or, for selectivity and application, factors or deadlines). */
+export function hasSections(institution: Institution, groups: readonly DetailGroupKey[]): boolean {
+  return groups.some(
+    (name) =>
+      rowsOf(institution.details, name).length > 0 ||
+      (name === "selectivity" && institution.factors.length > 0) ||
+      (name === "application" && institution.deadlines.length > 0),
+  )
+}
+
+/** The chosen sections of a school with recorded details: a key/value table, factors or deadlines, one source line. */
+export function RichSections({
+  institution,
+  groups,
+  after,
+}: {
+  institution: Institution
+  groups: readonly DetailGroupKey[]
+  /** Extra content under a section, by group name. */
+  after?: Partial<Record<DetailGroupKey, ReactNode>>
+}) {
   const t = useT("chooserDetails")
   const { details, factors, deadlines } = institution
-  const content = DETAIL_GROUPS.flatMap((name) => {
-    const rows = rowsOf(details, name)
-    const extra: ReactNode[] = []
-    if (name === "selectivity" && factors.length > 0) extra.push(<FactorsTable key="factors" factors={factors} />)
-    if (name === "application" && deadlines.length > 0) extra.push(<DeadlinesTable key="deadlines" items={deadlines} />)
-    if (rows.length === 0 && extra.length === 0) return []
-    return [{ name, rows, extra }]
-  })
-  const names = [...content.map((section) => section.name), "chances"]
   return (
-    <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-8" data-testid="rich-detail">
-      <SectionNav sections={names} />
-      <div className="flex min-w-0 flex-col gap-8">
-        {content.map(({ name, rows, extra }) => (
-          <section
-            key={name}
-            id={sectionId(name)}
-            aria-label={t(`groups.${name}`)}
-            className="flex scroll-mt-16 flex-col gap-3"
-          >
-            <h2 className="text-base font-semibold">{t(`groups.${name}`)}</h2>
+    <div className="flex min-w-0 flex-col gap-6" data-testid="rich-detail">
+      {groups.map((name) => {
+        const rows = rowsOf(details, name)
+        const extra: ReactNode[] = []
+        if (name === "selectivity" && factors.length > 0) extra.push(<FactorsTable key="factors" factors={factors} />)
+        if (name === "application" && deadlines.length > 0) extra.push(<DeadlinesTable key="deadlines" items={deadlines} />)
+        if (rows.length === 0 && extra.length === 0 && !after?.[name]) return null
+        return (
+          <section key={name} aria-label={t(`groups.${name}`)} className="flex flex-col gap-2">
+            <h3 className="text-base font-semibold">{t(`groups.${name}`)}</h3>
             {rows.length > 0 ? <DetailRows rows={rows} label={t(`groups.${name}`)} /> : null}
             {extra}
+            {after?.[name]}
+            <SectionSource rows={rows} />
           </section>
-        ))}
-        <section
-          id={sectionId("chances")}
-          aria-label={t("groups.chances")}
-          className="flex scroll-mt-16 flex-col gap-3"
-        >
-          <h2 className="text-base font-semibold">{t("groups.chances")}</h2>
-          {chances}
-        </section>
-      </div>
+        )
+      })}
     </div>
   )
 }

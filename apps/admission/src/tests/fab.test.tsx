@@ -33,7 +33,7 @@ describe("phone chrome", () => {
     )
     expect(await screen.findByText("page body")).toBeInTheDocument()
     const bar = await screen.findByTestId("section-bottom-bar")
-    for (const label of ["Career", "Activities", "Universities", "Essays", "Apply"]) {
+    for (const label of ["Today", "Profile", "Universities", "Essays", "Apply"]) {
       expect(within(bar).getByText(label)).toBeInTheDocument()
     }
     const reserve = screen.getByTestId("phone-bottom-reserve")

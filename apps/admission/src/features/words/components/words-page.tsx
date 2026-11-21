@@ -58,7 +58,7 @@ export function WordsPage() {
   const t = useT("words")
   return (
     <AdmissionShell>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="post" title={t("title")} />
         <WordsBody />
       </div>

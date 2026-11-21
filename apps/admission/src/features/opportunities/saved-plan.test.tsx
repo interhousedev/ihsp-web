@@ -34,12 +34,13 @@ const opportunity: Opportunity = {
   created_at: "2026-01-01T00:00:00Z",
   updated_at: "2026-01-01T00:00:00Z",
   for_you: false,
+  delivery: "external",
   lock_version: 0,
   upcoming: [{ day: "2026-10-03", kind: "registration", projected: false }],
 } as Opportunity
 
 const plan: Plan = {
-  entries: [{ id: "e1", opportunity_id: "o1", planned_grade: 10, note: null, created_at: "2026-01-01T00:00:00Z" }],
+  entries: [{ id: "e1", opportunity_id: "o1", planned_grade: 10, planned_term: null, note: null, created_at: "2026-01-01T00:00:00Z" }],
   opportunities: [opportunity],
   analytics: { load: {}, coverage: {}, unplaced: 0, conflicts: [] },
   deadlines: [],

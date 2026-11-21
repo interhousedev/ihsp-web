@@ -3,13 +3,13 @@
 import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
-import { Icons, Skeleton, StateView } from "@ihsp/ui"
+import { Icons, Input, Skeleton, StateView, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
 import { PageLoading } from "@ihsp/features-core"
 import { useAdmissionConfig } from "../../../lib/config"
 import { AdmissionShell } from "../../shell/components/admission-shell"
-import { useCaseload, type CaseloadFilters } from "../api"
+import { useCaseload, type CaseloadFilters, type CaseloadScope } from "../api"
 import { StaffOverview } from "../../home/components/staff-overview"
 import { CaseloadFiltersBar, type FilterOption } from "./caseload-filters"
 import { CaseloadList } from "./caseload-list"
@@ -17,6 +17,15 @@ import { SavedViews } from "./saved-views"
 import { QueryError } from "../../shell/components/query-error"
 
 export const STAFF_ROLES = ["admin", "counselor", "mentor"] as const
+
+function useDebounced(value: string, ms = 300): string {
+  const [debounced, setDebounced] = useState(value)
+  useEffect(() => {
+    const id = setTimeout(() => setDebounced(value), ms)
+    return () => clearTimeout(id)
+  }, [value, ms])
+  return debounced
+}
 
 /** Stage labels fall back to the raw value, so a stage the web does not know still shows. */
 function useStageLabel() {
@@ -30,8 +39,13 @@ export function CaseloadContent() {
   const stageLabel = useStageLabel()
   const [filters, setFilters] = useState<CaseloadFilters>({})
   const config = useAdmissionConfig()
-  const all = useCaseload({})
-  const filtered = useCaseload(filters)
+  const { session } = useSession()
+  const isAdmin = !!session?.user.roles?.includes("admin")
+  const [scope, setScope] = useState<CaseloadScope>("mine")
+  const [search, setSearch] = useState("")
+  const q = useDebounced(search)
+  const all = useCaseload({ scope })
+  const filtered = useCaseload({ ...filters, scope, q })
 
   const stages = useMemo<FilterOption[]>(() => {
     const fromConfig = config.data?.stages
@@ -46,12 +60,35 @@ export function CaseloadContent() {
     return [...seen].map(([value, label]) => ({ value, label }))
   }, [all.data])
 
-  const active = Boolean(filters.stage || filters.risk || filters.deadline_before || filters.group_id)
+  const active = Boolean(filters.stage || filters.risk || filters.deadline_before || filters.group_id || q.trim())
 
   return (
-    <div className={pageClass("default")}>
+    <div className={pageClass()}>
       <AppPageHeader icon="teams" title={t("caseload.title")} />
       {all.data ? <StaffOverview items={all.data.items} /> : null}
+      {isAdmin ? (
+        <Tabs value={scope} onValueChange={(next) => setScope(next === "all" ? "all" : "mine")}>
+          <TabsList>
+            <TabsTrigger value="mine" className="min-h-11 md:min-h-9">
+              {t("scope.mine")}
+            </TabsTrigger>
+            <TabsTrigger value="all" className="min-h-11 md:min-h-9">
+              {t("scope.all")}
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      ) : null}
+      <div className="relative">
+        <Icons.search aria-hidden className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+        <Input
+          type="search"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder={t("scope.search")}
+          aria-label={t("scope.search")}
+          className="min-h-11 pl-9 md:min-h-8"
+        />
+      </div>
       <SavedViews filters={filters} onApply={(view) => setFilters(view.filters)} />
       <CaseloadFiltersBar filters={filters} stages={stages} groups={groups} onChange={setFilters} />
       {filtered.isPending ? (
@@ -66,7 +103,7 @@ export function CaseloadContent() {
           description={active ? undefined : t("caseload.emptyText")}
         />
       ) : (
-        <CaseloadList items={filtered.data.items} stageLabel={stageLabel} />
+        <CaseloadList items={filtered.data.items} stageLabel={stageLabel} canAssign={isAdmin} />
       )}
     </div>
   )

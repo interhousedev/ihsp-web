@@ -232,7 +232,7 @@ export function OpportunitiesStaffBody() {
       </ul>
     )
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <AppPageHeader
         icon="sparkles"
         title={t("title")}

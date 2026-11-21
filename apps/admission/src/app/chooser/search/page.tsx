@@ -1,12 +1,9 @@
 "use client"
 
-import { ChooserPage } from "../../../features/chooser/components/chooser-page"
-import { SearchView } from "../../../features/chooser/components/search-view"
+import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/chooser/?step=match" })
 
 export default function Page() {
-  return (
-    <ChooserPage>
-      <SearchView />
-    </ChooserPage>
-  )
+  return <RouteRedirect target={target} />
 }

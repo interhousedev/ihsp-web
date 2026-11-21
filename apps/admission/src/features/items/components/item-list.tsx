@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { NextStep } from "../../../components/next-step"
+import { pageClass } from "../../../components/lib/page"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useAdmissionConfig } from "../../../lib/config"
 import { useDeleteItem, useItems, type Item, type ItemKind, type ItemStatus } from "../api"
@@ -13,8 +14,8 @@ import { useGoalPlan } from "../goal-plan"
 import { EmptySuggestions } from "./empty-suggestions"
 import { EditItemDialog } from "./edit-item-dialog"
 import { ItemAnalytics } from "./item-analytics"
+import { HonorDistribution, HonorSuggestionsRow } from "./honor-suggestions"
 import { ItemBoard } from "./item-board"
-import { ItemCard } from "./item-card"
 import { emptyForm, toForm } from "./item-fields"
 import { NewItemDialog } from "./new-item-dialog"
 import { WhatIfCard } from "./what-if-card"
@@ -77,7 +78,7 @@ export function ItemList() {
 
   return (
     <>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-4 md:max-w-5xl md:p-6 xl:max-w-6xl">
+      <div className={pageClass("lg:h-[calc(100dvh-var(--shell-top-reserve,0px)-3rem)] lg:min-h-0 lg:pb-4")}>
         <PageHeader back={<Icons.sparkles aria-hidden className="text-primary size-7" />} title={t("title")} />
         <Tabs value={kind} onValueChange={(value) => router.replace(`/activities/?kind=${value}`)}>
           <TabsList variant="line">
@@ -115,35 +116,33 @@ export function ItemList() {
             {t("add")}
           </Button>
         </div>
+        <div className="flex min-w-0 flex-col gap-5 md:gap-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-2">
+        {kind === "honor" ? <HonorSuggestionsRow /> : null}
         {items.isPending ? <StateView state="loading" /> : null}
         {items.isError ? <StateView state="error" error={items.error} onRetry={() => items.refetch()} /> : null}
         {items.isSuccess && ofKind.length === 0 ? (
-          <StateView
-            state="empty"
-            title={t(`empty.${kind}.title`)}
-            description={t(`empty.${kind}.text`)}
-            icon={kind === "honor" ? <Icons.certificates aria-hidden /> : <Icons.sparkles aria-hidden />}
-          />
+          <div className="md:hidden">
+            <StateView
+              state="empty"
+              title={t(`empty.${kind}.title`)}
+              description={t(`empty.${kind}.text`)}
+              icon={kind === "honor" ? <Icons.certificates aria-hidden /> : <Icons.sparkles aria-hidden />}
+            />
+          </div>
         ) : null}
-        {items.isSuccess && items.data.length === 0 ? <EmptySuggestions /> : null}
-        {ofKind.length > 0 && kind === "activity" ? (
-          <ItemBoard drafts={drafts} ready={ready} onEdit={openItem} onDelete={setDeleting} />
+        {items.isSuccess ? (
+          <div key={kind} className={ofKind.length === 0 ? "hidden md:block" : undefined}>
+            <ItemBoard drafts={drafts} ready={ready} onEdit={openItem} onDelete={setDeleting} />
+          </div>
         ) : null}
-        {ofKind.length > 0 && kind === "honor" ? (
-          <ul
-            aria-label={t("honorsScroll")}
-            className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 md:mx-0 md:px-0"
-          >
-            {ofKind.map((item) => (
-              <li key={item.id} className="w-72 shrink-0 snap-start">
-                <ItemCard item={item} onEdit={openItem} onDelete={setDeleting} className="h-full" />
-              </li>
-            ))}
-          </ul>
+        {items.isSuccess && (kind === "activity" || items.data.length === 0) ? (
+          <EmptySuggestions collapsed={items.data.length > 0} />
         ) : null}
+        {kind === "honor" && items.isSuccess ? <HonorDistribution items={ofKind} /> : null}
         {kind === "activity" && ofKind.length > 0 ? <ItemAnalytics items={ofKind} /> : null}
         {kind === "activity" ? <WhatIfCard /> : null}
-        <NextStep href="/chooser/search/" label={t("nextStep.explore")} hint={t("nextStep.exploreHint")} />
+        <NextStep href="/chooser/?step=match" label={t("nextStep.explore")} hint={t("nextStep.exploreHint")} />
+        </div>
       </div>
       {creating ? (
         <NewItemDialog

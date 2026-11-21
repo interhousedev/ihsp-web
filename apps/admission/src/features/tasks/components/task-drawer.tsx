@@ -68,6 +68,9 @@ export function TaskDrawer({
               <StatusPill status={task.status} />
               <PriorityPill priority={task.priority} />
               {task.overdue ? <OverdueBadge /> : null}
+              {task.assigned_by_name ? (
+                <span className="text-muted-foreground text-xs">{t("assignedBy", { name: task.assigned_by_name })}</span>
+              ) : null}
             </div>
           </SheetHeader>
           <div className="flex flex-col gap-5 px-4 pb-4">

@@ -7,33 +7,51 @@ import { useState } from "react"
 import { QueryError } from "../../shell/components/query-error"
 import { useKbArticles } from "../api"
 
-/** A known topic tag in the UI language, otherwise the tag humanized. */
 type TopicTranslator = { (key: string): string; has: (key: string) => boolean }
 
-function topicLabel(t: TopicTranslator, tag: string): string {
+/** Spelling variants stored on articles that name one topic. */
+const TOPIC_ALIASES: Record<string, string> = { test: "tests" }
+
+/** One key per topic: case, separators and known variants collapse ("Test" and "tests" are one chip). */
+function topicKey(tag: string): string {
   const key = tag.toLowerCase().replace(/[^a-z0-9]+/g, "_")
+  return TOPIC_ALIASES[key] ?? key
+}
+
+/** A known topic in the UI language, otherwise the tag humanized. */
+function topicLabel(t: TopicTranslator, tag: string): string {
+  const key = topicKey(tag)
   if (t.has(`topics.${key}`)) return t(`topics.${key}`)
   const text = tag.replace(/[_-]+/g, " ")
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-/** The searchable list of published articles in one language, filtered by tag. */
+/** The searchable list of published articles in one language, filtered by topic. */
 export function ArticleList({ locale, activeId }: { locale: string; activeId: string | null }) {
   const t = useT("kb")
   const [q, setQ] = useState("")
   const [tag, setTag] = useState<string | null>(null)
   const all = useKbArticles({ locale, status: "published" })
-  const query = useKbArticles({ locale, q: q.trim(), tag: tag ?? undefined, status: "published" })
-  const tags = [...new Set((all.data?.items ?? []).flatMap((article) => article.tags))].sort()
+  const query = useKbArticles({ locale, q: q.trim(), status: "published" })
+  const topics = new Map<string, string>()
+  for (const article of all.data?.items ?? []) {
+    for (const raw of article.tags) if (!topics.has(topicKey(raw))) topics.set(topicKey(raw), raw)
+  }
+  const tags = [...topics.entries()]
+    .map(([key, raw]) => ({ key, label: topicLabel(t, raw) }))
+    .sort((a, b) => a.label.localeCompare(b.label, locale))
+  const items = (query.data?.items ?? []).filter(
+    (article) => tag === null || article.tags.some((raw) => topicKey(raw) === tag),
+  )
 
   let body
   if (query.isPending) body = <Skeleton className="h-40 w-full" />
   else if (query.isError) body = <QueryError error={query.error} onRetry={() => void query.refetch()} />
-  else if (query.data.items.length === 0) body = <StateView state="empty" title={t("none")} />
+  else if (items.length === 0) body = <StateView state="empty" title={t("none")} />
   else
     body = (
-      <ul className="flex flex-col gap-1">
-        {query.data.items.map((article) => (
+      <ul className="flex flex-col gap-1 lg:min-h-0 lg:flex-1 lg:overflow-y-auto max-lg:max-h-72 max-lg:overflow-y-auto">
+        {items.map((article) => (
           <li key={article.id}>
             <Link
               href={`/faq/?id=${encodeURIComponent(article.id)}`}
@@ -51,7 +69,7 @@ export function ArticleList({ locale, activeId }: { locale: string; activeId: st
     )
 
   return (
-    <div className="flex min-w-0 flex-col gap-4">
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4">
       <div className="relative">
         <Icons.search className="text-muted-foreground absolute start-3 top-1/2 size-4 -translate-y-1/2" aria-hidden />
         <Input
@@ -64,8 +82,8 @@ export function ArticleList({ locale, activeId }: { locale: string; activeId: st
         />
       </div>
       {tags.length > 0 ? (
-        <div className="flex flex-wrap gap-2" role="group" aria-label={t("allTags")}>
-          {[null, ...tags].map((value) => (
+        <div className="flex max-h-24 flex-wrap gap-2 overflow-y-auto" role="group" aria-label={t("categories")}>
+          {[{ key: null, label: t("allTags") }, ...tags].map(({ key: value, label }) => (
             <button
               key={value ?? "all"}
               type="button"
@@ -76,7 +94,7 @@ export function ArticleList({ locale, activeId }: { locale: string; activeId: st
                 tag === value ? "bg-primary text-primary-foreground border-primary" : "hover:bg-accent",
               )}
             >
-              {value === null ? t("allTags") : topicLabel(t, value)}
+              {label}
             </button>
           ))}
         </div>
