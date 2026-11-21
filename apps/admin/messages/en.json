@@ -2780,6 +2780,13 @@
         "low": "Low",
         "medium": "Medium",
         "high": "High"
+      },
+      "tracing": {
+        "enabled": "Trace requests in Langfuse",
+        "defaultOn": "Traced by default",
+        "defaultOff": "Not traced by default: sensitive data such as essays",
+        "capture": "Send prompts and answers",
+        "captureHint": "Off: only timing, model and token counts are sent."
       }
     },
     "requests": {
@@ -2847,6 +2854,26 @@
         "answerChars": "Average answer length (chars)",
         "toolCalls": "Average tool calls"
       }
+    },
+    "tracing": {
+      "title": "Langfuse tracing",
+      "description": "The Langfuse project where requests are traced. Empty fields use the environment settings. Changes apply within 30 seconds.",
+      "source": {
+        "runtime": "Set here",
+        "env": "Environment",
+        "none": "Off"
+      },
+      "host": "Host",
+      "publicKey": "Public key",
+      "secretKey": "Secret key",
+      "secretStored": "Stored",
+      "secretStoredLast4": "Stored, ends in {last4}",
+      "secretMissing": "Not set",
+      "secretHint": "The secret key is kept in the vault and is never shown again. Leave it empty to keep the stored key.",
+      "save": "Save",
+      "remove": "Remove",
+      "saved": "Langfuse settings saved.",
+      "removed": "Langfuse settings removed. The environment settings apply."
     }
   },
   "richText": {

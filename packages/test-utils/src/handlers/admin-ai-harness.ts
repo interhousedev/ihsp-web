@@ -46,6 +46,7 @@ export const aiPipelinesFixture: AiPipeline[] = [
       source: "env",
     },
     env_default: { connector_id: "openrouter", model: "anthropic/claude-haiku-5.5", reasoning_effort: "none" },
+    tracing: { enabled: false, capture_content: false, default_enabled: false },
   },
   {
     pipeline: "web_search",
@@ -53,6 +54,7 @@ export const aiPipelinesFixture: AiPipeline[] = [
     route: { connector_id: null, model: null, reasoning_effort: null, updated_at: null },
     effective: { connector_id: "exa", model: "", reasoning_effort: "none", source: "env" },
     env_default: { connector_id: "exa", model: "", reasoning_effort: "none" },
+    tracing: { enabled: false, capture_content: false, default_enabled: false },
   },
 ]
 

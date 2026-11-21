@@ -12,7 +12,7 @@ import {
 } from "@ihsp/api"
 import { QueryState } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, PageContainer } from "@ihsp/ui"
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, PageContainer, Switch } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useId, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
@@ -21,6 +21,7 @@ import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
 import { REASONING, SEARCH_PIPELINE } from "../utils"
 import { HarnessTabs } from "./harness-tabs"
+import { TracingCard } from "./tracing-card"
 
 /** Pipelines: which connector, model and reasoning effort each group of AI tasks uses; empty falls through to the environment. */
 export function PipelinesPage() {
@@ -32,6 +33,7 @@ export function PipelinesPage() {
     <PageContainer title={th("title")}>
       <HarnessTabs />
       <p className="text-muted-foreground text-sm">{t("description")}</p>
+      <TracingCard />
       <QueryState query={pipelines} rows={4} isEmpty={(data) => data.items.length === 0} emptyText={t("empty")}>
         {({ items }) => (
           <div className="grid gap-4 xl:grid-cols-2">
@@ -56,6 +58,11 @@ function PipelineCard({ item, connectors }: { item: AiPipeline; connectors: read
   const [connector, setConnector] = useState(item.route.connector_id ?? "")
   const [model, setModel] = useState(item.route.model ?? "")
   const [effort, setEffort] = useState<string>(item.route.reasoning_effort ?? "")
+  // null keeps the default (admission untraced); a touched switch is stored explicitly
+  const [tracing, setTracing] = useState<boolean | null>(item.route.tracing_enabled ?? null)
+  const [capture, setCapture] = useState<boolean | null>(item.route.capture_content ?? null)
+  const tracingOn = tracing ?? item.tracing.enabled
+  const captureOn = capture ?? item.tracing.capture_content
   const allowed = connectors.filter((c) => c.enabled && (c.kind === "exa") === search)
   const efforts = {
     none: t("efforts.none"),
@@ -70,6 +77,8 @@ function PipelineCard({ item, connectors }: { item: AiPipeline; connectors: read
         connector_id: connector || null,
         model: search ? null : model.trim() || null,
         reasoning_effort: search ? null : ((effort || null) as ReasoningEffort | null),
+        tracing_enabled: tracing,
+        capture_content: capture,
       }),
     invalidate: [aiHarnessKeys.all()],
     success: t("saved", { pipeline: item.pipeline }),
@@ -79,7 +88,12 @@ function PipelineCard({ item, connectors }: { item: AiPipeline; connectors: read
     invalidate: [aiHarnessKeys.all()],
     success: t("resetDone", { pipeline: item.pipeline }),
   })
-  const routed = item.route.connector_id !== null || item.route.model !== null || item.route.reasoning_effort !== null
+  const routed =
+    item.route.connector_id !== null ||
+    item.route.model !== null ||
+    item.route.reasoning_effort !== null ||
+    item.route.tracing_enabled != null ||
+    item.route.capture_content != null
   const { effective } = item
   return (
     <Card role="group" aria-label={item.pipeline}>
@@ -136,6 +150,28 @@ function PipelineCard({ item, connectors }: { item: AiPipeline; connectors: read
               </LabeledField>
             </>
           )}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="flex min-h-11 items-center justify-between gap-3 text-sm">
+            <span>
+              {t("tracing.enabled")}
+              <span className="text-muted-foreground block text-xs">
+                {item.tracing.default_enabled ? t("tracing.defaultOn") : t("tracing.defaultOff")}
+              </span>
+            </span>
+            <Switch checked={tracingOn} onCheckedChange={(value: boolean) => setTracing(value)} />
+          </label>
+          <label className="flex min-h-11 items-center justify-between gap-3 text-sm">
+            <span>
+              {t("tracing.capture")}
+              <span className="text-muted-foreground block text-xs">{t("tracing.captureHint")}</span>
+            </span>
+            <Switch
+              checked={tracingOn && captureOn}
+              disabled={!tracingOn}
+              onCheckedChange={(value: boolean) => setCapture(value)}
+            />
+          </label>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button type="button" className={TOUCH} disabled={save.isPending} onClick={() => save.mutate(undefined)}>
