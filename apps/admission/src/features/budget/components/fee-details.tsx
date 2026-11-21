@@ -71,7 +71,7 @@ export function FeeDetails({ row }: { row: BudgetRow }) {
           </span>
         ) : null}
       </div>
-      <AidFacts row={row} />
+      <AidFacts aid={row.aid_profile} rate={row.admit_rate} />
     </div>
   )
 }

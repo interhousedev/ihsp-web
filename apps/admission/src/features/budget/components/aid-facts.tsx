@@ -25,11 +25,17 @@ const BARS = [
  * How the aid of one university meets need: full need (yes / no / unknown), the grant, loan and work shares, the average
  * aid and the admit rate with whom they describe (international or overall), and the source. Unknown is "no data".
  */
-export function AidFacts({ row }: { row: BudgetRow }) {
+export function AidFacts({
+  aid,
+  rate,
+  showAdmit = true,
+}: {
+  aid: BudgetRow["aid_profile"]
+  rate?: BudgetRow["admit_rate"]
+  showAdmit?: boolean
+}) {
   const t = useT("budget")
   const locale = useLocale()
-  const aid = row.aid_profile
-  const rate = row.admit_rate
   const none = t("aid.noData")
   const shares = { grant: aid?.grant_pct ?? null, loan: aid?.loan_pct ?? null, work: aid?.work_pct ?? null }
   const known = Object.values(shares).some((value) => value !== null)
@@ -44,9 +50,9 @@ export function AidFacts({ row }: { row: BudgetRow }) {
         <Fact label={aid?.avg_aid_scope ? t("aid.avgAid", { scope: t(`aid.scope.${aid.avg_aid_scope}`) }) : t("aid.avgAidPlain")}>
           {avg ?? <span className="text-muted-foreground">{none}</span>}
         </Fact>
-        <Fact label={rate ? t("aid.admit", { scope: t(`aid.scope.${rate.scope}`) }) : t("aid.admitPlain")}>
+        {showAdmit ? <Fact label={rate ? t("aid.admit", { scope: t(`aid.scope.${rate.scope}`) }) : t("aid.admitPlain")}>
           {rate ? `${new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(rate.percent)}%` : <span className="text-muted-foreground">{none}</span>}
-        </Fact>
+        </Fact> : null}
       </dl>
       <div className="flex flex-col gap-1.5">
         <p className="text-muted-foreground text-xs">{t("aid.composition")}</p>

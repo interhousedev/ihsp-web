@@ -78,7 +78,7 @@ export function ItemList() {
 
   return (
     <>
-      <div className={pageClass()}>
+      <div className={pageClass("lg:h-[calc(100dvh-var(--shell-top-reserve,0px)-3rem)] lg:min-h-0 lg:pb-4")}>
         <PageHeader back={<Icons.sparkles aria-hidden className="text-primary size-7" />} title={t("title")} />
         <Tabs value={kind} onValueChange={(value) => router.replace(`/activities/?kind=${value}`)}>
           <TabsList variant="line">
@@ -116,6 +116,7 @@ export function ItemList() {
             {t("add")}
           </Button>
         </div>
+        <div className="flex min-w-0 flex-col gap-5 md:gap-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-2">
         {kind === "honor" ? <HonorSuggestionsRow /> : null}
         {items.isPending ? <StateView state="loading" /> : null}
         {items.isError ? <StateView state="error" error={items.error} onRetry={() => items.refetch()} /> : null}
@@ -141,6 +142,7 @@ export function ItemList() {
         {kind === "activity" && ofKind.length > 0 ? <ItemAnalytics items={ofKind} /> : null}
         {kind === "activity" ? <WhatIfCard /> : null}
         <NextStep href="/chooser/?step=match" label={t("nextStep.explore")} hint={t("nextStep.exploreHint")} />
+        </div>
       </div>
       {creating ? (
         <NewItemDialog

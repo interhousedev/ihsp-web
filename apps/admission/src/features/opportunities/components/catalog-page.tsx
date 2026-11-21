@@ -314,7 +314,7 @@ export function CatalogBody() {
             />
           ) : null}
           {suggesting && <SubmitDialog open onOpenChange={setSuggesting} />}
-          <ScrollFade maxHeight="75vh">{body}</ScrollFade>
+          <ScrollFade className="max-h-[75vh] xl:max-h-[calc(100dvh-25rem)]">{body}</ScrollFade>
           {saved.size > 0 ? <NextStep href={PLAN_HREF} label={t("openPlan")} hint={t("nextPlanHint")} /> : null}
         </div>
       </SplitLayout>

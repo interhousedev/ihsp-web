@@ -22,6 +22,7 @@ import { IntlStrip } from "./institution-intl-strip"
 import { useIntlFigures } from "./intl-figures"
 import { currencyOf, formatCurrency } from "./money"
 import { useOptionLabel } from "./option-label"
+import { AidFacts } from "../../budget/components/aid-facts"
 import { ScholarshipList } from "./scholarships-table"
 
 /** Which recorded facts each tab shows; facts outside the lists go to "Facts". */
@@ -129,6 +130,7 @@ function Panel({ value, children }: { value: Tab; children: ReactNode }) {
 function DetailBody({ institution }: { institution: Institution }) {
   const t = useT("chooser")
   const tDetails = useT("chooserDetails")
+  const tBudget = useT("budget")
   const locale = useLocale()
   const countryLabel = useOptionLabel("country")
   const router = useRouter()
@@ -181,7 +183,10 @@ function DetailBody({ institution }: { institution: Institution }) {
   const moneyGroups = ["costs"] as const
   const applyGroups = ["application", "visa"] as const
   const factsEmpty = rich ? !hasSections(institution, factGroups) : admissionFacts.length + campusFacts.length === 0
+  const profile = institution.aid_profile
+  const aidSplit = profile != null && [profile.grant_pct, profile.loan_pct, profile.work_pct].some((share) => share != null)
   const moneyEmpty =
+    !aidSplit &&
     (rich ? !hasSections(institution, moneyGroups) : costFacts.length === 0) &&
     !scholarships.isLoading &&
     !scholarships.isError &&
@@ -237,6 +242,12 @@ function DetailBody({ institution }: { institution: Institution }) {
         <Panel value="money">
           {rich ? <RichSections institution={institution} groups={moneyGroups} /> : null}
           {!rich && costFacts.length > 0 ? <FactRows facts={costFacts} sources={institution.sources} /> : null}
+          {aidSplit ? (
+            <section className="flex flex-col gap-2">
+              <h3 className="text-base font-semibold">{tBudget("aid.title")}</h3>
+              <AidFacts aid={institution.aid_profile ?? null} showAdmit={false} />
+            </section>
+          ) : null}
           {scholarshipBlock}
           {moneyEmpty ? empty : null}
         </Panel>

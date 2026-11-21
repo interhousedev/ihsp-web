@@ -29120,6 +29120,8 @@ export interface components {
         InstitutionOut: {
             /** Aid Basis */
             aid_basis: string | null;
+            /** @description Aid shares (grant, loan, work-study); detail view only. */
+            aid_profile?: components["schemas"]["AidProfileOut"] | null;
             /** Aliases */
             aliases: string[];
             /** City */
