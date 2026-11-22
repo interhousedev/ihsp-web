@@ -34,7 +34,7 @@ export function searchInstitutions(
 
 /** Text search for the college picker: the first `limit` matches of `q` (an empty `q` returns the catalog's default order). */
 export function searchInstitutionsByText(q: string, limit: number, locale: string, signal?: AbortSignal) {
-  return searchInstitutions({ ...EMPTY_FILTERS, q }, 0, limit, locale, signal)
+  return searchInstitutions({ ...EMPTY_FILTERS, q, sort: "relevance" }, 0, limit, locale, signal)
 }
 
 export function getFacets(locale: string, signal?: AbortSignal) {
