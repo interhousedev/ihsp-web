@@ -21261,6 +21261,54 @@ export interface components {
             traits: number;
         };
         /**
+         * BackupCipher
+         * @description Cipher of a backup file.
+         */
+        BackupCipher: {
+            /** Name */
+            name: string;
+            /** Nonce */
+            nonce: string;
+        };
+        /**
+         * BackupDocument
+         * @description The JSON object of a backup file, with every size bounded.
+         */
+        BackupDocument: {
+            cipher: components["schemas"]["BackupCipher"];
+            /** Ciphertext */
+            ciphertext: string;
+            /** Count */
+            count: number;
+            /** Created At */
+            created_at: string;
+            /** Format */
+            format: string;
+            /** Generation */
+            generation: number;
+            kdf: components["schemas"]["BackupKdf"];
+            /** Version */
+            version: number;
+        };
+        /**
+         * BackupKdf
+         * @description Key derivation of a backup file (only the parameters the server writes).
+         */
+        BackupKdf: {
+            /** Length */
+            length: number;
+            /** N */
+            n: number;
+            /** Name */
+            name: string;
+            /** P */
+            p: number;
+            /** R */
+            r: number;
+            /** Salt */
+            salt: string;
+        };
+        /**
          * BalanceOut
          * @description Counts per label and a verdict code the web translates.
          */
@@ -28755,6 +28803,27 @@ export interface components {
             target_count: number;
         };
         /**
+         * FocusOut
+         * @description One verified focus: a paraphrase, the university's own sentence and its page.
+         */
+        FocusOut: {
+            /**
+             * Quote
+             * @description The exact English sentence on the page.
+             */
+            quote: string;
+            /**
+             * Source Url
+             * @description The page, on the university's own site.
+             */
+            source_url: string;
+            /**
+             * Text
+             * @description Short paraphrase in the request language.
+             */
+            text: string;
+        };
+        /**
          * ForkIn
          * @description The prompt of the group the new essay takes (`null` owner: Common App).
          */
@@ -29989,6 +30058,12 @@ export interface components {
              * @description Fit for the caller (as /list/fit); null when not computable.
              */
             fit_total?: number | null;
+            /**
+             * Focuses
+             * @description What the university says it looks for; verified items only.
+             * @default []
+             */
+            focuses: components["schemas"]["FocusOut"][];
             /** Highlights */
             highlights: components["schemas"]["HighlightOut"][];
             /**
@@ -33707,6 +33782,12 @@ export interface components {
             fields: string[];
             /** Fit Total */
             fit_total?: number | null;
+            /**
+             * Focuses
+             * @description What the university says it looks for; verified items only.
+             * @default []
+             */
+            focuses: components["schemas"]["FocusOut"][];
             /** Institution Type */
             institution_type: string | null;
             /** Intl Acceptance Rate */
@@ -47925,10 +48006,7 @@ export interface components {
          * @description The backup file (its JSON object) and its passphrase.
          */
         app__interfaces__http__v1__admin_users__essay_keys__schemas__RestoreBody: {
-            /** Backup */
-            backup: {
-                [key: string]: unknown;
-            };
+            backup: components["schemas"]["BackupDocument"];
             /** Passphrase */
             passphrase: string;
         };
