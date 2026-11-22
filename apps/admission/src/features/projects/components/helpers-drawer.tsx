@@ -1,7 +1,7 @@
 "use client"
 
 import { useLocale, useT } from "@ihsp/i18n"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, Skeleton, StateView } from "@ihsp/ui"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Skeleton, StateView } from "@ihsp/ui"
 import { QueryError } from "../../shell/components/query-error"
 import { useProjectHelpers, type Helper } from "../api"
 
@@ -79,13 +79,13 @@ export function HelpersDrawer({
   const t = useT("projects")
   const query = useProjectHelpers(tags, open)
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full overflow-y-auto sm:max-w-lg">
-        <SheetHeader>
-          <SheetTitle>{t("helpers.title")}</SheetTitle>
-          <SheetDescription>{title}</SheetDescription>
-        </SheetHeader>
-        <div className="flex flex-col gap-3 p-4">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>{t("helpers.title")}</DialogTitle>
+          <DialogDescription>{title}</DialogDescription>
+        </DialogHeader>
+        <div className="flex flex-col gap-3">
           {query.isPending ? (
             <Skeleton className="h-24 w-full" />
           ) : query.isError ? (
@@ -100,7 +100,7 @@ export function HelpersDrawer({
             </ul>
           )}
         </div>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   )
 }

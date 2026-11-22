@@ -23,6 +23,7 @@ export type Teammates = (typeof TEAMMATES)[number]
 
 export type Brief = {
   likes: string
+  future_interest: string
   experience: string
   hours_per_day: number
   teammates: Teammates
@@ -73,6 +74,7 @@ export type Helper = HelperIn & { id: string }
 
 export const emptyBrief: Brief = {
   likes: "",
+  future_interest: "",
   experience: "",
   hours_per_day: 2,
   teammates: "maybe",

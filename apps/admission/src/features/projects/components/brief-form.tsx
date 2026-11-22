@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Label, Textarea } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
+import { VoiceFill, type VoiceFieldSpec } from "@/components/voice-fill/voice-fill"
 import { TEAMMATES, type Brief } from "../api"
 
 const LIKES_MAX = 1500
@@ -10,6 +11,7 @@ const NOTE_MAX = 300
 const NETWORK_MAX = 1000
 const HOURS_MIN = 0.25
 const HOURS_MAX = 16
+const FUTURE_MAX = 1500
 
 export function briefValid(b: Brief): boolean {
   return (
@@ -36,6 +38,30 @@ export function BriefForm({
   const set = <K extends keyof Brief>(key: K, value: Brief[K]) => setBrief((b) => ({ ...b, [key]: value }))
   const num = (raw: string) => (raw === "" ? 0 : Number(raw))
   const valid = briefValid(brief)
+  const specs: VoiceFieldSpec[] = [
+    { key: "likes", label: t("form.likes"), max_length: LIKES_MAX },
+    { key: "future_interest", label: t("form.future"), max_length: FUTURE_MAX },
+    { key: "experience", label: t("form.experience"), max_length: LIKES_MAX },
+    { key: "hours_per_day", label: t("form.hours"), kind: "number" },
+    { key: "teammates", label: t("form.teammates"), kind: "choice", options: [...TEAMMATES] },
+    { key: "teammates_note", label: t("form.teammatesNote"), max_length: NOTE_MAX },
+    { key: "network", label: t("form.network"), max_length: NETWORK_MAX },
+    { key: "budget_min_usd", label: t("form.budgetMin"), kind: "number" },
+    { key: "budget_max_usd", label: t("form.budgetMax"), kind: "number" },
+  ]
+  const questions = [t("form.likes"), t("form.future"), t("form.experience"), t("form.hours"), t("form.teammates"), t("form.network"), t("form.budget")]
+  function fillFrom(values: Record<string, string>) {
+    setBrief((b) => {
+      const next: Brief = { ...b }
+      for (const [key, value] of Object.entries(values)) {
+        if (key === "hours_per_day") next.hours_per_day = Math.min(HOURS_MAX, Math.max(HOURS_MIN, Number(value)))
+        else if (key === "budget_min_usd" || key === "budget_max_usd") next[key] = Math.max(0, Math.trunc(Number(value)))
+        else if (key === "teammates") next.teammates = value as Brief["teammates"]
+        else if (key in next) (next as Record<string, unknown>)[key] = value
+      }
+      return next
+    })
+  }
 
   function submit(event: FormEvent) {
     event.preventDefault()
@@ -44,6 +70,7 @@ export function BriefForm({
 
   return (
     <form className="bg-card flex flex-col gap-4 rounded-card border p-4" onSubmit={submit}>
+      <VoiceFill form="projects_brief" questions={questions} fields={specs} onFill={fillFrom}>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="pj-likes">{t("form.likes")}</Label>
         <Textarea
@@ -54,6 +81,17 @@ export function BriefForm({
           placeholder={t("form.likesHint")}
           value={brief.likes}
           onChange={(e) => set("likes", e.target.value)}
+        />
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="pj-future">{t("form.future")}</Label>
+        <Textarea
+          id="pj-future"
+          rows={2}
+          maxLength={FUTURE_MAX}
+          placeholder={t("form.futureHint")}
+          value={brief.future_interest}
+          onChange={(e) => set("future_interest", e.target.value)}
         />
       </div>
       <div className="flex flex-col gap-1.5">
@@ -164,6 +202,7 @@ export function BriefForm({
       <Button type="submit" className="min-h-11 self-start" disabled={!valid || pending}>
         {t("form.submit")}
       </Button>
+      </VoiceFill>
     </form>
   )
 }

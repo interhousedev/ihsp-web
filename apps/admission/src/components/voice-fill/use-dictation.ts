@@ -25,13 +25,18 @@ function ctor(): Ctor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null
 }
 
-/** Web Speech dictation. `supported` is false where the browser has no recognizer; final phrases go to `onText`. */
-export function useDictation(lang: string, onText: (phrase: string) => void) {
+/**
+ * Web Speech dictation. `supported` is false where the browser has no recognizer; final phrases go to `onText`,
+ * and when `onInterim` is given it also receives the not yet final phrase being spoken ("" once it is final).
+ */
+export function useDictation(lang: string, onText: (phrase: string) => void, onInterim?: (phrase: string) => void) {
   const [supported, setSupported] = useState(false)
   const [listening, setListening] = useState(false)
   const rec = useRef<Recognition | null>(null)
   const cb = useRef(onText)
   cb.current = onText
+  const live = useRef(onInterim)
+  live.current = onInterim
   useEffect(() => {
     setSupported(ctor() !== null)
     return () => rec.current?.stop()
@@ -43,12 +48,16 @@ export function useDictation(lang: string, onText: (phrase: string) => void) {
     const r = new C()
     r.lang = lang
     r.continuous = true
-    r.interimResults = false
+    r.interimResults = live.current !== undefined
     r.onresult = (e) => {
+      let interim = ""
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const res = e.results[i]
-        if (res?.isFinal && res[0]) cb.current(res[0].transcript)
+        if (!res?.[0]) continue
+        if (res.isFinal) cb.current(res[0].transcript)
+        else interim += res[0].transcript
       }
+      live.current?.(interim)
     }
     r.onend = () => setListening(false)
     r.onerror = () => setListening(false)

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { useThemeLabel } from "./theme-label"
 import { CoachError } from "../coach-error"
-import { useDictation } from "../use-dictation"
+import { useDictation } from "../../../../components/voice-fill/use-dictation"
 import { useEvaluatePractice, useSavePractice, type PracticeEntry, type PracticeToday } from "../../flow/api"
 
 const SAVE_DELAY = 1000
