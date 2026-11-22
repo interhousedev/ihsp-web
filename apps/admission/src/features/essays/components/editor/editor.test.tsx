@@ -115,7 +115,7 @@ describe("essay editor shell", () => {
     await screen.findByRole("dialog")
   })
 
-  test("the side has one tab row (Read, Universities, Plan, Versions, More) and Universities shows the fit and the prompts", async () => {
+  test("the side has one tab row (Read, Plan, Versions, More) and the fit sits in the header, not in a Universities tab", async () => {
     server.use(
       http.get(apiUrl(`${A}/essays/e1/reviews`), () =>
         HttpResponse.json({
@@ -141,17 +141,22 @@ describe("essay editor shell", () => {
         }),
       ),
       http.get(apiUrl(`${A}/essays/prompt-map`), () => HttpResponse.json({ groups: [] })),
+      http.get(apiUrl(`${A}/catalog/institutions/i1`), () => HttpResponse.json({ id: "i1", name: "MIT" })),
+      deepRead(false),
       ...handlers(),
     )
-    renderAdmissionApp(<EssayEditor essay={essay} />)
-    for (const name of ["Read", "Universities", "Plan", "Versions"]) {
+    const targeted = { ...essay, targets: [{ institution_id: "i1", position: 0, prompt: "Why MIT", word_limit: null }] }
+    renderAdmissionApp(<EssayEditor essay={targeted} />)
+    for (const name of ["Read", "Plan", "Versions"]) {
       expect(screen.getByRole("tab", { name })).toBeTruthy()
     }
     expect(screen.getByTestId("dock-more")).toBeTruthy()
     expect(screen.queryByRole("button", { name: "Plan & tools" })).toBeNull()
     // The chip in the header and the card in the tab carry the same fit.
     await screen.findByText("81")
-    fireEvent.click(screen.getByRole("tab", { name: "Universities" }))
+    expect(screen.queryByRole("tab", { name: "Universities" })).toBeNull()
+    // The per-university review lives in the Read pane: the logo in the strip opens it.
+    fireEvent.click(await screen.findByTestId("read-uni"))
     await screen.findByText("Builder voice")
   })
 

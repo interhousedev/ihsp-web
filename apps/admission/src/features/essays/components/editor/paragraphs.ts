@@ -1,24 +1,12 @@
 import type { DeepRead } from "../../flow/steps-api"
+import { splitBlocks } from "../../lib/blocks"
 
 export type Span = { n: number; start: number; end: number }
 export type Moment = { start: number; end: number; kind: DeepRead["moments"][number]["kind"]; paragraph: number }
 
-/** Paragraphs as the server counts them: blocks separated by a blank line (trimmed, empty ones dropped). */
+/** Paragraphs as the server counts them; scene-break lines are transitions and are not numbered. */
 export function splitParagraphs(body: string): Span[] {
-  const spans: Span[] = []
-  const push = (from: number, to: number) => {
-    const chunk = body.slice(from, to)
-    const lead = chunk.length - chunk.trimStart().length
-    const text = chunk.trim()
-    if (text) spans.push({ n: spans.length + 1, start: from + lead, end: from + lead + text.length })
-  }
-  let last = 0
-  for (const m of body.matchAll(/\n\s*\n/g)) {
-    push(last, m.index)
-    last = m.index + m[0].length
-  }
-  push(last, body.length)
-  return spans
+  return splitBlocks(body).flatMap((b) => (b.kind === "paragraph" ? [{ n: b.n, start: b.start, end: b.end }] : []))
 }
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")

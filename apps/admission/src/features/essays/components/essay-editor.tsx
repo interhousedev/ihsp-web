@@ -14,6 +14,7 @@ import { useEssay, useRestore, useSaveEssay, type Essay, type EssayLink, type Pl
 import { countWords } from "../diff"
 import { CoachPanel } from "./coach-panel"
 import { RefinePanel } from "./refine-panel"
+import { SuppInfo } from "./supp-info"
 import { CheckPanel } from "./check-panel"
 import { EssayMeta } from "./essay-meta"
 import { PlanPane } from "./plan-pane"
@@ -27,7 +28,6 @@ import {
   ReadPanel,
   ScoreBar,
   TopBar,
-  UnisPanel,
   useReadState,
   useSplit,
   type DockView,
@@ -185,7 +185,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const institutionIds = [
     ...new Set([...targets.map((tg) => tg.institution_id), entry?.institution.id].filter((id): id is string => !!id)),
   ]
-  const readState = useReadState(essay.id, draft.body, flush)
+  const readState = useReadState(essay.id, draft.body, flush, institutionIds)
   const [selected, setSelected] = useState<number | null>(null)
   const go = (next: DockView) => {
     setView(next)
@@ -198,12 +198,15 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const panes: Record<DockView, ReactNode> = {
     read: (
       <div className="flex flex-col gap-5">
-        <ReadPanel state={readState} selected={selected} onSelect={setSelected} />
+        <ReadPanel essayId={essay.id} state={readState} selected={selected} onSelect={setSelected} />
         <CheckPanel essayId={essay.id} beforeRun={flush} />
         <RefinePanel essayId={essay.id} />
+        <SuppInfo essay={essay} />
+        <Button type="button" variant="outline" className="self-start" onClick={() => go("review")}>
+          {te("detailedReview")}
+        </Button>
       </div>
     ),
-    unis: <UnisPanel essay={essay} onReview={() => go("review")} />,
     plan: (
       <div className="flex flex-col gap-3">
         <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
@@ -256,7 +259,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
       <div className="flex min-h-0 min-w-0 flex-1 gap-4 p-3 md:p-4">
         <div className="flex min-w-0 flex-1 flex-col gap-3 md:overflow-y-auto md:pr-1 md:[scrollbar-gutter:stable]">
           <div className="mx-auto flex w-full max-w-3xl flex-col gap-3">
-            <ScoreBar essayId={essay.id} state={readState} onRead={() => go("read")} onUnis={() => go("unis")} />
+            <ScoreBar essayId={essay.id} state={readState} onRead={() => go("read")} onUnis={() => go("read")} />
             <EssayMeta
               prompt={draft.prompt_text}
               summary={targets.length > 0 ? targets.map((tg) => tg.prompt).join(" · ") : undefined}
