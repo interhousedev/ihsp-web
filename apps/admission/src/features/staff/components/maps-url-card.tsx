@@ -33,7 +33,7 @@ export function MapsUrlCard() {
       <CardContent className="flex flex-col gap-3">
         <div className="flex flex-col gap-1">
           <h3 className="font-semibold">{t("title")}</h3>
-          <p className="text-muted-foreground text-sm">{t("text")}</p>
+          <p className="text-muted-foreground text-sm">{t("text", { query: "{query}" })}</p>
         </div>
         <Input
           aria-label={t("title")}
