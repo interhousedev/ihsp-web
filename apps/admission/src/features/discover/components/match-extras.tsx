@@ -6,7 +6,7 @@ import type { AdmissionMatch } from "@ihsp/api"
 
 export type CardMatch = AdmissionMatch
 
-function Info({ label, children }: { label: string; children: string }) {
+export function Info({ label, children }: { label: string; children: string }) {
   const [open, setOpen] = useState(false)
   return (
     <span className="relative inline-flex" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
@@ -14,9 +14,14 @@ function Info({ label, children }: { label: string; children: string }) {
         type="button"
         aria-label={label}
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-        onFocus={() => setOpen(true)}
+        onClick={() => setOpen(true)}
+        onFocus={(e) => {
+          if (e.currentTarget.matches(":focus-visible")) setOpen(true)
+        }}
         onBlur={() => setOpen(false)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") setOpen(false)
+        }}
         className="text-muted-foreground border-hairline-strong inline-flex size-5 items-center justify-center rounded-full border text-[11px] leading-none"
       >
         i
@@ -82,12 +87,22 @@ export function MatchExtrasView({ match }: { match: CardMatch }) {
           ))}
         </ul>
       ) : null}
-      {match.net_cost_usd != null && match.cost_usd != null ? (
+      {match.cost_usd != null ? (
         <p className="flex flex-wrap items-center gap-2 text-sm">
-          <span className="font-semibold">{t("extras.netPrice", { amount: money(match.net_cost_usd, locale) })}</span>
-          <s className="text-muted-foreground text-xs">{money(match.cost_usd, locale)}</s>
+          {match.net_cost_usd != null ? (
+            <>
+              <span className="font-semibold">
+                {t("extras.netPrice", { amount: money(match.net_cost_usd, locale) })}
+              </span>
+              <s className="text-muted-foreground text-xs">{money(match.cost_usd, locale)}</s>
+            </>
+          ) : (
+            <span className="font-semibold">{t("extras.grossPrice", { amount: money(match.cost_usd, locale) })}</span>
+          )}
           <Info label={t("extras.estLabel")}>
-            {t("extras.estHow", { aid: money(match.aid_estimate_usd ?? 0, locale) })}
+            {match.net_cost_usd != null
+              ? t("extras.estHow", { aid: money(match.aid_estimate_usd ?? 0, locale) })
+              : t("extras.estGross")}
           </Info>
         </p>
       ) : null}
@@ -104,9 +119,9 @@ export function MatchExtrasView({ match }: { match: CardMatch }) {
                   />
                 ))}
               </span>
-              {e.note ? (
-                <Info label={t("extras.about", { name: t(`extras.experience.${e.key}`) })}>{e.note}</Info>
-              ) : null}
+              <Info label={t("extras.about", { name: t(`extras.experience.${e.key}`) })}>
+                {e.note ?? t("extras.expHow")}
+              </Info>
             </li>
           ))}
         </ul>

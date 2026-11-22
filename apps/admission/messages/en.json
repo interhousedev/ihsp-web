@@ -4443,6 +4443,9 @@
       "fields": "Fields of study",
       "rankings": "Subject rankings",
       "netPrice": "{amount} / yr after aid",
+      "grossPrice": "{amount} / yr",
+      "estGross": "Sticker price per year (tuition, housing and fees) as reported by the university. No average aid is known, so this is before any aid.",
+      "expHow": "Scores from 1 to 5 are editorial ratings by the admissions team, not official data.",
       "estLabel": "How is this estimated?",
       "estHow": "Estimate: sticker price minus the average aid ({aid}) this university reports. Your own aid may differ.",
       "experience": {
