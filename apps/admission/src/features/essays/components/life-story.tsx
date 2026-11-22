@@ -6,7 +6,7 @@ import { useState } from "react"
 import { AiTabCard } from "@/components/ai-tab-card"
 import { useLifeStory } from "../api"
 import { CoachError } from "./coach-error"
-import { useDictation } from "./use-dictation"
+import { useDictation } from "../../../components/voice-fill/use-dictation"
 
 const SPEECH_LANG: Record<string, string> = { en: "en-US", ru: "ru-RU", uz: "uz-UZ" }
 

@@ -1,12 +1,14 @@
 "use client"
 
-import { useT } from "@ihsp/i18n"
+import { useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, Label, Switch } from "@ihsp/ui"
 import { useState, type ReactNode } from "react"
+import { CountryInfoRow } from "../../countries/components/country-info"
 import { facetOf } from "../facets"
 import { EMPTY_FILTERS, SELECT_FILTERS, type FilterKey, type Filters } from "../filters"
 import type { Facets } from "../facets"
 import type { StudyGroup } from "../types"
+import { countryCode, countryName } from "./option-label"
 import { StudyFieldSelect } from "./study-field-select"
 
 const CONTROL =
@@ -61,6 +63,7 @@ export function FiltersPanel({
   onApply: (filters: Filters) => void
 }) {
   const t = useT("chooser")
+  const locale = useLocale()
   const [draft, setDraft] = useState(filters)
   const set = <K extends FilterKey>(key: K, value: Filters[K]) => setDraft((current) => ({ ...current, [key]: value }))
   const merit = facetOf(facets?.list, "merit_intl")
@@ -81,7 +84,19 @@ export function FiltersPanel({
         const value = (draft[key] as string | undefined) ?? ""
         return (
           <Field key={param} id={`f-${param}`} label={facet.label}>
-            <Select id={`f-${param}`} value={value} options={facet.options} onChange={(v) => set(key, v as never)} />
+            <Select
+              id={`f-${param}`}
+              value={value}
+              options={
+                param === "country"
+                  ? facet.options.map((o) => ({ value: o.value, label: countryName(o.value, locale) }))
+                  : facet.options
+              }
+              onChange={(v) => set(key, v as never)}
+            />
+            {param === "country" && countryCode(value) ? (
+              <CountryInfoRow codes={[countryCode(value) as string]} />
+            ) : null}
           </Field>
         )
       })}

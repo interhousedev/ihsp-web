@@ -6,7 +6,7 @@ import { describe, expect, spyOn, test } from "bun:test"
 import { renderAdmissionApp } from "../../tests/helpers"
 import { OrgsEditor } from "../opportunities-staff/components/orgs-editor"
 import { OpportunityReportsBody } from "../opportunities-staff/components/reports-page"
-import { ScholarshipsBody } from "./components/scholarships-page"
+import { CatalogBody } from "./components/catalog-page"
 
 const BASE = "/v1/admission"
 const org = {
@@ -58,7 +58,7 @@ describe("scholarships", () => {
         }),
       ),
     )
-    renderAdmissionApp(<ScholarshipsBody />)
+    renderAdmissionApp(<CatalogBody />, { route: "/opportunities/?kind=scholarship" })
     expect(await screen.findByRole("list", { name: "Your scholarships" })).toBeTruthy()
     expect((await screen.findAllByText("Lumiere Scholarship")).length).toBe(2)
     expect(screen.getAllByText("Essay req.").length).toBe(2)

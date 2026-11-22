@@ -25,7 +25,7 @@ The logo opens Home (`/`, section cards, Continue, tasks and deadlines). The sid
 
 Secondary links: `/faq/`, `/help/`, `/settings/` (`?tab=profile`). Staff pages are under `/staff/`, including `/staff/exemplars/` and `/staff/prompt-studio/`. `/setup/` is the first-run wizard, outside the nav.
 
-Old routes (`/journey/`, `/profile/`, `/words/`, `/alignment/`, `/colleges/*`, `/chooser/`, `/chooser/programs/`, `/chooser/scholarships/`, `/opportunities/plan/`, `/activities/view/`) redirect client-side to the new places and keep the query and hash.
+Old routes (`/journey/`, `/profile/`, `/words/`, `/alignment/`, `/colleges/*`, `/chooser/`, `/chooser/programs/`, `/chooser/scholarships/`, `/opportunities/scholarships/`, `/opportunities/plan/`, `/activities/view/`) redirect client-side to the new places and keep the query and hash.
 
 ## Run
 

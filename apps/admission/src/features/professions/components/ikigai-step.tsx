@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { TagInput, useDebounce } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef, useState } from "react"
+import { VoiceFill, type VoiceFieldSpec } from "@/components/voice-fill/voice-fill"
 import { ikigaiQuery, professionKeys, putIkigai, type Ikigai, type IkigaiCircle } from "../api"
 import { CIRCLE_COLOR, CIRCLES, EMPTY_IKIGAI, filledCount, MAX_CHIPS } from "../model"
 import { IkigaiVenn } from "./ikigai-venn"
@@ -37,7 +38,26 @@ export function IkigaiStep() {
     setDraft({ ...ikigai, [circle]: tags })
   }
 
+  const specs: VoiceFieldSpec[] = CIRCLES.map((id) => ({
+    key: id,
+    label: `${t(`question.${id}`)} (short phrases separated by commas)`,
+    max_length: 400,
+  }))
+  function fillFrom(values: Record<string, string>) {
+    setSaved(false)
+    const next = { ...ikigai }
+    for (const id of CIRCLES) {
+      const added = (values[id] ?? "")
+        .split(/[,;\n]/)
+        .map((tag) => tag.trim().slice(0, 60))
+        .filter(Boolean)
+      next[id] = [...new Set([...ikigai[id], ...added])].slice(0, MAX_CHIPS)
+    }
+    setDraft(next)
+  }
+
   return (
+    <VoiceFill form="ikigai" questions={CIRCLES.map((id) => t(`question.${id}`))} fields={specs} onFill={fillFrom}>
     <div className="grid items-center gap-4 md:grid-cols-2 md:gap-8">
       <IkigaiVenn ikigai={ikigai} active={active} onSelect={setActive} />
       <div className="flex flex-col gap-3">
@@ -78,5 +98,6 @@ export function IkigaiStep() {
         </p>
       </div>
     </div>
+    </VoiceFill>
   )
 }

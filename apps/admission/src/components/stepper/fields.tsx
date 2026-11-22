@@ -81,22 +81,27 @@ export function ChipsField({ question, value, onChange, disabled }: FieldProps) 
         {question.options.map((option) => {
           const on = picked.includes(option.value)
           return (
-            <label
+            <div
               key={option.value}
               className={cn(
-                "border-hairline-strong has-[:focus-visible]:ring-ring/50 flex min-h-9 cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition-colors has-[:focus-visible]:ring-[3px]",
+                "border-hairline-strong has-[:focus-visible]:ring-ring/50 flex min-h-9 items-center rounded-full border text-sm transition-colors has-[:focus-visible]:ring-[3px]",
                 on ? "border-primary bg-primary/10 font-medium" : "hover:bg-accent",
               )}
             >
-              <input
-                type="checkbox"
-                className="sr-only"
-                checked={on}
-                disabled={disabled}
-                onChange={() => onChange(toggled(question.options, picked, option))}
-              />
-              <OptionBody option={option} />
-            </label>
+              <label
+                className={cn("flex min-h-11 cursor-pointer items-center gap-2 py-1.5 pl-3 md:min-h-9", option.info ? "pr-1" : "pr-3")}
+              >
+                <input
+                  type="checkbox"
+                  className="sr-only"
+                  checked={on}
+                  disabled={disabled}
+                  onChange={() => onChange(toggled(question.options, picked, option))}
+                />
+                <OptionBody option={option} />
+              </label>
+              {option.info}
+            </div>
           )
         })}
       </div>

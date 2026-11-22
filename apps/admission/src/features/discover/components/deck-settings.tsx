@@ -7,10 +7,10 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
   useIsMobile,
 } from "@ihsp/ui"
 import { useState } from "react"
@@ -36,14 +36,14 @@ export function DeckSettings({ onSaved }: { onSaved: () => void }) {
           <Icons.adjustments aria-hidden />
           <span className="sr-only">{t("settings.open")}</span>
         </Button>
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetContent side="bottom" className="max-h-[88dvh] overflow-y-auto p-4">
-            <SheetHeader className="p-0">
-              <SheetTitle>{t("settings.title")}</SheetTitle>
-            </SheetHeader>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("settings.title")}</DialogTitle>
+            </DialogHeader>
             {panel}
-          </SheetContent>
-        </Sheet>
+          </DialogContent>
+        </Dialog>
       </>
     )
   return (

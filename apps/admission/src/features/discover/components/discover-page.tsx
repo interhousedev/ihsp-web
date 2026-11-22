@@ -105,7 +105,7 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
     <div className="mx-auto flex w-full min-w-0 max-w-md flex-col gap-4">
       <div className="rounded-card relative z-10 min-w-0">
         <SwipeDeck
-          className="h-[min(34rem,calc(100dvh-19rem))] min-h-[16rem] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
+          className="h-[max(29rem,calc(100dvh-24rem))] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
           items={remaining}
           getKey={(match) => match.university_id}
           getExitDirection={(match) =>

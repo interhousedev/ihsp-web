@@ -1,7 +1,9 @@
 "use client"
 
-import { ScholarshipsPage } from "../../../features/opportunities/components/scholarships-page"
+import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/opportunities/?kind=scholarship" })
 
 export default function Page() {
-  return <ScholarshipsPage />
+  return <RouteRedirect target={target} />
 }

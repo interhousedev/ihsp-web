@@ -11,6 +11,8 @@ export type StepOption = {
   /** A multi-choice chip that excludes the others (e.g. "Anywhere"): picking it clears them, picking another clears it. */
   exclusive?: boolean
   icon?: ReactNode
+  /** A separate control shown beside a multi-choice chip (e.g. an info button); it does not toggle the chip. */
+  info?: ReactNode
   description?: string
 }
 

@@ -6,7 +6,7 @@ import Link from "next/link"
 import type { TodayDeadline } from "../api"
 import { dayTone, daysBetween, dedupeDeadlines, shortDate } from "../dates"
 
-/** The three nearest dated things, one line each (desktop only: on a phone the dates sit under the rings). */
+/** The three nearest dated things, one line each. */
 export function DeadlineStrip({
   items,
   today,

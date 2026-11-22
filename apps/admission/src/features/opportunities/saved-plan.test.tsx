@@ -67,7 +67,7 @@ function routes() {
 describe("saved plan", () => {
   test("ADM-SAVED-1: one H1 and no nested tab bars", async () => {
     routes()
-    renderAdmissionApp(<PlanBody />, { route: "/plan/?view=saved" })
+    renderAdmissionApp(<PlanBody />, { route: "/plan/" })
     expect(await screen.findByText("Elements of AI")).toBeTruthy()
     expect(screen.queryAllByRole("heading", { level: 1 }).length).toBe(0)
     expect(screen.queryByRole("tablist")).toBeNull()
@@ -75,10 +75,17 @@ describe("saved plan", () => {
 
   test("ADM-SAVED-2: a saved card links to add to achievements; empty coverage is hidden", async () => {
     routes()
-    renderAdmissionApp(<PlanBody />, { route: "/plan/?view=saved" })
+    renderAdmissionApp(<PlanBody />, { route: "/plan/" })
     const link = await screen.findByRole("link", { name: /Add to achievements/ })
     expect(link.getAttribute("href")).toBe("/activities?item=new&from=e1")
     expect(screen.queryByText("Fields covered")).toBeNull()
+  })
+
+  test("a plan with entries links back to the catalog", async () => {
+    routes()
+    renderAdmissionApp(<PlanBody />, { route: "/plan/", messages: { opportunities: { findMore: "Find opportunities" } } })
+    const link = await screen.findByRole("link", { name: /Find opportunities/ })
+    expect(link.getAttribute("href")).toBe("/opportunities")
   })
 
   test("ADM-SAVED-3: the detail page shows kind, dates and Open my plan once saved", async () => {
@@ -87,6 +94,6 @@ describe("saved plan", () => {
     expect(await screen.findByRole("heading", { level: 1, name: "Elements of AI" })).toBeTruthy()
     expect(screen.getByText("Helsinki")).toBeTruthy()
     const link = await screen.findByRole("link", { name: "Open my plan" })
-    expect(link.getAttribute("href")).toBe("/plan?view=saved")
+    expect(link.getAttribute("href")).toBe("/plan")
   })
 })

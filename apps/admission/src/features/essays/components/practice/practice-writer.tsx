@@ -4,8 +4,9 @@ import { formatDate, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Button, cn, Icons, Label, Textarea } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
+import { useThemeLabel } from "./theme-label"
 import { CoachError } from "../coach-error"
-import { useDictation } from "../use-dictation"
+import { useDictation } from "../../../../components/voice-fill/use-dictation"
 import { useEvaluatePractice, useSavePractice, type PracticeEntry, type PracticeToday } from "../../flow/api"
 
 const SAVE_DELAY = 1000
@@ -15,12 +16,13 @@ const countWords = (text: string) => text.trim().split(/\s+/).filter(Boolean).le
 /** A finished day, read-only: its date, theme and text. */
 export function PastDay({ entry }: { entry: PracticeEntry }) {
   const t = useT("essayPractice")
+  const themeLabel = useThemeLabel()
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3 p-4">
       <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
         {formatDate(entry.day, undefined, { day: "numeric", month: "long" })}
       </p>
-      <h2 className="text-xl font-semibold">{entry.theme}</h2>
+      <h2 className="text-xl font-semibold">{themeLabel(entry.theme)}</h2>
       <p
         className="min-h-0 flex-1 overflow-y-auto text-sm whitespace-pre-wrap [scrollbar-gutter:stable]"
         data-testid="practice-past-body"
@@ -36,9 +38,10 @@ export function PastDay({ entry }: { entry: PracticeEntry }) {
 export function PracticeWriter({ today, onScored }: { today: PracticeToday; onScored: () => void }) {
   const t = useT("essayPractice")
   const tf = useT("essayFlow")
+  const themeLabel = useThemeLabel()
   const errorMessage = useErrorMessage()
   const locale = useLocale()
-  const save = useSavePractice()
+  const save = useSavePractice(today.theme)
   const evaluate = useEvaluatePractice()
   const [text, setText] = useState<string | null>(null)
   const saved = today.entry?.body ?? ""
@@ -83,7 +86,7 @@ export function PracticeWriter({ today, onScored }: { today: PracticeToday; onSc
         <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
           {t("todayLabel", { date: formatDate(today.day, undefined, { day: "numeric", month: "long" }) })}
         </p>
-        <h2 className="text-xl font-semibold">{today.theme}</h2>
+        <h2 className="text-xl font-semibold">{themeLabel(today.theme)}</h2>
         <p className="text-muted-foreground text-sm">{today.prompt}</p>
       </div>
       <Label htmlFor="practice-body" className="sr-only">

@@ -1,3 +1,6 @@
+import { createElement } from "react"
+import { CountryInfoButton } from "../countries/components/country-info"
+import { CountryFlag } from "../profile/components/country-flag"
 import type { StepOption, StepQuestion, StepQuestionKind } from "../../components/stepper"
 import { ANY, FIELD_ORDER, SECTION_OF, type PreferenceField } from "./mapping"
 
@@ -95,7 +98,12 @@ export function buildQuestions(t: Translate, sources: QuestionSources): StepQues
     if (field === "region") {
       const options: StepOption[] = [
         { value: ANY, label: t("o.region.any"), exclusive: true },
-        ...sources.regions.map((region) => ({ value: region.toUpperCase(), label: sources.regionName(region) })),
+        ...sources.regions.map((region) => ({
+          value: region.toUpperCase(),
+          label: sources.regionName(region),
+          icon: createElement(CountryFlag, { code: region }),
+          info: createElement(CountryInfoButton, { code: region.toUpperCase() }),
+        })),
       ]
       return { ...base, kind: "multi" as const, options, placeholder: t("placeholder") }
     }

@@ -3,12 +3,15 @@
 import { useT } from "@ihsp/i18n"
 import { Icons, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ihsp/ui"
 import Link from "next/link"
+import type { ReactNode } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { CATALOG_SORTS, type CatalogSort, type OpportunityKind } from "../api"
 
-/** The catalog kinds in tab order; "all" has no `kind`. Scholarships live in Universities & budget, exams in Tests. */
+/** The catalog kinds in tab order; "all" has no `kind`. Exams live in Tests. */
 export const CATEGORIES = [
   "all",
+  "scholarship",
   "course",
   "certification",
   "research",
@@ -19,9 +22,10 @@ export type Category = (typeof CATEGORIES)[number]
 
 const CATEGORY_ICON = {
   all: "search",
+  scholarship: "grades",
   course: "courses",
   certification: "certificates",
-  research: "sparkles",
+  research: "library",
   event: "calendarEvent",
   program: "globe",
 } as const satisfies Record<Category, string>
@@ -36,14 +40,41 @@ export function parseSort(value: string | null): CatalogSort | undefined {
   return CATALOG_SORTS.find((s) => s === value)
 }
 
-export function CategoryTabs({ value, onChange }: { value: Category; onChange: (value: Category) => void }) {
+/**
+ * The one tab row of Opportunities: the catalog kinds plus the project ideas tool. It owns navigation, so the catalog
+ * and the projects page show the same row. On the catalog a kind change keeps `sort` and replaces the URL.
+ */
+export function OpportunityNav({ value }: { value: Category | "projects" }) {
   const t = useT("opportunities")
+  const router = useRouter()
+  const pathname = usePathname()
+  const params = useSearchParams()
+  const onCatalog = pathname.replace(/\/$/, "") === "/opportunities"
+
+  function go(next: string) {
+    if (next === "projects") {
+      router.push("/opportunities/projects/")
+      return
+    }
+    const category = parseCategory(next)
+    const query = new URLSearchParams(onCatalog ? params.toString() : "")
+    if (category === "all") query.delete("kind")
+    else query.set("kind", category)
+    const text = query.toString()
+    if (!onCatalog) router.push(text ? `/opportunities/?${text}` : "/opportunities/")
+    else router.replace(text ? `${pathname}?${text}` : pathname)
+  }
+
   return (
     <UnderlineTabs
+      hideIconsBelowXl
       label={t("categories.label")}
       value={value}
-      onValueChange={(next) => onChange(parseCategory(next))}
-      tabs={CATEGORIES.map((c) => ({ value: c, label: t(`categories.${c}`), icon: CATEGORY_ICON[c] }))}
+      onValueChange={go}
+      tabs={[
+        ...CATEGORIES.map((c) => ({ value: c, label: t(`categories.${c}`), icon: CATEGORY_ICON[c] })),
+        { value: "projects", label: t("categories.projects"), icon: "sparkles" as const },
+      ]}
     />
   )
 }
@@ -53,15 +84,19 @@ export function RelevanceBar({
   sort,
   labels,
   onSort,
+  leading,
 }: {
   sort: CatalogSort | "ranking" | "acceptance" | "tuition"
   labels: string[]
   onSort: (sort: CatalogSort) => void
+  /** A control placed before the banner, e.g. the phone filters button. */
+  leading?: ReactNode
 }) {
   const t = useT("opportunities")
   const shown = CATALOG_SORTS.find((s) => s === sort)
   return (
     <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+      {leading}
       {sort === "relevance" ? (
         <p className="text-muted-foreground flex flex-wrap items-center gap-1">
           <Icons.sparkles aria-hidden className="size-4" />

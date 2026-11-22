@@ -70,10 +70,12 @@ export function useIdeaFit(text: string, enabled: boolean) {
   return useQuery(ideaFitOptions(text, enabled))
 }
 
-export function usePracticeToday() {
+/** Today's practice; `theme` is a creative prompt key (from Today) that applies only while there is no entry yet. */
+export function usePracticeToday(theme?: string) {
   return useQuery({
-    queryKey: flowKeys.today,
-    queryFn: ({ signal }) => getApiClient().get<PracticeToday>(`${BASE}/practice/today`, { signal }),
+    queryKey: theme ? [...flowKeys.today, theme] : flowKeys.today,
+    queryFn: ({ signal }) =>
+      getApiClient().get<PracticeToday>(`${BASE}/practice/today`, { signal, query: theme ? { theme } : undefined }),
   })
 }
 
@@ -84,12 +86,13 @@ export function usePracticeHistory() {
   })
 }
 
-export function useSavePractice() {
+export function useSavePractice(theme?: string) {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (body: string) => getApiClient().put<PracticeToday>(`${BASE}/practice/today`, { body }),
+    mutationFn: (body: string) => getApiClient().put<PracticeToday>(`${BASE}/practice/today`, { body, theme }),
     onSuccess: (today) => {
       qc.setQueryData(flowKeys.today, today)
+      void qc.invalidateQueries({ queryKey: flowKeys.today })
       void qc.invalidateQueries({ queryKey: flowKeys.practice })
     },
   })
@@ -107,6 +110,7 @@ export function useEvaluatePractice() {
       ),
     onSuccess: (today) => {
       qc.setQueryData(flowKeys.today, today)
+      void qc.invalidateQueries({ queryKey: flowKeys.today })
       void qc.invalidateQueries({ queryKey: flowKeys.practice })
     },
   })

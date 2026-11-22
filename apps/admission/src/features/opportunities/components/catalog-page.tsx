@@ -1,52 +1,44 @@
 "use client"
 
-import { AppPageHeader, pageClass } from "../../../components/lib/page"
-import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Icons,
-  Input,
-  Pill,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Skeleton,
-  StateView,
-} from "@ihsp/ui"
+import { Carousel, Slide } from "../../../components/lib/carousel"
+import { AppPageHeader, PageSection, pageClass } from "../../../components/lib/page"
+import { useErrorMessage, useT } from "@ihsp/i18n"
+import { Button, buttonVariants, Icons, ResponsiveDialog, Skeleton, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useId, useMemo, useState } from "react"
+import Link from "next/link"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { useEffect, useMemo, useState } from "react"
 import { toast } from "sonner"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { useStudentGrade } from "../../../config/applicant"
-import { useSchoolGrades } from "../../../lib/config"
-import { OpportunityTabs } from "./opportunity-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
-  localName,
   useOpportunities,
+  useOrgs,
   usePlan,
   useRemoveFromPlan,
   useSaveToPlan,
-  useTaxonomy,
   type CatalogFilter,
   type CatalogSort,
 } from "../api"
 import { careerPlanQuery } from "../../career/api"
-import { CategoryTabs, RelevanceBar, parseCategory, parseSort, type Category } from "./catalog-controls"
-import { NextStep } from "../../../components/next-step"
+import { OpportunityNav, RelevanceBar, parseCategory, parseSort } from "./catalog-controls"
+import {
+  ACTIVITY_KEYS,
+  COVERAGE_TABS,
+  CatalogFilters,
+  SCHOLARSHIP_KEYS,
+  activeCount,
+  inCoverage,
+  type CoverageTab,
+} from "./catalog-filters"
 import { bySchoolLevel } from "../level"
 import { OpportunityCard, SaveButton } from "./opportunity-card"
+import { ScholarshipCard } from "./scholarship-card"
 import { SubmitDialog } from "./submit-dialog"
 
-const ANY = "any"
-const COSTS = ["free", "50", "200", "1000"] as const
-const HOURS = [3, 6, 10, 20] as const
-const WITHIN = [30, 90, 180, 365] as const
-const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
+const PLAN_HREF = "/plan/"
 
 /** The cost choice as API filters: "free" means a known zero cost, a number a ceiling in USD. */
 function costFilter(cost: string | undefined): Pick<CatalogFilter, "free" | "max_tuition"> {
@@ -54,100 +46,73 @@ function costFilter(cost: string | undefined): Pick<CatalogFilter, "free" | "max
   return cost === "free" ? { free: true } : { max_tuition: Number(cost) }
 }
 
-function costLabel(t: ReturnType<typeof useT>, cost: string): string {
-  return cost === "free" ? t("filters.free") : t("filters.costUpTo", { amount: cost })
-}
-const PLAN_HREF = "/plan/?view=saved"
-
-export function FilterSelect({
-  label,
-  value,
-  onChange,
-  options,
-  anyLabel,
-}: {
-  label: string
-  /** The "any" option text, e.g. "Any scope"; defaults to "<label>: any". */
-  anyLabel?: string
-  value: string | undefined
-  onChange: (value: string | undefined) => void
-  options: { value: string; label: string }[]
-}) {
-  const t = useT("opportunities")
-  const id = useId()
-  const any = anyLabel ?? `${label}: ${t("any")}`
-  const shown = value ? (options.find((o) => o.value === value)?.label ?? value) : any
-  return (
-    <div className="flex min-w-0 flex-col gap-1">
-      <span id={id} className="text-muted-foreground text-xs font-medium">
-        {label}
-      </span>
-      <Select value={value ?? ANY} onValueChange={(v) => onChange(!v || v === ANY ? undefined : v)}>
-        <SelectTrigger aria-labelledby={id} className="w-full">
-          <SelectValue>{shown}</SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={ANY}>{any}</SelectItem>
-          {options.map((o) => (
-            <SelectItem key={o.value} value={o.value}>
-              {o.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
-  )
+/** `filter` without the listed keys. */
+function without(filter: CatalogFilter, keys: readonly (keyof CatalogFilter)[]): CatalogFilter {
+  const next = { ...filter }
+  for (const key of keys) delete next[key]
+  return next
 }
 
 export function CatalogBody() {
-  const GRADES = useSchoolGrades()
   const t = useT("opportunities")
-  const locale = useLocale()
   const errorMessage = useErrorMessage()
   const params = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
   const category = parseCategory(params.get("kind"))
+  const scholarship = category === "scholarship"
   const myGrade = useStudentGrade()
   const [other, setFilter] = useState<CatalogFilter>({})
   const [gradeTouched, setGradeTouched] = useState(false)
-  // Until the student picks a grade, the catalog shows the opportunities of their own grade (school level first).
+  // Until the student picks a grade, the activity tabs show the opportunities of their own grade (school level first).
+  // Scholarships mostly carry no grades, so that preset would hide them: the tab never applies it.
   useEffect(() => {
-    if (myGrade !== null && !gradeTouched) setFilter((f) => (f.grade === undefined ? { ...f, grade: myGrade } : f))
-  }, [myGrade, gradeTouched])
+    if (myGrade !== null && !gradeTouched && !scholarship)
+      setFilter((f) => (f.grade === undefined ? { ...f, grade: myGrade } : f))
+  }, [myGrade, gradeTouched, scholarship])
   const [cost, setCost] = useState<string | undefined>()
-  const filter: CatalogFilter = {
-    ...other,
-    ...costFilter(cost),
-    kind: category === "all" ? undefined : category,
-    sort: parseSort(params.get("sort")) ?? "deadline",
-  }
+  const [coverage, setCoverage] = useState<CoverageTab>("all")
+  // A filter that only exists on the other tab must never narrow this list.
+  useEffect(() => {
+    setFilter((f) => without(f, scholarship ? ACTIVITY_KEYS : SCHOLARSHIP_KEYS))
+    if (scholarship) setCost(undefined)
+    else setCoverage("all")
+  }, [scholarship])
   const [text, setText] = useState("")
   useEffect(() => {
     const id = setTimeout(() => setFilter((f) => ({ ...f, q: text.trim() || undefined })), 300)
     return () => clearTimeout(id)
   }, [text])
+  const shownFilter: CatalogFilter = {
+    ...other,
+    ...(scholarship ? {} : costFilter(cost)),
+    grade: scholarship && !gradeTouched ? undefined : other.grade,
+  }
+  const filter: CatalogFilter = {
+    ...shownFilter,
+    kind: category === "all" ? undefined : category,
+    sort: scholarship ? "deadline" : (parseSort(params.get("sort")) ?? "deadline"),
+  }
   const [suggesting, setSuggesting] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
-  const taxonomy = useTaxonomy()
   const career = useQuery(careerPlanQuery())
   const list = useOpportunities(filter)
   const plan = usePlan()
   const save = useSaveToPlan()
   const remove = useRemoveFromPlan()
   const saved = useMemo(() => new Set(plan.data?.entries.map((e) => e.opportunity_id)), [plan.data])
-  const fields = taxonomy.data?.fields ?? []
-  const subfields = fields.find((f) => f.id === filter.field_id)?.subfields ?? []
 
-  function setQuery(change: { kind?: Category | null; sort?: CatalogSort }) {
+  function setSort(sort: CatalogSort) {
     const next = new URLSearchParams(params.toString())
-    if (change.kind !== undefined) {
-      if (change.kind === null) next.delete("kind")
-      else next.set("kind", change.kind)
-    }
-    if (change.sort) next.set("sort", change.sort)
-    const text = next.toString()
-    router.replace(text ? `${pathname}?${text}` : pathname)
+    next.set("sort", sort)
+    router.replace(`${pathname}?${next.toString()}`)
+  }
+
+  function reset() {
+    setGradeTouched(true)
+    setFilter({})
+    setCost(undefined)
+    setText("")
   }
 
   function toggle(id: string, grades: number[]) {
@@ -166,18 +131,58 @@ export function CatalogBody() {
       )
   }
 
-  const shownItems = useMemo(() => bySchoolLevel(list.data?.items ?? [], myGrade), [list.data, myGrade])
+  const shownItems = useMemo(() => {
+    const items = bySchoolLevel(list.data?.items ?? [], myGrade)
+    return scholarship ? items.filter((i) => inCoverage(i, coverage)) : items
+  }, [list.data, myGrade, scholarship, coverage])
+  const count = list.data ? shownItems.length : undefined
+  const active = activeCount(category, shownFilter, cost, text)
+  const orgs = useOrgs()
+  const mine = useMemo(
+    () =>
+      (plan.data?.opportunities ?? [])
+        .filter((o) => o.fields.kind === "scholarship")
+        // The plan payload carries no organization; resolve it so the avatar matches the catalog card.
+        .map((o) => ({ ...o, org: o.org ?? orgs.data?.items.find((x) => x.id === o.fields.org_id) ?? null })),
+    [plan.data, orgs.data],
+  )
+  const busy = save.isPending || remove.isPending
+
   let body
   if (list.isPending) body = <Skeleton className="h-40 w-full" />
-  else if (list.isError) body = <StateView state="error" onRetry={() => void list.refetch()} />
+  else if (list.isError) body = <StateView state="error" error={list.error} onRetry={() => void list.refetch()} />
   else if (shownItems.length === 0)
+    body =
+      active > 0 || coverage !== "all" ? (
+        <StateView
+          state="filtered"
+          onReset={() => {
+            reset()
+            setCoverage("all")
+          }}
+        />
+      ) : (
+        <StateView
+          state="empty"
+          icon={<Icons.search aria-hidden />}
+          title={t("emptyTitle")}
+          description={t("emptyText")}
+        />
+      )
+  else if (scholarship)
     body = (
-      <StateView
-        state="empty"
-        icon={<Icons.search aria-hidden />}
-        title={t("emptyTitle")}
-        description={t("emptyText")}
-      />
+      <ul className="grid min-w-0 grid-cols-[repeat(auto-fill,minmax(min(100%,18rem),1fr))] gap-4">
+        {shownItems.map((item) => (
+          <li key={item.id} className="min-w-0">
+            <ScholarshipCard
+              item={item}
+              saved={saved.has(item.id)}
+              busy={busy}
+              onToggle={() => toggle(item.id, item.fields.grades ?? [])}
+            />
+          </li>
+        ))}
+      </ul>
     )
   else
     body = (
@@ -189,7 +194,7 @@ export function CatalogBody() {
             action={
               <SaveButton
                 saved={saved.has(item.id)}
-                busy={save.isPending || remove.isPending}
+                busy={busy}
                 onClick={() => toggle(item.id, item.fields.grades ?? [])}
               />
             }
@@ -198,126 +203,128 @@ export function CatalogBody() {
       </ul>
     )
 
+  const filterProps = {
+    kind: category,
+    filter: shownFilter,
+    onChange: setFilter,
+    onGradeTouched: () => setGradeTouched(true),
+    cost,
+    onCost: setCost,
+    text,
+    onText: setText,
+  }
+  const filters = (
+    <CatalogFilters {...filterProps} count={count} onReset={reset} />
+  )
+  const filtersButton = (
+    <Button type="button" variant="outline" className="min-h-11 md:hidden" onClick={() => setFiltersOpen(true)}>
+      <Icons.search aria-hidden className="size-4" />
+      {active > 0 ? t("filters.button", { count: active }) : t("view.filtersTitle")}
+    </Button>
+  )
+
   return (
     <div className={pageClass()}>
       <AppPageHeader
         icon="courses"
         title={t("title")}
         actions={
-          <Button type="button" size="sm" variant="outline" onClick={() => setSuggesting(true)}>
-            <Icons.add aria-hidden />
-            {t("suggest")}
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            {saved.size > 0 ? (
+              <Link href={PLAN_HREF} className={buttonVariants({ variant: "outline", size: "sm" })}>
+                <Icons.heart aria-hidden />
+                {t("planLink", { count: saved.size })}
+              </Link>
+            ) : null}
+            <Button type="button" size="sm" variant="outline" onClick={() => setSuggesting(true)}>
+              <Icons.add aria-hidden />
+              {t("suggest")}
+            </Button>
+          </div>
         }
       />
+      <OpportunityNav value={category} />
+      {scholarship ? (
+        <PageSection title={t("scholarships.yours")}>
+          {mine.length > 0 ? (
+            <Carousel label={t("scholarships.yours")}>
+              {mine.map((item) => (
+                <Slide key={item.id}>
+                  <ScholarshipCard
+                    item={item}
+                    saved
+                    busy={busy}
+                    onToggle={() => toggle(item.id, item.fields.grades ?? [])}
+                  />
+                </Slide>
+              ))}
+            </Carousel>
+          ) : (
+            <p className="text-muted-foreground text-sm">{t("scholarships.yoursEmpty")}</p>
+          )}
+        </PageSection>
+      ) : null}
+      {scholarship ? (
+        <div className="flex flex-wrap gap-2" role="group" aria-label={t("scholarships.coverageLabel")}>
+          {COVERAGE_TABS.map((value) => (
+            <Button
+              key={value}
+              type="button"
+              size="sm"
+              className="rounded-full"
+              variant={coverage === value ? "default" : "outline"}
+              aria-pressed={coverage === value}
+              onClick={() => setCoverage(value)}
+            >
+              {t(`coverageTab.${value}`)}
+            </Button>
+          ))}
+        </div>
+      ) : null}
       <SplitLayout
         asideFirst
         aside={
-          <>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="self-start md:hidden"
-              aria-expanded={filtersOpen}
-              onClick={() => setFiltersOpen((open) => !open)}
-            >
-              <Icons.search aria-hidden className="size-4" />
-              {t("view.filtersTitle")}
-            </Button>
-            <div className={filtersOpen ? "" : "hidden md:block"}>
-              <AsideCard title={t("view.filtersTitle")} icon={<Icons.search aria-hidden className="size-4" />}>
-                <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-1">
-                  <Input
-                    aria-label={t("searchLabel")}
-                    placeholder={t("searchLabel")}
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                  />
-                  <FilterSelect
-                    label={t("fieldLabel")}
-                    value={filter.field_id}
-                    onChange={(v) =>
-                      setFilter({ ...other, field_id: v, subfield_id: undefined, subject_id: undefined })
-                    }
-                    options={fields.map((f) => ({ value: f.id, label: localName(f.name, locale) }))}
-                  />
-                  {subfields.length > 0 && (
-                    <FilterSelect
-                      label={t("subfieldLabel")}
-                      value={filter.subfield_id}
-                      onChange={(v) => setFilter({ ...other, subfield_id: v, subject_id: undefined })}
-                      options={subfields.map((s) => ({ value: s.id, label: localName(s.name, locale) }))}
-                    />
-                  )}
-                  <FilterSelect
-                    label={t("gradeLabel")}
-                    value={filter.grade?.toString()}
-                    onChange={(v) => {
-                      setGradeTouched(true)
-                      setFilter({ ...other, grade: v ? Number(v) : undefined })
-                    }}
-                    options={GRADES.map((g) => ({ value: String(g), label: t("gradeShort", { grade: g }) }))}
-                  />
-                  <FilterSelect
-                    label={t("filters.delivery")}
-                    value={filter.delivery}
-                    onChange={(v) => setFilter({ ...other, delivery: v as CatalogFilter["delivery"] })}
-                    options={(["local", "external"] as const).map((d) => ({ value: d, label: t(`delivery.${d}`) }))}
-                  />
-                  <FilterSelect
-                    label={t("filters.cost")}
-                    value={cost}
-                    onChange={setCost}
-                    options={COSTS.map((c) => ({ value: c, label: costLabel(t, c) }))}
-                  />
-                  <FilterSelect
-                    label={t("filters.hours")}
-                    value={filter.max_hours?.toString()}
-                    onChange={(v) => setFilter({ ...other, max_hours: v ? Number(v) : undefined })}
-                    options={HOURS.map((h) => ({ value: String(h), label: t("filters.hoursUpTo", { hours: h }) }))}
-                  />
-                  <FilterSelect
-                    label={t("filters.starts")}
-                    value={filter.starts_within?.toString()}
-                    onChange={(v) => setFilter({ ...other, starts_within: v ? Number(v) : undefined })}
-                    options={WITHIN.map((d) => ({ value: String(d), label: t("filters.startsWithin", { days: d }) }))}
-                  />
-                  <FilterSelect
-                    label={t("filters.startMonth")}
-                    value={filter.starts_month?.toString()}
-                    onChange={(v) => setFilter({ ...other, starts_month: v ? Number(v) : undefined })}
-                    options={MONTHS.map((m) => ({
-                      value: String(m),
-                      label: new Date(2000, m - 1, 1).toLocaleDateString(locale, { month: "long" }),
-                    }))}
-                  />
-                </div>
-                {list.data ? (
-                  <Pill tone="primary" className="self-start">
-                    {t("view.results", { count: shownItems.length })}
-                  </Pill>
-                ) : null}
-              </AsideCard>
-            </div>
-          </>
+          <div className="hidden md:block">
+            <AsideCard title={t("view.filtersTitle")} icon={<Icons.search aria-hidden className="size-4" />}>
+              {filters}
+            </AsideCard>
+          </div>
         }
       >
         <div className="flex flex-col gap-4">
-          <OpportunityTabs value="catalog" planCount={plan.data?.entries.length ?? 0} />
-          <CategoryTabs value={category} onChange={(next) => setQuery({ kind: next === "all" ? null : next })} />
-          {list.data ? (
+          {scholarship ? (
+            <div className="md:hidden">{filtersButton}</div>
+          ) : (
             <RelevanceBar
-              sort={list.data.sort}
+              sort={list.data?.sort ?? "title"}
               labels={career.data?.study_focus.labels ?? []}
-              onSort={(next) => setQuery({ sort: next })}
+              onSort={setSort}
+              leading={filtersButton}
             />
-          ) : null}
+          )}
           {suggesting && <SubmitDialog open onOpenChange={setSuggesting} />}
           <ScrollFade className="max-h-[75vh] xl:max-h-[calc(100dvh-25rem)]">{body}</ScrollFade>
-          {saved.size > 0 ? <NextStep href={PLAN_HREF} label={t("openPlan")} hint={t("nextPlanHint")} /> : null}
         </div>
       </SplitLayout>
+      {filtersOpen ? (
+        <ResponsiveDialog
+          open
+          onOpenChange={setFiltersOpen}
+          title={t("view.filtersTitle")}
+          footer={
+            <>
+              <Button type="button" variant="outline" onClick={reset}>
+                {t("filters.reset")}
+              </Button>
+              <Button type="button" onClick={() => setFiltersOpen(false)}>
+                {t("filters.show", { count: shownItems.length })}
+              </Button>
+            </>
+          }
+        >
+          <CatalogFilters {...filterProps} count={undefined} />
+        </ResponsiveDialog>
+      ) : null}
     </div>
   )
 }

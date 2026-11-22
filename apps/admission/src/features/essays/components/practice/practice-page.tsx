@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { buttonVariants, cn, Icons, Pill, StateView, ToggleGroup, ToggleGroupItem } from "@ihsp/ui"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { pageClass } from "../../../../components/lib/page"
 import { AdmissionShell } from "../../../shell/components/admission-shell"
@@ -46,7 +47,8 @@ function Column({
 export function PracticeBody() {
   const t = useT("essayPractice")
   const te = useT("essays")
-  const today = usePracticeToday()
+  const picked = useSearchParams().get("theme") ?? undefined
+  const today = usePracticeToday(picked)
   const history = usePracticeHistory()
   const [day, setDay] = useState<string | null>(null)
   const [pane, setPane] = useState<Pane>("write")

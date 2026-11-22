@@ -5,6 +5,7 @@ import { StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import type { ReactNode } from "react"
+import { CountryInfoRow } from "../../countries/components/country-info"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { InstitutionFocuses } from "../../../components/lib/institution-focuses"
 import { useMatches } from "../../discover/hooks"
@@ -19,10 +20,11 @@ import { FactRows } from "./fact-rows"
 import { ApplyActions } from "./institution-apply"
 import { InstitutionFit } from "./institution-fit"
 import { InstitutionHeader } from "./institution-header"
+import { InstitutionRankings } from "./institution-rankings"
 import { IntlStrip } from "./institution-intl-strip"
 import { useIntlFigures } from "./intl-figures"
 import { currencyOf, formatCurrency } from "./money"
-import { useOptionLabel } from "./option-label"
+import { countryCode, useOptionLabel } from "./option-label"
 import { AidFacts } from "../../budget/components/aid-facts"
 import { ScholarshipList } from "./scholarships-table"
 
@@ -34,7 +36,7 @@ const TAB_FACTS = {
 } as const
 
 /** Raw keys that are shown elsewhere (or are internal) and never as a fact row. */
-const HIDDEN_FACTS = ["deadlines", "city_type", "fields", "institution_type"]
+const HIDDEN_FACTS = ["deadlines", "city_type", "fields", "institution_type", "rankings"]
 
 const TABS = ["fit", "facts", "money", "apply", "iht"] as const
 type Tab = (typeof TABS)[number]
@@ -209,7 +211,11 @@ function DetailBody({ institution }: { institution: Institution }) {
         place={[institution.city, countryLabel(institution.country)].filter(Boolean).join(", ")}
         row={row}
       />
+      {countryCode(institution.country) ? (
+        <CountryInfoRow codes={[countryCode(institution.country) as string]} />
+      ) : null}
       <IntlStrip figures={figures} deadline={deadline ? deadlineText(deadline, locale) : t("list.noDeadline")} />
+      <InstitutionRankings institution={institution} />
       <Tabs
         value={tab}
         onValueChange={(value) => select(String(value))}

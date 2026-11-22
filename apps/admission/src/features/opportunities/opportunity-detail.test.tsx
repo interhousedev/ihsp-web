@@ -76,6 +76,16 @@ describe("opportunity detail", () => {
     expect(screen.getByText("Great scholarship")).toBeTruthy()
   })
 
+  test("a scholarship links back to its kind tab and shows one Scholarship pill", async () => {
+    routes()
+    renderAdmissionApp(<OpportunityDetailBody />, { route: "/opportunities/view/?id=o1" })
+    expect(await screen.findByText("Lumiere Scholarship")).toBeTruthy()
+    expect(screen.getByRole("link", { name: "Scholarships" }).getAttribute("href")).toBe(
+      "/opportunities?kind=scholarship",
+    )
+    expect(screen.getAllByText("Scholarship")).toHaveLength(1)
+  })
+
   test("posts a comment", async () => {
     let body: unknown
     routes()

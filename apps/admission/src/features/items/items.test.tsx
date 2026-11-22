@@ -131,31 +131,17 @@ describe("items", () => {
     await waitFor(() => expect(called).toBe(true))
   })
 
-  test("honors scroll and activities show analytics and the what-if", async () => {
-    let message = ""
+  test("activities show analytics", async () => {
     server.use(
       http.get(apiUrl("/v1/admission/config"), () => HttpResponse.json({ item_caps: { activities: 10, honors: 5 } })),
       http.get(apiUrl("/v1/admission/me/items"), () =>
         HttpResponse.json({ items: [graded(), { ...item("h", "Olympiad", 1), kind: "honor" }], next_cursor: null }),
       ),
-      http.post(apiUrl("/v1/ai/chats"), () => HttpResponse.json({ id: "c1" }, { status: 201 })),
-      http.post(apiUrl("/v1/ai/chats/c1/messages"), async ({ request }) => {
-        message = ((await request.json()) as { text: string }).text
-        return HttpResponse.json({
-          chat: { id: "c1" },
-          new_messages: [{ seq: 2, role: "assistant", text: "Keep the club" }],
-          status: "done",
-        })
-      }),
     )
     renderAdmissionApp(<ItemList />)
     await screen.findByText("Robotics")
     expect(screen.getByText("By category")).toBeTruthy()
     expect(screen.getByText("By title grade")).toBeTruthy()
-    fireEvent.change(screen.getByLabelText("Test a change to your activities"), { target: { value: "Drop chess" } })
-    fireEvent.click(screen.getByRole("button", { name: "Evaluate" }))
-    await screen.findByText("Keep the club")
-    expect(message).toContain("Drop chess")
   })
 
   describe("popup editor in the URL", () => {

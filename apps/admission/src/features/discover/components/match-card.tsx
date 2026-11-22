@@ -24,7 +24,7 @@ function Stat({ label, value, note, noteTone }: { label: string; value: string; 
     <div className="flex min-w-0 flex-col">
       <dt className="text-muted-foreground text-xs">{label}</dt>
       <dd className="truncate text-base font-semibold">{value}</dd>
-      {note ? <dd className={cn("truncate text-xs", noteTone)}>{note}</dd> : null}
+      {note ? <dd className={cn("text-xs leading-tight", noteTone)}>{note}</dd> : null}
     </div>
   )
 }
@@ -70,7 +70,7 @@ export function MatchCard({ match }: { match: Match }) {
     })
   const logo = <RingLogo name={match.name} src={match.logo_url} />
   return (
-    <article className="bg-card border-hairline-strong rounded-card flex h-full flex-col gap-3 border p-4 shadow-sm md:p-5">
+    <article className="bg-card border-hairline-strong rounded-card relative flex h-full min-h-0 flex-col gap-2.5 overflow-hidden border p-4 shadow-sm md:p-5">
       <div className="flex items-center gap-3">
         {fit ? (
           <FitRingButton name={match.name} fit={fit} size={52}>
@@ -80,17 +80,23 @@ export function MatchCard({ match }: { match: Match }) {
           <div className="size-12 shrink-0">{logo}</div>
         )}
         <div className="min-w-0 flex-1">
-          <h3 className="text-lg leading-tight font-semibold">{match.name}</h3>
-          <p className="text-muted-foreground truncate text-sm">{place}</p>
+          <h3 className="line-clamp-2 text-lg leading-tight font-semibold break-words">{match.name}</h3>
+          <p className="text-muted-foreground line-clamp-2 text-sm">{place}</p>
         </div>
-        {match.fit_total == null ? null : (
-          <span className="shrink-0 text-end leading-none" aria-hidden>
-            <span className="text-2xl font-semibold tabular-nums">{match.fit_total}</span>
-            <span className="text-muted-foreground block text-[10px]">/100</span>
-          </span>
-        )}
-        {match.status ? <StatusPill status={match.status} /> : null}
       </div>
+      {match.fit_total == null && !match.status ? null : (
+        <div className="flex items-center justify-between gap-3">
+          {match.fit_total == null ? (
+            <span />
+          ) : (
+            <span className="flex items-baseline gap-1 leading-none" aria-hidden>
+              <span className="text-2xl font-semibold tabular-nums">{match.fit_total}</span>
+              <span className="text-muted-foreground text-[10px]">/100</span>
+            </span>
+          )}
+          {match.status ? <StatusPill status={match.status} /> : null}
+        </div>
+      )}
       {facts.length >= 2 ? (
         <dl className="grid grid-cols-2 gap-3">
           {facts.map((fact) => (
@@ -119,7 +125,7 @@ export function MatchCard({ match }: { match: Match }) {
       ) : null}
       <MatchExtrasView match={match as CardMatch} />
       {why ? (
-        <p aria-label={t("overlap.label")} className="text-muted-foreground line-clamp-2 text-sm">
+        <p aria-label={t("overlap.label")} className="text-muted-foreground line-clamp-1 text-xs">
           {t("overlap.why", { tags: why })}
         </p>
       ) : null}

@@ -10,6 +10,7 @@ import { LogoAvatar } from "../../../components/lib/photo-header"
 import { pageClass } from "../../../components/lib/page"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useOpportunity, usePlan, useRemoveFromPlan, useSaveToPlan } from "../api"
+import { CATEGORIES } from "./catalog-controls"
 import { OpportunityComments } from "./opportunity-comments"
 import { KIND_TONE } from "./opportunity-card"
 import { AwardPill } from "./scholarship-card"
@@ -44,6 +45,7 @@ export function OpportunityDetailBody() {
 
   const item = query.data
   const f = item.fields
+  const kindTab = CATEGORIES.find((c) => c !== "all" && c === f.kind)
   const orgName = item.org?.name ?? f.provider
   const deadline = item.upcoming[0]?.day
   const saved = plan.data?.entries.some((e) => e.opportunity_id === item.id) ?? false
@@ -53,8 +55,14 @@ export function OpportunityDetailBody() {
 
   return (
     <div className={pageClass()}>
-      {back}
-      <div className="flex items-start gap-4">
+      {kindTab ? (
+        <Link href={`/opportunities/?kind=${kindTab}`} className="text-primary text-sm hover:underline">
+          {t(`categories.${kindTab}`)}
+        </Link>
+      ) : (
+        back
+      )}
+      <div className="flex flex-col items-start gap-4 sm:flex-row">
         <LogoAvatar
           name={orgName ?? f.title}
           src={item.org?.logo_url ?? f.logo_url}
@@ -78,7 +86,7 @@ export function OpportunityDetailBody() {
             </ul>
           ) : null}
           <div className="flex flex-wrap items-center gap-2">
-            {f.award_type ? <AwardPill award={f.award_type} /> : null}
+            {f.award_type && !(f.award_type === "scholarship" && f.kind === "scholarship") ? <AwardPill award={f.award_type} /> : null}
             {f.scope ? <Pill tone="neutral">{t(`scope.${f.scope}`)}</Pill> : null}
             {(f.coverage ?? []).map((c) => (
               <Pill key={c} tone="neutral">
@@ -90,13 +98,13 @@ export function OpportunityDetailBody() {
             ) : null}
           </div>
         </div>
-        <div className="flex shrink-0 flex-col items-end gap-2">
-          <Button variant="outline" aria-pressed={saved} disabled={busy} onClick={toggle}>
+        <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto sm:items-end">
+          <Button variant="outline" className="w-full sm:w-auto" aria-pressed={saved} disabled={busy} onClick={toggle}>
             <Icons.heart aria-hidden className={saved ? "fill-destructive text-destructive size-4" : "size-4"} />
             {saved ? t("removeFromPlan") : t("saveToPlan")}
           </Button>
           {saved ? (
-            <Link href="/plan/?view=saved" className="text-primary text-sm hover:underline">
+            <Link href="/plan/" className="text-primary text-sm hover:underline">
               {t("openPlan")}
             </Link>
           ) : null}

@@ -11,12 +11,13 @@ export function currencyOf(text: string): string | null {
 export function formatCurrency(value: unknown, currency: string | null, locale: string): string | null {
   const number = typeof value === "number" ? value : typeof value === "string" ? Number(value) : Number.NaN
   if (!Number.isFinite(number)) return null
+  const digits = Number.isInteger(number) ? 0 : 2
   try {
     return currency
-      ? new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 }).format(number)
-      : new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(number)
+      ? new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: digits }).format(number)
+      : new Intl.NumberFormat(locale, { maximumFractionDigits: digits }).format(number)
   } catch {
-    return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(number)
+    return new Intl.NumberFormat(locale, { maximumFractionDigits: digits }).format(number)
   }
 }
 

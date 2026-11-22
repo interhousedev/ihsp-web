@@ -449,10 +449,136 @@
     },
     "nextActivities": "Find activities for {fields}",
     "bannerActivities": "Find activities: {fields}",
-    "quizTake": "Take the test (2 min)",
+    "quizTake": "Take the test (5 min)",
     "quizAgain": "Retake the test",
     "quizTitle": "Choosing a profession",
-    "quizHint": "10 short questions; your answers suggest fields of study."
+    "quizHint": "A short questionnaire: your answers suggest fields of study and fill in your ikigai. You can edit them afterwards.",
+    "ikigaiQ": {
+      "textLabel": "Anything else? Add your own",
+      "textPlaceholder": "Separate with commas",
+      "sectionTests": "Interests",
+      "sectionIkigai": "About you",
+      "done": "Fill my ikigai",
+      "ikigaiSaved": "Your answers are in your ikigai. You can edit them there.",
+      "flow": {
+        "title": "What makes you lose track of time?",
+        "guide": "Pick up to 4. Think of free evenings, not school tasks.",
+        "build": "Building things",
+        "puzzle": "Solving puzzles and logic problems",
+        "explain": "Explaining things to others",
+        "design": "Drawing and design",
+        "write": "Writing and storytelling",
+        "experiment": "Experiments and finding out how things work",
+        "organize": "Organizing events and people",
+        "perform": "Performing: music, stage, video",
+        "care": "Looking after others",
+        "analyze": "Working with numbers and data"
+      },
+      "topics": {
+        "title": "Which topics do you read, watch or ask about on your own?",
+        "guide": "Pick up to 4 topics you never get tired of.",
+        "tech": "Technology and software",
+        "space": "Space and physics",
+        "health": "Health and the human body",
+        "money": "Money, markets and business",
+        "nature": "Nature and the environment",
+        "history": "History and cultures",
+        "languages": "Languages and communication",
+        "games": "Games and game design",
+        "art": "Art, music and film",
+        "society": "Society, law and politics"
+      },
+      "values": {
+        "title": "What do you want from your future work besides a salary?",
+        "guide": "Pick up to 3 values that matter most.",
+        "freedom": "Freedom to decide for myself",
+        "helping": "Helping people directly",
+        "creativity": "Creating something new",
+        "status": "Respect and a strong name",
+        "learning": "Always learning something",
+        "stability": "Stability and calm",
+        "adventure": "Variety and adventure",
+        "fairness": "Fairness and justice"
+      },
+      "strengths": {
+        "title": "What do other people say you are good at?",
+        "guide": "Think of teachers, friends, family. Pick up to 4.",
+        "explain": "Explaining clearly",
+        "logic": "Maths and logic",
+        "calm": "Staying calm under pressure",
+        "creative": "Coming up with creative ideas",
+        "lead": "Leading a team",
+        "languages": "Languages",
+        "listen": "Listening and understanding people",
+        "detail": "Care and attention to detail",
+        "learnfast": "Learning new things fast",
+        "techskill": "Computers and gadgets"
+      },
+      "people": {
+        "title": "Which people would you like to work with or help?",
+        "guide": "Pick up to 3, or none if you prefer to work alone.",
+        "kids": "Children and students",
+        "patients": "Sick or elderly people",
+        "entrepreneurs": "Entrepreneurs and small business",
+        "teams": "Colleagues in a team",
+        "community": "My city or village community",
+        "youth": "Young people looking for a path",
+        "customers": "Customers who need a good product",
+        "experts": "Researchers and experts"
+      },
+      "problems": {
+        "title": "Which problems in Uzbekistan or the world do you want to help solve?",
+        "guide": "Pick up to 4 that bother you.",
+        "education": "Access to good education",
+        "health": "Healthcare and medicine",
+        "jobs": "Jobs and skills for young people",
+        "environment": "Water, air and the environment",
+        "digital": "Digital services and technology",
+        "agriculture": "Agriculture and food",
+        "energy": "Energy and infrastructure",
+        "safety": "Safety and fair laws",
+        "poverty": "Inequality and poverty",
+        "tourism": "Tourism and culture heritage"
+      },
+      "aiview": {
+        "title": "How do you think AI will change work in the next 10 years?",
+        "guide": "There is no right answer; this shows how you think about your future.",
+        "tool": "It stays a tool; people keep deciding",
+        "half": "It will take over many routine tasks in every job",
+        "vanish": "Many jobs will disappear",
+        "newjobs": "New jobs will appear that do not exist yet"
+      },
+      "airole": {
+        "title": "In that future, what would your own role be?",
+        "guide": "Pick up to 2.",
+        "build": "Building AI and software",
+        "use": "Using AI to do my field better",
+        "human": "Doing human work that AI cannot: care, trust, teaching",
+        "check": "Checking, steering and deciding on AI results",
+        "law": "Setting rules and ethics for AI"
+      },
+      "money": {
+        "title": "What do you expect from work in terms of money and stability?",
+        "guide": "Pick up to 2.",
+        "stable": "A stable salary",
+        "high": "High income, even with risk",
+        "business": "My own business",
+        "meaning": "A job with meaning, even if it pays less",
+        "abroad": "Work with foreign companies or abroad"
+      },
+      "setting": {
+        "title": "Where do you picture yourself working?",
+        "guide": "Pick up to 3.",
+        "office": "In an office with a team",
+        "remote": "Remotely from anywhere",
+        "lab": "In a laboratory or research centre",
+        "field": "Outdoors or on site",
+        "hospital": "In a hospital or clinic",
+        "school": "In a school or university",
+        "startup": "In a startup or my own company",
+        "public": "In government or an international organization"
+      }
+    }
   },
   "app": {
     "name": "{appAdmission}",
@@ -670,7 +796,36 @@
     "todayLabel": "Today · {date}",
     "historyEmpty": "Earlier days will appear here.",
     "scoreEmpty": "Write at least five words and ask for feedback: the score appears here.",
-    "words": "{count, plural, one {# word} other {# words}}"
+    "words": "{count, plural, one {# word} other {# words}}",
+    "themes": {
+      "kitchen": "Family kitchen",
+      "mistake": "A small mistake",
+      "object": "An ordinary object",
+      "street": "The street at six",
+      "argument": "An argument I lost",
+      "teacher": "What a teacher said",
+      "hands": "My hands",
+      "silence": "Silence",
+      "first": "The first time alone",
+      "map": "A place off the map",
+      "question": "A question",
+      "rule": "A rule",
+      "sound": "A sound of home",
+      "change": "What I no longer believe",
+      "stranger": "A stranger",
+      "build": "Something I built",
+      "language": "An untranslatable word",
+      "weather": "Weather as mood",
+      "photo": "A missing photograph",
+      "letter": "A letter to myself",
+      "work": "Unseen work",
+      "my_day": "My day",
+      "essay_idea": "Essay idea",
+      "five_senses": "Five senses",
+      "overheard": "Overheard",
+      "tomorrow": "Tomorrow",
+      "thanks": "Thanks"
+    }
   },
   "essayFlow": {
     "label": "Essay path",
@@ -1310,7 +1465,7 @@
       "future": "Future",
       "done": "Done",
       "planned": "Planned",
-      "ideas": "Ideas",
+      "ideas": "Opportunities",
       "tests": "Tests",
       "courses": "My courses",
       "list": "My list",
@@ -1334,7 +1489,9 @@
     "exemplars": "Exemplars",
     "promptStudio": "Prompt studio",
     "manageOpportunities": "Manage opportunities",
-    "manageUniversities": "Manage universities"
+    "manageUniversities": "Manage universities",
+    "manageProjectHelpers": "Project helpers",
+    "manageCountries": "Countries"
   },
   "outcomes": {
     "title": "Outcomes",
@@ -2157,7 +2314,9 @@
         "money": "Money",
         "apply": "Apply",
         "iht": "{brand}"
-      }
+      },
+      "rankingsTitle": "Rankings",
+      "rankingSource": "Source: {system}"
     },
     "estimate": {
       "range": "Estimated chance {low}–{high}%",
@@ -3203,13 +3362,6 @@
       "graded": "Graded",
       "count": "{count}"
     },
-    "whatIf": {
-      "label": "What if",
-      "title": "Test a change to your activities",
-      "placeholder": "What if I start a coding club? What if I drop chess?",
-      "submit": "Evaluate",
-      "running": "Evaluating…"
-    },
     "timing": {
       "school_year": "During school year",
       "school_break": "During school break",
@@ -3907,17 +4059,10 @@
     },
     "title": "Opportunities",
     "view": {
-      "tabs": "Opportunity sections",
-      "catalog": "Catalog",
-      "plan": "Saved",
-      "scholarships": "Scholarships",
       "filtersTitle": "Filters",
       "results": "{count, plural, one {# result} other {# results}}",
       "planTitle": "Saved opportunities",
-      "planCount": "{count, plural, one {# saved opportunity} other {# saved opportunities}}",
-      "programsTitle": "Find a program",
-      "programsTotal": "{count, plural, one {# program} other {# programs}}",
-      "programsSaved": "{count, plural, one {# program in your plan} other {# programs in your plan}}"
+      "planCount": "{count, plural, one {# saved opportunity} other {# saved opportunities}}"
     },
     "sourceLanguage": "Description in the original language (English)",
     "suggest": "Suggest an entry",
@@ -3931,23 +4076,6 @@
     "gradeLabel": "Grade",
     "gradeShort": "Grade {grade}",
     "gradeLong": "Grade {grade}",
-    "programs": {
-      "search": "Search programs",
-      "error": "Could not load programs",
-      "empty": "No programs found",
-      "rank": "Rank",
-      "accept": "Accept",
-      "tuition": "Tuition",
-      "free": "Free",
-      "add": "+ Add",
-      "added": "Added",
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {pages}",
-      "pagination": "Programs pages",
-      "online": "Online",
-      "weeks": "{count} weeks"
-    },
     "kind": {
       "exam": "Exam",
       "certification": "Certification",
@@ -4024,11 +4152,12 @@
       "all": "All",
       "course": "Courses",
       "certification": "Certifications",
-      "research": "Research & fellowships",
+      "research": "Research",
       "event": "Events",
       "program": "Programs",
       "exam": "Exams",
-      "scholarship": "Scholarships"
+      "scholarship": "Scholarships",
+      "projects": "Project ideas"
     },
     "sorting": {
       "label": "Sort by",
@@ -4039,7 +4168,6 @@
       "title": "Title"
     },
     "openPlan": "Open my plan",
-    "nextPlanHint": "Your saved opportunities and deadlines are in the plan.",
     "place": "Place in plan",
     "placeGrade": "Choose a grade",
     "currentGrade": "your grade",
@@ -4061,7 +4189,10 @@
       "hoursUpTo": "Up to {hours} h/week",
       "hoursValue": "{hours} h/week",
       "startsWithin": "{days} days",
-      "startsValue": "Starts {date}"
+      "startsValue": "Starts {date}",
+      "button": "Filters ({count})",
+      "reset": "Reset",
+      "show": "{count, plural, one {Show # result} other {Show # results}}"
     },
     "delivery": {
       "local": "At the lyceum (LMS)",
@@ -4087,7 +4218,9 @@
         "verified": "Verified",
         "rejected": "Rejected"
       }
-    }
+    },
+    "planLink": "My plan ({count})",
+    "findMore": "Find opportunities"
   },
   "opportunitiesStaff": {
     "reports": {
@@ -4531,7 +4664,12 @@
         "psychology": "Psychology",
         "social_sciences": "Social sciences",
         "taxation": "Taxation"
-      }
+      },
+      "looksFor": "What it looks for ({count})",
+      "looksForTitle": "What {name} looks for",
+      "costsRow": "Costs & scores",
+      "costsTitle": "Costs & scores",
+      "rankingsRow": "Rankings & subjects"
     }
   },
   "uniChat": {
@@ -5545,7 +5683,7 @@
     },
     "streak": {
       "title": "Streak",
-      "days": "{n} days in a row",
+      "days": "{n, plural, one {# day} other {# days}} in a row",
       "week": "Last 7 days",
       "done": "done",
       "missed": "missed"
@@ -5622,7 +5760,64 @@
     },
     "error": "Could not load this",
     "retry": "Retry",
-    "seasonSub": "{season} season"
+    "seasonSub": "{season} season",
+    "roadmap": {
+      "title": "Your path",
+      "xp": "{xp} XP",
+      "open": "Open: {name}",
+      "state": {
+        "done": "Done",
+        "current": "Up next",
+        "locked": "Locked"
+      },
+      "node": {
+        "countries": "Countries",
+        "major": "Field of study",
+        "activities": "Activities",
+        "tests": "Tests",
+        "list": "University list",
+        "statement": "Main essay",
+        "supplements": "Supplements",
+        "documents": "Documents",
+        "apply": "Applications",
+        "results": "Results"
+      }
+    },
+    "creative": {
+      "title": "Write something today",
+      "subtitle": "Your next steps are done. A short, free practice keeps your voice warm.",
+      "prompt": {
+        "my_day": {
+          "title": "Write about my day",
+          "text": "Describe one moment of today in a few honest sentences."
+        },
+        "essay_idea": {
+          "title": "A new idea for your essay",
+          "text": "Get a fresh topic to explore for your essay."
+        },
+        "five_senses": {
+          "title": "Five senses",
+          "text": "Describe a place you know using sight, sound, smell, touch and taste."
+        },
+        "overheard": {
+          "title": "Overheard",
+          "text": "Write a scene starting from a sentence you heard today."
+        },
+        "tomorrow": {
+          "title": "A letter to tomorrow",
+          "text": "Write to yourself a year from now."
+        },
+        "thanks": {
+          "title": "Someone to thank",
+          "text": "Write about a person who changed your week."
+        }
+      }
+    },
+    "programs": {
+      "title": "New programs",
+      "new": "{count} new",
+      "all": "All programs"
+    }
   },
   "weightsLab": {
     "error": "Could not load",
@@ -5781,6 +5976,14 @@
       "confirm": "Check the card and add it to your picks.",
       "discard": "Discard",
       "approx": "Closest ISCO group: {isco}"
+    },
+    "addOwn": {
+      "button": "Add another profession",
+      "title": "Add another profession",
+      "description": "Be specific: name the role and the place, e.g. “Data analyst in a fintech bank” or “Pediatric nurse in a regional hospital”, not just “IT” or “doctor”. We will fill in the card and you confirm it.",
+      "placeholder": "e.g. Data analyst in a fintech bank",
+      "submit": "Fill in the card",
+      "close": "Close"
     }
   },
   "profileHub": {
@@ -6053,5 +6256,278 @@
       "ru": "Russian",
       "en": "English"
     }
+  },
+  "countries": {
+    "infoAbout": "Facts about {country}",
+    "compare": "Compare countries",
+    "compareTitle": "Compare countries",
+    "unverified": "Not yet verified",
+    "verified": "Verified",
+    "asOf": "As of {date}",
+    "overall": "Overall",
+    "noFacts": "No facts for this country yet.",
+    "loadFailed": "Could not load the facts.",
+    "value": {},
+    "values": {
+      "label": {
+        "monthly_usd_student": "Monthly student budget",
+        "min_wage_usd_month": "Minimum wage",
+        "basis": "How it is calculated",
+        "avg_c_winter": "Average winter temperature",
+        "avg_c_summer": "Average summer temperature",
+        "koppen": "Köppen climate",
+        "cs_it": "Computer science and IT",
+        "engineering": "Engineering",
+        "business_econ": "Business and economics",
+        "medicine_bio": "Medicine and biology",
+        "natural_sci": "Natural sciences",
+        "social_law": "Social sciences and law",
+        "arts_media": "Arts and media",
+        "education_hum": "Education and humanities",
+        "processing_days": "Processing time",
+        "fee_usd": "Fee",
+        "uz_notes": "Notes for Uzbek citizens",
+        "gpi_score": "Global Peace Index score",
+        "gpi_rank": "Global Peace Index rank",
+        "visa_free_neighbours_for_residents": "Visa-free neighbours for residents",
+        "typical_hop_usd": "Typical hop cost",
+        "domestic_rail": "Domestic rail",
+        "domestic_bus": "Domestic bus",
+        "domestic_air": "Domestic air",
+        "international": "International links",
+        "hours_term": "Work hours in term",
+        "hours_holiday": "Work hours in holidays",
+        "min_hourly_wage_usd": "Minimum hourly wage",
+        "visa_name": "Visa name",
+        "months": "Duration",
+        "ef_epi_score": "EF English Proficiency score",
+        "ef_epi_band": "EF English Proficiency band",
+        "local_languages": "Local languages",
+        "direct": "Direct flight",
+        "cities": "Cities",
+        "hours": "Flight time",
+        "tz_diff_hours": "Time difference from Tashkent",
+        "uzbek_diaspora": "Uzbek diaspora",
+        "halal": "Halal food",
+        "insurance_usd_year": "Health insurance",
+        "min_hourly_wage": "Minimum hourly wage",
+        "min_wage": "Minimum wage",
+        "blocked_account": "Blocked account",
+        "fee": "Fee",
+        "insurance": "Health insurance",
+        "days_year": "Days per year",
+        "monthly_student": "Monthly student budget",
+        "typical_hop": "Typical hop cost"
+      },
+      "unit": {
+        "yes": "Yes",
+        "no": "No",
+        "month": "{value}/month",
+        "year": "{value}/year",
+        "hour": "{value}/hour",
+        "c": "{value} °C",
+        "days": "{value} days",
+        "hw": "{value} h/week",
+        "months": "{value} months",
+        "h": "{value} h",
+        "daysYear": "{value} days a year"
+      }
+    },
+    "staff": {
+      "title": "Country facts",
+      "search": "Search countries",
+      "statusLabel": "Status",
+      "anyStatus": "Any status",
+      "coverage": "{percent}% filled",
+      "edit": "Edit",
+      "verify": "Mark verified",
+      "asOf": "As of (YYYY-MM)",
+      "values": "Numbers as JSON",
+      "sources": "Sources (one https link per line)",
+      "saveDraft": "Save draft",
+      "saveVerified": "Save and mark verified",
+      "saved": "Saved",
+      "badValues": "The numbers are not valid JSON.",
+      "status": {
+        "missing": "No facts",
+        "draft": "Draft",
+        "verified": "Verified"
+      }
+    },
+    "fact": {
+      "cost_of_living": "Cost of living",
+      "climate": "Climate",
+      "opportunities": "Opportunities",
+      "student_visa": "Student visa",
+      "safety": "Safety",
+      "bureaucracy": "Bureaucracy",
+      "travel_reach": "Travel reach",
+      "transport": "Transport",
+      "work_rights": "Work rights",
+      "post_study": "After graduation",
+      "language": "Language",
+      "flights_tashkent": "Flights from Tashkent",
+      "community": "Community",
+      "health": "Health care",
+      "aid": "Financial aid",
+      "tolerance": "Tolerance"
+    },
+    "field": {
+      "cs_it": "Computer science and IT",
+      "engineering": "Engineering",
+      "business_econ": "Business and economics",
+      "medicine_bio": "Medicine and biology",
+      "natural_sci": "Natural sciences",
+      "social_law": "Social sciences and law",
+      "arts_media": "Arts and media",
+      "education_hum": "Education and humanities"
+    }
+  },
+  "projects": {
+    "title": "What project can I make?",
+    "newRun": "New ideas",
+    "emptyTitle": "No ideas yet",
+    "emptyText": "Fill in the form to get project ideas.",
+    "form": {
+      "likes": "What do you like and care about?",
+      "likesHint": "Topics, hobbies, problems you want to solve",
+      "experience": "What have you already done or can do?",
+      "experienceHint": "Skills, past projects, tools you know",
+      "hours": "Hours per day you can spend",
+      "teammates": "Do you have teammates?",
+      "teammatesNote": "Note about teammates (optional)",
+      "teammate": {
+        "yes": "Yes",
+        "maybe": "Maybe",
+        "no": "No"
+      },
+      "network": "Who could you ask for help?",
+      "networkHint": "Relatives, teachers, companies, communities",
+      "budget": "Budget in USD",
+      "budgetMin": "Budget from, USD",
+      "budgetMax": "Budget to, USD",
+      "budgetOrder": "The maximum must not be below the minimum.",
+      "submit": "Suggest projects",
+      "future": "What do you want to do or study in the future?",
+      "futureHint": "A field, a profession, a dream: we cross it with what you like now"
+    },
+    "running": {
+      "title": "Looking for project ideas…",
+      "text": "We search the web for similar projects. It can take up to 40 seconds."
+    },
+    "results": {
+      "title": "Project ideas",
+      "count": "{count, plural, one {# idea} other {# ideas}}",
+      "noSearch": "The web search was not available this time; ideas come from the model only."
+    },
+    "history": {
+      "title": "Earlier runs"
+    },
+    "card": {
+      "analogs": "Similar projects",
+      "where": {
+        "uzbekistan": "Uzbekistan",
+        "abroad": "Abroad"
+      },
+      "challenges": "Challenges",
+      "effect": "How it changes your application",
+      "steps": "First steps",
+      "help": "Help you may need",
+      "copyPrompt": "Copy prompt",
+      "copied": "Prompt copied",
+      "copyFailed": "Could not copy",
+      "helpers": "Helpers"
+    },
+    "helpers": {
+      "title": "Who can help",
+      "kind": {
+        "person": "Person",
+        "organization": "Organization"
+      },
+      "helpTypes": "Kinds of help",
+      "expertise": "Expertise",
+      "emptyTitle": "No helpers yet",
+      "emptyText": "No one is listed for these needs yet."
+    },
+    "helpTags": {
+      "website_tech": "Website & tech",
+      "business_growth": "Business growth",
+      "pitching": "Pitching",
+      "org_outreach": "Reaching organizations",
+      "fundraising": "Fundraising",
+      "product_dev": "Product development"
+    },
+    "helpTypes": {
+      "venue": "Venue",
+      "funding": "Funding",
+      "consultations": "Consultations",
+      "expertise": "Expertise",
+      "mentoring": "Mentoring",
+      "equipment_space": "Equipment & space"
+    },
+    "staff": {
+      "title": "Project helpers",
+      "add": "Add helper",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteTitle": "Delete this helper?",
+      "deactivate": "Deactivate",
+      "activate": "Activate",
+      "inactive": "Inactive",
+      "emptyTitle": "No helpers",
+      "emptyText": "Nothing matches the filters.",
+      "allKinds": "All kinds",
+      "allTags": "All tags",
+      "tag": "Tag",
+      "status": "Status",
+      "statusAll": "All",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
+      "createTitle": "New helper",
+      "editTitle": "Edit helper",
+      "save": "Save",
+      "saved": "Saved",
+      "kind": "Kind",
+      "city": "City",
+      "name": "Name",
+      "required": "Required",
+      "description": "Description ({lang})",
+      "descriptionRequired": "Fill in the description in all three languages.",
+      "tags": "Tags",
+      "helpTypes": "Kinds of help",
+      "expertise": "Expertise areas",
+      "expertiseNew": "New area",
+      "addArea": "Add",
+      "removeArea": "Remove {name}",
+      "contact": {
+        "email": "Email",
+        "phone": "Phone",
+        "telegram": "Telegram",
+        "website": "Website"
+      },
+      "invalid": {
+        "email": "Enter a valid email.",
+        "phone": "Enter a valid phone number.",
+        "telegram": "Use @username or https://t.me/…",
+        "website": "Use a link starting with http(s)://"
+      },
+      "active": "Active (shown to students)",
+      "tagsRequired": "Select at least one tag"
+    }
+  },
+  "voiceFill": {
+    "talk": "Talk in voice",
+    "title": "Answer these questions aloud",
+    "stop": "Pause the microphone",
+    "resume": "Start the microphone",
+    "listening": "Listening…",
+    "paused": "Paused. Tap the microphone to go on.",
+    "placeholder": "Your words will appear here",
+    "typedLabel": "Your answer",
+    "typedHint": "Voice input is not available in this browser. Type your answer to all the questions here.",
+    "done": "Fill the form",
+    "filling": "Filling…",
+    "cancel": "Back to the form",
+    "error": "Could not fill the form from your words. Try again or fill it in by hand."
   }
 }

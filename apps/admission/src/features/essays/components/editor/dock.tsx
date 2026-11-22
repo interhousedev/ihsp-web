@@ -9,10 +9,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icons,
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
   Tabs,
   TabsList,
   TabsTrigger,
@@ -138,19 +138,14 @@ export function Dock({
       >
         <TabStrip view={view ?? "read"} onView={onView} />
       </nav>
-      <Sheet open={view !== null} onOpenChange={(open) => (open ? undefined : onClose())}>
-        <SheetContent
-          side="bottom"
-          showCloseButton={false}
-          className="flex data-[side=bottom]:h-[78dvh] flex-col gap-3 p-3"
-        >
-          <div aria-hidden className="bg-muted-foreground/40 mx-auto h-1 w-10 shrink-0 rounded-full" />
-          <SheetHeader className="sr-only">
-            <SheetTitle>{title}</SheetTitle>
-          </SheetHeader>
+      <Dialog open={view !== null} onOpenChange={(open) => (open ? undefined : onClose())}>
+        <DialogContent className="flex h-[78dvh] flex-col gap-3 p-3 sm:max-w-2xl">
+          <DialogHeader className="sr-only">
+            <DialogTitle>{title}</DialogTitle>
+          </DialogHeader>
           {body}
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

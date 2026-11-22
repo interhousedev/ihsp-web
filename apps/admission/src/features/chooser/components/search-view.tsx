@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Input, Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, StateView } from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Icons, Input, StateView } from "@ihsp/ui"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
 import { ScrollFade } from "../../../components/scroll-fade"
@@ -165,18 +165,18 @@ export function SearchView() {
           <Button type="submit">{t("searchButton")}</Button>
         </form>
         <div className="lg:hidden">
-          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger render={<Button type="button" variant="outline" />}>
+          <Dialog open={sheetOpen} onOpenChange={setSheetOpen}>
+            <DialogTrigger render={<Button type="button" variant="outline" />}>
               <Icons.adjustments aria-hidden />
               {t("filters.title")}
-            </SheetTrigger>
-            <SheetContent side="bottom" className="max-h-[85dvh] overflow-y-auto p-4">
-              <SheetHeader>
-                <SheetTitle>{t("filters.title")}</SheetTitle>
-              </SheetHeader>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{t("filters.title")}</DialogTitle>
+              </DialogHeader>
               {panel}
-            </SheetContent>
-          </Sheet>
+            </DialogContent>
+          </Dialog>
         </div>
         <ActiveChips
           filters={filters}
