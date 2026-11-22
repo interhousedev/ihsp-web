@@ -1,7 +1,7 @@
 "use client"
 
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Button, Checkbox, Icons, Markdown, Progress, Sheet, SheetContent, SheetHeader, SheetTitle } from "@ihsp/ui"
+import { Button, Checkbox, Dialog, DialogContent, DialogHeader, DialogTitle, Icons, Markdown, Progress } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -60,10 +60,10 @@ export function TaskDrawer({
 
   return (
     <>
-      <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent className="w-full overflow-y-auto sm:max-w-lg">
-          <SheetHeader>
-            <SheetTitle>{task.title}</SheetTitle>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>{task.title}</DialogTitle>
             <div className="flex flex-wrap items-center gap-2">
               <StatusPill status={task.status} />
               <PriorityPill priority={task.priority} />
@@ -74,8 +74,8 @@ export function TaskDrawer({
                 </span>
               ) : null}
             </div>
-          </SheetHeader>
-          <div className="flex flex-col gap-5 px-4 pb-4">
+          </DialogHeader>
+          <div className="flex flex-col gap-5">
             <dl className="grid grid-cols-2 gap-3 text-sm">
               <div>
                 <dt className="text-muted-foreground text-xs">{t("drawer.start")}</dt>
@@ -142,8 +142,8 @@ export function TaskDrawer({
               {t("drawer.edit")}
             </Button>
           </div>
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
       {editing ? <TaskFormDialog task={task} open onOpenChange={setEditing} /> : null}
     </>
   )

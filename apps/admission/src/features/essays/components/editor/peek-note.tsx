@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Icons } from "@ihsp/ui"
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react"
 import { useEssay, useEssays } from "../../api"
 import { usePhone } from "./use-wide"
@@ -113,17 +113,17 @@ export function PeekNote({ open, onClose, currentId }: { open: boolean; onClose:
 
   if (phone)
     return (
-      <Sheet open onOpenChange={(o) => !o && onClose()}>
-        <SheetContent side="bottom" className="max-h-[88dvh] gap-0 overflow-hidden" data-testid="peek-sheet">
-          <SheetHeader className="border-hairline border-b pr-14">
-            <SheetTitle className="text-lg font-semibold">{t("peekTitle")}</SheetTitle>
-            <SheetDescription className="sr-only">{t("peekHint")}</SheetDescription>
-          </SheetHeader>
+      <Dialog open onOpenChange={(o) => !o && onClose()}>
+        <DialogContent className="max-h-[88dvh] gap-0 overflow-hidden p-0" data-testid="peek-sheet">
+          <DialogHeader className="border-hairline border-b p-4 pr-14">
+            <DialogTitle className="text-lg font-semibold">{t("peekTitle")}</DialogTitle>
+            <DialogDescription className="sr-only">{t("peekHint")}</DialogDescription>
+          </DialogHeader>
           <div className="flex min-h-[40dvh] flex-1 flex-col overflow-hidden p-4">
             <PeekBody currentId={currentId} />
           </div>
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
     )
 
   const down = (event: ReactPointerEvent<HTMLDivElement>) => {

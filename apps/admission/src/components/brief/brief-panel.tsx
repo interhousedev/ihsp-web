@@ -1,6 +1,6 @@
 "use client"
 
-import { cn, Icons, Sheet, SheetContent, SheetDescription, SheetTitle } from "@ihsp/ui"
+import { cn, Dialog, DialogContent, DialogDescription, DialogTitle, Icons } from "@ihsp/ui"
 import type { ReactNode } from "react"
 
 export type BriefSectionSpec = {
@@ -48,10 +48,10 @@ export function BriefPanel({
   closeLabel,
 }: BriefPanelProps) {
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
         showCloseButton={false}
-        className="bg-muted/60 data-[side=right]:w-full data-[side=right]:sm:max-w-[30rem] gap-0 overflow-hidden p-0"
+        className="bg-muted/60 flex h-[min(46rem,calc(100dvh-2rem))] flex-col gap-0 overflow-hidden p-0 sm:max-w-[34rem] max-sm:h-[92dvh]"
       >
         <div className="flex items-center justify-between px-5 pt-4 md:px-7 md:pt-5">
           <button
@@ -65,8 +65,8 @@ export function BriefPanel({
         </div>
         <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-5 pt-5 pb-28 md:px-7">
           <header className="flex flex-col gap-1">
-            <SheetTitle className="text-3xl leading-tight font-bold tracking-tight md:text-4xl">{title}</SheetTitle>
-            {subtitle ? <SheetDescription className="text-base">{subtitle}</SheetDescription> : null}
+            <DialogTitle className="text-3xl leading-tight font-bold tracking-tight md:text-4xl">{title}</DialogTitle>
+            {subtitle ? <DialogDescription className="text-base">{subtitle}</DialogDescription> : null}
           </header>
           {state ?? (
             <>
@@ -88,8 +88,8 @@ export function BriefPanel({
             <div className="pointer-events-auto flex w-full flex-wrap justify-center gap-2">{actions}</div>
           </div>
         ) : null}
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   )
 }
 
