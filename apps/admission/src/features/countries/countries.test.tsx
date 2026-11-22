@@ -22,7 +22,7 @@ const messages = {
 } as unknown as Messages
 
 describe("country facts", () => {
-  test("the info button opens the sheet with the facts and the student's field", async () => {
+  test("the info button opens the dialog with the facts and the student's field", async () => {
     server.use(...countriesHandlers)
     renderAdmissionApp(<CountryInfoRow codes={["FR"]} />, { messages })
     fireEvent.click(screen.getByRole("button", { name: /Facts about/ }))
