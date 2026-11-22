@@ -37981,6 +37981,11 @@ export interface components {
              * @description My short texts for member prompts; only for `short_answer`.
              */
             short_answers: components["schemas"]["ShortAnswerOut"][];
+            /**
+             * Similar Keys
+             * @description Keys of member prompts that only resemble the rest: shown as `similar`, the others are exact matches.
+             */
+            similar_keys: string[];
             /** Spread */
             spread: number;
         };
