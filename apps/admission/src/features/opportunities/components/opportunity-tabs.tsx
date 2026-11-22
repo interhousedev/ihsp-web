@@ -19,6 +19,9 @@ export function OpportunityTabs({ value, planCount }: { value: "catalog" | "scho
           {t("view.catalog")}
         </Link>
       )}
+      <Link href="/opportunities/projects/" className={CHIP}>
+        {t("view.projects")}
+      </Link>
       <Link href="/plan/?view=saved" className={CHIP}>
         {t("view.plan")}
         {planCount > 0 ? ` (${planCount})` : ""}

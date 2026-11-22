@@ -18,7 +18,6 @@ import { HonorDistribution, HonorSuggestionsRow } from "./honor-suggestions"
 import { ItemBoard } from "./item-board"
 import { emptyForm, toForm } from "./item-fields"
 import { NewItemDialog } from "./new-item-dialog"
-import { WhatIfCard } from "./what-if-card"
 
 const STATUSES: ItemStatus[] = ["draft", "ready"]
 const TONE = { draft: "warning", ready: "success" } as const
@@ -140,7 +139,6 @@ export function ItemList() {
           ) : null}
           {kind === "honor" && items.isSuccess ? <HonorDistribution items={ofKind} /> : null}
           {kind === "activity" && ofKind.length > 0 ? <ItemAnalytics items={ofKind} /> : null}
-          {kind === "activity" ? <WhatIfCard /> : null}
           <NextStep href="/chooser/?step=match" label={t("nextStep.explore")} hint={t("nextStep.exploreHint")} />
         </div>
       </div>
