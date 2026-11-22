@@ -15,6 +15,7 @@ import {
   type InstitutionStatus,
   type StaffInstitution,
 } from "../universities-api"
+import { CardDialog } from "./card-dialog"
 import { INSTITUTION_STATUSES, UniversityEditDialog } from "./university-edit-dialog"
 
 const PAGE_SIZE = 25
@@ -24,6 +25,7 @@ const TONES = { published: "success", provisional: "neutral", archived: "neutral
 function Body() {
   const t = useT("universitiesManage")
   const errorMessage = useErrorMessage()
+  const [cardId, setCardId] = useState<string | null>(null)
   const [q, setQ] = useState("")
   const [country, setCountry] = useState("")
   const [status, setStatus] = useState<"" | InstitutionStatus>("")
@@ -119,6 +121,9 @@ function Body() {
               </div>
               <StatusBadge tone={TONES[i.status]} label={t(`statuses.${i.status}`)} />
               <div className="flex flex-wrap gap-1">
+                <Button size="sm" variant="ghost" onClick={() => setCardId(i.id)}>
+                  {t("card")}
+                </Button>
                 <Button size="sm" variant="ghost" onClick={() => setEditing({ item: i })}>
                   {t("edit")}
                 </Button>
@@ -145,6 +150,7 @@ function Body() {
           </Button>
         </div>
       </div>
+      <CardDialog institution={list.data?.items.find((i) => i.id === cardId) ?? null} onClose={() => setCardId(null)} />
       <UniversityEditDialog
         open={editing !== null}
         institution={editing?.item ?? null}

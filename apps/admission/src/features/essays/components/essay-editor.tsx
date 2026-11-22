@@ -14,6 +14,7 @@ import { useEssay, useRestore, useSaveEssay, type Essay, type EssayLink, type Pl
 import { countWords } from "../diff"
 import { CoachPanel } from "./coach-panel"
 import { RefinePanel } from "./refine-panel"
+import { SuppInfo } from "./supp-info"
 import { CheckPanel } from "./check-panel"
 import { EssayMeta } from "./essay-meta"
 import { PlanPane } from "./plan-pane"
@@ -23,11 +24,11 @@ import {
   CommentsDrawer,
   Dock,
   isDockView,
+  PeekNote,
   PreviewDialog,
   ReadPanel,
   ScoreBar,
   TopBar,
-  UnisPanel,
   useReadState,
   useSplit,
   type DockView,
@@ -81,11 +82,27 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const split = useSplit()
   const list = useList()
   const te = useT("essayEditor")
-  const tab = useSearchParams().get("tab")
+  const params = useSearchParams()
+  const tab = params.get("tab")
+  const found = params.get("q")
   const [view, setView] = useState<DockView | null>(isDockView(tab) ? tab : null)
   const [shareOpen, setShareOpen] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
+  const [peekOpen, setPeekOpen] = useState(false)
   const copyFinal = useCopyFinal(draft.body)
+
+  // Arriving from the global search (`?q=`): select the first match in the body and scroll to it.
+  useEffect(() => {
+    const area = body.current
+    if (!found || !area) return
+    const at = area.value.toLocaleLowerCase().indexOf(found.toLocaleLowerCase())
+    if (at < 0) return
+    area.focus({ preventScroll: true })
+    area.setSelectionRange(at, at + found.length)
+    const line = area.value.slice(0, at).split("\n").length
+    area.scrollTop = Math.max(0, (line - 3) * 24)
+    area.scrollIntoView?.({ block: "center" })
+  }, [found])
 
   /** Saves the current draft when it has changes; resolves to the lock version to use next. */
   const flush = useCallback(async (): Promise<number> => {
@@ -185,7 +202,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const institutionIds = [
     ...new Set([...targets.map((tg) => tg.institution_id), entry?.institution.id].filter((id): id is string => !!id)),
   ]
-  const readState = useReadState(essay.id, draft.body, flush)
+  const readState = useReadState(essay.id, draft.body, flush, institutionIds)
   const [selected, setSelected] = useState<number | null>(null)
   const go = (next: DockView) => {
     setView(next)
@@ -198,12 +215,15 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const panes: Record<DockView, ReactNode> = {
     read: (
       <div className="flex flex-col gap-5">
-        <ReadPanel state={readState} selected={selected} onSelect={setSelected} />
+        <ReadPanel essayId={essay.id} state={readState} selected={selected} onSelect={setSelected} />
         <CheckPanel essayId={essay.id} beforeRun={flush} />
         <RefinePanel essayId={essay.id} />
+        <SuppInfo essay={essay} />
+        <Button type="button" variant="outline" className="self-start" onClick={() => go("review")}>
+          {te("detailedReview")}
+        </Button>
       </div>
     ),
-    unis: <UnisPanel essay={essay} onReview={() => go("review")} />,
     plan: (
       <div className="flex flex-col gap-3">
         <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
@@ -247,6 +267,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
         onRedo={() => history("redo")}
         onCopy={() => void copyFinal()}
         onPreview={() => setPreviewOpen(true)}
+        onPeek={() => setPeekOpen((v) => !v)}
         onVersions={() => go("versions")}
         onComments={() => go(view === "comments" ? "read" : "comments")}
         onShare={() => setShareOpen(true)}
@@ -256,7 +277,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
       <div className="flex min-h-0 min-w-0 flex-1 gap-4 p-3 md:p-4">
         <div className="flex min-w-0 flex-1 flex-col gap-3 md:overflow-y-auto md:pr-1 md:[scrollbar-gutter:stable]">
           <div className="mx-auto flex w-full max-w-3xl flex-col gap-3">
-            <ScoreBar essayId={essay.id} state={readState} onRead={() => go("read")} onUnis={() => go("unis")} />
+            <ScoreBar essayId={essay.id} state={readState} onRead={() => go("read")} onUnis={() => go("read")} />
             <EssayMeta
               prompt={draft.prompt_text}
               summary={targets.length > 0 ? targets.map((tg) => tg.prompt).join(" · ") : undefined}
@@ -328,6 +349,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
         <Dock split={split} view={view} onView={go} onClose={() => setView(null)} title={dockTitle} panes={panes} />
       </div>
       <ShareDialog essayId={essay.id} open={shareOpen} onOpenChange={setShareOpen} />
+      <PeekNote open={peekOpen} onClose={() => setPeekOpen(false)} currentId={essay.id} />
       <PreviewDialog
         open={previewOpen}
         onOpenChange={setPreviewOpen}

@@ -19,11 +19,11 @@ import {
 } from "@ihsp/ui"
 import type { ReactNode } from "react"
 
-export const DOCK_TABS = ["read", "unis", "plan", "versions"] as const
+export const DOCK_TABS = ["read", "plan", "versions"] as const
 export const DOCK_MORE = ["examples", "ideas", "comments"] as const
 export type DockTab = (typeof DOCK_TABS)[number]
 export type DockMore = (typeof DOCK_MORE)[number]
-/** `review` is the detailed per-university review: it belongs to the Вузы tab and has a back button. */
+/** `review` is the detailed per-university review: it opens from the Read tab and has a back button. */
 export type DockView = DockTab | DockMore | "review"
 
 export const isDockView = (value: string | null): value is DockView =>
@@ -42,7 +42,7 @@ function TabStrip({
   className?: string
 }) {
   const t = useT("essayEditor")
-  const active = view === "review" ? "unis" : isMore(view) ? "more" : view
+  const active = view === "review" ? "read" : isMore(view) ? "more" : view
   return (
     <Tabs value={active} onValueChange={(next) => onView(next as DockTab)} className={className}>
       <TabsList aria-label={t("tabsLabel")} className="w-full">
@@ -106,9 +106,9 @@ export function Dock({
       <TabStrip view={current} onView={onView} />
       {current === "review" ? (
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" variant="ghost" onClick={() => onView("unis")}>
+          <Button type="button" size="sm" variant="ghost" onClick={() => onView("read")}>
             <Icons.chevronLeft aria-hidden />
-            {t("tab.unis")}
+            {t("tab.read")}
           </Button>
           <h2 className="min-w-0 flex-1 truncate font-medium">{title}</h2>
         </div>

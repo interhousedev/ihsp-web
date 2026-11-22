@@ -10,7 +10,7 @@ import {
   usePlatformLinks,
 } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { AppShell, buttonVariants, CommandPalette, Icons, OfflineBadge, StateView } from "@ihsp/ui"
+import { AppShell, buttonVariants, Icons, OfflineBadge, StateView } from "@ihsp/ui"
 import { ShellSearch } from "./shell-search"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -98,7 +98,7 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
   return (
     <AppShell
       history={<ShellNavControls />}
-      search={sectionNav ? <ShellSearch nav={nav.groups} /> : <CommandPalette nav={nav.groups} />}
+      search={<ShellSearch nav={nav.groups} applicant={sectionNav} />}
       nav={nav.groups}
       bottomNav={sectionNav ? undefined : nav.bottom}
       bottomBar={sectionNav ? <SectionBottomBar items={nav.bottom} /> : undefined}

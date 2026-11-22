@@ -14,6 +14,10 @@ export function getMatches(limit: number, signal?: AbortSignal) {
   return getApiClient().get<AdmissionMatchList>(`${BASE}/matches`, { query: { limit }, signal })
 }
 
+export function getDismissed(signal?: AbortSignal) {
+  return getApiClient().get<AdmissionMatchList>(`${BASE}/matches/dismissed`, { signal })
+}
+
 export function postDecision(id: string, decision: AdmissionMatchDecision) {
   return getApiClient().post<void>(`${BASE}/matches/${encodeURIComponent(id)}/decision`, { decision })
 }

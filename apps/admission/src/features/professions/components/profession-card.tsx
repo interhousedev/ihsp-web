@@ -50,6 +50,7 @@ export function ProfessionCard({
           <p className="font-semibold leading-snug">{profession.name}</p>
           <p className="text-muted-foreground text-xs">{profession.group}</p>
         </div>
+        {profession.custom ? <Pill>{t("custom.badge")}</Pill> : null}
         <Button
           type="button"
           size="sm"
@@ -62,6 +63,7 @@ export function ProfessionCard({
           {picked ? t("card.picked") : t("card.add")}
         </Button>
       </div>
+      {profession.description ? <p className="text-sm leading-snug">{profession.description}</p> : null}
       <div className="flex flex-wrap items-center gap-1.5">
         <RiskBadge profession={profession} />
         {profession.salary_band ? (

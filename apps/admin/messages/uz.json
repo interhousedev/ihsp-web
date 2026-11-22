@@ -42,6 +42,7 @@
     "bots": "Botlar",
     "mcpActivity": "MCP faolligi",
     "vault": "Ombor",
+    "essayKeys": "Esse kalitlari",
     "migration": "Serverni koʻchirish",
     "devices": "Qurilmalar",
     "excuses": "Sababli qoldirishlar",
@@ -2249,6 +2250,64 @@
       "not_found": "Topilmadi",
       "invalid": "Notoʻgʻri maʼlumot",
       "error": "Xato"
+    }
+  },
+  "essayKeys": {
+    "title": "Esse kalitlari",
+    "status": {
+      "title": "Holat",
+      "students": "Kalitli talabalar",
+      "unknown": "Nomaʼlum",
+      "generation": "Kalitlar avlodi",
+      "backup": "Oxirgi nusxa",
+      "backupAt": "{at}, {by}",
+      "noBackup": "Bu avlod uchun hali nusxa yo‘q",
+      "rotation": "Almashtirish",
+      "state": {
+        "idle": "Yo‘q",
+        "running": "Ketmoqda",
+        "done": "Tugadi",
+        "failed": "Xato"
+      },
+      "progress": "Qayta shifrlangan esselar: {done} / {total}",
+      "unreadable": "O‘qib bo‘lmaydigan esselar: {count}"
+    },
+    "backup": {
+      "title": "Zaxira nusxa",
+      "warningTitle": "Har bir kalit avlodi uchun bitta yuklab olish",
+      "warning": "Nusxani har bir kalit avlodi uchun faqat bir marta yuklab olish mumkin. Faylni va maxfiy iborani oflayn, ikki xil ishonchli joyda saqlang. Ularsiz yo‘qolgan kalitlarni tiklab bo‘lmaydi.",
+      "passphrase": "Maxfiy ibora",
+      "confirm": "Maxfiy iborani takrorlang",
+      "tooShort": "Kamida {min} belgi",
+      "mismatch": "Maxfiy iboralar mos kelmaydi",
+      "submit": "Nusxani yuklab olish",
+      "sending": "Tayyorlanmoqda…",
+      "done": "Nusxa yuklab olindi. Uni oflayn saqlang."
+    },
+    "restore": {
+      "title": "Tiklash",
+      "description": "Ombordagi yo‘q kalitlarni yozadi. Mavjud kalit hech qachon ustidan yozilmaydi.",
+      "file": "Nusxa fayli (JSON)",
+      "passphrase": "Nusxaning maxfiy iborasi",
+      "submit": "Kalitlarni tiklash",
+      "sending": "Tiklanmoqda…",
+      "resultTitle": "Tiklash tugadi",
+      "restored": "Tiklandi: {count}",
+      "skipped": "O‘tkazib yuborildi (allaqachon bor): {count}",
+      "conflicts": "Ziddiyatlar, saqlangan kalit boshqacha ({count}):"
+    },
+    "rotate": {
+      "title": "Almashtirish",
+      "description": "Yangi kalit avlodini yaratadi va barcha saqlangan esselarni u bilan qayta shifrlaydi.",
+      "start": "Kalitlarni almashtirish",
+      "confirmTitle": "Esse kalitlari almashtirilsinmi?",
+      "confirmDescription": "Barcha esselar fonda yangi kalit bilan qayta shifrlanadi, bu biroz vaqt olishi mumkin. Tugagach, avvalgi nusxa kalitlarga mos kelmaydi: darhol yangisini oling.",
+      "confirm": "Almashtirish"
+    },
+    "errors": {
+      "backupTaken": "Bu kalit avlodi uchun nusxa allaqachon olingan.",
+      "backupInvalid": "Nusxa fayli yoki maxfiy ibora yaroqsiz.",
+      "rotationRunning": "Almashtirish allaqachon ketmoqda."
     }
   },
   "vault": {

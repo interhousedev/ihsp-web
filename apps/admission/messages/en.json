@@ -191,6 +191,12 @@
     "careerSettings": {
       "title": "Career questions and majors",
       "text": "Inventory questions and the majors list."
+    },
+    "mapsUrl": {
+      "title": "Map link",
+      "text": "Template of the Open on a map link. Use https and one {query} placeholder; leave empty for Google Maps.",
+      "save": "Save",
+      "saved": "Saved"
     }
   },
   "careerSettings": {
@@ -525,6 +531,12 @@
     }
   },
   "essayLedger": {
+    "unreadableTitle": "Some essays can't be opened",
+    "unreadableText": "The key that protected these essays was lost, so their text can't be recovered. You can delete them.",
+    "unreadableItem": "Unreadable essay",
+    "unreadableDelete": "Delete",
+    "unreadableConfirmTitle": "Delete this essay?",
+    "unreadableConfirmText": "The essay can't be read and can't be restored. This can't be undone.",
     "emptyTitle": "No prompts yet",
     "emptyList": "Add universities to your list and their essay prompts appear here.",
     "emptyAll": "No prompts in the catalog yet.",
@@ -557,6 +569,10 @@
     "open": "Open",
     "start": "Start",
     "startEssay": "Start an essay",
+    "askedBy": "Asked by {names}",
+    "similarTo": "similar: {names}",
+    "writeAll": "Write one for all {count}",
+    "draftStarted": "{count, plural, one {# draft} other {# drafts}}",
     "startAnother": "Start another version",
     "drawerPrompts": "Prompts and slots",
     "alsoFits": "Also fits",
@@ -861,11 +877,24 @@
         "fresh": "Fresh",
         "earned": "Earned"
       },
-      "fit": "Fit per university",
-      "fitHint": "The essay read against each university it is written for, under that prompt.",
-      "fitEmpty": "This essay has no university targets yet. Attach it to a prompt of a university on your list.",
-      "fitRun": "Check fit for my universities",
-      "fitRerun": "Check again",
+      "unisTitle": "Universities to read for",
+      "unisHint": "Tap a logo to include or leave out a university. The read runs only for the included ones.",
+      "unisHintRead": "Tap a reviewed logo to see how its admissions officer may react. Tap an included one without a review to review it.",
+      "uniOn": "included",
+      "uniOff": "left out",
+      "uniReviewed": "reviewed",
+      "uniBusy": "reviewing",
+      "uniExclude": "Leave this university out",
+      "ao": "How this university's admissions officer may react",
+      "aoPositive": "Likely to land well",
+      "aoConcerns": "Likely concerns",
+      "risks": "Risks",
+      "history": "History",
+      "historyBack": "Back to the read",
+      "historyEmpty": "No earlier reads yet.",
+      "historyOf": "Read from {date}",
+      "historyWords": "{count} words",
+      "latest": "Latest",
       "alignment": "Alignment {value} out of 100",
       "stale": "Out of date",
       "tips": "Supplement tips",
@@ -1052,6 +1081,8 @@
       "title": "Supp letter for {college}",
       "panel": "Supplemental letter",
       "noCollege": "No college linked",
+      "linkCollege": "Link a university",
+      "linkEmpty": "Your list has no universities yet",
       "targets": "Prompts this essay answers",
       "common": "Common App",
       "prompts": "This year's prompts ({cycle})",
@@ -2555,6 +2586,7 @@
     "rangeFrom": "From",
     "rangeTo": "To",
     "tagPlaceholder": "Type and press Enter",
+    "noUniversities": "No universities yet",
     "removeTag": "Remove {tag}",
     "fromRecord": "From your school record",
     "saving": "Saving…",
@@ -2872,7 +2904,17 @@
       "gap": "Gap"
     },
     "nextOutcomes": "Record results",
-    "nextOutcomesHint": "Note the decisions you receive to keep your plan up to date."
+    "nextOutcomesHint": "Note the decisions you receive to keep your plan up to date.",
+    "aoView": "How a reader may see it",
+    "subsections": "Parts of this section",
+    "open": "Open",
+    "disclaimer": "This is one reader's possible view, not a prediction. Nobody can guarantee an admission outcome, and colleges read applications differently. Decide together with your counselor.",
+    "verdict": {
+      "strong": "Strong",
+      "mixed": "Mixed",
+      "weak": "Weak",
+      "missing": "Missing"
+    }
   },
   "alignment": {
     "title": "Alignment",
@@ -3611,6 +3653,10 @@
     "rejectReasonLabel": "Reason (optional)",
     "requiredHint": "Add at least one detail or fact and an https source link to send."
   },
+  "focuses": {
+    "title": "What {name} says it looks for",
+    "source": "Source: {host}"
+  },
   "catalogFacts": {
     "choose": "Choose",
     "yes": "Yes",
@@ -3691,7 +3737,26 @@
     "rangeError": "Enter a number from {min} to {max}",
     "suppPromptsTitle": "Supplement prompts",
     "suppPromptLimit": "{count} words max",
-    "suppPromptOptional": "Optional"
+    "suppPromptOptional": "Optional",
+    "rankingSystem": "Ranking",
+    "rankingSubject": "Subject",
+    "rankingRank": "Rank (12 or 101-150)",
+    "rankingYear": "Year",
+    "rankingSource": "Source link",
+    "rankingAdd": "Add ranking",
+    "rankingAddFor": "Add ranking to {label}",
+    "focusText": "Focus ({lang})",
+    "focusQuote": "Exact quote (up to 300 characters)",
+    "focusSource": "Page on the university site",
+    "focusFetched": "Fetched on (YYYY-MM-DD)",
+    "focusVerified": "Verified",
+    "focusAdd": "Add focus",
+    "focusAddFor": "Add focus to {label}",
+    "experience": {
+      "social": "Social life",
+      "research": "Research",
+      "work": "Work experience"
+    }
   },
   "courses": {
     "add": "Add",
@@ -4399,12 +4464,74 @@
       "title": "You have seen every match",
       "text": "Change your algorithm to get a fresh set of colleges."
     },
+    "dismissed": {
+      "title": "Dismissed",
+      "text": "Colleges you marked “Not my vibe”.",
+      "return": "Return",
+      "returnLabel": "Return {name} to the deck"
+    },
     "deck": {
       "label": "College cards"
     },
     "settings": {
       "open": "Settings",
       "title": "Matching settings"
+    },
+    "extras": {
+      "more": "Show more",
+      "less": "Show less",
+      "fields": "Fields of study",
+      "rankings": "Subject rankings",
+      "netPrice": "{amount} / yr after aid",
+      "grossPrice": "{amount} / yr",
+      "fitsBudget": "Fits budget",
+      "aboveBudget": "Above budget",
+      "estGross": "Sticker price per year (tuition, housing and fees) as reported by the university. No average aid is known, so this is before any aid.",
+      "expHow": "Scores from 1 to 5 are editorial ratings by the admissions team, not official data.",
+      "estLabel": "How is this estimated?",
+      "estHow": "Estimate: sticker price minus the average aid ({aid}) this university reports. Your own aid may differ.",
+      "experience": {
+        "social": "Social life",
+        "research": "Research",
+        "work": "Work experience"
+      },
+      "score": "{score} out of 5",
+      "about": "About: {name}",
+      "map": "Open on a map",
+      "subjects": {
+        "overall": "Overall",
+        "architecture": "Architecture",
+        "architecture_planning": "Architecture & planning",
+        "arts_design": "Arts & design",
+        "arts_humanities": "Arts & humanities",
+        "biology": "Biology",
+        "biomedical_engineering": "Biomedical engineering",
+        "business": "Business",
+        "business_economics": "Business & economics",
+        "chemical_engineering": "Chemical engineering",
+        "chemistry": "Chemistry",
+        "computer_data": "Computer & data",
+        "computer_science": "Computer science",
+        "data_science": "Data science",
+        "economics": "Economics",
+        "education": "Education",
+        "engineering": "Engineering",
+        "environment": "Environment",
+        "humanities": "Humanities",
+        "law": "Law",
+        "law_politics": "Law & politics",
+        "life_health": "Life & health sciences",
+        "life_sciences": "Life sciences",
+        "management": "Management",
+        "mathematics": "Mathematics",
+        "medicine": "Medicine",
+        "natural_sciences": "Natural sciences",
+        "physics": "Physics",
+        "politics": "Politics",
+        "psychology": "Psychology",
+        "social_sciences": "Social sciences",
+        "taxation": "Taxation"
+      }
     }
   },
   "uniChat": {
@@ -5584,7 +5711,11 @@
       "empty": "No professions found. Try another word.",
       "error": "Could not load professions",
       "groups": "Profession groups",
-      "allGroups": "All"
+      "allGroups": "All",
+      "addCustom": "Add “{query}” as my profession",
+      "addCustomHint": "Not what you are looking for? Describe it in your own words and we will fill in the card.",
+      "filling": "Filling in the card…",
+      "fillError": "Could not fill in the card. Try again later."
     },
     "risk": {
       "low": "Low AI exposure",
@@ -5643,7 +5774,13 @@
       "error": "Could not suggest. Try again later.",
       "byQuiz": "The test points to: {majors}.",
       "toField": "Field of study →",
-      "notInCatalogue": "“{title}” is not in the catalogue: look for a similar profession with search."
+      "addCustom": "Add “{title}” as my profession"
+    },
+    "custom": {
+      "badge": "Your own",
+      "confirm": "Check the card and add it to your picks.",
+      "discard": "Discard",
+      "approx": "Closest ISCO group: {isco}"
     }
   },
   "profileHub": {
@@ -5691,7 +5828,6 @@
     "dockLabel": "Essay analysis",
     "tab": {
       "read": "Read",
-      "unis": "Universities",
       "plan": "Plan",
       "versions": "Versions",
       "more": "More",
@@ -5706,6 +5842,15 @@
     "copyFailed": "Could not copy the text",
     "preview": "Preview",
     "previewTitle": "Final text",
+    "peek": "Peek another essay",
+    "peekTitle": "Peek at another essay",
+    "peekHint": "A read-only copy of another of your essays",
+    "peekPick": "Choose an essay",
+    "peekEmpty": "No other essays yet",
+    "peekPrompt": "Prompt",
+    "peekNoText": "This essay is empty.",
+    "peekClose": "Close the note",
+    "peekDrag": "Drag to move",
     "previewEmpty": "Nothing to preview yet.",
     "previewCount": "{words, plural, one {# word} other {# words}} · {chars} characters",
     "previewCountLimit": "{words} of {limit} words · {chars} characters",
@@ -5736,17 +5881,14 @@
       "pages": "Pages",
       "universities": "Universities",
       "essays": "Essays",
-      "tasks": "Tasks"
+      "tasks": "Tasks",
+      "activities": "Activities and honors"
     },
-    "pages": {
-      "practice": "Essay practice",
-      "byUniversity": "Essays by university",
-      "professions": "Professions",
-      "weights": "What matters to me (radar)",
-      "catalog": "University catalog",
-      "graph": "List graph",
-      "gantt": "Deadlines and tasks",
-      "opportunities": "Opportunities and scholarships"
+    "fields": {
+      "title": "Title",
+      "prompt": "Prompt",
+      "body": "In the text",
+      "notes": "In the notes"
     }
   },
   "opportunitiesManage": {
@@ -5849,6 +5991,67 @@
       "published": "Published",
       "provisional": "Provisional",
       "archived": "Hidden"
+    },
+    "scorecard": {
+      "fill": "Fill from College Scorecard",
+      "title": "College Scorecard",
+      "search": "School name or UNITID",
+      "empty": "No schools found.",
+      "attach": "Attach facts",
+      "create": "Create from Scorecard",
+      "done": "Scorecard data saved.",
+      "add": "Add from College Scorecard"
+    },
+    "card": "Card"
+  },
+  "catalogCard": {
+    "title": "Institution card",
+    "card": "Card",
+    "tabs": {
+      "basics": "Basics",
+      "facts": "Facts",
+      "scholarships": "Scholarships",
+      "description": "Description"
+    },
+    "saved": "Saved",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "retry": "Try again",
+    "editBasics": "Edit name, location and status",
+    "mapUrl": "Map link",
+    "mapUrlHint": "HTTPS link to the campus on a map. Leave empty to remove it.",
+    "incomplete": "Some filled facts lack an https source link or a year.",
+    "verified": "Mark saved facts as verified by me",
+    "saveFacts": "Save facts ({count})",
+    "noScholarships": "No scholarships yet.",
+    "addScholarship": "Add scholarship",
+    "sName": "Name",
+    "sProvider": "Provider",
+    "sBasis": "Basis",
+    "sCoverageMin": "Covers from, %",
+    "sCoverageMax": "Covers up to, %",
+    "sCountry": "Country (2 letters)",
+    "sCycle": "Cycle year",
+    "sCovers": "Covers (comma separated)",
+    "sUrl": "Link",
+    "providers": {
+      "institution": "Institution",
+      "government": "Government",
+      "foundation": "Foundation"
+    },
+    "bases": {
+      "merit": "Merit",
+      "need": "Need",
+      "government": "Government",
+      "sports": "Sports",
+      "work_study": "Work-study"
+    },
+    "locales": {
+      "uz": "Uzbek",
+      "ru": "Russian",
+      "en": "English"
     }
   }
 }

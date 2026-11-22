@@ -102,6 +102,7 @@ export const keys = {
     syncRuns: (filters?: object) => ["admin", "sync-runs", params(filters)] as const,
     jobs: () => ["admin", "jobs"] as const,
     vaultStatus: () => ["admin", "vault", "status"] as const,
+    essayKeys: () => ["admin", "essay-keys", "status"] as const,
     migration: () => ["admin", "migration"] as const,
     userFacePhoto: (userId: string) => ["admin", "users", userId, "face-photo"] as const,
     devices: () => ["admin", "devices"] as const,

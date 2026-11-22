@@ -22,11 +22,13 @@ import { NextStep } from "../../../components/next-step"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
   isActive,
+  linkHref,
   SECTION_KEYS,
   REVIEWS_KEY,
   startReview,
   useReviews,
   type AppReview,
+  type ReviewLink,
   type ReviewPoint,
   type ReviewSection,
 } from "../api"
@@ -181,6 +183,8 @@ export function ReviewView({ review }: { review: AppReview }) {
           status: "pending",
           score: null,
           summary: "",
+          ao_view: "",
+          subsections: [],
           findings: [],
           next_actions: [],
         },
@@ -250,6 +254,7 @@ export function ReviewView({ review }: { review: AppReview }) {
             </ol>
           </section>
         ) : null}
+        <p className="text-muted-foreground text-xs">{t("disclaimer")}</p>
         <PageSection title={t("sections")} className="gap-3">
           {report.section_scores.map((score) => (
             <SectionCard
@@ -331,6 +336,18 @@ function Points({ title, points }: { title: string; points: ReviewPoint[] }) {
   )
 }
 
+/** The "Open" button of a finding or subsection; nothing when the link points nowhere. */
+function OpenLink({ link }: { link: ReviewLink | undefined }) {
+  const t = useT("appReview")
+  const href = linkHref(link)
+  if (!href) return null
+  return (
+    <Link href={href} className={buttonVariants({ size: "sm", variant: "outline" })}>
+      {t("open")}
+    </Link>
+  )
+}
+
 function SectionCard({
   name,
   score,
@@ -344,8 +361,10 @@ function SectionCard({
 }) {
   const t = useT("appReview")
   const status = section?.status ?? "skipped"
+  const findings = section?.findings ?? []
+  const subsections = section?.subsections ?? []
   return (
-    <details className="group rounded-lg border p-3">
+    <details className="group rounded-lg border p-3" data-testid={`card-${section?.key ?? name}`}>
       <summary className="flex cursor-pointer items-center justify-between gap-2">
         <span className="font-medium">{name}</span>
         <span className="flex items-center gap-2">
@@ -353,14 +372,48 @@ function SectionCard({
           <span className="tabular-nums">{t("score", { score: String(score) })}</span>
         </span>
       </summary>
-      <div className="mt-2 flex flex-col gap-2 text-sm">
+      <div className="mt-2 flex flex-col gap-3 text-sm">
         {comment ? <p>{comment}</p> : null}
         {section?.summary ? <p className="text-muted-foreground">{section.summary}</p> : null}
-        {section && section.findings.length > 0 ? (
-          <ul className="flex flex-col gap-1">
-            {section.findings.map((f, i) => (
-              <li key={i}>
-                <Pill>{t(`kind.${f.kind}`)}</Pill> {f.text}
+        {section?.ao_view ? (
+          <div className="bg-muted/50 flex flex-col gap-1 rounded-md p-3">
+            <span className="text-xs font-medium">{t("aoView")}</span>
+            <p>{section.ao_view}</p>
+          </div>
+        ) : null}
+        {subsections.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            <h3 className="text-xs font-medium">{t("subsections")}</h3>
+            {subsections.map((sub, i) => (
+              <details key={`${sub.key}-${i}`} className="rounded-md border p-2">
+                <summary className="flex cursor-pointer items-center justify-between gap-2">
+                  <span className="font-medium">{sub.title}</span>
+                  <Pill>{t(`verdict.${sub.verdict}`)}</Pill>
+                </summary>
+                <div className="mt-2 flex flex-col gap-2">
+                  {sub.ao_view ? <p>{sub.ao_view}</p> : null}
+                  <ul className="flex flex-col gap-1">
+                    {(sub.finding_indexes ?? []).flatMap((n) => {
+                      const f = findings[n]
+                      return f ? [<li key={n}>{`${t(`kind.${f.kind}`)}: ${f.text}`}</li>] : []
+                    })}
+                  </ul>
+                  <div>
+                    <OpenLink link={sub.link} />
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        ) : null}
+        {findings.length > 0 ? (
+          <ul className="flex flex-col gap-2">
+            {findings.map((f, i) => (
+              <li key={i} className="flex flex-wrap items-center gap-2">
+                <span>
+                  <Pill>{t(`kind.${f.kind}`)}</Pill> {f.text}
+                </span>
+                <OpenLink link={f.link} />
               </li>
             ))}
           </ul>

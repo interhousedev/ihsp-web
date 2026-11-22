@@ -8,7 +8,7 @@ import { useState } from "react"
 import { careerKeys, careerPlanQuery, suggest } from "../../career/api"
 import { useQuizMajors } from "../../career/components/career-quiz-dialog"
 import { careerMajorsQuery, pick } from "../../career/api"
-import { ikigaiQuery, searchProfessionsQuery, type Profession } from "../api"
+import { fillCustomProfession, ikigaiQuery, searchProfessionsQuery, type Profession } from "../api"
 import { EMPTY_IKIGAI, filledCount, MAX_PICKS, SUGGEST_MIN_CIRCLES } from "../model"
 
 /**
@@ -32,6 +32,13 @@ export function SuggestedRow({
   const majors = useQuery(careerMajorsQuery())
   const quiz = useQuizMajors()
   const [missing, setMissing] = useState<string | null>(null)
+  const fill = useMutation({
+    mutationFn: (title: string) => fillCustomProfession(title, locale),
+    onSuccess: (card) => {
+      setMissing(null)
+      onAdd(card)
+    },
+  })
   const run = useMutation({
     mutationFn: () => suggest("professions", locale),
     onSuccess: (data) => client.setQueryData(careerKeys.plan(), data),
@@ -84,8 +91,23 @@ export function SuggestedRow({
         </p>
       ) : null}
       {missing ? (
-        <p role="status" className="text-muted-foreground text-xs">
-          {t("suggest.notInCatalogue", { title: missing })}
+        <div role="status" className="flex flex-wrap items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="h-auto min-h-9 max-w-full text-start whitespace-normal"
+            disabled={fill.isPending || pickedFull || pickedIds.length >= MAX_PICKS}
+            onClick={() => fill.mutate(missing)}
+          >
+            <Icons.sparkles aria-hidden />
+            {fill.isPending ? t("search.filling") : t("suggest.addCustom", { title: missing })}
+          </Button>
+        </div>
+      ) : null}
+      {fill.isError ? (
+        <p role="alert" className="text-destructive text-xs">
+          {t("search.fillError")}
         </p>
       ) : null}
       {items.length > 0 && !run.isPending ? (

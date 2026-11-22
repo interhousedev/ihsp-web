@@ -1,9 +1,11 @@
 "use client"
 
-import { useT } from "@ihsp/i18n"
+import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, cn, Icons, Pill, Skeleton, StateView } from "@ihsp/ui"
 import { CoachError } from "../coach-error"
-import type { DeepRead, ParagraphStrength } from "../../flow/steps-api"
+import { useState } from "react"
+import { useReadHistory, useStoredRead, type DeepRead, type ParagraphStrength } from "../../flow/steps-api"
+import { ReadUnisStrip } from "./read-unis-strip"
 import type { ReadState } from "./read-state"
 import { ScoreRing } from "./score-bar"
 
@@ -43,43 +45,17 @@ function Uniqueness({ read }: { read: DeepRead }) {
   )
 }
 
-/** The Разбор tab: what the stripes on the text mean, the one fix, and the moments worth keeping. */
-export function ReadPanel({
-  state,
+function ReadBody({
+  read,
   selected,
   onSelect,
 }: {
-  state: ReadState
+  read: DeepRead
   selected: number | null
   onSelect: (paragraph: number | null) => void
 }) {
   const t = useT("essayFlow")
   const te = useT("essayEditor")
-  const { query, run, read, stale, start } = state
-  if (query.isPending) return <Skeleton className="h-48 w-full" />
-  if (query.isError) return <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
-  const button = (
-    <div className="flex flex-col gap-1">
-      <Button
-        type="button"
-        variant={stale || !read ? "default" : "outline"}
-        disabled={run.isPending}
-        onClick={() => void start()}
-      >
-        <Icons.sparkles aria-hidden />
-        {run.isPending ? t("deep.running") : read ? t("deep.rerun") : t("deep.run")}
-      </Button>
-      <span className="text-muted-foreground text-xs">{t("deep.runHint")}</span>
-      <CoachError error={run.error} />
-    </div>
-  )
-  if (!read)
-    return (
-      <div className="flex flex-col gap-3" data-testid="read-panel">
-        <p className="text-sm">{te("readNone")}</p>
-        {button}
-      </div>
-    )
   const weakest = read.paragraphs.find((p) => p.paragraph === read.fix_paragraph)?.strength === "weak"
   const dimension = read.fix_dimension.trim().toLowerCase()
   const fixWhere = weakest
@@ -88,7 +64,7 @@ export function ReadPanel({
       : te("fixWhere", { paragraph: read.fix_paragraph })
     : null
   return (
-    <div className="flex flex-col gap-4" data-testid="read-panel">
+    <>
       <Uniqueness read={read} />
       <div className="bg-warning-muted/40 border-hairline rounded-card flex flex-col gap-1.5 border p-3">
         <h3 className="text-sm font-semibold">{t("deep.fix")}</h3>
@@ -156,6 +132,138 @@ export function ReadPanel({
           </ul>
         </section>
       ) : null}
+    </>
+  )
+}
+
+/** The past reads of the essay: pick one to see it read-only; the newest carries a "latest" badge. */
+function History({
+  essayId,
+  selected,
+  onSelect,
+  onClose,
+}: {
+  essayId: string
+  selected: number | null
+  onSelect: (paragraph: number | null) => void
+  onClose: () => void
+}) {
+  const t = useT("essayFlow")
+  const fmt = useFormatters()
+  const list = useReadHistory(essayId, true)
+  const [readId, setReadId] = useState<string | null>(null)
+  const one = useStoredRead(essayId, readId)
+  const items = list.data ?? []
+  return (
+    <div className="flex flex-col gap-3" data-testid="read-history">
+      <div className="flex items-center gap-1">
+        <Button type="button" size="sm" variant="ghost" onClick={readId ? () => setReadId(null) : onClose}>
+          <Icons.chevronLeft aria-hidden />
+          {readId ? t("deep.history") : t("deep.historyBack")}
+        </Button>
+        <h3 className="min-w-0 flex-1 truncate text-sm font-semibold">{t("deep.history")}</h3>
+      </div>
+      {readId ? (
+        one.isPending ? (
+          <Skeleton className="h-40 w-full" />
+        ) : one.isError ? (
+          <StateView state="error" error={one.error} onRetry={() => void one.refetch()} />
+        ) : (
+          <div className="flex flex-col gap-4">
+            <p className="text-muted-foreground flex items-center gap-2 text-xs">
+              {t("deep.historyOf", { date: fmt.dateTime(new Date(one.data.created_at)) })}
+              {one.data.latest ? <Pill tone="success">{t("deep.latest")}</Pill> : null}
+            </p>
+            <ReadBody read={one.data.read} selected={selected} onSelect={onSelect} />
+          </div>
+        )
+      ) : list.isPending ? (
+        <Skeleton className="h-24 w-full" />
+      ) : list.isError ? (
+        <StateView state="error" error={list.error} onRetry={() => void list.refetch()} />
+      ) : items.length === 0 ? (
+        <p className="text-muted-foreground text-sm">{t("deep.historyEmpty")}</p>
+      ) : (
+        <ul className="flex flex-col gap-1.5">
+          {items.map((item, i) => (
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => setReadId(item.id)}
+                className="bg-card border-hairline rounded-card flex min-h-11 w-full flex-col gap-0.5 border p-2.5 text-left"
+              >
+                <span className="flex flex-wrap items-center gap-1.5 text-xs">
+                  <span className="font-medium">{fmt.dateTime(new Date(item.created_at))}</span>
+                  {i === 0 ? <Pill tone="success">{t("deep.latest")}</Pill> : null}
+                  {item.words > 0 ? (
+                    <span className="text-muted-foreground">{t("deep.historyWords", { count: item.words })}</span>
+                  ) : null}
+                </span>
+                {item.summary ? <span className="line-clamp-2 text-sm">{item.summary}</span> : null}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+/** The Read tab: the universities to read for, what the stripes on the text mean, the one fix and the moments. */
+export function ReadPanel({
+  essayId,
+  state,
+  selected,
+  onSelect,
+}: {
+  essayId: string
+  state: ReadState
+  selected: number | null
+  onSelect: (paragraph: number | null) => void
+}) {
+  const t = useT("essayFlow")
+  const te = useT("essayEditor")
+  const [showHistory, setShowHistory] = useState(false)
+  const { query, run, read, stale, start, unis } = state
+  if (query.isPending) return <Skeleton className="h-48 w-full" />
+  if (query.isError) return <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
+  if (showHistory)
+    return <History essayId={essayId} selected={selected} onSelect={onSelect} onClose={() => setShowHistory(false)} />
+  const button = (
+    <div className="flex flex-col gap-1">
+      <Button
+        type="button"
+        variant={stale || !read ? "default" : "outline"}
+        disabled={run.isPending}
+        onClick={() => void start()}
+      >
+        <Icons.sparkles aria-hidden />
+        {run.isPending ? t("deep.running") : read ? t("deep.rerun") : t("deep.run")}
+      </Button>
+      <span className="text-muted-foreground text-xs">{t("deep.runHint")}</span>
+      <CoachError error={run.error} />
+    </div>
+  )
+  const historyButton = (
+    <Button type="button" size="sm" variant="ghost" className="self-start" onClick={() => setShowHistory(true)}>
+      <Icons.clock aria-hidden />
+      {t("deep.history")}
+    </Button>
+  )
+  if (!read)
+    return (
+      <div className="flex flex-col gap-3" data-testid="read-panel">
+        <ReadUnisStrip unis={unis} hasRead={false} />
+        <p className="text-sm">{te("readNone")}</p>
+        {historyButton}
+        {button}
+      </div>
+    )
+  return (
+    <div className="flex flex-col gap-4" data-testid="read-panel">
+      <ReadUnisStrip unis={unis} hasRead />
+      {historyButton}
+      <ReadBody read={read} selected={selected} onSelect={onSelect} />
       {button}
     </div>
   )

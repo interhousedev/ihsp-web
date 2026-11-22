@@ -63,6 +63,7 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("aiHarness"), url: "/ai/connectors/", icon: "route", matchPrefixes: ["/ai/"] },
             { title: t("devices"), url: "/devices/", icon: "laptop" },
             { title: t("vault"), url: "/vault/", icon: "lock" },
+            { title: t("essayKeys"), url: "/essay-keys/", icon: "key" },
             { title: t("migration"), url: "/migration/", icon: "server" },
             { title: t("legal"), url: "/legal/", icon: "fileTypeDoc" },
             { title: t("erasure"), url: "/erasure/", icon: "trash" },

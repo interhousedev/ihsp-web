@@ -48,6 +48,7 @@ const {
   resetPersonalTokens,
   resetAdminMigration,
   resetAdminVault,
+  resetAdminEssayKeys,
   resetAdminKnowledge,
   resetCreatedFiles,
   resetLibraryState,
@@ -116,6 +117,7 @@ afterEach(() => {
   resetPersonalTokens()
   resetAdminMigration()
   resetAdminVault()
+  resetAdminEssayKeys()
   resetAdminKnowledge()
   resetWorkOffsStaffState()
   resetExcusesState()

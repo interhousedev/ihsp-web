@@ -26,6 +26,7 @@ import { idFactorsHandlers } from "./id-factors"
 import { idPersonalTokensHandlers } from "./id-personal-tokens"
 import { adminMigrationHandlers } from "./admin-migration"
 import { adminVaultHandlers } from "./admin-vault"
+import { adminEssayKeysHandlers } from "./admin-essay-keys"
 import { libraryHandlers } from "./library"
 import { lessonSourcesHandlers } from "./lesson-sources"
 import { linksHandlers } from "./links"
@@ -76,6 +77,7 @@ export { resetAdminJobs } from "./admin-jobs"
 export { personalTokenSecret, resetPersonalTokens } from "./id-personal-tokens"
 export { resetAdminMigration, setAdminMigration } from "./admin-migration"
 export { resetAdminVault } from "./admin-vault"
+export { resetAdminEssayKeys } from "./admin-essay-keys"
 export { aiConnectorsFixture, aiPipelinesFixture, aiRequestsFixture } from "./admin-ai-harness"
 export { resetFaces, setMyFace } from "./faces"
 export { onboardingCalls, resetOnboarding, setOnboarding, setOnboardingEmisEntries } from "./onboarding"
@@ -146,6 +148,7 @@ export {
   idPersonalTokensHandlers,
   adminMigrationHandlers,
   adminVaultHandlers,
+  adminEssayKeysHandlers,
   idHandlers,
   libraryHandlers,
   lessonSourcesHandlers,
@@ -198,6 +201,7 @@ export const allHandlers = [
   ...idPersonalTokensHandlers,
   ...adminMigrationHandlers,
   ...adminVaultHandlers,
+  ...adminEssayKeysHandlers,
   ...idAdminHandlers,
   ...registrationHandlers,
   ...loginCuesHandlers,

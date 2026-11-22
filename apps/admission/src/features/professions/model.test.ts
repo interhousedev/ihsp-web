@@ -1,5 +1,8 @@
 import { describe, expect, it } from "bun:test"
-import { addPick, exposurePct, filledCount, MAX_PICKS, removePick } from "./model"
+import type { Profession } from "./api"
+import { addPick, exposurePct, filledCount, isPoorMatch, MAX_PICKS, removePick } from "./model"
+
+const named = (name: string) => ({ id: name, name }) as Profession
 
 describe("professions model", () => {
   it("caps picks and ignores duplicates", () => {
@@ -15,5 +18,11 @@ describe("professions model", () => {
   })
   it("counts filled circles", () => {
     expect(filledCount({ love: ["a"], good_at: [], needs: ["b"], paid: [] })).toBe(2)
+  })
+  it("offers a custom title when no name matches", () => {
+    expect(isPoorMatch([], "solution architect")).toBe(true)
+    expect(isPoorMatch([named("Software developer")], "solution architect")).toBe(true)
+    expect(isPoorMatch([named("Solution Architect")], "solution")).toBe(false)
+    expect(isPoorMatch([], "a")).toBe(false)
   })
 })

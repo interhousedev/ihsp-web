@@ -42,6 +42,7 @@
     "bots": "Bots",
     "mcpActivity": "MCP activity",
     "vault": "Vault",
+    "essayKeys": "Essay keys",
     "migration": "Server migration",
     "devices": "Devices",
     "excuses": "Excuses",
@@ -2249,6 +2250,64 @@
       "not_found": "Not found",
       "invalid": "Invalid input",
       "error": "Error"
+    }
+  },
+  "essayKeys": {
+    "title": "Essay keys",
+    "status": {
+      "title": "Status",
+      "students": "Students with keys",
+      "unknown": "Unknown",
+      "generation": "Key generation",
+      "backup": "Last backup",
+      "backupAt": "{at}, by {by}",
+      "noBackup": "No backup yet for this generation",
+      "rotation": "Rotation",
+      "state": {
+        "idle": "Idle",
+        "running": "Running",
+        "done": "Done",
+        "failed": "Failed"
+      },
+      "progress": "{done} of {total} essays re-encrypted",
+      "unreadable": "Unreadable essays: {count}"
+    },
+    "backup": {
+      "title": "Backup",
+      "warningTitle": "One download per key generation",
+      "warning": "The backup can be downloaded only once for each key generation. Store the file and its passphrase offline, in two separate safe places. Without them, lost keys cannot be recovered.",
+      "passphrase": "Passphrase",
+      "confirm": "Repeat the passphrase",
+      "tooShort": "At least {min} characters",
+      "mismatch": "The passphrases do not match",
+      "submit": "Download the backup",
+      "sending": "Preparing…",
+      "done": "The backup is downloaded. Store it offline."
+    },
+    "restore": {
+      "title": "Restore",
+      "description": "Writes the keys missing from the vault. A key that already exists is never overwritten.",
+      "file": "Backup file (JSON)",
+      "passphrase": "Backup passphrase",
+      "submit": "Restore the keys",
+      "sending": "Restoring…",
+      "resultTitle": "Restore finished",
+      "restored": "Restored: {count}",
+      "skipped": "Skipped (already present): {count}",
+      "conflicts": "Conflicts, the stored key differs ({count}):"
+    },
+    "rotate": {
+      "title": "Rotation",
+      "description": "Creates a new key generation and re-encrypts every stored essay with it.",
+      "start": "Rotate the keys",
+      "confirmTitle": "Rotate the essay keys?",
+      "confirmDescription": "Every essay is re-encrypted with a new key in the background, which can take a while. After it finishes, the previous backup no longer matches the keys: take a new backup straight away.",
+      "confirm": "Rotate"
+    },
+    "errors": {
+      "backupTaken": "The keys are already backed up for this generation.",
+      "backupInvalid": "The backup file or the passphrase is not valid.",
+      "rotationRunning": "A rotation is already running."
     }
   },
   "vault": {

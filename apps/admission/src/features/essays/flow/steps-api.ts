@@ -102,10 +102,16 @@ export function useRunDeepRead(essayId: string) {
         { refresh },
         { headers: { "Accept-Language": locale } },
       ),
-    onSuccess: (data) => qc.setQueryData(flowKeys.deep(essayId), data),
+    onSuccess: (data) => {
+      qc.setQueryData(flowKeys.deep(essayId), data)
+      void qc.invalidateQueries({ queryKey: [...flowKeys.deep(essayId), "history"] })
+    },
   })
 }
 
+/** The server limit of universities in one review request. */
+export const MAX_REVIEW_UNIS = 5
+export type AoReaction = { summary: string; likely_positive: string[]; likely_concerns: string[] }
 export type UniReview = {
   alignment: number
   fit_summary: string
@@ -113,6 +119,7 @@ export type UniReview = {
   risks: string[]
   sourced: boolean
   supplement_tips: string[]
+  ao_reaction?: AoReaction | null
 }
 export type UniEntry = { institution_id: string; name: string; cached: boolean; stale: boolean; review: UniReview }
 export type EssayReviews = { base: unknown; base_cached: boolean; base_stale: boolean; universities: UniEntry[] }
@@ -127,17 +134,50 @@ export function useStoredReviews(essayId: string | null) {
   })
 }
 
-export function useGroupCritique(essayId: string) {
+/** Reviews the essay for the given universities (at most 5); the results replace those of the same universities. */
+export function useReviewUnis(essayId: string) {
   const locale = useLocale()
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (refresh: boolean) =>
+    mutationFn: (institutionIds: string[]) =>
       getApiClient().post<EssayReviews>(
-        `${BASE}/essays/${seg(essayId)}/group-critique`,
-        { refresh },
+        `${BASE}/essays/${seg(essayId)}/reviews`,
+        { institution_ids: institutionIds, refresh: false },
         { headers: { "Accept-Language": locale } },
       ),
-    onSuccess: (data) => qc.setQueryData(flowKeys.reviews(essayId), data),
+    onSuccess: (data) =>
+      qc.setQueryData<EssayReviews>(flowKeys.reviews(essayId), (old) => {
+        const fresh = new Set(data.universities.map((u) => u.institution_id))
+        return {
+          ...data,
+          universities: [
+            ...(old?.universities ?? []).filter((u) => !fresh.has(u.institution_id)),
+            ...data.universities,
+          ],
+        }
+      }),
+  })
+}
+
+/** `ReadHistoryItemOut`: one past deep read. */
+export type ReadHistoryItem = { id: string; created_at: string; words: number; summary: string; universities: string[] }
+export type StoredRead = { id: string; created_at: string; latest: boolean; read: DeepRead }
+
+export function useReadHistory(essayId: string, enabled: boolean) {
+  return useQuery({
+    queryKey: [...flowKeys.deep(essayId), "history"] as const,
+    enabled,
+    queryFn: ({ signal }) =>
+      getApiClient().get<ReadHistoryItem[]>(`${BASE}/essays/${seg(essayId)}/deep-read/history`, { signal }),
+  })
+}
+
+export function useStoredRead(essayId: string, readId: string | null) {
+  return useQuery({
+    queryKey: [...flowKeys.deep(essayId), "read", readId ?? ""] as const,
+    enabled: !!readId,
+    queryFn: ({ signal }) =>
+      getApiClient().get<StoredRead>(`${BASE}/essays/${seg(essayId)}/deep-read/${seg(readId ?? "")}`, { signal }),
   })
 }
 

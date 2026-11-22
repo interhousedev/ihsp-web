@@ -5,7 +5,8 @@ import { cn, Icons, Input, Skeleton, StateView, useDebounce } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useMemo, useState } from "react"
 import { searchProfessionsQuery, type Profession } from "../api"
-import { groupsOf, rankByFields, uniqueSources } from "../model"
+import { groupsOf, isPoorMatch, rankByFields, uniqueSources } from "../model"
+import { CustomProfession } from "./custom-profession"
 import { ExposureNote, ProfessionCard } from "./profession-card"
 
 /**
@@ -40,6 +41,10 @@ export function ProfessionSearch({
   const groups = useMemo(() => groupsOf(all), [all])
   const items = group && groups.includes(group) ? all.filter((p) => p.group === group) : all
   const sources = uniqueSources(items)
+  const custom =
+    term && !list.isPending && !list.isError && isPoorMatch(all, term) ? (
+      <CustomProfession key={term} query={term} full={full} fieldLabel={fieldLabel} onAdd={onAdd} />
+    ) : null
   return (
     <div className={cn("flex min-h-0 min-w-0 flex-col gap-2.5", className)}>
       <div className="relative">
@@ -84,7 +89,10 @@ export function ProfessionSearch({
       ) : list.isError ? (
         <StateView state="error" error={list.error} onRetry={() => void list.refetch()} />
       ) : items.length === 0 ? (
-        <StateView state="empty" emptyText={t("search.empty")} />
+        <div className="flex flex-col gap-3">
+          <StateView state="empty" emptyText={t("search.empty")} />
+          {custom}
+        </div>
       ) : (
         <div className="-me-1 min-h-0 overflow-y-auto pe-1 lg:max-h-[calc(100dvh-20rem)]" tabIndex={-1}>
           <ul className="grid gap-2.5 xl:grid-cols-2" aria-label={t("search.results")}>
@@ -99,6 +107,7 @@ export function ProfessionSearch({
               />
             ))}
           </ul>
+          {custom ? <div className="mt-3">{custom}</div> : null}
           <div className="mt-3 flex flex-col gap-1">
             <ExposureNote />
             {sources.length > 0 ? (

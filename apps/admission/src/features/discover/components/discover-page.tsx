@@ -8,6 +8,7 @@ import { toast } from "sonner"
 import { SwipeDeck, type SwipeDirection } from "../../../components/lib/swipe-deck"
 import type { AdmissionMatch as Match } from "@ihsp/api"
 import { useDecide, useMatches, useUndoDecision } from "../hooks"
+import { DismissedSection } from "./dismissed-section"
 import { DeckSettings } from "./deck-settings"
 import { MatchCard } from "./match-card"
 import { SwipeExplainer } from "./swipe-explainer"
@@ -151,6 +152,7 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
         </Button>
       </div>
       <SwipeExplainer />
+      <DismissedSection />
     </div>
   )
 

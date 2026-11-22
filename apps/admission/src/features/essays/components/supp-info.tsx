@@ -4,9 +4,12 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { LogoAvatar } from "../../../components/lib/photo-header"
+import { InstitutionFocuses } from "../../../components/lib/institution-focuses"
 import { useList } from "../../chooser/hooks"
 import type { Essay } from "../api"
+import { useSaveEssay } from "../api"
 import { useForkEssay, usePromptMap } from "../flow/api"
 import { SuppPrompts } from "./supp-prompts"
 
@@ -22,6 +25,9 @@ export function SuppInfo({ essay }: { essay: Essay }) {
   const entry = useList().data?.find((e) => e.id === essay.list_entry_id)
   const map = usePromptMap()
   const fork = useForkEssay(essay.id)
+  const save = useSaveEssay(essay.id)
+  const list = useList().data ?? []
+  const [picking, setPicking] = useState(false)
   const name = entry?.institution.name
   const targets = essay.targets ?? []
   const owners = new Map((map.data?.groups ?? []).flatMap((g) => g.prompts.map((p) => [p.prompt, p.institution_name])))
@@ -84,8 +90,58 @@ export function SuppInfo({ essay }: { essay: Essay }) {
           <Icons.chevronRight aria-hidden className="text-muted-foreground size-4" />
         </Link>
       ) : targets.length === 0 ? (
-        <p className="text-muted-foreground text-sm">{t("supp.noCollege")}</p>
+        <div className="flex flex-col gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="self-start"
+            aria-expanded={picking}
+            onClick={() => setPicking((v) => !v)}
+          >
+            {t("supp.linkCollege")}
+          </Button>
+          {picking ? (
+            list.length === 0 ? (
+              <p className="text-muted-foreground text-sm">{t("supp.linkEmpty")}</p>
+            ) : (
+              <ul className="flex flex-col gap-1" data-testid="link-college-picker">
+                {list.map((e) => (
+                  <li key={e.id}>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="w-full justify-start gap-2"
+                      disabled={save.isPending}
+                      onClick={() =>
+                        save.mutate(
+                          { list_entry_id: e.id, lock_version: essay.lock_version },
+                          { onSuccess: () => setPicking(false) },
+                        )
+                      }
+                    >
+                      <LogoAvatar
+                        name={e.institution.name}
+                        src={e.institution.logo_url}
+                        fit={e.institution.logo_fit}
+                        zoom={e.institution.logo_zoom}
+                        className="size-6"
+                      />
+                      {e.institution.name}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            )
+          ) : null}
+          {save.isError ? (
+            <p role="alert" className="text-destructive text-xs">
+              {errorMessage(save.error)}
+            </p>
+          ) : null}
+        </div>
       ) : null}
+      {entry && name ? <InstitutionFocuses name={name} focuses={entry.institution.focuses} /> : null}
       {entry && name ? (
         <SuppPrompts
           institutionId={entry.institution.id}

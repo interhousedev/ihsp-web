@@ -8,6 +8,7 @@
 
 import type { paths } from "./generated/openapi-served"
 import type { getAdminAiAccess, getAdminAiExtensions, getAdminAiLimits, getAdminAiStudents, getAdminAiUsage, putAdminAiAccess, putAdminAiExtension, putAdminAiLimits } from "./endpoints/admin-ai"
+import type { getAdminEssayKeysStatus, postAdminEssayKeysRestore, postAdminEssayKeysRotate } from "./endpoints/admin-essay-keys"
 import type { getAdminFeedback, getAdminFeedbackItem, patchAdminFeedback, postAdminFeedbackResponse } from "./endpoints/admin-feedback"
 import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
@@ -112,6 +113,18 @@ export const served_putAdminAiAccess: Awaited<ReturnType<typeof putAdminAiAccess
 // PUT /v1/admin/ai/limit-extensions/{user_id} — putAdminAiExtension
 declare const gen_putAdminAiExtension: ResponseOf<"/v1/admin/ai/limit-extensions/{user_id}", "put">
 export const served_putAdminAiExtension: Awaited<ReturnType<typeof putAdminAiExtension>> = gen_putAdminAiExtension
+
+// GET /v1/admin/essay-keys/status — getAdminEssayKeysStatus
+declare const gen_getAdminEssayKeysStatus: ResponseOf<"/v1/admin/essay-keys/status", "get">
+export const served_getAdminEssayKeysStatus: Awaited<ReturnType<typeof getAdminEssayKeysStatus>> = gen_getAdminEssayKeysStatus
+
+// POST /v1/admin/essay-keys/restore — postAdminEssayKeysRestore
+declare const gen_postAdminEssayKeysRestore: ResponseOf<"/v1/admin/essay-keys/restore", "post">
+export const served_postAdminEssayKeysRestore: Awaited<ReturnType<typeof postAdminEssayKeysRestore>> = gen_postAdminEssayKeysRestore
+
+// POST /v1/admin/essay-keys/rotate — postAdminEssayKeysRotate
+declare const gen_postAdminEssayKeysRotate: ResponseOf<"/v1/admin/essay-keys/rotate", "post">
+export const served_postAdminEssayKeysRotate: Awaited<ReturnType<typeof postAdminEssayKeysRotate>> = gen_postAdminEssayKeysRotate
 
 // GET /v1/admin/feedback — getAdminFeedback
 declare const gen_getAdminFeedback: ResponseOf<"/v1/admin/feedback", "get">

@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from "bun:test"
 import { waitFor } from "@testing-library/react"
 import { MotionGlobalConfig } from "motion/react"
 import { apiUrl, server } from "@ihsp/test-utils"
-import { screen } from "@testing-library/react"
+import { screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { http, HttpResponse } from "msw"
 import type { AppReview } from "../features/app-review/api"
@@ -42,10 +42,37 @@ const done: AppReview = {
       status: "done",
       score: 8,
       summary: "Robotics carries the story.",
-      findings: [{ kind: "strength", text: "Led the robotics club", evidence: ["item:1"] }],
+      ao_view: "A reader may notice sustained robotics work.",
+      subsections: [
+        {
+          key: "item:1",
+          title: "Robotics club",
+          verdict: "strong",
+          ao_view: "Leadership is visible here.",
+          finding_indexes: [0],
+          link: { kind: "activities", ref: "1" },
+        },
+      ],
+      findings: [
+        {
+          kind: "strength",
+          text: "Led the robotics club",
+          evidence: ["item:1"],
+          link: { kind: "activities", ref: "1" },
+        },
+      ],
       next_actions: ["Quantify the club results"],
     },
-    { key: "essays", status: "skipped", score: null, summary: "", findings: [], next_actions: [] },
+    {
+      key: "essays",
+      status: "skipped",
+      score: null,
+      summary: "",
+      ao_view: "",
+      subsections: [],
+      findings: [],
+      next_actions: [],
+    },
   ],
   report: {
     headline: "Strong engineering spike",
@@ -86,6 +113,20 @@ describe("AppReviewPanel", () => {
     expect(screen.getByText("No data yet")).toBeInTheDocument()
   })
 
+  it("shows section cards with the reader's view and Open links", async () => {
+    server.use(http.get(URL, () => HttpResponse.json({ items: [done] })))
+    renderAdmissionApp(<AppReviewPanel />)
+    const card = await screen.findByTestId("card-activities")
+    expect(card).toHaveTextContent("How a reader may see it")
+    expect(card).toHaveTextContent("A reader may notice sustained robotics work.")
+    expect(card).toHaveTextContent("Robotics club")
+    expect(card).toHaveTextContent("Strong")
+    const links = within(card).getAllByRole("link", { name: "Open" })
+    expect(links.length).toBe(2)
+    for (const link of links) expect(link.getAttribute("href")).toMatch(/^\/activities\/?\?item=1$/)
+    expect(screen.getByText(/one reader's possible view/)).toBeInTheDocument()
+  })
+
   it("moves the progress as sections finish", async () => {
     const running: AppReview = { ...base, status: "running", sections: done.sections }
     server.use(http.get(URL, () => HttpResponse.json({ items: [running] })))
@@ -99,6 +140,8 @@ describe("AppReviewPanel", () => {
       status: "pending" as const,
       score: null,
       summary: "",
+      ao_view: "",
+      subsections: [],
       findings: [],
       next_actions: [],
     })

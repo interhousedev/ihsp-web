@@ -28,6 +28,8 @@ export type CommandPaletteResult = {
   section: string
   url: string
   icon?: NavIcon
+  /** A text excerpt under the title; `start`/`end` mark the match inside `text`. */
+  snippet?: { text: string; start: number; end: number }
 }
 
 export type CommandPaletteProps = {
@@ -101,7 +103,7 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
   const [query, setQuery] = useState("")
   const [remote, setRemote] = useState<CommandPaletteResult[]>([])
   const [searching, setSearching] = useState(false)
-  const debounced = useDebounce(query.trim(), 250)
+  const debounced = useDebounce(query.trim(), 200)
   const searchRef = useRef(search)
   useEffect(() => {
     searchRef.current = search
@@ -250,9 +252,25 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
                 {group.items.map((result) => (
                   <CommandItem key={result.id} value={`${result.section} ${result.id}`} onSelect={() => go(result.url)}>
                     <NavIconView icon={result.icon} />
-                    <a href={result.url} tabIndex={-1} className="truncate" onClick={(event) => event.preventDefault()}>
-                      {result.title}
-                    </a>
+                    <div className="flex min-w-0 flex-col">
+                      <a
+                        href={result.url}
+                        tabIndex={-1}
+                        className="truncate"
+                        onClick={(event) => event.preventDefault()}
+                      >
+                        {result.title}
+                      </a>
+                      {result.snippet ? (
+                        <span className="text-muted-foreground line-clamp-2 text-xs" data-slot="snippet">
+                          {result.snippet.text.slice(0, result.snippet.start)}
+                          <mark className="bg-primary/20 text-foreground rounded-sm">
+                            {result.snippet.text.slice(result.snippet.start, result.snippet.end)}
+                          </mark>
+                          {result.snippet.text.slice(result.snippet.end)}
+                        </span>
+                      ) : null}
+                    </div>
                     {result.subtitle ? (
                       <span className="text-muted-foreground ms-auto truncate text-xs">{result.subtitle}</span>
                     ) : null}

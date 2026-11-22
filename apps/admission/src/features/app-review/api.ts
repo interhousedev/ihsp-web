@@ -24,6 +24,35 @@ export type ReviewPoint = ReviewReport["strengths"][number]
 export type ReviewAction = ReviewReport["next_actions"][number]
 export type ReviewScore = ReviewReport["section_scores"][number]
 
+export type ReviewLink = NonNullable<ReviewFinding["link"]>
+export type ReviewSubsection = NonNullable<ReviewSection["subsections"]>[number]
+
+/** The screen a review link opens; null when it points nowhere. */
+export function linkHref(link: ReviewLink | undefined): string | null {
+  const ref = encodeURIComponent(link?.ref ?? "")
+  switch (link?.kind) {
+    case "profile":
+      return "/profile/"
+    case "activities":
+    case "honors":
+      return ref ? `/activities/?item=${ref}` : "/activities/"
+    case "essay":
+      return ref ? `/essays/edit/?id=${ref}` : "/essays/"
+    case "list_entry":
+      return "/colleges/"
+    case "survey":
+      return ref ? `/setup/?q=${ref}` : "/profile/?section=background"
+    case "grades":
+      return "/courses/"
+    case "tests":
+      return "/tests/"
+    case "recommendations":
+      return "/documents/"
+    default:
+      return null
+  }
+}
+
 const BASE = "/v1/admission/me/application-reviews"
 export const REVIEWS_KEY = ["admission", "app-reviews"] as const
 

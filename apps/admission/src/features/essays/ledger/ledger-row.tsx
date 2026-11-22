@@ -1,9 +1,10 @@
 "use client"
 
 import { formatDate, useT } from "@ihsp/i18n"
-import { cn, Icons } from "@ihsp/ui"
-import { rowUniversities, type LedgerRow as Row } from "./ledger-model"
+import { Button, cn, Icons } from "@ihsp/ui"
+import { rowAskedBy, rowUniversities, type LedgerRow as Row } from "./ledger-model"
 import { UniLogoStack } from "./uni-logo"
+import { MAX_TARGETS, useStartEssay } from "./use-start-essay"
 
 /** A uniqueness score as a small number in a ring: the one score the ledger shows. */
 export function ScoreDot({ value, className }: { value: number; className?: string }) {
@@ -43,19 +44,22 @@ export function DueText({ due }: { due: NonNullable<Row["due"]> }) {
 
 /** One prompt group as a line of the ledger: status, theme, universities, deadline, the essay written or the way to start. */
 export function LedgerRowButton({ row, onOpen }: { row: Row; onOpen: () => void }) {
+  const { start, pending } = useStartEssay()
   const t = useT("essayLedger")
   const te = useT("essays")
   const started = row.essays.length > 0
   const first = row.essays[0]
   const unis = rowUniversities(row)
+  const asked = rowAskedBy(row)
+  const many = row.group.prompts.length > 1
   return (
-    <li>
+    <li className="flex min-w-0 items-center gap-1">
       <button
         type="button"
         data-testid={`ledger-row-${row.group.key}`}
         aria-haspopup="dialog"
         onClick={onOpen}
-        className="hover:bg-accent/50 focus-visible:ring-ring flex w-full min-w-0 items-center gap-3 rounded-md px-2 py-2 text-left transition-colors focus-visible:ring-2 focus-visible:outline-none md:px-3"
+        className="hover:bg-accent/50 focus-visible:ring-ring flex min-w-0 flex-1 items-center gap-3 rounded-md px-2 py-2 text-left transition-colors focus-visible:ring-2 focus-visible:outline-none md:px-3"
       >
         <span
           aria-hidden
@@ -91,12 +95,21 @@ export function LedgerRowButton({ row, onOpen }: { row: Row; onOpen: () => void 
             ) : (
               <span className="truncate">{row.group.prompts[0]?.prompt}</span>
             )}
+            {started ? (
+              <span className="text-success shrink-0">{t("draftStarted", { count: row.essays.length })}</span>
+            ) : null}
             {row.due ? (
               <span className="sm:hidden">
                 <DueText due={row.due} />
               </span>
             ) : null}
           </span>
+          {asked.exact.length > 0 ? (
+            <span data-testid={`ledger-asked-${row.group.key}`} className="text-muted-foreground truncate text-xs">
+              {t("askedBy", { names: asked.exact.join(", ") })}
+              {asked.similar.length > 0 ? ` · ${t("similarTo", { names: asked.similar.join(", ") })}` : ""}
+            </span>
+          ) : null}
         </span>
         {row.best !== null ? <ScoreDot value={row.best} className="size-8 text-xs" /> : null}
         <span
@@ -109,6 +122,23 @@ export function LedgerRowButton({ row, onOpen }: { row: Row; onOpen: () => void 
         </span>
         <Icons.chevronRight aria-hidden className="text-muted-foreground size-4 shrink-0" />
       </button>
+      {many && !started ? (
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          disabled={pending}
+          data-testid={`ledger-write-all-${row.group.key}`}
+          onClick={() => start(row.group, row.label)}
+          className="shrink-0"
+        >
+          <Icons.add aria-hidden />
+          <span className="hidden sm:inline">
+            {t("writeAll", { count: Math.min(row.group.prompts.length, MAX_TARGETS) })}
+          </span>
+          <span className="sm:hidden">{Math.min(row.group.prompts.length, MAX_TARGETS)}</span>
+        </Button>
+      ) : null}
     </li>
   )
 }

@@ -49,7 +49,7 @@ export function UniBoard() {
   const [picking, setPicking] = useState<{ universityId: string; slot: string } | null>(null)
   const [preview, setPreview] = useState<{ id: string; title: string; limit: number | null } | null>(null)
   const tables = match.data?.items ?? []
-  const mine = essays.data?.items ?? []
+  const mine = (essays.data?.items ?? []).filter((e) => !e.unreadable)
   const first = splitTables(tables).active[0] ?? tables[0]
   const selected = tables.find((x) => x.institution_id === view.uni)
   const shown = selected ?? first

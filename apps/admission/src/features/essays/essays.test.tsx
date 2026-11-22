@@ -44,6 +44,7 @@ const summary = ({
   uniqueness: null,
   deep_read: "none",
   deep_read_at: null,
+  unreadable: false,
 })
 
 const editorHandlers = () => [
@@ -176,6 +177,7 @@ describe("essay ledger", () => {
     kind: "shared",
     category: "other" as const,
     short_answers: [],
+    similar_keys: [] as string[],
     spread: 0.2,
     covered: true,
     prompts: [prompt, { ...prompt, key: "p2", institution_id: "i2", institution_name: "KAIST", word_limit: 300 }],
@@ -229,6 +231,30 @@ describe("essay ledger", () => {
     expect(summaryText).toContain("2 essays needed")
     expect(summaryText).toContain("1 started")
     expect(summaryText).toContain("next deadline 1 Jan")
+    await Bun.sleep(300)
+    view.unmount()
+  })
+
+  test("an unreadable essay is listed with a confirmed delete and stays out of the rows", async () => {
+    base()
+    const lost = { ...summary(essay), id: "e9", title: "", unreadable: true }
+    let deleted: string | null = null
+    server.use(
+      http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [written, lost] })),
+      http.delete(apiUrl("/v1/admission/essays/e9"), () => {
+        deleted = "e9"
+        return new HttpResponse(null, { status: 204 })
+      }),
+    )
+    const view = renderAdmissionApp(<EssaysBody />)
+    const box = await screen.findByTestId("unreadable-essays")
+    expect(box.textContent).toContain("Some essays can't be opened")
+    expect(screen.getAllByTestId("unreadable-essay").length).toBe(1)
+    expect((await screen.findByTestId("ledger-rows")).textContent).not.toContain("Unreadable essay")
+    fireEvent.click(within(box).getByRole("button", { name: "Delete" }))
+    expect(deleted).toBeNull()
+    fireEvent.click(within(await screen.findByRole("alertdialog")).getByRole("button", { name: "Delete" }))
+    await waitFor(() => expect(deleted).toBe("e9"))
     await Bun.sleep(300)
     view.unmount()
   })
