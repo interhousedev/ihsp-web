@@ -7,6 +7,7 @@ import { CareerPage } from "./components/career-page"
 import { CareerQuizButton } from "./components/career-quiz-dialog"
 import { mockChooser } from "../../tests/chooser-handlers"
 import { mockQuizzes } from "../../tests/quiz-handlers"
+import { IKIGAI_QUESTIONS } from "./ikigai-questions"
 import { QUIZ, recommend } from "./quiz"
 
 const major = (code: string, sort: number) => ({
@@ -31,9 +32,17 @@ const plan = (majors: string[] = []) => ({
   lock_version: 3,
 })
 
+let ikigai = { love: [] as string[], good_at: [] as string[], needs: [] as string[], paid: [] as string[] }
+
 function setup(puts: unknown[]) {
+  ikigai = { love: [], good_at: [], needs: [], paid: [] }
   const quizzes = mockQuizzes()
   server.use(
+    http.get(apiUrl("/v1/admission/me/ikigai"), () => HttpResponse.json(ikigai)),
+    http.put(apiUrl("/v1/admission/me/ikigai"), async ({ request }) => {
+      ikigai = (await request.json()) as typeof ikigai
+      return HttpResponse.json(ikigai)
+    }),
     http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json(plan())),
     http.get(apiUrl("/v1/admission/career/majors"), () => HttpResponse.json({ items: MAJORS })),
     http.get(apiUrl("/v1/admission/career/questions"), () => HttpResponse.json({ items: [] })),
@@ -49,16 +58,19 @@ function setup(puts: unknown[]) {
 const FINISHED = Object.fromEntries(QUIZ.map((q) => [q.id, q.options[0]!.key]))
 
 async function openQuiz() {
-  fireEvent.click(await screen.findByRole("button", { name: "Take the test (2 min)" }))
+  fireEvent.click(await screen.findByRole("button", { name: "Take the test (5 min)" }))
 }
 
+const submit = () => document.querySelector<HTMLButtonElement>("button[type=submit]")!
+
+/** Every question of the questionnaire in order: the cards of the major vote, then one chip (or card) per ikigai step. */
 async function answerAll() {
-  for (let i = 0; i < QUIZ.length; i++) {
-    const next = await screen.findByRole("button", { name: i === QUIZ.length - 1 ? "See my majors" : "Next" })
-    expect(next).toBeDisabled()
-    fireEvent.click((await screen.findAllByRole("radio"))[0]!)
-    await waitFor(() => expect(next).toBeEnabled())
-    fireEvent.click(next)
+  for (let i = 0; i < QUIZ.length + IKIGAI_QUESTIONS.length; i++) {
+    if (IKIGAI_QUESTIONS[i - QUIZ.length]?.id !== "people") expect(submit()).toBeDisabled()
+    const field = i < QUIZ.length || IKIGAI_QUESTIONS[i - QUIZ.length]!.kind === "single" ? "radio" : "checkbox"
+    fireEvent.click((await screen.findAllByRole(field))[0]!)
+    await waitFor(() => expect(submit()).toBeEnabled())
+    fireEvent.click(submit())
   }
 }
 
@@ -102,8 +114,11 @@ describe("career quiz", () => {
     await openQuiz()
     await answerAll()
     await waitFor(() => expect(store.quizzes.career.completed).toBe(true))
-    expect(Object.keys(store.quizzes.career.answers).length).toBe(QUIZ.length)
-  })
+    // Ten vote answers, ten ikigai answers, and the empty free-text line of the last question.
+    expect(Object.keys(store.quizzes.career.answers).length).toBe(QUIZ.length + IKIGAI_QUESTIONS.length + 1)
+    expect(ikigai.love.length).toBeGreaterThan(0)
+    expect(ikigai.paid.length).toBeGreaterThan(0)
+  }, 20000)
 
   test("a finished test shows results on the field page and adds a major to the profile", async () => {
     const puts: unknown[] = []

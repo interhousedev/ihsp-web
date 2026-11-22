@@ -36,6 +36,8 @@ describe("professions page", () => {
         HttpResponse.json({ love: [], good_at: [], needs: [], paid: [] }),
       ),
       http.get(apiUrl("/v1/admission/list/fit"), () => HttpResponse.json({ weights: {}, items: [] })),
+      http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json({ study_focus: { labels: [] } })),
+      http.get(apiUrl("/v1/admission/me/quizzes/career"), () => HttpResponse.json({ answers: {}, completed: false })),
     )
     renderAdmissionApp(<ProfessionsPage />)
     expect(await screen.findByText("Software developer")).toBeInTheDocument()

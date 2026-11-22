@@ -15,11 +15,14 @@ export function CustomProfession({
   full,
   fieldLabel,
   onAdd,
+  hideHint = false,
 }: {
   query: string
   full: boolean
   fieldLabel: (key: string) => string
   onAdd: (profession: Profession) => void
+  /** The caller already explains what to type (the add-another-profession panel). */
+  hideHint?: boolean
 }) {
   const t = useT("professions")
   const locale = useLocale()
@@ -50,7 +53,7 @@ export function CustomProfession({
   }
   return (
     <div className="flex flex-col items-start gap-1.5">
-      <p className="text-muted-foreground text-xs">{t("search.addCustomHint")}</p>
+      {hideHint ? null : <p className="text-muted-foreground text-xs">{t("search.addCustomHint")}</p>}
       <Button
         type="button"
         variant="outline"

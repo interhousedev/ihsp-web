@@ -12,6 +12,7 @@ import { addPick, MAX_PICKS } from "../model"
 import { careerPlanQuery } from "../../career/api"
 import { CareerQuizButton } from "../../career/components/career-quiz-dialog"
 import { FitImpact } from "./fit-impact"
+import { AddOwnProfession } from "./add-own-profession"
 import { IkigaiRow } from "./ikigai-row"
 import { SuggestedRow } from "./suggested-row"
 import { MyProfessions } from "./my-professions"
@@ -78,6 +79,11 @@ export function ProfessionsPage() {
             <h2 id="prof-browse" className="text-base font-semibold">
               {t("step.browse.title")}
             </h2>
+            <AddOwnProfession
+              full={picks.length >= MAX_PICKS}
+              fieldLabel={(key) => labels.get(key) ?? key}
+              onAdd={add}
+            />
             <ProfessionSearch
               pickedIds={picks.map((p) => p.id)}
               full={picks.length >= MAX_PICKS}
