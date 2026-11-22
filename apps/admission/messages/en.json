@@ -531,6 +531,12 @@
     }
   },
   "essayLedger": {
+    "unreadableTitle": "Some essays can't be opened",
+    "unreadableText": "The key that protected these essays was lost, so their text can't be recovered. You can delete them.",
+    "unreadableItem": "Unreadable essay",
+    "unreadableDelete": "Delete",
+    "unreadableConfirmTitle": "Delete this essay?",
+    "unreadableConfirmText": "The essay can't be read and can't be restored. This can't be undone.",
     "emptyTitle": "No prompts yet",
     "emptyList": "Add universities to your list and their essay prompts appear here.",
     "emptyAll": "No prompts in the catalog yet.",
@@ -1071,6 +1077,8 @@
       "title": "Supp letter for {college}",
       "panel": "Supplemental letter",
       "noCollege": "No college linked",
+      "linkCollege": "Link a university",
+      "linkEmpty": "Your list has no universities yet",
       "targets": "Prompts this essay answers",
       "common": "Common App",
       "prompts": "This year's prompts ({cycle})",
@@ -2574,6 +2582,7 @@
     "rangeFrom": "From",
     "rangeTo": "To",
     "tagPlaceholder": "Type and press Enter",
+    "noUniversities": "No universities yet",
     "removeTag": "Remove {tag}",
     "fromRecord": "From your school record",
     "saving": "Saving…",
@@ -4430,6 +4439,12 @@
       "title": "You have seen every match",
       "text": "Change your algorithm to get a fresh set of colleges."
     },
+    "dismissed": {
+      "title": "Dismissed",
+      "text": "Colleges you marked “Not my vibe”.",
+      "return": "Return",
+      "returnLabel": "Return {name} to the deck"
+    },
     "deck": {
       "label": "College cards"
     },
@@ -4444,6 +4459,8 @@
       "rankings": "Subject rankings",
       "netPrice": "{amount} / yr after aid",
       "grossPrice": "{amount} / yr",
+      "fitsBudget": "Fits budget",
+      "aboveBudget": "Above budget",
       "estGross": "Sticker price per year (tuition, housing and fees) as reported by the university. No average aid is known, so this is before any aid.",
       "expHow": "Scores from 1 to 5 are editorial ratings by the admissions team, not official data.",
       "estLabel": "How is this estimated?",

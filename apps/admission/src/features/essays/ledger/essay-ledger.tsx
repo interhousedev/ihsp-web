@@ -18,6 +18,7 @@ import { LedgerSectionBlock } from "./ledger-sections"
 import { LedgerSheet } from "./ledger-sheet"
 import { useCollapsed, useLedgerView } from "./ledger-state"
 import { UniBoard } from "./uni-board"
+import { UnreadableEssays } from "./unreadable-essays"
 
 /** The data of the ledger page: the prompt groups of the chosen scope joined with the student's essays. */
 export function useLedger() {
@@ -26,7 +27,12 @@ export function useLedger() {
   const essays = useEssays()
   const [query, setQuery] = useState("")
   const rows = useMemo(
-    () => buildLedger(map.data?.groups ?? [], essays.data?.items ?? [], view.scope),
+    () =>
+      buildLedger(
+        map.data?.groups ?? [],
+        (essays.data?.items ?? []).filter((e) => !e.unreadable),
+        view.scope,
+      ),
     [map.data, essays.data, view.scope],
   )
   const sections = useMemo(() => buildSections(rows), [rows])
@@ -125,6 +131,7 @@ export function EssayLedger({ ledger, nextHref, nextLabel }: { ledger: Ledger; n
               !byUni && "lg:bg-card lg:rounded-card lg:overflow-y-auto lg:border lg:[scrollbar-gutter:stable]",
             )}
           >
+            {byUni ? null : <UnreadableEssays essays={(essays.data?.items ?? []).filter((e) => e.unreadable)} />}
             {body}
           </div>
           {wide && !byUni ? <div className="min-h-0 overflow-y-auto [scrollbar-gutter:stable]">{aside}</div> : null}

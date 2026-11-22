@@ -531,6 +531,12 @@
     }
   },
   "essayLedger": {
+    "unreadableTitle": "Baʼzi inshoalarni ochib boʻlmaydi",
+    "unreadableText": "Bu inshoalarni himoya qilgan kalit yoʻqolgan, shuning uchun matnini tiklab boʻlmaydi. Ularni oʻchirib tashlashingiz mumkin.",
+    "unreadableItem": "Oʻqib boʻlmaydigan insho",
+    "unreadableDelete": "Oʻchirish",
+    "unreadableConfirmTitle": "Bu inshoni oʻchirasizmi?",
+    "unreadableConfirmText": "Inshoni oʻqib ham, tiklab ham boʻlmaydi. Bu amalni qaytarib boʻlmaydi.",
     "emptyTitle": "Hozircha promptlar yoʻq",
     "emptyList": "Roʻyxatga universitetlar qoʻshing, ularning promptlari shu yerda chiqadi.",
     "emptyAll": "Katalogda hozircha promptlar yoʻq.",
@@ -1071,6 +1077,8 @@
       "title": "{college} uchun supp letter",
       "panel": "Qoʻshimcha xat",
       "noCollege": "Kollej biriktirilmagan",
+      "linkCollege": "Universitetni biriktirish",
+      "linkEmpty": "Roʼyxatingizda hali universitetlar yoʻq",
       "targets": "Insho javob beradigan mavzular",
       "common": "Common App",
       "prompts": "Shu yilgi mavzular ({cycle})",
@@ -2574,6 +2582,7 @@
     "rangeFrom": "Dan",
     "rangeTo": "Gacha",
     "tagPlaceholder": "Yozing va Enter bosing",
+    "noUniversities": "Hozircha universitetlar yoʻq",
     "removeTag": "{tag} ni oʻchirish",
     "fromRecord": "Maktab yozuvidan",
     "saving": "Saqlanmoqda…",
@@ -4430,6 +4439,12 @@
       "title": "Barcha mosliklarni koʻrib chiqdingiz",
       "text": "Yangi kollejlar toʻplamini olish uchun algoritmni oʻzgartiring."
     },
+    "dismissed": {
+      "title": "Rad etilganlar",
+      "text": "Siz “Menga mos emas” deb belgilagan kollejlar.",
+      "return": "Qaytarish",
+      "returnLabel": "{name} ni lentaga qaytarish"
+    },
     "deck": {
       "label": "Kollej kartochkalari"
     },
@@ -4444,6 +4459,8 @@
       "rankings": "Fan reytinglari",
       "netPrice": "Yordamdan keyin yiliga {amount}",
       "grossPrice": "Yiliga {amount}",
+      "fitsBudget": "Byudjetga mos",
+      "aboveBudget": "Byudjetdan yuqori",
       "estGross": "Universitet maʼlumotiga koʻra yillik toʻliq narx (oʻqish, turar joy va yigʻimlar). Oʻrtacha yordam maʼlum emas, shuning uchun summa yordamsiz koʻrsatilgan.",
       "expHow": "1 dan 5 gacha baholar qabul guruhining tahririy baholari, rasmiy maʼlumot emas.",
       "estLabel": "Bu qanday hisoblangan?",

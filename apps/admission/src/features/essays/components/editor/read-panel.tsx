@@ -253,17 +253,17 @@ export function ReadPanel({
   if (!read)
     return (
       <div className="flex flex-col gap-3" data-testid="read-panel">
+        <ReadUnisStrip unis={unis} hasRead={false} />
         <p className="text-sm">{te("readNone")}</p>
         {historyButton}
-        <ReadUnisStrip unis={unis} hasRead={false} />
         {button}
       </div>
     )
   return (
     <div className="flex flex-col gap-4" data-testid="read-panel">
+      <ReadUnisStrip unis={unis} hasRead />
       {historyButton}
       <ReadBody read={read} selected={selected} onSelect={onSelect} />
-      <ReadUnisStrip unis={unis} hasRead />
       {button}
     </div>
   )

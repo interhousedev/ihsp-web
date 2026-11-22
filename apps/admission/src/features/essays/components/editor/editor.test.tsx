@@ -32,6 +32,7 @@ const summary = ({ body: _b, notes: _n, plan: _p, links: _l, ...rest }: Essay): 
   uniqueness: null,
   deep_read: "none",
   deep_read_at: null,
+  unreadable: false,
 })
 const supp: EssaySummary = { ...summary(essay), id: "e2", kind: "supplemental", title: "Supplement" }
 
@@ -181,5 +182,25 @@ describe("essay editor shell", () => {
     server.use(deepRead(true), ...handlers())
     renderAdmissionApp(<EssayEditor essay={withBody} />)
     await screen.findByTestId("editor-stale-banner")
+  })
+
+  test("the university logo strip stays above a deep read", async () => {
+    server.use(
+      http.get(apiUrl(`${A}/essays/e1/reviews`), () =>
+        HttpResponse.json({ base: null, base_cached: false, base_stale: false, universities: [] }),
+      ),
+      http.get(apiUrl(`${A}/essays/prompt-map`), () => HttpResponse.json({ groups: [] })),
+      http.get(apiUrl(`${A}/catalog/institutions/i1`), () => HttpResponse.json({ id: "i1", name: "MIT" })),
+      deepRead(false),
+      ...handlers(),
+    )
+    const targeted = {
+      ...withBody,
+      targets: [{ institution_id: "i1", position: 0, prompt: "Why MIT", word_limit: null }],
+    }
+    renderAdmissionApp(<EssayEditor essay={targeted} />)
+    const strip = await screen.findByTestId("read-uni")
+    const text = await screen.findByText("Opens on a number")
+    expect(strip.compareDocumentPosition(text) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
   })
 })
