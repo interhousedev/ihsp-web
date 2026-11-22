@@ -7,6 +7,7 @@
 
 import type { paths } from "./generated/openapi"
 import type { getAdminAiAccess, getAdminAiExtensions, getAdminAiLimits, getAdminAiStudents, getAdminAiUsage, putAdminAiAccess, putAdminAiExtension, putAdminAiLimits } from "./endpoints/admin-ai"
+import type { getAdminEssayKeysStatus, postAdminEssayKeysRestore, postAdminEssayKeysRotate } from "./endpoints/admin-essay-keys"
 import type { getAdminFeedback, getAdminFeedbackItem, patchAdminFeedback, postAdminFeedbackResponse } from "./endpoints/admin-feedback"
 import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
@@ -187,6 +188,18 @@ export const request_putAdminAiExtension: RequestOf<"/v1/admin/ai/limit-extensio
 // DELETE /v1/admin/ai/limit-extensions/{user_id} — deleteAdminAiExtension
 // no JSON success response (204, CSV, calendar or HTML): only the route is checked
 export type route_deleteAdminAiExtension = OperationOf<"/v1/admin/ai/limit-extensions/{user_id}", "delete">
+
+// GET /v1/admin/essay-keys/status — getAdminEssayKeysStatus
+declare const res_getAdminEssayKeysStatus: Awaited<ReturnType<typeof getAdminEssayKeysStatus>>
+export const response_getAdminEssayKeysStatus: ResponseOf<"/v1/admin/essay-keys/status", "get"> = res_getAdminEssayKeysStatus
+
+// POST /v1/admin/essay-keys/restore — postAdminEssayKeysRestore
+declare const res_postAdminEssayKeysRestore: Awaited<ReturnType<typeof postAdminEssayKeysRestore>>
+export const response_postAdminEssayKeysRestore: ResponseOf<"/v1/admin/essay-keys/restore", "post"> = res_postAdminEssayKeysRestore
+
+// POST /v1/admin/essay-keys/rotate — postAdminEssayKeysRotate
+declare const res_postAdminEssayKeysRotate: Awaited<ReturnType<typeof postAdminEssayKeysRotate>>
+export const response_postAdminEssayKeysRotate: ResponseOf<"/v1/admin/essay-keys/rotate", "post"> = res_postAdminEssayKeysRotate
 
 // GET /v1/admin/feedback — getAdminFeedback
 declare const res_getAdminFeedback: Awaited<ReturnType<typeof getAdminFeedback>>

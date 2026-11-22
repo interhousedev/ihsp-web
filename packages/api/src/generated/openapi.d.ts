@@ -39888,8 +39888,32 @@ export interface components {
              * @enum {string}
              */
             kind: "strength" | "risk" | "gap";
+            /**
+             * @default {
+             *       "kind": "none",
+             *       "ref": ""
+             *     }
+             */
+            link?: components["schemas"]["ReviewLinkOut"];
             /** Text */
             text: string;
+        };
+        /**
+         * ReviewLinkOut
+         * @description The screen a finding or subsection opens; `ref` is empty for a whole screen.
+         */
+        ReviewLinkOut: {
+            /**
+             * Kind
+             * @default none
+             * @enum {string}
+             */
+            kind?: "profile" | "activities" | "honors" | "essay" | "list_entry" | "survey" | "grades" | "tests" | "recommendations" | "none";
+            /**
+             * Ref
+             * @default
+             */
+            ref?: string;
         };
         /**
          * ReviewOut
@@ -39982,6 +40006,11 @@ export interface components {
          */
         ReviewSectionOut: {
             /**
+             * Ao View
+             * @default
+             */
+            ao_view?: string;
+            /**
              * Findings
              * @default []
              */
@@ -40003,6 +40032,11 @@ export interface components {
              * @enum {string}
              */
             status: "pending" | "running" | "done" | "failed" | "skipped";
+            /**
+             * Subsections
+             * @default []
+             */
+            subsections?: components["schemas"]["ReviewSubsectionOut"][];
             /**
              * Summary
              * @default
@@ -40048,6 +40082,38 @@ export interface components {
             total_reviews: number;
             /** Year */
             year: number;
+        };
+        /**
+         * ReviewSubsectionOut
+         * @description One real part of a section (an essay, an activity, a list entry...).
+         */
+        ReviewSubsectionOut: {
+            /**
+             * Ao View
+             * @default
+             */
+            ao_view?: string;
+            /**
+             * Finding Indexes
+             * @default []
+             */
+            finding_indexes?: number[];
+            /** Key */
+            key: string;
+            /**
+             * @default {
+             *       "kind": "none",
+             *       "ref": ""
+             *     }
+             */
+            link?: components["schemas"]["ReviewLinkOut"];
+            /** Title */
+            title: string;
+            /**
+             * Verdict
+             * @enum {string}
+             */
+            verdict: "strong" | "mixed" | "weak" | "missing";
         };
         /**
          * ReviseSlidesBody
