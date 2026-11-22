@@ -40,7 +40,9 @@ function Choice({
   return (
     <Select value={value || null} onValueChange={(next) => onChange(next ?? "")}>
       <SelectTrigger aria-label={label} className={TRIGGER}>
-        <SelectValue placeholder={t("choose")} />
+        <SelectValue placeholder={t("choose")}>
+          {(v: string | null) => options.find((o) => o.value === v)?.label ?? v}
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
         {options.map((option) => (
