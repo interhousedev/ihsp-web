@@ -7,6 +7,9 @@ import Algorithm from "./colleges/algorithm/page"
 import Colleges from "./colleges/page"
 import Deadlines from "./deadlines/page"
 import ActivityView from "./activities/view/page"
+import ChooserScholarships from "./chooser/scholarships/page"
+import OppPlan from "./opportunities/plan/page"
+import OppScholarships from "./opportunities/scholarships/page"
 import Profile from "./profile/page"
 import Words from "./words/page"
 
@@ -39,6 +42,20 @@ describe("old routes", () => {
     open("/colleges/algorithm/")
     render(<Algorithm />)
     await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/?step=quiz"))
+  })
+
+  test("old scholarship and plan routes land in the Opportunities tabs and the plan", async () => {
+    open("/opportunities/scholarships/?q=x")
+    render(<OppScholarships />)
+    await waitFor(() =>
+      expect(testRouter.replace).toHaveBeenCalledWith("/opportunities/?kind=scholarship&q=x"),
+    )
+    open("/chooser/scholarships/")
+    render(<ChooserScholarships />)
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/opportunities/?kind=scholarship"))
+    open("/opportunities/plan/")
+    render(<OppPlan />)
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/plan/"))
   })
 
   test("/words/ keeps the target hash and /alignment/ the incoming query", async () => {

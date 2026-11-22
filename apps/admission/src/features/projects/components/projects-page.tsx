@@ -2,11 +2,11 @@
 
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons, Skeleton, StateView } from "@ihsp/ui"
-import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
-import { AppPageHeader, pageClass } from "../../../components/lib/page"
+import { AppPageHeader, PageSection, pageClass } from "../../../components/lib/page"
+import { OpportunityNav } from "../../opportunities/components/catalog-controls"
 import { QueryError } from "../../shell/components/query-error"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { emptyBrief, useGenerateProjects, useProjectRun, useProjectRuns, type Brief, type ProjectRun } from "../api"
@@ -45,6 +45,7 @@ function Results({ run }: { run: ProjectRun }) {
 
 export function ProjectsBody() {
   const t = useT("projects")
+  const tOpp = useT("opportunities")
   const locale = useLocale()
   const errorMessage = useErrorMessage()
   const router = useRouter()
@@ -87,8 +88,9 @@ export function ProjectsBody() {
 
   return (
     <div className={pageClass()}>
-      <AppPageHeader
-        icon="sparkles"
+      <AppPageHeader icon="courses" title={tOpp("title")} />
+      <OpportunityNav value="projects" />
+      <PageSection
         title={t("title")}
         actions={
           !generate.isPending && !showForm && latest ? (
@@ -97,36 +99,33 @@ export function ProjectsBody() {
             </Button>
           ) : undefined
         }
-      />
-      <p className="text-muted-foreground text-sm">{t("intro")}</p>
-      <Link href="/opportunities/" className="text-primary min-h-11 self-start text-sm hover:underline">
-        {t("back")}
-      </Link>
-      {history.length > 1 && (
-        <nav aria-label={t("history.title")} className="flex flex-wrap items-center gap-2">
-          <span className="text-muted-foreground text-sm">{t("history.title")}</span>
-          {history.map((h) => {
-            const active = runParam ? runParam === h.id : latest?.id === h.id
-            return (
-              <Button
-                key={h.id}
-                type="button"
-                size="sm"
-                className="min-h-11"
-                variant={active ? "default" : "outline"}
-                aria-pressed={active}
-                onClick={() => {
-                  setFormOpen(false)
-                  selectRun(h.id)
-                }}
-              >
-                {when(h.created_at)} · {h.count}
-              </Button>
-            )
-          })}
-        </nav>
-      )}
-      {body}
+      >
+        {history.length > 1 && (
+          <nav aria-label={t("history.title")} className="flex flex-wrap items-center gap-2">
+            <span className="text-muted-foreground text-sm">{t("history.title")}</span>
+            {history.map((h) => {
+              const active = runParam ? runParam === h.id : latest?.id === h.id
+              return (
+                <Button
+                  key={h.id}
+                  type="button"
+                  size="sm"
+                  className="min-h-11"
+                  variant={active ? "default" : "outline"}
+                  aria-pressed={active}
+                  onClick={() => {
+                    setFormOpen(false)
+                    selectRun(h.id)
+                  }}
+                >
+                  {when(h.created_at)} · {h.count}
+                </Button>
+              )
+            })}
+          </nav>
+        )}
+        {body}
+      </PageSection>
     </div>
   )
 }

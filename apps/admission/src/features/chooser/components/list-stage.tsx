@@ -5,14 +5,13 @@ import {
   Alert,
   AlertDescription,
   Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
   Icons,
   Pill,
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
   StateView,
-  useIsMobile,
 } from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -40,7 +39,6 @@ export function UniListStage({ brief }: { brief?: BriefState }) {
   const router = useRouter()
   const pathname = usePathname()
   const params = useSearchParams()
-  const isMobile = useIsMobile()
   const [briefOpen, setBriefOpen] = useState(false)
   const view: ListView = params.get("view") === "graph" ? "graph" : "table"
   function setView(next: ListView) {
@@ -125,20 +123,20 @@ export function UniListStage({ brief }: { brief?: BriefState }) {
       )}
       <AddSchoolRow onAdded={setAdded} />
       <Link
-        href="/opportunities/scholarships/"
+        href="/opportunities/?kind=scholarship"
         className="text-muted-foreground inline-flex min-h-11 w-fit items-center text-sm underline underline-offset-2"
       >
         {t("scholarships")}
       </Link>
       {brief ? (
-        <Sheet open={briefOpen} onOpenChange={setBriefOpen}>
-          <SheetContent side={isMobile ? "bottom" : "right"} className="max-h-[88dvh] overflow-y-auto p-4">
-            <SheetHeader className="p-0">
-              <SheetTitle>{t("brief.open")}</SheetTitle>
-            </SheetHeader>
+        <Dialog open={briefOpen} onOpenChange={setBriefOpen}>
+          <DialogContent className="sm:max-w-xl">
+            <DialogHeader>
+              <DialogTitle>{t("brief.open")}</DialogTitle>
+            </DialogHeader>
             <BriefRail brief={brief} embedded />
-          </SheetContent>
-        </Sheet>
+          </DialogContent>
+        </Dialog>
       ) : null}
       <ResearchDialog row={researching} onClose={() => setResearching(null)} />
     </section>

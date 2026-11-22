@@ -22,7 +22,6 @@ import {
 import Link from "next/link"
 import { useMemo, useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
   useAiPlan,
   useGenerateAiPlan,
@@ -249,7 +248,13 @@ function Board({ plan }: { plan: Plan }) {
     : TERMS
   return (
     <section aria-label={t("boardTitle")} className="flex flex-col gap-3">
-      <h2 className="font-medium">{t("boardTitle")}</h2>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="font-medium">{t("boardTitle")}</h2>
+        <Link href="/opportunities/" className={buttonVariants({ variant: "outline", size: "sm" })}>
+          <Icons.add aria-hidden />
+          {t("findMore")}
+        </Link>
+      </div>
       {unplaced.length > 0 && (
         <div className="flex flex-col gap-2">
           <h3 className="text-muted-foreground text-sm">{t("unplacedTitle")}</h3>
@@ -354,12 +359,4 @@ export function PlanBody() {
     )
   }
   return <div className={pageClass()}>{body}</div>
-}
-
-export function OpportunityPlanPage() {
-  return (
-    <AdmissionShell>
-      <PlanBody />
-    </AdmissionShell>
-  )
 }

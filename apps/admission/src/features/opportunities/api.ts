@@ -103,31 +103,6 @@ export type CatalogFilter = {
   sort?: CatalogSort
 }
 
-export type ProgramExtras = {
-  country?: string | null
-  location?: string | null
-  online?: boolean
-  acceptance_rate?: number | null
-  tuition_usd?: number | null
-  logo_url?: string | null
-  host_institution?: string | null
-  duration_weeks?: number | null
-  ranking?: number | null
-}
-export type ProgramItem = Omit<Opportunity, "fields"> & { fields: Opportunity["fields"] & ProgramExtras }
-export type ProgramSort = "title" | "ranking" | "acceptance" | "tuition"
-export type ProgramFilter = {
-  q?: string
-  country?: string
-  online?: boolean
-  free?: boolean
-  max_tuition?: number
-  sort?: ProgramSort
-  page?: number
-  size?: number
-}
-export type ProgramPage = { items: ProgramItem[]; total: number; page: number; size: number }
-
 export const OPPORTUNITIES_KEY = ["admission", "opportunities"] as const
 const TAXONOMY_KEY = [...OPPORTUNITIES_KEY, "taxonomy"] as const
 const PLAN_KEY = [...OPPORTUNITIES_KEY, "plan"] as const
@@ -147,17 +122,6 @@ export function useOpportunities(filter: CatalogFilter) {
   return useQuery({
     queryKey: [...OPPORTUNITIES_KEY, "list", query] as const,
     queryFn: ({ signal }) => getApiClient().get<AdmissionOpportunityList>(BASE, { query, signal }),
-    placeholderData: (prev) => prev,
-  })
-}
-
-export function usePrograms(filter: ProgramFilter) {
-  const query = Object.fromEntries(
-    Object.entries({ ...filter, kind: "program" }).filter(([, v]) => v !== undefined && v !== "" && v !== false),
-  )
-  return useQuery({
-    queryKey: [...OPPORTUNITIES_KEY, "programs", query] as const,
-    queryFn: ({ signal }) => getApiClient().get<ProgramPage>(BASE, { query, signal }),
     placeholderData: (prev) => prev,
   })
 }

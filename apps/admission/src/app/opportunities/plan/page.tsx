@@ -2,7 +2,7 @@
 
 import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
 
-const target: RedirectTarget = () => ({ to: "/plan/?view=saved" })
+const target: RedirectTarget = () => ({ to: "/plan/" })
 
 export default function Page() {
   return <RouteRedirect target={target} />

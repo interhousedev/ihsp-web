@@ -5,9 +5,7 @@ import { describe, expect, test } from "bun:test"
 import { renderAdmissionApp } from "../../tests/helpers"
 import { OpportunitiesStaffBody } from "../opportunities-staff/components/opportunities-staff-page"
 import type { Opportunity, Plan, Submission, Taxonomy } from "./api"
-import { ScholarshipsBody } from "./components/scholarships-page"
 import { CatalogBody } from "./components/catalog-page"
-import { ProgramsBody } from "./components/programs-tab"
 import { PlanBody } from "./components/plan-page"
 
 const BASE = "/v1/admission/opportunities"
@@ -157,64 +155,20 @@ describe("opportunities", () => {
     expect(screen.queryByRole("button", { name: "Approve" })).toBeNull()
   })
 
-  test("programs render rows with fallbacks, paginate and add to the plan", async () => {
-    const program = (id: string, title: string, extra: object) => ({
-      ...opportunity,
-      id,
-      fields: { ...fields, kind: "program" as const, title, country: "USA", location: "Boston", ...extra },
-    })
-    const pages: string[] = []
-    let added: unknown
-    common()
-    server.use(
-      http.get(apiUrl(BASE), ({ request }) => {
-        const page = new URL(request.url).searchParams.get("page") ?? "1"
-        pages.push(page)
-        const items =
-          page === "1"
-            ? [
-                program("p1", "Lumiere", {
-                  ranking: null,
-                  tuition_usd: 0,
-                  acceptance_rate: 5,
-                  logo_url: "https://x.test/l.png",
-                }),
-                program("p2", "RSI", { ranking: 1, tuition_usd: 4000, acceptance_rate: null }),
-              ]
-            : [program("p3", "YYGS", { ranking: 3, tuition_usd: 100, acceptance_rate: 10 })]
-        return HttpResponse.json({ items, total: 12, page: Number(page), size: 10 })
-      }),
-      http.put(apiUrl(`${BASE}/plan/p1`), async ({ request }) => {
-        added = await request.json()
-        return HttpResponse.json(plan.entries[0])
-      }),
-    )
-    renderAdmissionApp(<ProgramsBody />)
-    expect(await screen.findByText("Lumiere")).toBeTruthy()
-    expect(screen.getByText("Free")).toBeTruthy()
-    expect(screen.getByText("~5%")).toBeTruthy()
-    expect(screen.getByText("#1")).toBeTruthy()
-    expect(screen.getAllByText("—").length).toBeGreaterThan(0)
-    expect(screen.getByText("Page 1 of 2")).toBeTruthy()
-    fireEvent.click(screen.getAllByRole("button", { name: "+ Add" })[0])
-    await waitFor(() => expect(added).toBeTruthy())
-    fireEvent.click(screen.getByRole("button", { name: "Next" }))
-    expect(await screen.findByText("YYGS")).toBeTruthy()
-    expect(screen.getByText("Page 2 of 2")).toBeTruthy()
-    expect(pages).toContain("2")
-  })
-
   test("scholarship filters have visible labels and an 'Any' option text", async () => {
     server.use(
       http.get(apiUrl(`${BASE}`), () => HttpResponse.json({ items: [], next_cursor: null })),
       http.get(apiUrl(`${BASE}/orgs`), () => HttpResponse.json({ items: [] })),
+      http.get(apiUrl(`${BASE}/taxonomy`), () => HttpResponse.json(taxonomy)),
+      http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json({ study_focus: { field_ids: [], labels: [] } })),
       http.get(apiUrl(`${BASE}/plan`), () => HttpResponse.json({ ...plan, entries: [], opportunities: [] })),
     )
-    renderAdmissionApp(<ScholarshipsBody />)
+    renderAdmissionApp(<CatalogBody />, { route: "/opportunities/?kind=scholarship" })
     for (const label of ["Scope", "Type", "Organization", "College credit"])
       expect(await screen.findByText(label)).toBeTruthy()
     expect(screen.getByText("Any scope")).toBeTruthy()
     expect(screen.getByText("Save scholarships with the heart to keep them here.")).toBeTruthy()
     expect(screen.queryByRole("heading", { level: 1, name: "Scholarships" })).toBeNull()
+    expect(screen.getByRole("heading", { level: 1, name: "Opportunities" })).toBeTruthy()
   })
 })

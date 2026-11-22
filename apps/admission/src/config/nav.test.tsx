@@ -33,6 +33,7 @@ describe("sections", () => {
     ["/plan/", "profile"],
     ["/opportunities/scholarships/", "profile"],
     ["/opportunities/view/", "profile"],
+    ["/opportunities/projects/", "profile"],
     ["/tests/", "profile"],
     ["/courses/", "profile"],
     ["/chooser/institution/", "universities"],
@@ -55,6 +56,7 @@ describe("sections", () => {
 
   it("picks the active part from the route or from ?tab=", () => {
     expect(activePart(SECTIONS.profile, "/opportunities/view/", null)?.id).toBe("ideas")
+    expect(activePart(SECTIONS.profile, "/opportunities/projects/", null)?.id).toBe("ideas")
     expect(activePart(SECTIONS.apply, "/outcomes/", null)?.id).toBe("results")
     expect(activePart(SECTIONS.profile, "/profile/professions/", null)?.id).toBe("professions")
     expect(activePart(SECTIONS.profile, "/profile/", null)?.id).toBe("overview")

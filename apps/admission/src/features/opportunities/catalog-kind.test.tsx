@@ -1,5 +1,5 @@
 import { apiUrl, server, testRouter } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { describe, expect, test } from "bun:test"
 import { renderAdmissionApp } from "../../tests/helpers"
@@ -67,7 +67,7 @@ function mockCatalog(sort: string, queries: URLSearchParams[] = []) {
 }
 
 describe("catalog categories and relevance", () => {
-  test("a saved opportunity adds the Open my plan next step", async () => {
+  test("a saved opportunity shows My plan (1) in the header", async () => {
     mockCatalog("title")
     server.use(
       http.get(apiUrl(`${BASE}/plan`), () =>
@@ -76,11 +76,14 @@ describe("catalog categories and relevance", () => {
     )
     renderAdmissionApp(<CatalogBody />, {
       route: "/opportunities/",
-      messages: { opportunities: { openPlan: "Open my plan", nextPlanHint: "Plan" } },
+      messages: { opportunities: { planLink: "My plan ({count})" } },
     })
     await screen.findByText("Summer CS")
-    const link = await screen.findByRole("link", { name: /Open my plan/ })
-    expect(link.getAttribute("href")).toBe("/plan?view=saved")
+    const link = await screen.findByRole("link", { name: /My plan \(1\)/ })
+    expect(link.getAttribute("href")).toBe("/plan")
+    expect(
+      screen.getAllByRole("link").filter((l) => l.getAttribute("href")?.startsWith("/plan")),
+    ).toHaveLength(1)
   })
 
   test("?kind= preselects the category and filters the request", async () => {
@@ -89,19 +92,19 @@ describe("catalog categories and relevance", () => {
     renderAdmissionApp(<CatalogBody />, { route: "/opportunities/?kind=program" })
     expect(await screen.findByText("Summer CS")).toBeTruthy()
     expect(queries.every((q) => q.get("kind") === "program")).toBe(true)
-    // ADM-IDEAS-1: one kind row only, one selected tab, and no scholarships/exam kinds.
+    // ADM-IDEAS-1: one tab row only (kinds plus Project ideas), one selected tab, scholarships as a tab.
     expect(screen.getAllByRole("tab").filter((tab) => tab.getAttribute("aria-selected") === "true")).toHaveLength(1)
-    expect(screen.getAllByRole("tab")).toHaveLength(6)
-    expect(screen.getByRole("link", { name: "Scholarships" }).getAttribute("href")).toBe("/opportunities/scholarships")
+    expect(screen.getAllByRole("tab")).toHaveLength(8)
+    expect(screen.getByRole("tab", { name: "Scholarships" })).toBeTruthy()
+    expect(screen.queryByRole("link", { name: "Scholarships" })).toBeNull()
   })
 
   test("choosing a category writes ?kind=", async () => {
     mockCatalog("title")
     renderAdmissionApp(<CatalogBody />, { route: "/opportunities/" })
     await screen.findByText("Summer CS")
-    const tabs = screen.getAllByRole("tab")
-    // ADM-IDEAS-2: all, course, certification, research, event, program
-    fireEvent.click(tabs[4]!)
+    // ADM-IDEAS-2: the events tab, found by name
+    fireEvent.click(screen.getByRole("tab", { name: "Events" }))
     await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/opportunities/?kind=event"))
   })
 
@@ -109,11 +112,11 @@ describe("catalog categories and relevance", () => {
     mockCatalog("relevance")
     renderAdmissionApp(<CatalogBody />, { route: "/opportunities/" })
     await screen.findByText("Summer CS")
-    const toggle = screen.getAllByRole("button", { name: "Filters" })[0]!
-    expect(toggle.getAttribute("aria-expanded")).toBe("false")
-    fireEvent.click(toggle)
-    expect(toggle.getAttribute("aria-expanded")).toBe("true")
     expect(screen.getByRole("link", { name: "Change" }).parentElement?.className).toContain("whitespace-nowrap")
+    fireEvent.click(screen.getAllByRole("button", { name: /^Filters/ })[0]!)
+    const dialog = await screen.findByRole("dialog", { name: "Filters" })
+    expect(within(dialog).getByText("Field: any")).toBeTruthy()
+    expect(within(dialog).getByText("Grade")).toBeTruthy()
   })
 
   test("relevance order shows the student's fields and a link to change them; for-you items get a badge", async () => {
@@ -130,6 +133,23 @@ describe("catalog categories and relevance", () => {
     renderAdmissionApp(<CatalogBody />, { route: "/opportunities/" })
     await screen.findByText("Summer CS")
     expect(screen.queryByText(/Sorted by your field/)).toBeNull()
+  })
+})
+
+describe("scholarship tab", () => {
+  test("?kind=scholarship requests scholarships by deadline without a grade preset", async () => {
+    const queries: URLSearchParams[] = []
+    mockCatalog("deadline", queries)
+    renderAdmissionApp(<CatalogBody />, { route: "/opportunities/?kind=scholarship" })
+    await screen.findByText("Summer CS")
+    expect(queries.length).toBeGreaterThan(0)
+    for (const q of queries) {
+      expect(q.get("kind")).toBe("scholarship")
+      expect(q.get("sort")).toBe("deadline")
+      expect(q.has("grade")).toBe(false)
+    }
+    expect(screen.getByRole("tab", { name: "Scholarships" }).getAttribute("aria-selected")).toBe("true")
+    expect(screen.getByRole("group", { name: "Coverage" })).toBeTruthy()
   })
 })
 
