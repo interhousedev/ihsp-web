@@ -81,9 +81,7 @@ describe("catalog categories and relevance", () => {
     await screen.findByText("Summer CS")
     const link = await screen.findByRole("link", { name: /My plan \(1\)/ })
     expect(link.getAttribute("href")).toBe("/plan")
-    expect(
-      screen.getAllByRole("link").filter((l) => l.getAttribute("href")?.startsWith("/plan")),
-    ).toHaveLength(1)
+    expect(screen.getAllByRole("link").filter((l) => l.getAttribute("href")?.startsWith("/plan"))).toHaveLength(1)
   })
 
   test("?kind= preselects the category and filters the request", async () => {

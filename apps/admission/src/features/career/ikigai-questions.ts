@@ -47,7 +47,18 @@ export const IKIGAI_QUESTIONS: readonly IkigaiQuestion[] = [
     kind: "multi",
     max: 4,
     text: true,
-    options: ["explain", "logic", "calm", "creative", "lead", "languages", "listen", "detail", "learnfast", "techskill"],
+    options: [
+      "explain",
+      "logic",
+      "calm",
+      "creative",
+      "lead",
+      "languages",
+      "listen",
+      "detail",
+      "learnfast",
+      "techskill",
+    ],
   },
   {
     id: "people",
@@ -130,14 +141,17 @@ export function deriveIkigai(answers: Stored, label: (questionId: string, option
   for (const question of IKIGAI_QUESTIONS) {
     if (!question.circle) continue
     const picked = asList(answers[ikigaiKey(question.id)]).filter((option) => question.options.includes(option))
-    const typed = textChips(typeof answers[ikigaiTextKey(question.id)] === "string" ? String(answers[ikigaiTextKey(question.id)]) : "")
+    const typed = textChips(
+      typeof answers[ikigaiTextKey(question.id)] === "string" ? String(answers[ikigaiTextKey(question.id)]) : "",
+    )
     lists[question.circle].push([...typed, ...picked.map((option) => label(question.id, option))])
   }
   const out: Ikigai = { ...EMPTY_IKIGAI }
   for (const circle of Object.keys(lists) as IkigaiCircle[]) {
     const rows = lists[circle]
     const mixed: string[] = []
-    for (let i = 0; rows.some((row) => i < row.length); i++) for (const row of rows) if (i < row.length) mixed.push(row[i]!)
+    for (let i = 0; rows.some((row) => i < row.length); i++)
+      for (const row of rows) if (i < row.length) mixed.push(row[i]!)
     out[circle] = distinct(mixed)
   }
   return out
@@ -146,7 +160,8 @@ export function deriveIkigai(answers: Stored, label: (questionId: string, option
 /** The student's own chips stay; the questionnaire's are added after them (no duplicates, at most `MAX_CHIPS`). */
 export function mergeIkigai(existing: Ikigai, derived: Ikigai): Ikigai {
   const out: Ikigai = { ...EMPTY_IKIGAI }
-  for (const circle of Object.keys(out) as IkigaiCircle[]) out[circle] = distinct([...existing[circle], ...derived[circle]])
+  for (const circle of Object.keys(out) as IkigaiCircle[])
+    out[circle] = distinct([...existing[circle], ...derived[circle]])
   return out
 }
 

@@ -4,6 +4,25 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.13.0] - 2026-11-23
+
+Includes the unreleased 1.12 work.
+
+### Added
+
+- Admission: Today roadmap, creative practice and new programs; "What project can I make?" with voice fill and a future-interest field.
+- Admission: one career questionnaire (20 questions) that fills the ikigai, with voice answers; add own profession at the top with a specificity hint.
+- Admission: one Opportunities catalog with Scholarships and Project ideas tabs; old scholarship and plan routes redirect.
+- Admission: QS and subject rankings on the swipe card and institution page; country flags and facts on the country question.
+- Admission: compact swipe card; helpers and side panels open as centered pop-ups (bottom sheet on phones).
+- Admission: global search, application review section cards, asked-by essay theme rows, peek another essay, dismissed section, budget fit chip, curator card editor and Scorecard attach.
+- Admin: essay keys page; Langfuse tracing configured only on the admin page.
+- iht.id: switch to block unnecessary AI tracking.
+
+### Fixed
+
+- University search ranks by relevance and finds short names (MIT); fact selects show labels; maps URL hint placeholder.
+
 ## [1.11.0] - 2026-11-21
 
 ### Added

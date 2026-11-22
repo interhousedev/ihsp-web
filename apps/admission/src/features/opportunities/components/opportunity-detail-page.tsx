@@ -86,7 +86,9 @@ export function OpportunityDetailBody() {
             </ul>
           ) : null}
           <div className="flex flex-wrap items-center gap-2">
-            {f.award_type && !(f.award_type === "scholarship" && f.kind === "scholarship") ? <AwardPill award={f.award_type} /> : null}
+            {f.award_type && !(f.award_type === "scholarship" && f.kind === "scholarship") ? (
+              <AwardPill award={f.award_type} />
+            ) : null}
             {f.scope ? <Pill tone="neutral">{t(`scope.${f.scope}`)}</Pill> : null}
             {(f.coverage ?? []).map((c) => (
               <Pill key={c} tone="neutral">

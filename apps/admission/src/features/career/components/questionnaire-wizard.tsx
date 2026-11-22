@@ -108,7 +108,10 @@ export function QuestionnaireWizard({ questions, answers, onAnswer, onFinish, la
         aria-valuetext={labels.step(step + 1, questions.length)}
         className="bg-muted h-1.5 overflow-hidden rounded-full"
       >
-        <div className="bg-primary h-full transition-[width]" style={{ width: `${((step + 1) / questions.length) * 100}%` }} />
+        <div
+          className="bg-primary h-full transition-[width]"
+          style={{ width: `${((step + 1) / questions.length) * 100}%` }}
+        />
       </div>
       <form onSubmit={(event) => void advance(event)} className="flex min-w-0 max-w-2xl flex-col gap-5">
         <header className="flex flex-col gap-2">

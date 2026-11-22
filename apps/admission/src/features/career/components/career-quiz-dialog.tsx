@@ -12,11 +12,7 @@ import { careerMajorsQuery } from "../api"
 import { IKIGAI_QUESTIONS, deriveIkigai, ikigaiKey, ikigaiTextKey, mergeIkigai } from "../ikigai-questions"
 import { QuizVoice } from "./quiz-voice"
 import { QUIZ, recommend, type Recommendation } from "../quiz"
-import {
-  QuestionnaireWizard,
-  type QuestionnaireExtraContext,
-  type QuestionnaireQuestion,
-} from "./questionnaire-wizard"
+import { QuestionnaireWizard, type QuestionnaireExtraContext, type QuestionnaireQuestion } from "./questionnaire-wizard"
 
 /** The stored quiz answers as plain strings (the major-voting part), and all of them as stored. */
 export function useQuizAnswers() {
@@ -66,40 +62,36 @@ export function CareerQuizButton({
   const tests = t("ikigaiQ.sectionTests")
   const about = t("ikigaiQ.sectionIkigai")
   const questions: QuestionnaireQuestion[] = [
-    ...QUIZ.map(
-      (q): QuestionnaireQuestion => ({
-        id: q.id,
-        section: "career",
-        sectionLabel: tests,
-        title: t(`quiz.${q.id}.title`),
-        kind: "single",
-        options: q.options.map((o) => ({
-          value: o.key,
-          label: t(`quiz.${q.id}.${o.key}`),
-          description: q.kind === "track" ? t(`quiz.${q.id}.${o.key}Text`) : undefined,
-        })),
-      }),
-    ),
-    ...IKIGAI_QUESTIONS.map(
-      (q): QuestionnaireQuestion => ({
-        id: ikigaiKey(q.id),
-        section: "ikigai",
-        sectionLabel: about,
-        title: t(`ikigaiQ.${q.id}.title`),
-        guide: t(`ikigaiQ.${q.id}.guide`),
-        kind: q.kind === "single" ? "single" : "multi",
-        optional: q.id === "people",
-        max: q.max,
-        options: q.options.map((o) => ({ value: o, label: t(`ikigaiQ.${q.id}.${o}`) })),
-        ...(q.text
-          ? {
-              textKey: ikigaiTextKey(q.id),
-              textLabel: t("ikigaiQ.textLabel"),
-              textPlaceholder: t("ikigaiQ.textPlaceholder"),
-            }
-          : {}),
-      }),
-    ),
+    ...QUIZ.map((q): QuestionnaireQuestion => ({
+      id: q.id,
+      section: "career",
+      sectionLabel: tests,
+      title: t(`quiz.${q.id}.title`),
+      kind: "single",
+      options: q.options.map((o) => ({
+        value: o.key,
+        label: t(`quiz.${q.id}.${o.key}`),
+        description: q.kind === "track" ? t(`quiz.${q.id}.${o.key}Text`) : undefined,
+      })),
+    })),
+    ...IKIGAI_QUESTIONS.map((q): QuestionnaireQuestion => ({
+      id: ikigaiKey(q.id),
+      section: "ikigai",
+      sectionLabel: about,
+      title: t(`ikigaiQ.${q.id}.title`),
+      guide: t(`ikigaiQ.${q.id}.guide`),
+      kind: q.kind === "single" ? "single" : "multi",
+      optional: q.id === "people",
+      max: q.max,
+      options: q.options.map((o) => ({ value: o, label: t(`ikigaiQ.${q.id}.${o}`) })),
+      ...(q.text
+        ? {
+            textKey: ikigaiTextKey(q.id),
+            textLabel: t("ikigaiQ.textLabel"),
+            textPlaceholder: t("ikigaiQ.textPlaceholder"),
+          }
+        : {}),
+    })),
   ]
 
   /** The ikigai the answers imply is added to the student's own chips and saved; then the quiz is marked finished. */

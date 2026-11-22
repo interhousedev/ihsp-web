@@ -83,7 +83,10 @@ describe("saved plan", () => {
 
   test("a plan with entries links back to the catalog", async () => {
     routes()
-    renderAdmissionApp(<PlanBody />, { route: "/plan/", messages: { opportunities: { findMore: "Find opportunities" } } })
+    renderAdmissionApp(<PlanBody />, {
+      route: "/plan/",
+      messages: { opportunities: { findMore: "Find opportunities" } },
+    })
     const link = await screen.findByRole("link", { name: /Find opportunities/ })
     expect(link.getAttribute("href")).toBe("/opportunities")
   })
