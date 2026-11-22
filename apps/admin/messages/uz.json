@@ -2860,7 +2860,6 @@
       "description": "Soʻrovlar kuzatiladigan Langfuse loyihasi. Boʻsh maydonlar muhit sozlamalaridan olinadi. Oʻzgarishlar 30 soniya ichida kuchga kiradi.",
       "source": {
         "runtime": "Shu yerda berilgan",
-        "env": "Muhit",
         "none": "Oʻchiq"
       },
       "host": "Manzil",

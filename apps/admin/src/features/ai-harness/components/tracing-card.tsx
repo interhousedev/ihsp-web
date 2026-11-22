@@ -30,7 +30,7 @@ function TracingForm({ data }: { data: AiTracing }) {
   const save = useAdminMutation({
     mutationFn: () =>
       putAiTracing({
-        host: host.trim() || data.env_host,
+        host: host.trim(),
         public_key: publicKey.trim(),
         ...(secret ? { secret_key: secret } : {}),
       }),
@@ -42,7 +42,7 @@ function TracingForm({ data }: { data: AiTracing }) {
     invalidate: [aiHarnessKeys.all()],
     success: t("removed"),
   })
-  const source = { runtime: t("source.runtime"), env: t("source.env"), none: t("source.none") }[data.source]
+  const source = { runtime: t("source.runtime"), none: t("source.none") }[data.source]
   return (
     <Card role="group" aria-label={t("title")}>
       <CardHeader className="gap-1">
@@ -55,13 +55,7 @@ function TracingForm({ data }: { data: AiTracing }) {
       <CardContent className="flex flex-col gap-4">
         <div className="grid gap-3 sm:grid-cols-3">
           <LabeledField label={t("host")} htmlFor={`${id}-host`}>
-            <Input
-              id={`${id}-host`}
-              type="url"
-              value={host}
-              placeholder={data.env_host}
-              onChange={(event) => setHost(event.target.value)}
-            />
+            <Input id={`${id}-host`} type="url" value={host} onChange={(event) => setHost(event.target.value)} />
           </LabeledField>
           <LabeledField label={t("publicKey")} htmlFor={`${id}-public`}>
             <Input

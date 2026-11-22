@@ -2860,7 +2860,6 @@
       "description": "The Langfuse project where requests are traced. Empty fields use the environment settings. Changes apply within 30 seconds.",
       "source": {
         "runtime": "Set here",
-        "env": "Environment",
         "none": "Off"
       },
       "host": "Host",
