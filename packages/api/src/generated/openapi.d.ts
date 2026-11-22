@@ -1172,6 +1172,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/essay-keys/backup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Backup
+         * @description The one passphrase-sealed backup of the current generation (409 after it).
+         */
+        post: operations["post_backup_v1_admin_essay_keys_backup_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/essay-keys/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Restore
+         * @description Write the keys missing from Vault; an existing key is never overwritten.
+         */
+        post: operations["post_restore_v1_admin_essay_keys_restore_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/essay-keys/rotate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Rotate
+         * @description Start the rotation in the worker; poll /status for progress.
+         */
+        post: operations["post_rotate_v1_admin_essay_keys_rotate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/essay-keys/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Status
+         * @description Students with a key, key generation, its backup and the rotation progress.
+         */
+        get: operations["get_status_v1_admin_essay_keys_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/excuses": {
         parameters: {
             query?: never;
@@ -6149,6 +6229,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/matches/dismissed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Dismissed
+         * @description Universities the caller marked "not my vibe"; Return is the DELETE decision.
+         */
+        get: operations["admission_list_dismissed_matches"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/matches/{university_id}/decision": {
         parameters: {
             query?: never;
@@ -6604,8 +6704,9 @@ export interface paths {
         put?: never;
         /**
          * Fill Custom Profession
-         * @description Fill the card of a typed-in profession (a model call) and keep it, ready
-         *     to pick through `PUT /me/professions` with the returned id.
+         * @description Fill the card of a typed-in profession (a model call) and keep it.
+         *
+         *     It is ready to pick through `PUT /me/professions` with the returned id.
          */
         post: operations["admission_fill_custom_profession"];
         delete?: never;
@@ -26745,6 +26846,21 @@ export interface components {
             word_limit?: number | null;
         };
         /**
+         * EssayKeysStatusResponse
+         * @description Keys, generation, backup and rotation.
+         */
+        EssayKeysStatusResponse: {
+            /** Exported At */
+            exported_at: string | null;
+            /** Exported By */
+            exported_by: string | null;
+            /** Generation */
+            generation: number;
+            rotation: components["schemas"]["RotationResponse"];
+            /** Students With Keys */
+            students_with_keys: number | null;
+        };
+        /**
          * EssayLinkIO
          * @description A link to an item id or a profile question id.
          */
@@ -26907,6 +27023,12 @@ export interface components {
              * @description The one score shown everywhere: deep-read uniqueness 0-100.
              */
             uniqueness: number | null;
+            /**
+             * Unreadable
+             * @description The sealed text is lost (key gone or changed): no text, only deletion is possible.
+             * @default false
+             */
+            unreadable?: boolean;
             /** Updated At */
             updated_at: string | null;
             /** Word Count */
@@ -33087,7 +33209,7 @@ export interface components {
             password_change?: components["schemas"]["PasswordChangeResponse"] | null;
             /** Redirect To */
             redirect_to?: string | null;
-            restore?: components["schemas"]["RestoreResponse"] | null;
+            restore?: components["schemas"]["app__interfaces__http__v1__id__login__schemas__RestoreResponse"] | null;
             second_factor?: components["schemas"]["SecondFactorResponse"] | null;
         };
         /**
@@ -33492,6 +33614,11 @@ export interface components {
              * @description Average aid for international students, USD.
              */
             avg_aid_intl?: number | null;
+            /**
+             * Budget Fit
+             * @description Net (else sticker) price against the student's budget; null when the budget or the price is unknown.
+             */
+            budget_fit?: ("fits" | "above") | null;
             /** City */
             city: string | null;
             /** Cost After Aid Usd */
@@ -36292,6 +36419,14 @@ export interface components {
             name: string;
             /** Transports */
             transports: string[];
+        };
+        /**
+         * PassphraseBody
+         * @description The passphrase that seals the backup (kept by the admin, never stored).
+         */
+        PassphraseBody: {
+            /** Passphrase */
+            passphrase: string;
         };
         /**
          * PasswordChangeResponse
@@ -39682,35 +39817,12 @@ export interface components {
             text: string;
         };
         /**
-         * RestoreBody
-         * @description POST /v1/id/login/restore and /login/restore/decline.
-         */
-        RestoreBody: {
-            /** Login Challenge */
-            login_challenge: string;
-            /** Ticket */
-            ticket: string;
-        };
-        /**
          * RestoreIn
          * @description The `lock_version` of the essay the client read.
          */
         RestoreIn: {
             /** Lock Version */
             lock_version: number;
-        };
-        /**
-         * RestoreResponse
-         * @description The account is scheduled for deletion on ``deletes_on``: restore or decline.
-         */
-        RestoreResponse: {
-            /**
-             * Deletes On
-             * Format: date
-             */
-            deletes_on: string;
-            /** Ticket */
-            ticket: string;
         };
         /**
          * RestoreRevisionBody
@@ -40155,6 +40267,27 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /**
+         * RotationResponse
+         * @description Progress of the last (or running) rotation.
+         */
+        RotationResponse: {
+            /** Done */
+            done: number;
+            /** Finished At */
+            finished_at: string | null;
+            /** Started At */
+            started_at: string | null;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "idle" | "running" | "done" | "failed";
+            /** Total */
+            total: number;
+            /** Unreadable */
+            unreadable: number;
         };
         /**
          * RoundOptionOut
@@ -47659,6 +47792,30 @@ export interface components {
             status: string;
         };
         /**
+         * RestoreBody
+         * @description The backup file (its JSON object) and its passphrase.
+         */
+        app__interfaces__http__v1__admin_users__essay_keys__schemas__RestoreBody: {
+            /** Backup */
+            backup: {
+                [key: string]: unknown;
+            };
+            /** Passphrase */
+            passphrase: string;
+        };
+        /**
+         * RestoreResponse
+         * @description Keys written, keys already present, students whose stored key differs.
+         */
+        app__interfaces__http__v1__admin_users__essay_keys__schemas__RestoreResponse: {
+            /** Conflicts */
+            conflicts: string[];
+            /** Restored */
+            restored: number;
+            /** Skipped */
+            skipped: number;
+        };
+        /**
          * AdminUserResponse
          * @description AdminUser.
          */
@@ -48896,6 +49053,29 @@ export interface components {
         app__interfaces__http__v1__flashcards__schemas__CopyBody: {
             /** Share Slug */
             share_slug: string;
+        };
+        /**
+         * RestoreBody
+         * @description POST /v1/id/login/restore and /login/restore/decline.
+         */
+        app__interfaces__http__v1__id__login__schemas__RestoreBody: {
+            /** Login Challenge */
+            login_challenge: string;
+            /** Ticket */
+            ticket: string;
+        };
+        /**
+         * RestoreResponse
+         * @description The account is scheduled for deletion on ``deletes_on``: restore or decline.
+         */
+        app__interfaces__http__v1__id__login__schemas__RestoreResponse: {
+            /**
+             * Deletes On
+             * Format: date
+             */
+            deletes_on: string;
+            /** Ticket */
+            ticket: string;
         };
         /**
          * AuditItemResponse
@@ -52072,6 +52252,112 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_backup_v1_admin_essay_keys_backup_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PassphraseBody"];
+            };
+        };
+        responses: {
+            /** @description Backup file */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_restore_v1_admin_essay_keys_restore_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__admin_users__essay_keys__schemas__RestoreBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_users__essay_keys__schemas__RestoreResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_rotate_v1_admin_essay_keys_rotate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EssayKeysStatusResponse"];
+                };
+            };
+        };
+    };
+    get_status_v1_admin_essay_keys_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EssayKeysStatusResponse"];
                 };
             };
         };
@@ -61758,6 +62044,37 @@ export interface operations {
             };
         };
     };
+    admission_list_dismissed_matches: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_decide_match: {
         parameters: {
             query?: never;
@@ -70849,7 +71166,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["RestoreBody"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__id__login__schemas__RestoreBody"];
             };
         };
         responses: {
@@ -70882,7 +71199,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["RestoreBody"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__id__login__schemas__RestoreBody"];
             };
         };
         responses: {
