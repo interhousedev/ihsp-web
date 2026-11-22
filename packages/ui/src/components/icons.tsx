@@ -87,6 +87,7 @@ import {
   IconLayoutGrid,
   IconLayoutSidebar,
   IconLoader,
+  IconKey,
   IconLock,
   IconRoute,
   IconLogin,
@@ -258,6 +259,7 @@ export const Icons = {
   badgeCheck: IconRosetteDiscountCheck,
   qrCode: IconQrcode,
   lock: IconLock,
+  key: IconKey,
   route: IconRoute,
   server: IconServerCog,
 
