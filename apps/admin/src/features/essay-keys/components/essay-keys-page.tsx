@@ -244,7 +244,11 @@ function RestoreCard() {
         throw new ParseError()
       }
       if (typeof backup !== "object" || backup === null || Array.isArray(backup)) throw new ParseError()
-      return postAdminEssayKeysRestore({ backup: backup as Record<string, unknown>, passphrase: value })
+      // Shape is validated by the server (422 admission/essay_keys_backup_invalid).
+      return postAdminEssayKeysRestore({
+        backup: backup as Parameters<typeof postAdminEssayKeysRestore>[0]["backup"],
+        passphrase: value,
+      })
     },
     onSuccess: async () => {
       setPassphrase("")
