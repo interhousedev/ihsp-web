@@ -48,3 +48,10 @@ export function uniqueSources(items: readonly Profession[]) {
 
 /** The minimum of filled circles before the "suits you" suggestions are offered. */
 export const SUGGEST_MIN_CIRCLES = 2
+
+/** True when the search has a term but no result carries it in its name: the student may add their own title. */
+export function isPoorMatch(items: readonly Profession[], term: string): boolean {
+  const needle = term.trim().toLowerCase()
+  if (needle.length < 2) return false
+  return !items.some((p) => p.name.toLowerCase().includes(needle))
+}

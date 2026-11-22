@@ -19,6 +19,12 @@ export type Profession = {
   salary_band: SalaryBand | null
   related_fields: string[]
   sources: { label: string; url: string }[]
+  /** A short text; set on the cards of typed-in professions. */
+  description?: string | null
+  /** True for a title the student typed in; its card was filled by the model. */
+  custom?: boolean
+  /** Closest ISCO-08 code of a typed-in profession. */
+  isco_id?: string | null
 }
 export type MyProfession = Profession & { rank: number }
 
@@ -67,6 +73,10 @@ export const putMyProfessions = (ids: string[], locale: string) =>
     { items: ids.map((profession_id, index) => ({ profession_id, rank: index + 1 })) },
     lang(locale),
   )
+
+/** Fills the card of a typed-in title (a model call); the server keeps it until it is picked or another is filled. */
+export const fillCustomProfession = (title: string, locale: string) =>
+  api.post<Profession>("/v1/admission/me/professions/custom/fill", { title }, lang(locale))
 
 export const ikigaiQuery = () =>
   queryOptions({
