@@ -694,7 +694,7 @@ export interface paths {
         post?: never;
         /**
          * Remove Tracing
-         * @description Remove the stored project and its key; the environment's applies again.
+         * @description Remove the stored project and its key; tracing stops.
          */
         delete: operations["remove_tracing_v1_admin_ai_tracing_delete"];
         options?: never;
@@ -45325,10 +45325,6 @@ export interface components {
         TracingOut: {
             /** Capture Default */
             capture_default: boolean;
-            /** Env Configured */
-            env_configured: boolean;
-            /** Env Host */
-            env_host: string;
             /** Has Secret */
             has_secret: boolean;
             /** Host */
@@ -45341,7 +45337,7 @@ export interface components {
              * Source
              * @enum {string}
              */
-            source: "runtime" | "env" | "none";
+            source: "runtime" | "none";
             /** Updated At */
             updated_at: string | null;
         };

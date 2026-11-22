@@ -15,8 +15,6 @@ const tracingFixture = {
   public_key: null,
   has_secret: false,
   secret_last4: null,
-  env_configured: false,
-  env_host: "",
   capture_default: false,
   updated_at: null,
 }

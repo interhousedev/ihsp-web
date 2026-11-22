@@ -61,13 +61,11 @@ export type AiPipelineBody = Pick<AiPipelineRoute, "connector_id" | "model" | "r
 
 /** The Langfuse project calls are traced to; the secret key is write-only and never returned. */
 export type AiTracing = {
-  source: "runtime" | "env" | "none"
+  source: "runtime" | "none"
   host: string
   public_key: string | null
   has_secret: boolean
   secret_last4: string | null
-  env_configured: boolean
-  env_host: string
   capture_default: boolean
   updated_at: string | null
 }
