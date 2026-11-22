@@ -5870,17 +5870,14 @@
       "pages": "Boʻlimlar",
       "universities": "OTMlar",
       "essays": "Esselar",
-      "tasks": "Vazifalar"
+      "tasks": "Vazifalar",
+      "activities": "Faoliyat va yutuqlar"
     },
-    "pages": {
-      "practice": "Esse mashqi",
-      "byUniversity": "OTMlar boʻyicha esselar",
-      "professions": "Kasblar",
-      "weights": "Men uchun muhim narsalar (radar)",
-      "catalog": "OTMlar katalogi",
-      "graph": "Roʻyxat grafigi",
-      "gantt": "Muddatlar va vazifalar",
-      "opportunities": "Imkoniyatlar va stipendiyalar"
+    "fields": {
+      "title": "Sarlavha",
+      "prompt": "Topshiriq",
+      "body": "Matn ichida",
+      "notes": "Qaydlarda"
     }
   },
   "opportunitiesManage": {

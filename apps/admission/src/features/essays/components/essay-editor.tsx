@@ -82,12 +82,27 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const split = useSplit()
   const list = useList()
   const te = useT("essayEditor")
-  const tab = useSearchParams().get("tab")
+  const params = useSearchParams()
+  const tab = params.get("tab")
+  const found = params.get("q")
   const [view, setView] = useState<DockView | null>(isDockView(tab) ? tab : null)
   const [shareOpen, setShareOpen] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [peekOpen, setPeekOpen] = useState(false)
   const copyFinal = useCopyFinal(draft.body)
+
+  // Arriving from the global search (`?q=`): select the first match in the body and scroll to it.
+  useEffect(() => {
+    const area = body.current
+    if (!found || !area) return
+    const at = area.value.toLocaleLowerCase().indexOf(found.toLocaleLowerCase())
+    if (at < 0) return
+    area.focus({ preventScroll: true })
+    area.setSelectionRange(at, at + found.length)
+    const line = area.value.slice(0, at).split("\n").length
+    area.scrollTop = Math.max(0, (line - 3) * 24)
+    area.scrollIntoView?.({ block: "center" })
+  }, [found])
 
   /** Saves the current draft when it has changes; resolves to the lock version to use next. */
   const flush = useCallback(async (): Promise<number> => {

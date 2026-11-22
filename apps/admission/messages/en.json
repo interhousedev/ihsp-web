@@ -5870,17 +5870,14 @@
       "pages": "Pages",
       "universities": "Universities",
       "essays": "Essays",
-      "tasks": "Tasks"
+      "tasks": "Tasks",
+      "activities": "Activities and honors"
     },
-    "pages": {
-      "practice": "Essay practice",
-      "byUniversity": "Essays by university",
-      "professions": "Professions",
-      "weights": "What matters to me (radar)",
-      "catalog": "University catalog",
-      "graph": "List graph",
-      "gantt": "Deadlines and tasks",
-      "opportunities": "Opportunities and scholarships"
+    "fields": {
+      "title": "Title",
+      "prompt": "Prompt",
+      "body": "In the text",
+      "notes": "In the notes"
     }
   },
   "opportunitiesManage": {

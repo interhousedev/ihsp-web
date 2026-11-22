@@ -5870,17 +5870,14 @@
       "pages": "Разделы",
       "universities": "Вузы",
       "essays": "Эссе",
-      "tasks": "Задачи"
+      "tasks": "Задачи",
+      "activities": "Активности и награды"
     },
-    "pages": {
-      "practice": "Практика эссе",
-      "byUniversity": "Эссе по вузам",
-      "professions": "Профессии",
-      "weights": "Что для меня важно (радар)",
-      "catalog": "Каталог вузов",
-      "graph": "График списка",
-      "gantt": "Сроки и задачи",
-      "opportunities": "Возможности и стипендии"
+    "fields": {
+      "title": "Название",
+      "prompt": "Задание",
+      "body": "В тексте",
+      "notes": "В заметках"
     }
   },
   "opportunitiesManage": {
