@@ -1,6 +1,7 @@
 export { AnnotatedText } from "./annotated-text"
 export { CommentsDrawer } from "./comments-drawer"
 export { Dock, isDockView, type DockMore, type DockTab, type DockView } from "./dock"
+export { PeekNote } from "./peek-note"
 export { PreviewDialog } from "./preview-dialog"
 export { ReadPanel } from "./read-panel"
 export { useReadState } from "./read-state"

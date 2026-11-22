@@ -115,6 +115,19 @@ export function filterRows(rows: LedgerRow[], query: string): LedgerRow[] {
   )
 }
 
+/** The universities asking the same question (exact) and those asking a similar one, from the server's `similar_keys`. */
+export function rowAskedBy(row: LedgerRow): { exact: string[]; similar: string[] } {
+  const near = new Set(row.group.similar_keys)
+  const exact = new Set<string>()
+  const similar = new Set<string>()
+  for (const p of row.group.prompts) {
+    if (!p.institution_id) continue
+    ;(near.has(p.key) ? similar : exact).add(p.institution_name)
+  }
+  for (const name of exact) similar.delete(name)
+  return { exact: [...exact], similar: [...similar] }
+}
+
 /** The distinct universities of a row (the Common App has no university), soonest list entries first. */
 export function rowUniversities(row: LedgerRow): { id: string; name: string }[] {
   const seen = new Map<string, string>()

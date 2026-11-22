@@ -177,6 +177,7 @@ describe("essay ledger", () => {
     kind: "shared",
     category: "other" as const,
     short_answers: [],
+    similar_keys: [] as string[],
     spread: 0.2,
     covered: true,
     prompts: [prompt, { ...prompt, key: "p2", institution_id: "i2", institution_name: "KAIST", word_limit: 300 }],

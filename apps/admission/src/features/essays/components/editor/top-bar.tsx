@@ -26,6 +26,7 @@ export type TopBarProps = {
   onRedo: () => void
   onCopy: () => void
   onPreview: () => void
+  onPeek: () => void
   onVersions: () => void
   onComments: () => void
   onShare: () => void
@@ -56,6 +57,7 @@ export function TopBar({
   onRedo,
   onCopy,
   onPreview,
+  onPeek,
   onVersions,
   onComments,
   onShare,
@@ -132,6 +134,9 @@ export function TopBar({
         <Button type="button" size="icon-sm" variant="ghost" aria-label={te("preview")} onClick={onPreview}>
           <Icons.eye aria-hidden />
         </Button>
+        <Button type="button" size="icon-sm" variant="ghost" aria-label={te("peek")} onClick={onPeek}>
+          <Icons.files aria-hidden />
+        </Button>
         <Button
           type="button"
           size="sm"
@@ -158,6 +163,10 @@ export function TopBar({
           <DropdownMenuItem onClick={onPreview}>
             <Icons.eye aria-hidden />
             {te("preview")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={onPeek}>
+            <Icons.files aria-hidden />
+            {te("peek")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={onShare}>
             <Icons.share aria-hidden />

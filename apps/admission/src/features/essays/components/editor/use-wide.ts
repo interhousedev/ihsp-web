@@ -25,3 +25,8 @@ export function useWide(): boolean {
 export function useSplit(): boolean {
   return useMedia("(min-width: 768px)")
 }
+
+/** A phone: under 640 px floating windows give way to a sheet. Without matchMedia: false. */
+export function usePhone(): boolean {
+  return !useMedia("(min-width: 640px)")
+}

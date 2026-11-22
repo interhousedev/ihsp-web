@@ -24,6 +24,7 @@ import {
   CommentsDrawer,
   Dock,
   isDockView,
+  PeekNote,
   PreviewDialog,
   ReadPanel,
   ScoreBar,
@@ -85,6 +86,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const [view, setView] = useState<DockView | null>(isDockView(tab) ? tab : null)
   const [shareOpen, setShareOpen] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
+  const [peekOpen, setPeekOpen] = useState(false)
   const copyFinal = useCopyFinal(draft.body)
 
   /** Saves the current draft when it has changes; resolves to the lock version to use next. */
@@ -250,6 +252,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
         onRedo={() => history("redo")}
         onCopy={() => void copyFinal()}
         onPreview={() => setPreviewOpen(true)}
+        onPeek={() => setPeekOpen((v) => !v)}
         onVersions={() => go("versions")}
         onComments={() => go(view === "comments" ? "read" : "comments")}
         onShare={() => setShareOpen(true)}
@@ -331,6 +334,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
         <Dock split={split} view={view} onView={go} onClose={() => setView(null)} title={dockTitle} panes={panes} />
       </div>
       <ShareDialog essayId={essay.id} open={shareOpen} onOpenChange={setShareOpen} />
+      <PeekNote open={peekOpen} onClose={() => setPeekOpen(false)} currentId={essay.id} />
       <PreviewDialog
         open={previewOpen}
         onOpenChange={setPreviewOpen}
