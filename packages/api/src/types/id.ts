@@ -74,6 +74,8 @@ export type UserPreferences = {
   /** Web Push on the account's devices (each device is switched on in its own settings). */
   hide_photo_from_classmates: boolean
   notify_push: boolean
+  /** Langfuse keeps the text of the general chat only (web and Telegram); other AI requests go without text. */
+  limit_ai_tracing: boolean
   today_cards: string[]
   onboarding_dismissed: string[]
   /** The sp phone bottom bar: up to 4 destination ids, `null` until the user picks. */

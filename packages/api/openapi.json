@@ -45575,6 +45575,17 @@
             ],
             "title": "Lessons Prompt Enabled"
           },
+          "limit_ai_tracing": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limit Ai Tracing"
+          },
           "locale": {
             "anyOf": [
               {
@@ -67397,14 +67408,6 @@
             "title": "Capture Default",
             "type": "boolean"
           },
-          "env_configured": {
-            "title": "Env Configured",
-            "type": "boolean"
-          },
-          "env_host": {
-            "title": "Env Host",
-            "type": "string"
-          },
           "has_secret": {
             "title": "Has Secret",
             "type": "boolean"
@@ -67438,7 +67441,6 @@
           "source": {
             "enum": [
               "runtime",
-              "env",
               "none"
             ],
             "title": "Source",
@@ -67463,8 +67465,6 @@
           "public_key",
           "has_secret",
           "secret_last4",
-          "env_configured",
-          "env_host",
           "capture_default",
           "updated_at"
         ],
@@ -69664,6 +69664,11 @@
           "lessons_prompt_enabled": {
             "default": true,
             "title": "Lessons Prompt Enabled",
+            "type": "boolean"
+          },
+          "limit_ai_tracing": {
+            "default": false,
+            "title": "Limit Ai Tracing",
             "type": "boolean"
           },
           "locale": {
@@ -78902,7 +78907,7 @@
     },
     "/v1/admin/ai/tracing": {
       "delete": {
-        "description": "Remove the stored project and its key; the environment's applies again.",
+        "description": "Remove the stored project and its key; tracing stops.",
         "operationId": "remove_tracing_v1_admin_ai_tracing_delete",
         "responses": {
           "200": {
