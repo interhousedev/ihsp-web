@@ -3653,6 +3653,10 @@
     "rejectReasonLabel": "Reason (optional)",
     "requiredHint": "Add at least one detail or fact and an https source link to send."
   },
+  "focuses": {
+    "title": "What {name} says it looks for",
+    "source": "Source: {host}"
+  },
   "catalogFacts": {
     "choose": "Choose",
     "yes": "Yes",
@@ -3741,6 +3745,13 @@
     "rankingSource": "Source link",
     "rankingAdd": "Add ranking",
     "rankingAddFor": "Add ranking to {label}",
+    "focusText": "Focus ({lang})",
+    "focusQuote": "Exact quote (up to 300 characters)",
+    "focusSource": "Page on the university site",
+    "focusFetched": "Fetched on (YYYY-MM-DD)",
+    "focusVerified": "Verified",
+    "focusAdd": "Add focus",
+    "focusAddFor": "Add focus to {label}",
     "experience": {
       "social": "Social life",
       "research": "Research",

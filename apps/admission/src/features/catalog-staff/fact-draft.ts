@@ -11,6 +11,26 @@ export type DeadlineDraft = {
 
 export type RankingDraft = { system: string; subject: string; rank: string; year: string; source_url: string }
 
+export type FocusDraft = {
+  en: string
+  ru: string
+  uz: string
+  quote: string
+  source_url: string
+  fetched_at: string
+  verified: boolean
+}
+
+export const EMPTY_FOCUS: FocusDraft = {
+  en: "",
+  ru: "",
+  uz: "",
+  quote: "",
+  source_url: "",
+  fetched_at: "",
+  verified: false,
+}
+
 export const RANK_SYSTEMS = ["qs", "the", "arwu", "usnews"] as const
 
 export const RANKING_SUBJECTS = [
@@ -53,7 +73,7 @@ export const EMPTY_RANKING: RankingDraft = { system: "qs", subject: "overall", r
 export const EXPERIENCE_PARTS = ["social", "research", "work"] as const
 
 /** What the inputs of one fact hold: text, a picked list, named numbers or the deadline and ranking rows. */
-export type Draft = string | string[] | Record<string, string> | DeadlineDraft[] | RankingDraft[]
+export type Draft = string | string[] | Record<string, string> | DeadlineDraft[] | RankingDraft[] | FocusDraft[]
 
 export const PLANS = ["ED", "ED2", "EA", "REA", "SCEA", "RD", "ROLLING", "OTHER"] as const
 
@@ -70,6 +90,7 @@ export function emptyDraft(item: FactSpecItem): Draft {
     case "study_fields":
     case "deadlines":
     case "rankings":
+    case "focuses":
       return []
     case "range":
     case "experience_scores":
@@ -140,6 +161,26 @@ export function serializeDraft(item: FactSpecItem, draft: Draft | undefined): un
       if (Object.keys(out).length === 0) return undefined
       if (record.notes) out.notes = JSON.parse(record.notes)
       return out
+    }
+    case "focuses": {
+      const rows = (draft as FocusDraft[])
+        .filter(
+          (row) =>
+            row.en.trim() &&
+            row.ru.trim() &&
+            row.uz.trim() &&
+            row.quote.trim() &&
+            isHttpsUrl(row.source_url.trim()) &&
+            row.fetched_at.trim(),
+        )
+        .map((row) => ({
+          text: { en: row.en.trim(), ru: row.ru.trim(), uz: row.uz.trim() },
+          quote: row.quote.trim(),
+          source_url: row.source_url.trim(),
+          fetched_at: row.fetched_at.trim(),
+          verified: row.verified,
+        }))
+      return rows.length > 0 ? rows : undefined
     }
     case "rankings": {
       const rows = (draft as RankingDraft[])
@@ -275,6 +316,22 @@ export function draftFromValue(item: FactSpecItem, value: unknown): Draft | unde
       if (source.notes) out.notes = JSON.stringify(source.notes)
       return out
     }
+    case "focuses":
+      return Array.isArray(value)
+        ? value.map((entry) => {
+            const row = record(entry) ?? {}
+            const text = textRecord(row.text) ?? {}
+            return {
+              en: text.en ?? "",
+              ru: text.ru ?? "",
+              uz: text.uz ?? "",
+              quote: textOf(row.quote),
+              source_url: textOf(row.source_url),
+              fetched_at: textOf(row.fetched_at),
+              verified: row.verified === true,
+            } satisfies FocusDraft
+          })
+        : undefined
     case "rankings":
       return Array.isArray(value)
         ? value.map((entry) => {

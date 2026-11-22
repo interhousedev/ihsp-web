@@ -25,6 +25,7 @@ export function institution(overrides: Partial<Institution> = {}): Institution {
     deadlines: [],
     sources: [],
     highlights: [],
+    focuses: [],
     details: [],
     factors: [],
     name_local: null,

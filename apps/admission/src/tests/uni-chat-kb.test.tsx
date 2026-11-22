@@ -26,6 +26,7 @@ const match: Match = {
   fields: ["Computer Science"],
   map_url: "https://www.google.com/maps/search/?api=1&query=Boston",
   rankings: [],
+  focuses: [],
 }
 
 const counselor = { session: { user: { ...userMe, roles: ["counselor" as const] } } }

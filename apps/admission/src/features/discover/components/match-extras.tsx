@@ -4,6 +4,7 @@ import { useLocale, useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
 import { useState } from "react"
 import type { AdmissionMatch } from "@ihsp/api"
+import { InstitutionFocuses } from "../../../components/lib/institution-focuses"
 
 export type CardMatch = AdmissionMatch
 
@@ -138,6 +139,7 @@ export function MatchExtrasView({ match }: { match: CardMatch }) {
           ))}
         </ul>
       ) : null}
+      <InstitutionFocuses name={match.name} focuses={match.focuses} />
       {match.map_url ? (
         <a href={match.map_url} target="_blank" rel="noreferrer" className="text-primary text-xs font-medium">
           {t("extras.map")}

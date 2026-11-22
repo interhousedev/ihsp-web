@@ -3653,6 +3653,10 @@
     "rejectReasonLabel": "Sabab (ixtiyoriy)",
     "requiredHint": "Yuborish uchun kamida bitta tafsilot yoki fakt va https manba havolasini qoʻshing."
   },
+  "focuses": {
+    "title": "{name} nimani qidirishini oʻzi aytadi",
+    "source": "Manba: {host}"
+  },
   "catalogFacts": {
     "choose": "Tanlang",
     "yes": "Ha",
@@ -3741,6 +3745,13 @@
     "rankingSource": "Manba havolasi",
     "rankingAdd": "Reyting qoʻshish",
     "rankingAddFor": "Reyting qoʻshish: {label}",
+    "focusText": "Fokus ({lang})",
+    "focusQuote": "Aniq iqtibos (300 belgigacha)",
+    "focusSource": "Universitet saytidagi sahifa",
+    "focusFetched": "Yuklangan sana (YYYY-MM-DD)",
+    "focusVerified": "Tekshirilgan",
+    "focusAdd": "Fokus qoʻshish",
+    "focusAddFor": "Fokus qoʻshish: {label}",
     "experience": {
       "social": "Talabalik hayoti",
       "research": "Tadqiqot",

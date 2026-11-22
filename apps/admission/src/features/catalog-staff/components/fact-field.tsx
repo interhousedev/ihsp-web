@@ -8,6 +8,7 @@ import { useStudyFields } from "../../chooser/hooks"
 import type { FactSpecItem } from "../api"
 import {
   EMPTY_DEADLINE,
+  EMPTY_FOCUS,
   EMPTY_RANKING,
   EXPERIENCE_PARTS,
   PLANS,
@@ -16,6 +17,7 @@ import {
   isUsdFact,
   type DeadlineDraft,
   type Draft,
+  type FocusDraft,
   type RankingDraft,
 } from "../fact-draft"
 
@@ -431,6 +433,78 @@ function RankingsField({ item, draft, onChange }: FieldProps<RankingDraft[]>) {
   )
 }
 
+function FocusesField({ item, draft, onChange }: FieldProps<FocusDraft[]>) {
+  const t = useT("catalogFacts")
+  const update = (index: number, patch: Partial<FocusDraft>) =>
+    onChange(draft.map((row, i) => (i === index ? { ...row, ...patch } : row)))
+  return (
+    <div className="flex flex-col gap-2">
+      {draft.map((row, index) => (
+        <div key={index} className="flex flex-col gap-2 rounded-card border p-2">
+          {(["en", "ru", "uz"] as const).map((lang) => (
+            <Input
+              key={lang}
+              aria-label={t("focusText", { lang })}
+              placeholder={t("focusText", { lang })}
+              maxLength={300}
+              value={row[lang]}
+              onChange={(e) => update(index, { [lang]: e.target.value })}
+            />
+          ))}
+          <Input
+            aria-label={t("focusQuote")}
+            placeholder={t("focusQuote")}
+            maxLength={300}
+            value={row.quote}
+            onChange={(e) => update(index, { quote: e.target.value })}
+          />
+          <Input
+            type="url"
+            aria-label={t("focusSource")}
+            placeholder="https://"
+            maxLength={2000}
+            value={row.source_url}
+            onChange={(e) => update(index, { source_url: e.target.value })}
+          />
+          <Input
+            aria-label={t("focusFetched")}
+            placeholder={t("focusFetched")}
+            maxLength={32}
+            value={row.fetched_at}
+            onChange={(e) => update(index, { fetched_at: e.target.value })}
+          />
+          <Pill pressed={row.verified} onClick={() => update(index, { verified: !row.verified })}>
+            {t("focusVerified")}
+          </Pill>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="self-end"
+            onClick={() => onChange(draft.filter((_, i) => i !== index))}
+          >
+            <Icons.trash className="size-4" aria-hidden />
+            {t("deadlineRemove")}
+          </Button>
+        </div>
+      ))}
+      {draft.length < 12 && (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="self-start"
+          aria-label={t("focusAddFor", { label: item.label })}
+          onClick={() => onChange([...draft, { ...EMPTY_FOCUS }])}
+        >
+          <Icons.add className="size-4" aria-hidden />
+          {t("focusAdd")}
+        </Button>
+      )}
+    </div>
+  )
+}
+
 function ExperienceField({ item, draft, onChange }: FieldProps<Record<string, string>>) {
   const t = useT("catalogFacts")
   const scores = ["", "1", "2", "3", "4", "5"].map((value) => ({ value, label: value || t("unknown") }))
@@ -473,6 +547,8 @@ export function FactField({ item, draft, onChange }: FieldProps<Draft>) {
       return <DeadlinesField item={item} draft={draft as DeadlineDraft[]} onChange={onChange} />
     case "rankings":
       return <RankingsField item={item} draft={draft as RankingDraft[]} onChange={onChange} />
+    case "focuses":
+      return <FocusesField item={item} draft={draft as FocusDraft[]} onChange={onChange} />
     case "experience_scores":
       return <ExperienceField item={item} draft={draft as Record<string, string>} onChange={onChange} />
     case "url":

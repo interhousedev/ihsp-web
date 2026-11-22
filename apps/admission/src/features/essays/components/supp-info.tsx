@@ -6,6 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { LogoAvatar } from "../../../components/lib/photo-header"
+import { InstitutionFocuses } from "../../../components/lib/institution-focuses"
 import { useList } from "../../chooser/hooks"
 import type { Essay } from "../api"
 import { useSaveEssay } from "../api"
@@ -140,6 +141,7 @@ export function SuppInfo({ essay }: { essay: Essay }) {
           ) : null}
         </div>
       ) : null}
+      {entry && name ? <InstitutionFocuses name={name} focuses={entry.institution.focuses} /> : null}
       {entry && name ? (
         <SuppPrompts
           institutionId={entry.institution.id}

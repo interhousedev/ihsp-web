@@ -3653,6 +3653,10 @@
     "rejectReasonLabel": "Причина (необязательно)",
     "requiredHint": "Чтобы отправить, добавьте хотя бы одну деталь или факт и ссылку-источник https."
   },
+  "focuses": {
+    "title": "Что {name} ищет, по его словам",
+    "source": "Источник: {host}"
+  },
   "catalogFacts": {
     "choose": "Выбрать",
     "yes": "Да",
@@ -3741,6 +3745,13 @@
     "rankingSource": "Ссылка на источник",
     "rankingAdd": "Добавить рейтинг",
     "rankingAddFor": "Добавить рейтинг: {label}",
+    "focusText": "Фокус ({lang})",
+    "focusQuote": "Точная цитата (до 300 символов)",
+    "focusSource": "Страница на сайте вуза",
+    "focusFetched": "Дата загрузки (ГГГГ-ММ-ДД)",
+    "focusVerified": "Проверено",
+    "focusAdd": "Добавить фокус",
+    "focusAddFor": "Добавить фокус: {label}",
     "experience": {
       "social": "Студенческая жизнь",
       "research": "Исследования",

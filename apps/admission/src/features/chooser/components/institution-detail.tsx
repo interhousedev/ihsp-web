@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import type { ReactNode } from "react"
 import { LogoAvatar } from "../../../components/lib/photo-header"
+import { InstitutionFocuses } from "../../../components/lib/institution-focuses"
 import { useMatches } from "../../discover/hooks"
 import { OutcomeSummary } from "../../outcomes/components/outcome-summary"
 import { useEstimatesVisible } from "../../../config/applicant"
@@ -236,6 +237,7 @@ function DetailBody({ institution }: { institution: Institution }) {
               <ChancesView institutionId={institution.id} showQuestions={false} />
             </section>
           ) : null}
+          <InstitutionFocuses name={institution.name} focuses={institution.focuses} />
           <SuggestedColleges institution={institution} />
         </Panel>
         <Panel value="facts">

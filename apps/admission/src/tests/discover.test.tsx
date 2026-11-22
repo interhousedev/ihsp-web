@@ -26,6 +26,7 @@ const match = (id: string, name: string): Match => ({
   fields: ["Computer Science"],
   map_url: "https://www.google.com/maps/search/?api=1&query=Boston",
   rankings: [],
+  focuses: [],
 })
 
 beforeEach(() => {
