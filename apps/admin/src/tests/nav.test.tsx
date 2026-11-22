@@ -52,6 +52,7 @@ describe("admin sidebar (ADM-1)", () => {
       "/ai/connectors/",
       "/devices/",
       "/vault/",
+      "/essay-keys/",
       "/migration/",
       "/legal/",
       "/erasure/",
