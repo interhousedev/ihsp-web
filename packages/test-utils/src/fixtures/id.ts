@@ -34,6 +34,7 @@ export const userPreferences: UserPreferences = {
   mail_forward_to_telegram: true,
   hide_photo_from_classmates: false,
   notify_push: true,
+  limit_ai_tracing: false,
   today_cards: ["now", "timeline", "due", "marks", "semester", "announcements", "alerts"],
   onboarding_dismissed: ["tour"],
   bottom_nav: null,

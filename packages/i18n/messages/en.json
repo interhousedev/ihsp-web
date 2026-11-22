@@ -2292,6 +2292,11 @@
       "failed": "Failed",
       "requested": "Requested {date}",
       "until": "available until {date}"
+    },
+    "tracing": {
+      "title": "Privacy",
+      "label": "Block unnecessary tracking and analytics",
+      "description": "Only the text of the general chat and the Telegram chat is kept for quality review; other AI requests are recorded without their text. Essays are never recorded."
     }
   },
   "appearance": {

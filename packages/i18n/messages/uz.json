@@ -2292,6 +2292,11 @@
       "failed": "Bajarilmadi",
       "requested": "Soʻralgan sana: {date}",
       "until": "{date} gacha mavjud"
+    },
+    "tracing": {
+      "title": "Maxfiylik",
+      "label": "Keraksiz kuzatuv va tahlilni bloklash",
+      "description": "Sifatni tekshirish uchun faqat umumiy chat va Telegram chati matni saqlanadi; boshqa sunʼiy intellekt soʻrovlari matnisiz yoziladi. Insholar hech qachon yozilmaydi."
     }
   },
   "appearance": {
