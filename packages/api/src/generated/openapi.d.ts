@@ -9733,6 +9733,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/voice-fill": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Voice Fill
+         * @description Extract the field values from a transcript (soft limit: 60 per hour).
+         */
+        post: operations["admission_voice_fill"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/voice/speech": {
         parameters: {
             query?: never;
@@ -22241,6 +22261,11 @@ export interface components {
              * @default
              */
             experience?: string;
+            /**
+             * Future Interest
+             * @default
+             */
+            future_interest?: string;
             /** Hours Per Day */
             hours_per_day: number;
             /** Likes */
@@ -30588,6 +30613,12 @@ export interface components {
             name_local: string | null;
             /** Next Deadline */
             next_deadline: string | null;
+            /**
+             * Rankings
+             * @description Overall ranking first, then subject rankings; detail view only.
+             * @default []
+             */
+            rankings?: components["schemas"]["RankingOut"][];
             /** Scholarship Count */
             scholarship_count: number;
             /** Slug */
@@ -39622,7 +39653,7 @@ export interface components {
         };
         /**
          * RankingOut
-         * @description A subject ranking relevant to the student's fields and professions.
+         * @description A ranking of the institution (overall or one subject).
          */
         RankingOut: {
             /** Rank */
@@ -47983,6 +48014,51 @@ export interface components {
          * @enum {string}
          */
         "Visibility-Output": "public" | "lyceum" | "hidden";
+        /**
+         * VoiceFieldIn
+         * @description One field of the caller's form.
+         */
+        VoiceFieldIn: {
+            /** Key */
+            key: string;
+            /**
+             * Kind
+             * @default text
+             * @enum {string}
+             */
+            kind?: "text" | "number" | "choice";
+            /** Label */
+            label: string;
+            /**
+             * Max Length
+             * @default 1500
+             */
+            max_length?: number;
+            /** Options */
+            options?: string[];
+        };
+        /**
+         * VoiceFillIn
+         * @description What the person said and the fields to fill from it.
+         */
+        VoiceFillIn: {
+            /** Fields */
+            fields: components["schemas"]["VoiceFieldIn"][];
+            /** Form */
+            form: string;
+            /** Transcript */
+            transcript: string;
+        };
+        /**
+         * VoiceFillOut
+         * @description The values found; a field the person did not speak about is absent.
+         */
+        VoiceFillOut: {
+            /** Values */
+            values: {
+                [key: string]: string;
+            };
+        };
         /**
          * WebAuthnOptionsResponse
          * @description PublicKeyCredentialCreationOptions / RequestOptions as JSON (base64url).
@@ -70007,6 +70083,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ChancesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_voice_fill: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VoiceFillIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceFillOut"];
                 };
             };
             /** @description Validation Error */
