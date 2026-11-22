@@ -1,5 +1,6 @@
 "use client"
 
+import { CountryFlag } from "./country-flag"
 import { useLocale, useT } from "@ihsp/i18n"
 import { useMemo, useRef } from "react"
 import { ChoiceCard, ChoiceCardGroup, Icons, Input, Pill, TagInput, Textarea } from "@ihsp/ui"
@@ -30,7 +31,11 @@ function TagsField({ question, value, onChange, onDraft, label }: FieldProps & {
   const options = useMemo(() => {
     if (question.kind === "country") {
       const names = new Intl.DisplayNames([locale], { type: "region" })
-      return configOptions(config.data, "countries").map((code) => ({ value: code, label: names.of(code) ?? code }))
+      return configOptions(config.data, "countries").map((code) => ({
+        value: code,
+        label: names.of(code) ?? code,
+        icon: <CountryFlag code={code} />,
+      }))
     }
     return configOptions(config.data, "fields").map((name) => ({ value: name, label: name }))
   }, [question.kind, config.data, locale])

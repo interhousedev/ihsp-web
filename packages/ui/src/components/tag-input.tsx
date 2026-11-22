@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type KeyboardEvent } from "react"
+import { useState, type KeyboardEvent, type ReactNode } from "react"
 import { cn } from "../lib/utils"
 import { Icons } from "./icons"
 import { Pill } from "./pill"
@@ -10,7 +10,7 @@ import { Pill } from "./pill"
  * (ignoring case) and tags beyond `max` are dropped. All labels come from the caller, so the text is translated there.
  * With `options` the field is a searchable multi-select: only listed values can be added, each shown by its label.
  */
-export type TagOption = { value: string; label: string }
+export type TagOption = { value: string; label: string; icon?: ReactNode }
 
 export function TagInput({
   value,
@@ -87,6 +87,7 @@ export function TagInput({
     >
       {value.map((tag) => (
         <Pill key={tag} className="h-6 gap-1 pr-1 pl-2.5 text-xs">
+          {options?.find((option) => option.value === tag)?.icon}
           {labelOf(tag)}
           <button
             type="button"
@@ -119,8 +120,9 @@ export function TagInput({
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
                 onClick={() => add(option.value)}
-                className="hover:bg-accent min-h-11 w-full cursor-pointer rounded-md px-2 text-left text-sm md:min-h-8"
+                className="hover:bg-accent flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-md px-2 text-left text-sm md:min-h-8"
               >
+                {option.icon}
                 {option.label}
               </button>
             </li>
