@@ -4669,6 +4669,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/country-facts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read Country Facts
+         * @description Facts of up to 30 countries; unverified ones are marked `verified: false`.
+         */
+        get: operations["admission_country_facts_read"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/country-facts/{country}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read One Country Facts
+         * @description The facts of one country.
+         */
+        get: operations["admission_country_facts_read_one"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/courses": {
         parameters: {
             query?: never;
@@ -5162,7 +5202,7 @@ export interface paths {
         };
         /**
          * Practice Today
-         * @description Today's theme and my entry for it, if I started one.
+         * @description Today's theme (or the creative one asked for) and my entry, if I started one.
          */
         get: operations["admission_essay_practice_today"];
         /**
@@ -7543,6 +7583,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/projects/helpers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Project Helpers
+         * @description Active helpers that share a tag, best match first.
+         */
+        get: operations["admission_project_helpers_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/projects/ideas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Project Ideas
+         * @description The newest run and the few before it.
+         */
+        get: operations["admission_project_ideas_list"];
+        put?: never;
+        /**
+         * Create Project Ideas
+         * @description Suggest projects for the brief (counts against the weekly AI limit).
+         */
+        post: operations["admission_project_ideas_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/projects/ideas/{run_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Project Run
+         * @description One of the caller's own runs.
+         */
+        get: operations["admission_project_ideas_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/readiness": {
         parameters: {
             query?: never;
@@ -8095,6 +8199,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/staff/countries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Staff Countries
+         * @description Every country with coverage and status, filterable (curators only).
+         */
+        get: operations["admission_staff_countries_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/countries/{country}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Staff Country
+         * @description Replace the facts of a country; `verified` publishes it as verified.
+         */
+        put: operations["admission_staff_countries_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/countries/{country}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Verify Staff Country
+         * @description Mark the stored facts of a country verified.
+         */
+        post: operations["admission_staff_countries_verify"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/deadlines": {
         parameters: {
             query?: never;
@@ -8513,6 +8677,54 @@ export interface paths {
          * @description Change an organization (staff).
          */
         patch: operations["admission_update_org"];
+        trace?: never;
+    };
+    "/v1/admission/staff/project-helpers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Helpers
+         * @description Every helper, inactive ones too (curators only).
+         */
+        get: operations["admission_staff_project_helpers_list"];
+        put?: never;
+        /**
+         * Create Helper
+         * @description Add a helper.
+         */
+        post: operations["admission_staff_project_helpers_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/project-helpers/{helper_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update Helper
+         * @description Replace a helper.
+         */
+        put: operations["admission_staff_project_helpers_update"];
+        post?: never;
+        /**
+         * Delete Helper
+         * @description Delete a helper.
+         */
+        delete: operations["admission_staff_project_helpers_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/admission/staff/prompt-studio/slots": {
@@ -9305,6 +9517,26 @@ export interface paths {
         get: operations["admission_today"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/today/programs/seen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Programs Seen
+         * @description Mark the new programs as seen; the unseen count restarts from zero.
+         */
+        post: operations["admission_programs_seen"];
         delete?: never;
         options?: never;
         head?: never;
@@ -20053,6 +20285,21 @@ export interface components {
             words_version: number | null;
         };
         /**
+         * AnalogOut
+         * @description An existing project like the idea.
+         */
+        AnalogOut: {
+            /** Name */
+            name: string;
+            /** Url */
+            url: string | null;
+            /**
+             * Where
+             * @enum {string}
+             */
+            where: "uzbekistan" | "abroad";
+        };
+        /**
          * AnalyticsOut
          * @description Load per `grade:term` ("10:fall"; fall/spring/summer/any), coverage by field.
          */
@@ -21979,6 +22226,40 @@ export interface components {
             target: number;
             /** Unlabelled */
             unlabelled: number;
+        };
+        /**
+         * BriefIn
+         * @description What the student tells about themselves.
+         */
+        BriefIn: {
+            /** Budget Max Usd */
+            budget_max_usd: number;
+            /** Budget Min Usd */
+            budget_min_usd: number;
+            /**
+             * Experience
+             * @default
+             */
+            experience: string;
+            /** Hours Per Day */
+            hours_per_day: number;
+            /** Likes */
+            likes: string;
+            /**
+             * Network
+             * @default
+             */
+            network: string;
+            /**
+             * Teammates
+             * @enum {string}
+             */
+            teammates: "yes" | "maybe" | "no";
+            /**
+             * Teammates Note
+             * @default
+             */
+            teammates_note: string;
         };
         /**
          * BriefSuggestionOut
@@ -24617,6 +24898,98 @@ export interface components {
             currency: string;
             /** Gap */
             gap: string | null;
+        };
+        /**
+         * CountryFactBody
+         * @description One fact: a 1-5 score (5 is best for the student), values, text, sources.
+         */
+        CountryFactBody: {
+            /** Score */
+            score?: number | null;
+            /** Sources */
+            sources?: string[];
+            text?: components["schemas"]["FactText"];
+            /** Values */
+            values?: {
+                [key: string]: boolean | number | string;
+            };
+        };
+        /**
+         * CountryFactsListOut
+         * @description Facts of several countries; a country without facts is absent.
+         */
+        CountryFactsListOut: {
+            /** Highlight */
+            highlight?: string[];
+            /** Items */
+            items: components["schemas"]["CountryFactsOut"][];
+        };
+        /**
+         * CountryFactsOut
+         * @description The facts of one country.
+         */
+        CountryFactsOut: {
+            /** As Of */
+            as_of: string;
+            /** Country */
+            country: string;
+            /** Facts */
+            facts: {
+                [key: string]: components["schemas"]["CountryFactBody"];
+            };
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "verified";
+            /** Updated At */
+            updated_at: string | null;
+            /** Verified */
+            verified: boolean;
+        };
+        /**
+         * CountryFactsPutIn
+         * @description A curator's replacement of a country's facts.
+         */
+        CountryFactsPutIn: {
+            /** As Of */
+            as_of: string;
+            /** Facts */
+            facts: {
+                [key: string]: components["schemas"]["CountryFactBody"];
+            };
+            /**
+             * Verified
+             * @default false
+             */
+            verified: boolean;
+        };
+        /**
+         * CountrySummaryListOut
+         * @description Every country with its coverage.
+         */
+        CountrySummaryListOut: {
+            /** Items */
+            items: components["schemas"]["CountrySummaryOut"][];
+        };
+        /**
+         * CountrySummaryOut
+         * @description One line of the staff country list.
+         */
+        CountrySummaryOut: {
+            /** As Of */
+            as_of: string | null;
+            /** Country */
+            country: string;
+            /** Coverage */
+            coverage: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "missing" | "draft" | "verified";
+            /** Updated At */
+            updated_at: string | null;
         };
         /**
          * CountsResponse
@@ -28227,6 +28600,27 @@ export interface components {
             step: number | null;
         };
         /**
+         * FactText
+         * @description A fact's description in the three languages (a missing one is empty).
+         */
+        FactText: {
+            /**
+             * En
+             * @default
+             */
+            en: string;
+            /**
+             * Ru
+             * @default
+             */
+            ru: string;
+            /**
+             * Uz
+             * @default
+             */
+            uz: string;
+        };
+        /**
          * FeedAction
          * @description `POST .../feeds/{id}/{action}`; only enable and disable work without a sync.
          * @enum {string}
@@ -29431,6 +29825,110 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * HelperContacts
+         * @description How to reach a helper; at least one is set.
+         */
+        HelperContacts: {
+            /** Email */
+            email?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Telegram */
+            telegram?: string | null;
+            /** Website */
+            website?: string | null;
+        };
+        /**
+         * HelperIn
+         * @description A curator's helper.
+         */
+        HelperIn: {
+            /**
+             * Active
+             * @default true
+             */
+            active: boolean;
+            /** City */
+            city?: string | null;
+            contacts: components["schemas"]["HelperContacts"];
+            description: components["schemas"]["HelperText"];
+            /** Expertise Areas */
+            expertise_areas: string[];
+            /** Help Types */
+            help_types: ("venue" | "funding" | "consultations" | "expertise" | "mentoring" | "equipment_space")[];
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "person" | "organization";
+            /** Name */
+            name: string;
+            /** Tags */
+            tags: ("website_tech" | "business_growth" | "pitching" | "org_outreach" | "fundraising" | "product_dev")[];
+        };
+        /**
+         * HelperListOut
+         * @description Helpers.
+         */
+        HelperListOut: {
+            /** Items */
+            items: components["schemas"]["HelperOut"][];
+        };
+        /**
+         * HelperOut
+         * @description A stored helper.
+         */
+        HelperOut: {
+            /**
+             * Active
+             * @default true
+             */
+            active: boolean;
+            /** City */
+            city?: string | null;
+            contacts: components["schemas"]["HelperContacts"];
+            description: components["schemas"]["HelperText"];
+            /** Expertise Areas */
+            expertise_areas: string[];
+            /** Help Types */
+            help_types: ("venue" | "funding" | "consultations" | "expertise" | "mentoring" | "equipment_space")[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "person" | "organization";
+            /** Name */
+            name: string;
+            /** Tags */
+            tags: ("website_tech" | "business_growth" | "pitching" | "org_outreach" | "fundraising" | "product_dev")[];
+        };
+        /**
+         * HelperText
+         * @description A description in the three languages (a missing one is empty).
+         */
+        HelperText: {
+            /**
+             * En
+             * @default
+             */
+            en: string;
+            /**
+             * Ru
+             * @default
+             */
+            ru: string;
+            /**
+             * Uz
+             * @default
+             */
+            uz: string;
         };
         /**
          * HideResourceBody
@@ -34940,6 +35438,16 @@ export interface components {
             token: string;
         };
         /**
+         * NewProgramsOut
+         * @description Programs published since the student last opened the block.
+         */
+        NewProgramsOut: {
+            /** Items */
+            items: components["schemas"]["ProgramOut"][];
+            /** Unseen */
+            unseen: number;
+        };
+        /**
          * NextActionOut
          * @description A ranked next step.
          */
@@ -37353,6 +37861,11 @@ export interface components {
         PracticeBodyIn: {
             /** Body */
             body: string;
+            /**
+             * Theme
+             * @description A creative theme key; used only when today has no entry yet.
+             */
+            theme?: string | null;
         };
         /**
          * PracticeEntryOut
@@ -37823,6 +38336,25 @@ export interface components {
             lock_version?: number | null;
         };
         /**
+         * ProgramOut
+         * @description A newly published program matching the student's fields.
+         */
+        ProgramOut: {
+            /** Href */
+            href: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Provider */
+            provider: string | null;
+            /** Title */
+            title: string;
+        };
+        /**
          * ProgressOut
          * @description Done and total steps.
          */
@@ -37878,6 +38410,37 @@ export interface components {
             status: string;
         };
         /**
+         * ProjectIdeasOut
+         * @description The newest run and the kept history.
+         */
+        ProjectIdeasOut: {
+            /** History */
+            history: components["schemas"]["RunSummaryOut"][];
+            latest: components["schemas"]["ProjectRunOut"] | null;
+        };
+        /**
+         * ProjectOut
+         * @description One suggested project.
+         */
+        ProjectOut: {
+            /** Analogs */
+            analogs: components["schemas"]["AnalogOut"][];
+            /** Application Effect */
+            application_effect: string;
+            /** Challenges */
+            challenges: string[];
+            /** First Steps */
+            first_steps: string[];
+            /** Help Tags */
+            help_tags: ("website_tech" | "business_growth" | "pitching" | "org_outreach" | "fundraising" | "product_dev")[];
+            /** Key */
+            key: string;
+            /** Summary */
+            summary: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * ProjectPatchBody
          * @description PATCH /v1/ai/projects/{id}: only the fields sent change.
          */
@@ -37911,6 +38474,27 @@ export interface components {
              * Format: date-time
              */
             updated_at: string;
+        };
+        /**
+         * ProjectRunOut
+         * @description One generation of ideas.
+         */
+        ProjectRunOut: {
+            brief: components["schemas"]["BriefIn"];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Projects */
+            projects: components["schemas"]["ProjectOut"][];
+            /** Search Used */
+            search_used: boolean;
         };
         /**
          * PromptActiveOut
@@ -40334,6 +40918,23 @@ export interface components {
             text: string;
         };
         /**
+         * RoadmapNodeOut
+         * @description A stop of the roadmap; the web names `key` in the student's language.
+         */
+        RoadmapNodeOut: {
+            /** Href */
+            href: string;
+            /** Key */
+            key: string;
+            /** Progress */
+            progress?: string | null;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "done" | "current" | "locked";
+        };
+        /**
          * Role
          * @description Global roles stored in users.roles.
          * @enum {string}
@@ -40538,6 +41139,24 @@ export interface components {
             output: {
                 [key: string]: unknown;
             };
+        };
+        /**
+         * RunSummaryOut
+         * @description One earlier run in the history list.
+         */
+        RunSummaryOut: {
+            /** Count */
+            count: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
         };
         /**
          * RunSyncBody
@@ -45965,7 +46584,10 @@ export interface components {
             deadlines: components["schemas"]["TodayDeadlineOut"][];
             /** Next */
             next: components["schemas"]["NextActionOut"][];
+            programs?: components["schemas"]["NewProgramsOut"];
             readiness: components["schemas"]["TodayReadinessOut"];
+            /** Roadmap */
+            roadmap?: components["schemas"]["RoadmapNodeOut"][];
             season: components["schemas"]["SeasonOut"];
             streak: components["schemas"]["StreakOut"];
         };
@@ -58779,6 +59401,71 @@ export interface operations {
             };
         };
     };
+    admission_country_facts_read: {
+        parameters: {
+            query: {
+                /** @description Comma-separated ISO codes. */
+                codes: string;
+                /** @description The student's study field names. */
+                fields?: string[] | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CountryFactsListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_country_facts_read_one: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                country: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CountryFactsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_list_my_courses: {
         parameters: {
             query?: never;
@@ -59688,7 +60375,9 @@ export interface operations {
     };
     admission_essay_practice_today: {
         parameters: {
-            query?: never;
+            query?: {
+                theme?: string | null;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -59702,6 +60391,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PracticeTodayOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -64708,6 +65406,123 @@ export interface operations {
             };
         };
     };
+    admission_project_helpers_list: {
+        parameters: {
+            query?: {
+                tag?: string[] | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelperListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_project_ideas_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectIdeasOut"];
+                };
+            };
+        };
+    };
+    admission_project_ideas_create: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BriefIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectRunOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_project_ideas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectRunOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_readiness: {
         parameters: {
             query?: never;
@@ -65887,6 +66702,104 @@ export interface operations {
             };
         };
     };
+    admission_staff_countries_list: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CountrySummaryListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_countries_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                country: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CountryFactsPutIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CountryFactsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_countries_verify: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                country: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CountryFactsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_staff_deadlines: {
         parameters: {
             query?: {
@@ -66920,6 +67833,123 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["OrgOut"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_project_helpers_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelperListOut"];
+                };
+            };
+        };
+    };
+    admission_staff_project_helpers_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelperIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelperOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_project_helpers_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                helper_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HelperIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelperOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_project_helpers_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                helper_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -68629,6 +69659,24 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
                 };
+            };
+        };
+    };
+    admission_programs_seen: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
