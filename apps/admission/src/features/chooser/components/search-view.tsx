@@ -1,7 +1,17 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Icons, Input, StateView } from "@ihsp/ui"
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Icons,
+  Input,
+  StateView,
+} from "@ihsp/ui"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
 import { ScrollFade } from "../../../components/scroll-fade"

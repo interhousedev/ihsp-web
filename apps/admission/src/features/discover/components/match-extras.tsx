@@ -47,7 +47,12 @@ const MAX_CHIPS = 4
 /** The ranking worth a glance on the card: QS overall, else any QS, else the first one the data holds. */
 export function headlineRanking(rankings: CardMatch["rankings"]): NonNullable<CardMatch["rankings"]>[number] | null {
   const list = rankings ?? []
-  return list.find((r) => r.system === "qs" && r.subject === "overall") ?? list.find((r) => r.system === "qs") ?? list[0] ?? null
+  return (
+    list.find((r) => r.system === "qs" && r.subject === "overall") ??
+    list.find((r) => r.system === "qs") ??
+    list[0] ??
+    null
+  )
 }
 
 /**
@@ -74,10 +79,13 @@ export function MatchExtrasView({ match }: { match: CardMatch }) {
   const rows: { section: Section; label: string }[] = []
   if (focuses.length) rows.push({ section: "focuses", label: t("extras.looksFor", { count: focuses.length }) })
   if (hasCosts) rows.push({ section: "costs", label: t("extras.costsRow") })
-  if (rankings.length || fields.length > MAX_CHIPS)
-    rows.push({ section: "rankings", label: t("extras.rankingsRow") })
+  if (rankings.length || fields.length > MAX_CHIPS) rows.push({ section: "rankings", label: t("extras.rankingsRow") })
   const title =
-    open === "focuses" ? t("extras.looksForTitle", { name: match.name }) : open === "costs" ? t("extras.costsTitle") : t("extras.rankingsRow")
+    open === "focuses"
+      ? t("extras.looksForTitle", { name: match.name })
+      : open === "costs"
+        ? t("extras.costsTitle")
+        : t("extras.rankingsRow")
   return (
     <div className="flex min-h-0 flex-col gap-2">
       {match.description ? <p className="line-clamp-2 text-sm">{match.description}</p> : null}
@@ -156,7 +164,9 @@ export function MatchExtrasView({ match }: { match: CardMatch }) {
                       data-testid="budget-fit"
                       className={cn(
                         "rounded-full px-2 py-0.5 text-xs font-medium",
-                        match.budget_fit === "fits" ? "bg-success/15 text-success" : "bg-destructive/10 text-destructive",
+                        match.budget_fit === "fits"
+                          ? "bg-success/15 text-success"
+                          : "bg-destructive/10 text-destructive",
                       )}
                     >
                       {t(match.budget_fit === "fits" ? "extras.fitsBudget" : "extras.aboveBudget")}

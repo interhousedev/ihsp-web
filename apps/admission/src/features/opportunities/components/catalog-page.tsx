@@ -213,9 +213,7 @@ export function CatalogBody() {
     text,
     onText: setText,
   }
-  const filters = (
-    <CatalogFilters {...filterProps} count={count} onReset={reset} />
-  )
+  const filters = <CatalogFilters {...filterProps} count={count} onReset={reset} />
   const filtersButton = (
     <Button type="button" variant="outline" className="min-h-11 md:hidden" onClick={() => setFiltersOpen(true)}>
       <Icons.search aria-hidden className="size-4" />

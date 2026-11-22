@@ -89,9 +89,7 @@ export function UnderlineTabs({
             )
           })}
         </TabsList>
-        {start ? (
-          <div aria-hidden data-tabs-fade="start" className={cn(fade, "start-0 bg-gradient-to-r")} />
-        ) : null}
+        {start ? <div aria-hidden data-tabs-fade="start" className={cn(fade, "start-0 bg-gradient-to-r")} /> : null}
         {end ? <div aria-hidden data-tabs-fade="end" className={cn(fade, "end-0 bg-gradient-to-l")} /> : null}
       </div>
     </Tabs>

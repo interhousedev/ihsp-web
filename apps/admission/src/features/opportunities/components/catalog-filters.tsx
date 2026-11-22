@@ -235,18 +235,18 @@ export function CatalogFilters({
         )}
       </div>
       {onReset ? (
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        {count !== undefined ? (
-          <Pill tone="primary" className="self-start">
-            {t("view.results", { count })}
-          </Pill>
-        ) : (
-          <span />
-        )}
-        <Button type="button" variant="ghost" size="sm" onClick={onReset}>
-          {t("filters.reset")}
-        </Button>
-      </div>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          {count !== undefined ? (
+            <Pill tone="primary" className="self-start">
+              {t("view.results", { count })}
+            </Pill>
+          ) : (
+            <span />
+          )}
+          <Button type="button" variant="ghost" size="sm" onClick={onReset}>
+            {t("filters.reset")}
+          </Button>
+        </div>
       ) : null}
     </div>
   )

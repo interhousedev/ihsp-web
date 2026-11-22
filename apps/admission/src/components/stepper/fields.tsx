@@ -89,7 +89,10 @@ export function ChipsField({ question, value, onChange, disabled }: FieldProps) 
               )}
             >
               <label
-                className={cn("flex min-h-11 cursor-pointer items-center gap-2 py-1.5 pl-3 md:min-h-9", option.info ? "pr-1" : "pr-3")}
+                className={cn(
+                  "flex min-h-11 cursor-pointer items-center gap-2 py-1.5 pl-3 md:min-h-9",
+                  option.info ? "pr-1" : "pr-3",
+                )}
               >
                 <input
                   type="checkbox"

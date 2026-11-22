@@ -47,9 +47,7 @@ describe("old routes", () => {
   test("old scholarship and plan routes land in the Opportunities tabs and the plan", async () => {
     open("/opportunities/scholarships/?q=x")
     render(<OppScholarships />)
-    await waitFor(() =>
-      expect(testRouter.replace).toHaveBeenCalledWith("/opportunities/?kind=scholarship&q=x"),
-    )
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/opportunities/?kind=scholarship&q=x"))
     open("/chooser/scholarships/")
     render(<ChooserScholarships />)
     await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/opportunities/?kind=scholarship"))
