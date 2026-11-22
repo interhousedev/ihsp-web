@@ -5217,6 +5217,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/essays/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Essays
+         * @description Search the words inside my own essays (owner only; nothing is logged).
+         */
+        get: operations["admission_search_essays"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/essays/short-answers/{slot_key}": {
         parameters: {
             query?: never;
@@ -26987,6 +27007,44 @@ export interface components {
             base_stale: boolean;
             /** Universities */
             universities: components["schemas"]["UniEntryOut"][];
+        };
+        /**
+         * EssaySearchHitOut
+         * @description One of my essays that contains the query, with a highlighted snippet.
+         */
+        EssaySearchHitOut: {
+            /**
+             * Essay Id
+             * Format: uuid
+             */
+            essay_id: string;
+            /**
+             * Field
+             * @enum {string}
+             */
+            field: "title" | "prompt" | "body" | "notes";
+            /**
+             * Match End
+             * @description End (exclusive) of the match inside `snippet`.
+             */
+            match_end: number;
+            /**
+             * Match Start
+             * @description Start of the match inside `snippet`.
+             */
+            match_start: number;
+            /** Snippet */
+            snippet: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * EssaySearchOut
+         * @description Matches in the caller's own essays.
+         */
+        EssaySearchOut: {
+            /** Items */
+            items: components["schemas"]["EssaySearchHitOut"][];
         };
         /**
          * EssaySummaryOut
@@ -59663,6 +59721,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_search_essays: {
+        parameters: {
+            query: {
+                q: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EssaySearchOut"];
                 };
             };
             /** @description Validation Error */
