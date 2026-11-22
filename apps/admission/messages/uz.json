@@ -2900,7 +2900,17 @@
       "gap": "Boʻshliq"
     },
     "nextOutcomes": "Natijalarni yozib qoʻyish",
-    "nextOutcomesHint": "Olingan qarorlarni belgilab, rejangizni dolzarb saqlang."
+    "nextOutcomesHint": "Olingan qarorlarni belgilab, rejangizni dolzarb saqlang.",
+    "aoView": "Oʻquvchi buni qanday koʻrishi mumkin",
+    "subsections": "Boʻlim qismlari",
+    "open": "Ochish",
+    "disclaimer": "Bu bitta oʻquvchining ehtimoliy nuqtai nazari, bashorat emas. Qabul natijasini hech kim kafolatlay olmaydi, universitetlar arizalarni turlicha oʻqiydi. Qarorni maslahatchingiz bilan birga qabul qiling.",
+    "verdict": {
+      "strong": "Kuchli",
+      "mixed": "Aralash",
+      "weak": "Zaif",
+      "missing": "Maʼlumot yoʻq"
+    }
   },
   "alignment": {
     "title": "Moslik",

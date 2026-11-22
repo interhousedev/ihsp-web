@@ -2900,7 +2900,17 @@
       "gap": "Gap"
     },
     "nextOutcomes": "Record results",
-    "nextOutcomesHint": "Note the decisions you receive to keep your plan up to date."
+    "nextOutcomesHint": "Note the decisions you receive to keep your plan up to date.",
+    "aoView": "How a reader may see it",
+    "subsections": "Parts of this section",
+    "open": "Open",
+    "disclaimer": "This is one reader's possible view, not a prediction. Nobody can guarantee an admission outcome, and colleges read applications differently. Decide together with your counselor.",
+    "verdict": {
+      "strong": "Strong",
+      "mixed": "Mixed",
+      "weak": "Weak",
+      "missing": "Missing"
+    }
   },
   "alignment": {
     "title": "Alignment",
