@@ -20,6 +20,7 @@ import { FactRows } from "./fact-rows"
 import { ApplyActions } from "./institution-apply"
 import { InstitutionFit } from "./institution-fit"
 import { InstitutionHeader } from "./institution-header"
+import { InstitutionRankings } from "./institution-rankings"
 import { IntlStrip } from "./institution-intl-strip"
 import { useIntlFigures } from "./intl-figures"
 import { currencyOf, formatCurrency } from "./money"
@@ -35,7 +36,7 @@ const TAB_FACTS = {
 } as const
 
 /** Raw keys that are shown elsewhere (or are internal) and never as a fact row. */
-const HIDDEN_FACTS = ["deadlines", "city_type", "fields", "institution_type"]
+const HIDDEN_FACTS = ["deadlines", "city_type", "fields", "institution_type", "rankings"]
 
 const TABS = ["fit", "facts", "money", "apply", "iht"] as const
 type Tab = (typeof TABS)[number]
@@ -214,6 +215,7 @@ function DetailBody({ institution }: { institution: Institution }) {
         <CountryInfoRow codes={[countryCode(institution.country) as string]} />
       ) : null}
       <IntlStrip figures={figures} deadline={deadline ? deadlineText(deadline, locale) : t("list.noDeadline")} />
+      <InstitutionRankings institution={institution} />
       <Tabs
         value={tab}
         onValueChange={(value) => select(String(value))}

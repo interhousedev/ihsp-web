@@ -28,6 +28,7 @@ export function institution(overrides: Partial<Institution> = {}): Institution {
     focuses: [],
     details: [],
     factors: [],
+    rankings: [],
     name_local: null,
     logo_zoom: 1,
     logo_fit: "circle",
