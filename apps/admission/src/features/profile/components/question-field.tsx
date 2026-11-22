@@ -1,6 +1,7 @@
 "use client"
 
 import { CountryFlag } from "./country-flag"
+import { CountryInfoRow } from "../../countries/components/country-info"
 import { useLocale, useT } from "@ihsp/i18n"
 import { useMemo, useRef } from "react"
 import { ChoiceCard, ChoiceCardGroup, Icons, Input, Pill, TagInput, Textarea } from "@ihsp/ui"
@@ -90,6 +91,7 @@ function TagsField({ question, value, onChange, onDraft, label }: FieldProps & {
         }}
       />
       <span className="text-muted-foreground text-xs">{t("tagHint")}</span>
+      {question.kind === "country" ? <CountryInfoRow codes={tags} /> : null}
     </div>
   )
 }

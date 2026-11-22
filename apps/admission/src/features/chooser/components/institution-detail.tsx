@@ -5,6 +5,7 @@ import { StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import type { ReactNode } from "react"
+import { CountryInfoRow } from "../../countries/components/country-info"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { InstitutionFocuses } from "../../../components/lib/institution-focuses"
 import { useMatches } from "../../discover/hooks"
@@ -22,7 +23,7 @@ import { InstitutionHeader } from "./institution-header"
 import { IntlStrip } from "./institution-intl-strip"
 import { useIntlFigures } from "./intl-figures"
 import { currencyOf, formatCurrency } from "./money"
-import { useOptionLabel } from "./option-label"
+import { countryCode, useOptionLabel } from "./option-label"
 import { AidFacts } from "../../budget/components/aid-facts"
 import { ScholarshipList } from "./scholarships-table"
 
@@ -209,6 +210,9 @@ function DetailBody({ institution }: { institution: Institution }) {
         place={[institution.city, countryLabel(institution.country)].filter(Boolean).join(", ")}
         row={row}
       />
+      {countryCode(institution.country) ? (
+        <CountryInfoRow codes={[countryCode(institution.country) as string]} />
+      ) : null}
       <IntlStrip figures={figures} deadline={deadline ? deadlineText(deadline, locale) : t("list.noDeadline")} />
       <Tabs
         value={tab}

@@ -44,6 +44,13 @@ const BY_CODE: Record<string, string> = Object.fromEntries(
   Object.entries(COUNTRIES).map(([name, { code }]) => [code, name]),
 )
 
+/** ISO 3166-1 alpha-2 code of a catalog country value (an English name or a code), or `null` when unmapped. */
+export function countryCode(value: string): string | null {
+  const text = value.trim()
+  if (/^[a-z]{2}$/i.test(text)) return text.toUpperCase()
+  return COUNTRIES[text.toLowerCase()]?.code ?? null
+}
+
 /** The country in `locale`: `Intl.DisplayNames` first; when it answers the code or the English name for a non-English locale, the table. */
 export function countryName(value: string, locale: string): string {
   const key = /^[a-z]{2}$/i.test(value) ? BY_CODE[value.toUpperCase()] : value.trim().toLowerCase()
@@ -61,7 +68,8 @@ export function countryName(value: string, locale: string): string {
   const englishName = code ? new Intl.DisplayNames(["en"], { type: "region" }).of(code) : undefined
   if (shown && shown !== code && shown !== englishName && shown !== value) return shown
   if (english && (locale === "uz" || locale === "ru")) return english[locale]
-  return shown && shown !== code ? shown : value
+  if (shown && shown !== code) return shown
+  return englishName && englishName !== code ? englishName : value
 }
 
 /** Label of a backend option value (`chooser.options.<group>.<value>`); an unknown value shows as the backend sent it. */
