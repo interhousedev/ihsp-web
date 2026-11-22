@@ -670,7 +670,36 @@
     "todayLabel": "Today · {date}",
     "historyEmpty": "Earlier days will appear here.",
     "scoreEmpty": "Write at least five words and ask for feedback: the score appears here.",
-    "words": "{count, plural, one {# word} other {# words}}"
+    "words": "{count, plural, one {# word} other {# words}}",
+    "themes": {
+      "kitchen": "Family kitchen",
+      "mistake": "A small mistake",
+      "object": "An ordinary object",
+      "street": "The street at six",
+      "argument": "An argument I lost",
+      "teacher": "What a teacher said",
+      "hands": "My hands",
+      "silence": "Silence",
+      "first": "The first time alone",
+      "map": "A place off the map",
+      "question": "A question",
+      "rule": "A rule",
+      "sound": "A sound of home",
+      "change": "What I no longer believe",
+      "stranger": "A stranger",
+      "build": "Something I built",
+      "language": "An untranslatable word",
+      "weather": "Weather as mood",
+      "photo": "A missing photograph",
+      "letter": "A letter to myself",
+      "work": "Unseen work",
+      "my_day": "My day",
+      "essay_idea": "Essay idea",
+      "five_senses": "Five senses",
+      "overheard": "Overheard",
+      "tomorrow": "Tomorrow",
+      "thanks": "Thanks"
+    }
   },
   "essayFlow": {
     "label": "Essay path",
@@ -1334,7 +1363,9 @@
     "exemplars": "Exemplars",
     "promptStudio": "Prompt studio",
     "manageOpportunities": "Manage opportunities",
-    "manageUniversities": "Manage universities"
+    "manageUniversities": "Manage universities",
+    "manageProjectHelpers": "Project helpers",
+    "manageCountries": "Countries"
   },
   "outcomes": {
     "title": "Outcomes",
@@ -3203,13 +3234,6 @@
       "graded": "Graded",
       "count": "{count}"
     },
-    "whatIf": {
-      "label": "What if",
-      "title": "Test a change to your activities",
-      "placeholder": "What if I start a coding club? What if I drop chess?",
-      "submit": "Evaluate",
-      "running": "Evaluating…"
-    },
     "timing": {
       "school_year": "During school year",
       "school_break": "During school break",
@@ -3917,7 +3941,8 @@
       "planCount": "{count, plural, one {# saved opportunity} other {# saved opportunities}}",
       "programsTitle": "Find a program",
       "programsTotal": "{count, plural, one {# program} other {# programs}}",
-      "programsSaved": "{count, plural, one {# program in your plan} other {# programs in your plan}}"
+      "programsSaved": "{count, plural, one {# program in your plan} other {# programs in your plan}}",
+      "projects": "What project can I make?"
     },
     "sourceLanguage": "Description in the original language (English)",
     "suggest": "Suggest an entry",
@@ -5545,7 +5570,7 @@
     },
     "streak": {
       "title": "Streak",
-      "days": "{n} days in a row",
+      "days": "{n, plural, one {# day} other {# days}} in a row",
       "week": "Last 7 days",
       "done": "done",
       "missed": "missed"
@@ -5622,7 +5647,64 @@
     },
     "error": "Could not load this",
     "retry": "Retry",
-    "seasonSub": "{season} season"
+    "seasonSub": "{season} season",
+    "roadmap": {
+      "title": "Your path",
+      "xp": "{xp} XP",
+      "open": "Open: {name}",
+      "state": {
+        "done": "Done",
+        "current": "Up next",
+        "locked": "Locked"
+      },
+      "node": {
+        "countries": "Countries",
+        "major": "Field of study",
+        "activities": "Activities",
+        "tests": "Tests",
+        "list": "University list",
+        "statement": "Main essay",
+        "supplements": "Supplements",
+        "documents": "Documents",
+        "apply": "Applications",
+        "results": "Results"
+      }
+    },
+    "creative": {
+      "title": "Write something today",
+      "subtitle": "Your next steps are done. A short, free practice keeps your voice warm.",
+      "prompt": {
+        "my_day": {
+          "title": "Write about my day",
+          "text": "Describe one moment of today in a few honest sentences."
+        },
+        "essay_idea": {
+          "title": "A new idea for your essay",
+          "text": "Get a fresh topic to explore for your essay."
+        },
+        "five_senses": {
+          "title": "Five senses",
+          "text": "Describe a place you know using sight, sound, smell, touch and taste."
+        },
+        "overheard": {
+          "title": "Overheard",
+          "text": "Write a scene starting from a sentence you heard today."
+        },
+        "tomorrow": {
+          "title": "A letter to tomorrow",
+          "text": "Write to yourself a year from now."
+        },
+        "thanks": {
+          "title": "Someone to thank",
+          "text": "Write about a person who changed your week."
+        }
+      }
+    },
+    "programs": {
+      "title": "New programs",
+      "new": "{count} new",
+      "all": "All programs"
+    }
   },
   "weightsLab": {
     "error": "Could not load",
@@ -6052,6 +6134,264 @@
       "uz": "Uzbek",
       "ru": "Russian",
       "en": "English"
+    }
+  },
+  "countries": {
+    "infoAbout": "Facts about {country}",
+    "compare": "Compare countries",
+    "compareTitle": "Compare countries",
+    "unverified": "Not yet verified",
+    "verified": "Verified",
+    "asOf": "As of {date}",
+    "overall": "Overall",
+    "noFacts": "No facts for this country yet.",
+    "loadFailed": "Could not load the facts.",
+    "value": {},
+    "values": {
+      "label": {
+        "monthly_usd_student": "Monthly student budget",
+        "min_wage_usd_month": "Minimum wage",
+        "basis": "How it is calculated",
+        "avg_c_winter": "Average winter temperature",
+        "avg_c_summer": "Average summer temperature",
+        "koppen": "Köppen climate",
+        "cs_it": "Computer science and IT",
+        "engineering": "Engineering",
+        "business_econ": "Business and economics",
+        "medicine_bio": "Medicine and biology",
+        "natural_sci": "Natural sciences",
+        "social_law": "Social sciences and law",
+        "arts_media": "Arts and media",
+        "education_hum": "Education and humanities",
+        "processing_days": "Processing time",
+        "fee_usd": "Fee",
+        "uz_notes": "Notes for Uzbek citizens",
+        "gpi_score": "Global Peace Index score",
+        "gpi_rank": "Global Peace Index rank",
+        "visa_free_neighbours_for_residents": "Visa-free neighbours for residents",
+        "typical_hop_usd": "Typical hop cost",
+        "domestic_rail": "Domestic rail",
+        "domestic_bus": "Domestic bus",
+        "domestic_air": "Domestic air",
+        "international": "International links",
+        "hours_term": "Work hours in term",
+        "hours_holiday": "Work hours in holidays",
+        "min_hourly_wage_usd": "Minimum hourly wage",
+        "visa_name": "Visa name",
+        "months": "Duration",
+        "ef_epi_score": "EF English Proficiency score",
+        "ef_epi_band": "EF English Proficiency band",
+        "local_languages": "Local languages",
+        "direct": "Direct flight",
+        "cities": "Cities",
+        "hours": "Flight time",
+        "tz_diff_hours": "Time difference from Tashkent",
+        "uzbek_diaspora": "Uzbek diaspora",
+        "halal": "Halal food",
+        "insurance_usd_year": "Health insurance",
+        "min_hourly_wage": "Minimum hourly wage",
+        "min_wage": "Minimum wage",
+        "blocked_account": "Blocked account",
+        "fee": "Fee",
+        "insurance": "Health insurance",
+        "days_year": "Days per year",
+        "monthly_student": "Monthly student budget",
+        "typical_hop": "Typical hop cost"
+      },
+      "unit": {
+        "yes": "Yes",
+        "no": "No",
+        "month": "{value}/month",
+        "year": "{value}/year",
+        "hour": "{value}/hour",
+        "c": "{value} °C",
+        "days": "{value} days",
+        "hw": "{value} h/week",
+        "months": "{value} months",
+        "h": "{value} h",
+        "daysYear": "{value} days a year"
+      }
+    },
+    "staff": {
+      "title": "Country facts",
+      "search": "Search countries",
+      "statusLabel": "Status",
+      "anyStatus": "Any status",
+      "coverage": "{percent}% filled",
+      "edit": "Edit",
+      "verify": "Mark verified",
+      "asOf": "As of (YYYY-MM)",
+      "values": "Numbers as JSON",
+      "sources": "Sources (one https link per line)",
+      "saveDraft": "Save draft",
+      "saveVerified": "Save and mark verified",
+      "saved": "Saved",
+      "badValues": "The numbers are not valid JSON.",
+      "status": {
+        "missing": "No facts",
+        "draft": "Draft",
+        "verified": "Verified"
+      }
+    },
+    "fact": {
+      "cost_of_living": "Cost of living",
+      "climate": "Climate",
+      "opportunities": "Opportunities",
+      "student_visa": "Student visa",
+      "safety": "Safety",
+      "bureaucracy": "Bureaucracy",
+      "travel_reach": "Travel reach",
+      "transport": "Transport",
+      "work_rights": "Work rights",
+      "post_study": "After graduation",
+      "language": "Language",
+      "flights_tashkent": "Flights from Tashkent",
+      "community": "Community",
+      "health": "Health care",
+      "aid": "Financial aid",
+      "tolerance": "Tolerance"
+    },
+    "field": {
+      "cs_it": "Computer science and IT",
+      "engineering": "Engineering",
+      "business_econ": "Business and economics",
+      "medicine_bio": "Medicine and biology",
+      "natural_sci": "Natural sciences",
+      "social_law": "Social sciences and law",
+      "arts_media": "Arts and media",
+      "education_hum": "Education and humanities"
+    }
+  },
+  "projects": {
+    "title": "What project can I make?",
+    "intro": "Tell us what you like and what you can do. We suggest project ideas that could strengthen your application. Only what you type here is used.",
+    "back": "Back to ideas",
+    "newRun": "New ideas",
+    "emptyTitle": "No ideas yet",
+    "emptyText": "Fill in the form to get project ideas.",
+    "form": {
+      "likes": "What do you like and care about?",
+      "likesHint": "Topics, hobbies, problems you want to solve",
+      "experience": "What have you already done or can do?",
+      "experienceHint": "Skills, past projects, tools you know",
+      "hours": "Hours per day you can spend",
+      "teammates": "Do you have teammates?",
+      "teammatesNote": "Note about teammates (optional)",
+      "teammate": {
+        "yes": "Yes",
+        "maybe": "Maybe",
+        "no": "No"
+      },
+      "network": "Who could you ask for help?",
+      "networkHint": "Relatives, teachers, companies, communities",
+      "budget": "Budget in USD",
+      "budgetMin": "Budget from, USD",
+      "budgetMax": "Budget to, USD",
+      "budgetOrder": "The maximum must not be below the minimum.",
+      "submit": "Suggest projects"
+    },
+    "running": {
+      "title": "Looking for project ideas…",
+      "text": "We search the web for similar projects. It can take up to 40 seconds."
+    },
+    "results": {
+      "title": "Project ideas",
+      "count": "{count, plural, one {# idea} other {# ideas}}",
+      "noSearch": "The web search was not available this time; ideas come from the model only."
+    },
+    "history": {
+      "title": "Earlier runs"
+    },
+    "card": {
+      "analogs": "Similar projects",
+      "where": {
+        "uzbekistan": "Uzbekistan",
+        "abroad": "Abroad"
+      },
+      "challenges": "Challenges",
+      "effect": "How it changes your application",
+      "steps": "First steps",
+      "help": "Help you may need",
+      "copyPrompt": "Copy prompt",
+      "copied": "Prompt copied",
+      "copyFailed": "Could not copy",
+      "helpers": "Helpers"
+    },
+    "helpers": {
+      "title": "Who can help",
+      "kind": {
+        "person": "Person",
+        "organization": "Organization"
+      },
+      "helpTypes": "Kinds of help",
+      "expertise": "Expertise",
+      "emptyTitle": "No helpers yet",
+      "emptyText": "No one is listed for these needs yet."
+    },
+    "helpTags": {
+      "website_tech": "Website & tech",
+      "business_growth": "Business growth",
+      "pitching": "Pitching",
+      "org_outreach": "Reaching organizations",
+      "fundraising": "Fundraising",
+      "product_dev": "Product development"
+    },
+    "helpTypes": {
+      "venue": "Venue",
+      "funding": "Funding",
+      "consultations": "Consultations",
+      "expertise": "Expertise",
+      "mentoring": "Mentoring",
+      "equipment_space": "Equipment & space"
+    },
+    "staff": {
+      "title": "Project helpers",
+      "add": "Add helper",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteTitle": "Delete this helper?",
+      "deactivate": "Deactivate",
+      "activate": "Activate",
+      "inactive": "Inactive",
+      "emptyTitle": "No helpers",
+      "emptyText": "Nothing matches the filters.",
+      "allKinds": "All kinds",
+      "allTags": "All tags",
+      "tag": "Tag",
+      "status": "Status",
+      "statusAll": "All",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
+      "createTitle": "New helper",
+      "editTitle": "Edit helper",
+      "save": "Save",
+      "saved": "Saved",
+      "kind": "Kind",
+      "city": "City",
+      "name": "Name",
+      "required": "Required",
+      "description": "Description ({lang})",
+      "descriptionRequired": "Fill in the description in all three languages.",
+      "tags": "Tags",
+      "helpTypes": "Kinds of help",
+      "expertise": "Expertise areas",
+      "expertiseNew": "New area",
+      "addArea": "Add",
+      "removeArea": "Remove {name}",
+      "contact": {
+        "email": "Email",
+        "phone": "Phone",
+        "telegram": "Telegram",
+        "website": "Website"
+      },
+      "invalid": {
+        "email": "Enter a valid email.",
+        "phone": "Enter a valid phone number.",
+        "telegram": "Use @username or https://t.me/…",
+        "website": "Use a link starting with http(s)://"
+      },
+      "active": "Active (shown to students)",
+      "tagsRequired": "Select at least one tag"
     }
   }
 }
