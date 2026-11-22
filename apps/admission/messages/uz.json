@@ -449,10 +449,136 @@
     },
     "nextActivities": "Faoliyatlarni topish: {fields}",
     "bannerActivities": "Faoliyatlarni topish: {fields}",
-    "quizTake": "Testdan oʻtish (2 daq)",
+    "quizTake": "Testni topshirish (5 daq)",
     "quizAgain": "Testdan qayta oʻtish",
     "quizTitle": "Kasb tanlash",
-    "quizHint": "10 ta qisqa savol: javoblarga qarab yoʻnalishlar taklif qilamiz."
+    "quizHint": "Qisqa anketa: javoblaringiz taʼlim yoʼnalishlarini taklif qiladi va ikigaini toʼldiradi. Keyin tahrirlash mumkin.",
+    "ikigaiQ": {
+      "textLabel": "Yana nima? Oʼzingizniki qoʼshing",
+      "textPlaceholder": "Vergul bilan ajrating",
+      "sectionTests": "Qiziqishlar",
+      "sectionIkigai": "Siz haqingizda",
+      "done": "Ikigaimni toʼldirish",
+      "ikigaiSaved": "Javoblaringiz ikigaiga qoʼshildi. Ularni u yerda tahrirlash mumkin.",
+      "flow": {
+        "title": "Qaysi mashgʼulotda vaqtni unutasiz?",
+        "guide": "4 tagacha tanlang. Maktab topshiriqlarini emas, boʼsh kechalaringizni eslang.",
+        "build": "Narsalar yasash",
+        "puzzle": "Boshqotirma va mantiqiy masalalar yechish",
+        "explain": "Boshqalarga tushuntirish",
+        "design": "Rasm chizish va dizayn",
+        "write": "Yozish va hikoya qilish",
+        "experiment": "Tajribalar va narsalar qanday ishlashini oʼrganish",
+        "organize": "Tadbirlar va odamlarni tashkil qilish",
+        "perform": "Chiqish: musiqa, sahna, video",
+        "care": "Boshqalarga gʼamxoʼrlik qilish",
+        "analyze": "Raqamlar va maʼlumotlar bilan ishlash"
+      },
+      "topics": {
+        "title": "Oʼzingiz qaysi mavzularda oʼqiysiz, koʼrasiz va soʼraysiz?",
+        "guide": "Charchamaydigan 4 tagacha mavzuni tanlang.",
+        "tech": "Texnologiya va dasturlash",
+        "space": "Koinot va fizika",
+        "health": "Salomatlik va inson tanasi",
+        "money": "Pul, bozor va biznes",
+        "nature": "Tabiat va ekologiya",
+        "history": "Tarix va madaniyatlar",
+        "languages": "Tillar va muloqot",
+        "games": "Oʼyinlar va ularning tuzilishi",
+        "art": "Sanʼat, musiqa va kino",
+        "society": "Jamiyat, huquq va siyosat"
+      },
+      "values": {
+        "title": "Maoshdan tashqari kelajakdagi ishdan nimani kutasiz?",
+        "guide": "Eng muhim 3 tagacha qadriyatni tanlang.",
+        "freedom": "Oʼzim qaror qabul qilish erkinligi",
+        "helping": "Odamlarga bevosita yordam berish",
+        "creativity": "Yangi narsa yaratish",
+        "status": "Hurmat va nufuz",
+        "learning": "Doim yangi narsa oʼrganish",
+        "stability": "Barqarorlik va xotirjamlik",
+        "adventure": "Xilma-xillik va sarguzasht",
+        "fairness": "Adolat"
+      },
+      "strengths": {
+        "title": "Boshqalar sizni nimada yaxshi deyishadi?",
+        "guide": "Oʼqituvchilar, doʼstlar, oila haqida oʼylang. 4 tagacha tanlang.",
+        "explain": "Tushunarli izohlash",
+        "logic": "Matematika va mantiq",
+        "calm": "Bosim ostida xotirjam qolish",
+        "creative": "Ijodiy gʼoyalar topish",
+        "lead": "Jamoani boshqarish",
+        "languages": "Tillar",
+        "listen": "Tinglash va odamlarni tushunish",
+        "detail": "Aniqlik va tafsilotlarga eʼtibor",
+        "learnfast": "Yangi narsani tez oʼrganish",
+        "techskill": "Kompyuter va texnika"
+      },
+      "people": {
+        "title": "Qanday odamlar bilan ishlashni yoki ularga yordam berishni xohlaysiz?",
+        "guide": "3 tagacha tanlang yoki yolgʼiz ishlashni yoqtirsangiz, hech birini.",
+        "kids": "Bolalar va oʼquvchilar",
+        "patients": "Bemor va keksa odamlar",
+        "entrepreneurs": "Tadbirkorlar va kichik biznes",
+        "teams": "Jamoadagi hamkasblar",
+        "community": "Shahar yoki qishloq aholisi",
+        "youth": "Yoʼl izlayotgan yoshlar",
+        "customers": "Yaxshi mahsulot kerak boʼlgan mijozlar",
+        "experts": "Olimlar va mutaxassislar"
+      },
+      "problems": {
+        "title": "Oʼzbekistonda yoki dunyoda qaysi muammolarni hal qilishga yordam bermoqchisiz?",
+        "guide": "Sizni tashvishlantiradigan 4 tagacha muammoni tanlang.",
+        "education": "Sifatli taʼlimga kirish imkoni",
+        "health": "Sogʼliqni saqlash va tibbiyot",
+        "jobs": "Yoshlar uchun ish va koʼnikmalar",
+        "environment": "Suv, havo va ekologiya",
+        "digital": "Raqamli xizmatlar va texnologiyalar",
+        "agriculture": "Qishloq xoʼjaligi va oziq-ovqat",
+        "energy": "Energetika va infratuzilma",
+        "safety": "Xavfsizlik va adolatli qonunlar",
+        "poverty": "Tengsizlik va qashshoqlik",
+        "tourism": "Turizm va madaniy meros"
+      },
+      "aiview": {
+        "title": "Sunʼiy intellekt kelgusi 10 yilda ishni qanday oʼzgartiradi deb oylaysiz?",
+        "guide": "Toʼgʼri javob yoʼq: bu kelajak haqida qanday oʼylashingizni koʼrsatadi.",
+        "tool": "Vosita boʼlib qoladi, qarorni odamlar qabul qiladi",
+        "half": "Har bir kasbdagi koʼp odatiy ishlarni oʼz zimmasiga oladi",
+        "vanish": "Koʼp kasblar yoʼqoladi",
+        "newjobs": "Hozir mavjud boʼlmagan yangi kasblar paydo boʼladi"
+      },
+      "airole": {
+        "title": "Shu kelajakda sizning oʼz rolingiz qanday boʼladi?",
+        "guide": "2 tagacha tanlang.",
+        "build": "Sunʼiy intellekt va dasturlar yaratish",
+        "use": "Oʼz sohamda sunʼiy intellektdan foydalanish",
+        "human": "Sunʼiy intellekt bajara olmaydigan inson ishi: gʼamxoʼrlik, ishonch, taʼlim",
+        "check": "Sunʼiy intellekt natijalarini tekshirish va yoʼnaltirish",
+        "law": "Sunʼiy intellekt uchun qoida va axloq belgilash"
+      },
+      "money": {
+        "title": "Ishdan pul va barqarorlik nuqtai nazaridan nimani kutasiz?",
+        "guide": "2 tagacha tanlang.",
+        "stable": "Barqaror maosh",
+        "high": "Yuqori daromad, xavf boʼlsa ham",
+        "business": "Oʼz biznesim",
+        "meaning": "Maʼnoli ish, kamroq toʼlansa ham",
+        "abroad": "Xorijiy kompaniyalar bilan yoki chet elda ish"
+      },
+      "setting": {
+        "title": "Oʼzingizni qayerda ishlayotgan holda koʼrasiz?",
+        "guide": "3 tagacha tanlang.",
+        "office": "Jamoa bilan ofisda",
+        "remote": "Istalgan joydan masofadan",
+        "lab": "Laboratoriya yoki tadqiqot markazida",
+        "field": "Ochiq havoda yoki obʼyektda",
+        "hospital": "Shifoxona yoki klinikada",
+        "school": "Maktab yoki universitetda",
+        "startup": "Startap yoki oʼz kompaniyamda",
+        "public": "Davlat tashkilotida yoki xalqaro tashkilotda"
+      }
+    }
   },
   "app": {
     "name": "{appAdmission}",
@@ -1339,7 +1465,7 @@
       "future": "Kelajak",
       "done": "Bajarilgan",
       "planned": "Rejada",
-      "ideas": "Gʻoyalar",
+      "ideas": "Imkoniyatlar",
       "tests": "Testlar",
       "courses": "Kurslarim",
       "list": "Roʻyxatim",
@@ -2188,7 +2314,9 @@
         "money": "Pul",
         "apply": "Topshirish",
         "iht": "{brand}"
-      }
+      },
+      "rankingsTitle": "Reytinglar",
+      "rankingSource": "Manba: {system}"
     },
     "estimate": {
       "range": "Taxminiy imkoniyat {low}–{high}%",
@@ -3931,18 +4059,10 @@
     },
     "title": "Imkoniyatlar",
     "view": {
-      "tabs": "Imkoniyat boʻlimlari",
-      "catalog": "Katalog",
-      "plan": "Saqlanganlar",
-      "scholarships": "Stipendiyalar",
       "filtersTitle": "Filtrlar",
       "results": "{count, plural, one {# ta natija} other {# ta natija}}",
       "planTitle": "Saqlangan imkoniyatlar",
-      "planCount": "{count, plural, one {# ta saqlangan imkoniyat} other {# ta saqlangan imkoniyat}}",
-      "programsTitle": "Dastur qidirish",
-      "programsTotal": "{count, plural, one {# ta dastur} other {# ta dastur}}",
-      "programsSaved": "{count, plural, one {# ta dastur rejada} other {# ta dastur rejada}}",
-      "projects": "Qanday loyiha qila olaman?"
+      "planCount": "{count, plural, one {# ta saqlangan imkoniyat} other {# ta saqlangan imkoniyat}}"
     },
     "sourceLanguage": "Tavsif asl tilda (inglizcha)",
     "suggest": "Yozuv taklif qilish",
@@ -3956,23 +4076,6 @@
     "gradeLabel": "Sinf",
     "gradeShort": "{grade}-sinf",
     "gradeLong": "{grade}-sinf",
-    "programs": {
-      "search": "Dasturlarni qidirish",
-      "error": "Dasturlarni yuklab boʻlmadi",
-      "empty": "Dasturlar topilmadi",
-      "rank": "Reyting",
-      "accept": "Qabul",
-      "tuition": "Narxi",
-      "free": "Bepul",
-      "add": "+ Qoʻshish",
-      "added": "Qoʻshildi",
-      "previous": "Oldingi",
-      "next": "Keyingi",
-      "pageOf": "{page}-sahifa, jami {pages}",
-      "pagination": "Dasturlar sahifalari",
-      "online": "Onlayn",
-      "weeks": "{count} hafta"
-    },
     "kind": {
       "exam": "Imtihon",
       "certification": "Sertifikat",
@@ -4049,11 +4152,12 @@
       "all": "Barchasi",
       "course": "Kurslar",
       "certification": "Sertifikatlar",
-      "research": "Tadqiqot va fellowship dasturlari",
+      "research": "Tadqiqot",
       "event": "Tadbirlar",
       "program": "Dasturlar",
       "exam": "Imtihonlar",
-      "scholarship": "Grantlar va stipendiyalar"
+      "scholarship": "Stipendiyalar",
+      "projects": "Loyiha gʼoyalari"
     },
     "sorting": {
       "label": "Saralash",
@@ -4064,7 +4168,6 @@
       "title": "Nomi boʻyicha"
     },
     "openPlan": "Rejamni ochish",
-    "nextPlanHint": "Saqlangan imkoniyatlar va muddatlar rejada.",
     "place": "Rejaga qoʻyish",
     "placeGrade": "Sinfni tanlang",
     "currentGrade": "sizning sinfingiz",
@@ -4086,7 +4189,10 @@
       "hoursUpTo": "Haftasiga {hours} soatgacha",
       "hoursValue": "Haftasiga {hours} soat",
       "startsWithin": "{days} kun",
-      "startsValue": "Boshlanishi {date}"
+      "startsValue": "Boshlanishi {date}",
+      "button": "Filtrlar ({count})",
+      "reset": "Tozalash",
+      "show": "{count} ta natijani koʼrsatish"
     },
     "delivery": {
       "local": "Litseyda (LMS)",
@@ -4112,7 +4218,9 @@
         "verified": "Tasdiqlangan",
         "rejected": "Rad etilgan"
       }
-    }
+    },
+    "planLink": "Rejam ({count})",
+    "findMore": "Imkoniyat topish"
   },
   "opportunitiesStaff": {
     "reports": {
@@ -4556,7 +4664,12 @@
         "psychology": "Psixologiya",
         "social_sciences": "Ijtimoiy fanlar",
         "taxation": "Soliq"
-      }
+      },
+      "looksFor": "Nimaga eʼtibor beradi ({count})",
+      "looksForTitle": "{name} nimaga eʼtibor beradi",
+      "costsRow": "Narx va baholar",
+      "costsTitle": "Narx va baholar",
+      "rankingsRow": "Reytinglar va yoʻnalishlar"
     }
   },
   "uniChat": {
@@ -5863,6 +5976,14 @@
       "confirm": "Kartochkani tekshiring va tanlovingizga qoʻshing.",
       "discard": "Bekor qilish",
       "approx": "Eng yaqin ISCO guruhi: {isco}"
+    },
+    "addOwn": {
+      "button": "Boshqa kasb qoʼshish",
+      "title": "Boshqa kasb qoʼshish",
+      "description": "Aniq yozing: rol va joy, masalan, «Fintex bankida maʼlumotlar tahlilchisi» yoki «Viloyat shifoxonasida bolalar hamshirasi», shunchaki «IT» yoki «shifokor» emas. Kartani biz toʼldiramiz, siz tasdiqlaysiz.",
+      "placeholder": "Masalan: fintex bankida maʼlumotlar tahlilchisi",
+      "submit": "Kartani toʼldirish",
+      "close": "Yopish"
     }
   },
   "profileHub": {
@@ -6264,8 +6385,6 @@
   },
   "projects": {
     "title": "Qanday loyiha qila olaman?",
-    "intro": "Nimani yoqtirishingiz va nimalarga qodirligingizni yozing. Arizangizni kuchaytirishi mumkin boʼlgan loyiha gʼoyalarini taklif qilamiz. Faqat bu yerga yozganingiz ishlatiladi.",
-    "back": "Gʼoyalarga qaytish",
     "newRun": "Yangi gʼoyalar",
     "emptyTitle": "Hozircha gʼoya yoʼq",
     "emptyText": "Loyiha gʼoyalarini olish uchun shaklni toʼldiring.",
@@ -6288,7 +6407,9 @@
       "budgetMin": "Byudjet dan, USD",
       "budgetMax": "Byudjet gacha, USD",
       "budgetOrder": "Maksimum minimumdan kichik boʼlmasligi kerak.",
-      "submit": "Loyihalarni taklif qilish"
+      "submit": "Loyihalarni taklif qilish",
+      "future": "Kelajakda nima bilan shugʼullanmoqchisiz yoki nimani oʼqimoqchisiz?",
+      "futureHint": "Soha, kasb, orzu: biz uni hozir yoqtirgan narsangiz bilan uygʼunlashtiramiz"
     },
     "running": {
       "title": "Loyiha gʼoyalari izlanmoqda…",
@@ -6393,5 +6514,20 @@
       "active": "Faol (oʼquvchilarga koʼrinadi)",
       "tagsRequired": "Kamida bitta teg tanlang"
     }
+  },
+  "voiceFill": {
+    "talk": "Ovoz bilan aytish",
+    "title": "Bu savollarga ovoz chiqarib javob bering",
+    "stop": "Mikrofonni toʼxtatib turish",
+    "resume": "Mikrofonni yoqish",
+    "listening": "Tinglayapman…",
+    "paused": "Pauza. Davom etish uchun mikrofonni bosing.",
+    "placeholder": "Soʼzlaringiz shu yerda paydo boʼladi",
+    "typedLabel": "Javobingiz",
+    "typedHint": "Bu brauzerda ovozli kiritish yoʼq. Barcha savollarga javobni shu yerga yozing.",
+    "done": "Shaklni toʼldirish",
+    "filling": "Toʼldiryapman…",
+    "cancel": "Shaklga qaytish",
+    "error": "Soʼzlaringiz asosida shaklni toʼldirib boʼlmadi. Qayta urinib koʼring yoki qoʼlda toʼldiring."
   }
 }
