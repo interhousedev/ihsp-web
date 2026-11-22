@@ -4,6 +4,7 @@ import { formatDate, useT } from "@ihsp/i18n"
 import { cn, Skeleton } from "@ihsp/ui"
 import { usePracticeHistory, usePracticeToday } from "../../flow/api"
 import { totalOf } from "./practice-score"
+import { useThemeLabel } from "./theme-label"
 
 /** Every day written so far, newest first, today on top; picking a day loads it read-only (today stays editable). */
 export function PracticeHistory({
@@ -62,6 +63,7 @@ function DayButton({
   total: number | null
   onClick: () => void
 }) {
+  const themeLabel = useThemeLabel()
   return (
     <button
       type="button"
@@ -81,7 +83,7 @@ function DayButton({
       />
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate font-medium">{label}</span>
-        <span className="text-muted-foreground truncate text-xs">{theme}</span>
+        <span className="text-muted-foreground truncate text-xs">{themeLabel(theme)}</span>
       </span>
       <span className="text-muted-foreground shrink-0 text-xs tabular-nums">
         {total !== null ? `${total}/20` : "—"}

@@ -9,7 +9,11 @@ import { useFitRows } from "../../fit/use-fit-rows"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useToday } from "../api"
 import { shortDate } from "../dates"
+import { DeadlineStrip } from "./deadline-strip"
+import { CreativePractice } from "./creative-practice"
+import { NewPrograms } from "./new-programs"
 import { NextActionCard, QueuedActions } from "./next-action-card"
+import { Roadmap } from "./roadmap"
 import { Rhythm } from "./rhythm"
 import { SeasonCard } from "./season-card"
 import { UniSection } from "./uni-section"
@@ -67,14 +71,26 @@ export function TodayPage() {
             </button>
           </div>
         ) : (
-          <div className="grid gap-3 md:gap-3.5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:grid-rows-[auto_auto]">
-            <NextActionCard
-              actions={data.next}
-              snoozed={snoozed}
-              onSnooze={(key) => setSnoozed((ids) => [...ids, key])}
-              className="order-1 lg:col-start-1 lg:row-start-1"
+          <div className="grid grid-cols-1 gap-3 md:gap-3.5 lg:grid-cols-[16rem_minmax(0,1.5fr)_minmax(0,1fr)] lg:grid-rows-[auto_auto_auto]">
+            {data.next.some((a) => !snoozed.includes(a.key)) ? (
+              <NextActionCard
+                actions={data.next}
+                snoozed={snoozed}
+                onSnooze={(key) => setSnoozed((ids) => [...ids, key])}
+                className="order-3 lg:col-start-2 lg:row-start-1"
+              />
+            ) : (
+              <CreativePractice className="order-3 lg:col-start-2 lg:row-start-1" />
+            )}
+            <Roadmap
+              nodes={data.roadmap ?? []}
+              streakDays={data.streak.days}
+              className="order-2 lg:col-start-1 lg:row-span-3 lg:row-start-1"
             />
-            <QueuedActions actions={data.next} snoozed={snoozed} className="order-3 lg:hidden" />
+            {data.programs ? (
+              <NewPrograms programs={data.programs} className="order-5 lg:col-span-2 lg:col-start-2 lg:row-start-3" />
+            ) : null}
+            <QueuedActions actions={data.next} snoozed={snoozed} className="order-6 lg:hidden" />
             <UniSection
               rows={fit.rows}
               deadlines={data.deadlines}
@@ -82,10 +98,13 @@ export function TodayPage() {
               loading={fit.isPending}
               failed={Boolean(fit.error)}
               onRetry={fit.refetch}
-              className="order-2 lg:col-span-2 lg:row-start-2"
+              className="order-4 lg:col-span-2 lg:col-start-2 lg:row-start-2"
             />
-            <div className="bg-card rounded-card order-4 border px-3.5 py-2 lg:hidden">
+            <div className="bg-card rounded-card order-1 flex flex-col gap-3 border px-3.5 py-3 lg:hidden">
               <Rhythm streak={data.streak} readiness={data.readiness.percent} />
+              <div className="border-t pt-3">
+                <DeadlineStrip items={data.deadlines} today={iso} />
+              </div>
             </div>
             <SeasonCard
               season={data.season.key}
@@ -94,7 +113,7 @@ export function TodayPage() {
               readiness={data.readiness.percent}
               deadlines={data.deadlines}
               today={iso}
-              className="order-5 lg:col-start-2 lg:row-start-1"
+              className="order-7 lg:col-start-3 lg:row-start-1"
             />
           </div>
         )}

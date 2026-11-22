@@ -24,7 +24,14 @@ export type Today = {
   readiness: { percent: number }
   season: { key: SeasonId; source: "auto" | "override"; checklist: TodayCheck[] }
   streak: { days: number; last7: boolean[]; today_done: boolean }
+  roadmap?: RoadmapNode[]
+  programs?: NewPrograms
 }
+
+/** A stop of the roadmap: `key` is named in the student's language by `today.roadmap.node.<key>`. */
+export type RoadmapNode = { key: string; state: "done" | "current" | "locked"; href: string; progress: string | null }
+export type NewProgram = { id: string; title: string; kind: string; provider: string | null; href: string }
+export type NewPrograms = { unseen: number; items: NewProgram[] }
 
 export const SEASONS: readonly SeasonId[] = ["explore", "build", "choose", "write", "submit", "results"]
 
@@ -46,5 +53,14 @@ export function useSnoozeAction() {
   return useMutation({
     mutationFn: (key: string) => getApiClient().post<void>("/v1/admission/today/snooze", { key }),
     onSettled: () => void client.invalidateQueries({ queryKey: TODAY_KEY }),
+  })
+}
+
+/** `POST /today/programs/seen`: the new-programs badge restarts from zero. */
+export function useProgramsSeen() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: () => getApiClient().post<void>("/v1/admission/today/programs/seen", {}),
+    onSuccess: () => void client.invalidateQueries({ queryKey: TODAY_KEY }),
   })
 }
