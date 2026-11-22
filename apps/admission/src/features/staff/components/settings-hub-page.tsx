@@ -6,6 +6,7 @@ import { useSession } from "@ihsp/auth"
 import { Card, CardContent } from "@ihsp/ui"
 import Link from "next/link"
 import { AdmissionShell } from "../../shell/components/admission-shell"
+import { MapsUrlCard } from "./maps-url-card"
 import { SchoolGradesCard } from "./school-grades-card"
 
 const ITEMS = [
@@ -36,6 +37,7 @@ export function SettingsHubBody() {
         ))}
       </ul>
       {isAdmin && <SchoolGradesCard />}
+      {isAdmin && <MapsUrlCard />}
     </div>
   )
 }

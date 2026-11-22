@@ -14,6 +14,7 @@ import { familyBudgetUsd } from "../../chooser/list-model"
 import { formatCompactCurrency } from "../../chooser/components/money"
 import { useOptionLabel } from "../../chooser/components/option-label"
 import { percent } from "../format"
+import { MatchExtrasView, type CardMatch } from "./match-extras"
 import { UniChatPanel } from "./uni-chat-panel"
 import { StatusPill } from "./status-pill"
 import { useTagLabel } from "./tag-label"
@@ -116,6 +117,7 @@ export function MatchCard({ match }: { match: Match }) {
           {fitT("known", { pct: Math.round((match.known_share ?? 0) * 100) })}
         </p>
       ) : null}
+      <MatchExtrasView match={match as CardMatch} />
       {why ? (
         <p aria-label={t("overlap.label")} className="text-muted-foreground line-clamp-2 text-sm">
           {t("overlap.why", { tags: why })}

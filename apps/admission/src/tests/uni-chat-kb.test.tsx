@@ -22,6 +22,10 @@ const match: Match = {
   match_pct: 87,
   overlap: { count: 2, total: 5, tags: [] },
   status: "target",
+  experience: [],
+  fields: ["Computer Science"],
+  map_url: "https://www.google.com/maps/search/?api=1&query=Boston",
+  rankings: [],
 }
 
 const counselor = { session: { user: { ...userMe, roles: ["counselor" as const] } } }

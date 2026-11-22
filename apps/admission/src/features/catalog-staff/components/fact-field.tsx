@@ -6,7 +6,18 @@ import { useId, useState } from "react"
 import { filterStudyGroups, studyFieldLabel } from "../../chooser/components/study-field-select"
 import { useStudyFields } from "../../chooser/hooks"
 import type { FactSpecItem } from "../api"
-import { EMPTY_DEADLINE, PLANS, isUsdFact, type DeadlineDraft, type Draft } from "../fact-draft"
+import {
+  EMPTY_DEADLINE,
+  EMPTY_RANKING,
+  EXPERIENCE_PARTS,
+  PLANS,
+  RANK_SYSTEMS,
+  RANKING_SUBJECTS,
+  isUsdFact,
+  type DeadlineDraft,
+  type Draft,
+  type RankingDraft,
+} from "../fact-draft"
 
 const IMPORTANCE = ["very_important", "important", "considered", "not_considered"] as const
 
@@ -339,6 +350,103 @@ function DeadlinesField({ item, draft, onChange }: FieldProps<DeadlineDraft[]>) 
   )
 }
 
+function RankingsField({ item, draft, onChange }: FieldProps<RankingDraft[]>) {
+  const t = useT("catalogFacts")
+  const subjects = useT("discover")
+  const update = (index: number, patch: Partial<RankingDraft>) =>
+    onChange(draft.map((row, i) => (i === index ? { ...row, ...patch } : row)))
+  const systems = RANK_SYSTEMS.map((value) => ({ value, label: value.toUpperCase() }))
+  const subjectOptions = RANKING_SUBJECTS.map((value) => ({ value, label: subjects(`extras.subjects.${value}`) }))
+  return (
+    <div className="flex flex-col gap-2">
+      {draft.map((row, index) => (
+        <div key={index} className="flex flex-col gap-2 rounded-card border p-2">
+          <div className="grid grid-cols-2 gap-2">
+            <Choice
+              label={t("rankingSystem")}
+              value={row.system}
+              options={systems}
+              onChange={(system) => update(index, { system })}
+            />
+            <Choice
+              label={t("rankingSubject")}
+              value={row.subject}
+              options={subjectOptions}
+              onChange={(subject) => update(index, { subject })}
+            />
+            <Input
+              aria-label={t("rankingRank")}
+              placeholder={t("rankingRank")}
+              maxLength={9}
+              value={row.rank}
+              onChange={(e) => update(index, { rank: e.target.value })}
+            />
+            <Input
+              type="number"
+              inputMode="numeric"
+              aria-label={t("rankingYear")}
+              placeholder={t("rankingYear")}
+              min={2000}
+              max={2100}
+              value={row.year}
+              onChange={(e) => update(index, { year: e.target.value })}
+            />
+          </div>
+          <Input
+            type="url"
+            aria-label={t("rankingSource")}
+            placeholder="https://"
+            maxLength={2000}
+            value={row.source_url}
+            onChange={(e) => update(index, { source_url: e.target.value })}
+          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="self-end"
+            onClick={() => onChange(draft.filter((_, i) => i !== index))}
+          >
+            <Icons.trash className="size-4" aria-hidden />
+            {t("deadlineRemove")}
+          </Button>
+        </div>
+      ))}
+      {draft.length < 40 && (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="self-start"
+          aria-label={t("rankingAddFor", { label: item.label })}
+          onClick={() => onChange([...draft, { ...EMPTY_RANKING }])}
+        >
+          <Icons.add className="size-4" aria-hidden />
+          {t("rankingAdd")}
+        </Button>
+      )}
+    </div>
+  )
+}
+
+function ExperienceField({ item, draft, onChange }: FieldProps<Record<string, string>>) {
+  const t = useT("catalogFacts")
+  const scores = ["", "1", "2", "3", "4", "5"].map((value) => ({ value, label: value || t("unknown") }))
+  return (
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+      {EXPERIENCE_PARTS.map((part) => (
+        <Choice
+          key={part}
+          label={`${item.label}: ${t(`experience.${part}`)}`}
+          value={draft[part] ?? ""}
+          options={scores.slice(1)}
+          onChange={(value) => onChange({ ...draft, [part]: value })}
+        />
+      ))}
+    </div>
+  )
+}
+
 /** The input of one fact; the kind of the spec picks the control and the draft shape. */
 export function FactField({ item, draft, onChange }: FieldProps<Draft>) {
   switch (item.kind) {
@@ -361,6 +469,21 @@ export function FactField({ item, draft, onChange }: FieldProps<Draft>) {
       return <StudyFieldsField item={item} draft={draft as string[]} onChange={onChange} />
     case "deadlines":
       return <DeadlinesField item={item} draft={draft as DeadlineDraft[]} onChange={onChange} />
+    case "rankings":
+      return <RankingsField item={item} draft={draft as RankingDraft[]} onChange={onChange} />
+    case "experience_scores":
+      return <ExperienceField item={item} draft={draft as Record<string, string>} onChange={onChange} />
+    case "url":
+      return (
+        <Input
+          type="url"
+          aria-label={item.label}
+          placeholder="https://"
+          maxLength={2000}
+          value={(draft as string | undefined) ?? ""}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      )
     case "date":
       return (
         <Input

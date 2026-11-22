@@ -191,6 +191,12 @@
     "careerSettings": {
       "title": "Career questions and majors",
       "text": "Inventory questions and the majors list."
+    },
+    "mapsUrl": {
+      "title": "Map link",
+      "text": "Template of the Open on a map link. Use https and one {query} placeholder; leave empty for Google Maps.",
+      "save": "Save",
+      "saved": "Saved"
     }
   },
   "careerSettings": {
@@ -861,11 +867,24 @@
         "fresh": "Fresh",
         "earned": "Earned"
       },
-      "fit": "Fit per university",
-      "fitHint": "The essay read against each university it is written for, under that prompt.",
-      "fitEmpty": "This essay has no university targets yet. Attach it to a prompt of a university on your list.",
-      "fitRun": "Check fit for my universities",
-      "fitRerun": "Check again",
+      "unisTitle": "Universities to read for",
+      "unisHint": "Tap a logo to include or leave out a university. The read runs only for the included ones.",
+      "unisHintRead": "Tap a reviewed logo to see how its admissions officer may react. Tap an included one without a review to review it.",
+      "uniOn": "included",
+      "uniOff": "left out",
+      "uniReviewed": "reviewed",
+      "uniBusy": "reviewing",
+      "uniExclude": "Leave this university out",
+      "ao": "How this university's admissions officer may react",
+      "aoPositive": "Likely to land well",
+      "aoConcerns": "Likely concerns",
+      "risks": "Risks",
+      "history": "History",
+      "historyBack": "Back to the read",
+      "historyEmpty": "No earlier reads yet.",
+      "historyOf": "Read from {date}",
+      "historyWords": "{count} words",
+      "latest": "Latest",
       "alignment": "Alignment {value} out of 100",
       "stale": "Out of date",
       "tips": "Supplement tips",
@@ -3691,7 +3710,19 @@
     "rangeError": "Enter a number from {min} to {max}",
     "suppPromptsTitle": "Supplement prompts",
     "suppPromptLimit": "{count} words max",
-    "suppPromptOptional": "Optional"
+    "suppPromptOptional": "Optional",
+    "rankingSystem": "Ranking",
+    "rankingSubject": "Subject",
+    "rankingRank": "Rank (12 or 101-150)",
+    "rankingYear": "Year",
+    "rankingSource": "Source link",
+    "rankingAdd": "Add ranking",
+    "rankingAddFor": "Add ranking to {label}",
+    "experience": {
+      "social": "Social life",
+      "research": "Research",
+      "work": "Work experience"
+    }
   },
   "courses": {
     "add": "Add",
@@ -4405,6 +4436,57 @@
     "settings": {
       "open": "Settings",
       "title": "Matching settings"
+    },
+    "extras": {
+      "more": "Show more",
+      "less": "Show less",
+      "fields": "Fields of study",
+      "rankings": "Subject rankings",
+      "netPrice": "{amount} / yr after aid",
+      "estLabel": "How is this estimated?",
+      "estHow": "Estimate: sticker price minus the average aid ({aid}) this university reports. Your own aid may differ.",
+      "experience": {
+        "social": "Social life",
+        "research": "Research",
+        "work": "Work experience"
+      },
+      "score": "{score} out of 5",
+      "about": "About: {name}",
+      "map": "Open on a map",
+      "subjects": {
+        "overall": "Overall",
+        "architecture": "Architecture",
+        "architecture_planning": "Architecture & planning",
+        "arts_design": "Arts & design",
+        "arts_humanities": "Arts & humanities",
+        "biology": "Biology",
+        "biomedical_engineering": "Biomedical engineering",
+        "business": "Business",
+        "business_economics": "Business & economics",
+        "chemical_engineering": "Chemical engineering",
+        "chemistry": "Chemistry",
+        "computer_data": "Computer & data",
+        "computer_science": "Computer science",
+        "data_science": "Data science",
+        "economics": "Economics",
+        "education": "Education",
+        "engineering": "Engineering",
+        "environment": "Environment",
+        "humanities": "Humanities",
+        "law": "Law",
+        "law_politics": "Law & politics",
+        "life_health": "Life & health sciences",
+        "life_sciences": "Life sciences",
+        "management": "Management",
+        "mathematics": "Mathematics",
+        "medicine": "Medicine",
+        "natural_sciences": "Natural sciences",
+        "physics": "Physics",
+        "politics": "Politics",
+        "psychology": "Psychology",
+        "social_sciences": "Social sciences",
+        "taxation": "Taxation"
+      }
     }
   },
   "uniChat": {
@@ -5584,7 +5666,11 @@
       "empty": "No professions found. Try another word.",
       "error": "Could not load professions",
       "groups": "Profession groups",
-      "allGroups": "All"
+      "allGroups": "All",
+      "addCustom": "Add “{query}” as my profession",
+      "addCustomHint": "Not what you are looking for? Describe it in your own words and we will fill in the card.",
+      "filling": "Filling in the card…",
+      "fillError": "Could not fill in the card. Try again later."
     },
     "risk": {
       "low": "Low AI exposure",
@@ -5643,7 +5729,13 @@
       "error": "Could not suggest. Try again later.",
       "byQuiz": "The test points to: {majors}.",
       "toField": "Field of study →",
-      "notInCatalogue": "“{title}” is not in the catalogue: look for a similar profession with search."
+      "addCustom": "Add “{title}” as my profession"
+    },
+    "custom": {
+      "badge": "Your own",
+      "confirm": "Check the card and add it to your picks.",
+      "discard": "Discard",
+      "approx": "Closest ISCO group: {isco}"
     }
   },
   "profileHub": {
@@ -5691,7 +5783,6 @@
     "dockLabel": "Essay analysis",
     "tab": {
       "read": "Read",
-      "unis": "Universities",
       "plan": "Plan",
       "versions": "Versions",
       "more": "More",
@@ -5849,6 +5940,67 @@
       "published": "Published",
       "provisional": "Provisional",
       "archived": "Hidden"
+    },
+    "scorecard": {
+      "fill": "Fill from College Scorecard",
+      "title": "College Scorecard",
+      "search": "School name or UNITID",
+      "empty": "No schools found.",
+      "attach": "Attach facts",
+      "create": "Create from Scorecard",
+      "done": "Scorecard data saved.",
+      "add": "Add from College Scorecard"
+    },
+    "card": "Card"
+  },
+  "catalogCard": {
+    "title": "Institution card",
+    "card": "Card",
+    "tabs": {
+      "basics": "Basics",
+      "facts": "Facts",
+      "scholarships": "Scholarships",
+      "description": "Description"
+    },
+    "saved": "Saved",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "retry": "Try again",
+    "editBasics": "Edit name, location and status",
+    "mapUrl": "Map link",
+    "mapUrlHint": "HTTPS link to the campus on a map. Leave empty to remove it.",
+    "incomplete": "Some filled facts lack an https source link or a year.",
+    "verified": "Mark saved facts as verified by me",
+    "saveFacts": "Save facts ({count})",
+    "noScholarships": "No scholarships yet.",
+    "addScholarship": "Add scholarship",
+    "sName": "Name",
+    "sProvider": "Provider",
+    "sBasis": "Basis",
+    "sCoverageMin": "Covers from, %",
+    "sCoverageMax": "Covers up to, %",
+    "sCountry": "Country (2 letters)",
+    "sCycle": "Cycle year",
+    "sCovers": "Covers (comma separated)",
+    "sUrl": "Link",
+    "providers": {
+      "institution": "Institution",
+      "government": "Government",
+      "foundation": "Foundation"
+    },
+    "bases": {
+      "merit": "Merit",
+      "need": "Need",
+      "government": "Government",
+      "sports": "Sports",
+      "work_study": "Work-study"
+    },
+    "locales": {
+      "uz": "Uzbek",
+      "ru": "Russian",
+      "en": "English"
     }
   }
 }

@@ -22,6 +22,10 @@ const match = (id: string, name: string): Match => ({
   match_pct: 87,
   overlap: { count: 2, total: 5, tags: ["vibe:urban"] },
   status: "target",
+  experience: [],
+  fields: ["Computer Science"],
+  map_url: "https://www.google.com/maps/search/?api=1&query=Boston",
+  rankings: [],
 })
 
 describe("discover swipe", () => {

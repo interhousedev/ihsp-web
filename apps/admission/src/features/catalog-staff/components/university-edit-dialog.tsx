@@ -2,8 +2,9 @@
 
 import { isApiError } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Input, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
+import { Button, Input, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
 import { useEffect, useState, type FormEvent } from "react"
+import { ScorecardDialog } from "./scorecard-dialog"
 import { toast } from "sonner"
 import {
   useStaffInstitutionMutations,
@@ -83,6 +84,7 @@ export function UniversityEditDialog({
   const errorMessage = useErrorMessage()
   const { create, update } = useStaffInstitutionMutations()
   const [form, setForm] = useState<Form>(EMPTY)
+  const [scorecard, setScorecard] = useState(false)
   const set = <K extends keyof Form>(key: K, value: Form[K]) => setForm((f) => ({ ...f, [key]: value }))
   useEffect(() => setForm(institution ? toForm(institution) : EMPTY), [institution, open])
 
@@ -136,6 +138,24 @@ export function UniversityEditDialog({
       }
     >
       <div className="grid gap-3 sm:grid-cols-2">
+        {(institution ? institution.country === "US" : form.country.trim().toUpperCase() === "US") && (
+          <div className="sm:col-span-2">
+            <Button type="button" variant="outline" onClick={() => setScorecard(true)}>
+              {institution ? t("scorecard.fill") : t("scorecard.add")}
+            </Button>
+            {scorecard && (
+              <ScorecardDialog
+                open
+                institutionId={institution?.id ?? null}
+                initialQuery={form.name}
+                onClose={() => {
+                  setScorecard(false)
+                  if (!institution) onClose()
+                }}
+              />
+            )}
+          </div>
+        )}
         <label className={`${field} sm:col-span-2`}>
           {t("name")}
           <Input value={form.name} maxLength={200} onChange={(e) => set("name", e.target.value)} />

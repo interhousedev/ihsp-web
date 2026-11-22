@@ -191,6 +191,12 @@
     "careerSettings": {
       "title": "Karyera savollari va yoʻnalishlari",
       "text": "Anketa savollari va yoʻnalishlar roʻyxati."
+    },
+    "mapsUrl": {
+      "title": "Xarita havolasi",
+      "text": "«Xaritada ochish» havolasi shabloni. https va bitta {query}; boʻsh qoldirsangiz — Google Maps.",
+      "save": "Saqlash",
+      "saved": "Saqlandi"
     }
   },
   "careerSettings": {
@@ -861,11 +867,24 @@
         "fresh": "Yangi",
         "earned": "Haqli"
       },
-      "fit": "Universitetlarga mosligi",
-      "fitHint": "Insho har bir universitetning mavzusi asosida shu universitet uchun oʻqiladi.",
-      "fitEmpty": "Bu inshoning hali universitet maqsadlari yoʻq. Uni roʻyxatingizdagi universitet mavzusiga biriktiring.",
-      "fitRun": "Universitetlarimga mosligini tekshirish",
-      "fitRerun": "Qayta tekshirish",
+      "unisTitle": "Tahlil qilinadigan universitetlar",
+      "unisHint": "Universitetni qoʻshish yoki chiqarish uchun logotipni bosing. Tahlil faqat qoʻshilganlar uchun boʻladi.",
+      "unisHintRead": "Qabul komissiyasi qanday munosabat bildirishini koʻrish uchun tahlil qilingan logotipni bosing. Tahlili yoʻq qoʻshilganini bossangiz, tahlil boshlanadi.",
+      "uniOn": "qoʻshilgan",
+      "uniOff": "chiqarilgan",
+      "uniReviewed": "tahlil qilingan",
+      "uniBusy": "tahlil qilinmoqda",
+      "uniExclude": "Bu universitetni chiqarish",
+      "ao": "Bu universitetning qabul komissiyasi qanday munosabat bildirishi mumkin",
+      "aoPositive": "Yaxshi taassurot qoldirishi mumkin",
+      "aoConcerns": "Ehtimoliy xavotirlar",
+      "risks": "Xavflar",
+      "history": "Tarix",
+      "historyBack": "Tahlilga qaytish",
+      "historyEmpty": "Avvalgi tahlillar hali yoʻq.",
+      "historyOf": "{date} dagi tahlil",
+      "historyWords": "{count} soʻz",
+      "latest": "Oxirgisi",
       "alignment": "Moslik 100 dan {value}",
       "stale": "Eskirgan",
       "tips": "Qoʻshimcha inshoga maslahatlar",
@@ -3691,7 +3710,19 @@
     "rangeError": "{min} dan {max} gacha son kiriting",
     "suppPromptsTitle": "Qoʻshimcha esse savollari",
     "suppPromptLimit": "koʻpi bilan {count} soʻz",
-    "suppPromptOptional": "Majburiy emas"
+    "suppPromptOptional": "Majburiy emas",
+    "rankingSystem": "Reyting",
+    "rankingSubject": "Fan",
+    "rankingRank": "Oʻrin (12 yoki 101-150)",
+    "rankingYear": "Yil",
+    "rankingSource": "Manba havolasi",
+    "rankingAdd": "Reyting qoʻshish",
+    "rankingAddFor": "Reyting qoʻshish: {label}",
+    "experience": {
+      "social": "Talabalik hayoti",
+      "research": "Tadqiqot",
+      "work": "Ish tajribasi"
+    }
   },
   "courses": {
     "add": "Qoʻshish",
@@ -4405,6 +4436,57 @@
     "settings": {
       "open": "Sozlamalar",
       "title": "Tanlash sozlamalari"
+    },
+    "extras": {
+      "more": "Koʻproq",
+      "less": "Kamroq",
+      "fields": "Yoʻnalishlar",
+      "rankings": "Fan reytinglari",
+      "netPrice": "Yordamdan keyin yiliga {amount}",
+      "estLabel": "Bu qanday hisoblangan?",
+      "estHow": "Taxminiy: toʻliq narx minus universitet eʼlon qilgan oʻrtacha yordam ({aid}). Sizning yordamingiz farq qilishi mumkin.",
+      "experience": {
+        "social": "Talabalik hayoti",
+        "research": "Tadqiqot",
+        "work": "Ish tajribasi"
+      },
+      "score": "5 dan {score}",
+      "about": "Haqida: {name}",
+      "map": "Xaritada ochish",
+      "subjects": {
+        "overall": "Umumiy",
+        "architecture": "Arxitektura",
+        "architecture_planning": "Arxitektura va rejalashtirish",
+        "arts_design": "Sanʼat va dizayn",
+        "arts_humanities": "Sanʼat va gumanitar fanlar",
+        "biology": "Biologiya",
+        "biomedical_engineering": "Biotibbiyot muhandisligi",
+        "business": "Biznes",
+        "business_economics": "Biznes va iqtisodiyot",
+        "chemical_engineering": "Kimyoviy muhandislik",
+        "chemistry": "Kimyo",
+        "computer_data": "Kompyuter va maʼlumotlar",
+        "computer_science": "Informatika",
+        "data_science": "Maʼlumotlar fani",
+        "economics": "Iqtisodiyot",
+        "education": "Taʼlim",
+        "engineering": "Muhandislik",
+        "environment": "Atrof-muhit",
+        "humanities": "Gumanitar fanlar",
+        "law": "Huquq",
+        "law_politics": "Huquq va siyosat",
+        "life_health": "Hayot va sogʻliq fanlari",
+        "life_sciences": "Hayot fanlari",
+        "management": "Menejment",
+        "mathematics": "Matematika",
+        "medicine": "Tibbiyot",
+        "natural_sciences": "Tabiiy fanlar",
+        "physics": "Fizika",
+        "politics": "Siyosatshunoslik",
+        "psychology": "Psixologiya",
+        "social_sciences": "Ijtimoiy fanlar",
+        "taxation": "Soliq"
+      }
     }
   },
   "uniChat": {
@@ -5584,7 +5666,11 @@
       "empty": "Kasb topilmadi. Boshqa soʻz sinab koʻring.",
       "error": "Kasblarni yuklab boʻlmadi",
       "groups": "Kasblar guruhlari",
-      "allGroups": "Hammasi"
+      "allGroups": "Hammasi",
+      "addCustom": "«{query}» ni oʻz kasbim sifatida qoʻshish",
+      "addCustomHint": "Kerakli kasb topilmadimi? Uni oʻz soʻzlaringiz bilan yozing, kartochkani toʻldiramiz.",
+      "filling": "Kartochka toʻldirilmoqda…",
+      "fillError": "Kartochkani toʻldirib boʻlmadi. Keyinroq urinib koʻring."
     },
     "risk": {
       "low": "AI ulushi past",
@@ -5643,7 +5729,13 @@
       "error": "Tanlab boʻlmadi. Keyinroq urinib koʻring.",
       "byQuiz": "Test boʻyicha sizga mos: {majors}.",
       "toField": "Yoʻnalish →",
-      "notInCatalogue": "«{title}» katalogda yoʻq: qidiruv orqali oʻxshash kasbni toping."
+      "addCustom": "«{title}» ni oʻz kasbim sifatida qoʻshish"
+    },
+    "custom": {
+      "badge": "Oʻzimniki",
+      "confirm": "Kartochkani tekshiring va tanlovingizga qoʻshing.",
+      "discard": "Bekor qilish",
+      "approx": "Eng yaqin ISCO guruhi: {isco}"
     }
   },
   "profileHub": {
@@ -5691,7 +5783,6 @@
     "dockLabel": "Insho tahlili",
     "tab": {
       "read": "Tahlil",
-      "unis": "OTMlar",
       "plan": "Reja",
       "versions": "Versiyalar",
       "more": "Yana",
@@ -5849,6 +5940,67 @@
       "published": "Eʼlon qilingan",
       "provisional": "Qoralama",
       "archived": "Yashirin"
+    },
+    "scorecard": {
+      "fill": "College Scorecard asosida toʻldirish",
+      "title": "College Scorecard",
+      "search": "Oliygoh nomi yoki UNITID",
+      "empty": "Hech narsa topilmadi.",
+      "attach": "Maʼlumotlarni biriktirish",
+      "create": "Scorecard asosida yaratish",
+      "done": "Scorecard maʼlumotlari saqlandi.",
+      "add": "College Scorecard orqali qoʻshish"
+    },
+    "card": "Kartochka"
+  },
+  "catalogCard": {
+    "title": "Universitet kartochkasi",
+    "card": "Kartochka",
+    "tabs": {
+      "basics": "Asosiy",
+      "facts": "Faktlar",
+      "scholarships": "Stipendiyalar",
+      "description": "Tavsif"
+    },
+    "saved": "Saqlandi",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "edit": "Tahrirlash",
+    "delete": "Oʻchirish",
+    "retry": "Qayta urinish",
+    "editBasics": "Nomi, joyi va holatini tahrirlash",
+    "mapUrl": "Xarita havolasi",
+    "mapUrlHint": "Kampusning xaritadagi HTTPS havolasi. Olib tashlash uchun boʻsh qoldiring.",
+    "incomplete": "Baʼzi toʻldirilgan faktlarda https manba havolasi yoki yil yoʻq.",
+    "verified": "Saqlangan faktlarni men tekshirgan deb belgilash",
+    "saveFacts": "Faktlarni saqlash ({count})",
+    "noScholarships": "Hozircha stipendiyalar yoʻq.",
+    "addScholarship": "Stipendiya qoʻshish",
+    "sName": "Nomi",
+    "sProvider": "Taqdim etuvchi",
+    "sBasis": "Asos",
+    "sCoverageMin": "Qoplaydi, % dan",
+    "sCoverageMax": "Qoplaydi, % gacha",
+    "sCountry": "Davlat (2 harf)",
+    "sCycle": "Qabul yili",
+    "sCovers": "Nimani qoplaydi (vergul bilan)",
+    "sUrl": "Havola",
+    "providers": {
+      "institution": "Universitet",
+      "government": "Davlat",
+      "foundation": "Jamgʻarma"
+    },
+    "bases": {
+      "merit": "Yutuqlar uchun",
+      "need": "Ehtiyoj asosida",
+      "government": "Davlat",
+      "sports": "Sport",
+      "work_study": "Ish va oʻqish"
+    },
+    "locales": {
+      "uz": "Oʻzbekcha",
+      "ru": "Ruscha",
+      "en": "Inglizcha"
     }
   }
 }
