@@ -37500,6 +37500,8 @@ export interface components {
             lessons_links_lead_min?: number | null;
             /** Lessons Prompt Enabled */
             lessons_prompt_enabled?: boolean | null;
+            /** Limit Ai Tracing */
+            limit_ai_tracing?: boolean | null;
             /** Locale */
             locale?: ("uz" | "ru" | "en") | null;
             /** Mail Forward To Telegram */
@@ -47047,6 +47049,11 @@ export interface components {
              * @default true
              */
             lessons_prompt_enabled: boolean;
+            /**
+             * Limit Ai Tracing
+             * @default false
+             */
+            limit_ai_tracing: boolean;
             /**
              * Locale
              * @default ru
