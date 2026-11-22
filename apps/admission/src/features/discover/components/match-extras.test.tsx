@@ -42,4 +42,15 @@ describe("MatchExtrasView", () => {
     fireEvent.click(buttons[0]!)
     expect(screen.getByRole("tooltip")).toBeTruthy()
   })
+
+  it("marks the price against the budget and hides the chip when it is unknown", () => {
+    const { unmount } = renderAdmissionApp(<MatchExtrasView match={{ ...base, budget_fit: "fits" } as CardMatch} />)
+    expect(screen.getByTestId("budget-fit").textContent).toBe("Fits budget")
+    unmount()
+    const above = renderAdmissionApp(<MatchExtrasView match={{ ...base, budget_fit: "above" } as CardMatch} />)
+    expect(screen.getByTestId("budget-fit").textContent).toBe("Above budget")
+    above.unmount()
+    renderAdmissionApp(<MatchExtrasView match={{ ...base, budget_fit: null } as CardMatch} />)
+    expect(screen.queryByTestId("budget-fit")).toBeNull()
+  })
 })

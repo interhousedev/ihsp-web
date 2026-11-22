@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+import { beforeEach, describe, expect, test } from "bun:test"
 import { apiUrl, server, userMe } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { http, HttpResponse } from "msw"
@@ -28,6 +28,12 @@ const match = (id: string, name: string): Match => ({
   rankings: [],
 })
 
+beforeEach(() => {
+  server.use(
+    http.get(apiUrl("/v1/admission/matches/dismissed"), () => HttpResponse.json({ items: [], undecided_only: false })),
+  )
+})
+
 describe("discover swipe", () => {
   test("Interested posts the decision and Undo deletes it", async () => {
     const calls: string[] = []
@@ -53,6 +59,29 @@ describe("discover swipe", () => {
     await waitFor(() => expect(calls).toEqual(['POST {"decision":"interested"}']))
     fireEvent.click(screen.getByRole("button", { name: "Undo last decision" }))
     await waitFor(() => expect(calls).toEqual(['POST {"decision":"interested"}', "DELETE"]))
+  })
+})
+
+describe("discover dismissed", () => {
+  test("lists Not my vibe colleges and Return deletes the decision", async () => {
+    const calls: string[] = []
+    server.use(
+      http.get(apiUrl("/v1/admission/matches"), () => HttpResponse.json({ items: [match("u1", "Alpha College")] })),
+      http.get(apiUrl("/v1/admission/matches/dismissed"), () =>
+        HttpResponse.json({ items: [match("u9", "Gamma College")], undecided_only: false }),
+      ),
+      http.get(apiUrl("/v1/admission/preferences"), () =>
+        HttpResponse.json({ answers: {}, tags: [], completed: false, updated_at: null }),
+      ),
+      http.delete(apiUrl("/v1/admission/matches/u9/decision"), () => {
+        calls.push("DELETE u9")
+        return new HttpResponse(null, { status: 204 })
+      }),
+    )
+    renderAdmissionApp(<DiscoverPage />)
+    expect(await screen.findByRole("heading", { name: "Dismissed" })).toBeInTheDocument()
+    fireEvent.click(await screen.findByRole("button", { name: "Return Gamma College to the deck" }))
+    await waitFor(() => expect(calls).toEqual(["DELETE u9"]))
   })
 })
 

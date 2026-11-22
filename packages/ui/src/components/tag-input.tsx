@@ -10,7 +10,14 @@ import { Pill } from "./pill"
  * (ignoring case) and tags beyond `max` are dropped. All labels come from the caller, so the text is translated there.
  * With `options` the field is a searchable multi-select: only listed values can be added, each shown by its label.
  */
-export type TagOption = { value: string; label: string; icon?: ReactNode }
+export type TagOption = {
+  value: string
+  label: string
+  icon?: ReactNode
+  /** Listed (and searchable) but not selectable; `hint` says why. */
+  disabled?: boolean
+  hint?: string
+}
 
 export function TagInput({
   value,
@@ -54,7 +61,7 @@ export function TagInput({
     setDraft("")
     if (options) {
       const found = options.find((option) => option.label.toLowerCase() === tag.toLowerCase())
-      if (!found) return
+      if (!found || found.disabled) return
       tag = found.value
     }
     if (!tag || full || value.some((existing) => existing.toLowerCase() === tag.toLowerCase())) return
@@ -69,7 +76,8 @@ export function TagInput({
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter" || event.key === ",") {
       event.preventDefault()
-      if (options && matches[0]) add(matches[0].value)
+      const first = matches.find((option) => !option.disabled)
+      if (options && first) add(first.value)
       else commit(draft)
     } else if (event.key === "Backspace" && draft === "" && value.length > 0) {
       onChange(value.slice(0, -1))
@@ -119,11 +127,15 @@ export function TagInput({
               <button
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
+                disabled={option.disabled}
                 onClick={() => add(option.value)}
-                className="hover:bg-accent flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-md px-2 text-left text-sm md:min-h-8"
+                className="hover:bg-accent flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-md px-2 text-left text-sm disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent md:min-h-8"
               >
                 {option.icon}
                 {option.label}
+                {option.disabled && option.hint ? (
+                  <span className="text-muted-foreground ms-auto text-xs">{option.hint}</span>
+                ) : null}
               </button>
             </li>
           ))}

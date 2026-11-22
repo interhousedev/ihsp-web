@@ -1,6 +1,7 @@
 "use client"
 
 import { useLocale, useT } from "@ihsp/i18n"
+import { cn } from "@ihsp/ui"
 import { useState } from "react"
 import type { AdmissionMatch } from "@ihsp/api"
 
@@ -104,6 +105,17 @@ export function MatchExtrasView({ match }: { match: CardMatch }) {
               ? t("extras.estHow", { aid: money(match.aid_estimate_usd ?? 0, locale) })
               : t("extras.estGross")}
           </Info>
+          {match.budget_fit ? (
+            <span
+              data-testid="budget-fit"
+              className={cn(
+                "rounded-full px-2 py-0.5 text-xs font-medium",
+                match.budget_fit === "fits" ? "bg-success/15 text-success" : "bg-destructive/10 text-destructive",
+              )}
+            >
+              {t(match.budget_fit === "fits" ? "extras.fitsBudget" : "extras.aboveBudget")}
+            </span>
+          ) : null}
         </p>
       ) : null}
       {experience.length ? (

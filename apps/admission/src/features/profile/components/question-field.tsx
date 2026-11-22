@@ -31,14 +31,23 @@ function TagsField({ question, value, onChange, onDraft, label }: FieldProps & {
   const options = useMemo(() => {
     if (question.kind === "country") {
       const names = new Intl.DisplayNames([locale], { type: "region" })
-      return configOptions(config.data, "countries").map((code) => ({
-        value: code,
-        label: names.of(code) ?? code,
-        icon: <CountryFlag code={code} />,
-      }))
+      const available = new Set(configOptions(config.data, "countries_available"))
+      const known = Array.isArray(
+        (config.data as { options?: Record<string, unknown> } | undefined)?.options?.countries_available,
+      )
+      return configOptions(config.data, "countries").map((code) => {
+        const disabled = known && !available.has(code)
+        return {
+          value: code,
+          label: names.of(code) ?? code,
+          icon: <CountryFlag code={code} />,
+          disabled,
+          hint: disabled ? t("noUniversities") : undefined,
+        }
+      })
     }
     return configOptions(config.data, "fields").map((name) => ({ value: name, label: name }))
-  }, [question.kind, config.data, locale])
+  }, [question.kind, config.data, locale, t])
   const draft = useRef("")
   const tags = asStrings(value)
   const max = question.max_choices ?? undefined

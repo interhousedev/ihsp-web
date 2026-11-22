@@ -7,6 +7,7 @@ import {
   deleteDecision,
   getChances,
   getDefaultPrompt,
+  getDismissed,
   getMatches,
   getUniChatSuggestions,
   openUniChat,
@@ -20,6 +21,13 @@ export function useMatches() {
   return useQuery({
     queryKey: ["admission", "matches", MATCH_LIMIT] as const,
     queryFn: ({ signal }) => getMatches(MATCH_LIMIT, signal),
+  })
+}
+
+export function useDismissed() {
+  return useQuery({
+    queryKey: ["admission", "matches", "dismissed"] as const,
+    queryFn: ({ signal }) => getDismissed(signal),
   })
 }
 
