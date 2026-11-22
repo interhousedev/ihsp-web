@@ -79,23 +79,26 @@ export function ShellSearch({ nav, applicant = true }: { nav: NavGroup[]; applic
         if (hit(title) || words.some(hit))
           results.push({ id: `page:${page.id}`, title, section: t("sections.pages"), url: page.path })
       }
+      // Server hits first: they match aliases (MIT, UCLA) and are ranked; a listed one is marked as on the list.
+      const shown = new Set<string>()
+      for (const item of catalog.items ?? []) {
+        shown.add(item.id)
+        results.push({
+          id: `cat:${item.id}`,
+          title: item.name,
+          subtitle: listed.has(item.id) ? t("onList") : t("inCatalog"),
+          section: t("sections.universities"),
+          url: `/chooser/institution/?id=${encodeURIComponent(item.id)}`,
+        })
+      }
       for (const entry of list)
-        if (hit(entry.institution.name))
+        if (!shown.has(entry.institution.id) && hit(entry.institution.name))
           results.push({
             id: `uni:${entry.id}`,
             title: entry.institution.name,
             subtitle: t("onList"),
             section: t("sections.universities"),
             url: `/chooser/institution/?id=${encodeURIComponent(entry.institution.id)}`,
-          })
-      for (const item of catalog.items ?? [])
-        if (!listed.has(item.id))
-          results.push({
-            id: `cat:${item.id}`,
-            title: item.name,
-            subtitle: t("inCatalog"),
-            section: t("sections.universities"),
-            url: `/chooser/institution/?id=${encodeURIComponent(item.id)}`,
           })
       const inBody = new Set<string>()
       for (const match of found.items) {
