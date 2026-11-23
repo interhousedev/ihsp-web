@@ -140,11 +140,11 @@
     "temporaryMarkFor": "Vaqtinchalik baho: {name}, {date}",
     "temporaryState": "vaqtinchalik baho {value}",
     "temporaryMarkHint": "Vaqtinchalik baholar EMIS ga kiritilguncha shu yerda saqlanadi.",
-    "excusedLocked": "Sababli: bu qoldirish qulflangan. O‘zgartirish uchun sababni olib tashlang.",
+    "excusedLocked": "Sababli: bu qoldirish qulflangan. Oʻzgartirish uchun sababni olib tashlang.",
     "excuseBadge": "Sabab",
     "excuseOriginRequest": "Sababli: tasdiqlangan ariza",
     "excuseOriginCurator": "Sababli: kurator",
-    "excuseOriginTeacher": "Sababli: o‘qituvchi belgisi"
+    "excuseOriginTeacher": "Sababli: oʻqituvchi belgisi"
   },
   "group": {
     "noGroup": "Siz guruhga rahbarlik qilmaysiz.",
@@ -495,28 +495,28 @@
       "back": "{subject}",
       "subgroupTitle": "{group} · {number}-kichik guruh",
       "students": "Talabalar ({count})",
-      "noStudents": "Bu guruhda talabalar yo‘q.",
+      "noStudents": "Bu guruhda talabalar yoʻq.",
       "subgroupBadge": "{number}-kichik guruh",
       "timetable": "Darslar",
       "thisWeek": "Shu hafta",
       "upcoming": "Kelgusi",
-      "noLessons": "Darslar yo‘q.",
+      "noLessons": "Darslar yoʻq.",
       "period": "{number}-para",
       "room": "{room}-xona"
     },
     "student": {
       "back": "Guruhga qaytish",
       "marks": "Baholar",
-      "average": "O‘rtacha baho",
+      "average": "Oʻrtacha baho",
       "semesterMark": "semestr bahosi {value}",
-      "noMarks": "Hali baholar yo‘q.",
+      "noMarks": "Hali baholar yoʻq.",
       "type": {
         "lesson": "Dars bahosi",
         "midterm": "Oraliq nazorat (ON)",
         "final": "Yakuniy nazorat (YN)"
       },
       "homework": "Uy vazifalari",
-      "noHomework": "Bu fan bo‘yicha uy vazifalari yo‘q.",
+      "noHomework": "Bu fan boʻyicha uy vazifalari yoʻq.",
       "done": "Bajarildi {when}",
       "notDone": "Bajarilmagan",
       "note": "Izoh: {note}",
@@ -589,11 +589,11 @@
       "approved": "Tasdiqlangan"
     },
     "empty": {
-      "pending": "Qaror kutayotgan arizalar yo‘q.",
-      "approved": "Tasdiqlangan sabablar yo‘q."
+      "pending": "Qaror kutayotgan arizalar yoʻq.",
+      "approved": "Tasdiqlangan sabablar yoʻq."
     },
-    "loadMore": "Yana ko‘rsatish",
-    "create": "O‘quvchini ozod qilish",
+    "loadMore": "Yana koʻrsatish",
+    "create": "Oʻquvchini ozod qilish",
     "status": {
       "pending": "Kutilmoqda",
       "approved": "Tasdiqlangan",
@@ -603,7 +603,7 @@
     },
     "origin": "Kurator yaratgan",
     "period": "{from} – {to}",
-    "openEnded": "{from} – keyingi ko‘rsatmagacha",
+    "openEnded": "{from} – keyingi koʻrsatmagacha",
     "lessonsCount": "{count, plural, one {# dars} other {# dars}}",
     "open": "Sababni ochish: {name}",
     "detail": {
@@ -611,7 +611,7 @@
       "period": "Davr",
       "template": "Turi",
       "decision": "Qaror",
-      "noReason": "Sabab ko‘rsatilmagan"
+      "noReason": "Sabab koʻrsatilmagan"
     },
     "actions": {
       "approve": "Tasdiqlash",
@@ -626,7 +626,7 @@
       "reject": "Sababni rad etish",
       "revoke": "Sababni qaytarib olish",
       "comment": "Izoh",
-      "placeholder": "O‘quvchi ko‘radi",
+      "placeholder": "Oʻquvchi koʻradi",
       "submit": "Tasdiqlash",
       "cancel": "Bekor qilish",
       "approved": "Sabab tasdiqlandi",
@@ -636,7 +636,7 @@
     },
     "thread": {
       "title": "Xabarlar",
-      "empty": "Hozircha xabarlar yo‘q.",
+      "empty": "Hozircha xabarlar yoʻq.",
       "label": "Xabar",
       "placeholder": "Xabar yozing",
       "send": "Yuborish",
@@ -645,24 +645,24 @@
       "download": "Ochish: {name}"
     },
     "form": {
-      "title": "O‘quvchini ozod qilish",
-      "student": "O‘quvchi",
-      "studentPlaceholder": "O‘quvchini tanlang",
+      "title": "Oʻquvchini ozod qilish",
+      "student": "Oʻquvchi",
+      "studentPlaceholder": "Oʻquvchini tanlang",
       "template": "Turi",
       "templatePlaceholder": "Turini tanlang",
       "startsOn": "Dan",
       "endsOn": "Gacha",
-      "endsOnHint": "Tugashi hali noma’lum bo‘lsa, bo‘sh qoldiring.",
+      "endsOnHint": "Tugashi hali noma’lum boʻlsa, boʻsh qoldiring.",
       "scope": "Amal qiladi",
       "scopeDays": "Butun kunlar",
       "scopeLessons": "Alohida darslar",
       "lessons": "Darslar",
-      "lessonsEmpty": "Bu davrda darslar yo‘q.",
+      "lessonsEmpty": "Bu davrda darslar yoʻq.",
       "reason": "Sabab",
       "documents": "Hujjatlar",
       "documentRequired": "Bu tur uchun hujjat kerak.",
       "submit": "Yaratish",
-      "created": "O‘quvchi ozod qilindi",
+      "created": "Oʻquvchi ozod qilindi",
       "noGroup": "Siz guruhga rahbarlik qilmaysiz.",
       "clearEnd": "Tugash sanasini olib tashlash"
     }

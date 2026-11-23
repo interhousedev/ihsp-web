@@ -22,13 +22,14 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SlugField,
   Switch,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@ihsp/ui"
-import { useState, type FormEvent } from "react"
+import { useCallback, useState, type FormEvent } from "react"
 import { useCreateBotPost, useDeleteBotPost, useMoveBotPost, useSaveBotPost } from "../hooks/use-bot-posts"
 import { botPostErrorMessage } from "../utils/errors"
 import { LOCALE_CODES, localized, type BotLocale } from "../utils/locales"
@@ -104,6 +105,10 @@ export function PostEditor({
   const failure = save.error ?? create.error ?? move.error ?? remove.error
   const fieldErrors = useServerFieldErrors(failure)
 
+  // A just-added post still has its generated placeholder address: let it follow the first title.
+  const [untitledDraft] = useState(() => /^post-[a-z0-9]+$/.test(post.slug) && !Object.values(form.title).some(Boolean))
+  const setSlug = useCallback((slug: string) => setForm((current) => ({ ...current, slug })), [])
+
   function setTitle(code: BotLocale, value: string) {
     setForm((current) => ({ ...current, title: { ...current.title, [code]: value } }))
   }
@@ -164,16 +169,19 @@ export function PostEditor({
     <form ref={fieldErrors.ref} onSubmit={submit} className="flex flex-col gap-6">
       <ErrorLine error={failure} />
 
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="bot-post-slug">{t("editor.slug")}</Label>
-        <Input
-          id="bot-post-slug"
-          value={form.slug}
-          maxLength={64}
-          disabled={busy}
-          onChange={(event) => setForm((current) => ({ ...current, slug: event.target.value }))}
-        />
-      </div>
+      <SlugField
+        id="bot-post-slug"
+        label={t("editor.slug")}
+        title={form.title.en || form.title.ru || form.title.uz}
+        value={form.slug}
+        onChange={setSlug}
+        followTitle={untitledDraft}
+        maxLength={64}
+        disabled={busy}
+        editLabel={t("editor.slugEdit")}
+        autoLabel={t("editor.slugAuto")}
+        hint={t("editor.slugHint")}
+      />
 
       <Tabs value={locale} onValueChange={(value) => setLocale(value as BotLocale)}>
         <TabsList aria-label={t("editor.locale")}>

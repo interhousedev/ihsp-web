@@ -8,11 +8,12 @@ import {
   type McpOutcome,
 } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button, Dropdown, Input, PageContainer, type DropdownOption } from "@ihsp/ui"
+import { Badge, Button, Dropdown, PageContainer, type DropdownOption } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs"
 import { useState } from "react"
 import { QueryState } from "@ihsp/features-core"
+import { UserPicker } from "../../shared/components/user-picker"
 
 const ALL = "all"
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
@@ -93,13 +94,12 @@ export function McpActivityPage() {
                 void setFilters({ outcome: value === ALL ? null : (value as McpOutcome) })
               }}
             />
-            <Input
-              aria-label={t("userId")}
-              placeholder={t("userId")}
-              value={user ?? ""}
-              onChange={(event) => {
+            <UserPicker
+              id="mcp-user"
+              value={userId ?? null}
+              onChange={(id) => {
                 setCursors([])
-                void setFilters({ user: event.target.value || null })
+                void setFilters({ user: id })
               }}
             />
           </div>

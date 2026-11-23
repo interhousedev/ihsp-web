@@ -255,16 +255,16 @@
       "emis": "EMIS holati",
       "synced": "Oxirgi sinxronizatsiya",
       "roles": "Rollar",
-      "syncButton": "EMIS bilan sinxronlash (baholar, o‘qituvchilar, darslar)",
+      "syncButton": "EMIS bilan sinxronlash (baholar, oʻqituvchilar, darslar)",
       "syncTitle": "EMIS bilan sinxronlash",
-      "syncHint": "O‘quvchining kichik guruhi, dars jadvali, o‘qituvchilar va baholari EMIS’dan qayta yuklanadi.",
-      "syncConfirmTitle": "O‘quvchini EMIS bilan sinxronlashtirilsinmi?",
-      "syncConfirmDescription": "Kichik guruh, dars jadvali, o‘qituvchilar va baholar EMIS’dan qayta yuklanadi. Sinxronlash fonda bajariladi va bir necha daqiqa olishi mumkin.",
+      "syncHint": "Oʻquvchining kichik guruhi, dars jadvali, oʻqituvchilar va baholari EMIS’dan qayta yuklanadi.",
+      "syncConfirmTitle": "Oʻquvchini EMIS bilan sinxronlashtirilsinmi?",
+      "syncConfirmDescription": "Kichik guruh, dars jadvali, oʻqituvchilar va baholar EMIS’dan qayta yuklanadi. Sinxronlash fonda bajariladi va bir necha daqiqa olishi mumkin.",
       "syncConfirmAction": "Sinxronlashni boshlash",
       "syncQueued": "EMIS bilan sinxronlash boshlandi",
       "syncNever": "Hali sinxronlanmagan",
       "syncAttempts": "Urinish {n} / {max}",
-      "syncLastError": "So‘nggi xato",
+      "syncLastError": "Soʻnggi xato",
       "syncFinished": "Tugadi",
       "syncStatus": {
         "pending": "Navbatda",
@@ -390,6 +390,12 @@
       "timetable": "Shu haftaning dars jadvali",
       "setPassword": "Parol oʻrnatish"
     }
+  },
+  "userPicker": {
+    "selected": "Foydalanuvchi tanlandi",
+    "clear": "Oʻzgartirish",
+    "placeholder": "Ism, login yoki pochta boʻyicha qidirish",
+    "none": "Foydalanuvchilar topilmadi"
   },
   "users": {
     "title": "Foydalanuvchilar va rollar",
@@ -1456,8 +1462,8 @@
     "lastSeen": "Oxirgi marta",
     "never": "Hech qachon",
     "open": "Muammoni ochish",
-    "empty": "Bu filtrlarga mos muammo yo‘q.",
-    "disabled": "Bu serverda xatolarni kuzatish sozlanmagan, shuning uchun muammolar ko‘rsatilmaydi.",
+    "empty": "Bu filtrlarga mos muammo yoʻq.",
+    "disabled": "Bu serverda xatolarni kuzatish sozlanmagan, shuning uchun muammolar koʻrsatilmaydi.",
     "prev": "Oldingi",
     "next": "Keyingi",
     "page": "{page}-sahifa"
@@ -1514,18 +1520,18 @@
   },
   "settings": {
     "logoTitle": "Litsey logotipi",
-    "logoDescription": "Talaba kartasida ko‘rsatiladi. PNG, JPEG yoki WebP, 1 MB gacha.",
-    "logoNone": "Logotip yuklanmagan, o‘rnatilgani ishlatiladi.",
+    "logoDescription": "Talaba kartasida koʻrsatiladi. PNG, JPEG yoki WebP, 1 MB gacha.",
+    "logoNone": "Logotip yuklanmagan, oʻrnatilgani ishlatiladi.",
     "logoUpload": "Logotip yuklash",
     "logoReplace": "Logotipni almashtirish",
-    "logoRemove": "Logotipni o‘chirish",
+    "logoRemove": "Logotipni oʻchirish",
     "logoTooBig": "Fayl 1 MB dan katta.",
     "logoBadType": "Faqat PNG, JPEG yoki WebP qabul qilinadi.",
-    "logoConfirmTitle": "Logotip o‘chirilsinmi?",
-    "logoConfirmDescription": "Talaba kartasida yana o‘rnatilgan logotip ko‘rsatiladi.",
+    "logoConfirmTitle": "Logotip oʻchirilsinmi?",
+    "logoConfirmDescription": "Talaba kartasida yana oʻrnatilgan logotip koʻrsatiladi.",
     "logoAlt": "Joriy litsey logotipi",
     "logoSaved": "Logotip saqlandi.",
-    "logoRemoved": "Logotip o‘chirildi.",
+    "logoRemoved": "Logotip oʻchirildi.",
     "title": "Sozlamalar",
     "school": "Maktab",
     "schoolName": "Maktab nomi",
@@ -1849,15 +1855,15 @@
       },
       "admit_essay_review_per_week": {
         "label": "Haftasiga esse tekshiruvlari",
-        "hint": "Talaba bir haftada so‘rashi mumkin bo‘lgan asosiy esse tekshiruvlari soni (model ishlaydigan har bir so‘rov uchun bittadan)."
+        "hint": "Talaba bir haftada soʻrashi mumkin boʻlgan asosiy esse tekshiruvlari soni (model ishlaydigan har bir soʻrov uchun bittadan)."
       },
       "admit_essay_uni_review_per_week": {
         "label": "Haftasiga universitet esse tekshiruvlari",
-        "hint": "Talaba bir haftada olishi mumkin bo‘lgan universitetlar bo‘yicha esse tekshiruvlari soni (model tekshiradigan har bir universitet uchun bittadan)."
+        "hint": "Talaba bir haftada olishi mumkin boʻlgan universitetlar boʻyicha esse tekshiruvlari soni (model tekshiradigan har bir universitet uchun bittadan)."
       },
       "admit_essay_studio_runs_per_day": {
         "label": "Kuniga prompt studiyasi ishga tushirishlari",
-        "hint": "Xodim prompt studiyasida bir kunda bajarishi mumkin bo‘lgan sinov ishga tushirishlari soni. Barcha xodimlar uchun bir xil."
+        "hint": "Xodim prompt studiyasida bir kunda bajarishi mumkin boʻlgan sinov ishga tushirishlari soni. Barcha xodimlar uchun bir xil."
       }
     },
     "admission": {
@@ -2131,14 +2137,14 @@
   },
   "botPosts": {
     "loading": "Yuklanmoqda…",
-    "loadFailed": "Postlarni yuklab bo‘lmadi.",
-    "empty": "Hozircha postlar yo‘q.",
+    "loadFailed": "Postlarni yuklab boʻlmadi.",
+    "empty": "Hozircha postlar yoʻq.",
     "saved": "Post saqlandi",
-    "created": "Post qo‘shildi",
-    "deleted": "Post o‘chirildi",
-    "moved": "Post ko‘chirildi",
-    "deleteTitle": "Postni o‘chirasizmi?",
-    "deleteDescription": "Post va unga tegishli barcha postlar botdan o‘chiriladi.",
+    "created": "Post qoʻshildi",
+    "deleted": "Post oʻchirildi",
+    "moved": "Post koʻchirildi",
+    "deleteTitle": "Postni oʻchirasizmi?",
+    "deleteDescription": "Post va unga tegishli barcha postlar botdan oʻchiriladi.",
     "tree": {
       "title": "Postlar",
       "dragHandle": "Sudrash: {title}",
@@ -2151,11 +2157,11 @@
       "body": "Matn",
       "audience": "Auditoriya",
       "published": "Nashr etilgan",
-      "parent": "Ostiga ko‘chirish",
+      "parent": "Ostiga koʻchirish",
       "moveTo": "Ota postni tanlang…",
       "save": "Saqlash",
-      "addChild": "Ichki post qo‘shish",
-      "delete": "Postni o‘chirish",
+      "addChild": "Ichki post qoʻshish",
+      "delete": "Postni oʻchirish",
       "label": "Post matni",
       "linkPrompt": "Havola manzili (https://…)",
       "bold": "Qalin",
@@ -2168,42 +2174,45 @@
       "quote": "Iqtibos",
       "link": "Havola",
       "formatting": "Formatlash",
-      "deleteWithChildren": "Ichki postlari bilan o‘chirish"
+      "deleteWithChildren": "Ichki postlari bilan oʻchirish",
+      "slugEdit": "Manzilni tahrirlash",
+      "slugAuto": "Sarlavhadan olish",
+      "slugHint": "Manzil sarlavhadan yaratiladi. Faqat lotin harflari, raqamlar va defis."
     },
     "preview": {
-      "title": "Oldindan ko‘rish",
-      "empty": "Matn bo‘sh",
+      "title": "Oldindan koʻrish",
+      "empty": "Matn boʻsh",
       "buttonEmpty": "Tugma"
     },
     "buttons": {
       "title": "Tugmalar",
       "label": "Nomi {locale}",
       "url": "Manzil (https)",
-      "remove": "Tugmani o‘chirish",
-      "add": "Tugma qo‘shish"
+      "remove": "Tugmani oʻchirish",
+      "add": "Tugma qoʻshish"
     },
     "audience": {
       "guest": "Mehmonlar",
       "student": "Talabalar",
       "both": "Hammaga"
     },
-    "deleteWithChildrenTitle": "Postni ichki postlari bilan o‘chirasizmi?",
-    "deleteWithChildrenDescription": "Post va undan pastdagi barcha ichki postlar botdan o‘chiriladi.",
+    "deleteWithChildrenTitle": "Postni ichki postlari bilan oʻchirasizmi?",
+    "deleteWithChildrenDescription": "Post va undan pastdagi barcha ichki postlar botdan oʻchiriladi.",
     "errors": {
-      "generic": "Xatolik yuz berdi. Qayta urinib ko‘ring.",
+      "generic": "Xatolik yuz berdi. Qayta urinib koʻring.",
       "slugTaken": "Bu slug band.",
       "notFound": "Post topilmadi.",
-      "rootProtected": "Asosiy menyuni o‘chirib yoki ko‘chirib bo‘lmaydi.",
+      "rootProtected": "Asosiy menyuni oʻchirib yoki koʻchirib boʻlmaydi.",
       "hasChildren": "Postda ichki postlar bor.",
-      "cycle": "Postni o‘ziga ichki qilib ko‘chirib bo‘lmaydi.",
-      "reorderMismatch": "Tartib daraxtga mos kelmaydi. Sahifani yangilab, qayta urinib ko‘ring.",
+      "cycle": "Postni oʻziga ichki qilib koʻchirib boʻlmaydi.",
+      "reorderMismatch": "Tartib daraxtga mos kelmaydi. Sahifani yangilab, qayta urinib koʻring.",
       "invalid": {
-        "empty": "{field}: maydonni to‘ldiring.",
+        "empty": "{field}: maydonni toʻldiring.",
         "language": "{field}: bu til uchun matnni kiriting.",
         "too-long": "{field}: matn juda uzun.",
         "format": "{field}: kichik lotin harflar, raqamlar va chiziqcha ishlating.",
         "url": "{field}: https:// manzilidan foydalaning.",
-        "too-many": "{field}: elementlar juda ko‘p."
+        "too-many": "{field}: elementlar juda koʻp."
       }
     }
   },
@@ -2212,7 +2221,7 @@
     "action": "Surat",
     "title": "{name} surati",
     "current": "Joriy surat",
-    "noPhoto": "Surat hali yoʼq",
+    "noPhoto": "Surat hali yoʻq",
     "takePhoto": "Suratga olish",
     "capture": "Suratga olish",
     "retake": "Qayta olish",
@@ -2224,7 +2233,7 @@
     "cameraHint": "Talabani kadrga joylashtiring va suratga oling.",
     "cameraUnavailable": "Bu yerda kamera mavjud emas. Surat faylini tanlang.",
     "cameraDenied": "Kameraga ruxsat berilmadi. Faylni tanlang yoki brauzer sozlamalarida kameraga ruxsat bering.",
-    "preview": "Oldindan koʼrish",
+    "preview": "Oldindan koʻrish",
     "video": "Kamera tasviri",
     "wrongType": "JPEG yoki PNG rasmini tanlang.",
     "tooLarge": "Surat 5 MB dan katta.",
@@ -2261,21 +2270,21 @@
       "generation": "Kalitlar avlodi",
       "backup": "Oxirgi nusxa",
       "backupAt": "{at}, {by}",
-      "noBackup": "Bu avlod uchun hali nusxa yo‘q",
+      "noBackup": "Bu avlod uchun hali nusxa yoʻq",
       "rotation": "Almashtirish",
       "state": {
-        "idle": "Yo‘q",
+        "idle": "Yoʻq",
         "running": "Ketmoqda",
         "done": "Tugadi",
         "failed": "Xato"
       },
       "progress": "Qayta shifrlangan esselar: {done} / {total}",
-      "unreadable": "O‘qib bo‘lmaydigan esselar: {count}"
+      "unreadable": "Oʻqib boʻlmaydigan esselar: {count}"
     },
     "backup": {
       "title": "Zaxira nusxa",
       "warningTitle": "Har bir kalit avlodi uchun bitta yuklab olish",
-      "warning": "Nusxani har bir kalit avlodi uchun faqat bir marta yuklab olish mumkin. Faylni va maxfiy iborani oflayn, ikki xil ishonchli joyda saqlang. Ularsiz yo‘qolgan kalitlarni tiklab bo‘lmaydi.",
+      "warning": "Nusxani har bir kalit avlodi uchun faqat bir marta yuklab olish mumkin. Faylni va maxfiy iborani oflayn, ikki xil ishonchli joyda saqlang. Ularsiz yoʻqolgan kalitlarni tiklab boʻlmaydi.",
       "passphrase": "Maxfiy ibora",
       "confirm": "Maxfiy iborani takrorlang",
       "tooShort": "Kamida {min} belgi",
@@ -2286,15 +2295,19 @@
     },
     "restore": {
       "title": "Tiklash",
-      "description": "Ombordagi yo‘q kalitlarni yozadi. Mavjud kalit hech qachon ustidan yozilmaydi.",
+      "description": "Ombordagi yoʻq kalitlarni yozadi. Mavjud kalit hech qachon ustidan yozilmaydi.",
       "file": "Nusxa fayli (JSON)",
       "passphrase": "Nusxaning maxfiy iborasi",
       "submit": "Kalitlarni tiklash",
       "sending": "Tiklanmoqda…",
       "resultTitle": "Tiklash tugadi",
       "restored": "Tiklandi: {count}",
-      "skipped": "O‘tkazib yuborildi (allaqachon bor): {count}",
-      "conflicts": "Ziddiyatlar, saqlangan kalit boshqacha ({count}):"
+      "skipped": "Oʻtkazib yuborildi (allaqachon bor): {count}",
+      "conflicts": "Ziddiyatlar, saqlangan kalit boshqacha ({count}):",
+      "previewFile": "Fayl:",
+      "previewGeneration": "Kalitlar avlodi:",
+      "previewCount": "Fayldagi kalitlar:",
+      "previewCreated": "Yaratilgan:"
     },
     "rotate": {
       "title": "Almashtirish",
@@ -2329,8 +2342,8 @@
     },
     "errors": {
       "rejected": "Kalit ulushi rad etildi.",
-      "unavailable": "Ombor mavjud emas. Keyinroq urinib koʼring.",
-      "generic": "Kalit ulushini yuborib boʼlmadi."
+      "unavailable": "Ombor mavjud emas. Keyinroq urinib koʻring.",
+      "generic": "Kalit ulushini yuborib boʻlmadi."
     }
   },
   "migration": {
@@ -2438,9 +2451,9 @@
       "rejected": "Rad etilgan",
       "all": "Hammasi"
     },
-    "empty": "Bu yerda hech narsa yo‘q.",
-    "loadMore": "Yana ko‘rsatish",
-    "student": "O‘quvchi",
+    "empty": "Bu yerda hech narsa yoʻq.",
+    "loadMore": "Yana koʻrsatish",
+    "student": "Oʻquvchi",
     "type": "Turi",
     "period": "{from} – {to}",
     "status": {
@@ -2451,14 +2464,14 @@
       "revoked": "Qaytarib olingan"
     },
     "open": "Sababni ochish: {name}",
-    "openEnded": "{from} – keyingi ko‘rsatmagacha",
+    "openEnded": "{from} – keyingi koʻrsatmagacha",
     "range": "{from} – {to}",
     "detail": {
       "reason": "Sabab",
       "period": "Davr",
       "template": "Turi",
       "decision": "Qaror",
-      "noReason": "Sabab ko‘rsatilmagan"
+      "noReason": "Sabab koʻrsatilmagan"
     },
     "actions": {
       "approve": "Tasdiqlash",
@@ -2469,7 +2482,7 @@
       "reject": "Sababni rad etish",
       "revoke": "Sababni qaytarib olish",
       "comment": "Izoh",
-      "placeholder": "O‘quvchi ko‘radi",
+      "placeholder": "Oʻquvchi koʻradi",
       "submit": "Tasdiqlash",
       "cancel": "Bekor qilish",
       "approved": "Sabab tasdiqlandi",
@@ -2479,7 +2492,7 @@
     },
     "thread": {
       "title": "Xabarlar",
-      "empty": "Hozircha xabarlar yo‘q.",
+      "empty": "Hozircha xabarlar yoʻq.",
       "label": "Xabar",
       "placeholder": "Xabar yozing",
       "send": "Yuborish",
@@ -2511,8 +2524,8 @@
       "locale": "Til",
       "title": "Sarlavha",
       "body": "Matn (Markdown)",
-      "announcement": "Oʼzgarish haqida eʼlon (Markdown, ixtiyoriy)",
-      "preview": "Koʼrib chiqish",
+      "announcement": "Oʻzgarish haqida eʼlon (Markdown, ixtiyoriy)",
+      "preview": "Koʻrib chiqish",
       "saveDraft": "Qoralamani saqlash",
       "saving": "Saqlanmoqda…",
       "saved": "Qoralama saqlandi.",
@@ -2525,7 +2538,7 @@
     "publishText": "Davom etish uchun har bir foydalanuvchi yangi versiyani qaytadan qabul qilishi kerak.",
     "publishConfirm": "Chop etish",
     "errors": {
-      "noDraft": "Chop etish uchun qoralama yoʼq. Avval qoralamani saqlang."
+      "noDraft": "Chop etish uchun qoralama yoʻq. Avval qoralamani saqlang."
     },
     "scopes": {
       "id": "Kirish (id)",
@@ -2672,8 +2685,8 @@
       "errors": "Xatolar"
     },
     "calls": {
-      "title": "{task} so‘nggi chaqiruvlari",
-      "empty": "Bu vazifa uchun chaqiruvlar yo‘q.",
+      "title": "{task} soʻnggi chaqiruvlari",
+      "empty": "Bu vazifa uchun chaqiruvlar yoʻq.",
       "time": "Vaqt",
       "model": "Model",
       "latency": "Kechikish",

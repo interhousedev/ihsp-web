@@ -19,7 +19,8 @@ export type LoginOptions = {
 /** Fills the login form of the login app and submits it; handles the code step when the account has OTP on. */
 export async function submitLoginForm(page: Page, account: Account, options: { otpCode?: string } = {}): Promise<void> {
   const since = Date.now()
-  await page.getByLabel("Login", { exact: true }).fill(account.login)
+  // The id app labels the field "Login or EMIS login" (older builds: "Login").
+  await page.getByLabel(/^Login( or EMIS login)?$/).fill(account.login)
   await page.getByLabel("Password", { exact: true }).fill(account.password)
   await page.getByRole("button", { name: "Log in", exact: true }).click()
 
