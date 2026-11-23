@@ -105,7 +105,8 @@ export function DiscoverPage({ lead, tray }: { lead?: ReactNode; tray?: ReactNod
     <div className="mx-auto flex w-full min-w-0 max-w-md flex-col gap-4">
       <div className="rounded-card relative z-10 min-w-0">
         <SwipeDeck
-          className="h-[max(29rem,calc(100dvh-24rem))] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
+          // Phones: the lead, the decision row and the section bar take about 26rem, so the row never covers the card.
+          className="h-[max(17rem,calc(100dvh-26rem))] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
           items={remaining}
           getKey={(match) => match.university_id}
           getExitDirection={(match) =>

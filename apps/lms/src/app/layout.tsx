@@ -1,5 +1,8 @@
 import "@ihsp/ui/styles"
 import "./stepik.css"
+import "@fontsource-variable/nunito"
+import "@/features/skin/playful.css"
+import { SKIN_INIT_SCRIPT } from "@/features/skin/skin"
 import { BRAND } from "@ihsp/config/brand"
 import { createPwaHeadScript } from "@ihsp/features-core/pwa/head"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
@@ -43,6 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script src="/env.js" />
         <script dangerouslySetInnerHTML={{ __html: PWA_HEAD_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: SKIN_INIT_SCRIPT }} />
       </head>
       <body className="bg-background text-foreground min-h-dvh overflow-x-hidden font-sans antialiased">
         <Providers>{children}</Providers>

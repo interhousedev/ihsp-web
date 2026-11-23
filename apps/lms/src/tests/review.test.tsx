@@ -1,6 +1,6 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
 import type { AttemptOverrideBody } from "@ihsp/api"
-import { apiUrl, ids, selectDropdownValue, server, testRouter } from "@ihsp/test-utils"
+import { apiUrl, courseStudents, ids, selectDropdownValue, server, testRouter } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { AdminPage } from "../features/admin/components/admin-page"
@@ -23,6 +23,29 @@ describe("students", () => {
     expect(screen.getByText("2/3")).toBeInTheDocument()
     const review = screen.getByRole("link", { name: "Review" })
     expect(review.getAttribute("href")).toContain(`id=${ids.attempt}&course=${ids.course}`)
+  })
+
+  it("shows widget results with a not verified badge", async () => {
+    server.use(
+      http.get(apiUrl("/v1/lms/courses/:id/students"), () =>
+        HttpResponse.json([
+          {
+            ...courseStudents[0],
+            widget_results: [
+              { step_id: ids.courseStepTest, block_id: "w1", score_pct: 87, passed: false, verified: false },
+            ],
+          },
+        ]),
+      ),
+    )
+    renderLms(<StudentsPage courseId={ids.course} />, {
+      route: `/edit/students/?id=${ids.course}`,
+      session: authorSession,
+    })
+    expect(await screen.findByText("Interactive widgets")).toBeInTheDocument()
+    expect(screen.getByText("87%")).toBeInTheDocument()
+    expect(screen.getByText("Not verified")).toBeInTheDocument()
+    expect(screen.getByText("Not passed")).toBeInTheDocument()
   })
 
   it("is closed to staff without the review permission", async () => {

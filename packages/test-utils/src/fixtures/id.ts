@@ -38,6 +38,8 @@ export const userPreferences: UserPreferences = {
   today_cards: ["now", "timeline", "due", "marks", "semester", "announcements", "alerts"],
   onboarding_dismissed: ["tour"],
   bottom_nav: null,
+  lms_skin: null,
+  lms_nudges: [],
   seen_marks_at: null,
 }
 

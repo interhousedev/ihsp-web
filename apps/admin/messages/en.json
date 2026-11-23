@@ -391,6 +391,12 @@
       "setPassword": "Set password"
     }
   },
+  "userPicker": {
+    "selected": "User selected",
+    "clear": "Change",
+    "placeholder": "Search by name, login or e-mail",
+    "none": "No users found"
+  },
   "users": {
     "title": "Users & roles",
     "empty": "No users match these filters.",
@@ -2168,7 +2174,10 @@
       "quote": "Quote",
       "link": "Link",
       "formatting": "Formatting",
-      "deleteWithChildren": "Delete with sub-posts"
+      "deleteWithChildren": "Delete with sub-posts",
+      "slugEdit": "Edit address",
+      "slugAuto": "Derive from title",
+      "slugHint": "The address is made from the title. Latin letters, digits and dashes only."
     },
     "preview": {
       "title": "Preview",
@@ -2294,7 +2303,11 @@
       "resultTitle": "Restore finished",
       "restored": "Restored: {count}",
       "skipped": "Skipped (already present): {count}",
-      "conflicts": "Conflicts, the stored key differs ({count}):"
+      "conflicts": "Conflicts, the stored key differs ({count}):",
+      "previewFile": "File:",
+      "previewGeneration": "Key generation:",
+      "previewCount": "Keys in the file:",
+      "previewCreated": "Created:"
     },
     "rotate": {
       "title": "Rotation",

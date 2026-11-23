@@ -1,5 +1,6 @@
 "use client"
 
+import { Icons } from "@ihsp/ui"
 import { useT } from "@ihsp/i18n"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Suspense } from "react"
@@ -27,17 +28,35 @@ function Tabs({ section }: { section: Section }) {
   const pathname = usePathname()
   const tab = useSearchParams().get("tab")
   const current = activePart(section, pathname, tab)
+  const SectionIcon = Icons[section.icon]
   return (
-    <div className={`${PAGE_FRAME} pt-2 print:hidden`} data-testid="section-tabs">
-      <UnderlineTabs
-        label={t("sectionParts", { section: t(`sections.${section.id}`) })}
-        tabs={section.parts.map((part) => ({ value: part.id, label: t(`parts.${part.id}`) }))}
-        value={current?.id ?? ""}
-        onValueChange={(id) => {
-          const part = section.parts.find((candidate) => candidate.id === id)
-          if (part && part.id !== current?.id) router.push(part.url)
-        }}
-      />
+    // Pinned under the phone top bar (and at the top on desktop) so the parts stay one tap away while reading.
+    <div
+      className="bg-background/85 sticky top-(--shell-top-reserve) z-20 py-2 backdrop-blur print:hidden"
+      data-testid="section-tabs"
+    >
+      <nav aria-label={t(`sections.${section.id}`)} className={PAGE_FRAME}>
+        <UnderlineTabs
+          label={t("sectionParts", { section: t(`sections.${section.id}`) })}
+          lead={
+            <>
+              <SectionIcon aria-hidden className="text-muted-foreground size-5" />
+              <span className="text-sm font-semibold whitespace-nowrap">{t(`sections.${section.id}`)}</span>
+            </>
+          }
+          tabs={section.parts.map((part) => ({
+            value: part.id,
+            label: t(`parts.${part.id}`),
+            icon: part.icon,
+            startsGroup: part.startsGroup,
+          }))}
+          value={current?.id ?? ""}
+          onValueChange={(id) => {
+            const part = section.parts.find((candidate) => candidate.id === id)
+            if (part && part.id !== current?.id) router.push(part.url)
+          }}
+        />
+      </nav>
     </div>
   )
 }

@@ -262,6 +262,13 @@ export const keys = {
   },
   lms: {
     all: () => ["lms"] as const,
+    engagementSummary: () => ["lms", "engagement", "summary"] as const,
+    engagement: () => ["lms", "engagement"] as const,
+    engagementReview: () => ["lms", "engagement", "review"] as const,
+    engagementQuests: () => ["lms", "engagement", "quests"] as const,
+    engagementMastery: (courseId: string) => ["lms", "engagement", "mastery", courseId] as const,
+    engagementSettings: (courseId: string) => ["lms", "course", courseId, "engagement-settings"] as const,
+    courseQuests: (courseId: string) => ["lms", "course", courseId, "quests"] as const,
     courses: (query?: string) => ["lms", "courses", query ?? ""] as const,
     myCourses: () => ["lms", "my-courses"] as const,
     course: (slug: string) => ["lms", "course", slug] as const,
@@ -270,6 +277,10 @@ export const keys = {
       ["lms", "course", courseId, "steps", stepId, "video", blockId] as const,
     previewVideo: (courseId: string, stepId: string, blockId: string) =>
       ["lms", "course", courseId, "preview", stepId, "video", blockId] as const,
+    captions: (courseId: string, stepId: string, blockId: string) =>
+      ["lms", "course", courseId, "steps", stepId, "captions", blockId] as const,
+    previewCaptions: (courseId: string, stepId: string, blockId: string) =>
+      ["lms", "course", courseId, "preview", stepId, "captions", blockId] as const,
     attempt: (id: string) => ["lms", "attempts", id] as const,
     cardNext: (stepId: string, blockId: string) => ["lms", "steps", stepId, "cards", blockId] as const,
     students: (courseId: string) => ["lms", "course", courseId, "students"] as const,
@@ -286,6 +297,7 @@ export const keys = {
     creators: () => ["lms", "creators"] as const,
     access: (courseId: string) => ["lms", "course", courseId, "access"] as const,
     preview: (courseId: string, stepId: string) => ["lms", "course", courseId, "preview", stepId] as const,
+    tutor: (stepId: string) => ["lms", "steps", stepId, "tutor"] as const,
   },
   staffSubjects: {
     all: () => ["staff-subjects"] as const,

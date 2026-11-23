@@ -19,10 +19,11 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     const catalog = { title: t("catalog"), url: "/", icon: "courses", match: "exact" } as const
     const my = { title: t("my"), url: "/my/", icon: "subjects" } as const
     const notebooks = { title: t("notebooks"), url: "/notebooks/", icon: "notebooks" } as const
+    const profile = { title: t("profile"), url: "/profile/", icon: "profile" } as const
     const join = { title: t("join"), url: "/join/", icon: "login" } as const
     if (guest) return { groups: [{ label: t("groupLearn"), items: [catalog] }], bottom: [catalog] }
     const groups: NavGroup[] = [
-      { label: t("groupLearn"), items: [catalog, my, notebooks, join] },
+      { label: t("groupLearn"), items: [catalog, my, notebooks, join, profile] },
       {
         label: t("groupManage"),
         items: [{ title: t("admin"), url: "/admin/", icon: "add", roles: ["lms_admin", "lms_creator"] }],

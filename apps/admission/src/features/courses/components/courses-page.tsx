@@ -8,6 +8,8 @@ import { toast } from "sonner"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { COURSE_SOURCES, useAddLmsCourse, useCourseMutations, useCourses, type Course, type CourseSource } from "../api"
 import { AddCourseDialog, type AddCourseTab } from "./add-course-dialog"
+import { MyBooks } from "./attached-books"
+import { CatalogBrowser } from "./catalog-browser"
 import { EventsPointer, ToTake } from "./to-take"
 import { ManualCourseDialog } from "./manual-course-dialog"
 
@@ -154,6 +156,8 @@ export function CoursesPage() {
             <EventsPointer />
           </div>
         </div>
+        <MyBooks />
+        <CatalogBrowser />
         <AddCourseDialog
           open={picking}
           onOpenChange={setPicking}

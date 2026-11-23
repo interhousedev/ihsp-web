@@ -10,8 +10,9 @@ import {
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, Icons } from "@ihsp/ui"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useMemo, useRef, useState } from "react"
+import { refreshProgress } from "../utils/fresh"
 import { dueInteraction, embedUrl, formatTime, sortInteractions, videoSource } from "../utils/interactive-video"
 import { nativeController, vimeoController, youtubeController, type VideoController } from "../utils/video-controller"
 
@@ -24,14 +25,17 @@ export function InteractiveVideoBlock({
   block,
   courseId,
   stepId,
+  slug,
   preview,
 }: {
   block: LearningInteractiveVideoBlock
   courseId: string
   stepId: string
+  slug: string | null
   preview: boolean
 }) {
   const t = useT("player")
+  const queryClient = useQueryClient()
   const sorted = useMemo(() => sortInteractions(block.interactions), [block.interactions])
   const [answers, setAnswers] = useState<Record<string, InteractionAnswer>>(block.answers ?? {})
   const [seen, setSeen] = useState<Set<string>>(() => new Set(Object.keys(block.answers ?? {})))
@@ -86,7 +90,11 @@ export function InteractiveVideoBlock({
           stepId={stepId}
           blockId={block.id}
           preview={preview}
-          onAnswered={(answer) => setAnswers((all) => ({ ...all, [active.id]: answer }))}
+          onAnswered={(answer) => {
+            setAnswers((all) => ({ ...all, [active.id]: answer }))
+            // The server completes the step once every question is answered: reload its progress (Playful footer).
+            if (!preview) void refreshProgress(queryClient, { courseId, stepId, slug })
+          }}
           onContinue={close}
         />
       ) : null}
@@ -192,6 +200,8 @@ function Player({
         title={label}
         allowFullScreen
         allow="autoplay; fullscreen; picture-in-picture"
+        // Only the YouTube/Vimeo players (embedUrl, pinned by video.test.ts) may get this sandbox: with
+        // allow-same-origin it grants full access to its own origin, so never reuse it for LMS-origin content.
         sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
         referrerPolicy="strict-origin-when-cross-origin"
         className="aspect-video w-full rounded-lg border"
@@ -236,6 +246,13 @@ function InteractionPanel({
     if (done) continueButton.current?.focus()
   }, [done])
 
+  // The panel opens under the video, possibly below the fold or under the Playful fixed footer: bring it into view.
+  // The bottom scroll margin keeps its buttons clear of that footer.
+  const panel = useRef<HTMLElement>(null)
+  useEffect(() => {
+    panel.current?.scrollIntoView({ block: "nearest", behavior: "smooth" })
+  }, [])
+
   function toggle(id: string) {
     setChosen((current) =>
       item.multiple ? (current.includes(id) ? current.filter((x) => x !== id) : [...current, id]) : [id],
@@ -244,10 +261,11 @@ function InteractionPanel({
 
   return (
     <section
+      ref={panel}
       role="dialog"
       aria-modal="false"
       aria-label={t(`interactive.kinds.${item.kind}`)}
-      className="bg-card flex flex-col gap-3 rounded-lg border p-4"
+      className="bg-card flex scroll-mb-44 flex-col gap-3 rounded-lg border p-4"
     >
       <p className="text-muted-foreground text-xs">
         {formatTime(item.at_sec)} · {t(`interactive.kinds.${item.kind}`)}

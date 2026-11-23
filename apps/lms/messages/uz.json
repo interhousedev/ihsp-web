@@ -9,7 +9,8 @@
     "notebooks": "Daftarlar",
     "admin": "Kurs yaratish",
     "groupLearn": "Oʻqish",
-    "groupManage": "Boshqarish"
+    "groupManage": "Boshqarish",
+    "profile": "Mening profilim"
   },
   "common": {
     "missingParam": "Bu sahifa kurslar roʻyxatidagi havola orqali ochiladi.",
@@ -26,7 +27,178 @@
     "changed": "Oʻzgargan",
     "removed": "Oʻchirilgan",
     "mcp": "AI yordamida yaratilgan",
-    "ai": "AI orqali"
+    "ai": "AI orqali",
+    "title": "Nishonlar",
+    "showLocked": "Yopiq nishonlarni koʻrsatish",
+    "showLockedHint": "Oʻquvchilar hali olinmagan nishonlarni maslahat bilan maqsad sifatida koʻradi.",
+    "listTitle": "{count, plural, =0 {Nishon yoʻq} other {# ta nishon}}",
+    "newBadge": "Yangi nishon",
+    "emptyTitle": "Hozircha nishon yoʻq",
+    "emptyHint": "Nishon yarating va uni berish qoidasini belgilang.",
+    "awarded": "{count, plural, other {# marta berilgan}}",
+    "edit": "Tahrirlash",
+    "delete": "Oʻchirish",
+    "deleted": "Nishon oʻchirildi",
+    "deleteTitle": "Nishon oʻchirilsinmi?",
+    "deleteHint": "“{name}” uni olgan barcha oʻquvchilardan olib tashlanadi.",
+    "editTitle": "Nishonni tahrirlash",
+    "cancel": "Bekor qilish",
+    "icon": "Belgi",
+    "shape": "Shakl",
+    "color": "Rang",
+    "image": "Rasm",
+    "imageHint": "Ixtiyoriy. PNG, JPEG yoki WebP, 512 KB gacha; belgining oʻrnini oladi.",
+    "imageUpload": "Rasm yuklash",
+    "imageRemove": "Rasmni olib tashlash",
+    "imageTooLarge": "Rasm 512 KB dan katta.",
+    "preview": "Koʻrinish",
+    "untitled": "Nomsiz nishon",
+    "language": "Til",
+    "name": "Nomi",
+    "description": "Tavsif",
+    "saved": "Nishon saqlandi",
+    "save": "Nishonni saqlash",
+    "saving": "Saqlanmoqda…",
+    "namesMissing": "Nomini qoʻshing: {langs}",
+    "fixRule": "Saqlash uchun belgilangan bloklarni tuzating.",
+    "locales": {
+      "en": "Inglizcha",
+      "ru": "Ruscha",
+      "uz": "Oʻzbekcha"
+    },
+    "shapes": {
+      "circle": "Doira",
+      "shield": "Qalqon",
+      "hexagon": "Oltiburchak",
+      "star": "Yulduz"
+    },
+    "icons": {
+      "star": "Yulduz",
+      "trophy": "Kubok",
+      "medal": "Medal",
+      "flame": "Alanga",
+      "book": "Kitob",
+      "rocket": "Raketa",
+      "bolt": "Chaqmoq",
+      "heart": "Yurak",
+      "crown": "Toj",
+      "target": "Moʻljal",
+      "brain": "Miya",
+      "check": "Belgi"
+    },
+    "events": {
+      "step_completed": "qadam bajarilganda",
+      "section_completed": "boʻlim bajarilganda",
+      "test_passed": "test topshirilganda",
+      "exam_scored": "imtihon baholanganda",
+      "streak_reached": "ketma-ketlikka erishilganda",
+      "course_completed": "kurs tugatilganda",
+      "reviews_done": "takrorlashlar bajarilganda"
+    },
+    "rule": {
+      "title": "Berish qoidasi",
+      "hint": "Bloklarni palitradan torting yoki klaviatura bilan qoʻshish va koʻchirish uchun blok menyusidan foydalaning.",
+      "canvas": "Qoida",
+      "palette": "Bloklar",
+      "paletteHint": "Blokni torting yoki joyini tanlash uchun bosing.",
+      "when": "qachon",
+      "event": "Hodisa",
+      "if": "agar",
+      "andIf": "va agar",
+      "stack": "Shartlar",
+      "underWhen": "QACHON ostiga",
+      "insideGroup": "“{name}” №{n} ichiga",
+      "addBlock": "Blok qoʻshish: {name}",
+      "addTo": "Qayerga qoʻshish",
+      "noRoom": "Yangi blok uchun joy yoʻq",
+      "emptyStack": "Shartlarni shu yerga tashlang (shartsiz har qanday hodisa mos)",
+      "emptyGroup": "Bloklarni shu yerga tashlang",
+      "blockActions": "{name} bloki amallari",
+      "moveUp": "Yuqoriga",
+      "moveDown": "Pastga",
+      "moveInto": "Koʻchirish",
+      "delete": "Blokni oʻchirish",
+      "chooseSection": "Boʻlimni tanlang",
+      "chooseStep": "Qadamni tanlang"
+    },
+    "problems": {
+      "tooManyBlocks": "Qoidada koʻpi bilan 32 ta blok boʻladi.",
+      "stackTooLong": "QACHON ostida koʻpi bilan 8 ta blok boʻladi.",
+      "tooDeep": "Ichma-ichlik 6 darajadan oshmasin.",
+      "childCount": "Ichida 2 tadan 8 tagacha blok boʻlsin.",
+      "notEmpty": "Ichiga aynan bitta blok qoʻying.",
+      "numberRange": "Son ruxsat etilgan oraliqdan tashqarida.",
+      "sectionMissing": "Boʻlimni tanlang.",
+      "stepMissing": "Qadamni tanlang."
+    },
+    "award": {
+      "title": "Yangi nishon!",
+      "ok": "Ajoyib"
+    },
+    "profile": {
+      "title": "Mening profilim",
+      "earned": "{count, plural, =0 {Mening nishonlarim} other {Mening nishonlarim · #}}",
+      "locked": "{count, plural, other {Maqsadlar · #}}",
+      "emptyTitle": "Hozircha nishon yoʻq",
+      "emptyHint": "Nishon olish uchun kurs qadamlarini bajaring.",
+      "goal": "Maqsad"
+    },
+    "blocks": {
+      "and": {
+        "before": "hammasi",
+        "after": "",
+        "palette": "Hammasi (VA)"
+      },
+      "or": {
+        "before": "biri",
+        "after": "",
+        "palette": "Biri (YOKI)"
+      },
+      "not": {
+        "before": "emas",
+        "after": "",
+        "palette": "EMAS"
+      },
+      "score_gte": {
+        "before": "ball ≥",
+        "after": "%",
+        "palette": "Ball kamida",
+        "input": "Ball foizda, {min} dan {max} gacha"
+      },
+      "count_gte": {
+        "before": "soni ≥",
+        "after": "",
+        "palette": "Soni kamida",
+        "input": "Soni, {min} dan {max} gacha"
+      },
+      "within_days_of_enroll": {
+        "before": "yozilgandan",
+        "after": "kun ichida",
+        "palette": "Yozilgandan keyin kunlar ichida",
+        "input": "Kunlar, {min} dan {max} gacha"
+      },
+      "section_is": {
+        "before": "boʻlimda",
+        "after": "",
+        "palette": "Boʻlimda",
+        "input": "Boʻlim"
+      },
+      "step_is": {
+        "before": "qadamda",
+        "after": "",
+        "palette": "Qadamda",
+        "input": "Qadam"
+      }
+    },
+    "hint": {
+      "step_completed": "Kurs qadamlarini bajaring",
+      "section_completed": "Boʻlimni bajaring",
+      "test_passed": "Testdan oʻting",
+      "exam_scored": "Imtihondan ball oling",
+      "streak_reached": "Tanaffussiz oʻqing",
+      "course_completed": "Kursni tugating",
+      "reviews_done": "Takrorlashlarni bajaring"
+    }
   },
   "courseCard": {
     "invite": "Faqat taklif bilan",
@@ -51,7 +223,8 @@
     "browse": "Katalogni ochish",
     "open": "Davom etish",
     "edit": "Tahrirlash",
-    "view": "Koʻrish"
+    "view": "Koʻrish",
+    "mastery": "Oʻzlashtirish"
   },
   "course": {
     "title": "Kurs",
@@ -120,7 +293,11 @@
       "flashcards": "kartochkalar",
       "video": "video",
       "h5p": "interaktiv topshiriq",
-      "interactive_video": "interaktiv video"
+      "interactive_video": "interaktiv video",
+      "ai_review": "AI taqriz",
+      "exam": "imtihon",
+      "code": "kod mashqi",
+      "html": "interaktiv vidjet"
     },
     "status": {
       "passed": "oʻtilgan",
@@ -164,7 +341,86 @@
       "title": "Interaktiv topshiriq",
       "unavailable": "Bu interaktiv topshiriqni koʻrsatib boʻlmaydi.",
       "score": "Eng yaxshi natija: {max} dan {score}"
-    }
+    },
+    "aiReview": {
+      "title": "AI taqriz",
+      "criteria": "Mezonlar",
+      "criterion": "{name} · {max} gacha",
+      "previewNote": "Bu yerda talabalar ishini yuklaydi va AI taqrizchi bilan suhbatlashadi. Oldindan koʻrishda chat mavjud emas.",
+      "intro": "Ishingizni yuklang va savol bering. Taqrizchi avval sizga bir nechta savol berishi mumkin. Tekshiruvga {count} marta yuborishingiz mumkin.",
+      "start": "Tekshiruvni boshlash",
+      "newConversation": "Yangi suhbat",
+      "thread": "Taqrizchi bilan suhbat",
+      "emptyThread": "Boshlash uchun ishingizni biriktiring yoki xabar yozing.",
+      "question": "Aniqlashtiruvchi savol",
+      "thinking": "Taqrizchi oʻylamoqda…",
+      "reviewing": "Taqrizchi ishingizni oʻqimoqda…",
+      "finalReview": "Sizning taqrizingiz",
+      "closed": "Bu suhbat boʻyicha yakuniy taqriz tayyor.",
+      "noneLeft": "Sizda urinishlar qolmadi.",
+      "dropLabel": "Ishni yuklash",
+      "dropTitle": "Fayllarni shu yerga torting",
+      "dropHint": "{types}; bir martada {max} tagacha fayl.",
+      "chooseFiles": "Fayllarni tanlash",
+      "refused": "Bu turdagi fayllar topshiriqda qabul qilinmaydi: {names}",
+      "attached": "Biriktirilgan fayllar",
+      "removeFile": "{name} ni oʻchirish",
+      "uploadProgress": "{name} yuklanmoqda",
+      "upload": {
+        "done": "Yuklandi",
+        "failed": "Yuklashda xato",
+        "rejected": "Rad etildi",
+        "uploading": "Yuklanmoqda"
+      },
+      "composer": "Taqrizchiga xabar",
+      "composerPlaceholder": "Savol bering yoki ishingizni tasvirlang…",
+      "send": "Yuborish",
+      "submit": "Tekshiruvga yuborish ({count} ta qoldi)",
+      "submitHint": "Yuborish bitta urinishni sarflaydi.",
+      "attachToSubmit": "Yuborish uchun ishingizni biriktiring.",
+      "history": "Oldingi suhbatlar ({count})",
+      "submissionsUsed": "{count} ta yuborish",
+      "status": {
+        "open": "Jarayonda",
+        "reviewed": "Tekshirildi"
+      },
+      "errors": {
+        "closed": "Bu suhbat yakunlangan. Yangisini boshlang.",
+        "noSubmissionsLeft": "Barcha urinishlaringizdan foydalandingiz.",
+        "fileRejected": "Fayllardan birini oʻqib boʻlmadi. Boshqa fayl yuklang.",
+        "unavailable": "AI taqrizchi hozir mavjud emas. Keyinroq urinib koʻring."
+      },
+      "kinds": {
+        "pdf": "PDF",
+        "docx": "Word",
+        "pptx": "PowerPoint",
+        "image": "Rasmlar",
+        "text": "Matn"
+      }
+    },
+    "html": {
+      "unavailable": "Vidjet mavjud emas.",
+      "title": "Interaktiv vidjet",
+      "fullscreen": "Toʻliq ekran",
+      "exitFullscreen": "Toʻliq ekrandan chiqish",
+      "passed": "Oʻtdi",
+      "score": "Natija: {score} / {max}"
+    },
+    "tutor": {
+      "open": "Tyutordan soʻrash",
+      "title": "AI tyutor",
+      "socratic": "Tyutor sizga maslahat va savollar bilan oʻylashga yordam beradi. U hech qachon tayyor javob bermaydi.",
+      "remaining": "{count, plural, =0 {Bugun savollar qolmadi} other {Bugun # ta savol qoldi}}",
+      "empty": "Bu qadamda qiynaldingizmi? Nima tushunarsiz ekanini soʻrang, tyutor sizni javobga yetaklaydi.",
+      "thinking": "Tyutor oʻylayapti…",
+      "you": "Siz",
+      "tutor": "Tyutor",
+      "input": "Savolingiz",
+      "placeholder": "Nima tushunarsiz?",
+      "send": "Yuborish",
+      "limitReached": "Bugungi tyutor savollaringiz tugadi. Ertaga qayting."
+    },
+    "captionsEmbedUnsupported": "Dars subtitrlari faqat ichki pleerda koʻrsatiladi. YouTube yoki Vimeo pleerining oʻz subtitrlaridan foydalaning."
   },
   "test": {
     "title": "Test",
@@ -241,7 +497,8 @@
     "versions": "Versiyalar",
     "staff": "Jamoa",
     "students": "Talabalar",
-    "settings": "Sozlamalar"
+    "settings": "Sozlamalar",
+    "badges": "Nishonlar"
   },
   "editor": {
     "title": "Kurs muharriri",
@@ -326,7 +583,11 @@
       "flashcards": "Kartochkalar",
       "video": "Video",
       "h5p": "H5P",
-      "interactive_video": "Interaktiv video"
+      "interactive_video": "Interaktiv video",
+      "ai_review": "AI taqriz",
+      "exam": "Imtihon",
+      "code": "Kod",
+      "html": "HTML vidjet"
     },
     "markdownLabel": "{number}-blok Markdown matni",
     "moveBlockUp": "{number}-blokni yuqoriga",
@@ -411,6 +672,22 @@
         "interactive_video": {
           "title": "Interaktiv video",
           "description": "Savollar, izohlar va havolalar uchun toʻxtaydigan video"
+        },
+        "ai_review": {
+          "title": "AI taqriz",
+          "description": "Talabalar ishini yuklaydi va AI dan taqriz oladi"
+        },
+        "exam": {
+          "title": "Imtihon",
+          "description": "Vaqtli raqamli imtihon (SAT, AP): boʻlimlar va modullar"
+        },
+        "code_block": {
+          "title": "Kod",
+          "description": "Avtomatik testlar bilan ishga tushiriladigan kod"
+        },
+        "html": {
+          "title": "HTML vidjet",
+          "description": "Yuklangan interaktiv HTML sahifa"
         }
       }
     },
@@ -460,6 +737,164 @@
       "text": "Matn",
       "url": "Havola",
       "multiple": "Bir nechta toʻgʻri javob"
+    },
+    "aiReview": {
+      "publicSection": "Talabalar nimani koʻradi",
+      "titleLabel": "Nomi",
+      "instructions": "Talabalar uchun koʻrsatma",
+      "instructionsHint": "Markdown qoʻllab-quvvatlanadi.",
+      "privateSection": "Taqrizchi sozlamalari",
+      "hidden": "Talabalardan yashirin",
+      "prompt": "Taqrizchi uchun koʻrsatma",
+      "promptPlaceholder": "Nimani tekshirish, nima eng muhim, qanchalik qatʼiy baholash…",
+      "promptHint": "Talabalar bu matnni hech qachon koʻrmaydi.",
+      "referenceFiles": "Namuna fayllar",
+      "referenceHint": "Namuna javoblar yoki rubrikalar, {max} tagacha fayl. Talabalardan yashirin.",
+      "removeFile": "{name} ni oʻchirish",
+      "topics": "Yashirin mavzular",
+      "topicPlaceholder": "Taqrizchi oshkor qilmasligi kerak boʻlgan mavzu",
+      "addTopic": "Qoʻshish",
+      "removeTopic": "{topic} ni oʻchirish",
+      "topicsHint": "Taqrizchi bu mavzularni hisobga oladi, lekin talabaga aytmaydi.",
+      "template": "Taqriz formati",
+      "criteria": "Mezonlar",
+      "noCriteria": "Hali mezonlar yoʻq.",
+      "addCriterion": "Mezon qoʻshish",
+      "criterionName": "{number}-mezon: nomi",
+      "criterionNamePlaceholder": "Nomi",
+      "criterionNameRequired": "Nomini kiriting: barcha mezonlarning nomi boʻlganda qadam saqlanadi",
+      "criterionDescription": "{number}-mezon: tavsifi",
+      "criterionDescriptionPlaceholder": "Kuchli javob nimani koʻrsatadi (talabalardan yashirin)",
+      "criterionMax": "{number}-mezon: eng yuqori ball",
+      "removeCriterion": "{number}-mezonni oʻchirish",
+      "criteriaHint": "Talabalar nomlar va eng yuqori ballarni koʻradi; tavsiflar yashirin.",
+      "sources": "Manbalar",
+      "courseMaterials": "Kurs materiallaridan qidirish",
+      "webSearch": "Internetdan qidirish",
+      "maxSubmissions": "Har bir talaba uchun urinishlar",
+      "maxSubmissionsHint": "1 dan 20 gacha.",
+      "passThreshold": "Oʻtish bali, %",
+      "passThresholdHint": "Blok oʻtilgan hisoblanishi uchun yakuniy taqriz mezonlar boʻyicha toʻplashi kerak boʻlgan ballar ulushi. 0 dan 100 gacha.",
+      "acceptedTypes": "Qabul qilinadigan fayllar",
+      "openSubmissions": "Talabalar ishlari",
+      "saveForSubmissions": "Talabalar ishlarini koʻrish uchun qadamni saqlang.",
+      "submissions": {
+        "title": "Talabalar ishlari",
+        "description": "Har bir talaba ishi boʻyicha oxirgi taqriz.",
+        "empty": "Hali ishlar yoʻq.",
+        "noReview": "Hali taqriz yoʻq.",
+        "earlier": "Oldingi ishlar ({count})",
+        "status": {
+          "open": "Jarayonda",
+          "reviewed": "Tekshirildi"
+        }
+      },
+      "kinds": {
+        "pdf": "PDF",
+        "docx": "Word",
+        "pptx": "PowerPoint",
+        "image": "Rasmlar",
+        "text": "Matn"
+      },
+      "templates": {
+        "review_table": {
+          "title": "Baholar jadvali",
+          "description": "Har bir mezon boʻyicha ball va izoh."
+        },
+        "rubric_checklist": {
+          "title": "Rubrika roʻyxati",
+          "description": "Mezonlar bajarilgan yoki bajarilmagan deb belgilanadi."
+        },
+        "strengths_cards": {
+          "title": "Kuchli tomonlar va yaxshilash",
+          "description": "Nima yaxshi chiqdi va nimani yaxshilash kerak kartochkalari."
+        },
+        "image_gallery": {
+          "title": "Rasmlar boʻyicha fikr",
+          "description": "Har bir yuklangan rasmga izoh."
+        }
+      },
+      "sample": {
+        "structure": "Tuzilma",
+        "evidence": "Dalillar",
+        "style": "Uslub",
+        "strengths": "Kuchli tomonlar",
+        "improvements": "Yaxshilash"
+      }
+    },
+    "html": {
+      "titleLabel": "Nomi",
+      "drop": "Vidjet fayli",
+      "uploaded": "Vidjet yuklandi",
+      "empty": "Vidjet hali yuklanmagan",
+      "dropHint": ".html faylni yoki ildizida index.html boʻlgan .zip arxivni tashlang, 20 MB gacha.",
+      "uploading": "Yuklanmoqda…",
+      "replace": "Vidjetni almashtirish",
+      "upload": "Vidjetni yuklash",
+      "cancel": "Bekor qilish",
+      "file": "Vidjet fayli",
+      "progress": "Yuklash jarayoni",
+      "tooLarge": "Fayl 20 MB dan katta.",
+      "files": "{count, plural, other {# ta fayl}}",
+      "height": "Balandlik: {px} px",
+      "heightAria": "Vidjet balandligi",
+      "heightHint": "Vidjet SDK orqali balandligini oʻzi oʻzgartira oladi.",
+      "fullscreen": "Toʻliq ekranga ruxsat berish",
+      "graded": "Natijani hisobga olish",
+      "gradedHint": "Vidjet natijani IHSP.reportScore orqali yuboradi; eng yaxshisi saqlanadi.",
+      "preview": "Oldindan koʻrish",
+      "saveToPreview": "Vidjetni koʻrish uchun qadamni saqlang."
+    },
+    "videoChecks": {
+      "open": "Transkript asosida tekshiruvlar taklif qilish",
+      "title": "Transkript asosida tekshiruvlar taklif qilish",
+      "description": "AI har bir necha daqiqada «toʻxta va taxmin qil» savollarini va takrorlash kartalarini taklif qiladi. Har birini koʻrib chiqing: siz qabul qilmaguningizcha hech narsa qoʻshilmaydi.",
+      "transcript": "Transkript",
+      "transcriptPlaceholder": "Video transkriptini joylang. Qatorlar 1:30 kabi vaqt bilan boshlanishi mumkin.",
+      "upload": ".vtt yoki .srt yuklash",
+      "loaded": "{name} yuklandi",
+      "tooLong": "Transkript juda uzun: koʻpi bilan 60 000 belgi.",
+      "suggest": "Tekshiruvlarni taklif qilish",
+      "thinking": "Transkript oʻqilmoqda va savollar tayyorlanmoqda…",
+      "cancel": "Bekor qilish",
+      "again": "Qaytadan boshlash",
+      "done": "Tayyor",
+      "checks": "Taklif qilingan toʻxtashlar",
+      "acceptedCount": "Videoga {count} ta toʻxtash qoʻshildi",
+      "noChecks": "Boshqa taklif qilingan toʻxtash yoʻq.",
+      "checkAt": "{time} dagi toʻxtash",
+      "options": "Variantlar (toʻgʻrisini belgilang)",
+      "option": "{number}-variant",
+      "correct": "{number}-variant toʻgʻri",
+      "why": "Nega:",
+      "discard": "Rad etish",
+      "accept": "{time} da toʻxtash qoʻshish",
+      "cards": "Takrorlash kartalari",
+      "cardsHint": "Keraksiz kartalar belgisini olib tashlang. Ular shu videodan keyin kartalar bloki sifatida qoʻshiladi.",
+      "keepCard": "{number}-kartani qoldirish",
+      "front": "{number}-kartaning old tomoni",
+      "back": "{number}-kartaning orqa tomoni",
+      "addCards": "{count} ta kartani kartalar bloki sifatida qoʻshish",
+      "cardsAdded": "Takrorlash kartalari shu videodan keyin kartalar bloki sifatida qoʻshildi.",
+      "length": "Video davomiyligi (transkriptda vaqt boʻlmasa)"
+    },
+    "captions": {
+      "title": "Subtitrlar (WebVTT)",
+      "hint": "Har bir til uchun .vtt faylini yuklang, 1 MB gacha. Subtitrlar yuklangan videolar va videofaylga toʻgʻridan-toʻgʻri havolalarda ishlaydi.",
+      "languages": {
+        "uz": "Oʻzbekcha",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "upload": "Subtitr yuklash",
+      "replace": "Subtitrni almashtirish",
+      "remove": "Subtitrni oʻchirish",
+      "uploading": "Yuklanmoqda…",
+      "file": "{language} subtitr fayli (.vtt)",
+      "label": "Pleerdagi nomi",
+      "default": "Standart holatda koʻrsatish",
+      "none": "Bu tilda subtitr yoʻq.",
+      "rejected": "Fayl WebVTT subtitri sifatida qabul qilinmadi. U WEBVTT bilan boshlanishi kerak."
     }
   },
   "markdownEditor": {
@@ -662,7 +1097,18 @@
     "codeLanguage": "Til",
     "codeStarter": "Boshlangʻich kod",
     "expectedOutputs": "Kutilgan chiqish",
-    "expectedOutputsHint": "Bir nechta ruxsat etilgan chiqishni uchta chiziqcha (---) qatori bilan ajrating."
+    "expectedOutputsHint": "Bir nechta ruxsat etilgan chiqishni uchta chiziqcha (---) qatori bilan ajrating.",
+    "patternRule": "Javob qoidasi (ixtiyoriy)",
+    "blankPattern": "{number}-boʻshliq uchun javob qoidasi",
+    "patternOff": "Qoʻshimcha qoidasiz",
+    "patternExact": "Aynan shu matn",
+    "patternContains": "Oʻz ichiga oladi",
+    "patternStartsWith": "Bilan boshlanadi",
+    "patternEndsWith": "Bilan tugaydi",
+    "patternAdvanced": "Tajribali foydalanuvchilar uchun: regulyar ifoda",
+    "patternText": "Matn",
+    "patternRegex": "Regulyar ifoda",
+    "patternIgnoreCase": "Katta va kichik harflarni farqlamaslik"
   },
   "cardsBuilder": {
     "card": "{number}-kartochka",
@@ -704,7 +1150,11 @@
       "flashcards": "Kartochkalar",
       "video": "Video",
       "h5p": "H5P",
-      "interactive_video": "Interaktiv video"
+      "interactive_video": "Interaktiv video",
+      "ai_review": "AI taqriz",
+      "exam": "Imtihon",
+      "code": "Kod",
+      "html": "HTML vidjet"
     },
     "untitled": "Nomsiz qadam",
     "noBlocks": "Bloklar yoʻq.",
@@ -753,7 +1203,13 @@
     "emptyVideo": "Video havolasi yoʻq.",
     "emptyH5P": "H5P paketi yoʻq.",
     "uploadedVideo": "Yuklangan video",
-    "interactions": "{count, plural, other {# ta toʻxtash}}"
+    "interactions": "{count, plural, other {# ta toʻxtash}}",
+    "patternMode": {
+      "exact": "Aynan «{text}»",
+      "contains": "«{text}» ni oʻz ichiga oladi",
+      "startsWith": "«{text}» bilan boshlanadi",
+      "endsWith": "«{text}» bilan tugaydi"
+    }
   },
   "diff": {
     "live": "Nashr qilingan versiya",
@@ -929,7 +1385,11 @@
     "step": "Qadam",
     "passed": "Oʻtdi",
     "failed": "Oʻtmadi",
-    "review": "Tekshirish"
+    "review": "Tekshirish",
+    "widgetsTitle": "Interaktiv vidjetlar",
+    "widgetsHint": "Kod va HTML vidjetlari natijasini talabaning brauzeri yuboradi, server ularni tekshirmaydi.",
+    "widget": "Vidjet",
+    "notVerified": "Tekshirilmagan"
   },
   "broadcasts": {
     "historyTitle": "Yuborilgan yangilanishlar",
@@ -1003,7 +1463,9 @@
       "removeTitle": "Kurs muallifini olib tashlaysizmi?",
       "added": "{name} endi kurs yarata oladi",
       "removed": "{name} endi kurs yaratuvchisi emas"
-    }
+    },
+    "slugEdit": "Manzilni tahrirlash",
+    "slugAuto": "Nomdan olish"
   },
   "courseNotebooks": {
     "title": "Bloknotlar",
@@ -1055,7 +1517,8 @@
       "details": "Tavsif",
       "visibility": "Kirish",
       "navigation": "Navigatsiya",
-      "access": "Kim koʻradi"
+      "access": "Kim koʻradi",
+      "engagement": "Faollik"
     },
     "removeItem": "Oʻchirish: {item}",
     "add": "Qoʻshish",
@@ -1180,7 +1643,10 @@
     "saved": "Sozlamalar saqlandi",
     "save": "Saqlash",
     "unsaved": "Saqlanmagan oʻzgarishlar bor",
-    "serverInvalid": "Server {field} maydonini rad etdi: {reason}."
+    "serverInvalid": "Server {field} maydonini rad etdi: {reason}.",
+    "certificates": "Sertifikatlar",
+    "tutorEnabled": "Talabalar uchun AI tyutor",
+    "tutorEnabledHint": "Talabalar har bir qadam boʻyicha Sokrat uslubidagi tyutordan soʻrashi mumkin. U maslahat beradi, tayyor javob bermaydi."
   },
   "courseLanding": {
     "continue": "Davom etish",
@@ -1232,25 +1698,25 @@
     "courseTitle": "Kirish",
     "lessonTitle": "«{title}» ga kirish",
     "audience": "Kim ochishi mumkin",
-    "whenDenied": "Boshqalar nimani ko‘radi",
+    "whenDenied": "Boshqalar nimani koʻradi",
     "audiences": {
       "public": "Hamma",
       "signed_in": "Tizimga kirgan foydalanuvchilar",
-      "students": "Litsey o‘quvchilari",
+      "students": "Litsey oʻquvchilari",
       "chosen": "Tanlangan guruhlar va odamlar"
     },
     "denied": {
       "hidden": "Yashirin",
-      "locked": "Qulf bilan ko‘rsatiladi"
+      "locked": "Qulf bilan koʻrsatiladi"
     },
     "groups": "Guruhlar",
     "noGroups": "Guruhlar tanlanmagan.",
     "users": "Odamlar",
     "usersChosen": "Tanlangan odamlar",
-    "userSearch": "Kurs o‘quvchilari va xodimlarini qidirish",
+    "userSearch": "Kurs oʻquvchilari va xodimlarini qidirish",
     "userList": "Kurs odamlari",
     "userRemove": "{name} ni olib tashlash",
-    "readOnly": "Kirishni faqat kurs egasi yoki LMS administratori o‘zgartira oladi.",
+    "readOnly": "Kirishni faqat kurs egasi yoki LMS administratori oʻzgartira oladi.",
     "save": "Saqlash",
     "saved": "Kirish saqlandi",
     "close": "Yopish",
@@ -1290,5 +1756,541 @@
     "previewEmpty": "Hozircha koʻrsatadigan narsa yoʻq.",
     "lossyNotice": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirib yuboradigan boshqa Markdown belgilari bor. Matn Markdown rejimida qoladi.",
     "lossyWarning": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirishi mumkin boʻlgan boshqa Markdown belgilari bor."
+  },
+  "skin": {
+    "name": {
+      "classic": "Klassik",
+      "playful": "Oʻyinli"
+    },
+    "hint": {
+      "classic": "Odatiy kurs sahifalari, sokin va ixcham.",
+      "playful": "Oʻquv yoʻli, dumaloq tugmalar, seriyalar va tabriklar."
+    },
+    "chooser": {
+      "title": "Kurslar koʻrinishini tanlang",
+      "description": "Buni istalgan vaqtda profilingizdagi «Koʻrinish» boʻlimida oʻzgartirishingiz mumkin.",
+      "later": "Keyinroq hal qilaman"
+    },
+    "preview": {
+      "lesson": "3-dars: Hujayralar",
+      "progress": "5 tadan 3 qadam",
+      "streak": "5 kun",
+      "xp": "120 XP",
+      "continue": "Davom etish"
+    },
+    "appearance": {
+      "menu": "Koʻrinish",
+      "title": "Koʻrinish",
+      "skin": "Kurslar uslubi",
+      "sound": "Darslardagi ovozlar",
+      "soundHint": "Javoblardan keyin qisqa ovozlar. Odatda oʻchiq."
+    },
+    "reminders": {
+      "title": "Telegramdagi eslatmalar",
+      "hint": "Faqat ish kunlari, 21:00–08:00 sokin soatlarda hech qachon.",
+      "lms_review_due": "Kartalarni takrorlash vaqti",
+      "lms_streak_at_risk": "Seriyam uzilishi mumkin",
+      "lms_deadline_soon": "Topshiriq muddati yaqin"
+    },
+    "path": {
+      "section": "{number}-boʻlim",
+      "sectionProgress": "{total} ta darsdan {done} tasi",
+      "jumpHere": "Shu yerga oʻtish",
+      "start": "Boshlash",
+      "continue": "Shu yerdan davom eting",
+      "empty": "Bu kursda hali darslar yoʻq.",
+      "state": {
+        "done": "Tugallangan",
+        "current": "Joriy",
+        "available": "Ochiq",
+        "locked": "Yopiq"
+      }
+    },
+    "lesson": {
+      "close": "Kurs yoʻliga qaytish",
+      "quitTitle": "Darsdan chiqasizmi?",
+      "quitDescription": "Shu paytgacha bajarilganlar saqlangan. Keyinroq shu joydan davom etishingiz mumkin.",
+      "quit": "Chiqish",
+      "stay": "Darsni davom ettirish",
+      "progress": "Dars jarayoni",
+      "sound": "Ovoz",
+      "empty": "Bu dars boʻsh.",
+      "continue": "Davom etish",
+      "back": "Orqaga",
+      "gotIt": "Tushunarli",
+      "pending": "Darsni yakunlash uchun topshiriqni bajaring.",
+      "toTask": "Topshiriqqa oʻtish",
+      "correct": "Ajoyib! Test topshirildi",
+      "wrong": "Hali topshirilmadi",
+      "score": "Ball: {max} dan {score}"
+    },
+    "celebrate": {
+      "title": "Dars tugallandi!",
+      "xp": "Olingan XP",
+      "accuracy": "Aniqlik",
+      "time": "Vaqt"
+    }
+  },
+  "courseCertificates": {
+    "title": "Sertifikatlar",
+    "tabsLabel": "Sertifikat sozlamalari",
+    "tabs": {
+      "design": "Dizayn",
+      "rules": "Qoidalar",
+      "partners": "Hamkorlar",
+      "issued": "Berilganlar"
+    },
+    "save": "Saqlash",
+    "reset": "Oʻzgarishlarni bekor qilish",
+    "cancel": "Bekor qilish",
+    "sample": {
+      "name": "Tinglovchi ismi",
+      "tier": "Imtiyozli",
+      "partner": "Hamkor tashkilot"
+    },
+    "field": {
+      "name": "Tinglovchi ismi",
+      "course": "Kurs nomi",
+      "tier": "Daraja",
+      "date": "Berilgan sana",
+      "partner": "Hamkor",
+      "code": "Tekshirish kodi",
+      "qr": "QR-kod",
+      "custom_text": "Ixtiyoriy matn"
+    },
+    "fonts": {
+      "montserrat": "Montserrat",
+      "oswald": "Oswald",
+      "lora": "Lora",
+      "eb_garamond": "EB Garamond",
+      "cormorant": "Cormorant"
+    },
+    "weights": {
+      "300": "Ingichka",
+      "400": "Oddiy",
+      "500": "Oʻrtacha",
+      "600": "Yarim qalin",
+      "700": "Qalin",
+      "800": "Juda qalin"
+    },
+    "aligns": {
+      "left": "Chapga",
+      "center": "Markazga",
+      "right": "Oʻngga"
+    },
+    "qr": {
+      "style": "QR-kod uslubi",
+      "styles": {
+        "square": "Kvadrat",
+        "rounded": "Yumaloq burchakli",
+        "dots": "Nuqtalar"
+      },
+      "fg": "Nuqtalar rangi",
+      "bg": "Fon rangi",
+      "logo": "Markazda logotip"
+    },
+    "design": {
+      "noBackground": "Fon hali yuklanmagan. PNG, JPEG yoki PDF yuklang.",
+      "serverPreview": "Yakuniy koʻrinish",
+      "serverPreviewAlt": "Server yaratgan koʻrinishdagi sertifikat",
+      "serverPreviewNote": "PDF aynan shunday koʻrinadi. Har saqlashdan keyin yangilanadi.",
+      "replaceBackground": "Fonni almashtirish",
+      "uploadBackground": "Fon yuklash",
+      "addField": "Maydon qoʻshish",
+      "backgroundHint": "PNG, JPEG yoki PDF ning birinchi sahifasi, 10 MB gacha. Albom A4 eng mos keladi.",
+      "pickField": "Shrift, oʻlcham va rangni oʻzgartirish uchun sertifikatdagi maydonni tanlang.",
+      "defaultName": "Kurs sertifikati",
+      "empty": "Bu kursda hali sertifikat dizayni yoʻq.",
+      "create": "Dizayn yaratish",
+      "removeField": "Maydonni oʻchirish",
+      "text": "Matn",
+      "font": "Shrift",
+      "size": "Oʻlcham",
+      "smaller": "Kichikroq",
+      "larger": "Kattaroq",
+      "weight": "Qalinlik",
+      "color": "Rang",
+      "align": "Tekislash",
+      "keyboardHint": "Strelkalar maydonni siljitadi, Shift bilan uzoqroqqa, Alt bilan oʻlchamini oʻzgartiradi.",
+      "fieldHandle": "Maydon: {field}",
+      "inspector": "{field} sozlamalari",
+      "state": {
+        "saved": "Barcha oʻzgarishlar saqlandi",
+        "pending": "Saqlanmagan oʻzgarishlar bor",
+        "saving": "Saqlanmoqda…",
+        "error": "Saqlanmadi"
+      }
+    },
+    "rules": {
+      "enabled": "Sertifikat berish",
+      "enabledHint": "Tinglovchilar oʻtish balini toʻplaganda sertifikatni avtomatik oladi.",
+      "passing": "Oʻtish bali",
+      "passingHint": "Sertifikat uchun toʻplash kerak boʻlgan kurs ballari ulushi.",
+      "optional": "Ixtiyoriy boʻlimlar",
+      "optionalHint": "Bu boʻlimlar ballari oʻtish baliga kirmaydi. Daraja ularni talab qilishi mumkin.",
+      "noSections": "Kursda hali boʻlimlar yoʻq.",
+      "tiers": "Darajalar",
+      "tiersHint": "Yuqori darajalar tepada. Tinglovchi shartlari bajarilgan birinchi darajani oladi.",
+      "addTier": "Daraja qoʻshish",
+      "noTiers": "Darajalar yoʻq: barcha sertifikatlar darajasiz beriladi.",
+      "reorder": "Tartibni oʻzgartirish uchun torting",
+      "untitled": "Nomsiz daraja",
+      "removeTier": "{name} darajasini oʻchirish",
+      "label": {
+        "uz": "Nomi (oʻzbekcha)",
+        "ru": "Nomi (ruscha)",
+        "en": "Nomi (inglizcha)"
+      },
+      "minPct": "Minimum, %",
+      "minPctNone": "Oʻtish bali",
+      "requireOptional": "Barcha ixtiyoriy boʻlimlar talab qilinadi",
+      "color": "Rang",
+      "customColor": "Boshqa rang",
+      "minBelowPassing": "Minimum oʻtish balidan ({passing}%) past.",
+      "labelsRequired": "Daraja nomlarini uchala tilda toʻldiring.",
+      "saved": "Qoidalar saqlandi"
+    },
+    "partners": {
+      "hint": "Hamkor tashkilotlar kurs sahifasida va, yoqilgan boʻlsa, sertifikatda koʻrsatiladi.",
+      "add": "Hamkor qoʻshish",
+      "empty": "Hali hamkorlar yoʻq.",
+      "edit": "Tahrirlash",
+      "delete": "Oʻchirish",
+      "deleted": "Hamkor oʻchirildi",
+      "deleteTitle": "{name} hamkorini oʻchirasizmi?",
+      "deleteHint": "Allaqachon berilgan sertifikatlarda hamkor saqlanib qoladi.",
+      "onCertificate": "Sertifikatda",
+      "coIssuedBadge": "Birgalikda beradi",
+      "name": "Nomi",
+      "url": "Sayt",
+      "urlInvalid": "http:// yoki https:// bilan boshlanadigan manzil kiriting.",
+      "logo": "Logotip yuklash",
+      "logoHint": "Shaffof yoki oq fondagi PNG, JPEG, SVG yoki WebP.",
+      "coIssued": "Birgalikdagi sertifikat",
+      "coIssuedHint": "Hamkor sertifikatni litsey bilan birgalikda beradi.",
+      "saved": "Hamkor saqlandi"
+    },
+    "issued": {
+      "hint": "Sertifikatlar avtomatik beriladi. Shartlarni bajarganlarning barchasiga hozir berishingiz mumkin.",
+      "issueAll": "Shartni bajarganlarga berish",
+      "issuedAll": "{count, plural, =0 {Hali hech kim shartlarni bajarmagan} one {# tinglovchida sertifikat bor} other {# tinglovchida sertifikat bor}}",
+      "empty": "Hali sertifikat berilmagan.",
+      "student": "Tinglovchi",
+      "tier": "Daraja",
+      "date": "Berilgan",
+      "code": "Kod",
+      "status": "Holat",
+      "actions": "Amallar",
+      "statusValid": "Haqiqiy",
+      "statusRevoked": "Bekor qilingan",
+      "revoke": "Bekor qilish",
+      "revoked": "Sertifikat bekor qilindi",
+      "revokeTitle": "{name} sertifikatini bekor qilasizmi?",
+      "revokeHint": "Tekshirish sahifasida u bekor qilingan deb koʻrsatiladi. Buni qaytarib boʻlmaydi.",
+      "reason": "Sabab"
+    },
+    "mine": {
+      "sectionTitle": "Sertifikatlar",
+      "title": "Kurs sertifikati",
+      "issued": "Daraja: {tier}. {date} da berilgan.",
+      "revoked": "Bu sertifikat bekor qilingan.",
+      "download": "PDF yuklab olish",
+      "verify": "Tekshirish sahifasi",
+      "nextTier": "{points, plural, =0 {Siz {tier} darajasi shartlarini bajardingiz: tez orada beriladi.} other {{tier} darajasigacha yana # ball.}}",
+      "progress": "Ball: {score}%, oʻtish chegarasi {passing}%. {steps, plural, =0 {Barcha majburiy qadamlar bajarildi.} other {Yana # ta majburiy qadam qoldi.}}"
+    },
+    "landing": {
+      "partnerTitle": "Hamkorlar",
+      "certificateTitle": "Sertifikat",
+      "qrNote": "{passing}% toʻplaganlar QR-kodli sertifikat oladi, uning haqiqiyligini istalgan kishi tekshira oladi."
+    },
+    "verify": {
+      "title": "Sertifikatni tekshirish",
+      "code": "Sertifikat kodi",
+      "codeHint": "Kod sertifikatdagi QR-kod ostida yozilgan.",
+      "check": "Tekshirish",
+      "notFound": "Bunday kodli sertifikat topilmadi.",
+      "valid": "Haqiqiy",
+      "revoked": "Bekor qilingan",
+      "holder": "Egasi",
+      "course": "Kurs",
+      "tier": "Daraja",
+      "issuedAt": "Berilgan",
+      "codeLabel": "Kod",
+      "partner": "{name} bilan birgalikda",
+      "qrAlt": "Ushbu sertifikatning QR-kodi"
+    }
+  },
+  "codeRunner": {
+    "frameTitle": "Kodni ishga tushirish",
+    "editorLabel": "Sizning kodingiz",
+    "run": "Ishga tushirish",
+    "reset": "Asliga qaytarish",
+    "submit": "Yuborish",
+    "submitting": "Tekshirilmoqda…",
+    "bestScore": "Eng yaxshi natija: {score}%",
+    "passed": "Oʻtdi",
+    "failed": "Oʻtmadi",
+    "notRun": "Ishga tushirilmagan",
+    "output": "Natija",
+    "tests": "Testlar",
+    "loading": "Muhit yuklanmoqda…",
+    "running": "Bajarilmoqda…",
+    "timedOut": "Vaqt tugadi: dastur toʻxtatildi.",
+    "truncated": "Natija 64 KB gacha qisqartirildi.",
+    "idle": "Natijani koʻrish uchun «Ishga tushirish»ni bosing.",
+    "noOutput": "Natija yoʻq.",
+    "unnamedTest": "Test",
+    "hiddenTest": "Yashirin",
+    "language": "Til",
+    "timeLimit": "Vaqt chegarasi, s",
+    "graded": "Baholanadi",
+    "instructions": "Topshiriq",
+    "starter": "Boshlangʻich kod",
+    "starterHint": "Talabalar shu koddan boshlaydi.",
+    "solution": "Yechim",
+    "solutionHint": "Talabalarga koʻrsatilmaydi; testlarni tekshirish uchun.",
+    "hiddenHint": "Yashirin testning faqat nomi koʻrinadi; uning kodi yuborishda brauzerga uzatiladi, shuning uchun qatʼiyatli talaba uni oʻqiy oladi.",
+    "testName": "Test nomi",
+    "testCode": "Test kodi",
+    "testNumber": "Test {n}",
+    "hidden": "Yashirin",
+    "removeTest": "Testni oʻchirish",
+    "addTest": "Test qoʻshish",
+    "runSolution": "Yechimni testlar bilan tekshirish",
+    "solutionPasses": "Yechim barcha testlardan oʻtadi.",
+    "solutionFails": "Yechim {score}% toʻplaydi.",
+    "solutionFailsHint": "Eʼlon qilishdan oldin yechim yoki testlarni tuzating.",
+    "languages": {
+      "python": "Python",
+      "javascript": "JavaScript",
+      "sql": "SQL"
+    },
+    "testHints": {
+      "python": "Python: assert ifodalari talaba kodidan keyin bajariladi, masalan assert add(2, 3) == 5",
+      "javascript": "JavaScript: assert(shart, xabar) dan foydalaning, masalan assert(add(2, 3) === 5, \"2 + 3\")",
+      "sql": "SQL: natijasi talabaning oxirgi soʻrovi natijasiga teng boʻlishi kerak boʻlgan soʻrov"
+    }
+  },
+  "engagement": {
+    "xpChip": "{level}-daraja, {xp} XP",
+    "xp": "{xp} XP",
+    "xpGain": "+{xp} XP",
+    "levelShort": "Dar.",
+    "level": "{level}-daraja",
+    "levelRing": "{level}-daraja: {into} / {next} XP, keyingi darajagacha",
+    "toNext": "Keyingi darajagacha {xp} XP",
+    "streakDays": "{count, plural, other {oʻquv kuni ketma-ket}}",
+    "streakWeek": "Shu oʻquv haftasi",
+    "streakBest": "Rekord: {count}",
+    "freezes": "{count, plural, =0 {muzlatish yoʻq} other {# ta muzlatish}}",
+    "todayPending": "seriyani saqlash uchun bugun shugʻullaning",
+    "day": {
+      "done": "shugʻullangan",
+      "bonus": "bonus kun",
+      "freeze": "muzlatish",
+      "missed": "oʻtkazib yuborilgan",
+      "pending": "hali emas"
+    },
+    "panel": {
+      "title": "Mening natijalarim",
+      "review": "Kundalik takrorlash",
+      "reviewDue": "{count} ta takrorlash kerak",
+      "reviewNone": "Bugun takrorlash yoʻq",
+      "startReview": "Takrorlashni boshlash",
+      "quests": "Sinf kvestlari"
+    },
+    "review": {
+      "title": "Kundalik takrorlash",
+      "empty": "Bugun takrorlash yoʻq. Ertaga qayting.",
+      "back": "Kurslarimga",
+      "counter": "{total} dan {index}",
+      "progress": "Sessiya jarayoni",
+      "check": "Tekshirish",
+      "next": "Keyingisi",
+      "show": "Javobni koʻrsatish",
+      "rate": "Qanchalik yaxshi esladingiz?",
+      "correct": "Toʻgʻri",
+      "incorrect": "Unchalik emas",
+      "correctAnswer": "Toʻgʻri javob: {answer}",
+      "rating": {
+        "again": "Yana",
+        "hard": "Qiyin",
+        "good": "Yaxshi",
+        "easy": "Oson"
+      },
+      "doneTitle": "Sessiya tugadi",
+      "doneBody": "{total} dan {correct} toʻgʻri · +{xp} XP"
+    },
+    "mastery": {
+      "title": "Oʻzlashtirish xaritasi",
+      "empty": "Kursda hali boʻlimlar yoʻq.",
+      "noUnlock": "Barcha boʻlimlar ochiq.",
+      "unlockRule": "Oldingi boʻlim {pct}% oʻzlashtirilganda boʻlim ochiladi.",
+      "pct": "{pct}%",
+      "sectionProgress": "Oʻzlashtirish: {title}",
+      "completed": "Bajarildi",
+      "locked": "Yopiq: {count} ta qadamni ochish uchun oldingi boʻlimda {pct}% ga erishing."
+    },
+    "quest": {
+      "done": "Bajarildi",
+      "ended": "Tugadi",
+      "daysLeft": "{count, plural, =0 {Oxirgi kun} other {# kun qoldi}}",
+      "mine": "Mening natijam",
+      "class": "Sinf maqsadi",
+      "goal": {
+        "steps": "{count} ta qadamni bajarish",
+        "xp": "{count} XP toʻplash",
+        "review_days": "{count} kun takrorlash"
+      }
+    }
+  },
+  "engagementStaff": {
+    "saved": "Saqlandi",
+    "save": "Saqlash",
+    "unlockTitle": "Boʻlimlarni oʻzlashtirishga qarab ochish",
+    "unlockHint": "Oʻquvchi joriy boʻlimni oʻzlashtirgandan keyingina keyingisi ochiladi.",
+    "unlockValue": "Talab qilinadigan oʻzlashtirish: {pct}%",
+    "unlockSlider": "Talab qilinadigan oʻzlashtirish",
+    "lenient": "Yumshoq",
+    "strict": "Qatʼiy",
+    "unlockOff": "Oʻchiq: barcha boʻlimlar ochiq.",
+    "questsTitle": "Sinf kvestlari",
+    "questsHint": "Muddatli umumiy maqsadlar: har bir oʻquvchining shaxsiy va sinfning umumiy maqsadi bor.",
+    "questsEmpty": "Hali kvestlar yoʻq.",
+    "addQuest": "Kvest qoʻshish",
+    "questTitle": "Nomi",
+    "questTitlePlaceholder": "masalan, 2-bobni tugatish",
+    "goalKind": "Maqsad",
+    "target": "Har bir oʻquvchi uchun maqsad",
+    "classTarget": "Bajarishi kerak boʻlgan oʻquvchilar",
+    "goal": {
+      "steps": "Bajarilgan qadamlar",
+      "xp": "Toʻplangan XP",
+      "review_days": "Takrorlash kunlari"
+    },
+    "goalHint": {
+      "steps": "Har bir oʻquvchi shuncha qadam bajaradi.",
+      "xp": "Har bir oʻquvchi shuncha XP toʻplaydi.",
+      "review_days": "Har bir oʻquvchi shuncha kun takrorlaydi."
+    },
+    "startsOn": "Boshlanishi",
+    "endsOn": "Tugashi",
+    "datesInvalid": "Tugash sanasi boshlanish sanasidan oldin boʻlmasligi kerak.",
+    "cancel": "Bekor qilish",
+    "saveQuest": "Kvestni saqlash",
+    "questSaved": "Kvest saqlandi",
+    "questLine": "{goal}: {target} · sinf {classTarget} · {start} – {end}",
+    "editQuest": "«{title}» ni tahrirlash",
+    "deleteQuest": "«{title}» ni oʻchirish",
+    "deleteConfirm": "«{title}» kvestini oʻchirasizmi?"
+  },
+  "examBuilder": {
+    "title": "Imtihon nomi",
+    "kind": "Imtihon turi",
+    "kinds": {
+      "sat": "SAT",
+      "ap": "AP",
+      "custom": "Boshqa"
+    },
+    "calculator": "Kalkulyator",
+    "calculators": {
+      "none": "Kalkulyatorsiz",
+      "scientific": "Muhandislik",
+      "graphing": "Grafik"
+    },
+    "presetHint": "SAT yoki AP tanlansa, boʻlimlar rasmiy tuzilma bilan almashtiriladi (SAT: Reading and Writing 2 × 32 daq, Math 2 × 35 daq).",
+    "scaled": "Shkalalangan ballar",
+    "scaleMin": "Eng past ball",
+    "scaleMax": "Eng yuqori ball",
+    "directions": "Koʻrsatmalar",
+    "referenceSheet": "Maʼlumotnoma",
+    "sectionDefault": "{number}-boʻlim",
+    "addSection": "Boʻlim qoʻshish",
+    "sectionTitle": "{number}-boʻlim nomi",
+    "adaptive": "Moslashuvchan (2-modul 1-modul natijasiga koʻra qiyinroq yoki osonroq)",
+    "removeSection": "{number}-boʻlimni oʻchirish",
+    "adaptiveHint": "1-moduldan keyin 60% va undan koʻp toʻplansa 2-modul (qiyinroq), aks holda 3-modul (osonroq) beriladi.",
+    "addModule": "Modul qoʻshish",
+    "moduleTitle": "{number}-modul nomi",
+    "minutes": "Daqiqa",
+    "questions": "{count} ta savol",
+    "removeModule": "{number}-modulni oʻchirish",
+    "addQuestion": "Savol qoʻshish"
+  },
+  "examPlayer": {
+    "exam": "Imtihon",
+    "calculator": "Kalkulyator",
+    "close": "Yopish",
+    "calc": {
+      "scientific": "Muhandislik",
+      "graphing": "Grafik",
+      "error": "Xato",
+      "expression": "Ifoda",
+      "function": "{number}-funksiya",
+      "graph": "Grafik"
+    },
+    "zoomIn": "Kattalashtirish",
+    "zoomOut": "Kichraytirish",
+    "closed": "Vaqt tugadi: modul yopildi.",
+    "saveFailed": "Javoblar saqlanmadi. Keyingi oʻzgarishda qayta urinamiz.",
+    "submitFailed": "Modulni topshirib boʻlmadi. Qayta urinib koʻring.",
+    "section": "{number}-boʻlim",
+    "module": "{number}-modul",
+    "directions": "Koʻrsatmalar",
+    "timerHidden": "Taymer yashirilgan",
+    "show": "Koʻrsatish",
+    "hide": "Yashirish",
+    "tools": "Asboblar",
+    "annotate": "Izoh",
+    "annotateHint": "Savoldagi matnni belgilang va «Izoh» tugmasini bosing",
+    "reference": "Maʼlumotnoma",
+    "lineReader": "Oʻqish chizgʻichi",
+    "fiveMinutes": "Modul tugashiga 5 daqiqa qoldi.",
+    "noDirections": "Koʻrsatmalar yoʻq.",
+    "checkTitle": "Javoblaringizni tekshiring",
+    "checkBody": "Javoblarni koʻrib chiqib, modulni hozir topshirishingiz mumkin.",
+    "markForReview": "Tekshirish uchun belgilash",
+    "eliminator": "Variantlarni chiqarish",
+    "note": "Izoh",
+    "saveNote": "Izohni saqlash",
+    "cancel": "Bekor qilish",
+    "answered": "{total} tadan {count} tasiga javob berildi",
+    "questionOf": "{total} tadan {number}-savol",
+    "checkShort": "Javoblarni tekshirish",
+    "navigator": "Savollar navigatori",
+    "goToCheck": "Tekshirish sahifasiga oʻtish",
+    "back": "Orqaga",
+    "submitModule": "Modulni topshirish",
+    "next": "Keyingi",
+    "legendCurrent": "Joriy",
+    "legendUnanswered": "Javobsiz",
+    "legendMarked": "Tekshirish uchun",
+    "choices": "Javob variantlari",
+    "eliminate": "{letter} variantini chizish",
+    "undoEliminate": "{letter} variantini qaytarish",
+    "undo": "Qaytarish",
+    "yourAnswer": "Javobingiz",
+    "answerPreview": "Javobni oldindan koʻrish",
+    "previewNote": "Xodimlar uchun koʻrinish: bu urinish baholanmaydi va oʻquvchilar natijalariga taʼsir qilmaydi.",
+    "loadFailed": "Imtihonni yuklab boʻlmadi.",
+    "breakTitle": "Tanaffus",
+    "breakBody": "Keyingi boʻlim: {section}. Tayyor boʻlganingizda davom eting.",
+    "resume": "Davom etish",
+    "startFailed": "Modulni boshlab boʻlmadi. Qayta urinib koʻring.",
+    "moduleDone": "Tugatilgan modullar: {done}.",
+    "startModule": "{number}-modulni boshlash ({minutes} daq)",
+    "onceNote": "Imtihonni bir marta topshirish mumkin. Har bir modul vaqtli; vaqt tugasa, modul yopiladi.",
+    "begin": "Imtihonni boshlash",
+    "overview": "Boʻlimlar: {sections}, taxminan {minutes} daqiqa",
+    "sectionModules": "{count} × {minutes} daq",
+    "totalScore": "Umumiy ball",
+    "range": "Oraliq {min}–{max}",
+    "raw": "{max} balldan {score}",
+    "review": "Javoblar tahlili",
+    "late": "kechikib",
+    "correct": "Toʻgʻri",
+    "incorrect": "Notoʻgʻri",
+    "correctAnswer": "Toʻgʻri javob"
   }
 }

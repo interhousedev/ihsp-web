@@ -1,0 +1,454 @@
+/*
+ * The learning side of the Playful skin: the course path, the lesson chrome and the celebration. Only `--pl-*` tokens
+ * from playful.css; every rule is scoped to `[data-skin="playful"]`, so Classic never sees it.
+ */
+
+/* ---------- 3D button ---------- */
+[data-skin="playful"] .pl-btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0 1.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  background: var(--pl-primary);
+  color: var(--pl-primary-fg);
+  box-shadow: 0 var(--pl-ledge) 0 var(--pl-primary-edge);
+  transition:
+    transform var(--pl-press-ms) var(--pl-ease-out),
+    box-shadow var(--pl-press-ms) var(--pl-ease-out);
+}
+[data-skin="playful"] .pl-btn:active {
+  transform: translateY(var(--pl-ledge));
+  box-shadow: none;
+}
+[data-skin="playful"] .pl-btn:focus-visible {
+  outline: 3px solid var(--pl-info);
+  outline-offset: 2px;
+}
+[data-skin="playful"] .pl-btn[data-tone="wrong"] {
+  background: var(--pl-wrong);
+  color: oklch(1 0 0);
+  box-shadow: 0 var(--pl-ledge) 0 var(--pl-wrong-edge);
+}
+
+/* ---------- Course path ---------- */
+[data-skin="playful"] .pl-path {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 480px;
+  padding: 1rem 1rem 6rem;
+}
+[data-skin="playful"] .pl-banner {
+  border-radius: var(--pl-radius-hero);
+  padding: 1rem 1.25rem;
+  color: oklch(1 0 0);
+  background: var(--pl-section, var(--pl-primary));
+  box-shadow: 0 var(--pl-ledge) 0 oklch(from var(--pl-section, var(--pl-primary)) calc(l - 0.12) c h);
+}
+[data-skin="playful"] .pl-banner[data-tone="0"] {
+  --pl-section: var(--pl-primary-edge);
+}
+[data-skin="playful"] .pl-banner[data-tone="1"] {
+  --pl-section: var(--pl-info-edge);
+}
+[data-skin="playful"] .pl-banner[data-tone="2"] {
+  --pl-section: var(--pl-league);
+}
+[data-skin="playful"] .pl-banner[data-tone="3"] {
+  --pl-section: var(--pl-streak-edge);
+}
+[data-skin="playful"] .pl-jump {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0 1rem;
+  font-weight: 800;
+  background: oklch(1 0 0 / 0.22);
+}
+[data-skin="playful"] .pl-nodes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 3.5rem 0 2.5rem;
+}
+[data-skin="playful"] .pl-node-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* The "Continue here" bubble sits above its node; keep it clear of the previous node's label. */
+[data-skin="playful"] .pl-node-wrap:has(.pl-bubble) {
+  margin-top: 2rem;
+}
+[data-skin="playful"] .pl-node {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 9999px;
+  background: var(--pl-tile);
+  color: var(--pl-muted-fg);
+  border: 2px solid var(--pl-tile-edge);
+  box-shadow: 0 6px 0 var(--pl-tile-edge);
+  transition: transform var(--pl-press-ms) var(--pl-ease-out);
+}
+[data-skin="playful"] a.pl-node:active {
+  transform: translateY(6px);
+  box-shadow: none;
+}
+[data-skin="playful"] .pl-node:focus-visible {
+  outline: 3px solid var(--pl-info);
+  outline-offset: 3px;
+}
+[data-skin="playful"] .pl-node svg {
+  width: 28px;
+  height: 28px;
+}
+[data-skin="playful"] .pl-node[data-state="available"] {
+  background: var(--pl-info);
+  border-color: var(--pl-info-edge);
+  color: oklch(1 0 0);
+  box-shadow: 0 6px 0 var(--pl-info-edge);
+}
+[data-skin="playful"] .pl-node[data-state="done"] {
+  background: var(--pl-primary);
+  border-color: var(--pl-primary-edge);
+  color: var(--pl-primary-fg);
+  box-shadow: 0 6px 0 var(--pl-primary-edge);
+}
+[data-skin="playful"] .pl-node[data-state="current"] {
+  width: 76px;
+  height: 76px;
+  background: var(--pl-xp);
+  border-color: var(--pl-xp-edge);
+  color: oklch(0.3 0.06 85);
+  box-shadow: 0 6px 0 var(--pl-xp-edge);
+}
+[data-skin="playful"] .pl-node[data-state="current"]::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 9999px;
+  border: 4px solid var(--pl-xp);
+  animation: pl-pulse 1.6s var(--pl-ease-out) infinite;
+  pointer-events: none;
+}
+[data-skin="playful"] .pl-node-label {
+  margin-top: 0.75rem;
+  max-width: 11rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--pl-fg);
+}
+[data-skin="playful"] .pl-node-wrap[data-state="locked"] .pl-node-label {
+  color: var(--pl-muted-fg);
+}
+[data-skin="playful"] .pl-bubble {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  white-space: nowrap;
+  border-radius: 12px;
+  padding: 0.35rem 0.75rem;
+  font-weight: 800;
+  font-size: 0.875rem;
+  background: var(--pl-card);
+  color: var(--pl-fg);
+  border: 2px solid var(--pl-tile-edge);
+  animation: pl-bob 1.8s ease-in-out infinite;
+}
+[data-skin="playful"] .pl-bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  translate: -50% -4px;
+  width: 12px;
+  height: 12px;
+  rotate: 45deg;
+  background: var(--pl-card);
+  border-right: 2px solid var(--pl-tile-edge);
+  border-bottom: 2px solid var(--pl-tile-edge);
+}
+@media (min-width: 768px) {
+  [data-skin="playful"] .pl-node {
+    width: 80px;
+    height: 80px;
+  }
+  [data-skin="playful"] .pl-node[data-state="current"] {
+    width: 92px;
+    height: 92px;
+  }
+}
+
+/* ---------- Lesson chrome ---------- */
+[data-skin="playful"] .pl-lesson {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  background: var(--pl-bg);
+  color: var(--pl-fg);
+}
+[data-skin="playful"] .pl-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+  background: var(--pl-bg);
+}
+[data-skin="playful"] .pl-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  color: var(--pl-muted-fg);
+}
+[data-skin="playful"] .pl-icon-btn:hover {
+  background: var(--pl-tile);
+}
+[data-skin="playful"] .pl-icon-btn[aria-pressed="true"] {
+  color: var(--pl-info);
+}
+[data-skin="playful"] .pl-progress {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+}
+[data-skin="playful"] .pl-seg {
+  height: 16px;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: var(--pl-tile-edge);
+}
+[data-skin="playful"] .pl-seg > span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--pl-primary);
+  transition: width 200ms var(--pl-ease-out);
+}
+[data-skin="playful"] .pl-seg[data-state="done"] > span {
+  width: 100%;
+}
+[data-skin="playful"] .pl-seg[data-state="current"] > span {
+  width: 35%;
+  background: var(--pl-info);
+}
+/* Sound off: the same note icon, dimmed and struck through, instead of an unrelated minus sign. */
+[data-skin="playful"] .pl-icon-btn[aria-pressed="false"] {
+  position: relative;
+  opacity: 0.55;
+}
+[data-skin="playful"] .pl-icon-btn[aria-pressed="false"]::after {
+  content: "";
+  position: absolute;
+  inset: 50% 20%;
+  height: 2px;
+  rotate: -45deg;
+  border-radius: 9999px;
+  background: currentColor;
+}
+[data-skin="playful"] .pl-lesson-body {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 720px;
+  flex: 1;
+  padding-bottom: 9rem;
+}
+[data-skin="playful"] .pl-lesson-title {
+  padding: 0.5rem 1rem 0;
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+[data-skin="playful"] .pl-footer {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 20;
+  border-top: 2px solid var(--pl-tile-edge);
+  background: var(--pl-bg);
+  padding: 1rem;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+[data-skin="playful"] .pl-footer[data-feedback="correct"] {
+  background: var(--pl-correct-bg);
+  border-top-color: transparent;
+  animation: pl-rise 220ms var(--pl-ease-out);
+}
+[data-skin="playful"] .pl-footer[data-feedback="wrong"] {
+  background: var(--pl-wrong-bg);
+  border-top-color: transparent;
+  animation: pl-rise 220ms var(--pl-ease-out);
+}
+[data-skin="playful"] .pl-footer-inner {
+  margin: 0 auto;
+  display: flex;
+  max-width: 720px;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+@media (min-width: 768px) {
+  [data-skin="playful"] .pl-footer-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+[data-skin="playful"] .pl-feedback-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+[data-skin="playful"] .pl-footer[data-feedback="correct"] .pl-feedback-title {
+  color: var(--pl-primary-edge);
+}
+[data-skin="playful"] .pl-footer[data-feedback="wrong"] .pl-feedback-title {
+  color: var(--pl-wrong);
+}
+[data-skin="playful"] .pl-back {
+  min-height: 44px;
+  align-self: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--pl-muted-fg);
+}
+
+/* ---------- Celebration ---------- */
+[data-skin="playful"] .pl-celebrate {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem 1rem 8rem;
+  background: var(--pl-bg);
+  color: var(--pl-fg);
+  animation: pl-fade 200ms var(--pl-ease-out);
+}
+[data-skin="playful"] .pl-celebrate-mark {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  border-radius: 9999px;
+  background: var(--pl-xp);
+  color: oklch(0.3 0.06 85);
+  box-shadow: 0 8px 0 var(--pl-xp-edge);
+  animation: pl-pop 420ms var(--pl-ease-pop) both;
+}
+[data-skin="playful"] .pl-celebrate-mark svg {
+  width: 56px;
+  height: 56px;
+}
+[data-skin="playful"] .pl-celebrate h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  text-align: center;
+  animation: pl-pop 320ms var(--pl-ease-pop) 300ms both;
+}
+[data-skin="playful"] .pl-stats {
+  display: grid;
+  width: 100%;
+  max-width: 420px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+[data-skin="playful"] .pl-stat {
+  overflow: hidden;
+  border-radius: var(--pl-radius-tile);
+  border: 2px solid var(--pl-stat);
+  text-align: center;
+  animation: pl-pop 320ms var(--pl-ease-pop) both;
+}
+[data-skin="playful"] .pl-stat:nth-child(1) {
+  --pl-stat: var(--pl-xp-edge);
+  animation-delay: 500ms;
+}
+[data-skin="playful"] .pl-stat:nth-child(2) {
+  --pl-stat: var(--pl-primary-edge);
+  animation-delay: 620ms;
+}
+[data-skin="playful"] .pl-stat:nth-child(3) {
+  --pl-stat: var(--pl-info-edge);
+  animation-delay: 740ms;
+}
+[data-skin="playful"] .pl-stat dt {
+  padding: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: oklch(1 0 0);
+  background: var(--pl-stat);
+}
+[data-skin="playful"] .pl-stat dd {
+  padding: 0.75rem 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes pl-pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+@keyframes pl-bob {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes pl-rise {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes pl-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pl-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-skin="playful"] .pl-path *,
+  [data-skin="playful"] .pl-lesson *,
+  [data-skin="playful"] .pl-lesson,
+  [data-skin="playful"] .pl-celebrate,
+  [data-skin="playful"] .pl-celebrate *,
+  [data-skin="playful"] .pl-node[data-state="current"]::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

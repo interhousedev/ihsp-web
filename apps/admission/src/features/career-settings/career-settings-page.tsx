@@ -1,5 +1,6 @@
 "use client"
 
+import { slugify } from "../../components/lib/slug"
 import { AppPageHeader, pageClass } from "../../components/lib/page"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
@@ -34,6 +35,15 @@ const localized = (text: Record<string, string>, locale: string) =>
   text[locale] || text.en || Object.values(text)[0] || ""
 const filled = (text: Record<string, string>) =>
   Object.fromEntries(Object.entries(text).filter(([, value]) => value.trim() !== ""))
+/** The seeded major areas are stored in English; known ones get a translated label, others show as typed. */
+const AREA_KEYS: Record<string, string> = {
+  STEM: "stem",
+  Business: "business",
+  Health: "health",
+  "Social sciences": "social",
+  Humanities: "humanities",
+  Arts: "arts",
+}
 
 function LocalizedFields({
   idPrefix,
@@ -76,7 +86,12 @@ function QuestionDialog({ question, onClose }: { question?: CareerQuestion; onCl
     try {
       await save.mutateAsync({
         id: question?.id,
-        input: { section, prompt: filled(prompt), sort_order: Number(order) || 0, active },
+        input: {
+          section,
+          prompt: filled(prompt),
+          sort_order: Number(order) || 0,
+          active,
+        },
       })
       toast.success(t("saved"))
       onClose()
@@ -132,8 +147,12 @@ function MajorDialog({ major, onClose }: { major?: CareerMajor; onClose: () => v
   const errorMessage = useErrorMessage()
   const save = useSaveMajor()
   const [code, setCode] = useState(major?.code ?? "")
+  const [editCode, setEditCode] = useState(false)
+  const u = useT("settingsUx")
   const [area, setArea] = useState(major?.area ?? "")
   const [name, setName] = useState<Record<string, string>>(major?.name ?? {})
+  const autoCode = slugify(name.en ?? Object.values(name).find((v) => v.trim()) ?? "")
+  const shownCode = major !== undefined || editCode ? code : autoCode
   const [order, setOrder] = useState(String(major?.sort_order ?? 0))
   const [minorOk, setMinorOk] = useState(major?.minor_ok ?? true)
   const [active, setActive] = useState(major?.active ?? true)
@@ -144,7 +163,7 @@ function MajorDialog({ major, onClose }: { major?: CareerMajor; onClose: () => v
       await save.mutateAsync({
         id: major?.id,
         input: {
-          code: code.trim(),
+          code: (major !== undefined || editCode ? code : autoCode).trim(),
           area: area.trim(),
           name: filled(name),
           sort_order: Number(order) || 0,
@@ -175,7 +194,26 @@ function MajorDialog({ major, onClose }: { major?: CareerMajor; onClose: () => v
         <div className="grid gap-2 sm:grid-cols-2">
           <div className="flex flex-col gap-1">
             <Label htmlFor="cm-code">{t("code")}</Label>
-            <Input id="cm-code" value={code} disabled={major !== undefined} onChange={(e) => setCode(e.target.value)} />
+            <div className="flex gap-2">
+              <Input
+                id="cm-code"
+                value={shownCode}
+                readOnly={!editCode}
+                disabled={major !== undefined}
+                onChange={(e) => setCode(e.target.value)}
+              />
+              {major === undefined ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="min-h-11 md:min-h-8"
+                  onClick={() => setEditCode((v) => !v)}
+                >
+                  {editCode ? u("codeAuto") : u("codeEdit")}
+                </Button>
+              ) : null}
+            </div>
           </div>
           <div className="flex flex-col gap-1">
             <Label htmlFor="cm-area">{t("area")}</Label>
@@ -239,8 +277,12 @@ export function CareerSettingsBody() {
   const locale = useLocale()
   const questions = useAdminQuestions()
   const majors = useAdminMajors()
-  const [questionDialog, setQuestionDialog] = useState<{ question?: CareerQuestion } | null>(null)
-  const [majorDialog, setMajorDialog] = useState<{ major?: CareerMajor } | null>(null)
+  const [questionDialog, setQuestionDialog] = useState<{
+    question?: CareerQuestion
+  } | null>(null)
+  const [majorDialog, setMajorDialog] = useState<{
+    major?: CareerMajor
+  } | null>(null)
 
   return (
     <div className={pageClass()}>
@@ -265,7 +307,7 @@ export function CareerSettingsBody() {
               <Row
                 key={question.id}
                 title={localized(question.prompt, locale)}
-                meta={`${t(`sections.${question.section}`)} · ${question.sort_order}`}
+                meta={t(`sections.${question.section}`)}
                 inactive={!question.active}
                 onEdit={() => setQuestionDialog({ question })}
               />
@@ -293,7 +335,7 @@ export function CareerSettingsBody() {
               <Row
                 key={major.id}
                 title={localized(major.name, locale)}
-                meta={`${major.code} · ${major.area} · ${major.sort_order}`}
+                meta={AREA_KEYS[major.area] ? t(`areas.${AREA_KEYS[major.area]}`) : major.area}
                 inactive={!major.active}
                 onEdit={() => setMajorDialog({ major })}
               />

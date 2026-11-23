@@ -48,6 +48,9 @@ function fromLms(block: Block): DisplayBlock {
   if (block.type === "text") return { type: "text", markdown: block.markdown }
   if (block.type === "video" || block.type === "interactive_video") return { type: "text", markdown: block.url }
   if (block.type === "h5p") return { type: "text", markdown: block.title || "H5P" }
+  if (block.type === "exam" || block.type === "html" || block.type === "ai_review")
+    return { type: "text", markdown: block.title }
+  if (block.type === "code") return { type: "text", markdown: block.instructions }
   if (block.type === "flashcards")
     return { type: "flashcards", cards: block.cards.map(({ front, back }) => ({ front, back })) }
   return {

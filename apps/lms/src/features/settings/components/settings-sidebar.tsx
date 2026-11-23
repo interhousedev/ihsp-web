@@ -43,6 +43,10 @@ export function SettingsSidebar({ settings, pollMs }: { settings: CourseSettings
             <Icons.eye aria-hidden />
             {t("previewLearner")}
           </LinkButton>
+          <LinkButton href={hrefs.certificates(settings.id)} variant="outline" className="min-h-11 md:min-h-8">
+            <Icons.certificates aria-hidden />
+            {t("certificates")}
+          </LinkButton>
           <ExportImsccButton courseId={settings.id} slug={settings.slug} />
           <CopyCourseButton courseId={settings.id} />
           <ImportImsccButton />

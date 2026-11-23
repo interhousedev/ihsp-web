@@ -16,6 +16,7 @@ export type EditorSection =
   | "students"
   | "preview"
   | "settings"
+  | "badges"
 
 /** Course tools as a row of links; each shows only for staff with the matching permission. */
 export function EditorNav({
@@ -62,6 +63,7 @@ export function EditorNav({
     { key: "versions", href: hrefs.versions(courseId), visible: any },
     { key: "staff", href: hrefs.staff(courseId), visible: any },
     { key: "settings", href: hrefs.settings(courseId), visible: can(permissions, "edit") },
+    { key: "badges", href: hrefs.badges(courseId), visible: can(permissions, "edit") },
     { key: "students", href: hrefs.students(courseId), visible: can(permissions, "review") },
   ]
   return (

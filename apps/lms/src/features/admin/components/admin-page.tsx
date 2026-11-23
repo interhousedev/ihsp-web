@@ -11,18 +11,18 @@ import {
   CardContent,
   Dropdown,
   Field,
-  FieldDescription,
   FieldError,
   FieldLabel,
   Input,
   LoadingButton,
   PageContainer,
+  SlugField,
 } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useState, type FormEvent } from "react"
 import { hrefs } from "../../shared/utils/hrefs"
-import { courseFormSchema, slugify, type CourseFormValues } from "../utils/slugify"
+import { courseFormSchema, type CourseFormValues } from "../utils/slugify"
 import { ImportImsccButton } from "../../imscc/components/import-imscc-dialog"
 import { CourseCreatorsCard } from "./course-creators-card"
 
@@ -38,7 +38,6 @@ export function AdminPage() {
   const router = useRouter()
   const [title, setTitle] = useState("")
   const [slug, setSlug] = useState("")
-  const [slugTouched, setSlugTouched] = useState(false)
   const [visibility, setVisibility] = useState<CourseFormValues["visibility"]>("public")
   const [submitted, setSubmitted] = useState(false)
 
@@ -72,29 +71,23 @@ export function AdminPage() {
                 maxLength={200}
                 onChange={(event) => {
                   setTitle(event.target.value)
-                  if (!slugTouched) setSlug(slugify(event.target.value))
                 }}
                 className="h-11 md:h-8"
               />
               {titleInvalid ? <FieldError>{t("titleRequired")}</FieldError> : null}
             </Field>
-            <Field>
-              <FieldLabel htmlFor="course-new-slug">{t("slug")}</FieldLabel>
-              <Input
-                id="course-new-slug"
-                value={slug}
-                aria-invalid={slugInvalid}
-                autoComplete="off"
-                spellCheck={false}
-                onChange={(event) => {
-                  setSlugTouched(true)
-                  setSlug(event.target.value)
-                }}
-                className="h-11 font-mono md:h-8"
-              />
-              <FieldDescription>{t("slugHint")}</FieldDescription>
-              {slugInvalid ? <FieldError>{t("slugInvalid")}</FieldError> : null}
-            </Field>
+            <SlugField
+              id="course-new-slug"
+              label={t("slug")}
+              title={title}
+              value={slug}
+              onChange={setSlug}
+              urlPrefix="/course/?slug="
+              editLabel={t("slugEdit")}
+              autoLabel={t("slugAuto")}
+              hint={t("slugHint")}
+              error={slugInvalid ? t("slugInvalid") : null}
+            />
             <Field>
               <FieldLabel htmlFor="course-new-visibility">{t("visibility")}</FieldLabel>
               <Dropdown

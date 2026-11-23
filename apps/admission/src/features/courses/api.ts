@@ -97,3 +97,71 @@ export function useEnrollAndAddLmsCourse() {
     onSuccess: () => client.invalidateQueries({ queryKey: COURSES_KEY }),
   })
 }
+
+export type CatalogKind = "course" | "book"
+export type CatalogFilter = "all" | CatalogKind
+
+// mirrors openapi admission_course_catalog (CatalogEntryOut)
+export type CatalogEntry = {
+  kind: CatalogKind
+  id: string
+  title: string
+  summary: string
+  cover_url: string | null
+  url: string
+  enrolled: boolean
+  language: string | null
+  year: number | null
+  pages: number | null
+}
+
+// mirrors openapi admission_attach_book (AttachedBookOut)
+export type AttachedBook = {
+  book: CatalogEntry
+  note: string | null
+  attached_at: string | null
+}
+
+export const CATALOG_PAGE = 24
+
+/** GET /v1/admission/courses/catalog: every published LMS course and library book, paged. */
+export function useCourseCatalog(query: string, kind: CatalogFilter, limit: number) {
+  return useQuery({
+    queryKey: ["admission", "course-catalog", query, kind, limit] as const,
+    queryFn: ({ signal }) =>
+      getApiClient().get<{ items: CatalogEntry[]; has_more: boolean }>("/v1/admission/courses/catalog", {
+        query: { ...(query ? { q: query } : {}), kind, limit, offset: 0 },
+        signal,
+      }),
+    placeholderData: (previous) => previous,
+  })
+}
+
+export const BOOKS_KEY = ["admission", "attached-books"] as const
+
+/** GET /v1/admission/courses/books (the caller's own) or /students/{id}/books (staff). */
+export function useAttachedBooks(studentId?: string) {
+  return useQuery({
+    queryKey: [...BOOKS_KEY, studentId ?? "me"] as const,
+    queryFn: () =>
+      getApiClient().get<{ items: AttachedBook[] }>(
+        studentId ? `/v1/admission/students/${studentId}/books` : "/v1/admission/courses/books",
+      ),
+  })
+}
+
+/** POST and DELETE /v1/admission/students/{id}/books: staff attach a library book or take it off. */
+export function useBookMutations(studentId: string) {
+  const client = useQueryClient()
+  const refresh = () => client.invalidateQueries({ queryKey: BOOKS_KEY })
+  const attach = useMutation({
+    mutationFn: ({ itemId, note }: { itemId: string; note: string | null }) =>
+      getApiClient().post<AttachedBook>(`/v1/admission/students/${studentId}/books`, { item_id: itemId, note }),
+    onSuccess: refresh,
+  })
+  const detach = useMutation({
+    mutationFn: (itemId: string) => getApiClient().delete(`/v1/admission/students/${studentId}/books/${itemId}`),
+    onSuccess: refresh,
+  })
+  return { attach, detach }
+}

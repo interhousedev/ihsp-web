@@ -24,6 +24,7 @@ import type {
   MyCourses,
   StepProgressItem,
   StepView,
+  VideoCaptions,
   VideoStream,
 } from "../types/lms-learning"
 
@@ -131,6 +132,42 @@ export const getLmsPreviewStepVideoQuery = (courseId: string, stepId: string, bl
   queryOptions({
     queryKey: keys.lms.previewVideo(courseId, stepId, blockId),
     queryFn: ({ signal }) => getLmsPreviewStepVideo(courseId, stepId, blockId, { signal }),
+  })
+
+/** GET /v1/lms/courses/{id}/steps/{step_id}/blocks/{block_id}/captions — enrolled or course staff; caption track URLs. */
+export function getLmsStepCaptions(
+  courseId: string,
+  stepId: string,
+  blockId: string,
+  opts?: RequestOptions,
+): Promise<VideoCaptions> {
+  return api.get<VideoCaptions>(
+    `/v1/lms/courses/${seg(courseId)}/steps/${seg(stepId)}/blocks/${seg(blockId)}/captions`,
+    opts,
+  )
+}
+export const getLmsStepCaptionsQuery = (courseId: string, stepId: string, blockId: string) =>
+  queryOptions({
+    queryKey: keys.lms.captions(courseId, stepId, blockId),
+    queryFn: ({ signal }) => getLmsStepCaptions(courseId, stepId, blockId, { signal }),
+  })
+
+/** GET /v1/lms/courses/{id}/preview/steps/{step_id}/blocks/{block_id}/captions — course:view_drafts; draft tracks. */
+export function getLmsPreviewStepCaptions(
+  courseId: string,
+  stepId: string,
+  blockId: string,
+  opts?: RequestOptions,
+): Promise<VideoCaptions> {
+  return api.get<VideoCaptions>(
+    `/v1/lms/courses/${seg(courseId)}/preview/steps/${seg(stepId)}/blocks/${seg(blockId)}/captions`,
+    opts,
+  )
+}
+export const getLmsPreviewStepCaptionsQuery = (courseId: string, stepId: string, blockId: string) =>
+  queryOptions({
+    queryKey: keys.lms.previewCaptions(courseId, stepId, blockId),
+    queryFn: ({ signal }) => getLmsPreviewStepCaptions(courseId, stepId, blockId, { signal }),
   })
 
 /** POST /v1/lms/steps/{step_id}/viewed — enrolled. */

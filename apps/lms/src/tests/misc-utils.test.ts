@@ -1,5 +1,6 @@
 import { describe, expect, it } from "bun:test"
-import { courseFormSchema, slugify } from "../features/admin/utils/slugify"
+import { slugify } from "@ihsp/ui"
+import { courseFormSchema } from "../features/admin/utils/slugify"
 import { describeAnswer, describeValue, isAnswered, withAnswer } from "../features/player/utils/answers"
 import { hrefs } from "../features/shared/utils/hrefs"
 import { continueStep, neighbours } from "../features/shared/utils/outline"

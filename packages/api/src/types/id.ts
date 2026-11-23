@@ -80,6 +80,10 @@ export type UserPreferences = {
   onboarding_dismissed: string[]
   /** The sp phone bottom bar: up to 4 destination ids, `null` until the user picks. */
   bottom_nav: string[] | null
+  /** The LMS skin; `null` until the user picks one in the first-visit chooser. */
+  lms_skin: "classic" | "playful" | null
+  /** LMS reminders in Telegram the user switched on (all off by default). */
+  lms_nudges: ("lms_review_due" | "lms_streak_at_risk" | "lms_deadline_soon")[]
   seen_marks_at: string | null
 }
 

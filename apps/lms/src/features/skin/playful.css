@@ -1,0 +1,202 @@
+/*
+ * The Playful skin of the LMS: tokens (`--pl-*`) and the restyle of shared components. Everything is scoped to
+ * `<html data-skin="playful">`, so Classic is untouched. The overrides sit on `body` (0,2,1), which beats the palette
+ * files' `[data-theme]` (0,1,0) and leaves `:root` with the palette's own values: they are copied into `--cl-*` there,
+ * so a `[data-skin="classic"]` element (the Classic preview) can restore them inside a Playful page.
+ */
+
+:root[data-skin="playful"] {
+  --cl-background: var(--background);
+  --cl-foreground: var(--foreground);
+  --cl-card: var(--card);
+  --cl-card-foreground: var(--card-foreground);
+  --cl-popover: var(--popover);
+  --cl-popover-foreground: var(--popover-foreground);
+  --cl-primary: var(--primary);
+  --cl-primary-foreground: var(--primary-foreground);
+  --cl-muted: var(--muted);
+  --cl-muted-foreground: var(--muted-foreground);
+  --cl-secondary: var(--secondary);
+  --cl-border: var(--border);
+  --cl-destructive: var(--destructive);
+  --cl-ring: var(--ring);
+  --cl-radius: var(--radius);
+  --cl-font-sans: var(--font-sans);
+}
+
+:root[data-skin="playful"] [data-skin="classic"] {
+  --background: var(--cl-background);
+  --foreground: var(--cl-foreground);
+  --card: var(--cl-card);
+  --card-foreground: var(--cl-card-foreground);
+  --popover: var(--cl-popover);
+  --popover-foreground: var(--cl-popover-foreground);
+  --primary: var(--cl-primary);
+  --primary-foreground: var(--cl-primary-foreground);
+  --muted: var(--cl-muted);
+  --muted-foreground: var(--cl-muted-foreground);
+  --secondary: var(--cl-secondary);
+  --border: var(--cl-border);
+  --destructive: var(--cl-destructive);
+  --ring: var(--cl-ring);
+  --radius: var(--cl-radius);
+  --font-sans: var(--cl-font-sans);
+  font-family: var(--cl-font-sans);
+}
+
+/* `[data-skin="playful"]` on any element also scopes the tokens, so the chooser can render a live preview. */
+:root[data-skin="playful"] body,
+body [data-skin="playful"] {
+  --pl-bg: oklch(0.99 0.004 150);
+  --pl-card: oklch(1 0 0);
+  --pl-fg: oklch(0.32 0.02 260);
+  --pl-muted-fg: oklch(0.5 0.02 260);
+  --pl-primary: oklch(0.72 0.19 150);
+  --pl-primary-fg: oklch(0.24 0.05 150);
+  --pl-primary-edge: oklch(0.58 0.17 150);
+  --pl-streak: oklch(0.75 0.17 55);
+  --pl-streak-edge: oklch(0.62 0.16 50);
+  --pl-xp: oklch(0.85 0.16 95);
+  --pl-xp-edge: oklch(0.7 0.15 85);
+  --pl-info: oklch(0.7 0.14 235);
+  --pl-info-edge: oklch(0.56 0.13 240);
+  --pl-league: oklch(0.62 0.19 300);
+  --pl-wrong: oklch(0.65 0.21 25);
+  --pl-wrong-edge: oklch(0.52 0.19 25);
+  --pl-tile: oklch(1 0 0);
+  --pl-tile-edge: oklch(0.9 0.01 250);
+  --pl-correct-bg: oklch(0.95 0.07 150);
+  --pl-wrong-bg: oklch(0.95 0.04 25);
+
+  --pl-radius-tile: 14px;
+  --pl-radius-card: 20px;
+  --pl-radius-hero: 24px;
+  --pl-ledge: 4px;
+  --pl-shadow-card: 0 2px 0 var(--pl-tile-edge);
+  --pl-ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --pl-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --pl-press-ms: 90ms;
+  --pl-font: "Nunito Variable", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+
+  /* The shared semantic tokens, so every `bg-primary`/`bg-card` follows the skin. */
+  --background: var(--pl-bg);
+  --foreground: var(--pl-fg);
+  --card: var(--pl-card);
+  --card-foreground: var(--pl-fg);
+  --popover: var(--pl-card);
+  --popover-foreground: var(--pl-fg);
+  --primary: var(--pl-primary);
+  --primary-foreground: var(--pl-primary-fg);
+  --muted-foreground: var(--pl-muted-fg);
+  --destructive: var(--pl-wrong);
+  --ring: var(--pl-info);
+  --radius: 0.875rem;
+  --font-sans: var(--pl-font);
+  font-family: var(--pl-font);
+}
+
+:root[data-skin="playful"].dark body,
+.dark body [data-skin="playful"] {
+  --pl-bg: oklch(0.2 0.02 250);
+  --pl-card: oklch(0.26 0.025 250);
+  --pl-fg: oklch(0.97 0.005 250);
+  --pl-muted-fg: oklch(0.75 0.015 250);
+  --pl-primary-edge: oklch(0.5 0.15 150);
+  --pl-tile: oklch(0.3 0.025 250);
+  --pl-tile-edge: oklch(0.22 0.02 250);
+  --pl-correct-bg: oklch(0.32 0.07 150);
+  --pl-wrong-bg: oklch(0.32 0.06 25);
+  --muted: oklch(0.3 0.025 250);
+  --secondary: oklch(0.3 0.025 250);
+  --border: oklch(0.34 0.025 250);
+}
+
+/* The learner pages' Stepik accent (`.lms-stepik`, dark green) yields to the skin's primary in Playful. */
+[data-skin="playful"] .lms-stepik:not([data-skin="classic"] *) {
+  --primary: var(--pl-primary);
+  --primary-foreground: var(--pl-primary-fg);
+  --ring: var(--pl-info);
+}
+
+[data-skin="playful"] :is(h1, h2, h3):not([data-skin="classic"] *) {
+  font-weight: 800;
+}
+
+/* 3D buttons: a coloured ledge under solid buttons; pressing sinks the button onto it. */
+[data-skin="playful"] [data-slot="button"]:not([data-skin="classic"] *) {
+  border-radius: var(--pl-radius-tile);
+  font-weight: 800;
+  transition:
+    transform var(--pl-press-ms) var(--pl-ease-out),
+    box-shadow var(--pl-press-ms) var(--pl-ease-out);
+}
+[data-skin="playful"] [data-slot="button"].bg-primary:not([data-skin="classic"] *) {
+  box-shadow: 0 var(--pl-ledge) 0 var(--pl-primary-edge);
+}
+[data-skin="playful"] [data-slot="button"]:is(.border-hairline-strong, .bg-secondary):not([data-skin="classic"] *) {
+  border: 2px solid var(--pl-tile-edge);
+  box-shadow: 0 var(--pl-ledge) 0 var(--pl-tile-edge);
+}
+[data-skin="playful"]
+  [data-slot="button"]:is(.bg-primary, .border-hairline-strong, .bg-secondary):active:not(:disabled):not(
+    [data-skin="classic"] *
+  ) {
+  transform: translateY(var(--pl-ledge));
+  box-shadow: none;
+}
+
+[data-skin="playful"] [data-slot="card"]:not([data-skin="classic"] *) {
+  border-radius: var(--pl-radius-card);
+  border: 2px solid var(--pl-tile-edge);
+  box-shadow: var(--pl-shadow-card);
+}
+
+/* Engagement widgets (skin-neutral components, restyled here through their hooks). */
+[data-skin="playful"] [data-testid="xp-chip"] {
+  border: 2px solid var(--pl-xp-edge);
+  background: color-mix(in oklch, var(--pl-xp) 25%, transparent);
+  font-weight: 800;
+}
+[data-skin="playful"] [data-testid="xp-chip"] > span:first-child {
+  background: var(--pl-xp);
+  color: oklch(0.3 0.06 85);
+}
+[data-skin="playful"] [data-testid="level-ring"] circle:last-of-type {
+  stroke: var(--pl-xp-edge);
+}
+[data-skin="playful"] [data-testid="level-ring"] {
+  font-weight: 800;
+}
+[data-skin="playful"] [data-testid="streak-week"] [data-state="done"],
+[data-skin="playful"] [data-testid="streak-week"] [data-state="bonus"] {
+  background: var(--pl-streak);
+  border-color: var(--pl-streak-edge);
+  color: white;
+  box-shadow: 0 2px 0 var(--pl-streak-edge);
+}
+
+/* Sidebar: the active item is a soft blue tile with a 2px blue edge (not the palette's solid fill). */
+[data-skin="playful"] [data-sidebar="menu-button"] {
+  border: 2px solid transparent;
+  border-radius: var(--pl-radius-tile);
+  font-weight: 700;
+}
+[data-skin="playful"] [data-sidebar="menu-button"][data-active],
+[data-skin="playful"] [data-sidebar="menu-button"][data-active]:hover {
+  border-color: var(--pl-info-edge);
+  background: color-mix(in oklch, var(--pl-info) 18%, var(--pl-card));
+  color: var(--pl-info-edge);
+  font-weight: 800;
+}
+:root[data-skin="playful"].dark [data-sidebar="menu-button"][data-active] {
+  color: var(--pl-info);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-skin="playful"] [data-slot="button"] {
+    transition: none;
+  }
+  [data-skin="playful"] [data-slot="button"]:active:not(:disabled) {
+    transform: none;
+  }
+}

@@ -22,7 +22,11 @@ import { useCountryName } from "../../countries/components/country-facts-view"
 import { COUNTRY_STATUSES, useStaffCountries, useVerifyCountry, type CountryStatus } from "../api"
 import { CountryEditDialog } from "./country-edit-dialog"
 
-const TONES = { missing: "neutral", draft: "warning", verified: "success" } as const
+const TONES = {
+  missing: "neutral",
+  draft: "warning",
+  verified: "success",
+} as const
 const ANY = "any"
 
 export function CountriesStaffBody() {
@@ -34,11 +38,14 @@ export function CountriesStaffBody() {
   const [editing, setEditing] = useState<string | null>(null)
   const query = useStaffCountries("", status)
   const needle = q.trim().toLowerCase()
-  const items = query.data?.items.filter((item) => {
-    if (!needle) return true
-    const en = new Intl.DisplayNames(["en"], { type: "region" }).of(item.country) ?? ""
-    return [item.country, name(item.country), en].some((v) => v.toLowerCase().includes(needle))
-  })
+  // Countries with facts first (most filled on top); the rest stay alphabetical.
+  const items = query.data?.items
+    .filter((item) => {
+      if (!needle) return true
+      const en = new Intl.DisplayNames(["en"], { type: "region" }).of(item.country) ?? ""
+      return [item.country, name(item.country), en].some((v) => v.toLowerCase().includes(needle))
+    })
+    .toSorted((a, b) => b.coverage - a.coverage)
   const verify = useVerifyCountry()
 
   let body
@@ -59,7 +66,7 @@ export function CountriesStaffBody() {
             <div className="flex w-24 justify-end">
               <StatusBadge tone={TONES[item.status]} label={t(`staff.status.${item.status}`)} />
             </div>
-            <div className="flex gap-2 sm:w-56 sm:justify-end">
+            <div className="flex shrink-0 gap-2 sm:w-72 sm:justify-end">
               <Button
                 type="button"
                 size="sm"
@@ -75,7 +82,11 @@ export function CountriesStaffBody() {
                   size="sm"
                   className="min-h-11 md:min-h-8"
                   disabled={verify.isPending}
-                  onClick={() => verify.mutate(item.country, { onError: (e) => toast.error(errorMessage(e)) })}
+                  onClick={() =>
+                    verify.mutate(item.country, {
+                      onError: (e) => toast.error(errorMessage(e)),
+                    })
+                  }
                 >
                   {t("staff.verify")}
                 </Button>

@@ -5,6 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { lessonNumbers } from "../../shared/utils/outline"
 import type { CourseProgress } from "../../shared/utils/course-progress"
 import { SidebarFooter, type SidebarLink } from "./sidebar-footer"
+import { SidebarInfoLink } from "./sidebar-info-link"
 import { SidebarLesson } from "./sidebar-lesson"
 import { SidebarModule } from "./sidebar-module"
 import { SidebarProgress } from "./sidebar-progress"
@@ -19,6 +20,8 @@ export function LearnerSidebar({
   outline,
   unavailable,
   currentStepId,
+  infoHref,
+  infoActive = false,
   hrefFor,
   links,
 }: {
@@ -27,6 +30,9 @@ export function LearnerSidebar({
   outline: readonly OutlineSection[] | null
   unavailable: boolean
   currentStepId: string
+  /** The course info page, the first entry above the modules. */
+  infoHref: string
+  infoActive?: boolean
   hrefFor: (stepId: string) => string
   links: readonly SidebarLink[]
 }) {
@@ -46,6 +52,7 @@ export function LearnerSidebar({
         {outline && outline.length === 0 ? (
           <p className="px-4 py-2 text-xs text-(--stepik-chrome-muted)">{t("noLessons")}</p>
         ) : null}
+        <SidebarInfoLink href={infoHref} active={infoActive} />
         <ol>
           {outline?.map((section, index) => (
             <SidebarModule key={section.id} number={index + 1} title={section.title}>

@@ -10,6 +10,8 @@ import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { useState, type ReactNode } from "react"
+import { SkinChooser } from "@/features/skin/skin-chooser"
+import { SkinProvider } from "@/features/skin/skin-provider"
 
 /** The path of the import is literal, so the bundler includes exactly the two message files of this app. */
 async function loadAppMessages(locale: Locale): Promise<Messages> {
@@ -38,7 +40,12 @@ export function Providers({ children }: { children: ReactNode }) {
               <AuthProvider>
                 <PwaRuntime />
                 <LazyTelegramBridge>
-                  <ThemePreferenceSync>{children}</ThemePreferenceSync>
+                  <ThemePreferenceSync>
+                    <SkinProvider>
+                      {children}
+                      <SkinChooser />
+                    </SkinProvider>
+                  </ThemePreferenceSync>
                 </LazyTelegramBridge>
               </AuthProvider>
             </AppThemeProvider>

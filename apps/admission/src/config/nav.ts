@@ -3,15 +3,26 @@
 import { useSession } from "@ihsp/auth"
 import { useIsAlumnus } from "./applicant"
 import { useT } from "@ihsp/i18n"
-import { type BottomNavItem, type NavGroup } from "@ihsp/ui"
+import { type BottomNavItem, type Icons, type NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { mentoringQuery } from "../features/mentoring/api"
 
 /** The five student sections, in sidebar and phone-bar order (Today, Profile, Universities, Essays, Apply). */
 export const SECTION_IDS = ["today", "profile", "universities", "essays", "apply"] as const
 export type SectionId = (typeof SECTION_IDS)[number]
 
-/** One part of a section: a route (`/plan/`) or a query tab (`/career/?tab=field`). Titles: `nav.parts.<id>`. */
-export type SectionPart = { id: string; url: string; isDefault?: boolean }
+/**
+ * One part of a section: a route (`/plan/`) or a query tab (`/career/?tab=field`). Titles: `nav.parts.<id>`.
+ * `startsGroup` puts a divider before the part in the section bar.
+ */
+export type SectionPart = {
+  id: string
+  url: string
+  icon: keyof typeof Icons
+  isDefault?: boolean
+  startsGroup?: boolean
+}
 
 export type Section = {
   id: SectionId
@@ -39,21 +50,21 @@ export const SECTIONS: Record<SectionId, Section> = {
     // Career, activities, tests and plan live inside the profile: one place for "who I am and what I have done".
     prefixes: ["/profile", "/career", "/activities", "/plan", "/opportunities", "/tests", "/courses"],
     parts: [
-      { id: "overview", url: "/profile/", isDefault: true },
-      { id: "professions", url: "/profile/professions/" },
-      { id: "field", url: "/career/" },
-      { id: "done", url: "/activities/" },
-      { id: "ideas", url: "/opportunities/" },
-      { id: "planned", url: "/plan/" },
-      { id: "tests", url: "/tests/" },
-      { id: "courses", url: "/courses/" },
+      { id: "overview", url: "/profile/", icon: "profile", isDefault: true },
+      { id: "professions", url: "/profile/professions/", icon: "target" },
+      { id: "field", url: "/career/", icon: "subjects" },
+      { id: "done", url: "/activities/", icon: "badgeCheck", startsGroup: true },
+      { id: "ideas", url: "/opportunities/", icon: "sparkles" },
+      { id: "planned", url: "/plan/", icon: "calendarEvent" },
+      { id: "tests", url: "/tests/", icon: "exams", startsGroup: true },
+      { id: "courses", url: "/courses/", icon: "courses" },
     ],
   },
   universities: {
     id: "universities",
     url: "/chooser/",
     icon: "search",
-    prefixes: ["/chooser"],
+    prefixes: ["/chooser", "/countries"],
     parts: [],
   },
   essays: {
@@ -70,16 +81,18 @@ export const SECTIONS: Record<SectionId, Section> = {
     icon: "files",
     prefixes: ["/documents", "/deadlines", "/tasks", "/review", "/outcomes"],
     parts: [
-      { id: "applications", url: "/documents/" },
-      { id: "tasks", url: "/tasks/" },
-      { id: "review", url: "/review/" },
-      { id: "results", url: "/outcomes/" },
+      { id: "applications", url: "/documents/", icon: "files" },
+      { id: "tasks", url: "/tasks/", icon: "checks" },
+      { id: "review", url: "/review/", icon: "eye" },
+      { id: "results", url: "/outcomes/", icon: "flag" },
     ],
   },
 }
 
 /** Secondary student links (sidebar footer group, phone header menu). Titles: `nav.<id>`. */
 export const SECONDARY_LINKS = [
+  { id: "countries", url: "/countries/", icon: "globe" },
+  { id: "trajectories", url: "/trajectories/", icon: "route" },
   { id: "faq", url: "/faq/", icon: "chat" },
   { id: "help", url: "/help/", icon: "help" },
   { id: "settings", url: "/settings/", icon: "settings" },
@@ -127,6 +140,21 @@ export function hasNoAdmissionAccess(roles: RoleList, alumnus = false): boolean 
   return !hasAny(roles, DOCUMENT_ROLES) && !hasAny(roles, ["student"]) && !alumnus
 }
 
+/**
+ * Where the gear leads: staff who edit admission settings go to their hub, unless they mentor someone (the mentor
+ * switch lives in personal settings); everyone else to personal settings. `null` while the mentor state loads.
+ */
+export function useSettingsHref(): string | null {
+  const { session } = useSession()
+  const roles = session?.user.roles
+  const alumnus = useIsAlumnus()
+  const editor = isStaffOnly(roles, alumnus) && hasAny(roles, SETTINGS_ROLES)
+  const mentoring = useQuery({ ...mentoringQuery(), enabled: editor })
+  if (!editor) return "/settings/"
+  if (!mentoring.data) return mentoring.isError ? "/staff/settings/" : null
+  return mentoring.data.mentor_assignments > 0 ? "/settings/" : "/staff/settings/"
+}
+
 /** The page a signed-in user starts on: transcript officers on their queue, other staff on the caseload. */
 export function landingFor(roles: RoleList, alumnus = false): string {
   if (!isStaffOnly(roles, alumnus)) return "/"
@@ -139,6 +167,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const { session } = useSession()
   const roles = session?.user.roles
   const alumnus = useIsAlumnus()
+  const settingsHref = useSettingsHref()
   return useMemo(() => {
     const staffOnly = isStaffOnly(roles, alumnus)
     const noAccess = hasNoAdmissionAccess(roles, alumnus)
@@ -158,6 +187,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       { title: t("manageUniversities"), url: "/staff/universities/", icon: "search", visible: isCurator },
       { title: t("manageCountries"), url: "/staff/countries/", icon: "globe", visible: isCurator },
       { title: t("manageProjectHelpers"), url: "/staff/project-helpers/", icon: "teams", visible: isCurator },
+      { title: t("manageTrajectories"), url: "/staff/trajectories/", icon: "route", visible: isCurator },
       { title: t("exemplars"), url: "/staff/exemplars/", icon: "post", visible: isCurator },
       { title: t("promptStudio"), url: "/staff/prompt-studio/", icon: "sparkles", visible: isCurator },
       {
@@ -199,9 +229,11 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
           : []),
         { title: t("short.staffDocuments"), url: "/staff/documents/", icon: "files" },
         { title: t("short.transcripts"), url: "/staff/transcripts/", icon: "page" },
-        { ...settings, title: t("short.settings") },
+        { ...settings, url: settingsHref ?? "/staff/settings/", title: t("short.settings") },
       ]
-      return { groups: [staffGroup, { label: t("groupMore"), items: [settings] }], bottom }
+      // Settings editors reach their hub from the staff group; personal settings hold only applicant data.
+      const more = settingsHref === "/settings/" ? [{ label: t("groupMore"), items: [settings] }] : []
+      return { groups: [staffGroup, ...more], bottom }
     }
     const sections = SECTION_IDS.map((id) => ({
       title: t(`sections.${id}`),
@@ -221,5 +253,5 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       icon: SECTIONS[id].icon,
     }))
     return { groups, bottom }
-  }, [t, roles, alumnus])
+  }, [t, roles, alumnus, settingsHref])
 }

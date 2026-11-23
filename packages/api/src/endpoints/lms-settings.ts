@@ -46,6 +46,8 @@ export type CourseSettingsView = {
   enrolment_starts_at: string | null
   enrolment_ends_at: string | null
   navigation: CourseNavItem[]
+  /** Learners may ask the Socratic step tutor. */
+  tutor_enabled: boolean
   publish_state: CoursePublishState
   visibility: "public" | "invite"
   invite_code: string | null
@@ -76,6 +78,7 @@ export type CourseDetailsBody = Partial<
     | "enrolment_starts_at"
     | "enrolment_ends_at"
     | "navigation"
+    | "tutor_enabled"
   >
 >
 

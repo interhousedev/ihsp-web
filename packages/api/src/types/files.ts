@@ -22,6 +22,8 @@ export type FileItem = {
     | "library_cover"
     | "library_material"
     | "lms_video"
+    | "lms_ai_review"
+    | "lms_captions"
   status: "pending" | "processing" | "ready" | "rejected" | "deleted"
   reject_reason: string | null
   text_bytes: number | null
@@ -40,6 +42,8 @@ export type FileUploadPurpose =
   | "library_cover"
   | "library_material"
   | "lms_video"
+  | "lms_ai_review"
+  | "lms_captions"
 
 export type FileCreateBody = {
   name: string

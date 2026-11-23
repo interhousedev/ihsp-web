@@ -4,6 +4,7 @@ import type { Question } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Field, FieldDescription, FieldLabel, Icons, Input, Dropdown, Textarea, useIsMobile } from "@ihsp/ui"
 import { useId } from "react"
+import { PatternEditor } from "./pattern-editor"
 import { moveItem, newBlank, newOption, newPair, newVariable } from "../utils/content-ops"
 
 type Props = {
@@ -356,23 +357,14 @@ export function BlanksFields({ question, onChange, keyOf }: Props) {
               }
               rows={2}
             />
-            <Input
-              aria-label={t("blankRegex", { number: index + 1 })}
-              placeholder={t("regex")}
-              value={blank.regex ?? ""}
-              onChange={(event) =>
-                set(
-                  blanks.map((b) =>
-                    b.id === blank.id
-                      ? {
-                          ...b,
-                          regex: event.target.value === "" ? null : event.target.value,
-                        }
-                      : b,
-                  ),
-                )
+            <PatternEditor
+              label={t("blankPattern", { number: index + 1 })}
+              regex={blank.regex}
+              onChange={(regex) => set(blanks.map((b) => (b.id === blank.id ? { ...b, regex } : b)))}
+              ignoreCase={!(blank.case_sensitive ?? false)}
+              onIgnoreCaseChange={(ignore) =>
+                set(blanks.map((b) => (b.id === blank.id ? { ...b, case_sensitive: !ignore } : b)))
               }
-              className="h-11 font-mono md:h-8"
             />
           </li>
         ))}

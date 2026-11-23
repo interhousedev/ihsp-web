@@ -28,7 +28,11 @@ import { EXEMPLAR_STATUSES, useExemplars, usePatchExemplar, type Exemplar, type 
 import { ExemplarDialog } from "./exemplar-dialog"
 import { ImportDialog } from "./import-dialog"
 
-const TONES = { draft: "neutral", published: "success", archived: "warning" } as const
+const TONES = {
+  draft: "neutral",
+  published: "success",
+  archived: "warning",
+} as const
 const ANY = "any"
 
 function Row({ item, onEdit }: { item: Exemplar; onEdit: () => void }) {
@@ -113,7 +117,12 @@ export function ExemplarsStaffBody() {
   const [importing, setImporting] = useState(false)
   const [editing, setEditing] = useState<Exemplar | null>(null)
   const yearNumber = /^\d{4}$/.test(year.trim()) ? Number(year) : null
-  const query = useExemplars({ q, status, institutionId: institution?.id ?? null, year: yearNumber })
+  const query = useExemplars({
+    q,
+    status,
+    institutionId: institution?.id ?? null,
+    year: yearNumber,
+  })
 
   let body
   if (query.isPending) body = <Skeleton className="h-32 w-full" />

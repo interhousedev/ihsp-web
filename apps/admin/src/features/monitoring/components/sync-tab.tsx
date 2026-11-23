@@ -2,7 +2,7 @@
 
 import { getAdminSyncRuns, keys, postAdminSyncRunStop, postSyncRun, type SyncRunItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, Input } from "@ihsp/ui"
+import { Button, ConfirmDialog } from "@ihsp/ui"
 import { useMemo, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { PagedTable } from "../../shared/components/paged-table"
@@ -12,9 +12,8 @@ import { MaterialsResync } from "./materials-resync"
 import { StudentSyncs } from "./student-syncs"
 import { SERVER_PAGE_SIZE, usePagedList } from "../../shared/hooks/use-paged-list"
 import { col } from "../../shared/utils/columns"
+import { UserPicker } from "../../shared/components/user-picker"
 import { TOUCH } from "../../shared/utils/touch"
-
-const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 function durationSeconds(run: SyncRunItem): number | null {
   if (!run.finished_at) return null
@@ -33,7 +32,6 @@ export function SyncTab() {
   const [stopping, setStopping] = useState<SyncRunItem | null>(null)
 
   const trimmed = userId.trim()
-  const validUser = trimmed === "" || UUID_PATTERN.test(trimmed)
   const run = useAdminMutation({
     mutationFn: () => postSyncRun(trimmed === "" ? {} : { user_id: trimmed }),
     invalidate: [keys.admin.syncRuns(), keys.admin.dashboard()],
@@ -84,22 +82,10 @@ export function SyncTab() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end gap-3">
-        <LabeledField
-          label={t("userId")}
-          htmlFor="sync-user"
-          description={validUser ? t("userHint") : t("userInvalid")}
-          className="max-w-sm"
-        >
-          <Input
-            id="sync-user"
-            value={userId}
-            className={TOUCH}
-            aria-invalid={!validUser}
-            placeholder="00000000-0000-…"
-            onChange={(event) => setUserId(event.target.value)}
-          />
+        <LabeledField label={t("userId")} htmlFor="sync-user" description={t("userHint")} className="max-w-sm">
+          <UserPicker id="sync-user" value={trimmed === "" ? null : trimmed} onChange={(id) => setUserId(id ?? "")} />
         </LabeledField>
-        <Button type="button" className={TOUCH} disabled={!validUser} onClick={() => setConfirmOpen(true)}>
+        <Button type="button" className={TOUCH} onClick={() => setConfirmOpen(true)}>
           {trimmed === "" ? t("runAll") : t("runOne")}
         </Button>
       </div>

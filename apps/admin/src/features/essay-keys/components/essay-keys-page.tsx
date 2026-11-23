@@ -30,7 +30,7 @@ import {
   Progress,
 } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { useId, useRef, useState } from "react"
+import { useId, useState } from "react"
 import { downloadBlob } from "../../shared/utils/csv"
 
 const MIN_PASSPHRASE = 12
@@ -227,36 +227,52 @@ function BackupCard() {
   )
 }
 
+type BackupBody = Parameters<typeof postAdminEssayKeysRestore>[0]["backup"]
+type BackupPreview = { generation: number | null; count: number | null; createdAt: string | null }
+
+const numberOrNull = (value: unknown) => (typeof value === "number" ? value : null)
+
+/** Reads the backup file's public header so the admin sees what is about to be restored. */
+async function readBackup(file: File): Promise<{ body: BackupBody; preview: BackupPreview } | null> {
+  let doc: unknown
+  try {
+    doc = JSON.parse(await file.text())
+  } catch {
+    return null
+  }
+  if (typeof doc !== "object" || doc === null || Array.isArray(doc)) return null
+  const head = doc as Record<string, unknown>
+  return {
+    // Shape is validated by the server (422 admission/essay_keys_backup_invalid).
+    body: doc as BackupBody,
+    preview: {
+      generation: numberOrNull(head.generation),
+      count: numberOrNull(head.count),
+      createdAt: typeof head.created_at === "string" ? head.created_at : null,
+    },
+  }
+}
+
 function RestoreCard() {
   const t = useT("essayKeys")
+  const { dateTime } = useFormatters()
   const queryClient = useQueryClient()
   const fileId = useId()
   const passId = useId()
-  const fileRef = useRef<HTMLInputElement>(null)
   const [passphrase, setPassphrase] = useState("")
-  const [fileName, setFileName] = useState("")
+  const [file, setFile] = useState<{ name: string; body: BackupBody | null; preview: BackupPreview | null } | null>(
+    null,
+  )
   const restore = useMutation({
-    mutationFn: async ({ file, value }: { file: File; value: string }): Promise<EssayKeysRestoreResult> => {
-      let backup: unknown
-      try {
-        backup = JSON.parse(await file.text())
-      } catch {
-        throw new ParseError()
-      }
-      if (typeof backup !== "object" || backup === null || Array.isArray(backup)) throw new ParseError()
-      // Shape is validated by the server (422 admission/essay_keys_backup_invalid).
-      return postAdminEssayKeysRestore({
-        backup: backup as Parameters<typeof postAdminEssayKeysRestore>[0]["backup"],
-        passphrase: value,
-      })
-    },
+    // Shape is validated by the server (422 admission/essay_keys_backup_invalid).
+    mutationFn: ({ body, value }: { body: BackupBody; value: string }): Promise<EssayKeysRestoreResult> =>
+      postAdminEssayKeysRestore({ backup: body, passphrase: value }),
     onSuccess: async () => {
       setPassphrase("")
       await queryClient.invalidateQueries({ queryKey: keys.admin.essayKeys() })
     },
   })
-  const apiError = useKnownError(restore.error instanceof ParseError ? null : restore.error)
-  const error = restore.error instanceof ParseError ? t("errors.backupInvalid") : apiError
+  const error = useKnownError(restore.error)
 
   return (
     <Card>
@@ -270,8 +286,7 @@ function RestoreCard() {
           className="grid gap-4"
           onSubmit={(event) => {
             event.preventDefault()
-            const file = fileRef.current?.files?.[0]
-            if (file && passphrase) restore.mutate({ file, value: passphrase })
+            if (file?.body && passphrase) restore.mutate({ body: file.body, value: passphrase })
           }}
         >
           <p className="text-muted-foreground text-sm">{t("restore.description")}</p>
@@ -279,11 +294,47 @@ function RestoreCard() {
             <FieldLabel htmlFor={fileId}>{t("restore.file")}</FieldLabel>
             <Input
               id={fileId}
-              ref={fileRef}
               type="file"
               accept="application/json,.json"
-              onChange={(event) => setFileName(event.target.files?.[0]?.name ?? "")}
+              onChange={async (event) => {
+                const chosen = event.target.files?.[0]
+                restore.reset()
+                if (!chosen) return setFile(null)
+                const read = await readBackup(chosen)
+                setFile({ name: chosen.name, body: read?.body ?? null, preview: read?.preview ?? null })
+              }}
             />
+            {file?.preview ? (
+              <dl data-testid="essay-keys-restore-preview" className="bg-muted grid gap-1 rounded-md p-3 text-sm">
+                <div className="flex gap-2">
+                  <dt className="text-muted-foreground">{t("restore.previewFile")}</dt>
+                  <dd className="break-all">{file.name}</dd>
+                </div>
+                {file.preview.generation !== null ? (
+                  <div className="flex gap-2">
+                    <dt className="text-muted-foreground">{t("restore.previewGeneration")}</dt>
+                    <dd>{file.preview.generation}</dd>
+                  </div>
+                ) : null}
+                {file.preview.count !== null ? (
+                  <div className="flex gap-2">
+                    <dt className="text-muted-foreground">{t("restore.previewCount")}</dt>
+                    <dd>{file.preview.count}</dd>
+                  </div>
+                ) : null}
+                {file.preview.createdAt && !Number.isNaN(Date.parse(file.preview.createdAt)) ? (
+                  <div className="flex gap-2">
+                    <dt className="text-muted-foreground">{t("restore.previewCreated")}</dt>
+                    <dd>{dateTime(file.preview.createdAt)}</dd>
+                  </div>
+                ) : null}
+              </dl>
+            ) : null}
+            {file && !file.body ? (
+              <Alert variant="destructive" role="alert">
+                <AlertDescription>{t("errors.backupInvalid")}</AlertDescription>
+              </Alert>
+            ) : null}
           </div>
           <div className="grid gap-2">
             <FieldLabel htmlFor={passId}>{t("restore.passphrase")}</FieldLabel>
@@ -322,7 +373,7 @@ function RestoreCard() {
           ) : null}
           <LoadingButton
             type="submit"
-            disabled={fileName === "" || passphrase === ""}
+            disabled={!file?.body || passphrase === ""}
             loading={restore.isPending}
             loadingLabel={t("restore.sending")}
           >
@@ -333,8 +384,6 @@ function RestoreCard() {
     </Card>
   )
 }
-
-class ParseError extends Error {}
 
 function RotateCard({ data }: { data: EssayKeysStatus }) {
   const t = useT("essayKeys")

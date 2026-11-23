@@ -15,6 +15,10 @@ const ICONS = {
   flashcards: Icons.flashcards,
   h5p: Icons.sparkles,
   interactive_video: Icons.media,
+  exam: Icons.forms,
+  code: Icons.code,
+  html: Icons.platforms,
+  ai_review: Icons.assistant,
 } as const
 
 /**

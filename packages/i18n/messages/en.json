@@ -389,6 +389,8 @@
     },
     "lms": {
       "draft-changed": "The draft changed while you were working. Reload it first.",
+      "tutor-disabled": "The AI tutor is turned off for this course.",
+      "tutor-daily-limit": "You have used all your tutor questions for today. Come back tomorrow.",
       "no-attempts-left": "You have no attempts left for this test.",
       "attempt-cooldown": "The pause between attempts is not over yet.",
       "attempt-closed": "This attempt is already closed.",

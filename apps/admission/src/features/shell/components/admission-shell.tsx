@@ -15,7 +15,7 @@ import { ShellSearch } from "./shell-search"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Suspense, useEffect, type ReactNode } from "react"
-import { hasNoAdmissionAccess, isStaffOnly, landingFor, useNav } from "../../../config/nav"
+import { hasNoAdmissionAccess, isStaffOnly, landingFor, useNav, useSettingsHref } from "../../../config/nav"
 import { useIsAlumnus } from "../../../config/applicant"
 import { useNotApplicantError } from "../use-not-applicant-error"
 import { SectionTabs } from "../../../components/section-tabs"
@@ -90,6 +90,7 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
   const { session } = useSession()
   const roles = session?.user.roles
   const alumnus = useIsAlumnus()
+  const settingsHref = useSettingsHref()
   const showTour = tour && !hasNoAdmissionAccess(roles, alumnus)
   const platforms = usePlatformLinks()
   // Applicants get the five-section bar and a header menu; staff and users without access keep the stock bar with "More".
@@ -106,7 +107,7 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
       brand={<AdmissionBrand />}
       ai={<AssistantHeaderButton />}
       bell={<NotificationBell />}
-      settingsHref="/settings/"
+      settingsHref={settingsHref ?? "/staff/settings/"}
       profile={<ProfileMenu />}
       sidebarFooter={<ProfileMenu variant="row" />}
       tools={

@@ -265,6 +265,7 @@ export const courseStudents: CourseStudent[] = [
         submitted_at: "2026-10-06T12:00:00Z",
       },
     ],
+    widget_results: [],
   },
 ]
 

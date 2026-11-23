@@ -113,7 +113,7 @@ export function H5PBlockEditor({
         <FieldDescription>{t("h5p.passingHint")}</FieldDescription>
       </Field>
       {showPreview && courseId && stepId ? (
-        <H5PPlayer block={preview} courseId={courseId} stepId={stepId} preview />
+        <H5PPlayer block={preview} courseId={courseId} stepId={stepId} preview slug={null} />
       ) : null}
     </div>
   )

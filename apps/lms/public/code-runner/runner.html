@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!--
+      The code runner of code blocks. It is framed by the LMS with sandbox="allow-scripts" (no allow-same-origin: an
+      opaque origin, so no cookies, storage or API tokens of the LMS are reachable) and runs learner code only in Web
+      Workers it creates from blob: URLs (they inherit this policy). See runner.js.
+      - script-src 'self': runner.js and the self-hosted runtimes (/pyodide/, /sqljs/) only.
+      - 'wasm-unsafe-eval': compiling the Pyodide and sql.js WebAssembly.
+      - 'unsafe-eval': Pyodide's Emscripten loader evaluates the EM_ASM/EM_JS snippets of its modules with eval();
+        Python does not start without it. It only applies inside this opaque-origin frame.
+      - worker-src blob:: the workers are built in this frame from blob: URLs (an opaque origin cannot start a
+        worker from a URL of another origin).
+      - connect-src 'self': the workers fetch the runtime files from the LMS origin; user code gets no fetch/XHR/
+        WebSocket at all (runner.js removes them before it runs), and no other origin is allowed anyway.
+      - No frames, forms, objects or base URL; the sandbox forbids top navigation and popups.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'; worker-src blob:; connect-src 'self'; style-src 'none'; img-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+  </head>
+  <body>
+    <script src="runner.js"></script>
+  </body>
+</html>

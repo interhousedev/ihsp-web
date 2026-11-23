@@ -4,6 +4,29 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.14.0] - 2026-11-23
+
+### Added
+
+- LMS: course info page; Bluebook SAT/AP exam block; code execution block; custom HTML widget block with pass mark; AI Review block.
+- LMS: caption tracks (VTT); tutor and interactive-video micro-checks.
+- Daily FSRS review, streaks, mastery map, class quests and Telegram nudges.
+- Playful (Duolingo-style) skin, chosen on the first visit and changeable in settings; XP and levels are shared by all skins.
+- Course certificates designer with verify pages, pass mark and honors tiers; course partners.
+- Course badges with a block rule builder.
+- Admission: LMS courses and library books are listed automatically, books can be attached per student, educational trajectories editor, countries panel with deeper data; pinned sub-page navigation.
+
+### Changed
+
+- Admission settings have no JSON inputs; staff settings open in the staff section.
+
+### Known issues
+
+- With the tutor off the console logs a 403.
+- The last submitted code is not restored.
+- Legacy `/course/step/?course=<slug>` links show an error (422).
+- Some country facts are English in the Russian interface; median salary is empty.
+
 ## [1.13.0] - 2026-11-23
 
 Includes the unreleased 1.12 work.

@@ -1,26 +1,18 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Input, Skeleton, Textarea } from "@ihsp/ui"
-import { useState } from "react"
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Input, Skeleton } from "@ihsp/ui"
+import { useMemo, useState } from "react"
 import { toast } from "sonner"
-import { FACT_KEYS, type CountryFact, type FactKey } from "../../countries/api"
+import type { CountryFact, FactKey } from "../../countries/api"
 import { useCountryName } from "../../countries/components/country-facts-view"
 import { usePutCountry, useStoredCountry } from "../api"
+import { EDIT_KEYS, buildFact, toDraft, type Draft, type EditKey } from "../country-values"
+import { FactEditor } from "./country-fact-editor"
 
-const LOCALES = ["en", "ru", "uz"] as const
-type Draft = { score: string; values: string; text: Record<(typeof LOCALES)[number], string>; sources: string }
+const AS_OF = /^\d{4}-(0[1-9]|1[0-2])$/
 
-const emptyDraft = (): Draft => ({ score: "", values: "", text: { en: "", ru: "", uz: "" }, sources: "" })
-const toDraft = (f?: CountryFact): Draft =>
-  f
-    ? {
-        score: f.score === null ? "" : String(f.score),
-        values: Object.keys(f.values).length ? JSON.stringify(f.values) : "",
-        text: { en: f.text.en ?? "", ru: f.text.ru ?? "", uz: f.text.uz ?? "" },
-        sources: f.sources.join("\n"),
-      }
-    : emptyDraft()
+type StoredFacts = Record<string, Parameters<typeof toDraft>[1]>
 
 function Form({
   code,
@@ -29,37 +21,36 @@ function Form({
   onDone,
 }: {
   code: string
-  initial: Record<string, Draft>
+  initial: Record<EditKey, Draft>
   asOf: string
   onDone: () => void
 }) {
   const t = useT("countries")
+  const u = useT("settingsUx")
   const errorMessage = useErrorMessage()
   const put = usePutCountry(code)
   const [drafts, setDrafts] = useState(initial)
+  const [opened] = useState(() => new Set(EDIT_KEYS.filter((k) => buildFact(k, initial[k]).fact !== null)))
   const [date, setDate] = useState(asOf)
-  const [invalid, setInvalid] = useState<string | null>(null)
-  const patch = (k: string, next: Partial<Draft>) => setDrafts((d) => ({ ...d, [k]: { ...d[k]!, ...next } }))
+  const [submitted, setSubmitted] = useState(false)
+  const built = useMemo(
+    () => Object.fromEntries(EDIT_KEYS.map((k) => [k, buildFact(k, drafts[k])])),
+    [drafts],
+  ) as Record<EditKey, ReturnType<typeof buildFact>>
+  const dateOk = AS_OF.test(date)
+  const blocking = (k: EditKey) => built[k].problems.filter((p) => submitted || p !== "sourceRequired")
 
   function save(verified: boolean) {
-    const facts: Partial<Record<FactKey, CountryFact>> = {}
-    for (const k of FACT_KEYS) {
-      const d = drafts[k]!
-      let values: CountryFact["values"] = {}
-      try {
-        values = d.values.trim() ? JSON.parse(d.values) : {}
-      } catch {
-        setInvalid(k)
-        return
-      }
-      const sources = d.sources
-        .split("\n")
-        .map((s) => s.trim())
-        .filter(Boolean)
-      if (d.score === "" && !Object.keys(values).length && !LOCALES.some((l) => d.text[l].trim())) continue
-      facts[k] = { score: d.score === "" ? null : Number(d.score), values, text: d.text, sources }
+    setSubmitted(true)
+    if (!dateOk || EDIT_KEYS.some((k) => built[k].problems.length > 0)) {
+      toast.error(u("fixErrors"))
+      return
     }
-    setInvalid(null)
+    const facts: Partial<Record<FactKey, CountryFact>> = {}
+    for (const k of EDIT_KEYS) {
+      const f = built[k].fact
+      if (f) (facts as Record<string, unknown>)[k] = f
+    }
     put.mutate(
       { as_of: date, verified, facts },
       {
@@ -76,51 +67,40 @@ function Form({
     <div className="flex flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
         {t("staff.asOf")}
-        <Input value={date} placeholder="2026-11" onChange={(e) => setDate(e.target.value)} />
+        <Input
+          type="month"
+          pattern="\d{4}-\d{2}"
+          className="min-h-11 md:min-h-8"
+          value={date}
+          aria-invalid={submitted && !dateOk ? true : undefined}
+          onChange={(e) => setDate(e.target.value)}
+        />
+        {submitted && !dateOk ? (
+          <span role="alert" className="text-destructive text-xs">
+            {u("asOfRequired")}
+          </span>
+        ) : null}
       </label>
-      {FACT_KEYS.map((k) => (
-        <fieldset key={k} className="flex flex-col gap-2 rounded-card border p-3">
-          <legend className="px-1 text-sm font-semibold">{t(`fact.${k}`)}</legend>
-          <Input
-            type="number"
-            min={1}
-            max={5}
-            aria-label={`${t(`fact.${k}`)} ${t("overall")}`}
-            placeholder={t("overall")}
-            value={drafts[k]!.score}
-            onChange={(e) => patch(k, { score: e.target.value })}
-          />
-          <Textarea
-            rows={2}
-            aria-label={`${t(`fact.${k}`)} ${t("staff.values")}`}
-            placeholder={t("staff.values")}
-            value={drafts[k]!.values}
-            onChange={(e) => patch(k, { values: e.target.value })}
-          />
-          {invalid === k ? (
-            <p role="alert" className="text-destructive text-xs">
-              {t("staff.badValues")}
-            </p>
-          ) : null}
-          {LOCALES.map((l) => (
-            <Textarea
-              key={l}
-              rows={2}
-              aria-label={`${t(`fact.${k}`)} ${l}`}
-              placeholder={l.toUpperCase()}
-              value={drafts[k]!.text[l]}
-              onChange={(e) => patch(k, { text: { ...drafts[k]!.text, [l]: e.target.value } })}
-            />
-          ))}
-          <Textarea
-            rows={2}
-            aria-label={`${t(`fact.${k}`)} ${t("staff.sources")}`}
-            placeholder={t("staff.sources")}
-            value={drafts[k]!.sources}
-            onChange={(e) => patch(k, { sources: e.target.value })}
-          />
-        </fieldset>
-      ))}
+      {EDIT_KEYS.map((k) => {
+        const b = { ...built[k], problems: blocking(k) }
+        const filled = built[k].fact !== null
+        return (
+          <details key={k} open={opened.has(k) || undefined} className="rounded-card border p-3">
+            <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-2 text-sm font-semibold md:min-h-8">
+              {u(`title.${k}`)}
+              <span className="text-muted-foreground text-xs font-normal">{filled ? u("filled") : u("empty")}</span>
+            </summary>
+            <div className="pt-3">
+              <FactEditor
+                k={k}
+                draft={drafts[k]}
+                built={b}
+                onChange={(next) => setDrafts((d) => ({ ...d, [k]: next }))}
+              />
+            </div>
+          </details>
+        )
+      })}
       <div className="flex flex-wrap gap-2">
         <Button
           type="button"
@@ -142,7 +122,8 @@ function Form({
 export function CountryEditDialog({ code, onClose }: { code: string; onClose: () => void }) {
   const name = useCountryName()
   const stored = useStoredCountry(code)
-  const initial = Object.fromEntries(FACT_KEYS.map((k) => [k, toDraft(stored.data?.facts[k])]))
+  const facts = (stored.data?.facts ?? {}) as StoredFacts
+  const initial = Object.fromEntries(EDIT_KEYS.map((k) => [k, toDraft(k, facts[k])])) as Record<EditKey, Draft>
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-2xl">

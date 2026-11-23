@@ -8,6 +8,10 @@ import {
   newTestBlock,
   newTextBlock,
   newVideoBlock,
+  newExamBlock,
+  newCodeBlock,
+  newHtmlBlock,
+  newAiReviewBlock,
   type QuestionType,
 } from "./content-ops"
 
@@ -29,6 +33,10 @@ export type StepTypeId =
   | "formula"
   | "code"
   | "free"
+  | "exam"
+  | "code_block"
+  | "html"
+  | "ai_review"
 
 export type StepTypeGroup = "materials" | "tests" | "answers"
 
@@ -92,6 +100,10 @@ export const STEP_TYPES: readonly StepType[] = [
   },
   { id: "code", group: "answers", icon: "code", create: task("code") },
   { id: "free", group: "answers", icon: "chat", create: task("free") },
+  { id: "exam", group: "materials", icon: "forms", create: newExamBlock },
+  { id: "code_block", group: "materials", icon: "code", create: newCodeBlock },
+  { id: "html", group: "materials", icon: "sparkles", create: newHtmlBlock },
+  { id: "ai_review", group: "materials", icon: "assistant", create: newAiReviewBlock },
 ]
 
 export const STEP_TYPE_GROUPS: readonly StepTypeGroup[] = ["materials", "tests", "answers"]

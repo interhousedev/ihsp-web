@@ -15,6 +15,8 @@ import { useNav } from "../../../config/nav"
 import { AccessGate, type Access } from "./access-gate"
 import { LmsBrand } from "./lms-brand"
 import { ProfileMenu } from "./profile-menu"
+import { HeaderXp } from "../../engagement/components/header-xp"
+import { BadgeAwardDialog } from "../../badges/components/badge-award-dialog"
 import { SignInButton } from "./sign-in-button"
 
 /**
@@ -40,6 +42,7 @@ export function LmsShell({ children, access = "auth" }: { children: ReactNode; a
         tools={
           <>
             {status === "anonymous" ? <SignInButton /> : null}
+            {status === "authenticated" ? <HeaderXp /> : null}
             <OfflineBadge />
           </>
         }
@@ -47,6 +50,7 @@ export function LmsShell({ children, access = "auth" }: { children: ReactNode; a
         <MaintenanceBanner />
         <Suspense fallback={<PageLoading />}>{children}</Suspense>
         <LegalGate />
+        {status === "authenticated" ? <BadgeAwardDialog /> : null}
       </AppShell>
     </AccessGate>
   )

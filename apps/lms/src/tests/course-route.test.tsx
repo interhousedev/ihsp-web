@@ -21,6 +21,8 @@ describe("course addresses", () => {
   it("keep the ids in the path", () => {
     expect(hrefs.step("c1", "s1")).toBe("/course/c1/step/s1/")
     expect(hrefs.step("c1", "s1", 3)).toBe("/course/c1/step/s1/?block=3")
+    expect(hrefs.courseInfo("c1")).toBe("/course/c1/info/")
+    expect(hrefs.courseInfo("c1", true)).toBe("/course/c1/info/?preview=1")
     expect(hrefs.course("algebra")).toBe("/course/algebra/")
     expect(hrefs.course("algebra", true)).toBe("/course/algebra/?preview=1")
   })
@@ -32,6 +34,9 @@ describe("course addresses", () => {
       stepId: "s1",
       block: 2,
     })
+    expect(resolveCourseUrl("/course/c1/info/", "")).toEqual({ kind: "info", courseId: "c1", preview: false })
+    expect(resolveCourseUrl("/course/c1/info/", "?preview=1")).toEqual({ kind: "info", courseId: "c1", preview: true })
+    expect(resolveCourseUrl("/course/c1/other/", "")).toEqual({ kind: "missing" })
     expect(resolveCourseUrl("/course/algebra/", "")).toEqual({ kind: "entry", ref: "algebra", preview: false })
     expect(resolveCourseUrl("/course/algebra/", "?preview=1")).toEqual({ kind: "entry", ref: "algebra", preview: true })
   })
@@ -49,7 +54,7 @@ describe("course addresses", () => {
       kind: "redirect",
       href: "/course/algebra/?preview=1",
     })
-    expect(resolveCourseUrl("/course/", "")).toEqual({ kind: "missing" })
+    expect(resolveCourseUrl("/course/", "")).toEqual({ kind: "redirect", href: "/" })
   })
 
   it("does not loop on a slug that is also a folder of the app", () => {
@@ -70,6 +75,7 @@ describe("deployment", () => {
     expect(pattern.test("/course/c1/")).toBe(true)
     expect(pattern.test("/course/c1/step/s1/")).toBe(true)
     expect(pattern.test("/course/c1/step/s1")).toBe(true)
+    expect(pattern.test("/course/c1/info/")).toBe(true)
     expect(pattern.test("/course/")).toBe(false)
     expect(pattern.test("/course/c1/other/s1/")).toBe(false)
   })
