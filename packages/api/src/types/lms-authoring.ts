@@ -1,7 +1,9 @@
 // LMS — authoring, drafts, versions, staff (backend § API contract → "LMS (B12 authoring, B13 learning)" rows of B12, and Schemas).
 
+import type { components } from "../generated/openapi"
 import type { PersonRef } from "./common"
 import type { H5PBlock, InteractiveVideoBlock } from "./lms-interactive"
+import type { AiReviewBlock, CodeBlock, ExamBlock, HtmlBlock } from "./lms-widgets"
 import type { AccessAudience, CourseStaffItem, OutlineSection, WhenDenied } from "./lms-learning"
 
 export type TestConfig = {
@@ -61,13 +63,29 @@ export type Question = {
   code?: { language: string; starter: string; expected_outputs: string[] }
 }
 
+/** A WebVTT caption track of a video block (WCAG 1.2.2); the server fills `default`. */
+export type CaptionTrack = Required<components["schemas"]["CaptionTrack"]>
+
 export type Block =
   | { id: string; type: "text"; markdown: string }
-  | { id: string; type: "video"; source: "link" | "upload"; url: string; file_id: string | null; caption: string }
+  | {
+      id: string
+      type: "video"
+      source: "link" | "upload"
+      url: string
+      file_id: string | null
+      caption: string
+      /** WebVTT tracks (purpose `lms_captions`): one per language, at most one default. */
+      captions?: CaptionTrack[]
+    }
   | { id: string; type: "test"; config: TestConfig; questions: Question[] }
   | { id: string; type: "flashcards"; cards: { id: string; front: string; back: string }[] }
   | H5PBlock
   | InteractiveVideoBlock
+  | ExamBlock
+  | CodeBlock
+  | HtmlBlock
+  | AiReviewBlock
 
 export type StepContent = { title: string; blocks: Block[] }
 

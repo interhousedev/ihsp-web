@@ -4669,6 +4669,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/countries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Countries
+         * @description Countries with facts or catalog institutions: region, scores, counts.
+         */
+        get: operations["admission_countries_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/countries/{country}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read Country Profile
+         * @description One country: its facts (null when none yet) and ranked catalog institutions.
+         */
+        get: operations["admission_countries_read"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/country-facts": {
         parameters: {
             query?: never;
@@ -4727,6 +4767,46 @@ export interface paths {
          * @description Add a course taken elsewhere.
          */
         post: operations["admission_add_manual_course"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/courses/books": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List My Books
+         * @description Books staff attached to the caller.
+         */
+        get: operations["admission_list_my_books"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/courses/catalog": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Browse Catalog
+         * @description Every published LMS course and library book; search and filter by type.
+         */
+        get: operations["admission_course_catalog"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -8931,6 +9011,78 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/staff/trajectories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Staff List
+         * @description Every trajectory, drafts too (curators only).
+         */
+        get: operations["admission_staff_trajectories_list"];
+        put?: never;
+        /**
+         * Staff Create
+         * @description Add a trajectory.
+         */
+        post: operations["admission_staff_trajectories_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/trajectories/resources": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Staff Resources
+         * @description LMS courses or library books a curator may link to a node.
+         */
+        get: operations["admission_staff_trajectories_resources"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/trajectories/{trajectory_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Staff Get
+         * @description One trajectory for the editor.
+         */
+        get: operations["admission_staff_trajectories_get"];
+        /**
+         * Staff Update
+         * @description Replace a trajectory.
+         */
+        put: operations["admission_staff_trajectories_update"];
+        post?: never;
+        /**
+         * Staff Delete
+         * @description Delete a trajectory and every student's progress on it.
+         */
+        delete: operations["admission_staff_trajectories_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/transcripts": {
         parameters: {
             query?: never;
@@ -9026,6 +9178,50 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/students/{student_id}/books": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Student Books
+         * @description Books attached to a student (staff in scope or the student).
+         */
+        get: operations["admission_list_student_books"];
+        put?: never;
+        /**
+         * Attach Book
+         * @description Attach a published library book to a student (staff only; idempotent).
+         */
+        post: operations["admission_attach_book"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/students/{student_id}/books/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Detach Book
+         * @description Remove an attached book (staff only).
+         */
+        delete: operations["admission_detach_book"];
         options?: never;
         head?: never;
         patch?: never;
@@ -9557,6 +9753,66 @@ export interface paths {
          * @description Hide a next action from `/today` for three days.
          */
         post: operations["admission_snooze_today"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/trajectories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Trajectories
+         * @description Published trajectories by field and text, with the caller's progress.
+         */
+        get: operations["admission_trajectories_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/trajectories/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Trajectory
+         * @description One published trajectory (curators also open drafts) with progress.
+         */
+        get: operations["admission_trajectories_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/trajectories/{trajectory_id}/progress/{node_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Mark Node
+         * @description Set the applicant's status of a node; null clears it.
+         */
+        put: operations["admission_trajectories_mark_node"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -10199,6 +10455,326 @@ export interface paths {
         patch: operations["update_type_v1_certificates_admin_types__type_id__patch"];
         trace?: never;
     };
+    "/v1/certificates/courses/issued/{cert_id}/pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Pdf
+         * @description Download a certificate PDF (holder or course staff).
+         */
+        get: operations["course_certificates_pdf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/issue-eligible": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Issue Eligible
+         * @description Issue certificates to every eligible learner now.
+         */
+        post: operations["course_certificates_issue_eligible"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/issued": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Issued
+         * @description Return the issued certificates of a course.
+         */
+        get: operations["course_certificates_list_issued"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/issued/{cert_id}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke
+         * @description Revoke a certificate.
+         */
+        post: operations["course_certificates_revoke"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mine
+         * @description Evaluate the caller, issue the certificate when earned and return the status.
+         */
+        post: operations["course_certificates_mine"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/partners": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Partners
+         * @description Return the partners of a course.
+         */
+        get: operations["course_certificates_list_partners"];
+        put?: never;
+        /**
+         * Create Partner
+         * @description Add a partner.
+         */
+        post: operations["course_certificates_create_partner"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/partners/{partner_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update Partner
+         * @description Update a partner.
+         */
+        put: operations["course_certificates_update_partner"];
+        post?: never;
+        /**
+         * Delete Partner
+         * @description Delete a partner.
+         */
+        delete: operations["course_certificates_delete_partner"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/partners/{partner_id}/logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload Logo
+         * @description Upload a partner logo (PNG or JPEG).
+         */
+        post: operations["course_certificates_upload_partner_logo"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Public Info
+         * @description Certificate facts of a public course for its landing page.
+         */
+        get: operations["course_certificates_public_info"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/sample.png": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Sample
+         * @description A sample certificate of a public course.
+         */
+        get: operations["course_certificates_sample"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Settings
+         * @description Return the certificate settings of a course (course writers).
+         */
+        get: operations["course_certificates_get_settings"];
+        /**
+         * Put Settings
+         * @description Store the certificate settings of a course.
+         */
+        put: operations["course_certificates_put_settings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Templates
+         * @description Return the templates of a course.
+         */
+        get: operations["course_certificates_list_templates"];
+        put?: never;
+        /**
+         * Create Template
+         * @description Create a template with a blank page and a starting layout.
+         */
+        post: operations["course_certificates_create_template"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/templates/{template_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update Template
+         * @description Store the layout of a template.
+         */
+        put: operations["course_certificates_update_template"];
+        post?: never;
+        /**
+         * Delete Template
+         * @description Delete a template.
+         */
+        delete: operations["course_certificates_delete_template"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/templates/{template_id}/background": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload Background
+         * @description Upload a background: PNG, JPEG or a PDF (first page), up to 10 MB.
+         */
+        post: operations["course_certificates_upload_background"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/courses/{course_id}/templates/{template_id}/preview.png": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview Template
+         * @description Return a PNG preview of the saved template with sample values.
+         */
+        get: operations["course_certificates_preview_template"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/certificates/files/{file_id}/download": {
         parameters: {
             query?: never;
@@ -10231,6 +10807,26 @@ export interface paths {
          * @description Return a short-lived address, for clients that cannot follow a redirect.
          */
         get: operations["get_file_url_v1_certificates_files__file_id__download_url_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/fonts/{font}.woff2": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Font
+         * @description Serve a bundled OFL typeface for the web constructor.
+         */
+        get: operations["course_certificates_font"];
         put?: never;
         post?: never;
         delete?: never;
@@ -10342,6 +10938,26 @@ export interface paths {
          * @description Delete one file of the caller's entry.
          */
         delete: operations["remove_entry_file_v1_certificates_me__entry_id__files__file_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/partners/{partner_id}/logo.png": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Partner Logo
+         * @description A partner logo of a public course, or by its versioned link.
+         */
+        get: operations["course_certificates_partner_logo"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -10467,6 +11083,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/certificates/templates/{template_id}/background.png": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Background
+         * @description Serve the template image of a public course, or by its versioned link.
+         */
+        get: operations["course_certificates_background"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/certificates/types": {
         parameters: {
             query?: never;
@@ -10479,6 +11115,46 @@ export interface paths {
          * @description Return every certificate type.
          */
         get: operations["list_types_v1_certificates_types_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/verify/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Verify
+         * @description Verify a certificate: holder name as printed, course, tier, partner, status.
+         */
+        get: operations["course_certificates_verify"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/verify/{code}/qr.svg": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Verify Qr
+         * @description Return the QR code of the verification page.
+         */
+        get: operations["course_certificates_verify_qr"];
         put?: never;
         post?: never;
         delete?: never;
@@ -13007,6 +13683,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/ai-review/sessions/{session_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lms Ai Review Get Session
+         * @description One of my review conversations with its messages.
+         */
+        get: operations["lms_ai_review_get_session_v1_lms_ai_review_sessions__session_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/ai-review/sessions/{session_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Lms Ai Review Send Message
+         * @description Send a message; the reviewer answers (or reviews after its questions).
+         */
+        post: operations["lms_ai_review_send_message_v1_lms_ai_review_sessions__session_id__messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/ai-review/sessions/{session_id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Lms Ai Review Submit
+         * @description Submit work for review; spends one of the block's submissions.
+         */
+        post: operations["lms_ai_review_submit_v1_lms_ai_review_sessions__session_id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/attempts/{attempt_id}": {
         parameters: {
             query?: never;
@@ -13087,6 +13823,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/badges/awards/{award_id}/seen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark Badge Award Seen
+         * @description Record that the learner saw the celebration of an award.
+         */
+        post: operations["lms_mark_badge_award_seen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/badges/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Badges
+         * @description Return the learner's earned and locked badges and the unseen awards.
+         */
+        get: operations["lms_my_badges"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses": {
         parameters: {
             query?: never;
@@ -13149,6 +13925,94 @@ export interface paths {
          */
         put: operations["set_course_access_v1_lms_courses__course_id__access_put"];
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/badge-settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Course Badge Settings
+         * @description Choose whether learners see the badges they have not earned yet.
+         */
+        put: operations["lms_set_course_badge_settings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/badges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Course Badges
+         * @description Return the badges of a course (course staff with `review`).
+         */
+        get: operations["lms_list_course_badges"];
+        put?: never;
+        /**
+         * Create Course Badge
+         * @description Create a badge with its design and rule (course staff with `edit`).
+         */
+        post: operations["lms_create_course_badge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/badges/{badge_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update Course Badge
+         * @description Replace a badge; a null `design.image_url` removes the uploaded image.
+         */
+        put: operations["lms_update_course_badge"];
+        post?: never;
+        /**
+         * Delete Course Badge
+         * @description Delete a badge and its awards.
+         */
+        delete: operations["lms_delete_course_badge"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/badges/{badge_id}/image": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload Course Badge Image
+         * @description Upload the badge image: PNG, JPEG or WebP, at most 512 KB.
+         */
+        post: operations["lms_upload_course_badge_image"];
         delete?: never;
         options?: never;
         head?: never;
@@ -13275,6 +14139,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/engagement-settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Engagement Get Settings
+         * @description Return the mastery unlock threshold (course staff with `review`).
+         */
+        get: operations["lms_engagement_get_settings"];
+        /**
+         * Engagement Set Settings
+         * @description Set the mastery unlock threshold; null turns the lock off (`edit`).
+         */
+        put: operations["lms_engagement_set_settings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/enroll": {
         parameters: {
             query?: never;
@@ -13329,6 +14217,28 @@ export interface paths {
          * @description Upload a `.h5p` package (zip, up to 100 MB); needs `edit` on the course.
          */
         post: operations["upload_h5p_v1_lms_courses__course_id__h5p_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/html-widgets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload Html Widget
+         * @description Upload a widget: one `.html` file or a `.zip` with `index.html` at its root.
+         *
+         *     Up to 20 MiB uploaded, 60 MiB unpacked and 500 files; needs `edit` on the course.
+         */
+        post: operations["upload_html_widget_v1_lms_courses__course_id__html_widgets_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -13419,6 +14329,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/captions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview Video Captions
+         * @description Return caption track URLs of the draft's video (needs `view_drafts`).
+         */
+        get: operations["preview_video_captions_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__captions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/h5p": {
         parameters: {
             query?: never;
@@ -13431,6 +14361,26 @@ export interface paths {
          * @description Return the signed base URL of a draft's H5P package (`view_drafts`).
          */
         get: operations["preview_h5p_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__h5p_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/html-widget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview Html Widget
+         * @description Return the signed URL of a draft's HTML widget (`view_drafts`).
+         */
+        get: operations["preview_html_widget_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__html_widget_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -13477,6 +14427,54 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/quests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Engagement List Course Quests
+         * @description Return every quest of a course (course staff with `review`).
+         */
+        get: operations["lms_engagement_list_course_quests"];
+        put?: never;
+        /**
+         * Engagement Create Quest
+         * @description Create a class quest of at most 31 days (course staff with `edit`).
+         */
+        post: operations["lms_engagement_create_quest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/quests/{quest_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Engagement Delete Quest
+         * @description Delete a class quest.
+         */
+        delete: operations["lms_engagement_delete_quest"];
+        options?: never;
+        head?: never;
+        /**
+         * Engagement Update Quest
+         * @description Replace a class quest (course staff with `edit`).
+         */
+        patch: operations["lms_engagement_update_quest"];
         trace?: never;
     };
     "/v1/lms/courses/{course_id}/settings": {
@@ -13651,6 +14649,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/ai-review/submissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lms Ai Review List Submissions
+         * @description Course staff: the submitted work of the block with the latest reviews.
+         */
+        get: operations["lms_ai_review_list_submissions_v1_lms_courses__course_id__steps__step_id__blocks__block_id__ai_review_submissions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/captions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Video Captions
+         * @description Return presigned GET URLs of a video's WebVTT caption tracks.
+         */
+        get: operations["get_video_captions_v1_lms_courses__course_id__steps__step_id__blocks__block_id__captions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/h5p": {
         parameters: {
             query?: never;
@@ -13671,6 +14709,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/hidden-tests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get Hidden Tests
+         * @description Return the hidden tests of a graded code block to run them on submit.
+         */
+        post: operations["get_hidden_tests_v1_lms_courses__course_id__steps__step_id__blocks__block_id__hidden_tests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/html-widget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Html Widget Launch
+         * @description Return the signed URL of the block's widget (enrolled or staff).
+         */
+        get: operations["get_html_widget_launch_v1_lms_courses__course_id__steps__step_id__blocks__block_id__html_widget_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Record Widget Result
+         * @description Store my score of a graded widget; the best score and a pass are kept.
+         */
+        post: operations["record_widget_result_v1_lms_courses__course_id__steps__step_id__blocks__block_id__result_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/video": {
         parameters: {
             query?: never;
@@ -13685,6 +14783,26 @@ export interface paths {
         get: operations["get_video_stream_v1_lms_courses__course_id__steps__step_id__blocks__block_id__video_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/video-checks/suggest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Suggest Video Checks
+         * @description Suggest checks every 2-3 minutes and recap cards; nothing is saved.
+         */
+        post: operations["lms_suggest_video_checks"];
         delete?: never;
         options?: never;
         head?: never;
@@ -13803,6 +14921,146 @@ export interface paths {
          * @description Describe the course; `?preview=1` shows drafts to people who can edit.
          */
         get: operations["get_course_landing_v1_lms_courses__slug__landing_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/engagement/courses/{course_id}/mastery": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Engagement Mastery
+         * @description Return the learner's mastery map of a course.
+         */
+        get: operations["lms_engagement_mastery"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/engagement/quests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Engagement Quests
+         * @description Return the running class quests of the learner's courses.
+         */
+        get: operations["lms_engagement_quests"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/engagement/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Engagement Review
+         * @description Return today's due questions and flashcards (at most 20 answers a day).
+         */
+        get: operations["lms_engagement_review"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/engagement/review/{item_id}/answer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Engagement Review Answer
+         * @description Check a review answer, reschedule the question and award XP.
+         */
+        post: operations["lms_engagement_review_answer"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/engagement/review/{item_id}/grade": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Engagement Review Grade
+         * @description Rate a due flashcard and award XP.
+         */
+        post: operations["lms_engagement_review_grade"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/engagement/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Engagement Summary
+         * @description Return XP, level, the school-week streak, due reviews and the weekly goal.
+         */
+        get: operations["lms_engagement_summary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/engagement/xp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Engagement Xp
+         * @description Return the newest XP awards.
+         */
+        get: operations["lms_engagement_xp"];
         put?: never;
         post?: never;
         delete?: never;
@@ -14011,6 +15269,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/steps/{step_id}/blocks/{block_id}/ai-review/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lms Ai Review List Sessions
+         * @description My review conversations about the block, newest first.
+         */
+        get: operations["lms_ai_review_list_sessions_v1_lms_steps__step_id__blocks__block_id__ai_review_sessions_get"];
+        put?: never;
+        /**
+         * Lms Ai Review Create Session
+         * @description Start a new review conversation about the block.
+         */
+        post: operations["lms_ai_review_create_session_v1_lms_steps__step_id__blocks__block_id__ai_review_sessions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/steps/{step_id}/blocks/{block_id}/attempts": {
         parameters: {
             query?: never;
@@ -14025,6 +15307,86 @@ export interface paths {
          * @description Start an attempt (or resume the open one); `preview=true` is for staff.
          */
         post: operations["start_attempt_v1_lms_steps__step_id__blocks__block_id__attempts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/steps/{step_id}/blocks/{block_id}/exam": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Exam Session
+         * @description Return my sitting; a module whose time ran out is closed on the way.
+         */
+        get: operations["get_exam_session_v1_lms_steps__step_id__blocks__block_id__exam_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/steps/{step_id}/blocks/{block_id}/exam/answers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Save Exam Answers
+         * @description Merge answers into the open module (until its deadline plus 30 seconds).
+         */
+        put: operations["save_exam_answers_v1_lms_steps__step_id__blocks__block_id__exam_answers_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/steps/{step_id}/blocks/{block_id}/exam/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start Exam Module
+         * @description Begin the next module (or return the open one) with its questions.
+         */
+        post: operations["start_exam_module_v1_lms_steps__step_id__blocks__block_id__exam_start_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/steps/{step_id}/blocks/{block_id}/exam/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit Exam Module
+         * @description Submit the open module; the last one finishes and grades the exam.
+         */
+        post: operations["submit_exam_module_v1_lms_steps__step_id__blocks__block_id__exam_submit_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -14235,6 +15597,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/steps/{step_id}/tutor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Tutor
+         * @description Return the caller's tutor conversation in a live step.
+         */
+        get: operations["lms_get_tutor"];
+        put?: never;
+        /**
+         * Ask Tutor
+         * @description Ask the Socratic tutor about the step; it hints and never gives answers.
+         */
+        post: operations["lms_ask_tutor"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/steps/{step_id}/viewed": {
         parameters: {
             query?: never;
@@ -14249,6 +15635,26 @@ export interface paths {
          * @description Record the view; a step without tests is completed by opening it.
          */
         post: operations["mark_viewed_v1_lms_steps__step_id__viewed_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/users/{user_id}/badges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * User Badges
+         * @description Return a learner's badges in the courses the caller shares with them.
+         */
+        get: operations["lms_user_badges"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -20208,6 +21614,287 @@ export interface components {
             steps: components["schemas"]["AiStepOut"][];
         };
         /**
+         * AiReviewAttachmentView
+         * @description A file the student attached to a message.
+         */
+        AiReviewAttachmentView: {
+            /** Content Type */
+            content_type: string;
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /** Name */
+            name: string;
+        };
+        /**
+         * AiReviewBlock
+         * @description An AI reviewer of a student's work (intermediate project review).
+         *
+         *     Only ``title``, ``instructions_public``, ``max_submissions``, ``accepted_types``
+         *     and the template name reach students; the prompt, files, private topics and
+         *     criteria descriptions stay on the server.
+         */
+        "AiReviewBlock-Input": {
+            /** Accepted Types */
+            accepted_types?: ("pdf" | "docx" | "pptx" | "image" | "text")[];
+            /** Criteria */
+            criteria?: components["schemas"]["AiReviewCriterion"][];
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Instructions Public
+             * @default
+             */
+            instructions_public?: string;
+            /**
+             * Max Submissions
+             * @default 3
+             */
+            max_submissions?: number;
+            /**
+             * Output Template
+             * @default review_table
+             * @enum {string}
+             */
+            output_template?: "review_table" | "rubric_checklist" | "strengths_cards" | "image_gallery";
+            /**
+             * Pass Threshold Pct
+             * @default 60
+             */
+            pass_threshold_pct?: number;
+            /** Private Topics */
+            private_topics?: string[];
+            /** Reference Files */
+            reference_files?: components["schemas"]["AiReviewFile"][];
+            /**
+             * Teacher Prompt
+             * @default
+             */
+            teacher_prompt?: string;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "ai_review";
+            /**
+             * Use Course Materials
+             * @default true
+             */
+            use_course_materials?: boolean;
+            /**
+             * Web Search
+             * @default false
+             */
+            web_search?: boolean;
+        };
+        /**
+         * AiReviewCriterion
+         * @description One row of the review: a criterion, what it means and its top score.
+         */
+        AiReviewCriterion: {
+            /**
+             * Description
+             * @default
+             */
+            description?: string;
+            /**
+             * Max Score
+             * @default 10
+             */
+            max_score?: number;
+            /** Name */
+            name: string;
+        };
+        /**
+         * AiReviewFile
+         * @description A reference file the teacher uploaded; its text is never shown to students.
+         */
+        AiReviewFile: {
+            /** File Id */
+            file_id: string;
+            /**
+             * Name
+             * @default
+             */
+            name?: string;
+        };
+        /**
+         * AiReviewMessageBody
+         * @description A chat message with optional files uploaded with purpose `lms_ai_review`.
+         */
+        AiReviewMessageBody: {
+            /** File Ids */
+            file_ids?: string[];
+            /**
+             * Text
+             * @default
+             */
+            text?: string;
+        };
+        /**
+         * AiReviewMessageView
+         * @description One message; ``openui`` is a fenced, validated OpenUI block.
+         */
+        AiReviewMessageView: {
+            /** Attachments */
+            attachments: components["schemas"]["AiReviewAttachmentView"][];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "chat" | "question" | "review";
+            /** Openui */
+            openui: string | null;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "student" | "assistant";
+            /** Text */
+            text: string | null;
+        };
+        /**
+         * AiReviewMessagesView
+         * @description Messages a turn added (the student's and the reviewer's).
+         */
+        AiReviewMessagesView: {
+            /** Messages */
+            messages: components["schemas"]["AiReviewMessageView"][];
+        };
+        /**
+         * AiReviewSessionListView
+         * @description The student's conversations about one block.
+         */
+        AiReviewSessionListView: {
+            /** Items */
+            items: components["schemas"]["AiReviewSessionSummaryView"][];
+        };
+        /**
+         * AiReviewSessionSummaryView
+         * @description A conversation in the student's list.
+         */
+        AiReviewSessionSummaryView: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "open" | "reviewed";
+            /** Submissions Used */
+            submissions_used: number;
+        };
+        /**
+         * AiReviewSessionView
+         * @description A conversation with every message.
+         */
+        AiReviewSessionView: {
+            /** Block Id */
+            block_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Messages */
+            messages: components["schemas"]["AiReviewMessageView"][];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "open" | "reviewed";
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+            /** Submissions Left */
+            submissions_left: number;
+        };
+        /**
+         * AiReviewStudentView
+         * @description Who submitted.
+         */
+        AiReviewStudentView: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
+         * AiReviewSubmissionListView
+         * @description Reviewed work of a block, for course staff.
+         */
+        AiReviewSubmissionListView: {
+            /** Items */
+            items: components["schemas"]["AiReviewSubmissionView"][];
+        };
+        /**
+         * AiReviewSubmissionView
+         * @description A reviewed session as staff see it.
+         */
+        AiReviewSubmissionView: {
+            /** Review Openui */
+            review_openui: string | null;
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "open" | "reviewed";
+            student: components["schemas"]["AiReviewStudentView"];
+            /** Submitted At */
+            submitted_at: string | null;
+        };
+        /**
+         * AiReviewSubmitBody
+         * @description The work to review: files and a note.
+         */
+        AiReviewSubmitBody: {
+            /** File Ids */
+            file_ids?: string[];
+            /**
+             * Note
+             * @default
+             */
+            note?: string;
+        };
+        /**
          * AiStepOut
          * @description A saved entry placed in a grade and term.
          */
@@ -21199,6 +22886,19 @@ export interface components {
             role?: "material" | "attachment";
         };
         /**
+         * AttachBookIn
+         * @description Attach a library book.
+         */
+        AttachBookIn: {
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            /** Note */
+            note?: string | null;
+        };
+        /**
          * AttachFileBody
          * @description POST /v1/ai/projects/{id}/files: one of the caller's own ready files.
          */
@@ -21230,6 +22930,25 @@ export interface components {
              * Format: uuid
              */
             notebook_id: string;
+        };
+        /**
+         * AttachedBookListOut
+         * @description The books attached to a student, newest first.
+         */
+        AttachedBookListOut: {
+            /** Items */
+            items: components["schemas"]["AttachedBookOut"][];
+        };
+        /**
+         * AttachedBookOut
+         * @description A book a staff member attached to a student.
+         */
+        AttachedBookOut: {
+            /** Attached At */
+            attached_at: string | null;
+            book: components["schemas"]["CatalogEntryOut"];
+            /** Note */
+            note: string | null;
         };
         /**
          * AttachedResourceResponse
@@ -21576,6 +23295,118 @@ export interface components {
             salt: string;
         };
         /**
+         * BadgeDesignView
+         * @description How a badge looks: a built-in icon in a frame, or an uploaded image.
+         */
+        BadgeDesignView: {
+            /** Color */
+            color: string;
+            icon: components["schemas"]["BadgeIcon"];
+            /** Image Url */
+            image_url?: string | null;
+            shape: components["schemas"]["BadgeShape"];
+        };
+        /**
+         * BadgeEvent
+         * @description The WHEN block: what happened to the learner.
+         * @enum {string}
+         */
+        BadgeEvent: "step_completed" | "section_completed" | "test_passed" | "exam_scored" | "streak_reached" | "course_completed" | "reviews_done";
+        /**
+         * BadgeIcon
+         * @description The built-in icon set.
+         * @enum {string}
+         */
+        BadgeIcon: "star" | "trophy" | "medal" | "flame" | "book" | "rocket" | "bolt" | "heart" | "crown" | "target" | "brain" | "check";
+        /**
+         * BadgeInput
+         * @description POST/PUT body of a badge; `rule` is validated as a bounded tree.
+         */
+        BadgeInput: {
+            /**
+             * @default {
+             *       "en": "",
+             *       "ru": "",
+             *       "uz": ""
+             *     }
+             */
+            description?: components["schemas"]["LocalizedText"];
+            design: components["schemas"]["BadgeDesignView"];
+            name: components["schemas"]["LocalizedText"];
+            /** Rule */
+            rule: {
+                [key: string]: unknown;
+            };
+        };
+        /**
+         * BadgeListView
+         * @description The badges of a course and whether learners see the locked ones.
+         */
+        BadgeListView: {
+            /** Items */
+            items: components["schemas"]["BadgeView"][];
+            /** Show Locked */
+            show_locked: boolean;
+        };
+        /**
+         * BadgePublicView
+         * @description A badge as learners see it (no rule).
+         */
+        BadgePublicView: {
+            description: components["schemas"]["LocalizedText"];
+            design: components["schemas"]["BadgeDesignView"];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            name: components["schemas"]["LocalizedText"];
+        };
+        /**
+         * BadgeSettingsInput
+         * @description PUT body of the course badge settings.
+         */
+        BadgeSettingsInput: {
+            /** Show Locked */
+            show_locked: boolean;
+        };
+        /**
+         * BadgeShape
+         * @description The frame drawn around the icon.
+         * @enum {string}
+         */
+        BadgeShape: "circle" | "shield" | "hexagon" | "star";
+        /**
+         * BadgeView
+         * @description A badge as course staff see it.
+         */
+        BadgeView: {
+            /** Awarded Count */
+            awarded_count: number;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            description: components["schemas"]["LocalizedText"];
+            design: components["schemas"]["BadgeDesignView"];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            name: components["schemas"]["LocalizedText"];
+            /** Rule */
+            rule: {
+                [key: string]: unknown;
+            };
+        };
+        /**
          * BalanceOut
          * @description Counts per label and a verdict code the web translates.
          */
@@ -21855,6 +23686,16 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Body_course_certificates_upload_background */
+        Body_course_certificates_upload_background: {
+            /** File */
+            file: string;
+        };
+        /** Body_course_certificates_upload_partner_logo */
+        Body_course_certificates_upload_partner_logo: {
+            /** File */
+            file: string;
+        };
         /** Body_identify_v1_device_identify_post */
         Body_identify_v1_device_identify_post: {
             direction: components["schemas"]["Direction"];
@@ -21863,6 +23704,11 @@ export interface components {
         };
         /** Body_import_preview_v1_admin_students_import_post */
         Body_import_preview_v1_admin_students_import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_lms_upload_course_badge_image */
+        Body_lms_upload_course_badge_image: {
             /** File */
             file: string;
         };
@@ -21910,6 +23756,11 @@ export interface components {
         };
         /** Body_upload_h5p_v1_lms_courses__course_id__h5p_post */
         Body_upload_h5p_v1_lms_courses__course_id__h5p_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_upload_html_widget_v1_lms_courses__course_id__html_widgets_post */
+        Body_upload_html_widget_v1_lms_courses__course_id__html_widgets_post: {
             /** File */
             file: string;
         };
@@ -22634,6 +24485,43 @@ export interface components {
             word: string;
         };
         /**
+         * CaptionTrack
+         * @description A WebVTT caption track of a video (WCAG 1.2.2), one per language.
+         */
+        CaptionTrack: {
+            /**
+             * Default
+             * @default false
+             */
+            default?: boolean;
+            /** File Id */
+            file_id: string;
+            /** Label */
+            label: string;
+            /**
+             * Lang
+             * @enum {string}
+             */
+            lang: "uz" | "ru" | "en";
+        };
+        /**
+         * CaptionUrlView
+         * @description A short-lived URL of one WebVTT caption track.
+         */
+        CaptionUrlView: {
+            /** Default */
+            default: boolean;
+            /** Label */
+            label: string;
+            /**
+             * Lang
+             * @enum {string}
+             */
+            lang: "uz" | "ru" | "en";
+            /** Url */
+            url: string;
+        };
+        /**
          * Card
          * @description A flash card of a flash card block.
          */
@@ -23018,6 +24906,53 @@ export interface components {
             items: components["schemas"]["CaseloadItemOut"][];
         };
         /**
+         * CatalogEntryOut
+         * @description A published LMS course or library book.
+         */
+        CatalogEntryOut: {
+            /** Cover Url */
+            cover_url: string | null;
+            /**
+             * Enrolled
+             * @description Courses only: the caller takes it.
+             */
+            enrolled: boolean;
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "course" | "book";
+            /**
+             * Language
+             * @description Books only.
+             */
+            language: string | null;
+            /**
+             * Pages
+             * @description Books only.
+             */
+            pages: number | null;
+            /**
+             * Summary
+             * @description Course summary or the book's authors.
+             */
+            summary: string;
+            /** Title */
+            title: string;
+            /**
+             * Url
+             * @description Absolute link to the LMS course or library page.
+             */
+            url: string;
+            /**
+             * Year
+             * @description Books only: year of publication.
+             */
+            year: number | null;
+        };
+        /**
          * CatalogFactIn
          * @description One international fact with the page it comes from.
          */
@@ -23182,6 +25117,16 @@ export interface components {
              * @description Site domain without scheme, e.g. `ox.ac.uk`.
              */
             website_domain?: unknown;
+        };
+        /**
+         * CatalogPageOut
+         * @description One page of the catalogue.
+         */
+        CatalogPageOut: {
+            /** Has More */
+            has_more: boolean;
+            /** Items */
+            items: components["schemas"]["CatalogEntryOut"][];
         };
         /**
          * CatalogProgramIn
@@ -24163,6 +26108,55 @@ export interface components {
             quote: string;
         };
         /**
+         * CodeBlock
+         * @description A runnable code panel with starter code, an author solution and tests.
+         */
+        "CodeBlock-Input": {
+            /**
+             * Graded
+             * @default false
+             */
+            graded?: boolean;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Instructions
+             * @default
+             */
+            instructions?: string;
+            /**
+             * Language
+             * @default python
+             * @enum {string}
+             */
+            language?: "python" | "javascript" | "sql";
+            /**
+             * Solution
+             * @default
+             */
+            solution?: string;
+            /**
+             * Starter
+             * @default
+             */
+            starter?: string;
+            /** Tests */
+            tests?: components["schemas"]["CodeTest"][];
+            /**
+             * Time Limit Ms
+             * @default 5000
+             */
+            time_limit_ms?: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "code";
+        };
+        /**
          * CodeBody
          * @description A one-time code.
          */
@@ -24189,6 +26183,32 @@ export interface components {
              * @default
              */
             starter?: string;
+        };
+        /**
+         * CodeTest
+         * @description A test of a code block; hidden tests show only their name to students.
+         */
+        CodeTest: {
+            /**
+             * Code
+             * @default
+             */
+            code?: string;
+            /**
+             * Hidden
+             * @default false
+             */
+            hidden?: boolean;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Name
+             * @default
+             */
+            name?: string;
         };
         /**
          * CollectionDetailResponse
@@ -24936,7 +26956,11 @@ export interface components {
             text?: components["schemas"]["FactText"];
             /** Values */
             values?: {
-                [key: string]: boolean | number | string;
+                [key: string]: boolean | number | string | {
+                    [key: string]: components["schemas"]["EmployerOut"][];
+                } | {
+                    [key: string]: number;
+                } | null;
             };
         };
         /**
@@ -24988,6 +27012,93 @@ export interface components {
              * @default false
              */
             verified?: boolean;
+        };
+        /**
+         * CountryInstitutionOut
+         * @description A catalog institution of the country.
+         */
+        CountryInstitutionOut: {
+            /** City */
+            city: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Logo Url */
+            logo_url: string | null;
+            /** Name */
+            name: string;
+            /** Rankings */
+            rankings: components["schemas"]["CountryRankingOut"][];
+            /** Verified */
+            verified: boolean;
+        };
+        /**
+         * CountryOverviewListOut
+         * @description Countries with facts or catalog institutions.
+         */
+        CountryOverviewListOut: {
+            /** Items */
+            items: components["schemas"]["CountryOverviewOut"][];
+        };
+        /**
+         * CountryOverviewOut
+         * @description One card of the student country list.
+         */
+        CountryOverviewOut: {
+            /** As Of */
+            as_of: string | null;
+            /** Country */
+            country: string;
+            /** Coverage */
+            coverage: number;
+            /** Institution Count */
+            institution_count: number;
+            /** Median Salary Usd */
+            median_salary_usd: number | null;
+            /** Region */
+            region: string;
+            /** Scores */
+            scores: {
+                [key: string]: number;
+            };
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "missing" | "draft" | "verified";
+        };
+        /**
+         * CountryProfileOut
+         * @description The student country page: facts (null when none yet) and institutions.
+         */
+        CountryProfileOut: {
+            /** Country */
+            country: string;
+            facts: components["schemas"]["CountryFactsOut"] | null;
+            /** Highlight */
+            highlight: string[];
+            /** Institution Count */
+            institution_count: number;
+            /** Institutions */
+            institutions: components["schemas"]["CountryInstitutionOut"][];
+            /** Region */
+            region: string;
+        };
+        /**
+         * CountryRankingOut
+         * @description One ranking of an institution (`overall` or a subject).
+         */
+        CountryRankingOut: {
+            /** Rank */
+            rank: number | string;
+            /** Subject */
+            subject: string;
+            /** System */
+            system: string;
+            /** Year */
+            year?: number | null;
         };
         /**
          * CountrySummaryListOut
@@ -25336,6 +27447,8 @@ export interface components {
             summary: string;
             /** Tags */
             tags: string[];
+            /** Tutor Enabled */
+            tutor_enabled: boolean;
             /** Visibility */
             visibility: string;
             /** Workload Hours Per Week */
@@ -26801,6 +28914,40 @@ export interface components {
             };
         };
         /**
+         * EarnedBadgeView
+         * @description A badge the learner earned.
+         */
+        EarnedBadgeView: {
+            /**
+             * Award Id
+             * Format: uuid
+             */
+            award_id: string;
+            /**
+             * Awarded At
+             * Format: date-time
+             */
+            awarded_at: string;
+            badge: components["schemas"]["BadgePublicView"];
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Course Title */
+            course_title: string;
+        };
+        /**
+         * EdgeIo
+         * @description `before` is a prerequisite of `after` (node ids).
+         */
+        EdgeIo: {
+            /** After */
+            after: string;
+            /** Before */
+            before: string;
+        };
+        /**
          * EffectiveOut
          * @description What the calls of a pipeline use now.
          */
@@ -27235,6 +29382,308 @@ export interface components {
             to_date: string | null;
         };
         /**
+         * EmployerOut
+         * @description A notable employer of a field (`employers.values.fields.<field>[]`).
+         */
+        EmployerOut: {
+            /** Name */
+            name: string;
+            /** Sector */
+            sector?: string | null;
+            /** Url */
+            url?: string | null;
+        };
+        /**
+         * EngagementAnswerResultView
+         * @description Feedback on a review answer.
+         */
+        EngagementAnswerResultView: {
+            /** Correct */
+            correct: boolean;
+            /** Correct Answer */
+            correct_answer: {
+                [key: string]: unknown;
+            } | null;
+            /** Explanation */
+            explanation: string | null;
+            /**
+             * Next Due
+             * Format: date-time
+             */
+            next_due: string;
+            /** Xp */
+            xp: number;
+        };
+        /**
+         * EngagementCardView
+         * @description A flashcard to recall.
+         */
+        EngagementCardView: {
+            /** Back */
+            back: string;
+            /** Front */
+            front: string;
+        };
+        /**
+         * EngagementGradeResultView
+         * @description Result of a flashcard rating.
+         */
+        EngagementGradeResultView: {
+            /**
+             * Next Due
+             * Format: date-time
+             */
+            next_due: string;
+            /** Xp */
+            xp: number;
+        };
+        /**
+         * EngagementMasterySectionView
+         * @description A section with its mastery.
+         */
+        EngagementMasterySectionView: {
+            /** Mastery Pct */
+            mastery_pct: number | null;
+            /** Section Id */
+            section_id: string;
+            /** Steps */
+            steps: components["schemas"]["EngagementMasteryStepView"][];
+            /** Title */
+            title: string;
+            /** Unlocked */
+            unlocked: boolean;
+        };
+        /**
+         * EngagementMasteryStepView
+         * @description A step in the mastery map.
+         */
+        EngagementMasteryStepView: {
+            /** Best Pct */
+            best_pct: number | null;
+            /** Completed */
+            completed: boolean;
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * EngagementMasteryView
+         * @description The mastery map of a course.
+         */
+        EngagementMasteryView: {
+            /** Sections */
+            sections: components["schemas"]["EngagementMasterySectionView"][];
+            /** Unlock Threshold Pct */
+            unlock_threshold_pct: number | null;
+        };
+        /**
+         * EngagementQuestInput
+         * @description A quest as staff edit it.
+         */
+        EngagementQuestInput: {
+            /** Class Target */
+            class_target: number;
+            /**
+             * Ends On
+             * Format: date
+             */
+            ends_on: string;
+            /**
+             * Goal Kind
+             * @enum {string}
+             */
+            goal_kind: "steps" | "xp" | "review_days";
+            /**
+             * Starts On
+             * Format: date
+             */
+            starts_on: string;
+            /** Target */
+            target: number;
+            /** Title */
+            title: string;
+        };
+        /**
+         * EngagementQuestListView
+         * @description Quests.
+         */
+        EngagementQuestListView: {
+            /** Items */
+            items: components["schemas"]["EngagementQuestView"][];
+        };
+        /**
+         * EngagementQuestView
+         * @description A class quest with the learner's and the class's progress (no ranking).
+         */
+        EngagementQuestView: {
+            /** Class Progress */
+            class_progress: number;
+            /** Class Target */
+            class_target: number;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Course Title */
+            course_title: string;
+            /** Done */
+            done: boolean;
+            /**
+             * Ends On
+             * Format: date
+             */
+            ends_on: string;
+            /**
+             * Goal Kind
+             * @enum {string}
+             */
+            goal_kind: "steps" | "xp" | "review_days";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** My Progress */
+            my_progress: number;
+            /**
+             * Starts On
+             * Format: date
+             */
+            starts_on: string;
+            /** Target */
+            target: number;
+            /** Title */
+            title: string;
+        };
+        /**
+         * EngagementReviewItemView
+         * @description One item of the daily review.
+         */
+        EngagementReviewItemView: {
+            card: components["schemas"]["EngagementCardView"] | null;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Item Id */
+            item_id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "question" | "flashcard";
+            /** Question */
+            question: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+        };
+        /**
+         * EngagementReviewQueueView
+         * @description Today's review queue (at most 20 answers a day).
+         */
+        EngagementReviewQueueView: {
+            /** Items */
+            items: components["schemas"]["EngagementReviewItemView"][];
+        };
+        /**
+         * EngagementSettingsView
+         * @description Course engagement settings.
+         */
+        EngagementSettingsView: {
+            /** Unlock Threshold Pct */
+            unlock_threshold_pct?: number | null;
+        };
+        /**
+         * EngagementStreakView
+         * @description School-week streak.
+         */
+        EngagementStreakView: {
+            /** Best */
+            best: number;
+            /** Current */
+            current: number;
+            /** Freezes */
+            freezes: number;
+            /** Today Done */
+            today_done: boolean;
+            /** Week */
+            week: components["schemas"]["EngagementWeekDayView"][];
+        };
+        /**
+         * EngagementSummaryView
+         * @description XP, level, streak, due reviews and the weekly goal.
+         */
+        EngagementSummaryView: {
+            /** Level */
+            level: number;
+            /** Review Due */
+            review_due: number;
+            streak: components["schemas"]["EngagementStreakView"];
+            /** Weekly Goal Days */
+            weekly_goal_days: number;
+            /** Xp For Next */
+            xp_for_next: number;
+            /** Xp Into Level */
+            xp_into_level: number;
+            /** Xp Total */
+            xp_total: number;
+        };
+        /**
+         * EngagementWeekDayView
+         * @description One day of the current Mon-Sun week.
+         */
+        EngagementWeekDayView: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "done" | "freeze" | "missed" | "pending" | "bonus";
+        };
+        /**
+         * EngagementXpItemView
+         * @description One XP award.
+         */
+        EngagementXpItemView: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** Ref */
+            ref: string;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "step" | "test" | "review" | "quest" | "exam" | "widget";
+            /** Xp */
+            xp: number;
+        };
+        /**
+         * EngagementXpListView
+         * @description Newest XP awards.
+         */
+        EngagementXpListView: {
+            /** Items */
+            items: components["schemas"]["EngagementXpItemView"][];
+        };
+        /**
          * EnvDefaultOut
          * @description What the pipeline uses without a runtime route.
          */
@@ -27627,6 +30076,52 @@ export interface components {
             note: string;
         };
         /**
+         * ExamBlock
+         * @description A Bluebook-style digital test (SAT, AP or custom) with timed modules.
+         */
+        "ExamBlock-Input": {
+            /**
+             * Calculator
+             * @default none
+             * @enum {string}
+             */
+            calculator?: "none" | "scientific" | "graphing";
+            /**
+             * Directions
+             * @default
+             */
+            directions?: string;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Kind
+             * @default custom
+             * @enum {string}
+             */
+            kind?: "sat" | "ap" | "custom";
+            /**
+             * Reference Sheet
+             * @default
+             */
+            reference_sheet?: string;
+            scaling?: components["schemas"]["ExamScaling"] | null;
+            /** Sections */
+            sections?: components["schemas"]["ExamSection"][];
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "exam";
+        };
+        /**
          * ExamCertificateOut
          * @description A standard certificate of the platform that no catalog test matches.
          */
@@ -27701,6 +30196,68 @@ export interface components {
              * Format: date
              */
             test_date: string;
+        };
+        /**
+         * ExamModule
+         * @description A timed module of an exam section (Bluebook: section 1, module 2).
+         */
+        ExamModule: {
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /** Questions */
+            questions?: components["schemas"]["Question"][];
+            /**
+             * Time Limit Sec
+             * @default 1920
+             */
+            time_limit_sec?: number;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+        };
+        /**
+         * ExamScaling
+         * @description The scaled score range of every section (SAT: 200 to 800).
+         */
+        ExamScaling: {
+            /**
+             * Max Score
+             * @default 800
+             */
+            max_score?: number;
+            /**
+             * Min Score
+             * @default 200
+             */
+            min_score?: number;
+        };
+        /**
+         * ExamSection
+         * @description A section of an exam: modules taken in order, optionally adaptive.
+         */
+        ExamSection: {
+            /**
+             * Adaptive
+             * @default false
+             */
+            adaptive?: boolean;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /** Modules */
+            modules?: components["schemas"]["ExamModule"][];
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
         };
         /**
          * ExcludedRefResponse
@@ -28898,7 +31455,7 @@ export interface components {
          * @description Why a file was uploaded.
          * @enum {string}
          */
-        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo" | "certificate" | "feedback" | "admission_document";
+        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo" | "certificate" | "feedback" | "admission_document" | "lms_ai_review" | "lms_captions";
         /**
          * FileShareLinkResponse
          * @description A new token: it is shown this once, only its hash is stored.
@@ -30199,6 +32756,145 @@ export interface components {
             serials: string[];
         };
         /**
+         * HtmlBlock
+         * @description An author-uploaded custom HTML widget, served sandboxed.
+         */
+        "HtmlBlock-Input": {
+            /**
+             * Allow Fullscreen
+             * @default false
+             */
+            allow_fullscreen?: boolean;
+            /**
+             * Entry
+             * @default index.html
+             * @constant
+             */
+            entry?: "index.html";
+            /**
+             * Graded
+             * @default false
+             */
+            graded?: boolean;
+            /**
+             * Height Px
+             * @default 600
+             */
+            height_px?: number;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Package Id
+             * @default
+             */
+            package_id?: string;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "html";
+        };
+        /**
+         * HtmlWidgetFileView
+         * @description One file of an uploaded HTML widget.
+         */
+        HtmlWidgetFileView: {
+            /** Byte Size */
+            byte_size: number;
+            /** Content Type */
+            content_type: string;
+            /** Path */
+            path: string;
+        };
+        /**
+         * HtmlWidgetLaunchResponse
+         * @description The signed URL of an HTML widget.
+         */
+        HtmlWidgetLaunchResponse: {
+            /** Base Url */
+            base_url: string;
+            /** Entry Url */
+            entry_url: string;
+            /** Expires In */
+            expires_in: number;
+        };
+        /**
+         * HtmlWidgetLaunchView
+         * @description Where the frame loads an HTML widget from (signed, short-lived).
+         */
+        HtmlWidgetLaunchView: {
+            /** Base Url */
+            base_url: string;
+            /** Entry Url */
+            entry_url: string;
+            /** Expires In */
+            expires_in: number;
+        };
+        /**
+         * HtmlWidgetPackageResponse
+         * @description An uploaded HTML widget.
+         */
+        HtmlWidgetPackageResponse: {
+            /** Byte Size */
+            byte_size: number;
+            /** File Count */
+            file_count: number;
+            /** Files */
+            files: components["schemas"]["HtmlWidgetFileView"][];
+            /** Package Id */
+            package_id: string;
+        };
+        /**
+         * I18nText
+         * @description A longer text in each language; empty when not written.
+         */
+        I18nText: {
+            /**
+             * En
+             * @default
+             */
+            en?: string;
+            /**
+             * Ru
+             * @default
+             */
+            ru?: string;
+            /**
+             * Uz
+             * @default
+             */
+            uz?: string;
+        };
+        /**
+         * I18nTitle
+         * @description A short text in each language; empty when not written.
+         */
+        I18nTitle: {
+            /**
+             * En
+             * @default
+             */
+            en?: string;
+            /**
+             * Ru
+             * @default
+             */
+            ru?: string;
+            /**
+             * Uz
+             * @default
+             */
+            uz?: string;
+        };
+        /**
          * IdeaFitIn
          * @description An idea text to match against the prompts.
          */
@@ -30975,6 +33671,14 @@ export interface components {
             severity: "error" | "warning";
         };
         /**
+         * IssueResult
+         * @description How many learners hold a valid certificate.
+         */
+        IssueResult: {
+            /** Issued */
+            issued: number;
+        };
+        /**
          * IssuedFeedOut
          * @description A new feed. `path` is relative to the API origin; keep it private.
          */
@@ -30982,6 +33686,37 @@ export interface components {
             /** Path */
             path: string;
             status: components["schemas"]["FeedStatusOut"];
+        };
+        /**
+         * IssuedItem
+         * @description An issued certificate in the staff list.
+         */
+        IssuedItem: {
+            /** Code */
+            code: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Issued At
+             * Format: date-time
+             */
+            issued_at: string;
+            /** Revoked */
+            revoked: boolean;
+            student: components["schemas"]["StudentRef"];
+            /** Tier */
+            tier: string;
+        };
+        /**
+         * IssuedList
+         * @description Certificates of a course.
+         */
+        IssuedList: {
+            /** Items */
+            items: components["schemas"]["IssuedItem"][];
         };
         ItemCardSchema: {
             [key: string]: unknown;
@@ -31752,6 +34487,18 @@ export interface components {
          */
         LabelRunStatus: "idle" | "running" | "failed";
         /**
+         * Labels
+         * @description A text in every locale.
+         */
+        Labels: {
+            /** En */
+            en: string;
+            /** Ru */
+            ru: string;
+            /** Uz */
+            uz: string;
+        };
+        /**
          * LatestCheckOut
          * @description The stored latest check; `stale` when the draft changed since.
          */
@@ -31802,6 +34549,52 @@ export interface components {
             word_count: number;
             /** Word Limit */
             word_limit: number | null;
+        };
+        /**
+         * LearningAiReviewBlockView
+         * @description An AI review of my work; the teacher's prompt and files are not included.
+         */
+        LearningAiReviewBlockView: {
+            /** Accepted Types */
+            accepted_types?: ("pdf" | "docx" | "pptx" | "image" | "text")[];
+            /** Criteria */
+            criteria?: components["schemas"]["LearningAiReviewCriterionView"][];
+            /** Id */
+            id: string;
+            /**
+             * Instructions Public
+             * @default
+             */
+            instructions_public?: string;
+            /** Max Submissions */
+            max_submissions: number;
+            /**
+             * Output Template
+             * @enum {string}
+             */
+            output_template: "review_table" | "rubric_checklist" | "strengths_cards" | "image_gallery";
+            /** Passed */
+            passed?: boolean | null;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "ai_review";
+        };
+        /**
+         * LearningAiReviewCriterionView
+         * @description A public criterion of an AI review: its name and top score.
+         */
+        LearningAiReviewCriterionView: {
+            /** Max Score */
+            max_score: number;
+            /** Name */
+            name: string;
         };
         /**
          * LearningAnswerBody
@@ -31965,7 +34758,10 @@ export interface components {
         };
         /**
          * LearningBlockResultView
-         * @description My result of an H5P or interactive video block (best H5P score).
+         * @description My result of an H5P, interactive video, code or HTML block (best score).
+         *
+         *     ``verified`` is false for code and HTML widgets: the browser graded them, so
+         *     the score is self-reported and earns no points.
          */
         LearningBlockResultView: {
             /**
@@ -31983,6 +34779,29 @@ export interface components {
              * @default 0
              */
             score?: number;
+            /**
+             * Verified
+             * @default true
+             */
+            verified?: boolean;
+        };
+        /**
+         * LearningCaptionTrackView
+         * @description A WebVTT caption track of a video block (its file comes from `/captions`).
+         */
+        LearningCaptionTrackView: {
+            /**
+             * Default
+             * @default false
+             */
+            default?: boolean;
+            /** Label */
+            label: string;
+            /**
+             * Lang
+             * @enum {string}
+             */
+            lang: "uz" | "ru" | "en";
         };
         /**
          * LearningCardCountsView
@@ -32032,6 +34851,72 @@ export interface components {
             front: string;
             /** Id */
             id: string;
+        };
+        /**
+         * LearningCodeBlockView
+         * @description A runnable code panel, without the author's solution.
+         */
+        LearningCodeBlockView: {
+            /**
+             * Graded
+             * @default false
+             */
+            graded?: boolean;
+            /** Id */
+            id: string;
+            /**
+             * Instructions
+             * @default
+             */
+            instructions?: string;
+            /**
+             * Language
+             * @enum {string}
+             */
+            language: "python" | "javascript" | "sql";
+            /**
+             * Passed
+             * @default false
+             */
+            passed?: boolean;
+            result?: components["schemas"]["LearningBlockResultView"] | null;
+            /**
+             * Starter
+             * @default
+             */
+            starter?: string;
+            /** Tests */
+            tests?: components["schemas"]["LearningCodeTestView"][];
+            /** Time Limit Ms */
+            time_limit_ms: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "code";
+        };
+        /**
+         * LearningCodeTestView
+         * @description A code block test; a hidden test keeps its name and has empty code.
+         */
+        LearningCodeTestView: {
+            /**
+             * Code
+             * @default
+             */
+            code?: string;
+            /**
+             * Hidden
+             * @default false
+             */
+            hidden?: boolean;
+            /** Id */
+            id: string;
+            /**
+             * Name
+             * @default
+             */
+            name?: string;
         };
         /**
          * LearningContactView
@@ -32190,6 +35075,318 @@ export interface components {
             /** Progress Pct */
             progress_pct: number;
             user: components["schemas"]["LearningPersonRefView"];
+            /**
+             * Widget Results
+             * @default []
+             */
+            widget_results?: components["schemas"]["LearningStudentWidgetResultView"][];
+        };
+        /**
+         * LearningExamAnswersBody
+         * @description `PUT .../blocks/{block_id}/exam/answers`: answers of the open module.
+         */
+        LearningExamAnswersBody: {
+            /** Answers */
+            answers: {
+                [key: string]: components["schemas"]["LearningAnswerBody"];
+            };
+            /** Module Id */
+            module_id: string;
+        };
+        /**
+         * LearningExamBlockView
+         * @description An exam block: structure, directions and timing; no questions or answers.
+         */
+        LearningExamBlockView: {
+            /**
+             * Calculator
+             * @enum {string}
+             */
+            calculator: "none" | "scientific" | "graphing";
+            /**
+             * Directions
+             * @default
+             */
+            directions?: string;
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "sat" | "ap" | "custom";
+            /**
+             * Passed
+             * @default false
+             */
+            passed?: boolean;
+            /**
+             * Reference Sheet
+             * @default
+             */
+            reference_sheet?: string;
+            result?: components["schemas"]["LearningBlockResultView"] | null;
+            scaling?: components["schemas"]["LearningExamScalingView"] | null;
+            /** Sections */
+            sections?: components["schemas"]["LearningExamSectionView"][];
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "exam";
+        };
+        /**
+         * LearningExamModuleRefView
+         * @description Where a module sits in an exam (1-based numbers, as Bluebook shows them).
+         */
+        LearningExamModuleRefView: {
+            /** Module Id */
+            module_id: string;
+            /** Module No */
+            module_no: number;
+            /**
+             * Module Title
+             * @default
+             */
+            module_title?: string;
+            /** Questions Count */
+            questions_count: number;
+            /** Section Id */
+            section_id: string;
+            /** Section No */
+            section_no: number;
+            /**
+             * Section Title
+             * @default
+             */
+            section_title?: string;
+            /** Time Limit Sec */
+            time_limit_sec: number;
+        };
+        /**
+         * LearningExamModuleReviewView
+         * @description A finished module with my answers, correct answers and explanations.
+         */
+        LearningExamModuleReviewView: {
+            /** Answers */
+            answers: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+            /**
+             * Late
+             * @default false
+             */
+            late?: boolean;
+            /** Max Score */
+            max_score: number;
+            /** Module Id */
+            module_id: string;
+            /** Module No */
+            module_no: number;
+            /**
+             * Module Title
+             * @default
+             */
+            module_title?: string;
+            /** Questions */
+            questions: components["schemas"]["LearningAttemptQuestionView"][];
+            /** Questions Count */
+            questions_count: number;
+            /** Review */
+            review: components["schemas"]["LearningReviewItemView"][];
+            /** Score */
+            score: number;
+            /** Section Id */
+            section_id: string;
+            /** Section No */
+            section_no: number;
+            /**
+             * Section Title
+             * @default
+             */
+            section_title?: string;
+            /** Time Limit Sec */
+            time_limit_sec: number;
+        };
+        /**
+         * LearningExamModuleRunView
+         * @description The open module: its questions (no answers) and the server-side timer.
+         */
+        LearningExamModuleRunView: {
+            /** Answers */
+            answers: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+            /**
+             * Deadline At
+             * Format: date-time
+             */
+            deadline_at: string;
+            /** Module Id */
+            module_id: string;
+            /** Module No */
+            module_no: number;
+            /**
+             * Module Title
+             * @default
+             */
+            module_title?: string;
+            /** Questions */
+            questions: components["schemas"]["LearningAttemptQuestionView"][];
+            /** Questions Count */
+            questions_count: number;
+            /** Section Id */
+            section_id: string;
+            /** Section No */
+            section_no: number;
+            /**
+             * Section Title
+             * @default
+             */
+            section_title?: string;
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /** Time Limit Sec */
+            time_limit_sec: number;
+        };
+        /**
+         * LearningExamModuleView
+         * @description A timed module of an exam section, without its questions.
+         */
+        LearningExamModuleView: {
+            /** Id */
+            id: string;
+            /** Questions Count */
+            questions_count: number;
+            /** Time Limit Sec */
+            time_limit_sec: number;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+        };
+        /**
+         * LearningExamResultView
+         * @description The graded exam: section scores, total and the review of every module.
+         */
+        LearningExamResultView: {
+            /**
+             * Finished At
+             * Format: date-time
+             */
+            finished_at: string;
+            /** Max Score */
+            max_score: number;
+            /** Modules */
+            modules: components["schemas"]["LearningExamModuleReviewView"][];
+            /** Scaled Max */
+            scaled_max?: number | null;
+            /** Scaled Min */
+            scaled_min?: number | null;
+            /** Scaled Total */
+            scaled_total?: number | null;
+            /** Score */
+            score: number;
+            /** Sections */
+            sections: components["schemas"]["LearningExamSectionScoreView"][];
+        };
+        /**
+         * LearningExamScalingView
+         * @description The scaled score range of every section.
+         */
+        LearningExamScalingView: {
+            /** Max Score */
+            max_score: number;
+            /** Min Score */
+            min_score: number;
+        };
+        /**
+         * LearningExamSectionScoreView
+         * @description The raw and scaled score of one section.
+         */
+        LearningExamSectionScoreView: {
+            /** Max Score */
+            max_score: number;
+            /** Scaled Score */
+            scaled_score?: number | null;
+            /** Score */
+            score: number;
+            /** Section Id */
+            section_id: string;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+        };
+        /**
+         * LearningExamSectionView
+         * @description A section of an exam.
+         */
+        LearningExamSectionView: {
+            /**
+             * Adaptive
+             * @default false
+             */
+            adaptive?: boolean;
+            /** Id */
+            id: string;
+            /** Modules */
+            modules?: components["schemas"]["LearningExamModuleView"][];
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+        };
+        /**
+         * LearningExamSessionView
+         * @description My sitting of an exam block; questions only of the module that is open.
+         */
+        LearningExamSessionView: {
+            /** Block Id */
+            block_id: string;
+            current?: components["schemas"]["LearningExamModuleRunView"] | null;
+            /** Modules Done */
+            modules_done: number;
+            next?: components["schemas"]["LearningExamModuleRefView"] | null;
+            /**
+             * Next Is New Section
+             * @default false
+             */
+            next_is_new_section?: boolean;
+            result?: components["schemas"]["LearningExamResultView"] | null;
+            /**
+             * Server Now
+             * Format: date-time
+             */
+            server_now: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "not_started" | "in_module" | "between" | "finished";
+        };
+        /**
+         * LearningExamSubmitBody
+         * @description `POST .../blocks/{block_id}/exam/submit`: the module being submitted.
+         */
+        LearningExamSubmitBody: {
+            /** Module Id */
+            module_id: string;
         };
         /**
          * LearningFlashcardsBlockView
@@ -32338,6 +35535,60 @@ export interface components {
             statement: {
                 [key: string]: unknown;
             };
+        };
+        /**
+         * LearningHiddenTestsView
+         * @description The hidden tests of a graded code block, fetched when the student submits.
+         */
+        LearningHiddenTestsView: {
+            /** Tests */
+            tests?: components["schemas"]["LearningCodeTestView"][];
+        };
+        /**
+         * LearningHtmlBlockView
+         * @description An author-uploaded HTML widget.
+         */
+        LearningHtmlBlockView: {
+            /**
+             * Allow Fullscreen
+             * @default false
+             */
+            allow_fullscreen?: boolean;
+            /**
+             * Entry
+             * @default index.html
+             */
+            entry?: string;
+            /**
+             * Graded
+             * @default false
+             */
+            graded?: boolean;
+            /** Height Px */
+            height_px: number;
+            /** Id */
+            id: string;
+            /**
+             * Package Id
+             * @default
+             */
+            package_id?: string;
+            /**
+             * Passed
+             * @default false
+             */
+            passed?: boolean;
+            result?: components["schemas"]["LearningBlockResultView"] | null;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "html";
         };
         /**
          * LearningInteractionAnswerBody
@@ -32742,7 +35993,7 @@ export interface components {
          */
         LearningStepView: {
             /** Blocks */
-            blocks: (components["schemas"]["LearningTextBlockView"] | components["schemas"]["LearningVideoBlockView"] | components["schemas"]["LearningQuizBlockView"] | components["schemas"]["LearningFlashcardsBlockView"] | components["schemas"]["LearningH5PBlockView"] | components["schemas"]["LearningInteractiveVideoBlockView"])[];
+            blocks: (components["schemas"]["LearningTextBlockView"] | components["schemas"]["LearningVideoBlockView"] | components["schemas"]["LearningQuizBlockView"] | components["schemas"]["LearningFlashcardsBlockView"] | components["schemas"]["LearningH5PBlockView"] | components["schemas"]["LearningInteractiveVideoBlockView"] | components["schemas"]["LearningExamBlockView"] | components["schemas"]["LearningCodeBlockView"] | components["schemas"]["LearningHtmlBlockView"] | components["schemas"]["LearningAiReviewBlockView"])[];
             /**
              * Blocks Passed
              * @default 0
@@ -32810,6 +36061,25 @@ export interface components {
             submitted_at: string;
         };
         /**
+         * LearningStudentWidgetResultView
+         * @description A graded code or HTML widget result of a student (browser-graded).
+         */
+        LearningStudentWidgetResultView: {
+            /** Block Id */
+            block_id: string;
+            /** Passed */
+            passed: boolean;
+            /** Score Pct */
+            score_pct: number;
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+            /** Verified */
+            verified: boolean;
+        };
+        /**
          * LearningTextBlockView
          * @description A text block of a step.
          */
@@ -32839,6 +36109,8 @@ export interface components {
              * @default
              */
             caption?: string;
+            /** Captions */
+            captions?: components["schemas"]["LearningCaptionTrackView"][];
             /** File Id */
             file_id?: string | null;
             /** Id */
@@ -32860,6 +36132,16 @@ export interface components {
             type: "video";
             /** Url */
             url: string;
+        };
+        /**
+         * LearningWidgetResultBody
+         * @description `POST .../blocks/{block_id}/result`: a graded code or HTML widget's score.
+         */
+        LearningWidgetResultBody: {
+            /** Passed */
+            passed: boolean;
+            /** Score Pct */
+            score_pct: number;
         };
         /**
          * LegalDocumentListOut
@@ -33728,6 +37010,42 @@ export interface components {
             ru?: string | null;
             /** Uz */
             uz?: string | null;
+        };
+        /**
+         * LocalizedText
+         * @description A text in the three interface languages.
+         */
+        LocalizedText: {
+            /**
+             * En
+             * @default
+             */
+            en?: string;
+            /**
+             * Ru
+             * @default
+             */
+            ru?: string;
+            /**
+             * Uz
+             * @default
+             */
+            uz?: string;
+        };
+        /**
+         * LockedBadgeView
+         * @description A badge not earned yet; `hint` is the rule event key for the client.
+         */
+        LockedBadgeView: {
+            badge: components["schemas"]["BadgePublicView"];
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Course Title */
+            course_title: string;
+            hint: components["schemas"]["BadgeEvent"];
         };
         /**
          * LogIssue
@@ -35038,6 +38356,26 @@ export interface components {
             source_ids?: string[] | null;
         };
         /**
+         * MineResponse
+         * @description The caller's standing in the course.
+         */
+        MineResponse: {
+            certificate: components["schemas"]["MyCertificate"] | null;
+            /** Eligible */
+            eligible: boolean;
+            /** Enabled */
+            enabled: boolean;
+            next_tier: components["schemas"]["TierBody"] | null;
+            /** Passing Pct */
+            passing_pct: number;
+            /** Progress Pct */
+            progress_pct: number;
+            /** Required Steps Left */
+            required_steps_left: number;
+            /** Score Pct */
+            score_pct: number;
+        };
+        /**
          * MissingAttendanceResponse
          * @description A teacher and the lessons without submitted attendance.
          */
@@ -35185,6 +38523,43 @@ export interface components {
             date: string;
             /** Follows Weekday */
             follows_weekday: number;
+        };
+        /**
+         * MyBadgesView
+         * @description The learner's earned and locked badges and the awards not celebrated yet.
+         */
+        MyBadgesView: {
+            /** Earned */
+            earned: components["schemas"]["EarnedBadgeView"][];
+            /** Locked */
+            locked: components["schemas"]["LockedBadgeView"][];
+            /** Unseen */
+            unseen: string[];
+        };
+        /**
+         * MyCertificate
+         * @description The caller's certificate.
+         */
+        MyCertificate: {
+            /** Code */
+            code: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Issued At
+             * Format: date-time
+             */
+            issued_at: string;
+            /** Pdf Url */
+            pdf_url: string;
+            /** Revoked */
+            revoked: boolean;
+            tier: components["schemas"]["Labels"];
+            /** Verify Url */
+            verify_url: string;
         };
         /**
          * MyErasureOut
@@ -35536,6 +38911,80 @@ export interface components {
          */
         NextSuggestionResponse: {
             suggestion: components["schemas"]["NextSectionResponse"] | null;
+        };
+        /**
+         * NodeIn
+         * @description One step; `id` is a short key unique in the trajectory.
+         */
+        NodeIn: {
+            description?: components["schemas"]["I18nText"];
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "topic" | "course" | "book" | "project" | "exam" | "milestone";
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "beginner" | "intermediate" | "advanced";
+            /**
+             * Optional
+             * @default false
+             */
+            optional?: boolean;
+            /** Resources */
+            resources?: components["schemas"]["ResourceIo"][];
+            title: components["schemas"]["I18nTitle"];
+        };
+        /**
+         * NodeOut
+         * @description One step as stored; `position` is its order in the stage.
+         */
+        NodeOut: {
+            description: components["schemas"]["I18nText"];
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "topic" | "course" | "book" | "project" | "exam" | "milestone";
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "beginner" | "intermediate" | "advanced";
+            /** Optional */
+            optional: boolean;
+            /** Position */
+            position: number;
+            /** Resources */
+            resources: components["schemas"]["ResourceOut"][];
+            title: components["schemas"]["I18nTitle"];
+        };
+        /**
+         * NodeProgressIn
+         * @description A new status of a node; null clears it.
+         */
+        NodeProgressIn: {
+            /** Status */
+            status: ("done" | "in_progress" | "skipped") | null;
+        };
+        /**
+         * NodeProgressOut
+         * @description The caller's status of one node.
+         */
+        NodeProgressOut: {
+            /** Node Id */
+            node_id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "done" | "in_progress" | "skipped";
         };
         /**
          * NoteIn
@@ -36982,6 +40431,48 @@ export interface components {
             strength: "strong" | "ok" | "weak";
         };
         /**
+         * PartnerBody
+         * @description A partner of a course.
+         */
+        PartnerBody: {
+            /**
+             * Co Issued
+             * @default true
+             */
+            co_issued?: boolean;
+            /** Name */
+            name: string;
+            /** Url */
+            url?: string | null;
+        };
+        /**
+         * PartnerList
+         * @description Partners of a course.
+         */
+        PartnerList: {
+            /** Items */
+            items: components["schemas"]["PartnerResponse"][];
+        };
+        /**
+         * PartnerResponse
+         * @description A partner with its logo link.
+         */
+        PartnerResponse: {
+            /** Co Issued */
+            co_issued: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Logo Url */
+            logo_url: string | null;
+            /** Name */
+            name: string;
+            /** Url */
+            url: string | null;
+        };
+        /**
          * PassageDetailResponse
          * @description `PassageDetail`: a passage with the passages before and after it.
          */
@@ -38046,6 +41537,10 @@ export interface components {
             lessons_prompt_enabled?: boolean | null;
             /** Limit Ai Tracing */
             limit_ai_tracing?: boolean | null;
+            /** Lms Nudges */
+            lms_nudges?: ("lms_review_due" | "lms_streak_at_risk" | "lms_deadline_soon")[] | null;
+            /** Lms Skin */
+            lms_skin?: ("classic" | "playful") | null;
             /** Locale */
             locale?: ("uz" | "ru" | "en") | null;
             /** Mail Forward To Telegram */
@@ -39088,6 +42583,34 @@ export interface components {
             created: boolean;
         };
         /**
+         * PublicCourseInfo
+         * @description Certificate facts for the course landing page.
+         */
+        PublicCourseInfo: {
+            /** Enabled */
+            enabled: boolean;
+            /** Partners */
+            partners: components["schemas"]["PublicPartner"][];
+            /** Passing Pct */
+            passing_pct: number;
+            /** Sample Url */
+            sample_url: string | null;
+            /** Tiers */
+            tiers: components["schemas"]["Labels"][];
+        };
+        /**
+         * PublicPartner
+         * @description A partner as shown publicly.
+         */
+        PublicPartner: {
+            /** Logo Url */
+            logo_url: string | null;
+            /** Name */
+            name: string;
+            /** Url */
+            url?: string | null;
+        };
+        /**
          * PublicShare
          * @description What anyone with the share link sees.
          */
@@ -39282,6 +42805,33 @@ export interface components {
             subject_id: string;
             /** Year Of Study */
             year_of_study: number;
+        };
+        /**
+         * QrStyle
+         * @description QR colours, module style and the partner logo in the middle.
+         */
+        QrStyle: {
+            /**
+             * Bg
+             * @default #ffffff
+             */
+            bg?: string;
+            /**
+             * Fg
+             * @default #000000
+             */
+            fg?: string;
+            /**
+             * Logo
+             * @default false
+             */
+            logo?: boolean;
+            /**
+             * Style
+             * @default square
+             * @enum {string}
+             */
+            style?: "square" | "rounded" | "dots";
         };
         /**
          * Question
@@ -39929,6 +43479,16 @@ export interface components {
             week_label?: string | null;
         };
         /**
+         * RecapCardOut
+         * @description A suggested recap flash card.
+         */
+        RecapCardOut: {
+            /** Back */
+            back: string;
+            /** Front */
+            front: string;
+        };
+        /**
          * ReconcileJobAccepted
          * @description 202 answer of "check that all lesson materials are in the notebooks".
          */
@@ -40474,7 +44034,7 @@ export interface components {
              * Purpose
              * @enum {string}
              */
-            purpose: "ai_upload" | "link" | "library_book" | "library_cover" | "library_material" | "lms_video" | "feedback" | "admission_document";
+            purpose: "ai_upload" | "link" | "library_book" | "library_cover" | "library_material" | "lms_video" | "feedback" | "admission_document" | "lms_ai_review" | "lms_captions";
             /** Sha256 B64 */
             sha256_b64: string;
             /** Size */
@@ -40494,6 +44054,51 @@ export interface components {
          * @enum {string}
          */
         ResolveAction: "dismiss" | "hold" | "unpublish" | "unpublish_and_warn";
+        /**
+         * ResourceHitListOut
+         * @description Matching courses or books.
+         */
+        ResourceHitListOut: {
+            /** Items */
+            items: components["schemas"]["ResourceHitOut"][];
+        };
+        /**
+         * ResourceHitOut
+         * @description A course or book to link.
+         */
+        ResourceHitOut: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lms_course" | "library_book" | "url";
+            /** Ref */
+            ref: string;
+            /** Subtitle */
+            subtitle: string;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string;
+        };
+        /**
+         * ResourceIo
+         * @description A link of a node; `ref` is the LMS course id, library item id or URL.
+         */
+        ResourceIo: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lms_course" | "library_book" | "url";
+            /** Ref */
+            ref: string;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+        };
         /**
          * ResourceItemResponse
          * @description ``ResourceItem``; ``file`` and ``created_at`` are null (links contract gap).
@@ -40538,6 +44143,26 @@ export interface components {
             source?: "user" | "emis";
             /** Title */
             title: string;
+        };
+        /**
+         * ResourceOut
+         * @description A link with the page it opens.
+         */
+        ResourceOut: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lms_course" | "library_book" | "url";
+            /** Ref */
+            ref: string;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /** Url */
+            url: string;
         };
         /**
          * ResponseIn
@@ -40622,6 +44247,13 @@ export interface components {
             why: string;
         };
         /**
+         * ReviewAnswerBody
+         * @description An answer to a review question (same shape as a test answer).
+         */
+        ReviewAnswerBody: {
+            answer: components["schemas"]["LearningAnswerBody"];
+        };
+        /**
          * ReviewBody
          * @description POST /v1/me/flashcards/{card_id}/review.
          *
@@ -40658,6 +44290,14 @@ export interface components {
             link?: components["schemas"]["ReviewLinkOut"];
             /** Text */
             text: string;
+        };
+        /**
+         * ReviewGradeBody
+         * @description A flashcard rating: 1 again, 2 hard, 3 good, 4 easy.
+         */
+        ReviewGradeBody: {
+            /** Rating */
+            rating: number;
         };
         /**
          * ReviewLinkOut
@@ -40909,6 +44549,14 @@ export interface components {
             label: string | null;
             /** Published */
             published: boolean;
+        };
+        /**
+         * RevokeBody
+         * @description Why a certificate is revoked.
+         */
+        RevokeBody: {
+            /** Reason */
+            reason: string;
         };
         /**
          * Rights
@@ -42253,13 +45901,21 @@ export interface components {
         };
         /**
          * SettingsBody
-         * @description Change course settings; omitted fields stay as they are.
+         * @description Certificate settings of a course.
          */
-        SettingsBody: {
-            /** Cover File Id */
-            cover_file_id?: string | null;
-            status?: components["schemas"]["CourseStatus"] | null;
-            visibility?: components["schemas"]["app__modules__lms__domain__authoring__enums__Visibility"] | null;
+        "SettingsBody-Output": {
+            /** Enabled */
+            enabled: boolean;
+            /** Optional Section Ids */
+            optional_section_ids?: string[];
+            /** Partner Ids */
+            partner_ids?: string[];
+            /** Passing Pct */
+            passing_pct: number;
+            /** Template Id */
+            template_id?: string | null;
+            /** Tiers */
+            tiers: components["schemas"]["TierBody"][];
         };
         /**
          * SettingsDetailsBody
@@ -42304,6 +45960,8 @@ export interface components {
             summary?: string | null;
             /** Tags */
             tags?: string[] | null;
+            /** Tutor Enabled */
+            tutor_enabled?: boolean | null;
             /** Workload Hours Per Week */
             workload_hours_per_week?: number | null;
         };
@@ -43717,6 +47375,28 @@ export interface components {
             now_or_next: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__LessonItemResponse"] | null;
         };
         /**
+         * StageIn
+         * @description A column of the roadmap; node order is their position.
+         */
+        StageIn: {
+            /** Id */
+            id: string;
+            /** Nodes */
+            nodes?: components["schemas"]["NodeIn"][];
+            title: components["schemas"]["I18nTitle"];
+        };
+        /**
+         * StageOut
+         * @description A stage with its nodes in order.
+         */
+        StageOut: {
+            /** Id */
+            id: string;
+            /** Nodes */
+            nodes: components["schemas"]["NodeOut"][];
+            title: components["schemas"]["I18nTitle"];
+        };
+        /**
          * StartCueRegistrationBody
          * @description The cue the student picked and the EMIS password for its login.
          */
@@ -43824,7 +47504,7 @@ export interface components {
          */
         "StepContent-Input": {
             /** Blocks */
-            blocks?: (components["schemas"]["TextBlock-Input"] | components["schemas"]["VideoBlock-Input"] | components["schemas"]["TestBlock-Input"] | components["schemas"]["FlashcardsBlock-Input"] | components["schemas"]["H5PBlock-Input"] | components["schemas"]["InteractiveVideoBlock-Input"])[];
+            blocks?: (components["schemas"]["TextBlock-Input"] | components["schemas"]["VideoBlock-Input"] | components["schemas"]["TestBlock-Input"] | components["schemas"]["FlashcardsBlock-Input"] | components["schemas"]["H5PBlock-Input"] | components["schemas"]["InteractiveVideoBlock-Input"] | components["schemas"]["ExamBlock-Input"] | components["schemas"]["CodeBlock-Input"] | components["schemas"]["HtmlBlock-Input"] | components["schemas"]["AiReviewBlock-Input"])[];
             /** Title */
             title: string;
         };
@@ -43834,7 +47514,7 @@ export interface components {
          */
         "StepContent-Output": {
             /** Blocks */
-            blocks?: (components["schemas"]["app__modules__lms__domain__step_content__TextBlock"] | components["schemas"]["app__modules__lms__domain__step_content__VideoBlock"] | components["schemas"]["app__modules__lms__domain__step_content__TestBlock"] | components["schemas"]["app__modules__lms__domain__step_content__FlashcardsBlock"] | components["schemas"]["app__modules__lms__domain__step_content__H5PBlock"] | components["schemas"]["app__modules__lms__domain__step_content__InteractiveVideoBlock"])[];
+            blocks?: (components["schemas"]["app__modules__lms__domain__step_content__TextBlock"] | components["schemas"]["app__modules__lms__domain__step_content__VideoBlock"] | components["schemas"]["app__modules__lms__domain__step_content__TestBlock"] | components["schemas"]["app__modules__lms__domain__step_content__FlashcardsBlock"] | components["schemas"]["app__modules__lms__domain__step_content__H5PBlock"] | components["schemas"]["app__modules__lms__domain__step_content__InteractiveVideoBlock"] | components["schemas"]["app__modules__lms__domain__step_content__ExamBlock"] | components["schemas"]["app__modules__lms__domain__step_content__CodeBlock"] | components["schemas"]["app__modules__lms__domain__step_content__HtmlBlock"] | components["schemas"]["app__modules__lms__domain__step_content__AiReviewBlock"])[];
             /** Title */
             title: string;
         };
@@ -43944,7 +47624,7 @@ export interface components {
          */
         StepPreviewResponse: {
             /** Current Blocks */
-            current_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__H5PBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__InteractiveVideoBlock"])[] | null;
+            current_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__H5PBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__InteractiveVideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__ExamBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__CodeBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__HtmlBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__AiReviewBlock"])[] | null;
             /** Lock Version */
             lock_version: number | null;
             /**
@@ -43953,7 +47633,7 @@ export interface components {
              */
             mode: "append" | "replace";
             /** New Blocks */
-            new_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__H5PBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__InteractiveVideoBlock"])[];
+            new_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__H5PBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__InteractiveVideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__ExamBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__CodeBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__HtmlBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__AiReviewBlock"])[];
             /** Step Id */
             step_id: string | null;
             /** Title */
@@ -44318,6 +47998,19 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /**
+         * StudentRef
+         * @description The holder of a certificate.
+         */
+        StudentRef: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
         };
         /**
          * StudentTodayResponse
@@ -46107,6 +49800,103 @@ export interface components {
             init_data: string;
         };
         /**
+         * TemplateCreate
+         * @description A new template.
+         */
+        TemplateCreate: {
+            /** Name */
+            name: string;
+        };
+        /**
+         * TemplateField
+         * @description A placed field; positions and sizes are fractions of the page.
+         */
+        TemplateField: {
+            /**
+             * Align
+             * @default center
+             * @enum {string}
+             */
+            align?: "left" | "center" | "right";
+            /**
+             * Color
+             * @default #111111
+             */
+            color?: string;
+            /**
+             * Font
+             * @default montserrat
+             * @enum {string}
+             */
+            font?: "montserrat" | "oswald" | "lora" | "eb_garamond" | "cormorant";
+            /** H */
+            h: number;
+            /**
+             * Key
+             * @enum {string}
+             */
+            key: "name" | "course" | "tier" | "date" | "partner" | "code" | "qr" | "custom_text";
+            /**
+             * Size
+             * @default 0.05
+             */
+            size?: number;
+            /** Text */
+            text?: string | null;
+            /** W */
+            w: number;
+            /**
+             * Weight
+             * @default 400
+             */
+            weight?: number;
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
+        /**
+         * TemplateList
+         * @description Templates of a course.
+         */
+        TemplateList: {
+            /** Items */
+            items: components["schemas"]["TemplateResponse"][];
+        };
+        /**
+         * TemplateResponse
+         * @description A certificate design.
+         */
+        TemplateResponse: {
+            /** Background Url */
+            background_url: string | null;
+            /** Fields */
+            fields: components["schemas"]["TemplateField"][];
+            /** Height Px */
+            height_px: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            qr: components["schemas"]["QrStyle"];
+            /** Width Px */
+            width_px: number;
+        };
+        /**
+         * TemplateUpdate
+         * @description A template layout.
+         */
+        TemplateUpdate: {
+            /** Fields */
+            fields: components["schemas"]["TemplateField"][];
+            /** Name */
+            name: string;
+            qr: components["schemas"]["QrStyle"];
+        };
+        /**
          * TemporaryMarkBody
          * @description A temporary mark on the EMIS scale (2 to 5) with an optional comment.
          */
@@ -46466,6 +50256,27 @@ export interface components {
          * @enum {string}
          */
         TextStatus: "none" | "pending" | "ready" | "no_text" | "failed";
+        /**
+         * TierBody
+         * @description A certificate tier, ordered low to high.
+         */
+        TierBody: {
+            /**
+             * Color
+             * @default #1f2937
+             */
+            color?: string;
+            /** Key */
+            key: string;
+            label: components["schemas"]["Labels"];
+            /** Min Pct */
+            min_pct?: number | null;
+            /**
+             * Require Optional
+             * @default false
+             */
+            require_optional?: boolean;
+        };
         /**
          * TimetableEntryInputBody
          * @description TimetableEntryInput.
@@ -46914,6 +50725,112 @@ export interface components {
             updated_at: string | null;
         };
         /**
+         * TrajectoryDetailOut
+         * @description A trajectory with the caller's progress (empty for staff).
+         */
+        TrajectoryDetailOut: {
+            /**
+             * Can Track
+             * @description The caller may mark progress.
+             */
+            can_track: boolean;
+            /** Progress */
+            progress: components["schemas"]["NodeProgressOut"][];
+            trajectory: components["schemas"]["TrajectoryOut"];
+        };
+        /**
+         * TrajectoryIn
+         * @description The editable trajectory; the prerequisite graph must be acyclic.
+         */
+        TrajectoryIn: {
+            description?: components["schemas"]["I18nText"];
+            /** Edges */
+            edges?: components["schemas"]["EdgeIo"][];
+            /**
+             * Field
+             * @description A study field key (cs_it, medicine_bio, ...).
+             */
+            field: string;
+            /**
+             * Published
+             * @default false
+             */
+            published?: boolean;
+            /** Slug */
+            slug: string;
+            /** Stages */
+            stages?: components["schemas"]["StageIn"][];
+            title: components["schemas"]["I18nTitle"];
+        };
+        /**
+         * TrajectoryListOut
+         * @description Trajectories ordered by field and slug.
+         */
+        TrajectoryListOut: {
+            /** Items */
+            items: components["schemas"]["TrajectorySummaryOut"][];
+        };
+        /**
+         * TrajectoryOut
+         * @description A trajectory with its graph.
+         */
+        TrajectoryOut: {
+            description: components["schemas"]["I18nText"];
+            /** Edges */
+            edges: components["schemas"]["EdgeIo"][];
+            /** Field */
+            field: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Published */
+            published: boolean;
+            /** Slug */
+            slug: string;
+            /** Stages */
+            stages: components["schemas"]["StageOut"][];
+            title: components["schemas"]["I18nTitle"];
+            /** Updated At */
+            updated_at: string | null;
+        };
+        /**
+         * TrajectoryStaffListOut
+         * @description Every trajectory, drafts too.
+         */
+        TrajectoryStaffListOut: {
+            /** Items */
+            items: components["schemas"]["TrajectorySummaryOut"][];
+        };
+        /**
+         * TrajectorySummaryOut
+         * @description A trajectory in a list with the caller's progress on required nodes.
+         */
+        TrajectorySummaryOut: {
+            description: components["schemas"]["I18nText"];
+            /** Done Count */
+            done_count: number;
+            /** Field */
+            field: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Node Count */
+            node_count: number;
+            /** Published */
+            published: boolean;
+            /** Required Count */
+            required_count: number;
+            /** Slug */
+            slug: string;
+            /** Stage Count */
+            stage_count: number;
+            title: components["schemas"]["I18nTitle"];
+        };
+        /**
          * TranscriptRequestIn
          * @description Where the transcript is needed.
          */
@@ -46955,6 +50872,51 @@ export interface components {
              */
             status: "done" | "awaiting_approval" | "limit_reached";
             usage: components["schemas"]["UsageInfoResponse"];
+        };
+        /**
+         * TutorAskBody
+         * @description A question for the tutor.
+         */
+        TutorAskBody: {
+            /**
+             * Language
+             * @default en
+             * @enum {string}
+             */
+            language?: "uz" | "ru" | "en";
+            /** Message */
+            message: string;
+        };
+        /**
+         * TutorConversationOut
+         * @description The conversation of the caller in the step.
+         */
+        TutorConversationOut: {
+            /** Messages */
+            messages: components["schemas"]["TutorMessageOut"][];
+            /**
+             * Remaining Today
+             * @description Questions left today; null for staff (no cap).
+             */
+            remaining_today: number | null;
+        };
+        /**
+         * TutorMessageOut
+         * @description A message of the tutor conversation.
+         */
+        TutorMessageOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "student" | "tutor";
+            /** Text */
+            text: string;
         };
         /**
          * TypeName
@@ -47581,6 +51543,14 @@ export interface components {
             label: string;
         };
         /**
+         * UserBadgesView
+         * @description The badges of a learner shown on their profile.
+         */
+        UserBadgesView: {
+            /** Earned */
+            earned: components["schemas"]["EarnedBadgeView"][];
+        };
+        /**
          * UserCreateBody
          * @description POST /v1/admin/users: a staff-like account without EMIS (no student/teacher).
          */
@@ -47707,6 +51677,13 @@ export interface components {
              * @default false
              */
             limit_ai_tracing?: boolean;
+            /**
+             * Lms Nudges
+             * @default []
+             */
+            lms_nudges?: ("lms_review_due" | "lms_streak_at_risk" | "lms_deadline_soon")[];
+            /** Lms Skin */
+            lms_skin?: ("classic" | "playful") | null;
             /**
              * Locale
              * @default ru
@@ -47863,6 +51840,30 @@ export interface components {
             verified: boolean;
         };
         /**
+         * VerifyResponse
+         * @description What the public verification page shows (minimal personal data).
+         */
+        VerifyResponse: {
+            /** Course Title */
+            course_title: string;
+            /** Holder Name */
+            holder_name: string;
+            /**
+             * Issued At
+             * Format: date-time
+             */
+            issued_at: string;
+            partner: components["schemas"]["PublicPartner"] | null;
+            /** Qr Svg Url */
+            qr_svg_url: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "valid" | "revoked";
+            tier_label: components["schemas"]["Labels"];
+        };
+        /**
          * VersionChangesView
          * @description Counts of what a version changed.
          */
@@ -47938,6 +51939,9 @@ export interface components {
         /**
          * VideoBlock
          * @description A video: a link (YouTube, Vimeo, direct file) or an uploaded file.
+         *
+         *     ``captions`` are WebVTT tracks; players show them on native video only
+         *     (embedded YouTube/Vimeo players use their own captions).
          */
         "VideoBlock-Input": {
             /**
@@ -47945,6 +51949,8 @@ export interface components {
              * @default
              */
             caption?: string;
+            /** Captions */
+            captions?: components["schemas"]["CaptionTrack"][];
             /** File Id */
             file_id?: string | null;
             /**
@@ -47990,6 +51996,63 @@ export interface components {
              * @description Video link, https only.
              */
             url: string;
+        };
+        /**
+         * VideoCaptionsView
+         * @description The caption tracks of a video block with short-lived URLs.
+         */
+        VideoCaptionsView: {
+            /** Expires In */
+            expires_in: number;
+            /** Tracks */
+            tracks: components["schemas"]["CaptionUrlView"][];
+        };
+        /**
+         * VideoCheckOut
+         * @description A suggested pause-and-predict question.
+         */
+        VideoCheckOut: {
+            /** At Seconds */
+            at_seconds: number;
+            /** Correct Index */
+            correct_index: number;
+            /** Explanation */
+            explanation: string;
+            /** Options */
+            options: string[];
+            /** Question */
+            question: string;
+        };
+        /**
+         * VideoChecksBody
+         * @description The transcript of the video (plain text, lines may start with mm:ss).
+         */
+        VideoChecksBody: {
+            /** Duration Seconds */
+            duration_seconds?: number | null;
+            /**
+             * Language
+             * @default en
+             * @enum {string}
+             */
+            language?: "uz" | "ru" | "en";
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /** Transcript */
+            transcript: string;
+        };
+        /**
+         * VideoChecksOut
+         * @description Suggestions the author edits before saving the draft.
+         */
+        VideoChecksOut: {
+            /** Cards */
+            cards: components["schemas"]["RecapCardOut"][];
+            /** Checks */
+            checks: components["schemas"]["VideoCheckOut"][];
         };
         /**
          * VideoStreamResponse
@@ -49826,6 +53889,24 @@ export interface components {
             username: string | null;
         };
         /**
+         * SettingsBody
+         * @description Certificate settings of a course.
+         */
+        app__interfaces__http__v1__course_certificates__SettingsBody: {
+            /** Enabled */
+            enabled: boolean;
+            /** Optional Section Ids */
+            optional_section_ids?: string[];
+            /** Partner Ids */
+            partner_ids?: string[];
+            /** Passing Pct */
+            passing_pct: number;
+            /** Template Id */
+            template_id?: string | null;
+            /** Tiers */
+            tiers: components["schemas"]["TierBody"][];
+        };
+        /**
          * AttachmentOut
          * @description An attached file; ``download_url`` is presigned and valid for one hour.
          */
@@ -50207,6 +54288,16 @@ export interface components {
             title: string;
         };
         /**
+         * SettingsBody
+         * @description Change course settings; omitted fields stay as they are.
+         */
+        app__interfaces__http__v1__lms_authoring__schemas__SettingsBody: {
+            /** Cover File Id */
+            cover_file_id?: string | null;
+            status?: components["schemas"]["CourseStatus"] | null;
+            visibility?: components["schemas"]["app__modules__lms__domain__authoring__enums__Visibility"] | null;
+        };
+        /**
          * AbsenceDayResponse
          * @description A day with absences.
          */
@@ -50526,6 +54617,130 @@ export interface components {
             name: string;
         };
         /**
+         * AiReviewBlock
+         * @description An AI review block (only shown, as the step already has it).
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__AiReviewBlock: {
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "ai_review";
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * CodeBlock
+         * @description A runnable code block (only shown, as the step already has it).
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__CodeBlock: {
+            /**
+             * Graded
+             * @default false
+             */
+            graded?: boolean;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Instructions
+             * @default
+             */
+            instructions?: string;
+            /**
+             * Language
+             * @default python
+             * @enum {string}
+             */
+            language?: "python" | "javascript" | "sql";
+            /**
+             * Solution
+             * @default
+             */
+            solution?: string;
+            /**
+             * Starter
+             * @default
+             */
+            starter?: string;
+            /** Tests */
+            tests?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Time Limit Ms
+             * @default 5000
+             */
+            time_limit_ms?: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "code";
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * ExamBlock
+         * @description An exam block (only shown, as the step already has it).
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__ExamBlock: {
+            /**
+             * Calculator
+             * @default none
+             * @enum {string}
+             */
+            calculator?: "none" | "scientific" | "graphing";
+            /**
+             * Directions
+             * @default
+             */
+            directions?: string;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Kind
+             * @default custom
+             * @enum {string}
+             */
+            kind?: "sat" | "ap" | "custom";
+            /**
+             * Reference Sheet
+             * @default
+             */
+            reference_sheet?: string;
+            /** Scaling */
+            scaling?: {
+                [key: string]: number;
+            } | null;
+            /** Sections */
+            sections?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "exam";
+        } & {
+            [key: string]: unknown;
+        };
+        /**
          * FlashcardsBlock
          * @description A flash cards block.
          */
@@ -50580,6 +54795,55 @@ export interface components {
              * @enum {string}
              */
             type: "h5p";
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * HtmlBlock
+         * @description An HTML widget block (only shown, as the step already has it).
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__HtmlBlock: {
+            /**
+             * Allow Fullscreen
+             * @default false
+             */
+            allow_fullscreen?: boolean;
+            /**
+             * Entry
+             * @default index.html
+             * @constant
+             */
+            entry?: "index.html";
+            /**
+             * Graded
+             * @default false
+             */
+            graded?: boolean;
+            /**
+             * Height Px
+             * @default 600
+             */
+            height_px?: number;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Package Id
+             * @default
+             */
+            package_id?: string;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "html";
         } & {
             [key: string]: unknown;
         };
@@ -50776,6 +55040,170 @@ export interface components {
          */
         app__modules__lms__domain__authoring__enums__Visibility: "public" | "invite";
         /**
+         * AiReviewBlock
+         * @description An AI reviewer of a student's work (intermediate project review).
+         *
+         *     Only ``title``, ``instructions_public``, ``max_submissions``, ``accepted_types``
+         *     and the template name reach students; the prompt, files, private topics and
+         *     criteria descriptions stay on the server.
+         */
+        app__modules__lms__domain__step_content__AiReviewBlock: {
+            /** Accepted Types */
+            accepted_types?: ("pdf" | "docx" | "pptx" | "image" | "text")[];
+            /** Criteria */
+            criteria?: components["schemas"]["AiReviewCriterion"][];
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Instructions Public
+             * @default
+             */
+            instructions_public?: string;
+            /**
+             * Max Submissions
+             * @default 3
+             */
+            max_submissions?: number;
+            /**
+             * Output Template
+             * @default review_table
+             * @enum {string}
+             */
+            output_template?: "review_table" | "rubric_checklist" | "strengths_cards" | "image_gallery";
+            /**
+             * Pass Threshold Pct
+             * @default 60
+             */
+            pass_threshold_pct?: number;
+            /** Private Topics */
+            private_topics?: string[];
+            /** Reference Files */
+            reference_files?: components["schemas"]["AiReviewFile"][];
+            /**
+             * Teacher Prompt
+             * @default
+             */
+            teacher_prompt?: string;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "ai_review";
+            /**
+             * Use Course Materials
+             * @default true
+             */
+            use_course_materials?: boolean;
+            /**
+             * Web Search
+             * @default false
+             */
+            web_search?: boolean;
+        };
+        /**
+         * CodeBlock
+         * @description A runnable code panel with starter code, an author solution and tests.
+         */
+        app__modules__lms__domain__step_content__CodeBlock: {
+            /**
+             * Graded
+             * @default false
+             */
+            graded?: boolean;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Instructions
+             * @default
+             */
+            instructions?: string;
+            /**
+             * Language
+             * @default python
+             * @enum {string}
+             */
+            language?: "python" | "javascript" | "sql";
+            /**
+             * Solution
+             * @default
+             */
+            solution?: string;
+            /**
+             * Starter
+             * @default
+             */
+            starter?: string;
+            /** Tests */
+            tests?: components["schemas"]["CodeTest"][];
+            /**
+             * Time Limit Ms
+             * @default 5000
+             */
+            time_limit_ms?: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "code";
+        };
+        /**
+         * ExamBlock
+         * @description A Bluebook-style digital test (SAT, AP or custom) with timed modules.
+         */
+        app__modules__lms__domain__step_content__ExamBlock: {
+            /**
+             * Calculator
+             * @default none
+             * @enum {string}
+             */
+            calculator?: "none" | "scientific" | "graphing";
+            /**
+             * Directions
+             * @default
+             */
+            directions?: string;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Kind
+             * @default custom
+             * @enum {string}
+             */
+            kind?: "sat" | "ap" | "custom";
+            /**
+             * Reference Sheet
+             * @default
+             */
+            reference_sheet?: string;
+            scaling?: components["schemas"]["ExamScaling"] | null;
+            /** Sections */
+            sections?: components["schemas"]["ExamSection"][];
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "exam";
+        };
+        /**
          * FlashcardsBlock
          * @description A block of flash cards studied with spaced repetition.
          */
@@ -50828,6 +55256,53 @@ export interface components {
              * @enum {string}
              */
             type: "h5p";
+        };
+        /**
+         * HtmlBlock
+         * @description An author-uploaded custom HTML widget, served sandboxed.
+         */
+        app__modules__lms__domain__step_content__HtmlBlock: {
+            /**
+             * Allow Fullscreen
+             * @default false
+             */
+            allow_fullscreen?: boolean;
+            /**
+             * Entry
+             * @default index.html
+             * @constant
+             */
+            entry?: "index.html";
+            /**
+             * Graded
+             * @default false
+             */
+            graded?: boolean;
+            /**
+             * Height Px
+             * @default 600
+             */
+            height_px?: number;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Package Id
+             * @default
+             */
+            package_id?: string;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "html";
         };
         /**
          * InteractiveVideoBlock
@@ -50908,6 +55383,9 @@ export interface components {
         /**
          * VideoBlock
          * @description A video: a link (YouTube, Vimeo, direct file) or an uploaded file.
+         *
+         *     ``captions`` are WebVTT tracks; players show them on native video only
+         *     (embedded YouTube/Vimeo players use their own captions).
          */
         app__modules__lms__domain__step_content__VideoBlock: {
             /**
@@ -50915,6 +55393,8 @@ export interface components {
              * @default
              */
             caption?: string;
+            /** Captions */
+            captions?: components["schemas"]["CaptionTrack"][];
             /** File Id */
             file_id?: string | null;
             /**
@@ -59480,6 +63960,67 @@ export interface operations {
             };
         };
     };
+    admission_countries_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CountryOverviewListOut"];
+                };
+            };
+        };
+    };
+    admission_countries_read: {
+        parameters: {
+            query?: {
+                /** @description The student's study field names. */
+                fields?: string[] | null;
+            };
+            header?: never;
+            path: {
+                country: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CountryProfileOut"];
+                };
+            };
+            /** @description Not an offered ISO country code. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_country_facts_read: {
         parameters: {
             query: {
@@ -59585,6 +64126,60 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CourseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_list_my_books: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttachedBookListOut"];
+                };
+            };
+        };
+    };
+    admission_course_catalog: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                kind?: "all" | "course" | "book";
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogPageOut"];
                 };
             };
             /** @description Validation Error */
@@ -68605,6 +73200,186 @@ export interface operations {
             };
         };
     };
+    admission_staff_trajectories_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrajectoryStaffListOut"];
+                };
+            };
+        };
+    };
+    admission_staff_trajectories_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TrajectoryIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrajectoryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_trajectories_resources: {
+        parameters: {
+            query?: {
+                kind?: "lms_course" | "library_book" | "url";
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResourceHitListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_trajectories_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trajectory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrajectoryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_trajectories_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trajectory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TrajectoryIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrajectoryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_staff_trajectories_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trajectory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_staff_transcripts: {
         parameters: {
             query?: {
@@ -68749,6 +73524,102 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["AppReviewOut"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_list_student_books: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttachedBookListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_attach_book: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachBookIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttachedBookOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_detach_book: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -69778,6 +74649,105 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_trajectories_list: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                field?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrajectoryListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_trajectories_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrajectoryDetailOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_trajectories_mark_node: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                trajectory_id: string;
+                node_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NodeProgressIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrajectoryDetailOut"];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -71002,6 +75972,662 @@ export interface operations {
             };
         };
     };
+    course_certificates_pdf: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cert_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_issue_eligible: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IssueResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_list_issued: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IssuedList"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_revoke: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                cert_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevokeBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_mine: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MineResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_list_partners: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PartnerList"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_create_partner: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PartnerBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PartnerResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_update_partner: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                partner_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PartnerBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PartnerResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_delete_partner: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                partner_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_upload_partner_logo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                partner_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_course_certificates_upload_partner_logo"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PartnerResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_public_info: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicCourseInfo"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_sample: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_get_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SettingsBody-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_put_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__course_certificates__SettingsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SettingsBody-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_list_templates: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TemplateList"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_create_template: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplateCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TemplateResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_update_template: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                template_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplateUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TemplateResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_delete_template: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                template_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_upload_background: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                template_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_course_certificates_upload_background"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TemplateResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_preview_template: {
+        parameters: {
+            query?: {
+                name?: string | null;
+            };
+            header?: never;
+            path: {
+                course_id: string;
+                template_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     download_file_v1_certificates_files__file_id__download_get: {
         parameters: {
             query?: never;
@@ -71051,6 +76677,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CertificateFileUrl"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_font: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                font: "montserrat" | "oswald" | "lora" | "eb_garamond" | "cormorant";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "font/ttf": unknown;
                 };
             };
             /** @description Validation Error */
@@ -71254,6 +76911,39 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_partner_logo: {
+        parameters: {
+            query?: {
+                v?: string | null;
+            };
+            header?: never;
+            path: {
+                partner_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": unknown;
+                };
             };
             /** @description Validation Error */
             422: {
@@ -71472,6 +77162,39 @@ export interface operations {
             };
         };
     };
+    course_certificates_background: {
+        parameters: {
+            query?: {
+                v?: string | null;
+            };
+            header?: never;
+            path: {
+                template_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_types_v1_certificates_types_get: {
         parameters: {
             query?: never;
@@ -71488,6 +77211,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CertificateTypeResponse"][];
+                };
+            };
+        };
+    };
+    course_certificates_verify: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VerifyResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_certificates_verify_qr: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/svg+xml": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -75927,6 +81712,107 @@ export interface operations {
             };
         };
     };
+    lms_ai_review_get_session_v1_lms_ai_review_sessions__session_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiReviewSessionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_ai_review_send_message_v1_lms_ai_review_sessions__session_id__messages_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AiReviewMessageBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiReviewMessagesView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_ai_review_submit_v1_lms_ai_review_sessions__session_id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AiReviewSubmitBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiReviewMessagesView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_attempt_v1_lms_attempts__attempt_id__get: {
         parameters: {
             query?: never;
@@ -76055,6 +81941,55 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_mark_badge_award_seen: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                award_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_my_badges: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyBadgesView"];
                 };
             };
         };
@@ -76209,6 +82144,209 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CourseAccessRulesView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_set_course_badge_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BadgeSettingsInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BadgeListView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_list_course_badges: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BadgeListView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_create_course_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BadgeInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BadgeView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_update_course_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                badge_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BadgeInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BadgeView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_delete_course_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                badge_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_upload_course_badge_image: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                badge_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_lms_upload_course_badge_image"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BadgeView"];
                 };
             };
             /** @description Validation Error */
@@ -76419,6 +82557,72 @@ export interface operations {
             };
         };
     };
+    lms_engagement_get_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementSettingsView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_engagement_set_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EngagementSettingsView"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementSettingsView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     enroll_v1_lms_courses__course_id__enroll_post: {
         parameters: {
             query?: never;
@@ -76503,6 +82707,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["H5PPackageResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_html_widget_v1_lms_courses__course_id__html_widgets_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_html_widget_v1_lms_courses__course_id__html_widgets_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HtmlWidgetPackageResponse"];
                 };
             };
             /** @description Validation Error */
@@ -76672,6 +82911,39 @@ export interface operations {
             };
         };
     };
+    preview_video_captions_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__captions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoCaptionsView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     preview_h5p_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__h5p_get: {
         parameters: {
             query?: never;
@@ -76692,6 +82964,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["H5PLaunchResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_html_widget_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__html_widget_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HtmlWidgetLaunchResponse"];
                 };
             };
             /** @description Validation Error */
@@ -76773,6 +83078,138 @@ export interface operations {
             };
         };
     };
+    lms_engagement_list_course_quests: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementQuestListView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_engagement_create_quest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EngagementQuestInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementQuestView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_engagement_delete_quest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                quest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_engagement_update_quest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                quest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EngagementQuestInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementQuestView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_settings_v1_lms_courses__course_id__settings_get: {
         parameters: {
             query?: never;
@@ -76815,7 +83252,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["SettingsBody"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__lms_authoring__schemas__SettingsBody"];
             };
         };
         responses: {
@@ -77140,6 +83577,72 @@ export interface operations {
             };
         };
     };
+    lms_ai_review_list_submissions_v1_lms_courses__course_id__steps__step_id__blocks__block_id__ai_review_submissions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiReviewSubmissionListView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_video_captions_v1_lms_courses__course_id__steps__step_id__blocks__block_id__captions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoCaptionsView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_h5p_launch_v1_lms_courses__course_id__steps__step_id__blocks__block_id__h5p_get: {
         parameters: {
             query?: never;
@@ -77173,6 +83676,109 @@ export interface operations {
             };
         };
     };
+    get_hidden_tests_v1_lms_courses__course_id__steps__step_id__blocks__block_id__hidden_tests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningHiddenTestsView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_html_widget_launch_v1_lms_courses__course_id__steps__step_id__blocks__block_id__html_widget_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HtmlWidgetLaunchView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    record_widget_result_v1_lms_courses__course_id__steps__step_id__blocks__block_id__result_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LearningWidgetResultBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningBlockResultView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_video_stream_v1_lms_courses__course_id__steps__step_id__blocks__block_id__video_get: {
         parameters: {
             query?: never;
@@ -77193,6 +83799,43 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["VideoStreamView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_suggest_video_checks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VideoChecksBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoChecksOut"];
                 };
             };
             /** @description Validation Error */
@@ -77383,6 +84026,198 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LearningLandingView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_engagement_mastery: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementMasteryView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_engagement_quests: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementQuestListView"];
+                };
+            };
+        };
+    };
+    lms_engagement_review: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementReviewQueueView"];
+                };
+            };
+        };
+    };
+    lms_engagement_review_answer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewAnswerBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementAnswerResultView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_engagement_review_grade: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewGradeBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementGradeResultView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_engagement_summary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementSummaryView"];
+                };
+            };
+        };
+    };
+    lms_engagement_xp: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EngagementXpListView"];
                 };
             };
             /** @description Validation Error */
@@ -77687,6 +84522,70 @@ export interface operations {
             };
         };
     };
+    lms_ai_review_list_sessions_v1_lms_steps__step_id__blocks__block_id__ai_review_sessions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiReviewSessionListView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_ai_review_create_session_v1_lms_steps__step_id__blocks__block_id__ai_review_sessions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiReviewSessionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     start_attempt_v1_lms_steps__step_id__blocks__block_id__attempts_post: {
         parameters: {
             query?: {
@@ -77708,6 +84607,142 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LearningAttemptView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_exam_session_v1_lms_steps__step_id__blocks__block_id__exam_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningExamSessionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_exam_answers_v1_lms_steps__step_id__blocks__block_id__exam_answers_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LearningExamAnswersBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningExamSessionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_exam_module_v1_lms_steps__step_id__blocks__block_id__exam_start_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningExamSessionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_exam_module_v1_lms_steps__step_id__blocks__block_id__exam_submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LearningExamSubmitBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningExamSessionView"];
                 };
             };
             /** @description Validation Error */
@@ -78092,6 +85127,72 @@ export interface operations {
             };
         };
     };
+    lms_get_tutor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TutorConversationOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_ask_tutor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TutorAskBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TutorConversationOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     mark_viewed_v1_lms_steps__step_id__viewed_post: {
         parameters: {
             query?: never;
@@ -78110,6 +85211,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LearningStepProgressView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_user_badges: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserBadgesView"];
                 };
             };
             /** @description Validation Error */

@@ -1,8 +1,10 @@
 // LMS — catalog, learning, attempts, review (backend § API contract → "LMS (B12 authoring, B13 learning)" rows of B13, and Schemas).
 
+import type { components } from "../generated/openapi"
 import type { PersonRef, ReviewRating } from "./common"
 import type { StudyNext } from "./flashcards"
 import type { LearningH5PBlock, LearningInteractiveVideoBlock } from "./lms-interactive"
+import type { LearningAiReviewBlock, LearningCodeBlock, LearningExamBlock, LearningHtmlBlock } from "./lms-widgets"
 
 export type CourseCard = {
   id: string
@@ -89,6 +91,15 @@ export type GuestCoursePage = Omit<CoursePage, "staff"> & {
 /** A presigned GET of an uploaded lesson video (the storage answers `Range` requests, so seeking works). */
 export type VideoStream = { url: string; expires_in: number }
 
+/** A caption track of a video block as a student sees it; its file comes from the captions endpoint. */
+export type LearningCaptionTrack = Required<components["schemas"]["LearningCaptionTrackView"]>
+
+/** The language of a WebVTT caption track. */
+export type CaptionLang = LearningCaptionTrack["lang"]
+
+/** Short-lived URLs of the WebVTT caption tracks of a video block. */
+export type VideoCaptions = components["schemas"]["VideoCaptionsView"]
+
 /**
  * A step ("lesson") as a student sees it. Its blocks are the squares of the step strip; `passed` is the green fill: a
  * text block once the lesson was viewed, a test block once an attempt passed, a flash card block once every card was
@@ -107,6 +118,7 @@ export type StepView = {
         url: string
         file_id: string | null
         caption: string
+        captions?: LearningCaptionTrack[]
         passed: boolean
       }
     | {
@@ -134,6 +146,10 @@ export type StepView = {
       }
     | LearningH5PBlock
     | LearningInteractiveVideoBlock
+    | LearningExamBlock
+    | LearningCodeBlock
+    | LearningHtmlBlock
+    | LearningAiReviewBlock
   )[]
   completed: boolean
   preview: boolean
@@ -221,6 +237,14 @@ export type CourseStudent = {
     max_score: number
     passed: boolean
     submitted_at: string
+  }[]
+  /** Code and HTML widget results; the score is reported by the browser (`verified: false`). */
+  widget_results: {
+    step_id: string
+    block_id: string
+    score_pct: number
+    passed: boolean
+    verified: boolean
   }[]
 }
 

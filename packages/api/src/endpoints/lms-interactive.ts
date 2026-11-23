@@ -4,6 +4,7 @@
 import { api } from "../client"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type { H5PLaunch, H5PPackage, InteractionResult, BlockResult, XapiStatement } from "../types/lms-interactive"
+import type { LearningHiddenTests } from "../types/lms-widgets"
 
 /** The upload limit of the backend (`H5P_MAX_PACKAGE_BYTES`). */
 export const H5P_MAX_BYTES = 100 * 1024 * 1024
@@ -58,6 +59,37 @@ export function postLmsH5PResult(
   opts?: RequestOptions,
 ): Promise<BlockResult> {
   return api.post<BlockResult>(`/v1/lms/steps/${seg(stepId)}/blocks/${seg(blockId)}/h5p-result`, { statement }, opts)
+}
+
+/** POST /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/result — enrolled; a graded code or HTML
+ * block reports its score from the browser (self-reported; the best score and a pass are kept). */
+export function postLmsWidgetResult(
+  courseId: string,
+  stepId: string,
+  blockId: string,
+  body: { score_pct: number; passed: boolean },
+  opts?: RequestOptions,
+): Promise<BlockResult> {
+  return api.post<BlockResult>(
+    `/v1/lms/courses/${seg(courseId)}/steps/${seg(stepId)}/blocks/${seg(blockId)}/result`,
+    body,
+    opts,
+  )
+}
+
+/** POST /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/hidden-tests — enrolled, rate limited; the
+ * hidden tests of a graded code block, run in the sandbox on submit. */
+export function postLmsHiddenTests(
+  courseId: string,
+  stepId: string,
+  blockId: string,
+  opts?: RequestOptions,
+): Promise<LearningHiddenTests> {
+  return api.post<LearningHiddenTests>(
+    `/v1/lms/courses/${seg(courseId)}/steps/${seg(stepId)}/blocks/${seg(blockId)}/hidden-tests`,
+    undefined,
+    opts,
+  )
 }
 
 /** POST /v1/lms/steps/{step_id}/blocks/{block_id}/interactions/{id}/answer — enrolled; only the first answer counts. */

@@ -44,11 +44,17 @@ import type { getAdminLegalAcceptances, getAdminLegalDocuments, getLegalDocument
 import type { getAdminLessonSources, getStaffEmisSourcesHidden, getStaffLessonSources, putStaffEmisSourcesHidden } from "./endpoints/lesson-sources"
 import type { getAnnotations, getAnnotationsExport, getLibraryAuthors, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMarkup, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTags, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageSubjects, getManageSuggestion, getManageTopics, getMeLibrary, getMySuggestions, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageCoversBackfill, postManageImport, postManagePagesBackfill, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putLibraryMarkup, putReadingListItems, putReadingListPin, putShelfEntry, searchLibraryItemText } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
+import type { getLmsAiReviewSession, getLmsAiReviewSessions, getLmsAiReviewSubmissions, postLmsAiReviewMessage, postLmsAiReviewSession, postLmsAiReviewSubmit } from "./endpoints/lms-ai-review"
 import type { getLmsCourseAccess, getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseBroadcast, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseAccess, putLmsCourseDraftMeta, putLmsCreator, putLmsStepAccess, putLmsStepDraft } from "./endpoints/lms-authoring"
+import type { getCourseBadges, getMyBadges, getUserBadges, postCourseBadgeImage } from "./endpoints/lms-badges"
+import type { getCertVerification } from "./endpoints/lms-certificates"
+import type { getLmsCourseQuests, getLmsEngagementMastery, getLmsEngagementQuests, getLmsEngagementReview, getLmsEngagementSettings, getLmsEngagementSummary, getLmsEngagementXp, patchLmsCourseQuest, postLmsCourseQuest, postLmsEngagementReviewAnswer, postLmsEngagementReviewGrade, putLmsEngagementSettings } from "./endpoints/lms-engagement"
+import type { getLmsHtmlWidgetLaunch, getLmsPreviewHtmlWidgetLaunch, postLmsHtmlWidget } from "./endpoints/lms-html-widgets"
 import type { postLmsCourseCopy, postLmsCourseImport } from "./endpoints/lms-imscc"
-import type { getLmsH5PLaunch, getLmsPreviewH5PLaunch, postLmsH5PPackage, postLmsH5PResult, postLmsInteractionAnswer } from "./endpoints/lms-interactive"
-import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMediaGrants, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, getPublicLmsCourseStep, getPublicLmsCourses, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsMediaRedeem, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
+import type { getLmsH5PLaunch, getLmsPreviewH5PLaunch, postLmsH5PPackage, postLmsH5PResult, postLmsHiddenTests, postLmsInteractionAnswer, postLmsWidgetResult } from "./endpoints/lms-interactive"
+import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMediaGrants, getLmsMyCourses, getLmsPreviewStepCaptions, getLmsPreviewStepVideo, getLmsStepCaptions, getLmsStepCardsNext, getLmsStepVideo, getPublicLmsCourseStep, getPublicLmsCourses, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsMediaRedeem, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getLmsCourseSettings, getPublicLmsCourseLanding, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
+import type { getLmsTutor, postLmsTutor, postLmsVideoChecksSuggest } from "./endpoints/lms-tutor"
 import type { getAdminLoginCues, getIdLoginCueGroups, getIdLoginCueNames, postAdminLoginCue, postAdminLoginCuesBulk, postAdminLoginCuesBulkDelete, postIdRegisterCue } from "./endpoints/login-cues"
 import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeGroupRating, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminStudentSyncStop, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun, postAdminSyncRunStop } from "./endpoints/marks"
 import type { getAdminMcpActivity, getAdminMcpActivitySummary, getIdMeConnectorsActivity } from "./endpoints/mcp-activity"
@@ -1474,6 +1480,30 @@ export const served_postAdminLinkDisable: Awaited<ReturnType<typeof postAdminLin
 declare const gen_postAdminLinkDismissReports: ResponseOf<"/v1/admin/links/{link_id}/dismiss-reports", "post">
 export const served_postAdminLinkDismissReports: Awaited<ReturnType<typeof postAdminLinkDismissReports>> = gen_postAdminLinkDismissReports
 
+// POST /v1/lms/steps/{step_id}/blocks/{block_id}/ai-review/sessions — postLmsAiReviewSession
+declare const gen_postLmsAiReviewSession: ResponseOf<"/v1/lms/steps/{step_id}/blocks/{block_id}/ai-review/sessions", "post">
+export const served_postLmsAiReviewSession: Awaited<ReturnType<typeof postLmsAiReviewSession>> = gen_postLmsAiReviewSession
+
+// GET /v1/lms/steps/{step_id}/blocks/{block_id}/ai-review/sessions — getLmsAiReviewSessions
+declare const gen_getLmsAiReviewSessions: ResponseOf<"/v1/lms/steps/{step_id}/blocks/{block_id}/ai-review/sessions", "get">
+export const served_getLmsAiReviewSessions: Awaited<ReturnType<typeof getLmsAiReviewSessions>> = gen_getLmsAiReviewSessions
+
+// GET /v1/lms/ai-review/sessions/{session_id} — getLmsAiReviewSession
+declare const gen_getLmsAiReviewSession: ResponseOf<"/v1/lms/ai-review/sessions/{session_id}", "get">
+export const served_getLmsAiReviewSession: Awaited<ReturnType<typeof getLmsAiReviewSession>> = gen_getLmsAiReviewSession
+
+// POST /v1/lms/ai-review/sessions/{session_id}/messages — postLmsAiReviewMessage
+declare const gen_postLmsAiReviewMessage: ResponseOf<"/v1/lms/ai-review/sessions/{session_id}/messages", "post">
+export const served_postLmsAiReviewMessage: Awaited<ReturnType<typeof postLmsAiReviewMessage>> = gen_postLmsAiReviewMessage
+
+// POST /v1/lms/ai-review/sessions/{session_id}/submit — postLmsAiReviewSubmit
+declare const gen_postLmsAiReviewSubmit: ResponseOf<"/v1/lms/ai-review/sessions/{session_id}/submit", "post">
+export const served_postLmsAiReviewSubmit: Awaited<ReturnType<typeof postLmsAiReviewSubmit>> = gen_postLmsAiReviewSubmit
+
+// GET /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/ai-review/submissions — getLmsAiReviewSubmissions
+declare const gen_getLmsAiReviewSubmissions: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/ai-review/submissions", "get">
+export const served_getLmsAiReviewSubmissions: Awaited<ReturnType<typeof getLmsAiReviewSubmissions>> = gen_getLmsAiReviewSubmissions
+
 // POST /v1/lms/courses — postLmsCourses
 declare const gen_postLmsCourses: ResponseOf<"/v1/lms/courses", "post">
 export const served_postLmsCourses: Awaited<ReturnType<typeof postLmsCourses>> = gen_postLmsCourses
@@ -1606,6 +1636,86 @@ export const served_putLmsCourseAccess: Awaited<ReturnType<typeof putLmsCourseAc
 declare const gen_putLmsStepAccess: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}/access", "put">
 export const served_putLmsStepAccess: Awaited<ReturnType<typeof putLmsStepAccess>> = gen_putLmsStepAccess
 
+// GET /v1/lms/courses/{course_id}/badges — getCourseBadges
+declare const gen_getCourseBadges: ResponseOf<"/v1/lms/courses/{course_id}/badges", "get">
+export const served_getCourseBadges: Awaited<ReturnType<typeof getCourseBadges>> = gen_getCourseBadges
+
+// POST /v1/lms/courses/{course_id}/badges/{badge_id}/image — postCourseBadgeImage
+declare const gen_postCourseBadgeImage: ResponseOf<"/v1/lms/courses/{course_id}/badges/{badge_id}/image", "post">
+export const served_postCourseBadgeImage: Awaited<ReturnType<typeof postCourseBadgeImage>> = gen_postCourseBadgeImage
+
+// GET /v1/lms/badges/mine — getMyBadges
+declare const gen_getMyBadges: ResponseOf<"/v1/lms/badges/mine", "get">
+export const served_getMyBadges: Awaited<ReturnType<typeof getMyBadges>> = gen_getMyBadges
+
+// GET /v1/lms/users/{user_id}/badges — getUserBadges
+declare const gen_getUserBadges: ResponseOf<"/v1/lms/users/{user_id}/badges", "get">
+export const served_getUserBadges: Awaited<ReturnType<typeof getUserBadges>> = gen_getUserBadges
+
+// GET /v1/certificates/verify/{code} — getCertVerification
+declare const gen_getCertVerification: ResponseOf<"/v1/certificates/verify/{code}", "get">
+export const served_getCertVerification: Awaited<ReturnType<typeof getCertVerification>> = gen_getCertVerification
+
+// GET /v1/lms/engagement/summary — getLmsEngagementSummary
+declare const gen_getLmsEngagementSummary: ResponseOf<"/v1/lms/engagement/summary", "get">
+export const served_getLmsEngagementSummary: Awaited<ReturnType<typeof getLmsEngagementSummary>> = gen_getLmsEngagementSummary
+
+// GET /v1/lms/engagement/xp — getLmsEngagementXp
+declare const gen_getLmsEngagementXp: ResponseOf<"/v1/lms/engagement/xp", "get">
+export const served_getLmsEngagementXp: Awaited<ReturnType<typeof getLmsEngagementXp>> = gen_getLmsEngagementXp
+
+// GET /v1/lms/engagement/review — getLmsEngagementReview
+declare const gen_getLmsEngagementReview: ResponseOf<"/v1/lms/engagement/review", "get">
+export const served_getLmsEngagementReview: Awaited<ReturnType<typeof getLmsEngagementReview>> = gen_getLmsEngagementReview
+
+// POST /v1/lms/engagement/review/{item_id}/answer — postLmsEngagementReviewAnswer
+declare const gen_postLmsEngagementReviewAnswer: ResponseOf<"/v1/lms/engagement/review/{item_id}/answer", "post">
+export const served_postLmsEngagementReviewAnswer: Awaited<ReturnType<typeof postLmsEngagementReviewAnswer>> = gen_postLmsEngagementReviewAnswer
+
+// POST /v1/lms/engagement/review/{item_id}/grade — postLmsEngagementReviewGrade
+declare const gen_postLmsEngagementReviewGrade: ResponseOf<"/v1/lms/engagement/review/{item_id}/grade", "post">
+export const served_postLmsEngagementReviewGrade: Awaited<ReturnType<typeof postLmsEngagementReviewGrade>> = gen_postLmsEngagementReviewGrade
+
+// GET /v1/lms/engagement/courses/{course_id}/mastery — getLmsEngagementMastery
+declare const gen_getLmsEngagementMastery: ResponseOf<"/v1/lms/engagement/courses/{course_id}/mastery", "get">
+export const served_getLmsEngagementMastery: Awaited<ReturnType<typeof getLmsEngagementMastery>> = gen_getLmsEngagementMastery
+
+// GET /v1/lms/engagement/quests — getLmsEngagementQuests
+declare const gen_getLmsEngagementQuests: ResponseOf<"/v1/lms/engagement/quests", "get">
+export const served_getLmsEngagementQuests: Awaited<ReturnType<typeof getLmsEngagementQuests>> = gen_getLmsEngagementQuests
+
+// GET /v1/lms/courses/{course_id}/engagement-settings — getLmsEngagementSettings
+declare const gen_getLmsEngagementSettings: ResponseOf<"/v1/lms/courses/{course_id}/engagement-settings", "get">
+export const served_getLmsEngagementSettings: Awaited<ReturnType<typeof getLmsEngagementSettings>> = gen_getLmsEngagementSettings
+
+// PUT /v1/lms/courses/{course_id}/engagement-settings — putLmsEngagementSettings
+declare const gen_putLmsEngagementSettings: ResponseOf<"/v1/lms/courses/{course_id}/engagement-settings", "put">
+export const served_putLmsEngagementSettings: Awaited<ReturnType<typeof putLmsEngagementSettings>> = gen_putLmsEngagementSettings
+
+// GET /v1/lms/courses/{course_id}/quests — getLmsCourseQuests
+declare const gen_getLmsCourseQuests: ResponseOf<"/v1/lms/courses/{course_id}/quests", "get">
+export const served_getLmsCourseQuests: Awaited<ReturnType<typeof getLmsCourseQuests>> = gen_getLmsCourseQuests
+
+// POST /v1/lms/courses/{course_id}/quests — postLmsCourseQuest
+declare const gen_postLmsCourseQuest: ResponseOf<"/v1/lms/courses/{course_id}/quests", "post">
+export const served_postLmsCourseQuest: Awaited<ReturnType<typeof postLmsCourseQuest>> = gen_postLmsCourseQuest
+
+// PATCH /v1/lms/courses/{course_id}/quests/{quest_id} — patchLmsCourseQuest
+declare const gen_patchLmsCourseQuest: ResponseOf<"/v1/lms/courses/{course_id}/quests/{quest_id}", "patch">
+export const served_patchLmsCourseQuest: Awaited<ReturnType<typeof patchLmsCourseQuest>> = gen_patchLmsCourseQuest
+
+// POST /v1/lms/courses/{course_id}/html-widgets — postLmsHtmlWidget
+declare const gen_postLmsHtmlWidget: ResponseOf<"/v1/lms/courses/{course_id}/html-widgets", "post">
+export const served_postLmsHtmlWidget: Awaited<ReturnType<typeof postLmsHtmlWidget>> = gen_postLmsHtmlWidget
+
+// GET /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/html-widget — getLmsHtmlWidgetLaunch
+declare const gen_getLmsHtmlWidgetLaunch: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/html-widget", "get">
+export const served_getLmsHtmlWidgetLaunch: Awaited<ReturnType<typeof getLmsHtmlWidgetLaunch>> = gen_getLmsHtmlWidgetLaunch
+
+// GET /v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/html-widget — getLmsPreviewHtmlWidgetLaunch
+declare const gen_getLmsPreviewHtmlWidgetLaunch: ResponseOf<"/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/html-widget", "get">
+export const served_getLmsPreviewHtmlWidgetLaunch: Awaited<ReturnType<typeof getLmsPreviewHtmlWidgetLaunch>> = gen_getLmsPreviewHtmlWidgetLaunch
+
 // POST /v1/lms/courses/import — postLmsCourseImport
 declare const gen_postLmsCourseImport: ResponseOf<"/v1/lms/courses/import", "post">
 export const served_postLmsCourseImport: Awaited<ReturnType<typeof postLmsCourseImport>> = gen_postLmsCourseImport
@@ -1629,6 +1739,14 @@ export const served_getLmsPreviewH5PLaunch: Awaited<ReturnType<typeof getLmsPrev
 // POST /v1/lms/steps/{step_id}/blocks/{block_id}/h5p-result — postLmsH5PResult
 declare const gen_postLmsH5PResult: ResponseOf<"/v1/lms/steps/{step_id}/blocks/{block_id}/h5p-result", "post">
 export const served_postLmsH5PResult: Awaited<ReturnType<typeof postLmsH5PResult>> = gen_postLmsH5PResult
+
+// POST /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/result — postLmsWidgetResult
+declare const gen_postLmsWidgetResult: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/result", "post">
+export const served_postLmsWidgetResult: Awaited<ReturnType<typeof postLmsWidgetResult>> = gen_postLmsWidgetResult
+
+// POST /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/hidden-tests — postLmsHiddenTests
+declare const gen_postLmsHiddenTests: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/hidden-tests", "post">
+export const served_postLmsHiddenTests: Awaited<ReturnType<typeof postLmsHiddenTests>> = gen_postLmsHiddenTests
 
 // POST /v1/lms/steps/{step_id}/blocks/{block_id}/interactions/{interaction_id}/answer — postLmsInteractionAnswer
 declare const gen_postLmsInteractionAnswer: ResponseOf<"/v1/lms/steps/{step_id}/blocks/{block_id}/interactions/{interaction_id}/answer", "post">
@@ -1673,6 +1791,14 @@ export const served_getLmsStepVideo: Awaited<ReturnType<typeof getLmsStepVideo>>
 // GET /v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/video — getLmsPreviewStepVideo
 declare const gen_getLmsPreviewStepVideo: ResponseOf<"/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/video", "get">
 export const served_getLmsPreviewStepVideo: Awaited<ReturnType<typeof getLmsPreviewStepVideo>> = gen_getLmsPreviewStepVideo
+
+// GET /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/captions — getLmsStepCaptions
+declare const gen_getLmsStepCaptions: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/captions", "get">
+export const served_getLmsStepCaptions: Awaited<ReturnType<typeof getLmsStepCaptions>> = gen_getLmsStepCaptions
+
+// GET /v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/captions — getLmsPreviewStepCaptions
+declare const gen_getLmsPreviewStepCaptions: ResponseOf<"/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/captions", "get">
+export const served_getLmsPreviewStepCaptions: Awaited<ReturnType<typeof getLmsPreviewStepCaptions>> = gen_getLmsPreviewStepCaptions
 
 // POST /v1/lms/steps/{step_id}/viewed — postLmsStepViewed
 declare const gen_postLmsStepViewed: ResponseOf<"/v1/lms/steps/{step_id}/viewed", "post">
@@ -1737,6 +1863,18 @@ export const served_postLmsCourseLinkCheck: Awaited<ReturnType<typeof postLmsCou
 // GET /v1/lms/public/courses/{slug}/landing — getPublicLmsCourseLanding
 declare const gen_getPublicLmsCourseLanding: ResponseOf<"/v1/lms/public/courses/{slug}/landing", "get">
 export const served_getPublicLmsCourseLanding: Awaited<ReturnType<typeof getPublicLmsCourseLanding>> = gen_getPublicLmsCourseLanding
+
+// GET /v1/lms/steps/{step_id}/tutor — getLmsTutor
+declare const gen_getLmsTutor: ResponseOf<"/v1/lms/steps/{step_id}/tutor", "get">
+export const served_getLmsTutor: Awaited<ReturnType<typeof getLmsTutor>> = gen_getLmsTutor
+
+// POST /v1/lms/steps/{step_id}/tutor — postLmsTutor
+declare const gen_postLmsTutor: ResponseOf<"/v1/lms/steps/{step_id}/tutor", "post">
+export const served_postLmsTutor: Awaited<ReturnType<typeof postLmsTutor>> = gen_postLmsTutor
+
+// POST /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/video-checks/suggest — postLmsVideoChecksSuggest
+declare const gen_postLmsVideoChecksSuggest: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/video-checks/suggest", "post">
+export const served_postLmsVideoChecksSuggest: Awaited<ReturnType<typeof postLmsVideoChecksSuggest>> = gen_postLmsVideoChecksSuggest
 
 // GET /v1/admin/login-cues — getAdminLoginCues
 declare const gen_getAdminLoginCues: ResponseOf<"/v1/admin/login-cues", "get">
