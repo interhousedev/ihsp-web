@@ -14,10 +14,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  TagInput,
 } from "@ihsp/ui"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
+import { ImageUrlField } from "../../../components/lib/image-url-field"
 import { InstitutionCombobox } from "../../chooser/components/institution-combobox"
 import { useInstitution } from "../../chooser/hooks"
 import type { Institution } from "../../chooser/types"
@@ -38,14 +40,22 @@ const REASONS = ["unknown_key", "value", "source_url", "year", "note", "text", "
 
 type Problem =
   | { type: "fact"; fact: string; reason: string }
-  | { type: "duplicate"; institutionId: string | null; proposalId: string | null }
+  | {
+      type: "duplicate"
+      institutionId: string | null
+      proposalId: string | null
+    }
   | { type: "limit"; limit: string }
 
 function readProblem(error: unknown): Problem | null {
   if (!isApiError(error)) return null
   const { params } = error
   if (error.type === "admission/catalog_fact_invalid") {
-    return { type: "fact", fact: String(params.fact ?? ""), reason: String(params.reason ?? "") }
+    return {
+      type: "fact",
+      fact: String(params.fact ?? ""),
+      reason: String(params.reason ?? ""),
+    }
   }
   if (error.type === "admission/catalog_duplicate") {
     return {
@@ -122,6 +132,7 @@ function useReasonText(): (reason: string) => string {
 export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const t = useT("catalogStaff")
   const tf = useT("catalogFacts")
+  const u = useT("settingsUx")
   const errorMessage = useErrorMessage()
   const create = useCreateProposal()
   const spec = useFactSpec()
@@ -133,7 +144,7 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
   const [country, setCountry] = useState("")
   const [city, setCity] = useState("")
   const [domain, setDomain] = useState("")
-  const [aliases, setAliases] = useState("")
+  const [aliases, setAliases] = useState<string[]>([])
   const [provider, setProvider] = useState<string>(PROVIDERS[0])
   const [basis, setBasis] = useState<string>(BASES[0])
   const [sourceUrl, setSourceUrl] = useState("")
@@ -160,9 +171,6 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
   const built = buildFacts(groups, facts, baseline)
   const factCount = Object.keys(built.facts).length
   const aliasList = aliases
-    .split(",")
-    .map((alias) => alias.trim())
-    .filter(Boolean)
 
   const fields: Record<string, unknown> =
     kind === "institution"
@@ -210,7 +218,7 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
     setBaseline(EMPTY_FACTS)
     setSeededFor(null)
     setCity(institution?.city ?? "")
-    setAliases(institution?.aliases.join(", ") ?? "")
+    setAliases(institution?.aliases ?? [])
     setLogoUrl(institution?.logo_url ?? "")
     setCoverUrl(institution?.cover_url ?? "")
     setProblem(null)
@@ -363,29 +371,25 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
                   </Field>
                   <div className="sm:col-span-2">
                     <Field id="cp-aliases" label={tf("aliasesLabel")}>
-                      <Input id="cp-aliases" value={aliases ?? ""} onChange={(e) => setAliases(e.target.value)} />
+                      <TagInput
+                        id="cp-aliases"
+                        value={aliases}
+                        onChange={setAliases}
+                        max={20}
+                        maxLength={200}
+                        placeholder={u("aliasesPlaceholder")}
+                        removeLabel={(tag) => u("removeTag", { tag })}
+                      />
                     </Field>
                   </div>
-                  <Field id="cp-logo" label={t("logoLabel")} error={!isHttps(logoUrl) ? t("httpsError") : null}>
-                    <Input
-                      id="cp-logo"
-                      type="url"
-                      aria-invalid={!isHttps(logoUrl)}
-                      aria-describedby={!isHttps(logoUrl) ? "cp-logo-error" : undefined}
-                      value={logoUrl ?? ""}
-                      onChange={(e) => setLogoUrl(e.target.value)}
-                    />
-                  </Field>
-                  <Field id="cp-cover" label={t("coverLabel")} error={!isHttps(coverUrl) ? t("httpsError") : null}>
-                    <Input
-                      id="cp-cover"
-                      type="url"
-                      aria-invalid={!isHttps(coverUrl)}
-                      aria-describedby={!isHttps(coverUrl) ? "cp-cover-error" : undefined}
-                      value={coverUrl ?? ""}
-                      onChange={(e) => setCoverUrl(e.target.value)}
-                    />
-                  </Field>
+                  <ImageUrlField id="cp-logo" label={t("logoLabel")} value={logoUrl ?? ""} onChange={setLogoUrl} />
+                  <ImageUrlField
+                    id="cp-cover"
+                    label={t("coverLabel")}
+                    value={coverUrl ?? ""}
+                    onChange={setCoverUrl}
+                    wide
+                  />
                 </>
               ) : (
                 <>

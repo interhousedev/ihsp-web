@@ -138,8 +138,8 @@ export function ProfileBody({ base = "/profile/?section=" }: { base?: string }) 
           <UnderlineTabs
             label={t("title")}
             tabs={[
-              { value: "details", label: t("details") },
-              { value: "background", label: t("background") },
+              { value: "details", label: t("details"), icon: "userPen" },
+              { value: "background", label: t("background"), icon: "journal" },
             ]}
             value={tab}
             onValueChange={(next) => router.replace(`${base}${next}`)}

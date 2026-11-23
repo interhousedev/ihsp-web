@@ -1,10 +1,10 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Checkbox, Input, LoadingButton, ResponsiveDialog, Skeleton } from "@ihsp/ui"
+import { Button, Checkbox, Input, LoadingButton, ResponsiveDialog, Skeleton, TagInput } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { UnderlineTabs } from "../../../components/lib/underline-tabs"
+import { UnderlineTabs, type UnderlineTab } from "../../../components/lib/underline-tabs"
 import { useFactSpec } from "../api"
 import {
   useCard,
@@ -20,6 +20,12 @@ import { FactsStep } from "./facts-step"
 import { UniversityEditDialog } from "./university-edit-dialog"
 
 const TABS = ["basics", "facts", "scholarships", "description"] as const
+const TAB_ICON: Record<(typeof TABS)[number], UnderlineTab["icon"]> = {
+  basics: "info",
+  facts: "checks",
+  scholarships: "billing",
+  description: "text",
+}
 const LOCALES = ["uz", "ru", "en"] as const
 const PROVIDERS = ["institution", "government", "foundation"] as const
 const BASES = ["merit", "need", "government", "sports", "work_study"] as const
@@ -44,7 +50,14 @@ function BasicsTab({ institution, card }: { institution: StaffInstitution; card:
           ? { lock_version: card.lock_version, facts: {}, remove: [MAP_KEY] }
           : {
               lock_version: card.lock_version,
-              facts: { [MAP_KEY]: { value: clean, source_url: clean, year: Number(currentYear()), verified: true } },
+              facts: {
+                [MAP_KEY]: {
+                  value: clean,
+                  source_url: clean,
+                  year: Number(currentYear()),
+                  verified: true,
+                },
+              },
               remove: [],
             },
       )
@@ -98,7 +111,10 @@ function FactsTab({ institution, card }: { institution: StaffInstitution; card: 
   const spec = useFactSpec()
   const { saveFacts } = useCardMutations(institution.id)
   const groups = (spec.data?.groups ?? [])
-    .map((group) => ({ ...group, facts: group.facts.filter((item) => item.key !== MAP_KEY) }))
+    .map((group) => ({
+      ...group,
+      facts: group.facts.filter((item) => item.key !== MAP_KEY),
+    }))
     .filter((group) => group.facts.length > 0)
   const [state, setState] = useState<FactsState | null>(null)
   const [baseline, setBaseline] = useState<FactsState | null>(null)
@@ -125,7 +141,11 @@ function FactsTab({ institution, card }: { institution: StaffInstitution; card: 
       Object.entries(built.facts).map(([k, f]) => [k, { ...f, verified }]),
     )
     try {
-      await saveFacts.mutateAsync({ lock_version: card.lock_version, facts, remove })
+      await saveFacts.mutateAsync({
+        lock_version: card.lock_version,
+        facts,
+        remove,
+      })
       toast.success(t("saved"))
     } catch (error) {
       toast.error(errorMessage(error))
@@ -168,7 +188,7 @@ type SForm = {
   country: string
   min: string
   max: string
-  covers: string
+  covers: string[]
   url: string
   cycle: string
 }
@@ -180,7 +200,7 @@ const S_EMPTY: SForm = {
   country: "",
   min: "",
   max: "",
-  covers: "",
+  covers: [],
   url: "",
   cycle: "",
 }
@@ -192,7 +212,7 @@ const toS = (s: CardScholarship): SForm => ({
   country: s.country ?? "",
   min: s.coverage_pct_min?.toString() ?? "",
   max: s.coverage_pct_max?.toString() ?? "",
-  covers: s.covers.join(", "),
+  covers: [...s.covers],
   url: s.url ?? "",
   cycle: s.cycle?.toString() ?? "",
 })
@@ -206,10 +226,7 @@ function toInput(f: SForm): ScholarshipInput {
     country: f.country.trim().toUpperCase() || null,
     coverage_pct_min: n(f.min),
     coverage_pct_max: n(f.max),
-    covers: f.covers
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean),
+    covers: f.covers,
     url: f.url.trim() || null,
     cycle: n(f.cycle),
   }
@@ -217,9 +234,13 @@ function toInput(f: SForm): ScholarshipInput {
 
 function ScholarshipsTab({ institution, card }: { institution: StaffInstitution; card: Card }) {
   const t = useT("catalogCard")
+  const u = useT("settingsUx")
   const errorMessage = useErrorMessage()
   const m = useCardMutations(institution.id)
-  const [editing, setEditing] = useState<{ id: string | null; form: SForm } | null>(null)
+  const [editing, setEditing] = useState<{
+    id: string | null
+    form: SForm
+  } | null>(null)
   const set = (patch: Partial<SForm>) => setEditing((e) => (e ? { ...e, form: { ...e.form, ...patch } } : e))
 
   async function run(action: Promise<unknown>) {
@@ -233,6 +254,7 @@ function ScholarshipsTab({ institution, card }: { institution: StaffInstitution;
   }
 
   const lock = card.lock_version
+  const urlOk = editing === null || editing.form.url.trim() === "" || isHttpsUrl(editing.form.url)
   return (
     <div className="flex flex-col gap-3">
       <ul className="flex flex-col gap-2">
@@ -252,7 +274,14 @@ function ScholarshipsTab({ institution, card }: { institution: StaffInstitution;
               size="sm"
               variant="ghost"
               disabled={m.deleteScholarship.isPending}
-              onClick={() => run(m.deleteScholarship.mutateAsync({ sid: s.id, lock_version: lock }))}
+              onClick={() =>
+                run(
+                  m.deleteScholarship.mutateAsync({
+                    sid: s.id,
+                    lock_version: lock,
+                  }),
+                )
+              }
             >
               {t("delete")}
             </Button>
@@ -277,8 +306,15 @@ function ScholarshipsTab({ institution, card }: { institution: StaffInstitution;
             const body = toInput(editing.form)
             void run(
               editing.id
-                ? m.updateScholarship.mutateAsync({ ...body, sid: editing.id, lock_version: lock })
-                : m.createScholarship.mutateAsync({ ...body, lock_version: lock }),
+                ? m.updateScholarship.mutateAsync({
+                    ...body,
+                    sid: editing.id,
+                    lock_version: lock,
+                  })
+                : m.createScholarship.mutateAsync({
+                    ...body,
+                    lock_version: lock,
+                  }),
             )
           }}
         >
@@ -345,29 +381,40 @@ function ScholarshipsTab({ institution, card }: { institution: StaffInstitution;
               onChange={(e) => set({ cycle: e.target.value })}
             />
           </label>
-          <label className={`${field} sm:col-span-2`}>
-            {t("sCovers")}
-            <Input
+          <div className={`${field} sm:col-span-2`}>
+            <label htmlFor="sch-covers">{t("sCovers")}</label>
+            <TagInput
+              id="sch-covers"
               value={editing.form.covers}
-              placeholder="tuition, housing"
-              onChange={(e) => set({ covers: e.target.value })}
+              onChange={(covers) => set({ covers })}
+              max={12}
+              maxLength={60}
+              placeholder={u("coversPlaceholder")}
+              removeLabel={(tag) => u("removeTag", { tag })}
             />
-          </label>
+          </div>
           <label className={`${field} sm:col-span-2`}>
             {t("sUrl")}
             <Input
               type="url"
               inputMode="url"
               placeholder="https://"
+              maxLength={2000}
+              aria-invalid={!urlOk || undefined}
               value={editing.form.url}
               onChange={(e) => set({ url: e.target.value })}
             />
+            {!urlOk ? (
+              <span role="alert" className="text-destructive text-xs">
+                {u("urlInvalid")}
+              </span>
+            ) : null}
           </label>
           <div className="flex gap-2 sm:col-span-2">
             <LoadingButton
               type="submit"
               loading={m.createScholarship.isPending || m.updateScholarship.isPending}
-              disabled={editing.form.name.trim() === ""}
+              disabled={editing.form.name.trim() === "" || !urlOk}
             >
               {t("save")}
             </LoadingButton>
@@ -390,7 +437,10 @@ function DescriptionTab({ institution, card }: { institution: StaffInstitution; 
 
   async function save() {
     try {
-      await saveDescription.mutateAsync({ lock_version: card.lock_version, description: text })
+      await saveDescription.mutateAsync({
+        lock_version: card.lock_version,
+        description: text,
+      })
       toast.success(t("saved"))
     } catch (error) {
       toast.error(errorMessage(error))
@@ -433,7 +483,7 @@ export function CardDialog({ institution, onClose }: { institution: StaffInstitu
       <div className="flex flex-col gap-4">
         <UnderlineTabs
           label={t("title")}
-          tabs={TABS.map((value) => ({ value, label: t(`tabs.${value}`) }))}
+          tabs={TABS.map((value) => ({ value, label: t(`tabs.${value}`), icon: TAB_ICON[value] }))}
           value={tab}
           onValueChange={(next) => setTab(next as (typeof TABS)[number])}
         />

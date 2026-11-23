@@ -6,6 +6,8 @@ import { LoadingButton, ResponsiveDialog, Skeleton } from "@ihsp/ui"
 import { Input } from "@ihsp/ui"
 import { useEffect, useState, type FormEvent } from "react"
 import { toast } from "sonner"
+import { DateListField, cleanDates } from "../../../components/lib/date-list-field"
+import { ImageUrlField, isHttpsImageUrl } from "../../../components/lib/image-url-field"
 import { useStaffOpportunity, useStaffOpportunityMutations, type StaffOppFields } from "../api"
 
 export const OPP_KINDS = [
@@ -19,8 +21,6 @@ export const OPP_KINDS = [
   "research",
 ] as const
 
-const DATES = /^\d{4}-\d{2}-\d{2}$/
-
 type Form = {
   kind: string
   title: string
@@ -29,8 +29,8 @@ type Form = {
   logo_url: string
   country: string
   summary: string
-  registration_deadlines: string
-  exam_dates: string
+  registration_deadlines: string[]
+  exam_dates: string[]
   note: string
 }
 
@@ -42,21 +42,13 @@ const EMPTY: Form = {
   logo_url: "",
   country: "",
   summary: "",
-  registration_deadlines: "",
-  exam_dates: "",
+  registration_deadlines: [],
+  exam_dates: [],
   note: "",
 }
 
 const text = (v: unknown) => (typeof v === "string" ? v : "")
-const dates = (v: unknown) => (Array.isArray(v) ? v.join(", ") : "")
-
-function parseDates(raw: string): string[] | null {
-  const parts = raw
-    .split(/[,\s]+/)
-    .map((d) => d.trim())
-    .filter(Boolean)
-  return parts.every((d) => DATES.test(d)) ? parts : null
-}
+const dates = (v: unknown): string[] => (Array.isArray(v) ? v.filter((d): d is string => typeof d === "string") : [])
 
 /** Create (`id` null) or edit one entry; fields the form does not show are sent back as loaded. */
 export function OpportunityEditDialog({
@@ -73,11 +65,9 @@ export function OpportunityEditDialog({
   const detail = useStaffOpportunity(open ? id : null)
   const { create, update } = useStaffOpportunityMutations()
   const [form, setForm] = useState<Form>(EMPTY)
-  const [badDates, setBadDates] = useState(false)
   const set = <K extends keyof Form>(key: K, value: Form[K]) => setForm((f) => ({ ...f, [key]: value }))
 
   useEffect(() => {
-    setBadDates(false)
     if (id === null) return setForm(EMPTY)
     const f = detail.data?.fields
     if (!f) return
@@ -97,9 +87,8 @@ export function OpportunityEditDialog({
 
   function submit(event: FormEvent) {
     event.preventDefault()
-    const reg = parseDates(form.registration_deadlines)
-    const exam = parseDates(form.exam_dates)
-    if (!reg || !exam) return setBadDates(true)
+    const reg = cleanDates(form.registration_deadlines)
+    const exam = cleanDates(form.exam_dates)
     const orNull = (v: string) => v.trim() || null
     const fields: StaffOppFields = {
       ...detail.data?.fields,
@@ -137,7 +126,11 @@ export function OpportunityEditDialog({
         <LoadingButton
           type="submit"
           loading={create.isPending || update.isPending}
-          disabled={loading || form.title.trim() === ""}
+          disabled={
+            loading ||
+            form.title.trim() === "" ||
+            [form.url, form.logo_url].some((v) => v.trim() !== "" && !isHttpsImageUrl(v))
+          }
         >
           {t("save")}
         </LoadingButton>
@@ -175,33 +168,29 @@ export function OpportunityEditDialog({
           </label>
           <label className={field}>
             {t("url")}
-            <Input inputMode="url" value={form.url} onChange={(e) => set("url", e.target.value)} />
-          </label>
-          <label className={`${field} sm:col-span-2`}>
-            {t("logoUrl")}
-            <Input inputMode="url" value={form.logo_url} onChange={(e) => set("logo_url", e.target.value)} />
-          </label>
-          <label className={field}>
-            {t("registrationDeadlines")}
             <Input
-              placeholder="2026-01-15, 2026-03-01"
-              value={form.registration_deadlines}
-              onChange={(e) => set("registration_deadlines", e.target.value)}
+              type="url"
+              inputMode="url"
+              placeholder="https://"
+              aria-invalid={form.url.trim() !== "" && !isHttpsImageUrl(form.url) ? true : undefined}
+              value={form.url}
+              onChange={(e) => set("url", e.target.value)}
             />
           </label>
-          <label className={field}>
-            {t("examDates")}
-            <Input
-              placeholder="2026-05-02"
-              value={form.exam_dates}
-              onChange={(e) => set("exam_dates", e.target.value)}
+          <div className="sm:col-span-2">
+            <ImageUrlField
+              id="opp-logo"
+              label={t("logoUrl")}
+              value={form.logo_url}
+              onChange={(v) => set("logo_url", v)}
             />
-          </label>
-          {badDates ? (
-            <p role="alert" className="text-destructive text-sm sm:col-span-2">
-              {t("badDates")}
-            </p>
-          ) : null}
+          </div>
+          <DateListField
+            label={t("registrationDeadlines")}
+            value={form.registration_deadlines}
+            onChange={(v) => set("registration_deadlines", v)}
+          />
+          <DateListField label={t("examDates")} value={form.exam_dates} onChange={(v) => set("exam_dates", v)} />
           <label className={`${field} sm:col-span-2`}>
             {t("summary")}
             <textarea

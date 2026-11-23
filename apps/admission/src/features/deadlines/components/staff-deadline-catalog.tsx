@@ -141,9 +141,15 @@ export function StaffDeadlineCatalog() {
             value={tab}
             onValueChange={setTab}
             tabs={[
-              { value: "all", label: t("view.all"), count: items.length, tone: "neutral" },
-              { value: "confirmed", label: t("status.confirmed"), count: confirmed.length, tone: "success" },
-              { value: "pending", label: t("view.pending"), count: pending.length, tone: "warning" },
+              { value: "all", label: t("view.all"), icon: "calendar", count: items.length, tone: "neutral" },
+              {
+                value: "confirmed",
+                label: t("status.confirmed"),
+                icon: "circleCheck",
+                count: confirmed.length,
+                tone: "success",
+              },
+              { value: "pending", label: t("view.pending"), icon: "clock", count: pending.length, tone: "warning" },
             ]}
           />
           {body}

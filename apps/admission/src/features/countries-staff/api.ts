@@ -7,8 +7,17 @@ import { COUNTRY_FACTS_KEY, type CountryFact, type CountryFacts, type FactKey } 
 const STAFF = "/v1/admission/staff/countries"
 export const COUNTRY_STATUSES = ["missing", "draft", "verified"] as const
 export type CountryStatus = (typeof COUNTRY_STATUSES)[number]
-export type CountrySummary = { country: string; status: CountryStatus; coverage: number; as_of: string | null }
-export type CountryPut = { as_of: string; verified: boolean; facts: Partial<Record<FactKey, CountryFact>> }
+export type CountrySummary = {
+  country: string
+  status: CountryStatus
+  coverage: number
+  as_of: string | null
+}
+export type CountryPut = {
+  as_of: string
+  verified: boolean
+  facts: Partial<Record<FactKey, CountryFact>>
+}
 
 const KEY = ["admission", "staff-countries"] as const
 

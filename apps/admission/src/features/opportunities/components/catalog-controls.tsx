@@ -67,7 +67,6 @@ export function OpportunityNav({ value }: { value: Category | "projects" }) {
 
   return (
     <UnderlineTabs
-      hideIconsBelowXl
       label={t("categories.label")}
       value={value}
       onValueChange={go}

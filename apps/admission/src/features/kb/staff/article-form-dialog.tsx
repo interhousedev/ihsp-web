@@ -3,7 +3,7 @@
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { RichTextEditor } from "@ihsp/features-core/rich-text"
 import { kbLibrary, MessageWithOpenUi, safeLinkUrl } from "@ihsp/features-core/openui"
-import { Button, Input, Markdown, ResponsiveDialog } from "@ihsp/ui"
+import { Button, Input, Markdown, ResponsiveDialog, TagInput } from "@ihsp/ui"
 import { useEffect, useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { useCreateKbArticle, useUpdateKbArticle, type KbArticle } from "../api"
@@ -19,11 +19,17 @@ interface Draft {
   title: string
   body: string
   locale: string
-  tags: string
+  tags: string[]
   published: boolean
 }
 
-const EMPTY: Draft = { title: "", body: "", locale: "ru", tags: "", published: false }
+const EMPTY: Draft = {
+  title: "",
+  body: "",
+  locale: "ru",
+  tags: [],
+  published: false,
+}
 
 function toDraft(article: KbArticle | null): Draft {
   if (!article) return EMPTY
@@ -31,20 +37,9 @@ function toDraft(article: KbArticle | null): Draft {
     title: article.title,
     body: article.body,
     locale: article.locale,
-    tags: article.tags.join(", "),
+    tags: [...article.tags],
     published: article.status === "published",
   }
-}
-
-export function parseTags(raw: string): string[] {
-  return [
-    ...new Set(
-      raw
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter(Boolean),
-    ),
-  ]
 }
 
 /** Creates an article, or edits `article` when given. */
@@ -58,6 +53,7 @@ export function ArticleFormDialog({
   onOpenChange: (open: boolean) => void
 }) {
   const t = useT("kb.staff")
+  const u = useT("settingsUx")
   const errorMessage = useErrorMessage()
   const create = useCreateKbArticle()
   const update = useUpdateKbArticle()
@@ -89,7 +85,7 @@ export function ArticleFormDialog({
       title: draft.title.trim(),
       body: draft.body,
       locale: draft.locale,
-      tags: parseTags(draft.tags),
+      tags: draft.tags,
       status: draft.published ? ("published" as const) : ("draft" as const),
     }
     if (article) update.mutate({ id: article.id, patch: fields }, done)
@@ -169,7 +165,14 @@ export function ArticleFormDialog({
           </label>
           <label className="flex flex-col gap-2 text-sm font-medium">
             {t("tags")}
-            <Input value={draft.tags} onChange={(event) => set("tags", event.target.value)} />
+            <TagInput
+              value={draft.tags}
+              onChange={(tags) => set("tags", tags)}
+              max={12}
+              maxLength={40}
+              placeholder={u("tagsPlaceholder")}
+              removeLabel={(tag) => u("removeTag", { tag })}
+            />
           </label>
         </div>
         <label className="flex items-center gap-2 text-sm font-medium">

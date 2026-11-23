@@ -46,6 +46,8 @@ describe("AdmissionShell", () => {
       "Universities & budget",
       "Essays",
       "Documents & applying",
+      "Countries",
+      "Trajectories",
       "Knowledge base",
       "Consultations",
       "Settings",

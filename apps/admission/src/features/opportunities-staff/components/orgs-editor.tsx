@@ -5,13 +5,26 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, LoadingButton } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
+import { ImageUrlField, isHttpsImageUrl } from "../../../components/lib/image-url-field"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { useOrgMutations, useOrgs, type Org, type OrgKind } from "../../opportunities/api"
 
 const KINDS: OrgKind[] = ["university", "company", "foundation", "government", "ngo"]
 
-type Draft = { name: string; kind: OrgKind; logo_url: string; website: string; country: string }
-const EMPTY: Draft = { name: "", kind: "university", logo_url: "", website: "", country: "" }
+type Draft = {
+  name: string
+  kind: OrgKind
+  logo_url: string
+  website: string
+  country: string
+}
+const EMPTY: Draft = {
+  name: "",
+  kind: "university",
+  logo_url: "",
+  website: "",
+  country: "",
+}
 
 function toDraft(org: Org): Draft {
   return {
@@ -107,18 +120,17 @@ export function OrgsEditor() {
             </option>
           ))}
         </select>
-        <div className="flex items-center gap-2">
-          <LogoAvatar name={draft.name || "?"} src={draft.logo_url || null} fit="contain" className="size-9 ring-0" />
-          <Input
-            aria-label={t("orgs.logoUrl")}
-            placeholder={t("orgs.logoUrl")}
-            value={draft.logo_url}
-            onChange={(e) => set("logo_url", e.target.value)}
-          />
-        </div>
+        <ImageUrlField
+          id="org-logo"
+          label={t("orgs.logoUrl")}
+          value={draft.logo_url}
+          onChange={(v) => set("logo_url", v)}
+        />
         <Input
           aria-label={t("orgs.website")}
           placeholder={t("orgs.website")}
+          type="url"
+          aria-invalid={draft.website.trim() !== "" && !isHttpsImageUrl(draft.website) ? true : undefined}
           value={draft.website}
           onChange={(e) => set("website", e.target.value)}
         />

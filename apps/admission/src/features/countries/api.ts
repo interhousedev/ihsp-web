@@ -57,3 +57,84 @@ export function useCountryFacts(codes: string[], fields: string[] = []) {
       }),
   })
 }
+
+export const REGIONS = ["central_asia", "europe", "middle_east", "asia", "africa", "americas", "oceania"] as const
+export type Region = (typeof REGIONS)[number]
+
+// mirrors openapi admission_countries_list
+export type CountryOverview = {
+  country: string
+  region: string
+  status: "missing" | "draft" | "verified"
+  coverage: number
+  as_of: string | null
+  scores: Record<string, number>
+  institution_count: number
+  median_salary_usd: number | null
+}
+export type CountryOverviewList = { items: CountryOverview[] }
+
+export type Employer = { name: string; sector?: string | null; url?: string | null }
+/** `employers.values` and `salaries.values`: the two facts with nested values. */
+export type EmployersValues = { fields?: Record<string, Employer[]> }
+export type SalariesValues = {
+  currency?: "USD"
+  year?: number
+  overall_median_annual?: number | null
+  by_field?: Record<string, number>
+}
+export type NestedFact<V> = Omit<CountryFact, "values"> & { values: V }
+
+// mirrors openapi admission_countries_read
+export type CountryRanking = { system: string; subject: string; rank: number | string; year: number | null }
+export type CountryInstitution = {
+  id: string
+  name: string
+  city: string | null
+  logo_url: string | null
+  verified: boolean
+  rankings: CountryRanking[]
+}
+export type CountryProfile = {
+  country: string
+  region: string
+  facts:
+    | (Omit<CountryFacts, "facts"> & {
+        facts: CountryFacts["facts"] & {
+          employers?: NestedFact<EmployersValues>
+          salaries?: NestedFact<SalariesValues>
+        }
+      })
+    | null
+  highlight: string[]
+  institutions: CountryInstitution[]
+  institution_count: number
+}
+
+/** `GET /v1/admission/countries`: countries with facts or catalog universities. */
+export function useCountries() {
+  return useQuery({
+    queryKey: ["admission", "countries"] as const,
+    staleTime: 10 * 60_000,
+    queryFn: ({ signal }) => getApiClient().get<CountryOverviewList>("/v1/admission/countries", { signal }),
+  })
+}
+
+/** `GET /v1/admission/countries/{code}`; `fields` are the student's study field names. */
+export function useCountryProfile(code: string, fields: string[] = []) {
+  return useQuery({
+    queryKey: ["admission", "countries", code, fields] as const,
+    enabled: /^[A-Z]{2}$/.test(code),
+    staleTime: 10 * 60_000,
+    queryFn: ({ signal }) =>
+      getApiClient().get<CountryProfile>(`/v1/admission/countries/${encodeURIComponent(code)}`, {
+        query: fields.length ? { fields } : {},
+        signal,
+      }),
+  })
+}
+
+/** Flag emoji of an ISO alpha-2 code (regional indicator symbols). */
+export function flagOf(code: string): string {
+  return /^[A-Z]{2}$/.test(code) ? String.fromCodePoint(...[...code].map((c) => 0x1f1a5 + c.charCodeAt(0))) : ""
+}

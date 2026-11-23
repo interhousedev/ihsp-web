@@ -7,6 +7,7 @@ import type { ReactNode } from "react"
 import { useOptionLabel } from "../../chooser/components/option-label"
 import { useWizardConfig } from "../../profile/api"
 import { useProfileText } from "../../profile/lib/use-profile-text"
+import { StaffBooksPanel } from "../../courses/components/attached-books"
 import { useStudentSection } from "../api"
 import type { DeniedSection } from "../../shell/components/access-denied"
 import { QueryError } from "../../shell/components/query-error"
@@ -28,7 +29,12 @@ function Section<T>({
 function text(value: unknown): string {
   if (value === null || value === undefined) return "—"
   if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") return String(value)
-  return JSON.stringify(value)
+  if (Array.isArray(value)) return value.map(text).join(", ")
+  if (typeof value === "object")
+    return Object.entries(value as Record<string, unknown>)
+      .map(([k, v]) => `${k.replaceAll("_", " ")}: ${text(v)}`)
+      .join("; ")
+  return String(value)
 }
 
 function Facts({ rows }: { rows: [string, unknown][] }) {
@@ -103,7 +109,9 @@ export function ProfileTab({ studentId }: { studentId: string }) {
             ) : null}
             {profile.missing_required.length > 0 ? (
               <p className="text-warning text-sm">
-                {t("student.missing", { list: profile.missing_required.map((id) => text.label(id)).join(", ") })}
+                {t("student.missing", {
+                  list: profile.missing_required.map((id) => text.label(id)).join(", "),
+                })}
               </p>
             ) : null}
           </div>
@@ -166,27 +174,30 @@ export function AlignmentTab({ studentId }: { studentId: string }) {
 export function CoursesTab({ studentId }: { studentId: string }) {
   const t = useT("staff")
   return (
-    <Section query={useStudentSection(studentId, "courses")} section="courses">
-      {({ items }) =>
-        items.length === 0 ? (
-          <StateView state="empty" title={t("student.coursesEmpty")} />
-        ) : (
-          <ul className="flex flex-col gap-2">
-            {items.map((course, index) => (
-              <li
-                key={course.id ?? index}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3"
-              >
-                <span className="text-sm font-medium">{course.title}</span>
-                <span className="text-muted-foreground text-xs">
-                  {[course.provider, course.level, course.year, course.grade].filter((v) => v != null).join(" · ")}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )
-      }
-    </Section>
+    <div className="flex flex-col gap-6">
+      <Section query={useStudentSection(studentId, "courses")} section="courses">
+        {({ items }) =>
+          items.length === 0 ? (
+            <StateView state="empty" title={t("student.coursesEmpty")} />
+          ) : (
+            <ul className="flex flex-col gap-2">
+              {items.map((course, index) => (
+                <li
+                  key={course.id ?? index}
+                  className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3"
+                >
+                  <span className="text-sm font-medium">{course.title}</span>
+                  <span className="text-muted-foreground text-xs">
+                    {[course.provider, course.level, course.year, course.grade].filter((v) => v != null).join(" · ")}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </Section>
+      <StaffBooksPanel studentId={studentId} />
+    </div>
   )
 }
 

@@ -216,7 +216,11 @@ describe("knowledge base", () => {
     fireEvent.change(await screen.findByLabelText("Link text"), { target: { value: "Pay here" } })
     fireEvent.change(screen.getByLabelText("Link address"), { target: { value: "/payments/" } })
     fireEvent.click(screen.getByRole("button", { name: "Apply" }))
-    fireEvent.change(screen.getByLabelText("Tags, comma separated"), { target: { value: "money, money, visa" } })
+    const tagField = screen.getByLabelText("Tags")
+    for (const tag of ["money", "money", "visa"]) {
+      fireEvent.change(tagField, { target: { value: tag } })
+      fireEvent.keyDown(tagField, { key: "Enter" })
+    }
     fireEvent.click(screen.getByRole("button", { name: "Save" }))
     await waitFor(() =>
       expect(created).toEqual({

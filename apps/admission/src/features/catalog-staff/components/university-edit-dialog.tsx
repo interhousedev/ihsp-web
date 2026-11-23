@@ -1,9 +1,10 @@
 "use client"
 
 import { isApiError } from "@ihsp/api"
-import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Input, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
-import { useEffect, useState, type FormEvent } from "react"
+import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
+import { Button, Input, LoadingButton, ResponsiveDialog, TagInput } from "@ihsp/ui"
+import { useEffect, useMemo, useState, type FormEvent } from "react"
+import { ImageUrlField, isHttpsImageUrl } from "../../../components/lib/image-url-field"
 import { ScorecardDialog } from "./scorecard-dialog"
 import { toast } from "sonner"
 import {
@@ -25,8 +26,8 @@ type Form = {
   website_domain: string
   kind: StaffInstitution["kind"]
   setting: string
-  aliases: string
-  languages: string
+  aliases: string[]
+  languages: string[]
   logo_url: string
   cover_url: string
   status: InstitutionStatus
@@ -40,18 +41,49 @@ const EMPTY: Form = {
   website_domain: "",
   kind: "university",
   setting: "",
-  aliases: "",
-  languages: "",
+  aliases: [],
+  languages: [],
   logo_url: "",
   cover_url: "",
   status: "published",
 }
 
-const list = (raw: string) =>
-  raw
-    .split(",")
-    .map((v) => v.trim())
-    .filter(Boolean)
+/** Languages a university can teach in, by ISO 639-1 code; shown by their name in the interface language. */
+const LANGUAGE_CODES = [
+  "en",
+  "ru",
+  "uz",
+  "de",
+  "fr",
+  "es",
+  "it",
+  "pt",
+  "nl",
+  "pl",
+  "cs",
+  "sv",
+  "da",
+  "no",
+  "fi",
+  "hu",
+  "tr",
+  "ar",
+  "zh",
+  "ja",
+  "ko",
+  "kk",
+  "ky",
+  "tg",
+  "az",
+  "ka",
+  "uk",
+  "he",
+  "hi",
+  "ms",
+  "id",
+  "th",
+  "vi",
+]
 
 function toForm(i: StaffInstitution): Form {
   return {
@@ -62,8 +94,8 @@ function toForm(i: StaffInstitution): Form {
     website_domain: i.website_domain ?? "",
     kind: i.kind,
     setting: i.setting ?? "",
-    aliases: i.aliases.join(", "),
-    languages: i.languages.join(", "),
+    aliases: [...i.aliases],
+    languages: [...i.languages],
     logo_url: i.logo_url ?? "",
     cover_url: i.cover_url ?? "",
     status: i.status,
@@ -85,6 +117,16 @@ export function UniversityEditDialog({
   const { create, update } = useStaffInstitutionMutations()
   const [form, setForm] = useState<Form>(EMPTY)
   const [scorecard, setScorecard] = useState(false)
+  const u = useT("settingsUx")
+  const locale = useLocale()
+  const languageOptions = useMemo(() => {
+    const names = new Intl.DisplayNames([locale], { type: "language" })
+    const codes = [...new Set([...LANGUAGE_CODES, ...form.languages])]
+    return codes.map((code) => ({
+      value: code,
+      label: names.of(code) ?? code,
+    }))
+  }, [locale, form.languages])
   const set = <K extends keyof Form>(key: K, value: Form[K]) => setForm((f) => ({ ...f, [key]: value }))
   useEffect(() => setForm(institution ? toForm(institution) : EMPTY), [institution, open])
 
@@ -99,8 +141,8 @@ export function UniversityEditDialog({
       website_domain: orNull(form.website_domain),
       kind: form.kind,
       setting: (orNull(form.setting) as StaffInstitution["setting"]) ?? null,
-      aliases: list(form.aliases),
-      languages: list(form.languages),
+      aliases: form.aliases,
+      languages: form.languages,
       logo_url: orNull(form.logo_url),
       cover_url: orNull(form.cover_url),
       status: form.status,
@@ -131,7 +173,11 @@ export function UniversityEditDialog({
         <LoadingButton
           type="submit"
           loading={create.isPending || update.isPending}
-          disabled={form.name.trim() === "" || form.country.trim().length !== 2}
+          disabled={
+            form.name.trim() === "" ||
+            form.country.trim().length !== 2 ||
+            [form.logo_url, form.cover_url].some((v) => v.trim() !== "" && !isHttpsImageUrl(v))
+          }
         >
           {t("save")}
         </LoadingButton>
@@ -197,22 +243,47 @@ export function UniversityEditDialog({
             ))}
           </select>
         </label>
-        <label className={field}>
-          {t("aliases")}
-          <Input value={form.aliases} onChange={(e) => set("aliases", e.target.value)} />
-        </label>
-        <label className={field}>
-          {t("languages")}
-          <Input value={form.languages} placeholder="en, ru" onChange={(e) => set("languages", e.target.value)} />
-        </label>
-        <label className={`${field} sm:col-span-2`}>
-          {t("logoUrl")}
-          <Input inputMode="url" value={form.logo_url} onChange={(e) => set("logo_url", e.target.value)} />
-        </label>
-        <label className={`${field} sm:col-span-2`}>
-          {t("coverUrl")}
-          <Input inputMode="url" value={form.cover_url} onChange={(e) => set("cover_url", e.target.value)} />
-        </label>
+        <div className={`${field} sm:col-span-2`}>
+          <label htmlFor="uni-aliases">{t("aliases")}</label>
+          <TagInput
+            id="uni-aliases"
+            value={form.aliases}
+            onChange={(v) => set("aliases", v)}
+            max={20}
+            maxLength={200}
+            placeholder={u("aliasesPlaceholder")}
+            removeLabel={(tag) => u("removeTag", { tag })}
+          />
+        </div>
+        <div className={`${field} sm:col-span-2`}>
+          <label htmlFor="uni-languages">{t("languages")}</label>
+          <TagInput
+            id="uni-languages"
+            value={form.languages}
+            onChange={(v) => set("languages", v)}
+            options={languageOptions}
+            max={12}
+            placeholder={u("languagesPlaceholder")}
+            removeLabel={(tag) => u("removeTag", { tag })}
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <ImageUrlField
+            id="uni-logo"
+            label={t("logoUrl")}
+            value={form.logo_url}
+            onChange={(v) => set("logo_url", v)}
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <ImageUrlField
+            id="uni-cover"
+            label={t("coverUrl")}
+            value={form.cover_url}
+            onChange={(v) => set("cover_url", v)}
+            wide
+          />
+        </div>
         <label className={field}>
           {t("status")}
           <select

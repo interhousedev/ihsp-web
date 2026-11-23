@@ -27,8 +27,8 @@ export function StaffDeadlinesPage() {
             value={tab}
             onValueChange={setTab}
             tabs={[
-              { value: "students", label: t("staffTimeline.students") },
-              { value: "catalog", label: t("staffTitle") },
+              { value: "students", label: t("staffTimeline.students"), icon: "students" },
+              { value: "catalog", label: t("staffTitle"), icon: "calendarEvent" },
             ]}
           />
         ) : null}

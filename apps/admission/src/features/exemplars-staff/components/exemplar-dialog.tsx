@@ -12,6 +12,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  TagInput,
   Textarea,
 } from "@ihsp/ui"
 import { useState, type FormEvent, type ReactNode } from "react"
@@ -58,18 +59,6 @@ function Field({
   )
 }
 
-/** The comma-separated tags of the form as a clean list. */
-export function parseTags(raw: string): string[] {
-  return [
-    ...new Set(
-      raw
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter(Boolean),
-    ),
-  ]
-}
-
 /** Create (no `exemplar`) or edit one exemplar of the library. */
 export function ExemplarDialog({
   open,
@@ -81,6 +70,7 @@ export function ExemplarDialog({
   exemplar?: Exemplar
 }) {
   const t = useT("exemplarsStaff")
+  const u = useT("settingsUx")
   const errorMessage = useErrorMessage()
   const create = useCreateExemplar()
   const patch = usePatchExemplar()
@@ -94,7 +84,7 @@ export function ExemplarDialog({
   const [sourceName, setSourceName] = useState(exemplar?.source_name ?? "")
   const [prompt, setPrompt] = useState(exemplar?.prompt ?? "")
   const [notes, setNotes] = useState(exemplar?.notes ?? "")
-  const [tags, setTags] = useState((exemplar?.tags ?? []).join(", "))
+  const [tags, setTags] = useState<string[]>(exemplar?.tags ?? [])
   const [body, setBody] = useState(exemplar?.body ?? "")
   const [duplicate, setDuplicate] = useState(false)
   const [touched, setTouched] = useState(false)
@@ -121,7 +111,7 @@ export function ExemplarDialog({
       year: yearNumber,
       prompt: prompt.trim(),
       notes: notes.trim(),
-      tags: parseTags(tags),
+      tags,
     }
     try {
       if (exemplar) {
@@ -132,7 +122,10 @@ export function ExemplarDialog({
           ...(institution ? { institution_id: institution.id } : {}),
         })
       } else {
-        const input: ExemplarInput = { ...fields, institution_id: institution?.id ?? null }
+        const input: ExemplarInput = {
+          ...fields,
+          institution_id: institution?.id ?? null,
+        }
         await create.mutateAsync(input)
       }
       toast.success(t("saved"))
@@ -249,7 +242,15 @@ export function ExemplarDialog({
           <Textarea id="ex-notes" rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} />
         </Field>
         <Field id="ex-tags" label={t("fieldTags")}>
-          <Input id="ex-tags" value={tags} onChange={(event) => setTags(event.target.value)} />
+          <TagInput
+            id="ex-tags"
+            value={tags}
+            onChange={setTags}
+            max={12}
+            maxLength={40}
+            placeholder={u("tagsPlaceholder")}
+            removeLabel={(tag) => u("removeTag", { tag })}
+          />
         </Field>
         <Field id="ex-body" label={t("fieldBody")} error={touched && body.trim() === "" ? t("required") : null}>
           <Textarea id="ex-body" rows={10} value={body} onChange={(event) => setBody(event.target.value)} />

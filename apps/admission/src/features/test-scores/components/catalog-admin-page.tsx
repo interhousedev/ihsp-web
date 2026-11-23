@@ -1,5 +1,6 @@
 "use client"
 
+import { slugify } from "../../../components/lib/slug"
 import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
@@ -14,6 +15,7 @@ import {
   LoadingButton,
   ResponsiveDialog,
   StateView,
+  TagInput,
 } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
@@ -34,37 +36,47 @@ const LOCALES = ["en", "ru", "uz"] as const
 
 type SectionForm = {
   key: string
+  keyManual: boolean
   names: Record<string, string>
   min: string
   max: string
   step: string
-  choices: string
+  choices: string[]
 }
 
 function toForm(section: ScoreSection): SectionForm {
   return {
     key: section.key,
+    keyManual: true,
     names: { ...section.names },
     min: String(section.min),
     max: String(section.max),
     step: String(section.step),
-    choices: (section.choices ?? []).join(", "),
+    choices: [...(section.choices ?? [])],
   }
 }
 
-const blankSection = (): SectionForm => ({ key: "", names: {}, min: "0", max: "100", step: "1", choices: "" })
+const blankSection = (): SectionForm => ({
+  key: "",
+  keyManual: false,
+  names: {},
+  min: "0",
+  max: "100",
+  step: "1",
+  choices: [],
+})
+
+const sectionKey = (form: SectionForm) =>
+  form.keyManual ? form.key.trim() : slugify(form.names.en ?? Object.values(form.names).find((v) => v.trim()) ?? "")
 
 function toSection(form: SectionForm): ScoreSection {
   return {
-    key: form.key.trim(),
+    key: sectionKey(form),
     names: Object.fromEntries(Object.entries(form.names).filter(([, value]) => value.trim() !== "")),
     min: Number(form.min),
     max: Number(form.max),
     step: Number(form.step),
-    choices: form.choices
-      .split(",")
-      .map((choice) => choice.trim())
-      .filter(Boolean),
+    choices: form.choices,
   }
 }
 
@@ -78,16 +90,28 @@ function SectionEditor({
   onRemove?: () => void
 }) {
   const t = useT("testCatalog")
+  const u = useT("settingsUx")
   const set = (patch: Partial<SectionForm>) => onChange({ ...form, ...patch })
   return (
     <div className="flex flex-col gap-2 rounded-md border p-2">
       <div className="grid gap-2 sm:grid-cols-4">
-        <Input
-          aria-label={t("sectionKey")}
-          placeholder={t("sectionKey")}
-          value={form.key ?? ""}
-          onChange={(e) => set({ key: e.target.value })}
-        />
+        <div className="flex gap-2">
+          <Input
+            aria-label={t("sectionKey")}
+            placeholder={t("sectionKey")}
+            value={sectionKey(form)}
+            readOnly={!form.keyManual}
+            onChange={(e) => set({ key: e.target.value })}
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => set({ keyManual: !form.keyManual, key: sectionKey(form) })}
+          >
+            {form.keyManual ? u("codeAuto") : u("codeEdit")}
+          </Button>
+        </div>
         {LOCALES.map((locale) => (
           <Input
             key={locale}
@@ -120,11 +144,14 @@ function SectionEditor({
           value={form.step ?? ""}
           onChange={(e) => set({ step: e.target.value })}
         />
-        <Input
+        <TagInput
           aria-label={t("choices")}
+          value={form.choices}
+          onChange={(choices) => set({ choices })}
+          max={50}
+          maxLength={60}
           placeholder={t("choices")}
-          value={form.choices ?? ""}
-          onChange={(e) => set({ choices: e.target.value })}
+          removeLabel={(tag) => u("removeTag", { tag })}
         />
       </div>
       {onRemove ? (
@@ -345,7 +372,13 @@ export function CatalogAdminBody() {
         open={pending !== null}
         onOpenChange={(open) => !open && setPending(null)}
         title={t("deleteTitle")}
-        description={pending ? t("deleteText", { name: scoreName(pending.names, locale) || pending.key }) : undefined}
+        description={
+          pending
+            ? t("deleteText", {
+                name: scoreName(pending.names, locale) || pending.key,
+              })
+            : undefined
+        }
         confirmLabel={t("delete")}
         destructive
         loading={remove.isPending}
