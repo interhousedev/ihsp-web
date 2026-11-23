@@ -178,17 +178,21 @@ export function usePutSuppPrompts() {
   })
 }
 
-export type CatalogTokenInput = { name: string; expires_in_days: number; otp_code: string }
+/** `admission:catalog` reads and proposes; `admission:catalog-write` only pushes country facts and institutions. */
+export const CATALOG_TOKEN_SCOPES = ["admission:catalog", "admission:catalog-write"] as const
+export type CatalogTokenScope = (typeof CATALOG_TOKEN_SCOPES)[number]
+
+export type CatalogTokenInput = { name: string; scope: CatalogTokenScope; expires_in_days: number; otp_code: string }
 
 /** Thrown when the one-time code is wrong; the session stays signed in. */
 export class OtpInvalidError extends Error {}
 
 /** POST /v1/id/personal-tokens: a wrong code answers 401 `auth/otp-invalid`, which keeps the session signed in. */
-export async function createCatalogToken(input: CatalogTokenInput): Promise<PersonalTokenCreated> {
+export async function createCatalogToken({ scope, ...input }: CatalogTokenInput): Promise<PersonalTokenCreated> {
   try {
     return await getApiClient().post<PersonalTokenCreated>("/v1/id/personal-tokens", {
       ...input,
-      scopes: ["admission:catalog"],
+      scopes: [scope],
     })
   } catch (error) {
     if (error instanceof ApiError && error.type === "auth/otp-invalid") throw new OtpInvalidError()
