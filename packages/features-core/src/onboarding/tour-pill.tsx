@@ -18,7 +18,7 @@ export function TourPill({ current, total, onResume, onEnd }: TourPillProps) {
   return (
     <section
       aria-label={t("label")}
-      className="bg-popover text-popover-foreground fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-1/2 z-50 flex max-w-[calc(100vw-1rem)] -translate-x-1/2 items-center gap-2 rounded-full border py-1.5 ps-4 pe-1.5 shadow-lg md:bottom-6"
+      className="bg-popover text-popover-foreground fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-1/2 z-50 flex max-w-[calc(100vw-1rem)] -translate-x-1/2 items-center gap-2 rounded-full border py-1.5 ps-4 pe-1.5 shadow-lg md:bottom-6 [body:has([data-exam-module])_&]:hidden"
     >
       <Icons.assistant aria-hidden className="text-primary size-4 shrink-0" />
       <span className="text-sm whitespace-nowrap">{step("step", { current, total })}</span>

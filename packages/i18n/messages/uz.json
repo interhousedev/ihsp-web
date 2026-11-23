@@ -389,6 +389,8 @@
     },
     "lms": {
       "draft-changed": "Siz ishlayotganda qoralama oʻzgardi. Avval uni yangilang.",
+      "tutor-disabled": "Bu kursda AI tyutor oʻchirilgan.",
+      "tutor-daily-limit": "Bugungi tyutor savollaringiz tugadi. Ertaga qayting.",
       "no-attempts-left": "Bu test uchun urinishlar qolmadi.",
       "attempt-cooldown": "Urinishlar orasidagi tanaffus hali tugamadi.",
       "attempt-closed": "Bu urinish allaqachon yopilgan.",
@@ -1461,7 +1463,7 @@
         "medium": "Oʻrtacha",
         "hard": "Qiyin"
       },
-      "addWithAi": "AI yordamida yangi savollar qoʼshish"
+      "addWithAi": "AI yordamida yangi savollar qoʻshish"
     },
     "import": {
       "title": "Kartochkalarni import qilish",
@@ -1480,9 +1482,9 @@
       "confirm": "{count} ta kartochkani import qilish"
     },
     "aiCards": {
-      "title": "AI yordamida yangi savollar qoʼshish",
+      "title": "AI yordamida yangi savollar qoʻshish",
       "generated": "Yaratilgan kartochkalar",
-      "reading": "Manbalar oʼqilmoqda…",
+      "reading": "Manbalar oʻqilmoqda…",
       "generating": "Kartochkalar tuzilmoqda…",
       "notebooks": "Daftarlaringizdan",
       "files": "«Mening fayllarim»dan",
@@ -1493,13 +1495,13 @@
       "counts": {
         "fewer": "Kamroq",
         "standard": "Oddiy",
-        "more": "Koʼproq"
+        "more": "Koʻproq"
       },
       "focus": "Nimaga eʼtibor qaratish kerak (ixtiyoriy)",
-      "failed": "Kartochkalarni yaratib boʼlmadi. Qayta urinib koʼring yoki boshqa manbalarni tanlang.",
+      "failed": "Kartochkalarni yaratib boʻlmadi. Qayta urinib koʻring yoki boshqa manbalarni tanlang.",
       "cancel": "Bekor qilish",
       "generate": "Yaratish",
-      "add": "{count, plural, other {# ta kartochka qoʼshish}}"
+      "add": "{count, plural, other {# ta kartochka qoʻshish}}"
     }
   },
   "pwa": {
@@ -1850,7 +1852,7 @@
       "kindMulti": "Bir nechta tanlov",
       "fieldsEmpty": "QoÊ»shimcha maydonlar hali yoÊ»q.",
       "standard": "Standart imtihon",
-      "standardHint": "Test natijalari qatorida koʼrsatiladi (SAT, IELTS...), mukofot sifatida taklif qilinmaydi.",
+      "standardHint": "Test natijalari qatorida koʻrsatiladi (SAT, IELTS...), mukofot sifatida taklif qilinmaydi.",
       "category": "Kategoriya",
       "categoryNone": "Kategoriyasiz"
     },
@@ -2661,7 +2663,7 @@
   "personalTokens": {
     "title": "Shaxsiy tokenlar",
     "docs": "Shaxsiy tokenlar qanday ishlaydi",
-    "empty": "Hozircha shaxsiy tokenlar yoʼq.",
+    "empty": "Hozircha shaxsiy tokenlar yoʻq.",
     "scopes": "Ruxsatlar",
     "lastUsed": "Oxirgi foydalanish",
     "never": "Hech qachon",
@@ -2670,13 +2672,13 @@
     "expired": "Muddati tugagan",
     "revoke": "Bekor qilish",
     "revokeTitle": "{name} bekor qilinsinmi?",
-    "revokeDescription": "Bu tokendan foydalanuvchi skriptlar darhol ruxsatni yoʼqotadi.",
+    "revokeDescription": "Bu tokendan foydalanuvchi skriptlar darhol ruxsatni yoʻqotadi.",
     "new": {
       "action": "Yangi token",
       "title": "Yangi shaxsiy token",
       "name": "Nomi",
-      "scopeRead": "Profilingizni oʼqish.",
-      "scopeWrite": "Profilingizni oʼzgartirish.",
+      "scopeRead": "Profilingizni oʻqish.",
+      "scopeWrite": "Profilingizni oʻzgartirish.",
       "scopesRequired": "Kamida bitta ruxsatni tanlang.",
       "expiry": "Amal qilish muddati",
       "days": "{count} kun",
@@ -2687,7 +2689,7 @@
     "created": {
       "title": "{name} tokeni yaratildi",
       "onceTitle": "Hozir nusxa oling",
-      "once": "Token faqat bir marta koʼrsatiladi. Uni xavfsiz joyda saqlang.",
+      "once": "Token faqat bir marta koʻrsatiladi. Uni xavfsiz joyda saqlang.",
       "copy": "Tokenni nusxalash",
       "done": "Tayyor"
     }

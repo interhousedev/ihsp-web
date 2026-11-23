@@ -26,6 +26,7 @@ export const courseSettingsFixture: CourseSettingsView = {
   enrolment_open: true,
   enrolment_starts_at: null,
   enrolment_ends_at: null,
+  tutor_enabled: true,
   navigation: [
     { key: "overview", hidden: false },
     { key: "syllabus", hidden: false },

@@ -29,6 +29,83 @@
       "ecosystem": "npm"
     },
     {
+      "name": "@codemirror/autocomplete",
+      "version": "6.20.4",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/codemirror/autocomplete",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/commands",
+      "version": "6.11.1",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/codemirror/commands",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/lang-javascript",
+      "version": "6.2.5",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/lang-javascript",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/lang-python",
+      "version": "6.2.1",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/lang-python",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/lang-sql",
+      "version": "6.10.0",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/lang-sql",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/language",
+      "version": "6.13.1",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/codemirror/language",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/lint",
+      "version": "6.9.8",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/codemirror/lint",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/search",
+      "version": "6.7.2",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/codemirror/search",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/state",
+      "version": "6.7.6",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/codemirror/state",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/streamparser",
+      "version": "6.0.0",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/codemirror/streamparser",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@codemirror/view",
+      "version": "6.43.15",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/codemirror/view",
+      "ecosystem": "npm"
+    },
+    {
       "name": "@date-fns/tz",
       "version": "1.5.0",
       "license": "MIT",
@@ -117,6 +194,13 @@
       "version": "5.3.0",
       "license": "OFL-1.1",
       "url": "https://fontsource.org/fonts/inter",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@fontsource-variable/nunito",
+      "version": "5.3.0",
+      "license": "OFL-1.1",
+      "url": "https://fontsource.org/fonts/nunito",
       "ecosystem": "npm"
     },
     {
@@ -218,6 +302,48 @@
       "ecosystem": "npm"
     },
     {
+      "name": "@lezer/common",
+      "version": "1.5.5",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/lezer/common",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@lezer/highlight",
+      "version": "1.2.5",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/lezer/highlight",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@lezer/javascript",
+      "version": "1.5.6",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/lezer/javascript",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@lezer/lr",
+      "version": "1.4.12",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/lezer/lr",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@lezer/python",
+      "version": "1.1.19",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/lezer/python",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@marijn/find-cluster-break",
+      "version": "1.0.4",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/marijn/find-cluster-break",
+      "ecosystem": "npm"
+    },
+    {
       "name": "@napi-rs/canvas",
       "version": "1.1.0",
       "license": "MIT",
@@ -233,14 +359,14 @@
     },
     {
       "name": "@next/env",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "license": "MIT",
       "url": "https://github.com/vercel/next.js",
       "ecosystem": "npm"
     },
     {
       "name": "@next/swc-darwin-arm64",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "license": "MIT",
       "url": "https://github.com/vercel/next.js",
       "ecosystem": "npm"
@@ -981,6 +1107,13 @@
       "ecosystem": "npm"
     },
     {
+      "name": "@types/emscripten",
+      "version": "1.41.6",
+      "license": "MIT",
+      "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/emscripten",
+      "ecosystem": "npm"
+    },
+    {
       "name": "@types/estree",
       "version": "1.0.9",
       "license": "MIT",
@@ -1366,6 +1499,13 @@
       "ecosystem": "npm"
     },
     {
+      "name": "codemirror",
+      "version": "6.0.2",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/basic-setup",
+      "ecosystem": "npm"
+    },
+    {
       "name": "comma-separated-tokens",
       "version": "2.0.3",
       "license": "MIT",
@@ -1384,6 +1524,13 @@
       "version": "2.1.0",
       "license": "MIT",
       "url": "https://github.com/jshttp/content-type",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "crelt",
+      "version": "1.0.7",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/marijn/crelt",
       "ecosystem": "npm"
     },
     {
@@ -2459,7 +2606,7 @@
     },
     {
       "name": "next",
-      "version": "16.4.3",
+      "version": "16.4.6",
       "license": "MIT",
       "url": "https://nextjs.org",
       "ecosystem": "npm"
@@ -2850,6 +2997,13 @@
       "ecosystem": "PyPI"
     },
     {
+      "name": "pyodide",
+      "version": "314.0.8",
+      "license": "MPL-2.0",
+      "url": "https://github.com/pyodide/pyodide",
+      "ecosystem": "npm"
+    },
+    {
       "name": "pyOpenSSL",
       "version": "26.4.0",
       "license": "Apache License, Version 2.0",
@@ -3200,6 +3354,13 @@
       "ecosystem": "npm"
     },
     {
+      "name": "sql.js",
+      "version": "1.16.0",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/sql.js",
+      "ecosystem": "npm"
+    },
+    {
       "name": "SQLAlchemy",
       "version": "2.0.54",
       "license": "MIT",
@@ -3233,6 +3394,13 @@
       "license": "MIT OR Apache-2.0",
       "url": "https://pypi.org/project/structlog/",
       "ecosystem": "PyPI"
+    },
+    {
+      "name": "style-mod",
+      "version": "4.1.4",
+      "license": "MIT",
+      "url": "https://code.haverbeke.berlin/marijn/style-mod",
+      "ecosystem": "npm"
     },
     {
       "name": "style-to-js",
@@ -3541,6 +3709,13 @@
       "license": "BSD-2-Clause",
       "url": "https://github.com/GrahamDumpleton/wrapt",
       "ecosystem": "PyPI"
+    },
+    {
+      "name": "ws",
+      "version": "8.22.0",
+      "license": "MIT",
+      "url": "https://github.com/websockets/ws",
+      "ecosystem": "npm"
     },
     {
       "name": "xlsxwriter",

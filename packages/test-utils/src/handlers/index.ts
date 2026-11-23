@@ -35,6 +35,10 @@ import { lmsLearningHandlers } from "./lms-learning"
 import { lmsImsccHandlers } from "./lms-imscc"
 import { lmsInteractiveHandlers } from "./lms-interactive"
 import { lmsSettingsHandlers } from "./lms-settings"
+import { lmsBadgesHandlers } from "./lms-badges"
+import { lmsCertificatesHandlers } from "./lms-certificates"
+import { lmsEngagementHandlers } from "./lms-engagement"
+import { lmsWidgetsHandlers } from "./lms-widgets"
 import { marksHandlers } from "./marks"
 import { groupRatingHandlers } from "./group-rating"
 import { notebooksHandlers } from "./notebooks"
@@ -99,6 +103,10 @@ export {
 export { userForRequest } from "./id"
 export { resetImsccImports } from "./lms-imscc"
 export { h5pPackageFixture } from "./lms-interactive"
+export { badgePublicFixture, earnedBadgeFixture, myBadgesFixture } from "./lms-badges"
+export { certSettingsFixture, resetLmsCertificatesState } from "./lms-certificates"
+export { engagementSummaryFixture, resetEngagementState } from "./lms-engagement"
+export { resetLmsWidgetsState } from "./lms-widgets"
 export { courseLandingFixture, courseSettingsFixture, resetLmsSettings } from "./lms-settings"
 export {
   currentFactors,
@@ -160,6 +168,10 @@ export {
   lmsImsccHandlers,
   lmsInteractiveHandlers,
   lmsSettingsHandlers,
+  lmsBadgesHandlers,
+  lmsCertificatesHandlers,
+  lmsEngagementHandlers,
+  lmsWidgetsHandlers,
   marksHandlers,
   notebooksHandlers,
   notificationsHandlers,
@@ -253,6 +265,10 @@ export const allHandlers = [
   ...lmsImsccHandlers,
   ...lmsInteractiveHandlers,
   ...lmsSettingsHandlers,
+  ...lmsBadgesHandlers,
+  ...lmsCertificatesHandlers,
+  ...lmsEngagementHandlers,
+  ...lmsWidgetsHandlers,
   ...lmsLearningHandlers,
   ...lmsAuthoringHandlers,
   ...libraryHandlers,
