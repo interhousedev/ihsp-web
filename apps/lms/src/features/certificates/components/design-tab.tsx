@@ -41,7 +41,7 @@ import { FieldInspector } from "./field-inspector"
 
 /** Saving waits this long after the last change, then the server preview is drawn again. */
 const SAVE_DELAY_MS = 800
-const SAMPLE_CODE = "IHT-7Q2K-9XZD"
+const SAMPLE_CODE = "4NRXA9PPA7X9"
 
 type SaveState = "saved" | "pending" | "saving" | "error"
 
