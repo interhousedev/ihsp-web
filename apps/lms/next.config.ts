@@ -28,6 +28,12 @@ const config: NextConfig = {
         rewrites: async () => [
           { source: "/course/:course", destination: "/course/shell/" },
           { source: "/course/:course/step/:step", destination: "/course/shell/" },
+          { source: "/course/:course/info", destination: "/course/shell/" },
+        ],
+        // The code runner workers load Pyodide and sql.js from an opaque origin (deploy/sites/lms.conf does the same).
+        headers: async () => [
+          { source: "/pyodide/:path*", headers: [{ key: "Access-Control-Allow-Origin", value: "*" }] },
+          { source: "/sqljs/:path*", headers: [{ key: "Access-Control-Allow-Origin", value: "*" }] },
         ],
       }
     : {}),

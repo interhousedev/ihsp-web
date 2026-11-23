@@ -1,0 +1,132 @@
+/*
+ * IHSP widget styles: the LMS theme tokens (packages/ui, default "claude" theme) for author-made HTML widgets.
+ * Copy this file and ihsp-widget.js into the widget .zip next to index.html. Dark mode follows the LMS: the player
+ * opens the widget with #theme=dark, and ihsp-widget.js sets data-theme="dark" on <html>.
+ */
+:root {
+  --background: oklch(0.9818 0.0054 95.0986);
+  --foreground: oklch(0.3438 0.0269 95.7226);
+  --card: oklch(0.9818 0.0054 95.0986);
+  --primary: oklch(0.6171 0.1375 39.0427);
+  --primary-foreground: oklch(1 0 0);
+  --muted: oklch(0.9341 0.0153 90.239);
+  --muted-foreground: oklch(0.6059 0.0075 97.4233);
+  --border: oklch(0.8847 0.0069 97.3627);
+  --ring: oklch(0.6171 0.1375 39.0427);
+  --destructive: oklch(0.577 0.245 27.325);
+  --success: oklch(0.46 0.12 155);
+  --success-foreground: oklch(0.99 0 0);
+  --radius: 0.5rem;
+  --font-sans:
+    "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --background: oklch(0.2679 0.0036 106.6427);
+  --foreground: oklch(0.8074 0.0142 93.0137);
+  --card: oklch(0.2679 0.0036 106.6427);
+  --primary: oklch(0.6724 0.1308 38.7559);
+  --muted: oklch(0.2213 0.0038 106.707);
+  --muted-foreground: oklch(0.7713 0.0169 99.0657);
+  --border: oklch(0.3618 0.0101 106.8928);
+  --ring: oklch(0.6724 0.1308 38.7559);
+  --destructive: oklch(0.6368 0.2078 25.3313);
+  --success: oklch(0.7 0.14 155);
+  --success-foreground: oklch(0.2 0 0);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+  background: var(--background);
+  color: var(--foreground);
+  font: 16px/1.5 var(--font-sans);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  margin: 0 0 0.75rem;
+}
+h1 {
+  font-size: 1.5rem;
+}
+h2 {
+  font-size: 1.25rem;
+}
+
+.ihsp-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 0.25rem);
+  padding: 1rem;
+}
+
+.ihsp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px; /* touch target */
+  padding: 0 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+.ihsp-button[data-variant="outline"] {
+  background: transparent;
+  color: var(--foreground);
+  border-color: var(--border);
+}
+.ihsp-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ihsp-input {
+  min-height: 44px;
+  width: 100%;
+  padding: 0 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.ihsp-muted {
+  color: var(--muted-foreground);
+}
+.ihsp-success {
+  color: var(--success);
+}
+.ihsp-error {
+  color: var(--destructive);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
