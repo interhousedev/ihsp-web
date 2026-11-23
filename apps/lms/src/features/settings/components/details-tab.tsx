@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Dropdown, Field, FieldError, FieldLabel, Input, Textarea } from "@ihsp/ui"
+import { Dropdown, Field, FieldError, FieldLabel, Input, Switch, Textarea } from "@ihsp/ui"
 import type { CourseDraft, CourseLanguage, CourseLevel } from "@ihsp/api"
 import { MarkdownEditor } from "../../step-editor/components/markdown-editor"
 import type { SettingsForm } from "../hooks/use-settings-form"
@@ -196,6 +196,17 @@ export function DetailsTab({
         max={LIST_LIMITS.audience[0]}
         maxLength={LIST_LIMITS.audience[1]}
       />
+      <div className="flex flex-col gap-1">
+        <label className="flex min-h-11 items-center gap-3 text-sm font-medium md:min-h-8">
+          <Switch
+            checked={values.tutor_enabled}
+            onCheckedChange={(tutor_enabled) => update({ tutor_enabled })}
+            aria-label={t("tutorEnabled")}
+          />
+          {t("tutorEnabled")}
+        </label>
+        <p className="text-muted-foreground text-sm">{t("tutorEnabledHint")}</p>
+      </div>
     </div>
   )
 }

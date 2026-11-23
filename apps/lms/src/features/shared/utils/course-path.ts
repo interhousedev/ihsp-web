@@ -1,7 +1,7 @@
 import { hrefs } from "./hrefs"
 
 /**
- * The unified course page lives at `/course/<slug or id>/` and `/course/<courseId>/step/<stepId>/`. Every app is a static
+ * The unified course page lives at `/course/<slug or id>/` and `/course/<courseId>/step/<stepId>/`; the course info page inside the player is `/course/<courseId>/info/`. Every app is a static
  * export, so one shell (`/course/shell/`) answers all of them: nginx (deploy/sites/lms.conf) and the dev rewrite
  * (next.config.ts) serve it, and the page reads the ids from `window.location`. The old query links land on real folders
  * of the app and redirect from here.
@@ -9,6 +9,7 @@ import { hrefs } from "./hrefs"
 export type CourseUrl =
   | { kind: "player"; courseId: string; stepId: string; block: number | null }
   | { kind: "entry"; ref: string; preview: boolean }
+  | { kind: "info"; courseId: string; preview: boolean }
   | { kind: "redirect"; href: string }
   | { kind: "missing" }
 
@@ -34,7 +35,8 @@ export function resolveCourseUrl(pathname: string, search: string): CourseUrl {
     if (course && step)
       return { kind: "redirect", href: hrefs.step(course, step, positiveInt(params.get("block")) ?? undefined) }
     const slug = params.get("slug") ?? course
-    if (!slug) return { kind: "missing" }
+    // Bare `/course/` names no course: it is the catalog.
+    if (!slug) return { kind: "redirect", href: hrefs.catalog() }
     const preview = params.get("preview") === "1"
     const href = hrefs.course(slug, preview)
     // A slug that is also a folder of the app has no address in the path: it stays on the query form.
@@ -45,10 +47,12 @@ export function resolveCourseUrl(pathname: string, search: string): CourseUrl {
   if (second === undefined) return { kind: "entry", ref: first, preview: params.get("preview") === "1" }
   if (second === "step" && third !== undefined)
     return { kind: "player", courseId: first, stepId: third, block: positiveInt(params.get("block")) }
+  if (second === "info" && third === undefined)
+    return { kind: "info", courseId: first, preview: params.get("preview") === "1" }
   return { kind: "missing" }
 }
 
 /** Whether this address is drawn by the same page as the current one, so it can open without loading a document. */
 export function isPlayerPath(pathname: string): boolean {
-  return /^\/course\/[^/]+\/step\/[^/]+\/?$/.test(pathname)
+  return /^\/course\/[^/]+\/(step\/[^/]+|info)\/?$/.test(pathname)
 }

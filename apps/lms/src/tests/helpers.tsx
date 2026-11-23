@@ -4,6 +4,7 @@ import { configure, screen } from "@testing-library/react"
 import type { UserEvent } from "@testing-library/user-event"
 import type { ReactElement } from "react"
 import en from "../../messages/en.json"
+import { SkinProvider } from "../features/skin/skin-provider"
 
 // The first render of a page in a cold test run takes several seconds (test files also raise bun's timeout).
 configure({ asyncUtilTimeout: 15_000 })
@@ -20,7 +21,7 @@ export const testerSession: RenderWithProvidersOptions["session"] = {
 
 /** Renders with the app's own English messages merged over the shared ones. */
 export function renderLms(ui: ReactElement, options: RenderWithProvidersOptions = {}) {
-  return renderWithProviders(ui, { messages: en as Messages, ...options })
+  return renderWithProviders(<SkinProvider>{ui}</SkinProvider>, { messages: en as Messages, ...options })
 }
 
 export async function readBody<T>(request: Request): Promise<T> {

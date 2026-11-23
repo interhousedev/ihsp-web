@@ -7,7 +7,11 @@ import { Markdown } from "@ihsp/ui"
 import { useEffect, useRef } from "react"
 import { SignInButton } from "../../shell/components/sign-in-button"
 import { FlashcardsBlock } from "./flashcards-block"
+import { CodeBlock } from "./code-block"
+import { ExamBlock } from "./exam-block"
 import { H5PBlock } from "./h5p-block"
+import { HtmlBlock } from "./html-block"
+import { AiReviewBlock } from "./ai-review/ai-review-block"
 import { InteractiveVideoBlock } from "./interactive-video-block"
 import { TestBlock } from "./test-block"
 import { VideoBlock } from "./video-block"
@@ -44,6 +48,7 @@ export function StepContent({
       block.type === "flashcards" ||
       block.type === "h5p" ||
       block.type === "interactive_video" ||
+      block.type === "ai_review" ||
       (block.type === "video" && Boolean(block.file_id)))
   const shown = useRef(focusKey)
 
@@ -77,11 +82,48 @@ export function StepContent({
           courseId={courseId}
           stepId={stepId}
           preview={preview}
+          captions={block.captions}
         />
       ) : block.type === "interactive_video" ? (
-        <InteractiveVideoBlock key={block.id} block={block} courseId={courseId} stepId={stepId} preview={preview} />
+        <InteractiveVideoBlock
+          key={block.id}
+          block={block}
+          courseId={courseId}
+          stepId={stepId}
+          slug={slug}
+          preview={preview}
+        />
       ) : block.type === "h5p" ? (
-        <H5PBlock key={block.id} block={block} courseId={courseId} stepId={stepId} preview={preview} />
+        <H5PBlock key={block.id} block={block} courseId={courseId} stepId={stepId} preview={preview} slug={slug} />
+      ) : block.type === "exam" ? (
+        <ExamBlock
+          key={block.id}
+          block={block}
+          courseId={courseId}
+          stepId={stepId}
+          mode={preview ? "preview" : "learn"}
+          slug={slug}
+        />
+      ) : block.type === "code" ? (
+        <CodeBlock
+          key={block.id}
+          block={block}
+          courseId={courseId}
+          stepId={stepId}
+          mode={preview ? "preview" : "learn"}
+          slug={slug}
+        />
+      ) : block.type === "html" ? (
+        <HtmlBlock
+          key={block.id}
+          block={block}
+          courseId={courseId}
+          stepId={stepId}
+          mode={preview ? "preview" : "learn"}
+          slug={slug}
+        />
+      ) : block.type === "ai_review" ? (
+        <AiReviewBlock key={block.id} block={block} courseId={courseId} stepId={stepId} preview={preview} slug={slug} />
       ) : block.type === "test" ? (
         <TestBlock key={block.id} courseId={courseId} stepId={stepId} block={block} preview={preview} slug={slug} />
       ) : (

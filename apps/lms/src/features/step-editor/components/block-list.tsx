@@ -7,7 +7,11 @@ import { ConfirmDialog } from "@ihsp/ui"
 import { moveItem, updateBlock } from "../utils/content-ops"
 import { BlockCard } from "./block-card"
 import { FlashcardsBlockEditor } from "./flashcards-block-editor"
+import { CodeBlockEditor } from "./code-block-editor"
+import { ExamBlockEditor } from "./exam-block-editor"
 import { H5PBlockEditor } from "./h5p-block-editor"
+import { HtmlBlockEditor } from "./html-block-editor"
+import { AiReviewBlockEditor } from "./ai-review/ai-review-block-editor"
 import { InteractiveVideoBlockEditor } from "./interactive-video-block-editor"
 import { MarkdownEditor } from "./markdown-editor"
 import { VideoBlockEditor } from "./video-block-editor"
@@ -71,10 +75,28 @@ export function BlockList({
                 keyOf={keyOf}
                 courseId={courseId}
                 stepId={stepId}
+                onAddBlock={(added) =>
+                  edit((current) => {
+                    const at = current.blocks.findIndex((other) => other.id === block.id)
+                    const blocks = [...current.blocks]
+                    blocks.splice(at === -1 ? blocks.length : at + 1, 0, added)
+                    return { ...current, blocks }
+                  })
+                }
               />
             ) : null}
             {block.type === "h5p" ? (
               <H5PBlockEditor block={block} onChange={replace} courseId={courseId} stepId={stepId} />
+            ) : null}
+            {block.type === "exam" ? (
+              <ExamBlockEditor block={block} onChange={replace} courseId={courseId} stepId={stepId} />
+            ) : null}
+            {block.type === "code" ? <CodeBlockEditor block={block} onChange={replace} /> : null}
+            {block.type === "html" ? (
+              <HtmlBlockEditor block={block} onChange={replace} courseId={courseId} stepId={stepId} />
+            ) : null}
+            {block.type === "ai_review" ? (
+              <AiReviewBlockEditor block={block} onChange={replace} courseId={courseId} stepId={stepId} />
             ) : null}
             {block.type === "test" ? <TestBlockEditor block={block} keyOf={keyOf} onChange={replace} /> : null}
             {block.type === "flashcards" ? (

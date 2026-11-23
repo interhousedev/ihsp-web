@@ -1,5 +1,6 @@
 "use client"
 
+import type { CaptionSource } from "../hooks/use-caption-tracks"
 import { useVideoPosition } from "../hooks/use-video-position"
 
 /** A native player for a video file: controls, the first frame as poster (`preload="metadata"`) and a remembered position. */
@@ -9,6 +10,7 @@ export function VideoFile({
   positionKey,
   poster,
   onError,
+  tracks = [],
 }: {
   src: string
   label: string
@@ -16,9 +18,12 @@ export function VideoFile({
   positionKey: string
   poster?: string
   onError?: () => void
+  /** WebVTT caption tracks (WCAG 1.2.2), already turned into local `blob:` URLs. */
+  tracks?: CaptionSource[]
 }) {
   const position = useVideoPosition(positionKey)
   return (
+    // oxlint-disable-next-line jsx-a11y/media-has-caption -- the captions <track> elements are rendered from `tracks` below
     <video
       src={src}
       controls
@@ -33,7 +38,20 @@ export function VideoFile({
       onError={onError}
       className="aspect-video w-full rounded-lg border bg-black"
     >
-      <track kind="captions" />
+      {tracks.length ? (
+        tracks.map((track) => (
+          <track
+            key={track.lang}
+            kind="captions"
+            src={track.src}
+            srcLang={track.lang}
+            label={track.label}
+            default={track.default}
+          />
+        ))
+      ) : (
+        <track kind="captions" />
+      )}
     </video>
   )
 }

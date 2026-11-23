@@ -2,8 +2,9 @@
 
 import { getLmsH5PLaunchQuery, postLmsH5PResult, type BlockResult, type LearningH5PBlock } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef, useState } from "react"
+import { refreshProgress } from "../utils/fresh"
 import { h5pBaseUrl, h5pPlayerSrc, H5P_SANDBOX, parsePlayerMessage } from "../utils/h5p"
 
 /**
@@ -16,13 +17,16 @@ export function H5PBlock({
   courseId,
   stepId,
   preview,
+  slug,
 }: {
   block: LearningH5PBlock
   courseId: string
   stepId: string
   preview: boolean
+  slug: string | null
 }) {
   const t = useT("player")
+  const queryClient = useQueryClient()
   const launch = useQuery({
     ...getLmsH5PLaunchQuery(courseId, stepId, block.id, preview),
     enabled: block.package_id !== "",
@@ -42,12 +46,15 @@ export function H5PBlock({
       if (message.kind === "size") return setHeight(Math.ceil(message.height))
       if (preview) return
       void postLmsH5PResult(stepId, block.id, message.statement)
-        .then(setResult)
+        .then((saved) => {
+          setResult(saved)
+          void refreshProgress(queryClient, { courseId, stepId, slug })
+        })
         .catch(() => undefined)
     }
     window.addEventListener("message", onMessage)
     return () => window.removeEventListener("message", onMessage)
-  }, [block.id, preview, stepId])
+  }, [block.id, courseId, preview, queryClient, slug, stepId])
 
   if (!block.package_id || launch.isError) {
     return <p className="text-muted-foreground text-sm">{t("h5p.unavailable")}</p>

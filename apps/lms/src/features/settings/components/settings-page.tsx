@@ -15,8 +15,11 @@ import { DetailsTab } from "./details-tab"
 import { NavigationTab } from "./navigation-tab"
 import { SettingsSidebar } from "./settings-sidebar"
 import { VisibilityTab } from "./visibility-tab"
+import { EngagementSettingsTab } from "../../engagement/components/engagement-settings-tab"
 
-const TABS = ["details", "visibility", "access", "navigation"] as const
+const TABS = ["details", "visibility", "access", "navigation", "engagement"] as const
+/** Tabs that save on their own; the save bar shows there only with unsaved form changes. */
+const SELF_SAVING: Partial<Record<Tab, true>> = { access: true, engagement: true }
 type Tab = (typeof TABS)[number]
 
 function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }) {
@@ -91,6 +94,7 @@ function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }
               {tab === "visibility" ? <VisibilityTab form={form} draft={draft} /> : null}
               {tab === "access" ? <CourseAccessTab courseId={draft.id} permissions={draft.my_permissions} /> : null}
               {tab === "navigation" ? <NavigationTab form={form} /> : null}
+              {tab === "engagement" ? <EngagementSettingsTab courseId={draft.id} /> : null}
             </div>
             {form.serverError ? (
               <Alert variant="destructive">
@@ -109,7 +113,7 @@ function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }
                 <AlertDescription>{errorMessage(meta.error)}</AlertDescription>
               </Alert>
             ) : null}
-            {tab !== "access" || form.dirty || metaDirty ? (
+            {!SELF_SAVING[tab] || form.dirty || metaDirty ? (
               <SaveBar
                 dirty={form.dirty || metaDirty}
                 saving={form.save.isPending || meta.isPending}

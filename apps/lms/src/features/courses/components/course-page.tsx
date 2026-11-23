@@ -29,6 +29,8 @@ import { courseProgress, formatPoints } from "../../shared/utils/course-progress
 import { notebookHref } from "../../notebooks/utils/hrefs"
 import { CourseOutline } from "./course-outline"
 import { CoursePromoCard } from "./course-promo-card"
+import { MyCertificateCard } from "../../certificates/components/my-certificate-card"
+import { CoursePartnersSection } from "../../certificates/components/course-partners-section"
 import { SectionMenu } from "../../shared/components/section-menu"
 
 /** The tabs of the course page, in Stepik's order. The learner tabs show only to enrolled students. */
@@ -59,7 +61,14 @@ export function ProgressTab({ course }: { course: CoursePageData }) {
   const t = useT("course")
   const format = useFormatters()
   const progress = courseProgress(course)
-  if (!progress) return <p className="text-muted-foreground text-sm">{t("progressEmpty")}</p>
+  if (!progress) {
+    return (
+      <div className="flex flex-col gap-4">
+        <p className="text-muted-foreground text-sm">{t("progressEmpty")}</p>
+        <MyCertificateCard courseId={course.id} />
+      </div>
+    )
+  }
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm tabular-nums">{t("progressLessons", { done: progress.done, total: progress.total })}</p>
@@ -71,6 +80,7 @@ export function ProgressTab({ course }: { course: CoursePageData }) {
           })}
         </p>
       ) : null}
+      <MyCertificateCard courseId={course.id} />
     </div>
   )
 }
@@ -180,12 +190,15 @@ function CourseBody({
           {title}
         </SectionMenu>
       </h1>
-      <TabsContent value="about" className="pt-4">
+      <TabsContent value="about" className="flex flex-col gap-6 pt-4">
         {landing ? (
           <LandingAbout landing={landing} />
         ) : (
           <p className="text-sm leading-relaxed break-words whitespace-pre-line">{course?.description}</p>
         )}
+        {(landing?.id ?? course?.id) ? (
+          <CoursePartnersSection courseId={(landing?.id ?? course?.id) as string} />
+        ) : null}
       </TabsContent>
       <TabsContent value="syllabus" className="pt-4">
         {course ? (

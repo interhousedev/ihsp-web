@@ -60,6 +60,29 @@ function StudentCard({
             ))}
           </ul>
         )}
+        {student.widget_results.length > 0 ? (
+          <section className="flex flex-col gap-2" aria-label={t("widgetsTitle")}>
+            <h3 className="text-sm font-medium">{t("widgetsTitle")}</h3>
+            <p className="text-muted-foreground text-xs">{t("widgetsHint")}</p>
+            <ul className="flex flex-col divide-y rounded-lg border">
+              {student.widget_results.map((result) => (
+                <li
+                  key={`${result.step_id}:${result.block_id}`}
+                  className="flex flex-wrap items-center gap-2 px-3 py-2 text-sm"
+                >
+                  <span className="min-w-0 flex-1 break-words">
+                    {stepTitles.get(result.step_id) ?? t("step")} · {t("widget")}
+                  </span>
+                  <span className="tabular-nums">{Math.round(result.score_pct)}%</span>
+                  <Badge variant={result.passed ? "default" : "destructive"}>
+                    {result.passed ? t("passed") : t("failed")}
+                  </Badge>
+                  {result.verified ? null : <Badge variant="outline">{t("notVerified")}</Badge>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </CardContent>
     </Card>
   )

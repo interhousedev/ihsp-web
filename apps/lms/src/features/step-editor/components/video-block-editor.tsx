@@ -4,6 +4,7 @@ import type { Block } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, Field, FieldDescription, FieldLabel, Icons, Input, Progress } from "@ihsp/ui"
 import { type ChangeEvent, useId, useRef } from "react"
+import { CaptionTracksEditor } from "./caption-tracks-editor"
 import { VideoFile } from "../../shared/components/video-file"
 import { useEditorVideoUrl } from "../hooks/use-editor-video-url"
 import { useVideoUpload } from "../hooks/use-video-upload"
@@ -146,6 +147,12 @@ export function VideoBlockEditor<T extends VideoBlock>({
           className="h-11 md:h-8"
         />
       </Field>
+      {block.type === "video" ? (
+        <CaptionTracksEditor
+          tracks={block.captions ?? []}
+          onChange={(captions) => onChange({ ...block, captions } as T)}
+        />
+      ) : null}
     </div>
   )
 }

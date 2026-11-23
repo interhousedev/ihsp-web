@@ -3,7 +3,14 @@
 import type { Block, Question, TestConfig } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Badge, Icons, Markdown } from "@ihsp/ui"
+import { parsePattern } from "../../step-editor/utils/answer-pattern"
 import { secondsToMinutes } from "../utils/time"
+
+/** A pattern for readers: «Contains "x"» for a generated one, the raw expression otherwise. */
+function describePattern(regex: string, t: ReturnType<typeof useT>): string {
+  const parsed = parsePattern(regex)
+  return parsed ? t(`patternMode.${parsed.mode}`, { text: parsed.text }) : `${t("regex")}: ${regex}`
+}
 
 function ConfigSummary({ config }: { config: TestConfig }) {
   const t = useT("blocks")
@@ -56,7 +63,7 @@ function QuestionSummary({ question, index }: { question: Question; index: numbe
       {question.type === "text" && question.answer ? (
         <p className="mt-2 text-sm">
           {t("accepted")}: {(question.answer.accepted ?? []).join(", ") || "-"}
-          {question.answer.regex ? ` · ${t("regex")}: ${question.answer.regex}` : ""}
+          {question.answer.regex ? ` · ${describePattern(question.answer.regex, t)}` : ""}
         </p>
       ) : null}
       {question.type === "number" && question.answer ? (
@@ -87,7 +94,10 @@ function QuestionSummary({ question, index }: { question: Question; index: numbe
       ) : null}
       {question.blanks ? (
         <p className="mt-2 text-sm">
-          {t("accepted")}: {question.blanks.map((blank) => blank.accepted[0] ?? blank.regex ?? "-").join(" | ")}
+          {t("accepted")}:{" "}
+          {question.blanks
+            .map((blank) => blank.accepted[0] ?? (blank.regex ? describePattern(blank.regex, t) : "-"))
+            .join(" | ")}
         </p>
       ) : null}
       {question.random ? (
@@ -125,6 +135,9 @@ export function BlockView({ block }: { block: Block }) {
         {block.caption ? ` · ${block.caption}` : ""}
       </p>
     )
+  }
+  if (block.type === "exam" || block.type === "code" || block.type === "html" || block.type === "ai_review") {
+    return <p className="text-sm break-all">{t(`types.${block.type}`)}</p>
   }
   if (block.type === "h5p") {
     return (

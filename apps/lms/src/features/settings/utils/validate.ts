@@ -64,6 +64,7 @@ export function changedFields(base: CourseSettingsView, next: CourseSettingsView
     "enrolment_starts_at",
     "enrolment_ends_at",
     "navigation",
+    "tutor_enabled",
   ] as const
   for (const key of writable) {
     if (JSON.stringify(base[key]) !== JSON.stringify(next[key])) body[key] = next[key]

@@ -22,7 +22,10 @@ import { LessonHeader } from "./lesson-header"
 import { PreviewBanner } from "./preview-banner"
 import type { SidebarLink } from "./sidebar-footer"
 import { StepContent } from "./step-content"
+import { TutorPanel } from "./tutor-panel"
 import { StepStrip } from "./step-strip"
+import { PlayfulStepPlayer } from "../../skin/lesson/playful-step-player"
+import { useSkin } from "../../skin/skin-provider"
 
 /**
  * The lesson player (UF-LMS-03, UF-LMS-04) laid out like Stepik: the course sidebar, a strip with one square per step
@@ -50,6 +53,7 @@ export function StepPlayer({
   const step = useQuery(preview ? getLmsCoursePreviewStepQuery(courseId, stepId) : reads.step(guest, courseId, stepId))
   const around = useStepOutline({ courseId, slug, preview })
   useMarkViewed({ courseId, stepId, slug: around.slug, step: step.data, enabled: !preview && !guest })
+  const { skin } = useSkin()
 
   // Without `block` in the address the first step not passed opens, and stays open while the passes change.
   const [entry, setEntry] = useState<number | null>(null)
@@ -81,6 +85,30 @@ export function StepPlayer({
   )
   const locked = (outlineLocked ?? false) || isContentLocked(step.error)
 
+  // Playful chrome for a signed-in learner; previews, guests, locked lessons and exams keep the Classic player.
+  if (
+    skin === "playful" &&
+    !preview &&
+    !guest &&
+    !locked &&
+    step.data &&
+    !step.data.preview &&
+    !step.data.blocks.some((item) => item.type === "exam")
+  ) {
+    return (
+      <PlayfulStepPlayer
+        step={step.data}
+        index={index}
+        courseId={courseId}
+        slug={around.slug}
+        previous={previous}
+        next={next}
+        hrefFor={targetHref}
+        pathHref={hrefs.course(around.slug ?? courseId)}
+      />
+    )
+  }
+
   const lesson = locked ? (
     <div className="px-4 py-5 md:px-6">
       <LockedNotice kind="lesson" contact={around.course?.contact} />
@@ -104,6 +132,7 @@ export function StepPlayer({
             ) : (
               <p className="text-muted-foreground px-4 py-5 text-sm md:px-6">{t("emptyStep")}</p>
             )}
+            {current && !preview && !guest && !data.preview ? <TutorPanel stepId={stepId} /> : null}
             <LessonFooter previous={previous} next={next} hrefFor={targetHref} finishHref={backHref} />
           </>
         )
@@ -121,6 +150,7 @@ export function StepPlayer({
           outline={around.outline}
           unavailable={around.unavailable}
           currentStepId={stepId}
+          infoHref={hrefs.courseInfo(courseId, preview)}
           hrefFor={(id) => stepHref(id)}
           links={links}
         />

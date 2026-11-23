@@ -14,6 +14,9 @@ import { continueStep } from "../../shared/utils/outline"
 import { LearnerShell } from "../../shell/components/learner-shell"
 import { LmsShell } from "../../shell/components/lms-shell"
 import { PageLoading } from "@ihsp/features-core"
+import { CoursePath } from "../../skin/lesson/course-path"
+import { useSkin } from "../../skin/skin-provider"
+import { CourseInfoPlayer } from "./course-info-player"
 import { CoursePage } from "./course-page"
 
 const LOCATION_CHANGED = "lms:course-location"
@@ -68,13 +71,24 @@ function CourseEntry({ courseRef, preview }: { courseRef: string; preview: boole
     retry: false,
   })
   const page = course.data
-  const target = !preview && page && (page.enrolled || page.can_edit) ? continueStep(page.outline) : null
+  // Playful shows an enrolled learner the course path instead of resuming the lesson right away.
+  const path = useSkin().skin === "playful" && !preview && page?.enrolled === true
+  const target = !preview && !path && page && (page.enrolled || page.can_edit) ? continueStep(page.outline) : null
 
   useEffect(() => {
     if (!page || !target) return
     moveTo(hrefs.step(page.id, target.step_id) + window.location.search, "replace")
   }, [page, target])
 
+  if (path && page) {
+    return (
+      <div className="contents" onClickCapture={keepStepLinksInShell}>
+        <LmsShell access="auth">
+          <CoursePath page={page} />
+        </LmsShell>
+      </div>
+    )
+  }
   if (target || (!preview && (status === "loading" || course.isPending))) return <PageLoading />
   // A refused or missing course is final here: mounting the page would ask for the same course again, over and over.
   if (!preview && course.isError) {
@@ -102,7 +116,10 @@ export function CourseRoute() {
   const redirect = target?.kind === "redirect" ? target.href : null
 
   useEffect(() => {
-    if (redirect) moveTo(redirect, "replace")
+    if (!redirect) return
+    // Another page of the app (the catalog) is a different document: only the course addresses are moved in place.
+    if (redirect.startsWith("/course/")) moveTo(redirect, "replace")
+    else window.location.replace(redirect)
   }, [redirect])
 
   if (target === null || target.kind === "redirect") return <PageLoading />
@@ -114,6 +131,13 @@ export function CourseRoute() {
     )
   }
   if (target.kind === "entry") return <CourseEntry courseRef={target.ref} preview={target.preview} />
+  if (target.kind === "info") {
+    return (
+      <div className="contents" onClickCapture={keepStepLinksInShell}>
+        <CourseInfoPlayer courseId={target.courseId} preview={target.preview} />
+      </div>
+    )
+  }
   return (
     <div className="contents" onClickCapture={keepStepLinksInShell}>
       <LearnerShell access="public">

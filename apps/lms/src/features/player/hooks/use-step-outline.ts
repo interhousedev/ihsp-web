@@ -30,8 +30,13 @@ export function useStepOutline({
 }): StepOutline {
   // The course page is served by slug only and the player's address has the id: the student's courses map one to the other.
   // A guest has no courses of their own: the public page takes the id as well.
-  const guest = useSession().status === "anonymous"
-  const mine = useQuery({ ...getLmsMyCoursesQuery(), enabled: !preview && !guest && slug === null, retry: false })
+  const status = useSession().status
+  const guest = status === "anonymous"
+  const mine = useQuery({
+    ...getLmsMyCoursesQuery(),
+    enabled: !preview && status === "authenticated" && slug === null,
+    retry: false,
+  })
   const known =
     slug ?? [...(mine.data?.enrolled ?? []), ...(mine.data?.managed ?? [])].find((item) => item.id === courseId)?.slug
   const course = useQuery({

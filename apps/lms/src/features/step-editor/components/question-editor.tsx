@@ -26,6 +26,7 @@ export function QuestionEditor({
   onChange,
   onMove,
   onRemove,
+  types = QUESTION_TYPES,
 }: {
   question: Question
   index: number
@@ -34,6 +35,8 @@ export function QuestionEditor({
   onChange: (question: Question) => void
   onMove: (direction: "up" | "down") => void
   onRemove: () => void
+  /** The types the author may pick (an exam allows only a few). */
+  types?: readonly QuestionType[]
 }) {
   const t = useT("testBuilder")
   const typeId = useId()
@@ -88,11 +91,11 @@ export function QuestionEditor({
             id={typeId}
             value={question.type}
             onValueChange={(value) => {
-              const next = QUESTION_TYPES.find((item): item is QuestionType => item === value)
+              const next = types.find((item): item is QuestionType => item === value)
               if (next) onChange(changeQuestionType(question, next))
             }}
             className="w-full"
-            options={QUESTION_TYPES.map((type) => ({ value: type, label: t(`types.${type}`) }))}
+            options={types.map((type) => ({ value: type, label: t(`types.${type}`) }))}
           />
         </Field>
         <Field>

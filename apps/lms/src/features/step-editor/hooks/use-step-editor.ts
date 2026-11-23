@@ -16,7 +16,7 @@ import { useAutosave, useWarnBeforeUnload } from "../../editor/hooks/use-autosav
 import { bufferKey, clearBuffer, readBuffer, writeBuffer, type Buffered } from "../../editor/utils/local-buffer"
 import { AUTOSAVE_INTERVAL_MS, type SaveStatus } from "../../editor/utils/save-status"
 import { jsonEqual } from "../../shared/utils/block-diff"
-import { remapIds } from "../utils/content-ops"
+import { canSaveDraft, remapIds } from "../utils/content-ops"
 
 /** Pause after the last edit before the draft is saved. */
 const AUTOSAVE_DEBOUNCE_MS = 1500
@@ -86,7 +86,8 @@ export function useStepEditor(
   }, [dirty, content, key, restorable])
 
   const save = useCallback(async () => {
-    if (!canEdit || !dirtyRef.current || saving.current) return
+    // A half-filled field the server rejects (an unnamed AI review criterion) waits in the local buffer.
+    if (!canEdit || !dirtyRef.current || saving.current || !canSaveDraft(contentRef.current)) return
     saving.current = true
     const sent = contentRef.current
     const sentCount = editCount.current

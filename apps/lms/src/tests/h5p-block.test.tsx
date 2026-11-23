@@ -92,7 +92,7 @@ describe("H5P player", () => {
         return Response.json({ score: 3, max_score: 4, completed: true })
       }),
     )
-    renderLms(<H5PBlock block={learner} courseId="c1" stepId="s1" preview={false} />)
+    renderLms(<H5PBlock block={learner} courseId="c1" stepId="s1" preview={false} slug={null} />)
 
     const frame = (await screen.findByTitle("Quiz")) as HTMLIFrameElement
     expect(frame.getAttribute("sandbox")).toBe("allow-scripts")

@@ -2,8 +2,9 @@
 
 import type { Question } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Field, FieldDescription, FieldLabel, Input, Textarea } from "@ihsp/ui"
+import { Field, FieldLabel, Input, Textarea } from "@ihsp/ui"
 import { useId } from "react"
+import { PatternEditor } from "./pattern-editor"
 
 type Answer = NonNullable<Question["answer"]>
 
@@ -19,7 +20,6 @@ export function AnswerConfigEditor({
 }) {
   const t = useT("testBuilder")
   const acceptedId = useId()
-  const regexId = useId()
   const valueId = useId()
   const toleranceId = useId()
   const current: Answer = answer ?? {}
@@ -75,30 +75,13 @@ export function AnswerConfigEditor({
           rows={3}
         />
       </Field>
-      <Field>
-        <FieldLabel htmlFor={regexId}>{t("regex")}</FieldLabel>
-        <Input
-          id={regexId}
-          value={current.regex ?? ""}
-          onChange={(event) =>
-            onChange({
-              ...current,
-              regex: event.target.value === "" ? null : event.target.value,
-            })
-          }
-          className="h-11 font-mono md:h-8"
-        />
-        <FieldDescription>{t("regexHint")}</FieldDescription>
-      </Field>
-      <label className="flex min-h-11 items-center gap-2 text-sm md:min-h-8">
-        <input
-          type="checkbox"
-          checked={current.case_sensitive ?? false}
-          onChange={(event) => onChange({ ...current, case_sensitive: event.target.checked })}
-          className="accent-primary size-4"
-        />
-        {t("caseSensitive")}
-      </label>
+      <PatternEditor
+        label={t("patternRule")}
+        regex={current.regex}
+        onChange={(regex) => onChange({ ...current, regex })}
+        ignoreCase={!(current.case_sensitive ?? false)}
+        onIgnoreCaseChange={(ignore) => onChange({ ...current, case_sensitive: !ignore })}
+      />
     </div>
   )
 }

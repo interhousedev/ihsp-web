@@ -175,12 +175,18 @@ describe("interactive video player", () => {
           })
         },
       ),
+      http.get("*/v1/lms/courses/c1/steps/s1", () => {
+        refreshed += 1
+        return Response.json({ step_id: "s1", blocks: [] })
+      }),
     )
+    let refreshed = 0
     const { user, container } = renderLms(
       <InteractiveVideoBlock
         block={learnerBlock("https://cdn.test/a.mp4")}
         courseId="c1"
         stepId="s1"
+        slug={null}
         preview={false}
       />,
     )
@@ -209,6 +215,8 @@ describe("interactive video player", () => {
     await user.click(screen.getByRole("button", { name: "Answer" }))
     expect(await screen.findByText("Correct!")).toBeTruthy()
     expect(sent).toEqual({ option_ids: ["a"] })
+    // the answer completes the block on the server: the step view reloads for the progress
+    await waitFor(() => expect(refreshed).toBe(1))
     await user.click(screen.getByRole("button", { name: "Continue" }))
     await waitFor(() => expect(screen.queryByText("Correct!")).toBeNull())
   })
@@ -222,7 +230,13 @@ describe("interactive video player", () => {
       http.get("http://localhost/", () => new Response("")),
     )
     const { container } = renderLms(
-      <InteractiveVideoBlock block={learnerBlock("https://youtu.be/dQw4w9WgXcQ")} courseId="c1" stepId="s1" preview />,
+      <InteractiveVideoBlock
+        block={learnerBlock("https://youtu.be/dQw4w9WgXcQ")}
+        courseId="c1"
+        stepId="s1"
+        slug={null}
+        preview
+      />,
     )
     const frame = container.querySelector("iframe")!
     expect(frame.src).toContain("youtube-nocookie.com/embed/dQw4w9WgXcQ")

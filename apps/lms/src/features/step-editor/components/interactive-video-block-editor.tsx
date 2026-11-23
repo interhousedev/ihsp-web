@@ -2,11 +2,17 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Dropdown, Field, FieldLabel, Icons, Input, Switch, Textarea } from "@ihsp/ui"
-import { useId, useState } from "react"
+import { useId, useLayoutEffect, useRef, useState } from "react"
 import { formatTime, parseTime, sortInteractions } from "../../player/utils/interactive-video"
-import { type Interaction, type InteractiveVideoBlock, newInteraction } from "../utils/content-ops"
+import {
+  type FlashcardsBlock,
+  type Interaction,
+  type InteractiveVideoBlock,
+  newInteraction,
+} from "../utils/content-ops"
 import { OptionListEditor } from "./option-list-editor"
 import { VideoBlockEditor } from "./video-block-editor"
+import { VideoChecksDialog } from "./video-checks-dialog"
 
 const KINDS: readonly Interaction["kind"][] = ["question", "note", "link"]
 
@@ -20,18 +26,27 @@ export function InteractiveVideoBlockEditor({
   keyOf = (id) => id,
   courseId,
   stepId,
+  onAddBlock,
 }: {
   block: InteractiveVideoBlock
   onChange: (block: InteractiveVideoBlock) => void
   keyOf?: (id: string) => string
   courseId?: string
   stepId?: string
+  /** Inserts a block after this one (the recap flash cards). */
+  onAddBlock?: (block: FlashcardsBlock) => void
 }) {
   const t = useT("stepEditor")
   const atId = useId()
   const [at, setAt] = useState("0:00")
+  const [suggesting, setSuggesting] = useState(false)
   const atSeconds = parseTime(at)
   const sorted = sortInteractions(block.interactions)
+  // Accepted checks arrive one by one while the dialog is open; each one must build on the previous one.
+  const latest = useRef(block)
+  useLayoutEffect(() => {
+    latest.current = block
+  }, [block])
 
   function add(kind: Interaction["kind"]) {
     if (atSeconds === null) return
@@ -40,6 +55,12 @@ export function InteractiveVideoBlockEditor({
 
   function update(id: string, next: Interaction) {
     onChange({ ...block, interactions: block.interactions.map((item) => (item.id === id ? next : item)) })
+  }
+
+  function acceptCheck(interaction: Interaction) {
+    const next = { ...latest.current, interactions: [...latest.current.interactions, interaction] }
+    latest.current = next
+    onChange(next)
   }
 
   return (
@@ -77,6 +98,17 @@ export function InteractiveVideoBlockEditor({
             </Button>
           ))}
         </div>
+        {courseId && stepId ? (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setSuggesting(true)}
+            className="min-h-11 self-start md:min-h-8"
+          >
+            <Icons.sparkles aria-hidden />
+            {t("videoChecks.open")}
+          </Button>
+        ) : null}
         {sorted.length === 0 ? <p className="text-muted-foreground text-sm">{t("interactive.none")}</p> : null}
         <ol className="flex flex-col gap-3">
           {sorted.map((item) => (
@@ -93,6 +125,18 @@ export function InteractiveVideoBlockEditor({
           ))}
         </ol>
       </section>
+      {courseId && stepId ? (
+        <VideoChecksDialog
+          open={suggesting}
+          onOpenChange={setSuggesting}
+          courseId={courseId}
+          stepId={stepId}
+          blockId={block.id}
+          title={block.caption}
+          onAcceptCheck={acceptCheck}
+          onAddCards={onAddBlock}
+        />
+      ) : null}
     </div>
   )
 }

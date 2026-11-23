@@ -7,6 +7,10 @@ export type VideoBlock = Extract<Block, { type: "video" }>
 export type FlashcardsBlock = Extract<Block, { type: "flashcards" }>
 export type H5PBlock = Extract<Block, { type: "h5p" }>
 export type InteractiveVideoBlock = Extract<Block, { type: "interactive_video" }>
+export type ExamBlock = Extract<Block, { type: "exam" }>
+export type CodeBlock = Extract<Block, { type: "code" }>
+export type HtmlBlock = Extract<Block, { type: "html" }>
+export type AiReviewBlock = Extract<Block, { type: "ai_review" }>
 export type Interaction = InteractiveVideoBlock["interactions"][number]
 export type QuestionOption = NonNullable<Question["options"]>[number]
 export type Card = FlashcardsBlock["cards"][number]
@@ -171,6 +175,66 @@ export function newVideoBlock(): VideoBlock {
 
 export function newH5PBlock(): H5PBlock {
   return { id: newTempId(), type: "h5p", package_id: "", title: "", main_library: "", passing_score_pct: 0 }
+}
+
+export function newExamBlock(): ExamBlock {
+  return {
+    id: newTempId(),
+    type: "exam",
+    title: "",
+    kind: "custom",
+    directions: "",
+    reference_sheet: "",
+    calculator: "none",
+    sections: [],
+    scaling: null,
+  }
+}
+
+export function newCodeBlock(): CodeBlock {
+  return {
+    id: newTempId(),
+    type: "code",
+    language: "python",
+    instructions: "",
+    starter: "",
+    solution: "",
+    tests: [],
+    time_limit_ms: 5000,
+    graded: false,
+  }
+}
+
+export function newHtmlBlock(): HtmlBlock {
+  return {
+    id: newTempId(),
+    type: "html",
+    title: "",
+    package_id: "",
+    entry: "index.html",
+    height_px: 600,
+    allow_fullscreen: false,
+    graded: false,
+  }
+}
+
+export function newAiReviewBlock(): AiReviewBlock {
+  return {
+    id: newTempId(),
+    type: "ai_review",
+    title: "",
+    instructions_public: "",
+    teacher_prompt: "",
+    output_template: "review_table",
+    criteria: [],
+    use_course_materials: true,
+    reference_files: [],
+    web_search: false,
+    private_topics: [],
+    max_submissions: 3,
+    pass_threshold_pct: 60,
+    accepted_types: ["pdf", "docx", "image", "text"],
+  }
 }
 
 export function newInteractiveVideoBlock(): InteractiveVideoBlock {
@@ -468,4 +532,11 @@ export function validateContent(content: StepContent): ContentIssue[] {
     }
   }
   return issues
+}
+
+/** Whether the server accepts the draft: required fields of the draft schema are filled. */
+export function canSaveDraft(content: StepContent): boolean {
+  return content.blocks.every(
+    (block) => block.type !== "ai_review" || block.criteria.every((criterion) => criterion.name.trim() !== ""),
+  )
 }

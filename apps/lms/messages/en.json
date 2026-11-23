@@ -9,7 +9,8 @@
     "notebooks": "Notebooks",
     "admin": "Create course",
     "groupLearn": "Learn",
-    "groupManage": "Manage"
+    "groupManage": "Manage",
+    "profile": "My profile"
   },
   "common": {
     "missingParam": "This page needs a link from the course list.",
@@ -26,7 +27,178 @@
     "changed": "Changed",
     "removed": "Removed",
     "mcp": "Created with AI",
-    "ai": "Via AI"
+    "ai": "Via AI",
+    "title": "Badges",
+    "showLocked": "Show locked badges to learners",
+    "showLockedHint": "Learners see badges they have not earned yet as goals, with a hint.",
+    "listTitle": "{count, plural, =0 {No badges} one {# badge} other {# badges}}",
+    "newBadge": "New badge",
+    "emptyTitle": "No badges yet",
+    "emptyHint": "Create a badge and set the rule that awards it.",
+    "awarded": "{count, plural, one {Awarded # time} other {Awarded # times}}",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleted": "Badge deleted",
+    "deleteTitle": "Delete the badge?",
+    "deleteHint": "“{name}” will be removed from every learner who earned it.",
+    "editTitle": "Edit badge",
+    "cancel": "Cancel",
+    "icon": "Icon",
+    "shape": "Shape",
+    "color": "Colour",
+    "image": "Image",
+    "imageHint": "Optional. PNG, JPEG or WebP up to 512 KB; it replaces the icon.",
+    "imageUpload": "Upload image",
+    "imageRemove": "Remove image",
+    "imageTooLarge": "The image is larger than 512 KB.",
+    "preview": "Preview",
+    "untitled": "Untitled badge",
+    "language": "Language",
+    "name": "Name",
+    "description": "Description",
+    "saved": "Badge saved",
+    "save": "Save badge",
+    "saving": "Saving…",
+    "namesMissing": "Add a name in: {langs}",
+    "fixRule": "Fix the marked blocks to save.",
+    "locales": {
+      "en": "English",
+      "ru": "Russian",
+      "uz": "Uzbek"
+    },
+    "shapes": {
+      "circle": "Circle",
+      "shield": "Shield",
+      "hexagon": "Hexagon",
+      "star": "Star"
+    },
+    "icons": {
+      "star": "Star",
+      "trophy": "Trophy",
+      "medal": "Medal",
+      "flame": "Flame",
+      "book": "Book",
+      "rocket": "Rocket",
+      "bolt": "Bolt",
+      "heart": "Heart",
+      "crown": "Crown",
+      "target": "Target",
+      "brain": "Brain",
+      "check": "Check"
+    },
+    "events": {
+      "step_completed": "a step is completed",
+      "section_completed": "a section is completed",
+      "test_passed": "a test is passed",
+      "exam_scored": "an exam is scored",
+      "streak_reached": "a streak is reached",
+      "course_completed": "the course is completed",
+      "reviews_done": "reviews are done"
+    },
+    "rule": {
+      "title": "Award rule",
+      "hint": "Drag blocks from the palette, or use a block's menu to add and move it with the keyboard.",
+      "canvas": "Rule",
+      "palette": "Blocks",
+      "paletteHint": "Drag a block, or press it to choose where to add it.",
+      "when": "when",
+      "event": "Event",
+      "if": "if",
+      "andIf": "and if",
+      "stack": "Conditions",
+      "underWhen": "Under WHEN",
+      "insideGroup": "Inside “{name}” #{n}",
+      "addBlock": "Add block: {name}",
+      "addTo": "Add to",
+      "noRoom": "No room for another block",
+      "emptyStack": "Drop conditions here (none: every event counts)",
+      "emptyGroup": "Drop blocks here",
+      "blockActions": "Actions for {name}",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "moveInto": "Move into",
+      "delete": "Delete block",
+      "chooseSection": "Choose a section",
+      "chooseStep": "Choose a step"
+    },
+    "problems": {
+      "tooManyBlocks": "A rule can have at most 32 blocks.",
+      "stackTooLong": "At most 8 blocks can stand under WHEN.",
+      "tooDeep": "Blocks can be nested at most 6 deep.",
+      "childCount": "Needs 2 to 8 blocks inside.",
+      "notEmpty": "Put exactly one block inside.",
+      "numberRange": "The number is out of range.",
+      "sectionMissing": "Choose a section.",
+      "stepMissing": "Choose a step."
+    },
+    "award": {
+      "title": "New badge!",
+      "ok": "Great"
+    },
+    "profile": {
+      "title": "My profile",
+      "earned": "{count, plural, =0 {My badges} other {My badges · #}}",
+      "locked": "{count, plural, other {Goals · #}}",
+      "emptyTitle": "No badges yet",
+      "emptyHint": "Complete course steps to earn badges.",
+      "goal": "Goal"
+    },
+    "blocks": {
+      "and": {
+        "before": "all of",
+        "after": "",
+        "palette": "All of (AND)"
+      },
+      "or": {
+        "before": "any of",
+        "after": "",
+        "palette": "Any of (OR)"
+      },
+      "not": {
+        "before": "not",
+        "after": "",
+        "palette": "Not"
+      },
+      "score_gte": {
+        "before": "score ≥",
+        "after": "%",
+        "palette": "Score at least",
+        "input": "Score in percent, {min} to {max}"
+      },
+      "count_gte": {
+        "before": "count ≥",
+        "after": "",
+        "palette": "Count at least",
+        "input": "Count, {min} to {max}"
+      },
+      "within_days_of_enroll": {
+        "before": "within",
+        "after": "days of enrolling",
+        "palette": "Within days of enrolling",
+        "input": "Days, {min} to {max}"
+      },
+      "section_is": {
+        "before": "in section",
+        "after": "",
+        "palette": "In section",
+        "input": "Section"
+      },
+      "step_is": {
+        "before": "in step",
+        "after": "",
+        "palette": "In step",
+        "input": "Step"
+      }
+    },
+    "hint": {
+      "step_completed": "Complete course steps",
+      "section_completed": "Complete a section",
+      "test_passed": "Pass a test",
+      "exam_scored": "Score on an exam",
+      "streak_reached": "Keep a learning streak",
+      "course_completed": "Finish the course",
+      "reviews_done": "Do your reviews"
+    }
   },
   "courseCard": {
     "invite": "Invite only",
@@ -51,7 +223,8 @@
     "browse": "Browse the catalog",
     "open": "Continue",
     "edit": "Edit",
-    "view": "View"
+    "view": "View",
+    "mastery": "Mastery"
   },
   "course": {
     "title": "Course",
@@ -120,7 +293,11 @@
       "flashcards": "flash cards",
       "video": "video",
       "h5p": "interactive task",
-      "interactive_video": "interactive video"
+      "interactive_video": "interactive video",
+      "ai_review": "AI review",
+      "exam": "exam",
+      "code": "code exercise",
+      "html": "interactive widget"
     },
     "status": {
       "passed": "passed",
@@ -164,7 +341,86 @@
       "title": "Interactive task",
       "unavailable": "This interactive task cannot be shown.",
       "score": "Best result: {score} of {max}"
-    }
+    },
+    "aiReview": {
+      "title": "AI review",
+      "criteria": "Criteria",
+      "criterion": "{name} · up to {max}",
+      "previewNote": "Students upload their work here and talk to the AI reviewer. The chat is not available in preview.",
+      "intro": "Upload your work and ask questions. The reviewer may ask you a few questions first. You can submit for review {count, plural, one {# time} other {# times}}.",
+      "start": "Start a review",
+      "newConversation": "New conversation",
+      "thread": "Conversation with the reviewer",
+      "emptyThread": "Attach your work or write a message to begin.",
+      "question": "Clarifying question",
+      "thinking": "The reviewer is thinking…",
+      "reviewing": "The reviewer is reading your work…",
+      "finalReview": "Your review",
+      "closed": "This conversation has a final review.",
+      "noneLeft": "You have no submissions left.",
+      "dropLabel": "Upload your work",
+      "dropTitle": "Drag files here",
+      "dropHint": "{types}; up to {max} files at a time.",
+      "chooseFiles": "Choose files",
+      "refused": "These files are of a type this task does not accept: {names}",
+      "attached": "Attached files",
+      "removeFile": "Remove {name}",
+      "uploadProgress": "Uploading {name}",
+      "upload": {
+        "done": "Uploaded",
+        "failed": "Upload failed",
+        "rejected": "Rejected",
+        "uploading": "Uploading"
+      },
+      "composer": "Message to the reviewer",
+      "composerPlaceholder": "Ask a question or describe your work…",
+      "send": "Send",
+      "submit": "Submit for review ({count} left)",
+      "submitHint": "Submitting uses one attempt.",
+      "attachToSubmit": "Attach your work to submit it.",
+      "history": "Earlier conversations ({count})",
+      "submissionsUsed": "{count, plural, one {# submission} other {# submissions}}",
+      "status": {
+        "open": "In progress",
+        "reviewed": "Reviewed"
+      },
+      "errors": {
+        "closed": "This conversation is finished. Start a new one.",
+        "noSubmissionsLeft": "You have used all your submissions.",
+        "fileRejected": "One of the files could not be read. Upload a different file.",
+        "unavailable": "The AI reviewer is not available right now. Try again later."
+      },
+      "kinds": {
+        "pdf": "PDF",
+        "docx": "Word",
+        "pptx": "PowerPoint",
+        "image": "Images",
+        "text": "Text"
+      }
+    },
+    "html": {
+      "unavailable": "This widget is not available.",
+      "title": "Interactive widget",
+      "fullscreen": "Full screen",
+      "exitFullscreen": "Exit full screen",
+      "passed": "Passed",
+      "score": "Score: {score} of {max}"
+    },
+    "tutor": {
+      "open": "Ask the tutor",
+      "title": "AI tutor",
+      "socratic": "The tutor helps you think with hints and questions. It never gives the answers.",
+      "remaining": "{count, plural, =0 {No questions left today} one {# question left today} other {# questions left today}}",
+      "empty": "Stuck on this step? Ask what confuses you and the tutor will guide you to the answer.",
+      "thinking": "The tutor is thinking…",
+      "you": "You",
+      "tutor": "Tutor",
+      "input": "Your question",
+      "placeholder": "What is unclear?",
+      "send": "Send",
+      "limitReached": "You have used all your tutor questions for today. Come back tomorrow."
+    },
+    "captionsEmbedUnsupported": "Captions from this lesson play only in the built-in player. Use the YouTube or Vimeo player's own captions."
   },
   "test": {
     "title": "Test",
@@ -241,7 +497,8 @@
     "versions": "Versions",
     "staff": "Staff",
     "students": "Students",
-    "settings": "Settings"
+    "settings": "Settings",
+    "badges": "Badges"
   },
   "editor": {
     "title": "Course editor",
@@ -326,7 +583,11 @@
       "flashcards": "Flash cards",
       "video": "Video",
       "h5p": "H5P",
-      "interactive_video": "Interactive video"
+      "interactive_video": "Interactive video",
+      "ai_review": "AI review",
+      "exam": "Exam",
+      "code": "Code",
+      "html": "HTML widget"
     },
     "markdownLabel": "Markdown of block {number}",
     "moveBlockUp": "Move block {number} up",
@@ -411,6 +672,22 @@
         "interactive_video": {
           "title": "Interactive video",
           "description": "A video that pauses for questions, notes and links"
+        },
+        "ai_review": {
+          "title": "AI review",
+          "description": "Students upload work and get a review from AI"
+        },
+        "exam": {
+          "title": "Exam",
+          "description": "A timed digital exam (SAT, AP) with sections and modules"
+        },
+        "code_block": {
+          "title": "Code",
+          "description": "Runnable code with automatic tests"
+        },
+        "html": {
+          "title": "HTML widget",
+          "description": "An uploaded interactive HTML page"
         }
       }
     },
@@ -460,6 +737,164 @@
       "text": "Text",
       "url": "Link",
       "multiple": "Several correct answers"
+    },
+    "aiReview": {
+      "publicSection": "What students see",
+      "titleLabel": "Title",
+      "instructions": "Instructions for students",
+      "instructionsHint": "Supports Markdown.",
+      "privateSection": "Reviewer settings",
+      "hidden": "Hidden from students",
+      "prompt": "Instructions for the reviewer",
+      "promptPlaceholder": "What to check, what matters most, how strict to be…",
+      "promptHint": "Students never see this text.",
+      "referenceFiles": "Reference files",
+      "referenceHint": "Model answers or rubrics, up to {max} files. Hidden from students.",
+      "removeFile": "Remove {name}",
+      "topics": "Private topics",
+      "topicPlaceholder": "A topic the reviewer must not reveal",
+      "addTopic": "Add",
+      "removeTopic": "Remove {topic}",
+      "topicsHint": "The reviewer checks these but never names them to the student.",
+      "template": "Review format",
+      "criteria": "Criteria",
+      "noCriteria": "No criteria yet.",
+      "addCriterion": "Add a criterion",
+      "criterionName": "Criterion {number}: name",
+      "criterionNamePlaceholder": "Name",
+      "criterionNameRequired": "Enter a name: the step saves once every criterion has one",
+      "criterionDescription": "Criterion {number}: description",
+      "criterionDescriptionPlaceholder": "What a strong answer shows (hidden from students)",
+      "criterionMax": "Criterion {number}: maximum score",
+      "removeCriterion": "Remove criterion {number}",
+      "criteriaHint": "Students see the names and maximum scores; descriptions stay hidden.",
+      "sources": "Sources",
+      "courseMaterials": "Search the course materials",
+      "webSearch": "Search the web",
+      "maxSubmissions": "Submissions per student",
+      "maxSubmissionsHint": "From 1 to 20.",
+      "passThreshold": "Pass mark, %",
+      "passThresholdHint": "The share of the criteria points a final review needs to count the block as passed. From 0 to 100.",
+      "acceptedTypes": "Accepted files",
+      "openSubmissions": "Student submissions",
+      "saveForSubmissions": "Save the step to see student submissions.",
+      "submissions": {
+        "title": "Student submissions",
+        "description": "The latest review of each student's work.",
+        "empty": "No submissions yet.",
+        "noReview": "No review yet.",
+        "earlier": "{count, plural, one {Earlier submission (#)} other {Earlier submissions (#)}}",
+        "status": {
+          "open": "In progress",
+          "reviewed": "Reviewed"
+        }
+      },
+      "kinds": {
+        "pdf": "PDF",
+        "docx": "Word",
+        "pptx": "PowerPoint",
+        "image": "Images",
+        "text": "Text"
+      },
+      "templates": {
+        "review_table": {
+          "title": "Review table",
+          "description": "A score and a comment for each criterion."
+        },
+        "rubric_checklist": {
+          "title": "Rubric checklist",
+          "description": "Criteria marked as met or not met."
+        },
+        "strengths_cards": {
+          "title": "Strengths and improvements",
+          "description": "Cards with what works and what to improve."
+        },
+        "image_gallery": {
+          "title": "Image feedback",
+          "description": "Comments on each uploaded image."
+        }
+      },
+      "sample": {
+        "structure": "Structure",
+        "evidence": "Evidence",
+        "style": "Style",
+        "strengths": "Strengths",
+        "improvements": "To improve"
+      }
+    },
+    "html": {
+      "titleLabel": "Title",
+      "drop": "Widget file",
+      "uploaded": "Widget uploaded",
+      "empty": "No widget uploaded yet",
+      "dropHint": "Drop an .html file or a .zip with index.html at its root, up to 20 MB.",
+      "uploading": "Uploading…",
+      "replace": "Replace widget",
+      "upload": "Upload widget",
+      "cancel": "Cancel",
+      "file": "Widget file",
+      "progress": "Upload progress",
+      "tooLarge": "The file is larger than 20 MB.",
+      "files": "{count, plural, one {# file} other {# files}}",
+      "height": "Height: {px} px",
+      "heightAria": "Widget height",
+      "heightHint": "The widget can resize itself with the widget SDK.",
+      "fullscreen": "Allow full screen",
+      "graded": "Count the score",
+      "gradedHint": "The widget reports a score with IHSP.reportScore; the best score is kept.",
+      "preview": "Preview",
+      "saveToPreview": "Save the step to preview the widget."
+    },
+    "videoChecks": {
+      "open": "Suggest checks from transcript",
+      "title": "Suggest checks from transcript",
+      "description": "AI proposes pause-and-predict questions every few minutes and recap cards. Review each one; nothing is added until you accept it.",
+      "transcript": "Transcript",
+      "transcriptPlaceholder": "Paste the transcript of the video. Lines may start with a time such as 1:30.",
+      "upload": "Upload .vtt or .srt",
+      "loaded": "Loaded {name}",
+      "tooLong": "The transcript is too long: at most 60,000 characters.",
+      "suggest": "Suggest checks",
+      "thinking": "Reading the transcript and preparing questions…",
+      "cancel": "Cancel",
+      "again": "Start over",
+      "done": "Done",
+      "checks": "Proposed pauses",
+      "acceptedCount": "{count, plural, one {# pause added} other {# pauses added}} to the video",
+      "noChecks": "No more proposed pauses.",
+      "checkAt": "Pause at {time}",
+      "options": "Options (choose the correct one)",
+      "option": "Option {number}",
+      "correct": "Option {number} is correct",
+      "why": "Why:",
+      "discard": "Discard",
+      "accept": "Add pause at {time}",
+      "cards": "Recap cards",
+      "cardsHint": "Untick the cards you do not want. They are added as a flash cards block after this video.",
+      "keepCard": "Keep card {number}",
+      "front": "Front of card {number}",
+      "back": "Back of card {number}",
+      "addCards": "{count, plural, one {Add # card as a flash cards block} other {Add # cards as a flash cards block}}",
+      "cardsAdded": "The recap cards were added as a flash cards block after this video.",
+      "length": "Video length (if the transcript has no times)"
+    },
+    "captions": {
+      "title": "Captions (WebVTT)",
+      "hint": "Upload a .vtt file for each language, up to 1 MB. Captions play on uploaded videos and direct video links.",
+      "languages": {
+        "uz": "Oʼzbekcha",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "upload": "Upload captions",
+      "replace": "Replace captions",
+      "remove": "Remove captions",
+      "uploading": "Uploading…",
+      "file": "Captions file for {language} (.vtt)",
+      "label": "Label in the player",
+      "default": "Show by default",
+      "none": "No captions in this language.",
+      "rejected": "The file was not accepted as WebVTT captions. It must start with WEBVTT."
     }
   },
   "markdownEditor": {
@@ -662,7 +1097,18 @@
     "codeLanguage": "Language",
     "codeStarter": "Starter code",
     "expectedOutputs": "Expected outputs",
-    "expectedOutputsHint": "Separate outputs with ---."
+    "expectedOutputsHint": "Separate outputs with ---.",
+    "patternRule": "Answer rule (optional)",
+    "blankPattern": "Answer rule for blank {number}",
+    "patternOff": "No extra rule",
+    "patternExact": "Exactly this text",
+    "patternContains": "Contains",
+    "patternStartsWith": "Starts with",
+    "patternEndsWith": "Ends with",
+    "patternAdvanced": "Advanced: regular expression",
+    "patternText": "Text",
+    "patternRegex": "Regular expression",
+    "patternIgnoreCase": "Ignore upper and lower case"
   },
   "cardsBuilder": {
     "card": "Card {number}",
@@ -704,7 +1150,11 @@
       "flashcards": "Flash cards",
       "video": "Video",
       "h5p": "H5P",
-      "interactive_video": "Interactive video"
+      "interactive_video": "Interactive video",
+      "ai_review": "AI review",
+      "exam": "Exam",
+      "code": "Code",
+      "html": "HTML widget"
     },
     "untitled": "Untitled step",
     "noBlocks": "No blocks.",
@@ -753,7 +1203,13 @@
     "emptyVideo": "No video link.",
     "emptyH5P": "No H5P package.",
     "uploadedVideo": "Uploaded video",
-    "interactions": "{count, plural, one {# pause} other {# pauses}}"
+    "interactions": "{count, plural, one {# pause} other {# pauses}}",
+    "patternMode": {
+      "exact": "Exactly “{text}”",
+      "contains": "Contains “{text}”",
+      "startsWith": "Starts with “{text}”",
+      "endsWith": "Ends with “{text}”"
+    }
   },
   "diff": {
     "live": "Live version",
@@ -929,7 +1385,11 @@
     "step": "Step",
     "passed": "Passed",
     "failed": "Not passed",
-    "review": "Review"
+    "review": "Review",
+    "widgetsTitle": "Interactive widgets",
+    "widgetsHint": "Code and HTML widget scores are reported by the student's browser and are not verified by the server.",
+    "widget": "Widget",
+    "notVerified": "Not verified"
   },
   "broadcasts": {
     "historyTitle": "Updates sent to students",
@@ -1003,7 +1463,9 @@
       "removeTitle": "Remove this course creator?",
       "added": "{name} can create courses now",
       "removed": "{name} is no longer a course creator"
-    }
+    },
+    "slugEdit": "Edit address",
+    "slugAuto": "Derive from title"
   },
   "courseNotebooks": {
     "title": "Notebooks",
@@ -1055,7 +1517,8 @@
       "details": "Details",
       "visibility": "Visibility",
       "navigation": "Navigation",
-      "access": "Who can see"
+      "access": "Who can see",
+      "engagement": "Engagement"
     },
     "removeItem": "Remove {item}",
     "add": "Add",
@@ -1180,7 +1643,10 @@
     "saved": "Settings saved",
     "save": "Save",
     "unsaved": "Unsaved changes",
-    "serverInvalid": "The server rejected {field}: {reason}."
+    "serverInvalid": "The server rejected {field}: {reason}.",
+    "certificates": "Certificates",
+    "tutorEnabled": "AI tutor for students",
+    "tutorEnabledHint": "Students can ask a Socratic tutor about each step. It gives hints and never the answers."
   },
   "courseLanding": {
     "continue": "Continue",
@@ -1290,5 +1756,541 @@
     "previewEmpty": "Nothing to preview yet.",
     "lossyNotice": "This text has formulas, tables or other Markdown that the visual editor would change. It stays in Markdown mode.",
     "lossyWarning": "This text has formulas, tables or other Markdown that the visual editor may change."
+  },
+  "skin": {
+    "name": {
+      "classic": "Classic",
+      "playful": "Playful"
+    },
+    "hint": {
+      "classic": "The familiar course pages, calm and compact.",
+      "playful": "A learning path, round buttons, streaks and celebrations."
+    },
+    "chooser": {
+      "title": "Choose how your courses look",
+      "description": "You can change this any time in your profile, under Appearance.",
+      "later": "Decide later"
+    },
+    "preview": {
+      "lesson": "Lesson 3: Cells",
+      "progress": "3 of 5 steps",
+      "streak": "5 days",
+      "xp": "120 XP",
+      "continue": "Continue"
+    },
+    "appearance": {
+      "menu": "Appearance",
+      "title": "Appearance",
+      "skin": "Course style",
+      "sound": "Sounds in lessons",
+      "soundHint": "Short sounds after answers. Off by default."
+    },
+    "reminders": {
+      "title": "Reminders in Telegram",
+      "hint": "Sent on weekdays only, never during quiet hours 21:00–08:00.",
+      "lms_review_due": "Cards are due for review",
+      "lms_streak_at_risk": "My streak is at risk",
+      "lms_deadline_soon": "A quest deadline is close"
+    },
+    "path": {
+      "section": "Section {number}",
+      "sectionProgress": "{done} of {total} lessons",
+      "jumpHere": "Jump here",
+      "start": "Start",
+      "continue": "Continue here",
+      "empty": "This course has no lessons yet.",
+      "state": {
+        "done": "Done",
+        "current": "Current",
+        "available": "Open",
+        "locked": "Locked"
+      }
+    },
+    "lesson": {
+      "close": "Back to the course path",
+      "quitTitle": "Quit lesson?",
+      "quitDescription": "Your progress so far is saved. You can continue from here later.",
+      "quit": "Quit",
+      "stay": "Keep learning",
+      "progress": "Lesson progress",
+      "sound": "Sound",
+      "empty": "This lesson is empty.",
+      "continue": "Continue",
+      "back": "Back",
+      "gotIt": "Got it",
+      "pending": "Submit the task to finish this lesson.",
+      "toTask": "Go to the task",
+      "correct": "Nice! Test passed",
+      "wrong": "Not passed yet",
+      "score": "Score: {score} of {max}"
+    },
+    "celebrate": {
+      "title": "Lesson complete!",
+      "xp": "XP earned",
+      "accuracy": "Accuracy",
+      "time": "Time"
+    }
+  },
+  "courseCertificates": {
+    "title": "Certificates",
+    "tabsLabel": "Certificate settings",
+    "tabs": {
+      "design": "Design",
+      "rules": "Rules",
+      "partners": "Partners",
+      "issued": "Issued"
+    },
+    "save": "Save",
+    "reset": "Discard changes",
+    "cancel": "Cancel",
+    "sample": {
+      "name": "Learner name",
+      "tier": "With distinction",
+      "partner": "Partner organisation"
+    },
+    "field": {
+      "name": "Learner name",
+      "course": "Course title",
+      "tier": "Tier",
+      "date": "Issue date",
+      "partner": "Partner",
+      "code": "Verification code",
+      "qr": "QR code",
+      "custom_text": "Custom text"
+    },
+    "fonts": {
+      "montserrat": "Montserrat",
+      "oswald": "Oswald",
+      "lora": "Lora",
+      "eb_garamond": "EB Garamond",
+      "cormorant": "Cormorant"
+    },
+    "weights": {
+      "300": "Light",
+      "400": "Regular",
+      "500": "Medium",
+      "600": "Semibold",
+      "700": "Bold",
+      "800": "Extra bold"
+    },
+    "aligns": {
+      "left": "Left",
+      "center": "Centre",
+      "right": "Right"
+    },
+    "qr": {
+      "style": "QR style",
+      "styles": {
+        "square": "Square",
+        "rounded": "Rounded",
+        "dots": "Dots"
+      },
+      "fg": "Dots colour",
+      "bg": "Background colour",
+      "logo": "Logo in the centre"
+    },
+    "design": {
+      "noBackground": "No background yet. Upload a PNG, JPEG or PDF.",
+      "serverPreview": "Final render",
+      "serverPreviewAlt": "Certificate as the server renders it",
+      "serverPreviewNote": "This is exactly how the PDF will look. It refreshes after each save.",
+      "replaceBackground": "Replace background",
+      "uploadBackground": "Upload background",
+      "addField": "Add field",
+      "backgroundHint": "PNG, JPEG or the first page of a PDF, up to 10 MB. Landscape A4 works best.",
+      "pickField": "Select a field on the certificate to change its font, size and colour.",
+      "defaultName": "Course certificate",
+      "empty": "This course has no certificate design yet.",
+      "create": "Create design",
+      "removeField": "Remove field",
+      "text": "Text",
+      "font": "Font",
+      "size": "Size",
+      "smaller": "Smaller",
+      "larger": "Larger",
+      "weight": "Weight",
+      "color": "Colour",
+      "align": "Alignment",
+      "keyboardHint": "Arrow keys move the field, Shift moves it further, Alt changes its size.",
+      "fieldHandle": "Field: {field}",
+      "inspector": "Settings of {field}",
+      "state": {
+        "saved": "All changes saved",
+        "pending": "Unsaved changes",
+        "saving": "Saving…",
+        "error": "Not saved"
+      }
+    },
+    "rules": {
+      "enabled": "Issue certificates",
+      "enabledHint": "Learners receive a certificate automatically when they reach the passing mark.",
+      "passing": "Passing mark",
+      "passingHint": "The share of course points a learner needs for a certificate.",
+      "optional": "Optional sections",
+      "optionalHint": "Points from these sections do not count towards the passing mark. A tier can require them.",
+      "noSections": "The course has no sections yet.",
+      "tiers": "Tiers",
+      "tiersHint": "Higher tiers on top. A learner gets the first tier whose conditions they meet.",
+      "addTier": "Add tier",
+      "noTiers": "No tiers: every certificate is issued without a tier.",
+      "reorder": "Drag to reorder",
+      "untitled": "Untitled tier",
+      "removeTier": "Remove tier {name}",
+      "label": {
+        "uz": "Name (Uzbek)",
+        "ru": "Name (Russian)",
+        "en": "Name (English)"
+      },
+      "minPct": "Minimum %",
+      "minPctNone": "Passing mark",
+      "requireOptional": "Requires all optional sections",
+      "color": "Colour",
+      "customColor": "Custom colour",
+      "minBelowPassing": "The minimum is below the passing mark ({passing}%).",
+      "labelsRequired": "Fill in the tier names in all three languages.",
+      "saved": "Rules saved"
+    },
+    "partners": {
+      "hint": "Partner organisations appear on the course page and, when switched on, on the certificate.",
+      "add": "Add partner",
+      "empty": "No partners yet.",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleted": "Partner deleted",
+      "deleteTitle": "Delete partner {name}?",
+      "deleteHint": "Certificates already issued keep the partner.",
+      "onCertificate": "On certificate",
+      "coIssuedBadge": "Co-issuer",
+      "name": "Name",
+      "url": "Website",
+      "urlInvalid": "Enter an address starting with http:// or https://.",
+      "logo": "Upload logo",
+      "logoHint": "PNG, JPEG, SVG or WebP on a transparent or white background.",
+      "coIssued": "Co-issued certificate",
+      "coIssuedHint": "The partner issues the certificate together with the lyceum.",
+      "saved": "Partner saved"
+    },
+    "issued": {
+      "hint": "Certificates are issued automatically. Issue them now to learners who already qualify.",
+      "issueAll": "Issue to all eligible",
+      "issuedAll": "{count, plural, =0 {No learners qualify yet} one {# learner holds a certificate} other {# learners hold a certificate}}",
+      "empty": "No certificates issued yet.",
+      "student": "Learner",
+      "tier": "Tier",
+      "date": "Issued",
+      "code": "Code",
+      "status": "Status",
+      "actions": "Actions",
+      "statusValid": "Valid",
+      "statusRevoked": "Revoked",
+      "revoke": "Revoke",
+      "revoked": "Certificate revoked",
+      "revokeTitle": "Revoke the certificate of {name}?",
+      "revokeHint": "The verification page will show it as revoked. This cannot be undone.",
+      "reason": "Reason"
+    },
+    "mine": {
+      "sectionTitle": "Certificates",
+      "title": "Course certificate",
+      "issued": "Tier: {tier}. Issued on {date}.",
+      "revoked": "This certificate has been revoked.",
+      "download": "Download PDF",
+      "verify": "Verification page",
+      "nextTier": "{points, plural, =0 {You qualify for {tier}: it will be issued shortly.} one {# more point to {tier}.} other {# more points to {tier}.}}",
+      "progress": "Score: {score}% of {passing}% needed to pass. {steps, plural, =0 {All required steps are done.} one {# required step left.} other {# required steps left.}}"
+    },
+    "landing": {
+      "partnerTitle": "Partners",
+      "certificateTitle": "Certificate",
+      "qrNote": "Learners who reach {passing}% receive a certificate with a QR code anyone can scan to verify it."
+    },
+    "verify": {
+      "title": "Verify a certificate",
+      "code": "Certificate code",
+      "codeHint": "The code is printed under the QR code on the certificate.",
+      "check": "Check",
+      "notFound": "No certificate with this code was found.",
+      "valid": "Valid",
+      "revoked": "Revoked",
+      "holder": "Holder",
+      "course": "Course",
+      "tier": "Tier",
+      "issuedAt": "Issued",
+      "codeLabel": "Code",
+      "partner": "Together with {name}",
+      "qrAlt": "QR code of this certificate"
+    }
+  },
+  "codeRunner": {
+    "frameTitle": "Code runner",
+    "editorLabel": "Your code",
+    "run": "Run",
+    "reset": "Reset",
+    "submit": "Submit",
+    "submitting": "Checking…",
+    "bestScore": "Best score: {score}%",
+    "passed": "Passed",
+    "failed": "Failed",
+    "notRun": "Not run",
+    "output": "Output",
+    "tests": "Tests",
+    "loading": "Loading the runtime…",
+    "running": "Running…",
+    "timedOut": "Time limit exceeded: the program was stopped.",
+    "truncated": "Output truncated at 64 KB.",
+    "idle": "Press Run to see the output.",
+    "noOutput": "No output.",
+    "unnamedTest": "Test",
+    "hiddenTest": "Hidden",
+    "language": "Language",
+    "timeLimit": "Time limit, s",
+    "graded": "Graded",
+    "instructions": "Instructions",
+    "starter": "Starter code",
+    "starterHint": "Students start from this code.",
+    "solution": "Solution",
+    "solutionHint": "Never shown to students; used to check the tests.",
+    "hiddenHint": "Students see only the name of a hidden test; its code is sent to their browser on Submit, so a determined student can read it.",
+    "testName": "Test name",
+    "testCode": "Test code",
+    "testNumber": "Test {n}",
+    "hidden": "Hidden",
+    "removeTest": "Remove test",
+    "addTest": "Add test",
+    "runSolution": "Run solution against tests",
+    "solutionPasses": "The solution passes every test.",
+    "solutionFails": "The solution scores {score}%.",
+    "solutionFailsHint": "Fix the solution or the tests before publishing.",
+    "languages": {
+      "python": "Python",
+      "javascript": "JavaScript",
+      "sql": "SQL"
+    },
+    "testHints": {
+      "python": "Python: assert statements run after the student code, e.g. assert add(2, 3) == 5",
+      "javascript": "JavaScript: use assert(condition, message), e.g. assert(add(2, 3) === 5, \"2 + 3\")",
+      "sql": "SQL: a query whose result must equal the result of the student's last query"
+    }
+  },
+  "engagement": {
+    "xpChip": "Level {level}, {xp} XP",
+    "xp": "{xp} XP",
+    "xpGain": "+{xp} XP",
+    "levelShort": "Lv",
+    "level": "Level {level}",
+    "levelRing": "Level {level}: {into} of {next} XP to the next level",
+    "toNext": "{xp} XP to the next level",
+    "streakDays": "{count, plural, one {school day in a row} other {school days in a row}}",
+    "streakWeek": "This school week",
+    "streakBest": "Best: {count}",
+    "freezes": "{count, plural, =0 {no freezes} one {# freeze} other {# freezes}}",
+    "todayPending": "study today to keep the streak",
+    "day": {
+      "done": "studied",
+      "bonus": "bonus day",
+      "freeze": "freeze used",
+      "missed": "missed",
+      "pending": "not yet"
+    },
+    "panel": {
+      "title": "My progress",
+      "review": "Daily review",
+      "reviewDue": "{count, plural, one {# item is due} other {# items are due}}",
+      "reviewNone": "Nothing is due today",
+      "startReview": "Start review",
+      "quests": "Class quests"
+    },
+    "review": {
+      "title": "Daily review",
+      "empty": "Nothing to review today. Come back tomorrow.",
+      "back": "Back to my courses",
+      "counter": "{index} of {total}",
+      "progress": "Session progress",
+      "check": "Check",
+      "next": "Next",
+      "show": "Show answer",
+      "rate": "How well did you remember?",
+      "correct": "Correct",
+      "incorrect": "Not quite",
+      "correctAnswer": "Correct answer: {answer}",
+      "rating": {
+        "again": "Again",
+        "hard": "Hard",
+        "good": "Good",
+        "easy": "Easy"
+      },
+      "doneTitle": "Session complete",
+      "doneBody": "{correct} of {total} right · +{xp} XP"
+    },
+    "mastery": {
+      "title": "Mastery map",
+      "empty": "This course has no sections yet.",
+      "noUnlock": "All sections are open.",
+      "unlockRule": "A section opens when the previous one reaches {pct}% mastery.",
+      "pct": "{pct}%",
+      "sectionProgress": "Mastery of {title}",
+      "completed": "Completed",
+      "locked": "Locked: reach {pct}% in the previous section to open {count, plural, one {# step} other {# steps}}."
+    },
+    "quest": {
+      "done": "Done",
+      "ended": "Ended",
+      "daysLeft": "{count, plural, =0 {Last day} one {# day left} other {# days left}}",
+      "mine": "My progress",
+      "class": "Class goal",
+      "goal": {
+        "steps": "Complete {count, plural, one {# step} other {# steps}}",
+        "xp": "Earn {count} XP",
+        "review_days": "Review on {count, plural, one {# day} other {# days}}"
+      }
+    }
+  },
+  "engagementStaff": {
+    "saved": "Saved",
+    "save": "Save",
+    "unlockTitle": "Unlock sections at mastery",
+    "unlockHint": "Learners open the next section only after mastering the current one.",
+    "unlockValue": "Required mastery: {pct}%",
+    "unlockSlider": "Required mastery",
+    "lenient": "Lenient",
+    "strict": "Strict",
+    "unlockOff": "Off: all sections are open.",
+    "questsTitle": "Class quests",
+    "questsHint": "Shared goals with dates; each learner has a personal target and the class a common one.",
+    "questsEmpty": "No quests yet.",
+    "addQuest": "Add quest",
+    "questTitle": "Title",
+    "questTitlePlaceholder": "e.g. Finish chapter 2",
+    "goalKind": "Goal",
+    "target": "Target per learner",
+    "classTarget": "Learners to finish",
+    "goal": {
+      "steps": "Steps completed",
+      "xp": "XP earned",
+      "review_days": "Review days"
+    },
+    "goalHint": {
+      "steps": "Each learner completes this many steps.",
+      "xp": "Each learner earns this much XP.",
+      "review_days": "Each learner reviews on this many days."
+    },
+    "startsOn": "Starts",
+    "endsOn": "Ends",
+    "datesInvalid": "The end date must not be before the start date.",
+    "cancel": "Cancel",
+    "saveQuest": "Save quest",
+    "questSaved": "Quest saved",
+    "questLine": "{goal}: {target} · class {classTarget} · {start} – {end}",
+    "editQuest": "Edit {title}",
+    "deleteQuest": "Delete {title}",
+    "deleteConfirm": "Delete the quest “{title}”?"
+  },
+  "examBuilder": {
+    "title": "Exam title",
+    "kind": "Exam type",
+    "kinds": {
+      "sat": "SAT",
+      "ap": "AP",
+      "custom": "Custom"
+    },
+    "calculator": "Calculator",
+    "calculators": {
+      "none": "No calculator",
+      "scientific": "Scientific",
+      "graphing": "Graphing"
+    },
+    "presetHint": "Choosing SAT or AP replaces the sections with the official structure (SAT: Reading and Writing 2 × 32 min, Math 2 × 35 min).",
+    "scaled": "Scaled scores",
+    "scaleMin": "Lowest score",
+    "scaleMax": "Highest score",
+    "directions": "Directions",
+    "referenceSheet": "Reference sheet",
+    "sectionDefault": "Section {number}",
+    "addSection": "Add section",
+    "sectionTitle": "Section {number} title",
+    "adaptive": "Adaptive (module 2 is harder or easier by module 1 score)",
+    "removeSection": "Delete section {number}",
+    "adaptiveHint": "Module 1 is followed by module 2 (harder) when the student scores 60% or more, otherwise by module 3 (easier).",
+    "addModule": "Add module",
+    "moduleTitle": "Module {number} title",
+    "minutes": "Minutes",
+    "questions": "{count, plural, one {# question} other {# questions}}",
+    "removeModule": "Delete module {number}",
+    "addQuestion": "Add question"
+  },
+  "examPlayer": {
+    "exam": "Exam",
+    "calculator": "Calculator",
+    "close": "Close",
+    "calc": {
+      "scientific": "Scientific",
+      "graphing": "Graphing",
+      "error": "Error",
+      "expression": "Expression",
+      "function": "Function {number}",
+      "graph": "Graph"
+    },
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "closed": "Time is up: this module is closed.",
+    "saveFailed": "Could not save your answers. Retrying with the next change.",
+    "submitFailed": "Could not submit the module. Try again.",
+    "section": "Section {number}",
+    "module": "Module {number}",
+    "directions": "Directions",
+    "timerHidden": "Timer hidden",
+    "show": "Show",
+    "hide": "Hide",
+    "tools": "Tools",
+    "annotate": "Annotate",
+    "annotateHint": "Select text in the question, then press Annotate",
+    "reference": "Reference",
+    "lineReader": "Line reader",
+    "fiveMinutes": "5 minutes left in this module.",
+    "noDirections": "No directions.",
+    "checkTitle": "Check your work",
+    "checkBody": "On test day you can't move on to the next module until time runs out. Here you can review your answers and submit now.",
+    "markForReview": "Mark for review",
+    "eliminator": "Answer eliminator",
+    "note": "Note",
+    "saveNote": "Save note",
+    "cancel": "Cancel",
+    "answered": "{count} of {total} answered",
+    "questionOf": "Question {number} of {total}",
+    "checkShort": "Check your work",
+    "navigator": "Question navigator",
+    "goToCheck": "Go to review page",
+    "back": "Back",
+    "submitModule": "Submit module",
+    "next": "Next",
+    "legendCurrent": "Current",
+    "legendUnanswered": "Unanswered",
+    "legendMarked": "For review",
+    "choices": "Answer choices",
+    "eliminate": "Cross out choice {letter}",
+    "undoEliminate": "Restore choice {letter}",
+    "undo": "Undo",
+    "yourAnswer": "Your answer",
+    "answerPreview": "Answer preview",
+    "previewNote": "Staff preview: this sitting is not scored and is kept apart from student results.",
+    "loadFailed": "Could not load the exam.",
+    "breakTitle": "Take a break",
+    "breakBody": "Your next section is {section}. Resume when you are ready.",
+    "resume": "Resume testing",
+    "startFailed": "Could not start the module. Try again.",
+    "moduleDone": "{done, plural, one {# module} other {# modules}} done.",
+    "startModule": "Start module {number} ({minutes} min)",
+    "onceNote": "You can take this exam once. Each module is timed; it closes when time runs out.",
+    "begin": "Begin exam",
+    "overview": "{sections, plural, one {# section} other {# sections}}, about {minutes} minutes",
+    "sectionModules": "{count} × {minutes} min",
+    "totalScore": "Total score",
+    "range": "Range {min}–{max}",
+    "raw": "{score} of {max} points",
+    "review": "Review answers",
+    "late": "late",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "correctAnswer": "Correct answer"
   }
 }
