@@ -8259,6 +8259,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/staff/catalog/push/countries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Push Catalog Countries
+         * @description Upsert country facts by ISO code as drafts; verified ones are skipped.
+         */
+        post: operations["admission_catalog_push_countries"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/catalog/push/institutions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Push Catalog Institutions
+         * @description Upsert institutions in the seed shape by slug.
+         */
+        post: operations["admission_catalog_push_institutions"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/catalog/scorecard/search": {
         parameters: {
             query?: never;
@@ -27087,6 +27127,43 @@ export interface components {
             region: string;
         };
         /**
+         * CountryPushIn
+         * @description A batch of countries, upserted by ISO code as drafts.
+         */
+        CountryPushIn: {
+            /** Items */
+            items: components["schemas"]["CountryPushItemIn"][];
+            /**
+             * Overwrite Verified
+             * @description Replace countries a curator already verified.
+             * @default false
+             */
+            overwrite_verified?: boolean;
+        };
+        /**
+         * CountryPushItemIn
+         * @description One country in the shape of `country_facts.json`; checked per item.
+         */
+        CountryPushItemIn: {
+            /**
+             * As Of
+             * @description Month of the facts, `YYYY-MM`.
+             */
+            as_of: string;
+            /**
+             * Country
+             * @description ISO 3166-1 alpha-2 code.
+             */
+            country: string;
+            /**
+             * Facts
+             * @description Facts keyed by fact name, as `PUT .../countries/{code}` takes.
+             */
+            facts: {
+                [key: string]: unknown;
+            };
+        };
+        /**
          * CountryRankingOut
          * @description One ranking of an institution (`overall` or a subject).
          */
@@ -27726,7 +27803,7 @@ export interface components {
             /** Otp Code */
             otp_code?: string | null;
             /** Scopes */
-            scopes: ("me:read" | "me:write" | "admission:read" | "admission:memory" | "admission:docs" | "admission:documents" | "admission:catalog")[];
+            scopes: ("me:read" | "me:write" | "admission:read" | "admission:memory" | "admission:docs" | "admission:documents" | "admission:catalog" | "admission:catalog-write")[];
         };
         /**
          * CreateReadingListBody
@@ -33335,6 +33412,19 @@ export interface components {
             items: components["schemas"]["InstitutionOut"][];
             /** Next Cursor */
             next_cursor: number | null;
+        };
+        /**
+         * InstitutionPushIn
+         * @description A batch of institutions in the seed catalog shape, upserted by slug.
+         */
+        InstitutionPushIn: {
+            /**
+             * Items
+             * @description Seed `Institution` entries, optionally with `logo_url`, `cover_url` (https; mirrored into our storage).
+             */
+            items: {
+                [key: string]: unknown;
+            }[];
         };
         /**
          * IntakeDraftIO
@@ -42755,6 +42845,42 @@ export interface components {
             auth: string;
             /** P256Dh */
             p256dh: string;
+        };
+        /**
+         * PushResultListOut
+         * @description One result per pushed item, in order.
+         */
+        PushResultListOut: {
+            /** Items */
+            items: components["schemas"]["PushResultOut"][];
+        };
+        /**
+         * PushResultOut
+         * @description What happened to one item of the batch.
+         */
+        PushResultOut: {
+            /**
+             * Field
+             * @description The invalid field when `invalid`.
+             */
+            field: string | null;
+            /** Index */
+            index: number;
+            /**
+             * Key
+             * @description ISO code or institution slug.
+             */
+            key: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "created" | "updated" | "unchanged" | "skipped" | "invalid";
+            /**
+             * Warnings
+             * @description Fields saved without their value, e.g. a logo not fetched.
+             */
+            warnings: string[];
         };
         /**
          * PushSubscriptionBody
@@ -71332,6 +71458,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CatalogProposalOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_catalog_push_countries: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CountryPushIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushResultListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_catalog_push_institutions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InstitutionPushIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushResultListOut"];
                 };
             };
             /** @description Validation Error */
