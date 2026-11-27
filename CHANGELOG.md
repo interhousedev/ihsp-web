@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.15.1] - 2026-11-28
+
+### Security
+
+- The image picks up the Alpine `libxml2` fixes (CVE-2026-11979 and five more; the 1.15.0 image build stopped at the Trivy gate and was not published).
+
 ## [1.15.0] - 2026-11-28
 
 ### Added
