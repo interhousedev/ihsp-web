@@ -36,6 +36,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[]; search:
             { title: t("excuses"), url: "/excuses/", icon: "checks" },
             { title: t("teachers"), url: "/teachers/", icon: IconUserCircle },
             { title: t("myGroup"), url: "/my-group/", icon: "groups" },
+            { title: t("activities"), url: "/activities/", icon: "pin" },
           ],
         },
         {
