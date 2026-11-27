@@ -4,6 +4,21 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-11-28
+
+### Added
+
+- LMS Duo: one path line through every stage and lesson, real lesson content for all block kinds, coach, levels and badges.
+- Tests: a "show correct answers to the student" switch for the test creator; students always see their score and missed questions, and, when allowed, the correct answers with an AI explanation of the mistake.
+- Staff Studio: tests from or into the question bank by EMIS subject and topic, one media tool for video with voice-over (mp4 download), a roomier AI text check that is also in the homework checker, and materials saved to the subject notebook.
+- my.iht activities: clubs (IHT Volunteers included), events, ratings, opportunities, club to course links, and an accept or decline dialog for club ownership transfers.
+- Admin: activities and opportunities management, clubs with capabilities, club analytics, LMS levels and badges.
+- Landing: the public clubs page uses the ihsu.uz design and is linked from the main landing.
+
+### Known issues
+
+- The clubs contact form needs the Turnstile keys set in production.
+
 ## [1.14.0] - 2026-11-23
 
 ### Added
