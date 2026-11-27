@@ -2,11 +2,30 @@
 
 import { QueryState } from "@ihsp/features-core"
 import { useLocale, useT } from "@ihsp/i18n"
-import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, ConfirmDialog, Icons, Input, Label } from "@ihsp/ui"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  ConfirmDialog,
+  Icons,
+  Input,
+  Label,
+} from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
-import { activateLevelScheme, getLevelPreviewQuery, levelKeys, putLevelTiers, type LevelPreview, type LevelScheme, type LevelTier } from "../api"
+import {
+  activateLevelScheme,
+  getLevelPreviewQuery,
+  levelKeys,
+  putLevelTiers,
+  type LevelPreview,
+  type LevelScheme,
+  type LevelTier,
+} from "../api"
 import { checks, countAt, LOCALES, MAX_LEVEL, pick, sameTiers, xpToReach } from "../levels"
 
 const PALETTE = [
@@ -42,11 +61,19 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
   const verdicts = checks(tiers)
   const broken = verdicts.filter((v) => !v.ok)
 
-  const patch = (key: string, change: Partial<LevelTier>) => setRows((list) => list.map((row) => (row.key === key ? { ...row, ...change } : row)))
+  const patch = (key: string, change: Partial<LevelTier>) =>
+    setRows((list) => list.map((row) => (row.key === key ? { ...row, ...change } : row)))
   const addTier = () =>
     setRows((list) => [
       ...list,
-      { key: `n${Date.now()}`, level_from: Math.min(MAX_LEVEL, (list[list.length - 1]?.level_from ?? 1) + 3), title: { ru: "", uz: "", en: "" }, color: "#f59e0b", icon: "star", reward_badge_id: null },
+      {
+        key: `n${Date.now()}`,
+        level_from: Math.min(MAX_LEVEL, (list[list.length - 1]?.level_from ?? 1) + 3),
+        title: { ru: "", uz: "", en: "" },
+        color: "#f59e0b",
+        icon: "star",
+        reward_badge_id: null,
+      },
     ])
 
   const save = useAdminMutation({
@@ -75,7 +102,9 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
             <CardDescription>{t("curve.description")}</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3">
-            <p className="text-sm">{t("curve.example", { l5: xpToReach(5, scheme.curve), l10: xpToReach(10, scheme.curve) })}</p>
+            <p className="text-sm">
+              {t("curve.example", { l5: xpToReach(5, scheme.curve), l10: xpToReach(10, scheme.curve) })}
+            </p>
             <ol className="grid grid-cols-4 gap-2 sm:grid-cols-6 lg:grid-cols-8" aria-label={t("curve.table")}>
               {Array.from({ length: 12 }, (_, i) => i + 1).map((level) => (
                 <li key={level} className="bg-muted/50 rounded-lg px-2 py-1.5 text-center">
@@ -87,7 +116,10 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
           </CardContent>
         </Card>
 
-        <Card className="min-w-0 xl:sticky xl:top-4 xl:col-start-2 xl:row-span-2 xl:row-start-1" data-testid="level-preview">
+        <Card
+          className="min-w-0 xl:sticky xl:top-4 xl:col-start-2 xl:row-span-2 xl:row-start-1"
+          data-testid="level-preview"
+        >
           <CardHeader>
             <CardTitle>{t("preview.title")}</CardTitle>
           </CardHeader>
@@ -108,22 +140,38 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
               const next = rows[index + 1]
               const wrongOrder = index > 0 && tier.level_from <= (rows[index - 1]?.level_from ?? 0)
               return (
-                <div key={tier.key} className="grid gap-3 rounded-xl border p-3 sm:grid-cols-3">
+                <div key={tier.key} className="grid gap-3 rounded-card border p-3 sm:grid-cols-3">
                   <div className="flex items-center gap-2 sm:col-span-3">
                     <span className="size-4 rounded-full" style={{ backgroundColor: tier.color }} aria-hidden />
                     <span className="text-sm font-semibold tabular-nums">
-                      {next ? t("tiers.range", { from: tier.level_from, to: next.level_from - 1 }) : t("tiers.open", { from: tier.level_from })}
+                      {next
+                        ? t("tiers.range", { from: tier.level_from, to: next.level_from - 1 })
+                        : t("tiers.open", { from: tier.level_from })}
                     </span>
                     {rows.length > 1 && index > 0 ? (
-                      <Button variant="ghost" size="icon" className="ml-auto size-11 md:size-9" type="button" aria-label={t("tiers.remove")} onClick={() => setRows((list) => list.filter((x) => x.key !== tier.key))}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="ml-auto size-11 md:size-9"
+                        type="button"
+                        aria-label={t("tiers.remove")}
+                        onClick={() => setRows((list) => list.filter((x) => x.key !== tier.key))}
+                      >
                         <Icons.trash aria-hidden />
                       </Button>
                     ) : null}
                   </div>
                   {LOCALES.map((l) => (
                     <div key={l} className="grid gap-1.5">
-                      <Label htmlFor={`title-${tier.key}-${l}`}>{t("tiers.titleLabel")} · {l.toUpperCase()}</Label>
-                      <Input id={`title-${tier.key}-${l}`} value={tier.title[l] ?? ""} aria-invalid={(tier.title[l] ?? "").trim() === ""} onChange={(event) => patch(tier.key, { title: { ...tier.title, [l]: event.target.value } })} />
+                      <Label htmlFor={`title-${tier.key}-${l}`}>
+                        {t("tiers.titleLabel")} · {l.toUpperCase()}
+                      </Label>
+                      <Input
+                        id={`title-${tier.key}-${l}`}
+                        value={tier.title[l] ?? ""}
+                        aria-invalid={(tier.title[l] ?? "").trim() === ""}
+                        onChange={(event) => patch(tier.key, { title: { ...tier.title, [l]: event.target.value } })}
+                      />
                     </div>
                   ))}
                   <div className="grid gap-1.5">
@@ -142,7 +190,12 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
                   </div>
                   <div className="grid gap-1.5 sm:col-span-2">
                     <Label htmlFor={`reward-${tier.key}`}>{t("tiers.reward")}</Label>
-                    <select id={`reward-${tier.key}`} className={SELECT_CLASS} value={tier.reward_badge_id ?? ""} onChange={(event) => patch(tier.key, { reward_badge_id: event.target.value || null })}>
+                    <select
+                      id={`reward-${tier.key}`}
+                      className={SELECT_CLASS}
+                      value={tier.reward_badge_id ?? ""}
+                      onChange={(event) => patch(tier.key, { reward_badge_id: event.target.value || null })}
+                    >
                       <option value="">{t("tiers.noReward")}</option>
                       {rewardBadges.map((badge) => (
                         <option key={badge.id} value={badge.id}>
@@ -151,7 +204,11 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
                       ))}
                     </select>
                   </div>
-                  <div className="flex flex-wrap items-center gap-1 sm:col-span-3" role="radiogroup" aria-label={t("tiers.color")}>
+                  <div
+                    className="flex flex-wrap items-center gap-1 sm:col-span-3"
+                    role="radiogroup"
+                    aria-label={t("tiers.color")}
+                  >
                     {PALETTE.map((color) => (
                       <button
                         key={color.key}
@@ -162,7 +219,10 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
                         onClick={() => patch(tier.key, { color: color.hex })}
                         className="flex size-11 items-center justify-center rounded-full focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none"
                       >
-                        <span className={`size-8 rounded-full ${tier.color === color.hex ? "ring-foreground ring-2 ring-offset-2" : ""}`} style={{ backgroundColor: color.hex }} />
+                        <span
+                          className={`size-8 rounded-full ${tier.color === color.hex ? "ring-foreground ring-2 ring-offset-2" : ""}`}
+                          style={{ backgroundColor: color.hex }}
+                        />
                       </button>
                     ))}
                   </div>
@@ -192,10 +252,21 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
       <div className="bg-background/95 sticky bottom-0 z-20 -mx-4 flex items-center gap-2 border-t p-3 backdrop-blur md:-mx-6 md:px-6">
         <p className="text-muted-foreground hidden flex-1 text-sm sm:block">{dirty ? t("unsaved") : t("noChanges")}</p>
         <div className="flex flex-1 gap-2 sm:flex-none">
-          <Button variant="outline" type="button" className="flex-1 sm:flex-none" disabled={!dirty || broken.length > 0 || save.isPending} onClick={() => save.mutate()}>
+          <Button
+            variant="outline"
+            type="button"
+            className="flex-1 sm:flex-none"
+            disabled={!dirty || broken.length > 0 || save.isPending}
+            onClick={() => save.mutate()}
+          >
             {t("saveDraft")}
           </Button>
-          <Button type="button" className="flex-1 sm:flex-none" disabled={broken.length > 0} onClick={() => setConfirming(true)}>
+          <Button
+            type="button"
+            className="flex-1 sm:flex-none"
+            disabled={broken.length > 0}
+            onClick={() => setConfirming(true)}
+          >
             <Icons.check data-icon="inline-start" aria-hidden />
             {t("activate")}
           </Button>
@@ -216,7 +287,11 @@ export function DraftEditor({ scheme, active, rewardBadges, onActivated }: Props
 
 function PreviewChart({ data }: { data: LevelPreview }) {
   const t = useT("lmsLevels")
-  const levels = Array.from({ length: MAX_LEVEL }, (_, i) => ({ level: i + 1, before: countAt(data.before, i + 1), after: countAt(data.after, i + 1) }))
+  const levels = Array.from({ length: MAX_LEVEL }, (_, i) => ({
+    level: i + 1,
+    before: countAt(data.before, i + 1),
+    after: countAt(data.after, i + 1),
+  }))
   const total = levels.reduce((sum, row) => sum + row.before, 0)
   const moved = levels.reduce((sum, row) => sum + Math.max(0, row.after - row.before), 0)
   const peak = Math.max(1, ...levels.flatMap((l) => [l.before, l.after]))
@@ -237,17 +312,33 @@ function PreviewChart({ data }: { data: LevelPreview }) {
       </p>
       <div>
         <div className="text-muted-foreground mb-2 flex items-center gap-3 text-xs">
-          <span className="flex items-center gap-1"><span className="bg-muted-foreground/40 size-2.5 rounded-sm" />{t("preview.before")}</span>
-          <span className="flex items-center gap-1"><span className="bg-primary size-2.5 rounded-sm" />{t("preview.after")}</span>
+          <span className="flex items-center gap-1">
+            <span className="bg-muted-foreground/40 size-2.5 rounded-sm" />
+            {t("preview.before")}
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="bg-primary size-2.5 rounded-sm" />
+            {t("preview.after")}
+          </span>
         </div>
         <div className="flex gap-2">
-          <span className="text-muted-foreground w-4 rotate-180 text-[10px] [writing-mode:vertical-rl]">{t("preview.axisY")}</span>
+          <span className="text-muted-foreground w-4 rotate-180 text-[10px] [writing-mode:vertical-rl]">
+            {t("preview.axisY")}
+          </span>
           <ol className="flex h-36 flex-1 items-end gap-1" aria-label={t("preview.chart")}>
             {levels.map((row) => (
               <li key={row.level} className="flex h-full min-w-0 flex-1 flex-col justify-end gap-1">
                 <div className="flex flex-1 items-end gap-px">
-                  <span className="bg-muted-foreground/40 w-1/2 rounded-t-sm" style={{ height: `${(row.before / peak) * 100}%` }} title={`${row.before}`} />
-                  <span className="bg-primary w-1/2 rounded-t-sm" style={{ height: `${(row.after / peak) * 100}%` }} title={`${row.after}`} />
+                  <span
+                    className="bg-muted-foreground/40 w-1/2 rounded-t-sm"
+                    style={{ height: `${(row.before / peak) * 100}%` }}
+                    title={`${row.before}`}
+                  />
+                  <span
+                    className="bg-primary w-1/2 rounded-t-sm"
+                    style={{ height: `${(row.after / peak) * 100}%` }}
+                    title={`${row.after}`}
+                  />
                 </div>
                 <span className="text-muted-foreground text-center text-[10px] tabular-nums">{row.level}</span>
               </li>

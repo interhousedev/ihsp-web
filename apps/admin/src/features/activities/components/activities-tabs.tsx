@@ -31,7 +31,9 @@ export function ActivitiesTabs({ current, end }: { current: (typeof TABS)[number
           >
             {t(`tabs.${tab.key}`)}
             {tab.key === "clubs" && pending > 0 ? (
-              <span className="bg-destructive text-destructive-foreground grid min-w-5 place-items-center rounded-full px-1.5 text-xs tabular-nums">{pending}</span>
+              <span className="bg-destructive text-destructive-foreground grid min-w-5 place-items-center rounded-full px-1.5 text-xs tabular-nums">
+                {pending}
+              </span>
             ) : null}
           </Link>
         ))}

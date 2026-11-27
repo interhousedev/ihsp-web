@@ -1,7 +1,21 @@
 "use client"
 
 import type { BadgeIcon, BadgeShape } from "@ihsp/api"
-import { IconBolt, IconBook, IconBrain, IconCheck, IconCrown, IconFlame, IconHeart, IconMedal, IconRocket, IconStar, IconTarget, IconTrophy, type Icon } from "@ihsp/ui"
+import {
+  IconBolt,
+  IconBook,
+  IconBrain,
+  IconCheck,
+  IconCrown,
+  IconFlame,
+  IconHeart,
+  IconMedal,
+  IconRocket,
+  IconStar,
+  IconTarget,
+  IconTrophy,
+  type Icon,
+} from "@ihsp/ui"
 import type { Design } from "../api"
 
 export const ICON_COMPONENTS: Record<BadgeIcon, Icon> = {
@@ -31,7 +45,11 @@ const SHAPE_PATHS: Record<BadgeShape, string> = {
 export function BadgeMedal({ design, size = 48 }: { design: Design; size?: number }) {
   const Glyph = ICON_COMPONENTS[design.icon]
   return (
-    <span className="relative inline-flex shrink-0 items-center justify-center" style={{ width: size, height: size }} aria-hidden>
+    <span
+      className="relative inline-flex shrink-0 items-center justify-center"
+      style={{ width: size, height: size }}
+      aria-hidden
+    >
       <svg viewBox="0 0 100 100" className="absolute inset-0 size-full drop-shadow-sm">
         <path d={SHAPE_PATHS[design.shape]} fill={design.color} />
         <path d={SHAPE_PATHS[design.shape]} fill="none" stroke="white" strokeOpacity={0.55} strokeWidth={4} />

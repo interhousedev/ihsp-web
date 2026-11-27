@@ -57,9 +57,7 @@ const EMPTY: DayBlockBody = {
 function BlockDialog({ block, groups, onClose }: { block: DayBlock | null; groups: GroupItem[]; onClose: () => void }) {
   const t = useT("dayBlocks")
   const [form, setForm] = useState<DayBlockBody>(() =>
-    block
-      ? { ...block, starts_at: hhmm(block.starts_at), ends_at: hhmm(block.ends_at) }
-      : EMPTY,
+    block ? { ...block, starts_at: hhmm(block.starts_at), ends_at: hhmm(block.ends_at) } : EMPTY,
   )
   const patch = (part: Partial<DayBlockBody>) => setForm((prev) => ({ ...prev, ...part }))
   const save = useAdminMutation({
@@ -217,10 +215,7 @@ export function DayBlocksPage() {
     success: t("deleted"),
     onSuccess: () => setDeleting(null),
   })
-  const groupNames = useMemo(
-    () => new Map((groups.data ?? []).map((group) => [group.id, group.name])),
-    [groups.data],
-  )
+  const groupNames = useMemo(() => new Map((groups.data ?? []).map((group) => [group.id, group.name])), [groups.data])
   const byDay = useMemo(
     () =>
       WEEKDAYS.map((day) => ({
@@ -234,8 +229,7 @@ export function DayBlocksPage() {
 
   const audience = (block: DayBlock) => {
     if (block.scope === "course") return t("courseN", { n: block.course ?? 0 })
-    if (block.scope === "groups")
-      return block.group_ids.map((id) => groupNames.get(id) ?? "?").join(", ")
+    if (block.scope === "groups") return block.group_ids.map((id) => groupNames.get(id) ?? "?").join(", ")
     return t("scope.all")
   }
 

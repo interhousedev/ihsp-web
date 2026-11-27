@@ -3,6 +3,7 @@
 import { BRAND } from "@ihsp/config/brand"
 import { useT } from "@ihsp/i18n"
 import { IconBrandTelegram, IconMenu2, IconX, cn } from "@ihsp/ui"
+import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { ctaPrimary, ctaSecondary } from "./cta-styles"
 import { useLandingLinks } from "./links"
@@ -65,9 +66,9 @@ export function SiteHeader({ base = "" }: { base?: string }) {
               {t(`nav.${key}`)}
             </a>
           ))}
-          <a href="/clubs/" className="hdr-link">
+          <Link href="/clubs/" className="hdr-link">
             {t("nav.clubs")}
-          </a>
+          </Link>
         </nav>
         <div className="hdr-end">
           <LocaleSwitch />
@@ -102,9 +103,9 @@ export function SiteHeader({ base = "" }: { base?: string }) {
                 {t(`nav.${key}`)}
               </a>
             ))}
-            <a href="/clubs/" onClick={() => close(false)} className="hdr-link">
+            <Link href="/clubs/" onClick={() => close(false)} className="hdr-link">
               {t("nav.clubs")}
-            </a>
+            </Link>
           </nav>
           <div className="hdr-panel-row">
             <LocaleSwitch />

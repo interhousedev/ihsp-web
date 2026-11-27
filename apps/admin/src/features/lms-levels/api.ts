@@ -54,7 +54,11 @@ export const getRewardBadgesQuery = () =>
     queryFn: ({ signal }) => api.get<{ items: PlatformBadgeOption[] }>("/v1/admin/lms/badges", { signal }),
   })
 
-export function createLevelScheme(body: { name: LocalizedName; curve: LevelCurve; scope: "platform" }): Promise<LevelScheme> {
+export function createLevelScheme(body: {
+  name: LocalizedName
+  curve: LevelCurve
+  scope: "platform"
+}): Promise<LevelScheme> {
   return api.post<LevelScheme>("/v1/admin/lms/level-schemes", body)
 }
 

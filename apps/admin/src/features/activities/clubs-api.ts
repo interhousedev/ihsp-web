@@ -38,15 +38,17 @@ export function useAdminClubs(status?: ClubStatus) {
   return useQuery({
     queryKey: [...adminClubsKey, status ?? "all"],
     queryFn: async ({ signal }): Promise<AdminClub[]> =>
-      (await activities.get("/v1/admin/activities/clubs", { query: { status, limit: 100 } }, { signal })).items.map((c) => ({
-        id: c.id,
-        slug: c.slug,
-        name: nameOf(c.name),
-        status: c.status as ClubStatus,
-        ownerName: c.owner_name,
-        memberCount: c.member_count,
-        logoUrl: c.logo_url ? apiAbsoluteUrl(c.logo_url) : null,
-      })),
+      (await activities.get("/v1/admin/activities/clubs", { query: { status, limit: 100 } }, { signal })).items.map(
+        (c) => ({
+          id: c.id,
+          slug: c.slug,
+          name: nameOf(c.name),
+          status: c.status as ClubStatus,
+          ownerName: c.owner_name,
+          memberCount: c.member_count,
+          logoUrl: c.logo_url ? apiAbsoluteUrl(c.logo_url) : null,
+        }),
+      ),
   })
 }
 
@@ -63,14 +65,18 @@ export function useClubCapabilities(id: string | null) {
     queryKey: clubCapabilitiesKey(id ?? ""),
     enabled: id !== null,
     queryFn: async ({ signal }): Promise<ClubCapability[]> =>
-      (await activities.get("/v1/activities/clubs/{club_id}", { path: { club_id: id as string } }, { signal })).capabilities ?? [],
+      (await activities.get("/v1/activities/clubs/{club_id}", { path: { club_id: id as string } }, { signal }))
+        .capabilities ?? [],
   })
 }
 
 export function useReviewClub(onDone: () => void) {
   return useAdminMutation<{ id: string; approve: boolean; reason?: string }, unknown>({
     mutationFn: ({ id, approve, reason }) =>
-      activities.post("/v1/admin/activities/clubs/{club_id}:review", { path: { club_id: id }, body: { approve, reason: reason ?? null } }),
+      activities.post("/v1/admin/activities/clubs/{club_id}:review", {
+        path: { club_id: id },
+        body: { approve, reason: reason ?? null },
+      }),
     invalidate: [adminClubsKey, clubAnalyticsKey],
     onSuccess: onDone,
   })
@@ -95,7 +101,10 @@ export function useResumeClub() {
 export function useForceTransferClub(onDone: () => void) {
   return useAdminMutation<{ id: string; toUserId: string }, unknown>({
     mutationFn: ({ id, toUserId }) =>
-      activities.post("/v1/admin/activities/clubs/{club_id}:force-transfer", { path: { club_id: id }, body: { to_user_id: toUserId } }),
+      activities.post("/v1/admin/activities/clubs/{club_id}:force-transfer", {
+        path: { club_id: id },
+        body: { to_user_id: toUserId },
+      }),
     invalidate: [adminClubsKey],
     onSuccess: onDone,
   })
@@ -104,7 +113,10 @@ export function useForceTransferClub(onDone: () => void) {
 export function useSetCapabilities(onDone: () => void) {
   return useAdminMutation<{ id: string; capabilities: ClubCapability[] }, unknown>({
     mutationFn: ({ id, capabilities }) =>
-      activities.put("/v1/admin/activities/clubs/{club_id}/capabilities", { path: { club_id: id }, body: { capabilities } }),
+      activities.put("/v1/admin/activities/clubs/{club_id}/capabilities", {
+        path: { club_id: id },
+        body: { capabilities },
+      }),
     invalidate: [adminClubsKey],
     onSuccess: onDone,
   })

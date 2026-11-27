@@ -40,9 +40,9 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("lessons"), url: "/lessons/", icon: "calendarEvent" },
             { title: t("exams"), url: "/exams/", icon: "exams" },
             { title: t("knowledge"), url: "/knowledge/", icon: "library" },
-            { title: t("lmsLevels"), url: "/lms-levels/", icon: "exams" },
-            { title: t("activities"), url: "/activities/", icon: "groups" },
-            { title: t("lmsBadges"), url: "/lms-badges/", icon: "certificates" },
+            { title: t("lmsLevels"), url: "/lms-levels/", icon: "trendingUp" },
+            { title: t("activities"), url: "/activities/", icon: "trophy" },
+            { title: t("lmsBadges"), url: "/lms-badges/", icon: "award" },
           ],
         },
         {

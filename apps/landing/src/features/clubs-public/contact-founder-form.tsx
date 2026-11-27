@@ -18,11 +18,18 @@ export function ContactFounderForm({ slug, club, captchaKey }: { slug: string; c
   const widget = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (!captchaKey || sent || !widget.current) return
-    const w = window as unknown as { turnstile?: { render: (el: HTMLElement, o: object) => string; remove: (id: string) => void } }
+    const w = window as unknown as {
+      turnstile?: { render: (el: HTMLElement, o: object) => string; remove: (id: string) => void }
+    }
     let id: string | undefined
     const mount = () => {
       if (widget.current && w.turnstile && id === undefined)
-        id = w.turnstile.render(widget.current, { sitekey: captchaKey, callback: setToken, "expired-callback": () => setToken(""), "error-callback": () => setToken("") })
+        id = w.turnstile.render(widget.current, {
+          sitekey: captchaKey,
+          callback: setToken,
+          "expired-callback": () => setToken(""),
+          "error-callback": () => setToken(""),
+        })
     }
     if (w.turnstile) mount()
     else {
@@ -43,7 +50,7 @@ export function ContactFounderForm({ slug, club, captchaKey }: { slug: string; c
 
   if (sent) {
     return (
-      <div role="status" className="rounded-xl border p-4">
+      <div role="status" className="rounded-card border p-4">
         <p className="font-semibold">{t("sentTitle")}</p>
         <p className="text-muted-foreground mt-1 text-sm">{t("sentBody", { club })}</p>
       </div>
@@ -56,9 +63,17 @@ export function ContactFounderForm({ slug, club, captchaKey }: { slug: string; c
     setBusy(true)
     setFailed(null)
     publicClubsApi
-      .contact(slug, { name: field("name"), email: field("email"), message: field("message"), website: field("website") || null, captcha_token: token })
+      .contact(slug, {
+        name: field("name"),
+        email: field("email"),
+        message: field("message"),
+        website: field("website") || null,
+        captcha_token: token,
+      })
       .then(() => setSent(true))
-      .catch((err: { status?: number }) => setFailed(err.status === 409 || err.status === 404 ? "unavailable" : "failed"))
+      .catch((err: { status?: number }) =>
+        setFailed(err.status === 409 || err.status === 404 ? "unavailable" : "failed"),
+      )
       .finally(() => setBusy(false))
   }
   return (
@@ -74,8 +89,18 @@ export function ContactFounderForm({ slug, club, captchaKey }: { slug: string; c
       </div>
       <div className="grid gap-1.5">
         <Label htmlFor="cf-message">{t("message")}</Label>
-        <Textarea id="cf-message" name="message" rows={5} required maxLength={MAX} value={message} onChange={(e) => setMessage(e.target.value)} />
-        <p className="text-muted-foreground text-right text-xs tabular-nums">{message.length} / {MAX}</p>
+        <Textarea
+          id="cf-message"
+          name="message"
+          rows={5}
+          required
+          maxLength={MAX}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <p className="text-muted-foreground text-right text-xs tabular-nums">
+          {message.length} / {MAX}
+        </p>
       </div>
       {/* Honeypot: hidden from people; a bot that fills it is dropped by the server. */}
       <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
@@ -84,9 +109,15 @@ export function ContactFounderForm({ slug, club, captchaKey }: { slug: string; c
           <input type="text" name="website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
-      {failed ? <p role="alert" className="text-destructive text-sm">{t(failed)}</p> : null}
+      {failed ? (
+        <p role="alert" className="text-destructive text-sm">
+          {t(failed)}
+        </p>
+      ) : null}
       {captchaKey ? <div ref={widget} /> : null}
-      <Button type="submit" disabled={busy || !token}>{t("send")}</Button>
+      <Button type="submit" disabled={busy || !token}>
+        {t("send")}
+      </Button>
     </form>
   )
 }

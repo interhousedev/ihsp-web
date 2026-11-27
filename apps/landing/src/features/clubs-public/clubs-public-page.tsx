@@ -39,8 +39,14 @@ export function ClubsPublicPage() {
             <SectionHead id="clubs-title" eyebrow={t("eyebrow")} title={t("title")}>
               <p className="lnd-body max-w-2xl">{t("lead")}</p>
             </SectionHead>
-            {list.failed ? <p role="alert" className="lnd-body mb-6">{t("loadFailed")}</p> : null}
-            {!list.loading && !list.failed && clubs.length === 0 ? <p className="lnd-body mb-6">{t("noClubs")}</p> : null}
+            {list.failed ? (
+              <p role="alert" className="lnd-body mb-6">
+                {t("loadFailed")}
+              </p>
+            ) : null}
+            {!list.loading && !list.failed && clubs.length === 0 ? (
+              <p className="lnd-body mb-6">{t("noClubs")}</p>
+            ) : null}
             <ul className="lnd-bento lnd-bento--auto">
               {clubs.map((c, index) => (
                 <li key={c.slug} className="lnd-bento-cell">
@@ -64,7 +70,11 @@ export function ClubsPublicPage() {
               <IconChevronLeft aria-hidden className="size-4" />
               {t("all")}
             </Link>
-            {page.failed ? <p role="alert" className="lnd-body">{t("loadFailed")}</p> : null}
+            {page.failed ? (
+              <p role="alert" className="lnd-body">
+                {t("loadFailed")}
+              </p>
+            ) : null}
           </section>
         ) : (
           <>
@@ -81,8 +91,17 @@ export function ClubsPublicPage() {
                   </h1>
                   <p className="lnd-body">{club.description}</p>
                   <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                    <a href={`https://app.ihsu.uz/activities/club/?slug=${club.slug}`} className="lnd-btn lnd-btn--solid justify-center">{t("join")}</a>
-                    {club.contact_enabled ? <a href="#club-contact" className="lnd-btn justify-center">{t("contactCta")}</a> : null}
+                    <a
+                      href={`https://app.ihsu.uz/activities/club/?slug=${club.slug}`}
+                      className="lnd-btn lnd-btn--solid justify-center"
+                    >
+                      {t("join")}
+                    </a>
+                    {club.contact_enabled ? (
+                      <a href="#club-contact" className="lnd-btn justify-center">
+                        {t("contactCta")}
+                      </a>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -94,7 +113,8 @@ export function ClubsPublicPage() {
                   <ul className="grid gap-1 text-base">
                     {club.team.map((m) => (
                       <li key={`${m.name}-${m.position}`}>
-                        <span className="font-medium">{m.name}</span> <span className="text-muted-foreground">· {m.position}</span>
+                        <span className="font-medium">{m.name}</span>{" "}
+                        <span className="text-muted-foreground">· {m.position}</span>
                       </li>
                     ))}
                   </ul>
@@ -102,15 +122,15 @@ export function ClubsPublicPage() {
               </section>
             ) : null}
             {club.contact_enabled ? (
-            <section aria-labelledby="club-contact" className="lnd-section">
-              <div className="lnd-panel mx-auto grid max-w-xl gap-3 p-6 md:p-8">
-                <h2 id="club-contact" className="text-2xl font-semibold">
-                  {t("contactTitle")}
-                </h2>
-                <p className="text-muted-foreground text-sm">{t("contactLead")}</p>
-                <ContactFounderForm slug={club.slug} club={club.name} captchaKey={captchaKey} />
-              </div>
-            </section>
+              <section aria-labelledby="club-contact" className="lnd-section">
+                <div className="lnd-panel mx-auto grid max-w-xl gap-3 p-6 md:p-8">
+                  <h2 id="club-contact" className="text-2xl font-semibold">
+                    {t("contactTitle")}
+                  </h2>
+                  <p className="text-muted-foreground text-sm">{t("contactLead")}</p>
+                  <ContactFounderForm slug={club.slug} club={club.name} captchaKey={captchaKey} />
+                </div>
+              </section>
             ) : null}
           </>
         )}

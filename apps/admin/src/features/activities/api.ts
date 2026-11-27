@@ -10,7 +10,16 @@ import { useAdminMutation } from "../shared/hooks/use-admin-mutation"
  * Shapes follow `OpportunityOut`/`OpportunityFields` (admission) and the route tests of the backend.
  */
 
-export const KINDS = ["exam", "certification", "course", "event", "recurring", "program", "scholarship", "research"] as const
+export const KINDS = [
+  "exam",
+  "certification",
+  "course",
+  "event",
+  "recurring",
+  "program",
+  "scholarship",
+  "research",
+] as const
 export type Kind = (typeof KINDS)[number]
 /** Backend surfaces: `admission` (applicants) and `my_iht` (students). */
 export type Surface = "admission" | "my_iht"
@@ -48,7 +57,8 @@ type OpportunityOut = {
 }
 
 const BASE = "/v1/admin/activities/opportunities"
-const toSurfaces = (a: Audience): Surface[] => (a === "applicant" ? ["admission"] : a === "student" ? ["my_iht"] : ["admission", "my_iht"])
+const toSurfaces = (a: Audience): Surface[] =>
+  a === "applicant" ? ["admission"] : a === "student" ? ["my_iht"] : ["admission", "my_iht"]
 const fromSurfaces = (s: Surface[] | undefined): Audience => {
   const admission = !s || s.includes("admission")
   const mine = !s || s.includes("my_iht")
@@ -83,7 +93,10 @@ export const activitiesKey = ["admin", "activities", "opportunities"] as const
 export function useActivities() {
   return useQuery({
     queryKey: [...activitiesKey, "all"],
-    queryFn: async ({ signal }) => (await api.get<{ items: OpportunityOut[] }>(BASE, { signal, query: { include_archived: true } })).items.map(toActivity),
+    queryFn: async ({ signal }) =>
+      (await api.get<{ items: OpportunityOut[] }>(BASE, { signal, query: { include_archived: true } })).items.map(
+        toActivity,
+      ),
   })
 }
 

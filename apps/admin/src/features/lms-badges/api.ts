@@ -56,7 +56,10 @@ export function createPlatformBadge(body: PlatformBadgeBody): Promise<PlatformBa
   return api.post<PlatformBadge>("/v1/admin/lms/badges", body)
 }
 
-export function patchPlatformBadge(id: string, body: Partial<PlatformBadgeBody> & { enabled?: boolean }): Promise<PlatformBadge> {
+export function patchPlatformBadge(
+  id: string,
+  body: Partial<PlatformBadgeBody> & { enabled?: boolean },
+): Promise<PlatformBadge> {
   return api.patch<PlatformBadge>(`/v1/admin/lms/badges/${seg(id)}`, body)
 }
 

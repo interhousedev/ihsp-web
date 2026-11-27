@@ -4,7 +4,8 @@
  */
 /** API origin: runtime `window.__ENV__.API_URL` (public/env.js), like the apps; the build-time variable is the fallback. */
 function base(): string {
-  const w = typeof window === "undefined" ? undefined : (window as unknown as { __ENV__?: { API_URL?: string } }).__ENV__
+  const w =
+    typeof window === "undefined" ? undefined : (window as unknown as { __ENV__?: { API_URL?: string } }).__ENV__
   return (w?.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/+$/, "")
 }
 
@@ -19,7 +20,13 @@ export type PublicClubListItem = {
 }
 export type PublicTeamMember = { name: string; position: string; bio: string; photo_url: string | null }
 export type PublicClubPage = PublicClubListItem & { team: PublicTeamMember[] }
-export type ContactFounderBody = { name: string; email: string; message: string; captcha_token?: string; website?: string | null }
+export type ContactFounderBody = {
+  name: string
+  email: string
+  message: string
+  captcha_token?: string
+  website?: string | null
+}
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${base()}/v1/public/clubs${path}`, init)

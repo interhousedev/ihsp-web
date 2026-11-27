@@ -2,7 +2,19 @@
 
 import { QueryState } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Card, CardContent, CardHeader, CardTitle, PageContainer } from "@ihsp/ui"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  PageContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@ihsp/ui"
 import { ActivitiesTabs } from "@/features/activities/components/activities-tabs"
 import { nameOf, useClubAnalytics } from "@/features/activities/clubs-api"
 
@@ -33,34 +45,42 @@ export function ClubAnalyticsPage() {
               ))}
             </div>
             <Card className="min-w-0">
-              <CardHeader><CardTitle>{t("table.title")}</CardTitle></CardHeader>
+              <CardHeader>
+                <CardTitle>{t("table.title")}</CardTitle>
+              </CardHeader>
               <CardContent className="overflow-x-auto">
-                <table className="w-full min-w-[32rem] text-sm">
-                  <thead>
-                    <tr className="text-muted-foreground text-left">
-                      <th className="py-2 pr-3 font-medium">{t("table.club")}</th>
-                      <th className="px-3 py-2 text-right font-medium">{t("table.members")}</th>
-                      <th className="px-3 py-2 text-right font-medium">{t("table.events")}</th>
-                      <th className="px-3 py-2 text-right font-medium">{t("table.attendance")}</th>
-                      <th className="py-2 pl-3 text-right font-medium">{t("table.rating")}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>{t("table.club")}</TableHead>
+                      <TableHead className="text-end">{t("table.members")}</TableHead>
+                      <TableHead className="text-end">{t("table.events")}</TableHead>
+                      <TableHead className="text-end">{t("table.attendance")}</TableHead>
+                      <TableHead className="text-end">{t("table.rating")}</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
                     {(data.per_club ?? []).map((c) => (
-                      <tr key={c.club_id} className="border-t">
-                        <td className="py-2 pr-3">
+                      <TableRow key={c.club_id}>
+                        <TableCell>
                           <span className="font-medium">{nameOf(c.name)}</span>
                           <span className="text-muted-foreground block text-xs">{a(`clubs.status.${c.status}`)}</span>
-                        </td>
-                        <td className="px-3 py-2 text-right tabular-nums">{c.members}</td>
-                        <td className="px-3 py-2 text-right tabular-nums">{c.events}</td>
-                        <td className="px-3 py-2 text-right tabular-nums">{c.attendance_rate === null ? "—" : `${Math.round(c.attendance_rate * 100)}%`}</td>
-                        <td className="py-2 pl-3 text-right tabular-nums">{c.avg_rating === null ? t("table.noRating") : c.avg_rating.toFixed(1)}</td>
-                      </tr>
+                        </TableCell>
+                        <TableCell className="text-end tabular-nums">{c.members}</TableCell>
+                        <TableCell className="text-end tabular-nums">{c.events}</TableCell>
+                        <TableCell className="text-end tabular-nums">
+                          {c.attendance_rate === null ? "—" : `${Math.round(c.attendance_rate * 100)}%`}
+                        </TableCell>
+                        <TableCell className="text-end tabular-nums">
+                          {c.avg_rating === null ? t("table.noRating") : c.avg_rating.toFixed(1)}
+                        </TableCell>
+                      </TableRow>
                     ))}
-                  </tbody>
-                </table>
-                {(data.per_club ?? []).length === 0 ? <p className="text-muted-foreground py-4 text-center text-sm">{a("empty")}</p> : null}
+                  </TableBody>
+                </Table>
+                {(data.per_club ?? []).length === 0 ? (
+                  <p className="text-muted-foreground py-4 text-center text-sm">{a("empty")}</p>
+                ) : null}
               </CardContent>
             </Card>
           </>

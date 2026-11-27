@@ -20,12 +20,20 @@ export function LevelsPage() {
   const badges = useQuery(getRewardBadgesQuery())
   return (
     <QueryState query={query} rows={6}>
-      {({ items }) => <Schemes items={items.filter((s) => s.scope === "platform")} rewardBadges={badges.data?.items ?? []} />}
+      {({ items }) => (
+        <Schemes items={items.filter((s) => s.scope === "platform")} rewardBadges={badges.data?.items ?? []} />
+      )}
     </QueryState>
   )
 }
 
-function Schemes({ items, rewardBadges }: { items: LevelScheme[]; rewardBadges: { id: string; name: Record<string, string> }[] }) {
+function Schemes({
+  items,
+  rewardBadges,
+}: {
+  items: LevelScheme[]
+  rewardBadges: { id: string; name: Record<string, string> }[]
+}) {
   const t = useT("lmsLevels")
   const locale = useLocale()
   const active = items.find((s) => s.active) ?? null
@@ -48,8 +56,14 @@ function Schemes({ items, rewardBadges }: { items: LevelScheme[]; rewardBadges: 
   return (
     <PageContainer
       title={t("title")}
-      badge={<Badge variant={selected ? "warning" : "success"}>{selected ? t("status.draft") : t("status.active")}</Badge>}
-      meta={active ? <span className="text-muted-foreground text-sm">{t("meta", { active: pick(active.name, locale) })}</span> : undefined}
+      badge={
+        <Badge variant={selected ? "warning" : "success"}>{selected ? t("status.draft") : t("status.active")}</Badge>
+      }
+      meta={
+        active ? (
+          <span className="text-muted-foreground text-sm">{t("meta", { active: pick(active.name, locale) })}</span>
+        ) : undefined
+      }
       actions={
         selected ? (
           <Button type="button" variant="outline" onClick={() => setCreating(true)}>
@@ -68,7 +82,14 @@ function Schemes({ items, rewardBadges }: { items: LevelScheme[]; rewardBadges: 
           <AlertDescription className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <span>{t("activated.body", { name: pick(justActivated.name, locale) })}</span>
             {previous ? (
-              <Button type="button" variant="link" size="sm" className="h-auto p-0" disabled={revert.isPending} onClick={() => revert.mutate(previous.id)}>
+              <Button
+                type="button"
+                variant="link"
+                size="sm"
+                className="h-auto p-0"
+                disabled={revert.isPending}
+                onClick={() => revert.mutate(previous.id)}
+              >
                 {t("activated.revert", { name: pick(previous.name, locale) })}
               </Button>
             ) : null}
@@ -77,7 +98,12 @@ function Schemes({ items, rewardBadges }: { items: LevelScheme[]; rewardBadges: 
       ) : null}
 
       {drafts.length > 1 && selected ? (
-        <select className={`${SELECT_CLASS} sm:max-w-xs`} aria-label={t("drafts")} value={selected.id} onChange={(event) => setSelectedId(event.target.value)}>
+        <select
+          className={`${SELECT_CLASS} sm:max-w-xs`}
+          aria-label={t("drafts")}
+          value={selected.id}
+          onChange={(event) => setSelectedId(event.target.value)}
+        >
           {drafts.map((d) => (
             <option key={d.id} value={d.id}>
               {pick(d.name, locale)}
