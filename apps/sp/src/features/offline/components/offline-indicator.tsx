@@ -15,7 +15,7 @@ export function OfflineIndicator() {
   const failed = useNetworkFailure()
   const online = useOnline()
   const cachedAt = useCachedDataAge()
-  const showFailure = failed && cachedAt === null
+  const showFailure = failed
   const offline = showFailure || !online
   const updated = offline && cachedAt !== null ? t("updated", { when: f.relative(cachedAt) }) : null
   return (

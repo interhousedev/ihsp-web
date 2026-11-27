@@ -4,7 +4,14 @@ import { apiAbsoluteUrl, getLmsCoursesQuery, getLmsMyCoursesQuery, type CourseCa
 import { useSession } from "@ihsp/auth"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useMemo } from "react"
-import { activitiesApi, type ClubCapability, type ClubProfilePatch, type FormFieldDef, type MemberRole, type MemberView } from "./api/activities-api"
+import {
+  activitiesApi,
+  type ClubCapability,
+  type ClubProfilePatch,
+  type FormFieldDef,
+  type MemberRole,
+  type MemberView,
+} from "./api/activities-api"
 
 const K = {
   all: ["activities"] as const,
@@ -37,11 +44,15 @@ export type ClubSummary = {
   ownerId: string | null
 }
 
-const policy = (value: string | undefined): ClubSummary["joinPolicy"] => (value === "open" || value === "invite" ? value : "request")
+const policy = (value: string | undefined): ClubSummary["joinPolicy"] =>
+  value === "open" || value === "invite" ? value : "request"
 
 /** Active clubs with member counts and the caller's role (`GET /clubs`). */
 export function useClubs(category?: string) {
-  const list = useQuery({ queryKey: [...K.all, "list", category ?? ""], queryFn: () => activitiesApi.clubList(category) })
+  const list = useQuery({
+    queryKey: [...K.all, "list", category ?? ""],
+    queryFn: () => activitiesApi.clubList(category),
+  })
   const clubs = useMemo<ClubSummary[]>(() => {
     return (list.data?.items ?? []).map(({ club: c, member_count, my_role, my_status }) => ({
       id: c.id,
@@ -87,7 +98,11 @@ export function useClub(slug: string | null, id?: string | null) {
   const summary = clubs.find((c) => (id ? c.id === id : c.slug === slug)) ?? null
   const clubId = summary?.id ?? ""
   const detail = useQuery({ queryKey: club(clubId), queryFn: () => activitiesApi.club(clubId), enabled: clubId !== "" })
-  const standing = useQuery({ queryKey: club(clubId, "me"), queryFn: () => activitiesApi.myStanding(clubId), enabled: clubId !== "" })
+  const standing = useQuery({
+    queryKey: club(clubId, "me"),
+    queryFn: () => activitiesApi.myStanding(clubId),
+    enabled: clubId !== "",
+  })
   const { session } = useSession()
   const me = standing.data
   const members = useClubMembers(me?.can_view_members === true ? clubId : "")
@@ -106,17 +121,38 @@ export function useClub(slug: string | null, id?: string | null) {
     requested: me?.status === "requested",
   }
   const merged: ClubSummary | null = summary
-    ? { ...summary, capabilities: detail.data?.capabilities ?? summary.capabilities, ownerId: detail.data?.owner_id ?? summary.ownerId }
+    ? {
+        ...summary,
+        capabilities: detail.data?.capabilities ?? summary.capabilities,
+        ownerId: detail.data?.owner_id ?? summary.ownerId,
+      }
     : null
-  return { club: merged, detail: detail.data ?? null, viewer, isPending: isPending || (clubId !== "" && standing.isPending), isError, error, members: members.data?.items ?? [] }
+  return {
+    club: merged,
+    detail: detail.data ?? null,
+    viewer,
+    isPending: isPending || (clubId !== "" && standing.isPending),
+    isError,
+    error,
+    members: members.data?.items ?? [],
+  }
 }
 
 export function useClubMembers(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "members"), queryFn: () => activitiesApi.members(clubId), enabled: clubId !== "", retry: false })
+  return useQuery({
+    queryKey: club(clubId, "members"),
+    queryFn: () => activitiesApi.members(clubId),
+    enabled: clubId !== "",
+    retry: false,
+  })
 }
 
 export function usePublicClub(slug: string | null) {
-  return useQuery({ queryKey: ["activities", "public-club", slug], queryFn: () => activitiesApi.publicClub(slug ?? ""), enabled: !!slug })
+  return useQuery({
+    queryKey: ["activities", "public-club", slug],
+    queryFn: () => activitiesApi.publicClub(slug ?? ""),
+    enabled: !!slug,
+  })
 }
 
 export function useOpportunities() {
@@ -128,19 +164,36 @@ export function useEvents() {
 }
 
 export function useClubEvents(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "events"), queryFn: () => activitiesApi.clubEvents(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "events"),
+    queryFn: () => activitiesApi.clubEvents(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useEvent(eventId: string | null) {
-  return useQuery({ queryKey: ["activities", "event", eventId], queryFn: () => activitiesApi.event(eventId ?? ""), enabled: !!eventId })
+  return useQuery({
+    queryKey: ["activities", "event", eventId],
+    queryFn: () => activitiesApi.event(eventId ?? ""),
+    enabled: !!eventId,
+  })
 }
 
 export function useMyRsvp(eventId: string | null) {
-  return useQuery({ queryKey: ["activities", "event", eventId, "rsvp"], queryFn: () => activitiesApi.myRsvp(eventId ?? ""), enabled: !!eventId })
+  return useQuery({
+    queryKey: ["activities", "event", eventId, "rsvp"],
+    queryFn: () => activitiesApi.myRsvp(eventId ?? ""),
+    enabled: !!eventId,
+  })
 }
 
 export function useEventQr(eventId: string | null, enabled: boolean) {
-  return useQuery({ queryKey: ["activities", "event", eventId, "qr"], queryFn: () => activitiesApi.eventQr(eventId ?? ""), enabled: !!eventId && enabled, retry: false })
+  return useQuery({
+    queryKey: ["activities", "event", eventId, "qr"],
+    queryFn: () => activitiesApi.eventQr(eventId ?? ""),
+    enabled: !!eventId && enabled,
+    retry: false,
+  })
 }
 
 /** RSVP and its cancellation for one event. */
@@ -158,13 +211,20 @@ export function useJoinClub(clubId: string) {
     void qc.invalidateQueries({ queryKey: K.mine })
     void qc.invalidateQueries({ queryKey: club(clubId) })
   }
-  const join = useMutation({ mutationFn: (message?: string) => activitiesApi.join(clubId, message), onSuccess: refresh })
+  const join = useMutation({
+    mutationFn: (message?: string) => activitiesApi.join(clubId, message),
+    onSuccess: refresh,
+  })
   const leave = useMutation({ mutationFn: () => activitiesApi.leave(clubId), onSuccess: refresh })
   return { join, leave }
 }
 
 export function useClubRatings(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "ratings"), queryFn: () => activitiesApi.ratingsSummary(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "ratings"),
+    queryFn: () => activitiesApi.ratingsSummary(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useRateClub(clubId: string) {
@@ -176,15 +236,26 @@ export function useRateClub(clubId: string) {
 }
 
 export function usePositions(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "positions"), queryFn: () => activitiesApi.positions(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "positions"),
+    queryFn: () => activitiesApi.positions(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useApply() {
-  return useMutation({ mutationFn: ({ positionId, answers }: { positionId: string; answers: Record<string, unknown> }) => activitiesApi.apply(positionId, answers) })
+  return useMutation({
+    mutationFn: ({ positionId, answers }: { positionId: string; answers: Record<string, unknown> }) =>
+      activitiesApi.apply(positionId, answers),
+  })
 }
 
 export function useApplications(positionId: string) {
-  return useQuery({ queryKey: ["activities", "applications", positionId], queryFn: () => activitiesApi.applications(positionId), enabled: positionId !== "" })
+  return useQuery({
+    queryKey: ["activities", "applications", positionId],
+    queryFn: () => activitiesApi.applications(positionId),
+    enabled: positionId !== "",
+  })
 }
 
 export function useApplicationAction(positionId: string) {
@@ -203,40 +274,66 @@ export function useMemberActions(clubId: string) {
   const qc = useQueryClient()
   const done = () => qc.invalidateQueries({ queryKey: club(clubId, "members") })
   return {
-    approve: useMutation({ mutationFn: (userId: string) => activitiesApi.approveMember(clubId, userId), onSuccess: done }),
+    approve: useMutation({
+      mutationFn: (userId: string) => activitiesApi.approveMember(clubId, userId),
+      onSuccess: done,
+    }),
     remove: useMutation({ mutationFn: (userId: string) => activitiesApi.banMember(clubId, userId), onSuccess: done }),
     transfer: useMutation({ mutationFn: (userId: string) => activitiesApi.transferOwnership(clubId, userId) }),
   }
 }
 
 export function useAnnouncements(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "announcements"), queryFn: () => activitiesApi.announcements(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "announcements"),
+    queryFn: () => activitiesApi.announcements(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useAnnouncementActions(clubId: string) {
   const qc = useQueryClient()
   const done = () => qc.invalidateQueries({ queryKey: club(clubId, "announcements") })
   return {
-    send: useMutation({ mutationFn: (body: Parameters<typeof activitiesApi.announce>[1]) => activitiesApi.announce(clubId, body), onSuccess: done }),
+    send: useMutation({
+      mutationFn: (body: Parameters<typeof activitiesApi.announce>[1]) => activitiesApi.announce(clubId, body),
+      onSuccess: done,
+    }),
     cancel: useMutation({ mutationFn: (id: string) => activitiesApi.cancelAnnouncement(id), onSuccess: done }),
   }
 }
 
 export function usePlanner(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "planner"), queryFn: () => activitiesApi.planner(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "planner"),
+    queryFn: () => activitiesApi.planner(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function usePlannerActions(clubId: string) {
   const qc = useQueryClient()
   const done = () => qc.invalidateQueries({ queryKey: club(clubId, "planner") })
   return {
-    add: useMutation({ mutationFn: (body: Parameters<typeof activitiesApi.addPlannerItem>[1]) => activitiesApi.addPlannerItem(clubId, body), onSuccess: done }),
-    move: useMutation({ mutationFn: ({ id, status }: { id: string; status: Parameters<typeof activitiesApi.movePlannerItem>[1] }) => activitiesApi.movePlannerItem(id, status), onSuccess: done }),
+    add: useMutation({
+      mutationFn: (body: Parameters<typeof activitiesApi.addPlannerItem>[1]) =>
+        activitiesApi.addPlannerItem(clubId, body),
+      onSuccess: done,
+    }),
+    move: useMutation({
+      mutationFn: ({ id, status }: { id: string; status: Parameters<typeof activitiesApi.movePlannerItem>[1] }) =>
+        activitiesApi.movePlannerItem(id, status),
+      onSuccess: done,
+    }),
   }
 }
 
 export function useMyProfile(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "profile"), queryFn: () => activitiesApi.profile(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "profile"),
+    queryFn: () => activitiesApi.profile(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useSaveProfile(clubId: string) {
@@ -248,15 +345,26 @@ export function useSaveProfile(clubId: string) {
 }
 
 export function useDraftRounds(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "draft-rounds"), queryFn: () => activitiesApi.clubDraftRounds(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "draft-rounds"),
+    queryFn: () => activitiesApi.clubDraftRounds(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useDraftActions(clubId: string) {
   const qc = useQueryClient()
   const done = () => qc.invalidateQueries({ queryKey: club(clubId, "draft-rounds") })
   return {
-    signup: useMutation({ mutationFn: ({ roundId, role }: { roundId: string; role: string }) => activitiesApi.signup(roundId, role), onSuccess: done }),
-    respond: useMutation({ mutationFn: ({ pickId, accept }: { pickId: string; accept: boolean }) => activitiesApi.respondPick(pickId, accept), onSuccess: done }),
+    signup: useMutation({
+      mutationFn: ({ roundId, role }: { roundId: string; role: string }) => activitiesApi.signup(roundId, role),
+      onSuccess: done,
+    }),
+    respond: useMutation({
+      mutationFn: ({ pickId, accept }: { pickId: string; accept: boolean }) =>
+        activitiesApi.respondPick(pickId, accept),
+      onSuccess: done,
+    }),
     pick: useMutation({
       mutationFn: async ({ roundId, userId, role }: { roundId: string; userId: string; role: string }) => {
         const pick = await activitiesApi.pick(roundId, userId, role)
@@ -268,15 +376,27 @@ export function useDraftActions(clubId: string) {
 }
 
 export function useRanking(roundId: string) {
-  return useQuery({ queryKey: ["activities", "ranking", roundId], queryFn: () => activitiesApi.ranking(roundId), enabled: roundId !== "" })
+  return useQuery({
+    queryKey: ["activities", "ranking", roundId],
+    queryFn: () => activitiesApi.ranking(roundId),
+    enabled: roundId !== "",
+  })
 }
 
 export function useLeaderboard(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "leaderboard"), queryFn: () => activitiesApi.leaderboard(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "leaderboard"),
+    queryFn: () => activitiesApi.leaderboard(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useMyPoints(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "points"), queryFn: () => activitiesApi.myPoints(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "points"),
+    queryFn: () => activitiesApi.myPoints(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useLeaderboardOptOut() {
@@ -298,7 +418,11 @@ export function useCapabilities(clubId: string) {
 }
 
 export function useClubFormFields(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "form-fields"), queryFn: () => activitiesApi.formFields(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "form-fields"),
+    queryFn: () => activitiesApi.formFields(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function useSaveFormFields(clubId: string) {
@@ -310,11 +434,19 @@ export function useSaveFormFields(clubId: string) {
 }
 
 export function useFormAnswers(clubId: string, enabled: boolean) {
-  return useQuery({ queryKey: club(clubId, "form-answers"), queryFn: () => activitiesApi.formAnswers(clubId), enabled: clubId !== "" && enabled })
+  return useQuery({
+    queryKey: club(clubId, "form-answers"),
+    queryFn: () => activitiesApi.formAnswers(clubId),
+    enabled: clubId !== "" && enabled,
+  })
 }
 
 export function usePointsRules(clubId: string) {
-  return useQuery({ queryKey: club(clubId, "points-rules"), queryFn: () => activitiesApi.pointsRules(clubId), enabled: clubId !== "" })
+  return useQuery({
+    queryKey: club(clubId, "points-rules"),
+    queryFn: () => activitiesApi.pointsRules(clubId),
+    enabled: clubId !== "",
+  })
 }
 
 export function usePointsActions(clubId: string) {
@@ -325,7 +457,8 @@ export function usePointsActions(clubId: string) {
       onSuccess: () => qc.invalidateQueries({ queryKey: club(clubId, "points-rules") }),
     }),
     award: useMutation({
-      mutationFn: (body: { user_id: string; points: number; reason: string }) => activitiesApi.awardPoints(clubId, body),
+      mutationFn: (body: { user_id: string; points: number; reason: string }) =>
+        activitiesApi.awardPoints(clubId, body),
       onSuccess: () => qc.invalidateQueries({ queryKey: club(clubId, "leaderboard") }),
     }),
   }
@@ -342,13 +475,23 @@ export function useCreateEvent(clubId: string) {
 export function useCreateRound(clubId: string) {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ eventId, needed }: { eventId: string; needed: Record<string, number> }) => activitiesApi.createRound(eventId, clubId, needed),
+    mutationFn: ({ eventId, needed }: { eventId: string; needed: Record<string, number> }) =>
+      activitiesApi.createRound(eventId, clubId, needed),
     onSuccess: () => qc.invalidateQueries({ queryKey: club(clubId, "draft-rounds") }),
   })
 }
 
 export function useRoundSignups(roundId: string) {
-  return useQuery({ queryKey: ["activities", "signups", roundId], queryFn: () => activitiesApi.signups(roundId), enabled: roundId !== "" })
+  return useQuery({
+    queryKey: ["activities", "signups", roundId],
+    queryFn: () => activitiesApi.signups(roundId),
+    enabled: roundId !== "",
+  })
+}
+
+/** Open ownership offers addressed to the caller. */
+export function useIncomingTransfers() {
+  return useQuery({ queryKey: [...K.all, "incoming-transfers"], queryFn: () => activitiesApi.incomingTransfers() })
 }
 
 /** Accepting or declining an ownership transfer offered to the caller. */
@@ -363,21 +506,45 @@ export function useTransferAnswer() {
 
 /** Courses linked to a club with their LMS titles; `mine` are the courses the caller manages (linking them needs no confirmation). */
 export function useClubCourses(clubId: string) {
-  const links = useQuery({ queryKey: club(clubId, "courses"), queryFn: () => activitiesApi.clubCourses(clubId), enabled: clubId !== "" })
+  const links = useQuery({
+    queryKey: club(clubId, "courses"),
+    queryFn: () => activitiesApi.clubCourses(clubId),
+    enabled: clubId !== "",
+  })
   const catalogue = useQuery(getLmsCoursesQuery())
   const managed = useQuery({ ...getLmsMyCoursesQuery(), retry: false })
-  const byId = useMemo(() => new Map<string, CourseCard>((catalogue.data ?? []).map((c) => [c.id, c])), [catalogue.data])
+  const byId = useMemo(
+    () => new Map<string, CourseCard>((catalogue.data ?? []).map((c) => [c.id, c])),
+    [catalogue.data],
+  )
   const mineIds = useMemo(() => new Set((managed.data?.managed ?? []).map((c) => c.id)), [managed.data])
-  return { links: links.data?.items ?? [], isPending: links.isPending, isError: links.isError, error: links.error, byId, mineIds, courses: catalogue.data ?? [] }
+  return {
+    links: links.data?.items ?? [],
+    isPending: links.isPending,
+    isError: links.isError,
+    error: links.error,
+    byId,
+    mineIds,
+    courses: catalogue.data ?? [],
+  }
 }
 
 export function useCourseLinkActions(clubId: string) {
   const qc = useQueryClient()
   const done = () => qc.invalidateQueries({ queryKey: club(clubId, "courses") })
   return {
-    link: useMutation({ mutationFn: (courseId: string) => activitiesApi.linkCourse(clubId, courseId), onSuccess: done }),
-    unlink: useMutation({ mutationFn: (courseId: string) => activitiesApi.unlinkCourse(clubId, courseId), onSuccess: done }),
-    confirm: useMutation({ mutationFn: (courseId: string) => activitiesApi.confirmCourse(clubId, courseId), onSuccess: done }),
+    link: useMutation({
+      mutationFn: (courseId: string) => activitiesApi.linkCourse(clubId, courseId),
+      onSuccess: done,
+    }),
+    unlink: useMutation({
+      mutationFn: (courseId: string) => activitiesApi.unlinkCourse(clubId, courseId),
+      onSuccess: done,
+    }),
+    confirm: useMutation({
+      mutationFn: (courseId: string) => activitiesApi.confirmCourse(clubId, courseId),
+      onSuccess: done,
+    }),
   }
 }
 

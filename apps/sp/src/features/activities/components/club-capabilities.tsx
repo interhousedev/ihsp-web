@@ -38,21 +38,35 @@ export function MemberForm({ clubId }: { clubId: string }) {
   useEffect(() => setValues(profile.data?.answers ?? {}), [profile.data])
   if (profile.isPending || defs.isPending) return <p className="text-muted-foreground text-sm">{common("loading")}</p>
   const own = (defs.data?.fields ?? []) as FormField[]
-  const fields: FormField[] = own.length > 0 ? own : FORM_FIELDS.map((key) => ({ key, type: "text", label: t(`form.${key}`) }))
+  const fields: FormField[] =
+    own.length > 0 ? own : FORM_FIELDS.map((key) => ({ key, type: "text", label: t(`form.${key}`) }))
   return (
     <Card>
       <CardContent className="grid gap-4">
         <p className="text-muted-foreground text-sm">{t("form.hint")}</p>
         {fields.map((field) => (
-          <ApplyField key={field.key} field={field} value={values[field.key]} onChange={(v) => setValues((s) => ({ ...s, [field.key]: v }))} />
+          <ApplyField
+            key={field.key}
+            field={field}
+            value={values[field.key]}
+            onChange={(v) => setValues((s) => ({ ...s, [field.key]: v }))}
+          />
         ))}
         <div className="flex items-center gap-3">
           <Button type="button" disabled={save.isPending} onClick={() => save.mutate(values)}>
             {common("save")}
           </Button>
-          {save.isSuccess ? <span role="status" className="text-sm">{common("saved")}</span> : null}
+          {save.isSuccess ? (
+            <span role="status" className="text-sm">
+              {common("saved")}
+            </span>
+          ) : null}
         </div>
-        {save.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(save.error)}</p> : null}
+        {save.isError ? (
+          <p role="alert" className="text-destructive text-sm">
+            {errorMessage(save.error)}
+          </p>
+        ) : null}
       </CardContent>
     </Card>
   )
@@ -81,7 +95,12 @@ export function MemberDraft({ clubId, userId }: { clubId: string; userId: string
                   <span>
                     {role} · {t("draft.need", { count })}
                   </span>
-                  <Button type="button" size="sm" disabled={round.status !== "open" || signup.isPending || !round.id || !userId} onClick={() => round.id && signup.mutate({ roundId: round.id, role })}>
+                  <Button
+                    type="button"
+                    size="sm"
+                    disabled={round.status !== "open" || signup.isPending || !round.id || !userId}
+                    onClick={() => round.id && signup.mutate({ roundId: round.id, role })}
+                  >
                     {t("draft.signUp")}
                   </Button>
                 </div>
@@ -90,7 +109,11 @@ export function MemberDraft({ clubId, userId }: { clubId: string; userId: string
           </Card>
         </li>
       ))}
-      {signup.isError || respond.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(signup.error ?? respond.error)}</p> : null}
+      {signup.isError || respond.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(signup.error ?? respond.error)}
+        </p>
+      ) : null}
     </ul>
   )
 }
@@ -110,7 +133,9 @@ export function Leaderboard({ clubId, withMine = false }: { clubId: string; with
       {withMine && mine.data ? (
         <Card>
           <CardContent className="grid gap-1">
-            <p className="text-3xl font-semibold tabular-nums">{t("leaderboard.yourPoints", { count: mine.data.total })}</p>
+            <p className="text-3xl font-semibold tabular-nums">
+              {t("leaderboard.yourPoints", { count: mine.data.total })}
+            </p>
             <ul className="text-muted-foreground text-sm">
               {mine.data.entries.slice(0, 5).map((e) => (
                 <li key={`${e.at}-${e.reason}`}>
@@ -139,7 +164,13 @@ export function Leaderboard({ clubId, withMine = false }: { clubId: string; with
       </ol>
       {withMine ? (
         <label className="flex min-h-11 items-center gap-2 text-sm">
-          <Switch checked={out} onCheckedChange={(v) => { setOut(v); optOut.mutate(v) }} />
+          <Switch
+            checked={out}
+            onCheckedChange={(v) => {
+              setOut(v)
+              optOut.mutate(v)
+            }}
+          />
           {t("leaderboard.optOut")}
         </label>
       ) : null}
@@ -169,7 +200,11 @@ export function CapabilityToggles({ clubId, value }: { clubId: string; value: Cl
             />
           </label>
         ))}
-        {patch.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(patch.error)}</p> : null}
+        {patch.isError ? (
+          <p role="alert" className="text-destructive text-sm">
+            {errorMessage(patch.error)}
+          </p>
+        ) : null}
       </CardContent>
     </Card>
   )
@@ -193,32 +228,43 @@ export function DraftBoard({ clubId }: { clubId: string }) {
     <div className="grid gap-3">
       <NewRound clubId={clubId} />
       {!current ? <p className="text-muted-foreground text-sm">{t("noEvents")}</p> : null}
-      {current ? <>
-      <select className={SELECT_CLASS} value={current.id ?? ""} onChange={(e) => setRoundId(e.target.value)}>
-        {items.map((r) => (
-          <option key={r.id} value={r.id}>
-            {eventTitle.get(r.event_id) ?? t("draftBoard.round")}
-          </option>
-        ))}
-      </select>
-      <ul className="grid gap-2">
-        {(ranking.data?.items ?? []).map((r) => (
-          <li key={r.user_id}>
-            <Card>
-              <CardContent className="flex items-center justify-between gap-3">
-                <span>
-                  {names.get(r.user_id) ?? r.user_id} · {r.score}
-                </span>
-                <Button type="button" size="sm" disabled={pick.isPending || !current.id} onClick={() => current.id && pick.mutate({ roundId: current.id, userId: r.user_id, role })}>
-                  {t("draftBoard.invite")}
-                </Button>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ul>
-      </> : null}
-      {pick.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(pick.error)}</p> : null}
+      {current ? (
+        <>
+          <select className={SELECT_CLASS} value={current.id ?? ""} onChange={(e) => setRoundId(e.target.value)}>
+            {items.map((r) => (
+              <option key={r.id} value={r.id}>
+                {eventTitle.get(r.event_id) ?? t("draftBoard.round")}
+              </option>
+            ))}
+          </select>
+          <ul className="grid gap-2">
+            {(ranking.data?.items ?? []).map((r) => (
+              <li key={r.user_id}>
+                <Card>
+                  <CardContent className="flex items-center justify-between gap-3">
+                    <span>
+                      {names.get(r.user_id) ?? r.user_id} · {r.score}
+                    </span>
+                    <Button
+                      type="button"
+                      size="sm"
+                      disabled={pick.isPending || !current.id}
+                      onClick={() => current.id && pick.mutate({ roundId: current.id, userId: r.user_id, role })}
+                    >
+                      {t("draftBoard.invite")}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
+      {pick.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(pick.error)}
+        </p>
+      ) : null}
     </div>
   )
 }
@@ -237,7 +283,12 @@ function NewRound({ clubId }: { clubId: string }) {
     <Card>
       <CardContent className="grid gap-3">
         <h3 className="font-semibold">{t("draftBoard.newRound")}</h3>
-        <select className={SELECT_CLASS} value={eventId} aria-label={t("draftBoard.round")} onChange={(e) => setEventId(e.target.value)}>
+        <select
+          className={SELECT_CLASS}
+          value={eventId}
+          aria-label={t("draftBoard.round")}
+          onChange={(e) => setEventId(e.target.value)}
+        >
           <option value="">{t("draftBoard.round")}</option>
           {(events.data?.items ?? []).map((e) => (
             <option key={e.id} value={e.id}>
@@ -246,8 +297,21 @@ function NewRound({ clubId }: { clubId: string }) {
           ))}
         </select>
         <div className="grid gap-2 md:grid-cols-[1fr_8rem]">
-          <input className={SELECT_CLASS} placeholder={t("draftBoard.role")} value={role} maxLength={60} onChange={(e) => setRole(e.target.value)} />
-          <input type="number" min={1} className={SELECT_CLASS} aria-label={t("draftBoard.count")} value={count} onChange={(e) => setCount(e.target.value)} />
+          <input
+            className={SELECT_CLASS}
+            placeholder={t("draftBoard.role")}
+            value={role}
+            maxLength={60}
+            onChange={(e) => setRole(e.target.value)}
+          />
+          <input
+            type="number"
+            min={1}
+            className={SELECT_CLASS}
+            aria-label={t("draftBoard.count")}
+            value={count}
+            onChange={(e) => setCount(e.target.value)}
+          />
         </div>
         <Button
           type="button"
@@ -257,7 +321,11 @@ function NewRound({ clubId }: { clubId: string }) {
         >
           {t("draftBoard.create")}
         </Button>
-        {create.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(create.error)}</p> : null}
+        {create.isError ? (
+          <p role="alert" className="text-destructive text-sm">
+            {errorMessage(create.error)}
+          </p>
+        ) : null}
       </CardContent>
     </Card>
   )
@@ -284,10 +352,17 @@ export function ClubCourses({ clubId, canManage }: { clubId: string; canManage: 
               <Card>
                 <CardContent className="grid gap-2">
                   <p className="font-semibold">{course?.title ?? l.course_id}</p>
-                  {course ? <p className="text-muted-foreground text-sm">{t("courses.lessons", { count: course.steps_count })}</p> : null}
+                  {course ? (
+                    <p className="text-muted-foreground text-sm">
+                      {t("courses.lessons", { count: course.steps_count })}
+                    </p>
+                  ) : null}
                   <div className="flex flex-wrap items-center gap-2">
                     {l.status === "pending" ? <Badge variant="warning">{t("courses.pending")}</Badge> : null}
-                    <a className="text-primary text-sm underline" href={`https://lms.ihsu.uz/courses/?slug=${course?.slug ?? ""}`}>
+                    <a
+                      className="text-primary text-sm underline"
+                      href={`https://lms.ihsu.uz/courses/?slug=${course?.slug ?? ""}`}
+                    >
                       {t("courses.open")}
                     </a>
                     {canManage && l.status === "pending" ? (
@@ -310,7 +385,12 @@ export function ClubCourses({ clubId, canManage }: { clubId: string; canManage: 
       </ul>
       {canManage ? (
         <div className="flex gap-2">
-          <select className={SELECT_CLASS} value={pickId} onChange={(e) => setPickId(e.target.value)} aria-label={t("courses.pick")}>
+          <select
+            className={SELECT_CLASS}
+            value={pickId}
+            onChange={(e) => setPickId(e.target.value)}
+            aria-label={t("courses.pick")}
+          >
             <option value="">{t("courses.placeholder")}</option>
             {free.map((c) => (
               <option key={c.id} value={c.id}>
@@ -318,12 +398,20 @@ export function ClubCourses({ clubId, canManage }: { clubId: string; canManage: 
               </option>
             ))}
           </select>
-          <Button type="button" disabled={!pickId || link.isPending} onClick={() => link.mutate(pickId, { onSuccess: () => setPickId("") })}>
+          <Button
+            type="button"
+            disabled={!pickId || link.isPending}
+            onClick={() => link.mutate(pickId, { onSuccess: () => setPickId("") })}
+          >
             {t("courses.link")}
           </Button>
         </div>
       ) : null}
-      {link.isError || unlink.isError || confirm.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(link.error ?? unlink.error ?? confirm.error)}</p> : null}
+      {link.isError || unlink.isError || confirm.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(link.error ?? unlink.error ?? confirm.error)}
+        </p>
+      ) : null}
     </div>
   )
 }

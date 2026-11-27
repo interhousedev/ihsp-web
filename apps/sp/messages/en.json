@@ -1655,10 +1655,11 @@
       "create": "Create event"
     },
     "transferOffer": {
-      "title": "You are offered ownership of this club",
+      "title": "Take over “{name}”?",
       "body": "The offer is valid for 7 days. If you decline, the current owner stays.",
       "accepted": "You are now the club owner.",
-      "declined": "You declined the offer."
+      "declined": "You declined the offer.",
+      "close": "Close"
     }
   }
 }

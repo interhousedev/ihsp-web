@@ -37,32 +37,50 @@ function Planner({ clubId }: { clubId: string }) {
           if (title.trim()) add.mutate({ title: title.trim() }, { onSuccess: () => setTitle("") })
         }}
       >
-        <input className={SELECT_CLASS} value={title} maxLength={200} onChange={(e) => setTitle(e.target.value)} aria-label={t("planner.draftTitle")} />
-        <Button type="submit" disabled={add.isPending}>{t("planner.confirm")}</Button>
+        <input
+          className={SELECT_CLASS}
+          value={title}
+          maxLength={200}
+          onChange={(e) => setTitle(e.target.value)}
+          aria-label={t("planner.draftTitle")}
+        />
+        <Button type="submit" disabled={add.isPending}>
+          {t("planner.confirm")}
+        </Button>
       </form>
-      {add.isError || move.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(add.error ?? move.error)}</p> : null}
+      {add.isError || move.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(add.error ?? move.error)}
+        </p>
+      ) : null}
       <div className="grid gap-3 md:grid-cols-4">
         {COLUMNS.map((col) => (
           <section key={col} className="grid content-start gap-2">
             <h3 className="text-sm font-semibold">{t(`planner.columns.${col}`)}</h3>
-            {items.filter((i) => i.status === col).map((item) => (
-              <Card key={item.id}>
-                <CardContent className="grid gap-2">
-                  <p className="text-sm font-medium">{item.title}</p>
-                  <Badge variant="neutral" className="w-fit">{t(`planner.kinds.${item.kind}`)}</Badge>
-                  <select
-                    className={SELECT_CLASS}
-                    value={item.status}
-                    aria-label={t("planner.move")}
-                    onChange={(e) => item.id && move.mutate({ id: item.id, status: e.target.value as PlannerStatus })}
-                  >
-                    {COLUMNS.map((c) => (
-                      <option key={c} value={c}>{t(`planner.columns.${c}`)}</option>
-                    ))}
-                  </select>
-                </CardContent>
-              </Card>
-            ))}
+            {items
+              .filter((i) => i.status === col)
+              .map((item) => (
+                <Card key={item.id}>
+                  <CardContent className="grid gap-2">
+                    <p className="text-sm font-medium">{item.title}</p>
+                    <Badge variant="neutral" className="w-fit">
+                      {t(`planner.kinds.${item.kind}`)}
+                    </Badge>
+                    <select
+                      className={SELECT_CLASS}
+                      value={item.status}
+                      aria-label={t("planner.move")}
+                      onChange={(e) => item.id && move.mutate({ id: item.id, status: e.target.value as PlannerStatus })}
+                    >
+                      {COLUMNS.map((c) => (
+                        <option key={c} value={c}>
+                          {t(`planner.columns.${c}`)}
+                        </option>
+                      ))}
+                    </select>
+                  </CardContent>
+                </Card>
+              ))}
           </section>
         ))}
       </div>
@@ -82,16 +100,38 @@ function Announcements({ clubId }: { clubId: string }) {
     <div className="grid gap-4">
       <Card>
         <CardContent className="grid gap-3">
-          <Textarea rows={3} maxLength={2000} placeholder={t("announce.placeholder")} value={text} onChange={(e) => setText(e.target.value)} />
-          <select className={SELECT_CLASS} value={audience} aria-label={t("announce.audience")} onChange={(e) => setAudience(e.target.value as typeof audience)}>
+          <Textarea
+            rows={3}
+            maxLength={2000}
+            placeholder={t("announce.placeholder")}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <select
+            className={SELECT_CLASS}
+            value={audience}
+            aria-label={t("announce.audience")}
+            onChange={(e) => setAudience(e.target.value as typeof audience)}
+          >
             {AUDIENCES.map((a) => (
-              <option key={a} value={a}>{t(`announce.aud.${a}`)}</option>
+              <option key={a} value={a}>
+                {t(`announce.aud.${a}`)}
+              </option>
             ))}
           </select>
-          <Button type="button" className="w-fit" disabled={!text.trim() || send.isPending} onClick={() => send.mutate({ text: text.trim(), audience }, { onSuccess: () => setText("") })}>
+          <Button
+            type="button"
+            className="w-fit"
+            disabled={!text.trim() || send.isPending}
+            onClick={() => send.mutate({ text: text.trim(), audience }, { onSuccess: () => setText("") })}
+          >
             {t("announce.send")}
           </Button>
-          {send.isError || cancel.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(send.error ?? cancel.error)}</p> : null}
+          {send.isError || cancel.isError ? (
+            <p role="alert" className="text-destructive text-sm">
+              {errorMessage(send.error ?? cancel.error)}
+            </p>
+          ) : null}
         </CardContent>
       </Card>
       <Section title={t("announce.history")}>
@@ -106,7 +146,13 @@ function Announcements({ clubId }: { clubId: string }) {
                     {a.recipient_count ? ` · ${t("announce.reach", { count: a.recipient_count })}` : ""}
                   </p>
                   {a.scheduled_at && !a.sent_at && !a.cancelled && a.id ? (
-                    <Button type="button" size="sm" variant="outline" className="w-fit" onClick={() => a.id && cancel.mutate(a.id)}>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="w-fit"
+                      onClick={() => a.id && cancel.mutate(a.id)}
+                    >
                       {t("announce.cancel")}
                     </Button>
                   ) : null}
@@ -120,7 +166,17 @@ function Announcements({ clubId }: { clubId: string }) {
   )
 }
 
-function Members({ clubId, members, isOwner, canApprove }: { clubId: string; members: { user_id: string; display_name: string; role: string; status: string }[]; isOwner: boolean; canApprove: boolean }) {
+function Members({
+  clubId,
+  members,
+  isOwner,
+  canApprove,
+}: {
+  clubId: string
+  members: { user_id: string; display_name: string; role: string; status: string }[]
+  isOwner: boolean
+  canApprove: boolean
+}) {
   const t = useT("activities")
   const errorMessage = useErrorMessage()
   const { approve, remove, transfer } = useMemberActions(clubId)
@@ -138,21 +194,53 @@ function Members({ clubId, members, isOwner, canApprove }: { clubId: string; mem
                   <p className="text-muted-foreground text-sm">{t(`roles.${m.role}`)}</p>
                 </div>
                 {m.status === "requested" && canApprove ? (
-                  <Button type="button" size="sm" disabled={approve.isPending} onClick={() => approve.mutate(m.user_id)}>{t("approve")}</Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    disabled={approve.isPending}
+                    onClick={() => approve.mutate(m.user_id)}
+                  >
+                    {t("approve")}
+                  </Button>
                 ) : null}
                 {m.role === "member" && m.status === "active" ? (
-                  <Button type="button" size="sm" variant="outline" hidden={!canApprove} disabled={remove.isPending} onClick={() => remove.mutate(m.user_id)}>{t("remove")}</Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    hidden={!canApprove}
+                    disabled={remove.isPending}
+                    onClick={() => remove.mutate(m.user_id)}
+                  >
+                    {t("remove")}
+                  </Button>
                 ) : null}
                 {isOwner && m.role !== "owner" && m.status === "active" ? (
-                  <Button type="button" size="sm" variant="outline" disabled={transfer.isPending} onClick={() => transfer.mutate(m.user_id)}>{t("transfer.offer")}</Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    disabled={transfer.isPending}
+                    onClick={() => transfer.mutate(m.user_id)}
+                  >
+                    {t("transfer.offer")}
+                  </Button>
                 ) : null}
               </CardContent>
             </Card>
           </li>
         ))}
       </ul>
-      {transfer.isSuccess ? <p role="status" className="text-sm">{t("transfer.pending")}</p> : null}
-      {approve.isError || remove.isError || transfer.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(approve.error ?? remove.error ?? transfer.error)}</p> : null}
+      {transfer.isSuccess ? (
+        <p role="status" className="text-sm">
+          {t("transfer.pending")}
+        </p>
+      ) : null}
+      {approve.isError || remove.isError || transfer.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(approve.error ?? remove.error ?? transfer.error)}
+        </p>
+      ) : null}
     </div>
   )
 }
@@ -171,15 +259,34 @@ export function ManagePage() {
       {t("back")}
     </Link>
   )
-  if (isPending) return <PageContainer title={common("loading")} back={back}>{null}</PageContainer>
-  if (!club) return <PageContainer title={t("manageTitle")} back={back}><p role="alert" className="text-sm">{isError ? errorMessage(error) : t("empty")}</p></PageContainer>
-  if (!viewer.isStaff) return <PageContainer title={club.name} back={back}><p className="text-muted-foreground text-sm">{t("noAccess")}</p></PageContainer>
+  if (isPending)
+    return (
+      <PageContainer title={common("loading")} back={back}>
+        {null}
+      </PageContainer>
+    )
+  if (!club)
+    return (
+      <PageContainer title={t("manageTitle")} back={back}>
+        <p role="alert" className="text-sm">
+          {isError ? errorMessage(error) : t("empty")}
+        </p>
+      </PageContainer>
+    )
+  if (!viewer.isStaff)
+    return (
+      <PageContainer title={club.name} back={back}>
+        <p className="text-muted-foreground text-sm">{t("noAccess")}</p>
+      </PageContainer>
+    )
 
   const tabs = [
     { value: "members", label: t("manageTabs.members"), count: members.filter((m) => m.status === "requested").length },
     { value: "events", label: t("manageTabs.events") },
     { value: "announcements", label: t("manageTabs.announcements") },
-    ...(club.capabilities.some((c) => c === "forms" || c === "drafting" || c === "points") ? [{ value: "volunteering", label: t("manageTabs.volunteering") }] : []),
+    ...(club.capabilities.some((c) => c === "forms" || c === "drafting" || c === "points")
+      ? [{ value: "volunteering", label: t("manageTabs.volunteering") }]
+      : []),
     { value: "courses", label: t("manageTabs.courses") },
     ...(viewer.canEdit || viewer.isAdmin ? [{ value: "settings", label: t("manageTabs.settings") }] : []),
   ]
@@ -188,7 +295,9 @@ export function ManagePage() {
     <PageContainer title={`${t("manageTitle")} · ${club.name}`} back={back}>
       <SectionTabs tabs={tabs} value={tab} onChange={setTab}>
         <div className="mt-4">
-          {tab === "members" ? <Members clubId={club.id} members={members} isOwner={viewer.isOwner} canApprove={viewer.canApprove} /> : null}
+          {tab === "members" ? (
+            <Members clubId={club.id} members={members} isOwner={viewer.isOwner} canApprove={viewer.canApprove} />
+          ) : null}
           {tab === "events" ? (
             <div className="grid gap-6">
               {viewer.canManageEvents ? <EventsAdmin clubId={club.id} /> : null}

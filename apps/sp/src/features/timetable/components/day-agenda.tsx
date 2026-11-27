@@ -49,7 +49,17 @@ export function buildAgenda(lessons: readonly StudentLessonItem[], blocks: reado
   return result
 }
 
-function GapRow({ minutes, reason, time, tone }: { minutes: string; reason: string; time?: string; tone: "free" | "block" }) {
+function GapRow({
+  minutes,
+  reason,
+  time,
+  tone,
+}: {
+  minutes: string
+  reason: string
+  time?: string
+  tone: "free" | "block"
+}) {
   return (
     <div
       className={cn(

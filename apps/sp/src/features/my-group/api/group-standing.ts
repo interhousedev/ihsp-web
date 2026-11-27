@@ -48,8 +48,7 @@ export const NO_GROUP = "academic/no-group"
 export function useGroupRankings(scope: RankScope, metric: RankMetric, enabled: boolean) {
   return useQuery({
     queryKey: ["me", "group", "rankings", scope, metric],
-    queryFn: () =>
-      api.get<{ items: GroupRankingItem[] }>("/v1/me/group/rankings", { query: { scope, metric } }),
+    queryFn: () => api.get<{ items: GroupRankingItem[] }>("/v1/me/group/rankings", { query: { scope, metric } }),
     enabled,
   })
 }

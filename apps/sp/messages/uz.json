@@ -1655,10 +1655,11 @@
       "create": "Tadbir yaratish"
     },
     "transferOffer": {
-      "title": "Sizga klub egasi boʻlish taklif qilindi",
+      "title": "«{name}» klubini boshqarish sizga topshirilmoqda",
       "body": "Taklif 7 kun amal qiladi. Rad etsangiz, hozirgi egasi qoladi.",
       "accepted": "Siz klub egasi boʻldingiz.",
-      "declined": "Siz taklifni rad etdingiz."
+      "declined": "Siz taklifni rad etdingiz.",
+      "close": "Yopish"
     }
   }
 }

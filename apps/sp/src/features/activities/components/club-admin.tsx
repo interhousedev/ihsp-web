@@ -1,7 +1,7 @@
 "use client"
 
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Button, Card, CardContent, Label, Textarea } from "@ihsp/ui"
+import { Button, Card, CardContent, Label, ResponsiveDialog, Textarea } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import type { Club, FormFieldDef, JoinPolicy, MemberView } from "../api/activities-api"
 import {
@@ -14,12 +14,18 @@ import {
   usePointsRules,
   useSaveFormFields,
   useTransferAnswer,
+  useIncomingTransfers,
 } from "../use-activities"
 import { SELECT_CLASS, Section } from "./activity-ui"
 
 const POLICIES: JoinPolicy[] = ["open", "request", "invite"]
 const FIELD_TYPES = ["text", "choice", "number", "bool"] as const
-const KIND_KEY: Record<(typeof FIELD_TYPES)[number], "text" | "chips" | "number" | "bool"> = { text: "text", choice: "chips", number: "number", bool: "bool" }
+const KIND_KEY: Record<(typeof FIELD_TYPES)[number], "text" | "chips" | "number" | "bool"> = {
+  text: "text",
+  choice: "chips",
+  number: "number",
+  bool: "bool",
+}
 
 function Failure({ error }: { error: unknown }) {
   const errorMessage = useErrorMessage()
@@ -35,7 +41,16 @@ export function ClubProfileEditor({ clubId, club }: { clubId: string; club: Club
   const t = useT("activities")
   const common = useT("common")
   const patch = usePatchClub(clubId)
-  const [v, setV] = useState({ name: "", description: "", category: "", goals: "", rules: "", schedule: "", partners: "", join_policy: "request" as JoinPolicy })
+  const [v, setV] = useState({
+    name: "",
+    description: "",
+    category: "",
+    goals: "",
+    rules: "",
+    schedule: "",
+    partners: "",
+    join_policy: "request" as JoinPolicy,
+  })
   useEffect(() => {
     setV({
       name: club.name,
@@ -48,7 +63,8 @@ export function ClubProfileEditor({ clubId, club }: { clubId: string; club: Club
       join_policy: club.join_policy ?? "request",
     })
   }, [club])
-  const set = (key: keyof typeof v) => (e: { target: { value: string } }) => setV((s) => ({ ...s, [key]: e.target.value }))
+  const set = (key: keyof typeof v) => (e: { target: { value: string } }) =>
+    setV((s) => ({ ...s, [key]: e.target.value }))
   return (
     <Card>
       <CardContent className="grid gap-4">
@@ -94,14 +110,21 @@ export function ClubProfileEditor({ clubId, club }: { clubId: string; club: Club
                 goals: v.goals,
                 rules: v.rules,
                 schedule: v.schedule,
-                partners: v.partners.split("\n").map((p) => p.trim()).filter(Boolean),
+                partners: v.partners
+                  .split("\n")
+                  .map((p) => p.trim())
+                  .filter(Boolean),
                 join_policy: v.join_policy,
               })
             }
           >
             {common("save")}
           </Button>
-          {patch.isSuccess ? <span role="status" className="text-sm">{common("saved")}</span> : null}
+          {patch.isSuccess ? (
+            <span role="status" className="text-sm">
+              {common("saved")}
+            </span>
+          ) : null}
         </div>
         <Failure error={patch.error} />
       </CardContent>
@@ -134,7 +157,13 @@ export function FormBuilder({ clubId }: { clubId: string }) {
     if (!name) return
     let key = slug(name) || `field_${fields.length + 1}`
     while (fields.some((f) => f.key === key)) key += "_2"
-    const opts = type === "choice" ? options.split(",").map((o) => o.trim()).filter(Boolean) : undefined
+    const opts =
+      type === "choice"
+        ? options
+            .split(",")
+            .map((o) => o.trim())
+            .filter(Boolean)
+        : undefined
     setFields([...fields, { key, label: name, type, ...(opts ? { options: opts } : {}) }])
     setLabel("")
     setOptions("")
@@ -149,18 +178,37 @@ export function FormBuilder({ clubId }: { clubId: string }) {
             {fields.map((f) => (
               <li key={f.key} className="flex items-center justify-between gap-2 text-sm">
                 <span>
-                  {f.label ?? f.key} · <span className="text-muted-foreground">{t(`formsAdmin.kind.${KIND_KEY[(f.type as (typeof FIELD_TYPES)[number]) ?? "text"] ?? "text"}`)}</span>
+                  {f.label ?? f.key} ·{" "}
+                  <span className="text-muted-foreground">
+                    {t(`formsAdmin.kind.${KIND_KEY[(f.type as (typeof FIELD_TYPES)[number]) ?? "text"] ?? "text"}`)}
+                  </span>
                   {f.options?.length ? <span className="text-muted-foreground"> · {f.options.join(", ")}</span> : null}
                 </span>
-                <Button type="button" size="sm" variant="outline" onClick={() => setFields(fields.filter((x) => x.key !== f.key))}>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setFields(fields.filter((x) => x.key !== f.key))}
+                >
                   {t("formsAdmin.delete")}
                 </Button>
               </li>
             ))}
           </ul>
           <div className="grid gap-2 md:grid-cols-[1fr_10rem]">
-            <input className={SELECT_CLASS} placeholder={t("formsAdmin.newField")} value={label} maxLength={120} onChange={(e) => setLabel(e.target.value)} />
-            <select className={SELECT_CLASS} value={type} aria-label={t("formsAdmin.fieldType")} onChange={(e) => setType(e.target.value as typeof type)}>
+            <input
+              className={SELECT_CLASS}
+              placeholder={t("formsAdmin.newField")}
+              value={label}
+              maxLength={120}
+              onChange={(e) => setLabel(e.target.value)}
+            />
+            <select
+              className={SELECT_CLASS}
+              value={type}
+              aria-label={t("formsAdmin.fieldType")}
+              onChange={(e) => setType(e.target.value as typeof type)}
+            >
               {FIELD_TYPES.map((k) => (
                 <option key={k} value={k}>
                   {t(`formsAdmin.kind.${KIND_KEY[k]}`)}
@@ -170,7 +218,12 @@ export function FormBuilder({ clubId }: { clubId: string }) {
           </div>
           {type === "choice" ? (
             <div className="grid gap-1.5">
-              <input className={SELECT_CLASS} placeholder={t("formsAdmin.options")} value={options} onChange={(e) => setOptions(e.target.value)} />
+              <input
+                className={SELECT_CLASS}
+                placeholder={t("formsAdmin.options")}
+                value={options}
+                onChange={(e) => setOptions(e.target.value)}
+              />
               <p className="text-muted-foreground text-xs">{t("formsAdmin.optionsHint")}</p>
             </div>
           ) : null}
@@ -181,7 +234,11 @@ export function FormBuilder({ clubId }: { clubId: string }) {
             <Button type="button" disabled={save.isPending} onClick={() => save.mutate(fields)}>
               {common("save")}
             </Button>
-            {save.isSuccess ? <span role="status" className="text-sm">{common("saved")}</span> : null}
+            {save.isSuccess ? (
+              <span role="status" className="text-sm">
+                {common("saved")}
+              </span>
+            ) : null}
           </div>
           <Failure error={save.error} />
         </CardContent>
@@ -194,7 +251,8 @@ export function FormBuilder({ clubId }: { clubId: string }) {
               <Card>
                 <CardContent className="grid gap-1 text-sm">
                   <p className="font-medium">
-                    {r.display_name} <span className="text-muted-foreground font-normal">· {fmt.dateTime(r.updated_at)}</span>
+                    {r.display_name}{" "}
+                    <span className="text-muted-foreground font-normal">· {fmt.dateTime(r.updated_at)}</span>
                   </p>
                   {Object.entries(r.answers).map(([k, value]) => {
                     const def = fields.find((f) => f.key === k)
@@ -238,7 +296,7 @@ export function PointsAdmin({ clubId, members }: { clubId: string; members: Memb
     setValues(Object.fromEntries(RULES.map((x) => [x.key, r[x.key] !== undefined ? String(Math.abs(r[x.key])) : ""])))
   }, [rules.data])
   const submitRules = () => {
-    const next: Record<string, number> = { ...(rules.data?.rules ?? {}) }
+    const next: Record<string, number> = { ...rules.data?.rules }
     for (const rule of RULES) {
       const n = Number(values[rule.key])
       if (values[rule.key] === "" || !Number.isFinite(n) || n < 0) {
@@ -262,16 +320,30 @@ export function PointsAdmin({ clubId, members }: { clubId: string; members: Memb
               <span>{t(`pointsAdmin.${rule.label}`)}</span>
               <span className="flex items-center gap-1">
                 {rule.sign < 0 ? "−" : "+"}
-                <input type="number" min={0} className={`${SELECT_CLASS} w-24`} value={values[rule.key] ?? ""} onChange={(e) => setValues((s) => ({ ...s, [rule.key]: e.target.value }))} />
+                <input
+                  type="number"
+                  min={0}
+                  className={`${SELECT_CLASS} w-24`}
+                  value={values[rule.key] ?? ""}
+                  onChange={(e) => setValues((s) => ({ ...s, [rule.key]: e.target.value }))}
+                />
               </span>
             </label>
           ))}
-          {invalid ? <p role="alert" className="text-destructive text-sm">{t("pointsAdmin.invalidRule")}</p> : null}
+          {invalid ? (
+            <p role="alert" className="text-destructive text-sm">
+              {t("pointsAdmin.invalidRule")}
+            </p>
+          ) : null}
           <div className="flex items-center gap-3">
             <Button type="button" className="w-fit" disabled={saveRules.isPending} onClick={submitRules}>
               {t("pointsAdmin.save")}
             </Button>
-            {saveRules.isSuccess ? <span role="status" className="text-sm">{t("pointsAdmin.saved")}</span> : null}
+            {saveRules.isSuccess ? (
+              <span role="status" className="text-sm">
+                {t("pointsAdmin.saved")}
+              </span>
+            ) : null}
           </div>
           <Failure error={saveRules.error} />
         </CardContent>
@@ -279,7 +351,12 @@ export function PointsAdmin({ clubId, members }: { clubId: string; members: Memb
       <Card>
         <CardContent className="grid gap-3">
           <h3 className="font-semibold">{t("pointsAdmin.manualTitle")}</h3>
-          <select className={SELECT_CLASS} value={userId} aria-label={t("pointsAdmin.member")} onChange={(e) => setUserId(e.target.value)}>
+          <select
+            className={SELECT_CLASS}
+            value={userId}
+            aria-label={t("pointsAdmin.member")}
+            onChange={(e) => setUserId(e.target.value)}
+          >
             <option value="">{t("pointsAdmin.member")}</option>
             {active.map((m) => (
               <option key={m.user_id} value={m.user_id}>
@@ -287,13 +364,35 @@ export function PointsAdmin({ clubId, members }: { clubId: string; members: Memb
               </option>
             ))}
           </select>
-          <input type="number" className={SELECT_CLASS} placeholder={t("pointsAdmin.amount")} value={amount} onChange={(e) => setAmount(e.target.value)} />
-          <input className={SELECT_CLASS} placeholder={t("pointsAdmin.reason")} value={reason} maxLength={200} onChange={(e) => setReason(e.target.value)} />
+          <input
+            type="number"
+            className={SELECT_CLASS}
+            placeholder={t("pointsAdmin.amount")}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <input
+            className={SELECT_CLASS}
+            placeholder={t("pointsAdmin.reason")}
+            value={reason}
+            maxLength={200}
+            onChange={(e) => setReason(e.target.value)}
+          />
           <Button
             type="button"
             className="w-fit"
             disabled={!userId || !Number.isInteger(pts) || pts === 0 || !reason.trim() || award.isPending}
-            onClick={() => award.mutate({ user_id: userId, points: pts, reason: reason.trim() }, { onSuccess: () => { setAmount(""); setReason("") } })}
+            onClick={() =>
+              award.mutate(
+                { user_id: userId, points: pts, reason: reason.trim() },
+                {
+                  onSuccess: () => {
+                    setAmount("")
+                    setReason("")
+                  },
+                },
+              )
+            }
           >
             {t("pointsAdmin.award")}
           </Button>
@@ -311,14 +410,21 @@ export function EventsAdmin({ clubId }: { clubId: string }) {
   const list = useClubEvents(clubId)
   const create = useCreateEvent(clubId)
   const [v, setV] = useState({ title: "", starts: "", ends: "", location: "", capacity: "" })
-  const set = (key: keyof typeof v) => (e: { target: { value: string } }) => setV((s) => ({ ...s, [key]: e.target.value }))
+  const set = (key: keyof typeof v) => (e: { target: { value: string } }) =>
+    setV((s) => ({ ...s, [key]: e.target.value }))
   const ok = v.title.trim() !== "" && v.starts !== "" && v.ends !== "" && new Date(v.ends) > new Date(v.starts)
   return (
     <div className="grid gap-4">
       <Card>
         <CardContent className="grid gap-3">
           <h3 className="font-semibold">{t("eventsAdmin.title")}</h3>
-          <input className={SELECT_CLASS} placeholder={t("eventsAdmin.name")} maxLength={200} value={v.title} onChange={set("title")} />
+          <input
+            className={SELECT_CLASS}
+            placeholder={t("eventsAdmin.name")}
+            maxLength={200}
+            value={v.title}
+            onChange={set("title")}
+          />
           <div className="grid gap-2 md:grid-cols-2">
             <label className="grid gap-1 text-sm">
               {t("eventsAdmin.starts")}
@@ -330,8 +436,20 @@ export function EventsAdmin({ clubId }: { clubId: string }) {
             </label>
           </div>
           <div className="grid gap-2 md:grid-cols-2">
-            <input className={SELECT_CLASS} placeholder={t("eventsAdmin.location")} value={v.location} onChange={set("location")} />
-            <input type="number" min={1} className={SELECT_CLASS} placeholder={t("eventsAdmin.capacity")} value={v.capacity} onChange={set("capacity")} />
+            <input
+              className={SELECT_CLASS}
+              placeholder={t("eventsAdmin.location")}
+              value={v.location}
+              onChange={set("location")}
+            />
+            <input
+              type="number"
+              min={1}
+              className={SELECT_CLASS}
+              placeholder={t("eventsAdmin.capacity")}
+              value={v.capacity}
+              onChange={set("capacity")}
+            />
           </div>
           <Button
             type="button"
@@ -372,27 +490,63 @@ export function EventsAdmin({ clubId }: { clubId: string }) {
   )
 }
 
-/** The offer of club ownership the caller opened from a notification (`?transfer=<id>`). */
-export function TransferBanner({ transferId }: { transferId: string }) {
+/** The offer of club ownership: opened from a notification (`?transfer=<id>`) or found among the caller's pending offers. */
+export function TransferDialog({
+  clubId,
+  clubName,
+  transferId,
+}: {
+  clubId: string
+  clubName: string
+  transferId: string | null
+}) {
   const t = useT("activities")
+  const incoming = useIncomingTransfers()
   const { accept, decline } = useTransferAnswer()
-  if (accept.isSuccess) return <p role="status" className="text-sm">{t("transferOffer.accepted")}</p>
-  if (decline.isSuccess) return <p role="status" className="text-sm">{t("transferOffer.declined")}</p>
+  const [closed, setClosed] = useState(false)
+  const pending = (incoming.data ?? []).find((x) => x.club_id === clubId && (!transferId || x.id === transferId))
+  const id = transferId ?? pending?.id ?? null
+  const answered = accept.isSuccess || decline.isSuccess
+  const open = !closed && id !== null && (answered || pending !== undefined || transferId !== null)
   return (
-    <Card>
-      <CardContent className="grid gap-2">
-        <p className="font-semibold">{t("transferOffer.title")}</p>
-        <p className="text-muted-foreground text-sm">{t("transferOffer.body")}</p>
-        <div className="flex gap-2">
-          <Button type="button" size="sm" disabled={accept.isPending} onClick={() => accept.mutate(transferId)}>
-            {t("approve")}
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={(next) => !next && setClosed(true)}
+      title={t("transferOffer.title", { name: clubName })}
+      description={
+        answered
+          ? accept.isSuccess
+            ? t("transferOffer.accepted")
+            : t("transferOffer.declined")
+          : t("transferOffer.body")
+      }
+      footer={
+        answered ? (
+          <Button type="button" onClick={() => setClosed(true)}>
+            {t("transferOffer.close")}
           </Button>
-          <Button type="button" size="sm" variant="outline" disabled={decline.isPending} onClick={() => decline.mutate(transferId)}>
-            {t("draft.decline")}
-          </Button>
-        </div>
-        <Failure error={accept.error ?? decline.error} />
-      </CardContent>
-    </Card>
+        ) : (
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={decline.isPending || accept.isPending}
+              onClick={() => id && decline.mutate(id)}
+            >
+              {t("draft.decline")}
+            </Button>
+            <Button
+              type="button"
+              disabled={decline.isPending || accept.isPending}
+              onClick={() => id && accept.mutate(id)}
+            >
+              {t("approve")}
+            </Button>
+          </>
+        )
+      }
+    >
+      <Failure error={accept.error ?? decline.error} />
+    </ResponsiveDialog>
   )
 }

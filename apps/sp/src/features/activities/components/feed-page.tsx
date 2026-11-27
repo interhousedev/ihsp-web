@@ -1,7 +1,18 @@
 "use client"
 
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button, buttonVariants, Card, CardContent, Icons, PageContainer, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
+import {
+  Badge,
+  Button,
+  buttonVariants,
+  Card,
+  CardContent,
+  Icons,
+  PageContainer,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
 import { useClubs, useEvents, useOpportunities } from "../use-activities"
@@ -37,14 +48,20 @@ export function FeedPage() {
   const pending = clubs.isPending || events.isPending || opps.isPending
   const failed = clubs.isError && opps.isError
   const empty =
-    !pending && (!showClubs || clubs.clubs.length === 0) && (!showEvents || eventItems.length === 0) && (!showOpps || oppItems.length === 0)
+    !pending &&
+    (!showClubs || clubs.clubs.length === 0) &&
+    (!showEvents || eventItems.length === 0) &&
+    (!showOpps || oppItems.length === 0)
 
   return (
     <PageContainer
       title={t("title")}
       actions={
         organized.length > 0 ? (
-          <Link href={`/activities/manage/?slug=${organized[0].slug}`} className={buttonVariants({ variant: "outline" })}>
+          <Link
+            href={`/activities/manage/?slug=${organized[0].slug}`}
+            className={buttonVariants({ variant: "outline" })}
+          >
             <Icons.teams data-icon="inline-start" aria-hidden />
             {t("myClubs")}
           </Link>
@@ -65,7 +82,12 @@ export function FeedPage() {
           </div>
         </Tabs>
         {categories.length > 0 ? (
-          <select className={`${SELECT_CLASS} w-auto`} value={category} aria-label={t("categoryLabel")} onChange={(e) => setCategory(e.target.value)}>
+          <select
+            className={`${SELECT_CLASS} w-auto`}
+            value={category}
+            aria-label={t("categoryLabel")}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="">{t("allTopics")}</option>
             {categories.map((c) => (
               <option key={c} value={c}>
@@ -92,10 +114,14 @@ export function FeedPage() {
                       <div className="flex items-start gap-3">
                         <ClubLogo club={{ name: c.name, logoUrl: c.logoUrl }} />
                         <div className="min-w-0">
-                          <Badge variant={c.kind === "su" ? "info" : "neutral"}>{c.kind === "su" ? t("suEvent") : t("types.clubBadge")}</Badge>
+                          <Badge variant={c.kind === "su" ? "info" : "neutral"}>
+                            {c.kind === "su" ? t("suEvent") : t("types.clubBadge")}
+                          </Badge>
                           <p className="mt-1 font-semibold">{c.name}</p>
                           <p className="text-muted-foreground text-xs">
-                            {[c.category ? categoryLabel(c.category) : null, t("members", { count: c.memberCount })].filter(Boolean).join(" · ")}
+                            {[c.category ? categoryLabel(c.category) : null, t("members", { count: c.memberCount })]
+                              .filter(Boolean)
+                              .join(" · ")}
                           </p>
                         </div>
                       </div>
@@ -125,7 +151,9 @@ export function FeedPage() {
                         {fmt.dateTime(e.starts_at)}
                         {e.location ? ` · ${e.location}` : ""}
                       </p>
-                      {clubName.get(e.club_id) ? <p className="text-muted-foreground mt-auto text-xs">{clubName.get(e.club_id)}</p> : null}
+                      {clubName.get(e.club_id) ? (
+                        <p className="text-muted-foreground mt-auto text-xs">{clubName.get(e.club_id)}</p>
+                      ) : null}
                     </CardContent>
                   </Card>
                 </Link>
@@ -143,7 +171,9 @@ export function FeedPage() {
                       {t("types.opportunity")}
                     </Badge>
                     <p className="font-semibold">{o.title}</p>
-                    <p className="text-muted-foreground text-sm">{[o.provider ?? o.host_institution, o.amount_text].filter(Boolean).join(" · ")}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {[o.provider ?? o.host_institution, o.amount_text].filter(Boolean).join(" · ")}
+                    </p>
                     {deadline ? (
                       <Badge variant="neutral" className="mt-auto w-fit">
                         {t("deadline", { date: fmt.date(deadline) })}

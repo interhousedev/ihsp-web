@@ -27,7 +27,9 @@ export function StudentCardButton({ iconOnly = false, onHero = false }: { iconOn
           type="button"
           variant="outline"
           className={
-            onHero ? "border-white/60 bg-white/15 text-(--brand-ink) hover:bg-white/25 hover:text-(--brand-ink)" : undefined
+            onHero
+              ? "border-white/60 bg-white/15 text-(--brand-ink) hover:bg-white/25 hover:text-(--brand-ink)"
+              : undefined
           }
           onClick={() => setOpen(true)}
         >

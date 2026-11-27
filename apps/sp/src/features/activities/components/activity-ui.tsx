@@ -8,11 +8,24 @@ import { hueOf } from "../use-activities"
 
 const initials = (name: string) => {
   const words = name.split(" ").filter(Boolean)
-  return (words.length > 1 ? words.slice(0, 2).map((w) => w[0]).join("") : name.slice(0, 2)).toUpperCase()
+  return (
+    words.length > 1
+      ? words
+          .slice(0, 2)
+          .map((w) => w[0])
+          .join("")
+      : name.slice(0, 2)
+  ).toUpperCase()
 }
 
 /** A club logo: the uploaded picture, or the initials on a colour taken from the club's name. */
-export function ClubLogo({ club, size = "md" }: { club: { name: string; logoUrl?: string | null }; size?: "sm" | "md" | "lg" }) {
+export function ClubLogo({
+  club,
+  size = "md",
+}: {
+  club: { name: string; logoUrl?: string | null }
+  size?: "sm" | "md" | "lg"
+}) {
   const cls = size === "lg" ? "size-20 text-2xl" : size === "sm" ? "size-10 text-sm" : "size-14 text-lg"
   if (club.logoUrl) {
     // eslint-disable-next-line @next/next/no-img-element
@@ -45,14 +58,24 @@ export function PersonAvatar({ person, size = 40 }: { person: { name: string }; 
 export function Stars({ value, count }: { value: number; count?: number }) {
   return (
     <span className="inline-flex items-center gap-1 text-sm tabular-nums" aria-label={`${value} / 5`}>
-      <Icons.exclusive className="size-4 text-amber-500" aria-hidden />
+      <Icons.exclusive className="size-4 text-warning" aria-hidden />
       <span className="font-semibold">{value.toFixed(1)}</span>
       {count !== undefined ? <span className="text-muted-foreground">({count})</span> : null}
     </span>
   )
 }
 
-export function Section({ title, hint, action, children }: { title: string; hint?: string; action?: ReactNode; children: ReactNode }) {
+export function Section({
+  title,
+  hint,
+  action,
+  children,
+}: {
+  title: string
+  hint?: string
+  action?: ReactNode
+  children: ReactNode
+}) {
   return (
     <section className="flex flex-col gap-3">
       <div className="flex items-end justify-between gap-3">
@@ -84,7 +107,9 @@ export function SectionTabs({
 }) {
   const rail = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    const id = requestAnimationFrame(() => rail.current?.querySelector<HTMLElement>("[data-active]")?.scrollIntoView({ inline: "center", block: "nearest" }))
+    const id = requestAnimationFrame(() =>
+      rail.current?.querySelector<HTMLElement>("[data-active]")?.scrollIntoView({ inline: "center", block: "nearest" }),
+    )
     return () => cancelAnimationFrame(id)
   }, [value])
   const current = tabs.find((x) => x.value === value)
@@ -96,12 +121,17 @@ export function SectionTabs({
             {tabs.map((x) => (
               <TabsTrigger key={x.value} value={x.value} className="min-h-11 px-3 whitespace-nowrap">
                 {x.label}
-                {x.count ? <span className="bg-background/30 ms-1.5 rounded-full px-1.5 text-xs tabular-nums">{x.count}</span> : null}
+                {x.count ? (
+                  <span className="bg-background/30 ms-1.5 rounded-full px-1.5 text-xs tabular-nums">{x.count}</span>
+                ) : null}
               </TabsTrigger>
             ))}
           </TabsList>
         </div>
-        <div className="from-background pointer-events-none absolute inset-y-0 end-0 w-8 bg-gradient-to-l to-transparent md:hidden" aria-hidden />
+        <div
+          className="from-background pointer-events-none absolute inset-y-0 end-0 w-8 bg-gradient-to-l to-transparent md:hidden"
+          aria-hidden
+        />
       </div>
       {current ? <h2 className="text-lg font-semibold md:hidden">{current.label}</h2> : null}
       {children}
@@ -110,7 +140,15 @@ export function SectionTabs({
 }
 
 /** The inputs of a position's application form (`form_schema.fields`); the answers keep the field keys. */
-export function ApplyField({ field, value, onChange }: { field: FormField; value: unknown; onChange: (v: unknown) => void }) {
+export function ApplyField({
+  field,
+  value,
+  onChange,
+}: {
+  field: FormField
+  value: unknown
+  onChange: (v: unknown) => void
+}) {
   const t = useT("activities")
   const label = (field.label ?? field.key) + (field.required ? " *" : "")
   if (field.type === "choice") {
@@ -136,7 +174,12 @@ export function ApplyField({ field, value, onChange }: { field: FormField; value
   if (field.type === "bool") {
     return (
       <label className="flex min-h-11 items-center gap-2 text-sm">
-        <input type="checkbox" className="size-4" checked={value === true} onChange={(e) => onChange(e.target.checked)} />
+        <input
+          type="checkbox"
+          className="size-4"
+          checked={value === true}
+          onChange={(e) => onChange(e.target.checked)}
+        />
         {label}
       </label>
     )
@@ -154,9 +197,15 @@ export function ApplyField({ field, value, onChange }: { field: FormField; value
           onChange={(e) => onChange(e.target.value === "" ? undefined : Number(e.target.value))}
         />
       ) : (
-        <Textarea rows={2} required={field.required} placeholder={t("answerPlaceholder")} maxLength={field.max_length} value={typeof value === "string" ? value : ""} onChange={(e) => onChange(e.target.value)} />
+        <Textarea
+          rows={2}
+          required={field.required}
+          placeholder={t("answerPlaceholder")}
+          maxLength={field.max_length}
+          value={typeof value === "string" ? value : ""}
+          onChange={(e) => onChange(e.target.value)}
+        />
       )}
     </div>
   )
 }
-

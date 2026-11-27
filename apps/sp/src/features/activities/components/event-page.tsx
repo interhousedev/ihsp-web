@@ -26,7 +26,12 @@ export function EventPage() {
       {t("back")}
     </Link>
   )
-  if (event.isPending) return <PageContainer title={common("loading")} back={back}>{null}</PageContainer>
+  if (event.isPending)
+    return (
+      <PageContainer title={common("loading")} back={back}>
+        {null}
+      </PageContainer>
+    )
   if (!e) {
     return (
       <PageContainer title={t("title")} back={back}>

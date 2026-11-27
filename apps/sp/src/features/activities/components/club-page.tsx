@@ -34,7 +34,7 @@ import {
   usePublicClub,
   useRateClub,
 } from "../use-activities"
-import { TransferBanner } from "./club-admin"
+import { TransferDialog } from "./club-admin"
 import { ClubCourses, Leaderboard, MemberDraft, MemberForm } from "./club-capabilities"
 import { ApplyField, ClubLogo, PersonAvatar, Section, SectionTabs, Stars } from "./activity-ui"
 
@@ -73,7 +73,12 @@ export function ClubPage() {
       {t("back")}
     </Link>
   )
-  if (isPending) return <PageContainer title={common("loading")} back={back}>{null}</PageContainer>
+  if (isPending)
+    return (
+      <PageContainer title={common("loading")} back={back}>
+        {null}
+      </PageContainer>
+    )
   if (!club) {
     return (
       <PageContainer title={t("title")} back={back}>
@@ -195,18 +200,26 @@ export function ClubPage() {
         </Alert>
       ) : null}
 
-      {params.get("transfer") ? <TransferBanner transferId={params.get("transfer") ?? ""} /> : null}
+      <TransferDialog clubId={club.id} clubName={club.name} transferId={params.get("transfer")} />
 
       <SectionTabs tabs={tabs} value={tab} onChange={setTab}>
         {tab === "about" ? (
           <div className="mt-4 flex flex-col gap-8">
             {detail && (detail.goals || detail.rules || detail.schedule) ? (
               <div className="grid gap-3 md:grid-cols-3">
-                {([["goals", detail.goals], ["rules", detail.rules], ["schedule", detail.schedule]] as const).map(([key, text]) =>
+                {(
+                  [
+                    ["goals", detail.goals],
+                    ["rules", detail.rules],
+                    ["schedule", detail.schedule],
+                  ] as const
+                ).map(([key, text]) =>
                   text ? (
                     <Card key={key}>
                       <CardContent className="grid gap-1">
-                        <p className="text-muted-foreground text-xs font-medium uppercase">{t(key === "schedule" ? "when" : key)}</p>
+                        <p className="text-muted-foreground text-xs font-medium uppercase">
+                          {t(key === "schedule" ? "when" : key)}
+                        </p>
                         <p className="text-sm whitespace-pre-line">{text}</p>
                       </CardContent>
                     </Card>
@@ -295,7 +308,12 @@ export function ClubPage() {
                           <p className="text-muted-foreground text-sm">{pos.description}</p>
                           <div className="mt-auto flex items-center justify-between gap-2 pt-2">
                             <span className="text-muted-foreground text-sm">{t("slots", { count: pos.slots })}</span>
-                            <Button type="button" size="sm" disabled={applied === pos.title || !isMember} onClick={() => setApplying(pos)}>
+                            <Button
+                              type="button"
+                              size="sm"
+                              disabled={applied === pos.title || !isMember}
+                              onClick={() => setApplying(pos)}
+                            >
                               {t("apply")}
                             </Button>
                           </div>
@@ -313,8 +331,12 @@ export function ClubPage() {
                   <CardContent className="grid gap-3">
                     <div className="flex items-center justify-between gap-3">
                       <div>
-                        <p className="text-3xl font-semibold tabular-nums">{summary?.avg != null ? summary.avg.toFixed(1) : "–"}</p>
-                        <p className="text-muted-foreground text-sm">{t("ratingsCount", { count: summary?.count ?? 0 })}</p>
+                        <p className="text-3xl font-semibold tabular-nums">
+                          {summary?.avg != null ? summary.avg.toFixed(1) : "–"}
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          {t("ratingsCount", { count: summary?.count ?? 0 })}
+                        </p>
                       </div>
                       <Button type="button" variant="outline" disabled={rated} onClick={() => setRating(true)}>
                         <Icons.sparkles data-icon="inline-start" aria-hidden />
@@ -404,7 +426,12 @@ export function ClubPage() {
       >
         <div className="grid gap-4">
           {(applying?.form_schema.fields ?? []).map((field) => (
-            <ApplyField key={field.key} field={field} value={answers[field.key]} onChange={(v) => setAnswers((a) => ({ ...a, [field.key]: v }))} />
+            <ApplyField
+              key={field.key}
+              field={field}
+              value={answers[field.key]}
+              onChange={(v) => setAnswers((a) => ({ ...a, [field.key]: v }))}
+            />
           ))}
           {apply.isError ? (
             <p role="alert" className="text-destructive text-sm">
@@ -455,7 +482,12 @@ export function ClubPage() {
             <Textarea rows={3} maxLength={1000} value={comment} onChange={(e) => setComment(e.target.value)} />
           </div>
           <label className="flex min-h-11 items-center gap-2 text-sm">
-            <input type="checkbox" checked={anonymous} onChange={(e) => setAnonymous(e.target.checked)} className="size-4" />
+            <input
+              type="checkbox"
+              checked={anonymous}
+              onChange={(e) => setAnonymous(e.target.checked)}
+              className="size-4"
+            />
             {t("anonymous")}
           </label>
           {rate.isError ? (
