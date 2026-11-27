@@ -1417,6 +1417,10 @@ body {
     grid-column: span 2;
   }
 }
+.lnd-bento--auto {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 20rem));
+  justify-content: center;
+}
 .lnd-bento-cell {
   display: flex;
 }

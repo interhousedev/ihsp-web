@@ -15,7 +15,8 @@
       "integrations": "Integratsiyalar",
       "control": "Nazorat",
       "faq": "Savollar",
-      "open": "Ilovani ochish"
+      "open": "Ilovani ochish",
+      "clubs": "Klublar"
     },
     "hero": {
       "title": "Maktab kuningiz: javob chatda",
@@ -237,7 +238,8 @@
       "features": "Imkoniyatlar",
       "integrations": "Integratsiyalar",
       "faq": "Savollar",
-      "tagline": "Dars jadvali, baholar, kutubxona va kurslar bitta akkauntda."
+      "tagline": "Dars jadvali, baholar, kutubxona va kurslar bitta akkauntda.",
+      "clubs": "Klublar"
     },
     "banner": {
       "label": "Abituriyentlar savollari",
@@ -534,6 +536,44 @@
           "a": "Oʻzbek, rus va ingliz tillari."
         }
       }
+    },
+    "clubsTeaser": {
+      "eyebrow": "Klublar",
+      "title": "Litsey klublari",
+      "lead": "To'garaklar, seksiyalar va jamoalar: o'zingizga yoqqanini toping va qo'shiling.",
+      "all": "Barcha klublar"
     }
+  },
+  "clubsPublic": {
+    "title": "Клубы лицея",
+    "lead": "Клубы и сообщества Academic Lyceum International House Tashkent. Присоединяйтесь через приложение или напишите руководителю клуба.",
+    "members": "Участников: {count}",
+    "all": "Все клубы",
+    "goals": "Цели и расписание",
+    "team": "Команда",
+    "partners": "Партнёры",
+    "events": "Ближайшие события",
+    "contactTitle": "Написать руководителю клуба",
+    "contactLead": "Сообщение получит руководитель клуба. Ваш адрес почты не публикуется.",
+    "contact": {
+      "name": "Ваше имя",
+      "email": "Эл. почта",
+      "emailHint": "Нужна только для ответа.",
+      "message": "Сообщение",
+      "send": "Отправить",
+      "sentTitle": "Сообщение отправлено",
+      "sentBody": "Руководитель клуба «{club}» ответит на вашу почту.",
+      "failed": "Xabarni yuborib boʼlmadi. Qayta urinib koʼring.",
+      "unavailable": "Hozir rahbar bilan bogʼlanib boʼlmaydi. Keyinroq urinib koʼring."
+    },
+    "eyebrow": "Klublar",
+    "coursesEyebrow": "O'qish",
+    "courses": "Klub kurslari",
+    "eventsEyebrow": "Afisha",
+    "join": "Вступить в my.iht",
+    "contactCta": "Написать руководителю клуба",
+    "openCourse": "Открыть в lms.iht",
+    "loadFailed": "Klublarni yuklab boʼlmadi. Keyinroq urinib koʼring.",
+    "noClubs": "Klublar hali eʼlon qilinmagan."
   }
 }

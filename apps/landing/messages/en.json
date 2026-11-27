@@ -15,7 +15,8 @@
       "integrations": "Integrations",
       "control": "Control",
       "faq": "Questions",
-      "open": "Open app"
+      "open": "Open app",
+      "clubs": "Clubs"
     },
     "hero": {
       "title": "Your school day, answered in a chat",
@@ -237,7 +238,8 @@
       "features": "Features",
       "integrations": "Integrations",
       "faq": "Questions",
-      "tagline": "Timetable, marks, library and courses in one account."
+      "tagline": "Timetable, marks, library and courses in one account.",
+      "clubs": "Clubs"
     },
     "banner": {
       "label": "Questions from applicants",
@@ -534,6 +536,44 @@
           "a": "Uzbek, Russian and English."
         }
       }
+    },
+    "clubsTeaser": {
+      "eyebrow": "Clubs",
+      "title": "Lyceum clubs",
+      "lead": "Clubs, sections and communities: find your thing and join.",
+      "all": "All clubs"
     }
+  },
+  "clubsPublic": {
+    "title": "Клубы лицея",
+    "lead": "Клубы и сообщества Academic Lyceum International House Tashkent. Присоединяйтесь через приложение или напишите руководителю клуба.",
+    "members": "Участников: {count}",
+    "all": "Все клубы",
+    "goals": "Цели и расписание",
+    "team": "Команда",
+    "partners": "Партнёры",
+    "events": "Ближайшие события",
+    "contactTitle": "Написать руководителю клуба",
+    "contactLead": "Сообщение получит руководитель клуба. Ваш адрес почты не публикуется.",
+    "contact": {
+      "name": "Ваше имя",
+      "email": "Эл. почта",
+      "emailHint": "Нужна только для ответа.",
+      "message": "Сообщение",
+      "send": "Отправить",
+      "sentTitle": "Сообщение отправлено",
+      "sentBody": "Руководитель клуба «{club}» ответит на вашу почту.",
+      "failed": "Could not send the message. Please try again.",
+      "unavailable": "Contacting the club leader is unavailable right now. Please try again later."
+    },
+    "eyebrow": "Clubs",
+    "coursesEyebrow": "Learning",
+    "courses": "Club courses",
+    "eventsEyebrow": "Events",
+    "join": "Вступить в my.iht",
+    "contactCta": "Написать руководителю клуба",
+    "openCourse": "Открыть в lms.iht",
+    "loadFailed": "Could not load the clubs. Please try again later.",
+    "noClubs": "No clubs are published yet."
   }
 }

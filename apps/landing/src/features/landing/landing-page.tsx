@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { useState } from "react"
 import { AnimatedBackdrop } from "../../components/backgrounds"
 import { AppBento } from "./app-bento"
+import { ClubsTeaser } from "./clubs-teaser"
 import { Faq } from "./faq"
 import { FeatureAccordion } from "./feature-accordion"
 import { FinalCta, SiteFooter } from "./footer"
@@ -39,6 +40,7 @@ export function LandingPage() {
         <IntegrationOrbit />
         <SplitInSight />
         <SplitControl />
+        <ClubsTeaser />
         <Testimonials />
         <SetupSteps />
         <Faq />
