@@ -1,13 +1,23 @@
 "use client"
 
+import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 import { Input } from "@ihsp/ui"
 import { useState } from "react"
 
-/** Whether `value` is an absolute https URL. */
+function storageOrigin(): string | null {
+  try {
+    return new URL(getConfig().STORAGE_ORIGIN).origin
+  } catch {
+    return null
+  }
+}
+
+/** Whether `value` is an absolute https URL or lives in our storage (plain http in dev). */
 export function isHttpsImageUrl(value: string): boolean {
   try {
-    return new URL(value.trim()).protocol === "https:"
+    const url = new URL(value.trim())
+    return url.protocol === "https:" || url.origin === storageOrigin()
   } catch {
     return false
   }
