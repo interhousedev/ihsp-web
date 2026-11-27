@@ -1,6 +1,6 @@
 "use client"
 
-import { keys, patchAdminGroup, type GroupDetail } from "@ihsp/api"
+import { api, keys, patchAdminGroup, type GroupDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Card, CardContent, CardHeader, CardTitle, Input } from "@ihsp/ui"
 import { useEffect, useState } from "react"
@@ -37,15 +37,22 @@ export function GroupPeopleCard({ group }: { group: GroupDetail }) {
     curatorId !== (group.curator?.id ?? "") ||
     headId !== (group.head_student?.id ?? "") ||
     status !== group.status
+  const headChanged = headId !== (group.head_student?.id ?? "")
   const save = useAdminMutation({
-    mutationFn: () =>
-      patchAdminGroup(group.id, {
-        ...(nameChanged ? { name: name.trim() } : {}),
-        ...(semesterChanged ? { current_semester: Number(semester) } : {}),
-        ...(curatorId !== (group.curator?.id ?? "") ? { curator_id: curatorId || null } : {}),
-        ...(headId !== (group.head_student?.id ?? "") ? { head_student_id: headId || null } : {}),
-        ...(status !== group.status ? { status } : {}),
-      }),
+    mutationFn: async () => {
+      // The head student has its own endpoint, which checks the student is a member of this group.
+      if (headChanged)
+        await api.put<void>(`/v1/admin/groups/${encodeURIComponent(group.id)}/head-student`, {
+          student_id: headId || null,
+        })
+      if (nameChanged || semesterChanged || curatorId !== (group.curator?.id ?? "") || status !== group.status)
+        await patchAdminGroup(group.id, {
+          ...(nameChanged ? { name: name.trim() } : {}),
+          ...(semesterChanged ? { current_semester: Number(semester) } : {}),
+          ...(curatorId !== (group.curator?.id ?? "") ? { curator_id: curatorId || null } : {}),
+          ...(status !== group.status ? { status } : {}),
+        })
+    },
     invalidate: [keys.admin.groups.all(), keys.staff.groups.list()],
     success: t("saved"),
   })

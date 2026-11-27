@@ -4,7 +4,6 @@ import { useT } from "@ihsp/i18n"
 import type { BottomNavItem, NavGroup } from "@ihsp/ui"
 import { IconUserCircle } from "@ihsp/ui"
 import { useMemo } from "react"
-import { useIsHeadStudent } from "@/features/exams/hooks/use-exams"
 import { SETTINGS_GROUPS, settingsGroupHref } from "@/features/settings/components/settings-groups"
 
 /**
@@ -18,7 +17,6 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[]; search:
   const tProfile = useT("profile")
   const tFace = useT("face")
   const tSettings = useT("settings")
-  const isHead = useIsHeadStudent()
   return useMemo(() => {
     const dashboard = { title: t("dashboard"), url: "/", icon: "dashboard", match: "exact" } as const
     const timetable = { title: t("timetable"), url: "/timetable/", icon: "timetable" } as const
@@ -37,7 +35,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[]; search:
             { title: t("exams"), url: "/exams/", icon: "exams" },
             { title: t("excuses"), url: "/excuses/", icon: "checks" },
             { title: t("teachers"), url: "/teachers/", icon: IconUserCircle },
-            ...(isHead ? [{ title: t("myGroup"), url: "/my-group/", icon: "groups" as const }] : []),
+            { title: t("myGroup"), url: "/my-group/", icon: "groups" },
           ],
         },
         {
@@ -79,5 +77,5 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[]; search:
         },
       ],
     }
-  }, [t, tProfile, tFace, tSettings, isHead])
+  }, [t, tProfile, tFace, tSettings])
 }
