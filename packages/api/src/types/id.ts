@@ -68,6 +68,7 @@ export type UserPreferences = {
   alerts_gpa_below: number | null
   alerts_semester_mark_below: number | null
   alerts_mark_below: number | null
+  notify_absences: boolean
   lessons_links_lead_min: number
   lessons_prompt_enabled: boolean
   mail_forward_to_telegram: boolean

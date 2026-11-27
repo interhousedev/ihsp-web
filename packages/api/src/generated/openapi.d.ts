@@ -1108,6 +1108,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/day-blocks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Day Blocks
+         * @description List every non-lesson block, ordered by start time.
+         */
+        get: operations["list_day_blocks_v1_admin_day_blocks_get"];
+        put?: never;
+        /**
+         * Create Day Block
+         * @description Add a non-lesson block.
+         */
+        post: operations["create_day_block_v1_admin_day_blocks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/day-blocks/{block_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update Day Block
+         * @description Replace every field of a non-lesson block.
+         */
+        put: operations["update_day_block_v1_admin_day_blocks__block_id__put"];
+        post?: never;
+        /**
+         * Delete Day Block
+         * @description Delete a non-lesson block.
+         */
+        delete: operations["delete_day_block_v1_admin_day_blocks__block_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/devices": {
         parameters: {
             query?: never;
@@ -1522,6 +1570,26 @@ export interface paths {
          * @description Read the curriculum from EMIS now and return what is stored for the group.
          */
         post: operations["sync_curriculum_v1_admin_groups__group_id__curriculum_sync_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/groups/{group_id}/head-student": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Head Student
+         * @description Assign the head student (an active member of the group); null clears it.
+         */
+        put: operations["set_head_student_v1_admin_groups__group_id__head_student_put"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -16813,6 +16881,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/group/rankings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Group Rankings
+         * @description Aggregates of every ranked group; members of other groups are never shown.
+         */
+        get: operations["get_my_group_rankings_v1_me_group_rankings_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/group/rating": {
         parameters: {
             query?: never;
@@ -17816,6 +17904,26 @@ export interface paths {
          * @description Return the student's lessons between two dates (default: this week).
          */
         get: operations["get_timetable_v1_me_timetable_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/timetable/day-blocks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Day Blocks
+         * @description Lunch, breaks and other non-lesson blocks of the student's group per date.
+         */
+        get: operations["get_day_blocks_v1_me_timetable_day_blocks_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -28310,6 +28418,116 @@ export interface components {
             projected: boolean;
         };
         /**
+         * DayBlockBody
+         * @description Body of POST /v1/admin/day-blocks and PUT /v1/admin/day-blocks/{id}.
+         *
+         *     `weekdays` are ISO numbers, Monday 1 … Friday 5. `course` is required for the
+         *     scope `course`; `group_ids` must not be empty for the scope `groups`.
+         */
+        DayBlockBody: {
+            /** Course */
+            course?: number | null;
+            /**
+             * Ends At
+             * Format: time
+             */
+            ends_at: string;
+            /** Group Ids */
+            group_ids?: string[];
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lunch" | "second_lunch" | "break" | "assembly" | "other";
+            /** Name */
+            name: string;
+            /**
+             * Scope
+             * @default all
+             * @enum {string}
+             */
+            scope?: "all" | "course" | "groups";
+            /**
+             * Starts At
+             * Format: time
+             */
+            starts_at: string;
+            /** Weekdays */
+            weekdays: number[];
+        };
+        /**
+         * DayBlockOccurrenceResponse
+         * @description A non-lesson block on one date of the student's timetable.
+         */
+        DayBlockOccurrenceResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Ends At
+             * Format: time
+             */
+            ends_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lunch" | "second_lunch" | "break" | "assembly" | "other";
+            /** Name */
+            name: string;
+            /**
+             * Starts At
+             * Format: time
+             */
+            starts_at: string;
+        };
+        /**
+         * DayBlockResponse
+         * @description A non-lesson block (lunch, second lunch, break, assembly).
+         */
+        DayBlockResponse: {
+            /** Course */
+            course: number | null;
+            /**
+             * Ends At
+             * Format: time
+             */
+            ends_at: string;
+            /** Group Ids */
+            group_ids: string[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lunch" | "second_lunch" | "break" | "assembly" | "other";
+            /** Name */
+            name: string;
+            /**
+             * Scope
+             * @enum {string}
+             */
+            scope: "all" | "course" | "groups";
+            /**
+             * Starts At
+             * Format: time
+             */
+            starts_at: string;
+            /** Weekdays */
+            weekdays: number[];
+        };
+        /**
          * DayCount
          * @description One calendar day (Tashkent) and a count.
          */
@@ -32039,6 +32257,21 @@ export interface components {
             subject: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__SubjectRefResponse"];
         };
         /**
+         * GroupCard
+         * @description The caller's group.
+         */
+        GroupCard: {
+            /** Course */
+            course: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
          * GroupCountsResponse
          * @description Counts per value of one group, and the group's average of a starred number.
          */
@@ -32085,6 +32318,21 @@ export interface components {
             refresh?: boolean;
         };
         /**
+         * GroupCuratorRef
+         * @description The curator (homeroom teacher) by full name.
+         */
+        GroupCuratorRef: {
+            /** Full Name */
+            full_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Photo Url */
+            photo_url: string | null;
+        };
+        /**
          * GroupDetailResponse
          * @description GroupDetail.
          */
@@ -32117,6 +32365,25 @@ export interface components {
             subgroups_assigned: number;
             /** Unregistered Count */
             unregistered_count: number;
+        };
+        /**
+         * GroupHeadRef
+         * @description The head student, with first, last and full name.
+         */
+        GroupHeadRef: {
+            /** First Name */
+            first_name: string;
+            /** Full Name */
+            full_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Name */
+            last_name: string;
+            /** Photo Url */
+            photo_url: string | null;
         };
         /**
          * GroupMemberRow
@@ -32156,21 +32423,14 @@ export interface components {
             status?: ("active" | "archived") | null;
         };
         /**
-         * GroupPersonRef
-         * @description A person of the group, by name.
+         * GroupPlace
+         * @description The group's place among `total` ranked groups.
          */
-        GroupPersonRef: {
-            /** First Name */
-            first_name: string;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Last Name */
-            last_name: string;
-            /** Photo Url */
-            photo_url: string | null;
+        GroupPlace: {
+            /** Place */
+            place: number;
+            /** Total */
+            total: number;
         };
         /**
          * GroupProgressCell
@@ -32254,6 +32514,45 @@ export interface components {
             student: components["schemas"]["app__interfaces__http__v1__me_marks__schemas__PersonRef"];
         };
         /**
+         * GroupRankingItem
+         * @description One group in a ranking: aggregates only, never members.
+         */
+        GroupRankingItem: {
+            /** Course */
+            course: number | null;
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+            /** Is Mine */
+            is_mine: boolean;
+            /** Members Count */
+            members_count: number;
+            /** Place */
+            place: number;
+            /** Value */
+            value: number | null;
+        };
+        /**
+         * GroupRankingsResponse
+         * @description Groups ranked best first; groups without a value this term are left out.
+         */
+        GroupRankingsResponse: {
+            /** Items */
+            items: components["schemas"]["GroupRankingItem"][];
+        };
+        /**
+         * GroupRanks
+         * @description The group's place in its course and in the lyceum.
+         */
+        GroupRanks: {
+            course: components["schemas"]["GroupScopeRanks"];
+            lyceum: components["schemas"]["GroupScopeRanks"];
+        };
+        /**
          * GroupRatingRow
          * @description One student of the group in the GPA rating (`rank` None when no GPA).
          */
@@ -32281,6 +32580,14 @@ export interface components {
             id: string;
             /** Name */
             name: string;
+        };
+        /**
+         * GroupScopeRanks
+         * @description The group's place by GPA and attendance; null when the group has no value.
+         */
+        GroupScopeRanks: {
+            attendance: components["schemas"]["GroupPlace"] | null;
+            gpa: components["schemas"]["GroupPlace"] | null;
         };
         /**
          * GroupStatsItemResponse
@@ -32338,6 +32645,27 @@ export interface components {
             last_name: string;
             /** Photo Url */
             photo_url: string | null;
+        };
+        /**
+         * GroupTopRow
+         * @description A classmate in a top; equal values share a rank.
+         */
+        GroupTopRow: {
+            /** Full Name */
+            full_name: string;
+            /** Is Me */
+            is_me: boolean;
+            /** Photo Url */
+            photo_url: string | null;
+            /** Rank */
+            rank: number;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Value */
+            value: number | null;
         };
         /**
          * GuestCommentOut
@@ -32484,6 +32812,14 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * HeadStudentBody
+         * @description Body of PUT /v1/admin/groups/{id}/head-student; null clears the head student.
+         */
+        HeadStudentBody: {
+            /** Student Id */
+            student_id: string | null;
         };
         /**
          * HelperContacts
@@ -38660,13 +38996,17 @@ export interface components {
         };
         /**
          * MyGroupResponse
-         * @description The caller's group: homeroom teacher, head student and members.
+         * @description The caller's group: homeroom teacher, head student, members and standings.
          *
-         *     `homeroom_teacher` and `head_student` are null when not assigned.
+         *     `homeroom_teacher`, `curator` and `head_student` are null when not assigned.
          *     `is_head_student` tells whether group progress and rating are open to the caller.
+         *     The tops rank classmates by current-term GPA (mean mark) and attendance percent
+         *     (late counts as present); classmates without a value are left out.
          */
         MyGroupResponse: {
-            head_student: components["schemas"]["GroupPersonRef"] | null;
+            curator: components["schemas"]["GroupCuratorRef"] | null;
+            group: components["schemas"]["GroupCard"];
+            head_student: components["schemas"]["GroupHeadRef"] | null;
             homeroom_teacher: components["schemas"]["GroupTeacherRef"] | null;
             /**
              * Id
@@ -38677,10 +39017,17 @@ export interface components {
             is_head_student: boolean;
             /** Members */
             members: components["schemas"]["GroupMemberRow"][];
+            /** Members Count */
+            members_count: number;
             /** Name */
             name: string;
+            ranks: components["schemas"]["GroupRanks"];
             /** Size */
             size: number;
+            /** Top By Attendance */
+            top_by_attendance: components["schemas"]["GroupTopRow"][];
+            /** Top By Grade */
+            top_by_grade: components["schemas"]["GroupTopRow"][];
         };
         /**
          * MyProfessionListOut
@@ -41643,6 +41990,8 @@ export interface components {
             marks_types?: ("lesson" | "midterm" | "final")[] | null;
             /** Marks Values */
             marks_values?: number[] | null;
+            /** Notify Absences */
+            notify_absences?: boolean | null;
             /** Notify Push */
             notify_push?: boolean | null;
             /** Onboarding Dismissed */
@@ -51848,6 +52197,11 @@ export interface components {
              */
             marks_values?: number[];
             /**
+             * Notify Absences
+             * @default true
+             */
+            notify_absences?: boolean;
+            /**
              * Notify Push
              * @default true
              */
@@ -57655,6 +58009,123 @@ export interface operations {
             };
         };
     };
+    list_day_blocks_v1_admin_day_blocks_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayBlockResponse"][];
+                };
+            };
+        };
+    };
+    create_day_block_v1_admin_day_blocks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DayBlockBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayBlockResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_day_block_v1_admin_day_blocks__block_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DayBlockBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayBlockResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_day_block_v1_admin_day_blocks__block_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_devices_v1_admin_devices_get: {
         parameters: {
             query?: never;
@@ -58412,6 +58883,39 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["CurriculumSyncResponse"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_head_student_v1_admin_groups__group_id__head_student_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HeadStudentBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -87580,6 +88084,38 @@ export interface operations {
             };
         };
     };
+    get_my_group_rankings_v1_me_group_rankings_get: {
+        parameters: {
+            query?: {
+                scope?: "course" | "lyceum";
+                metric?: "gpa" | "attendance";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupRankingsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_my_group_rating_v1_me_group_rating_get: {
         parameters: {
             query?: {
@@ -89332,6 +89868,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StudentLessonItemResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_day_blocks_v1_me_timetable_day_blocks_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayBlockOccurrenceResponse"][];
                 };
             };
             /** @description Validation Error */
