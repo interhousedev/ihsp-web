@@ -143,3 +143,4 @@ export type * from "./types/honours"
 
 export * from "./endpoints/student-card"
 export type * from "./types/student-card"
+export * from "./activities"

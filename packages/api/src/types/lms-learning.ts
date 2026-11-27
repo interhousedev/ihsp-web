@@ -54,8 +54,11 @@ export type OutlineSection = {
  * The outline a learner sees: steps are new or changed since the last visit (editors also see removed and MCP steps).
  * A step is a lesson of the learner screens; its points are what a perfect pass of its tests gives.
  */
+type GeneratedOutlineStep = components["schemas"]["LearningOutlineStepView"]
+
 export type LearnerOutlineSection = Omit<OutlineSection, "steps"> & {
-  steps: (Omit<OutlineSection["steps"][number], "badge"> & {
+  steps: (Pick<GeneratedOutlineStep, "kind" | "estimated_minutes" | "lock_reason"> &
+    Omit<OutlineSection["steps"][number], "badge"> & {
     badge?: "new" | "changed" | null
     access?: AccessAudience
     /** The caller may not open this lesson; it shows with a lock. */
@@ -67,7 +70,8 @@ export type LearnerOutlineSection = Omit<OutlineSection, "steps"> & {
   })[]
 }
 
-export type CoursePage = CourseCard & {
+export type CoursePage = CourseCard &
+  Pick<components["schemas"]["LearningCoursePageView"], "continue_step_id" | "enrolled_via"> & {
   staff: CourseStaffItem[]
   outline: LearnerOutlineSection[]
   enrolled: boolean
@@ -82,6 +86,9 @@ export type CoursePage = CourseCard & {
   /** Whom to ask when the course or a lesson is locked for a chosen audience. */
   contact?: LearningContact | null
 }
+
+/** The level of the caller: platform-wide or inside one course. */
+export type MyLevel = components["schemas"]["MyLevelOut"]
 
 /** The course page for guests: staff are name and position only. */
 export type GuestCoursePage = Omit<CoursePage, "staff"> & {
