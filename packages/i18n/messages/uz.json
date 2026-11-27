@@ -645,6 +645,8 @@
       "title": "Ogohlantirishlar",
       "drops": "GPA va semestr bahosi pasayishi",
       "dropsHint": "GPA yoki semestr bahosi pasaysa xabar keladi.",
+      "absences": "Darslar qoldirilishi (EMIS)",
+      "absencesHint": "EMIS tizimida dars qoldirilganda Telegram va ilovada xabar keladi.",
       "gpaBelow": "GPA pastroq:",
       "semesterMarkBelow": "Semestr bahosi pastroq:",
       "markBelow": "Baho pastroq:"

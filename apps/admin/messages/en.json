@@ -21,6 +21,7 @@
     "rooms": "Rooms",
     "terms": "Terms & bells",
     "timetable": "Timetable",
+    "dayBlocks": "Non-lesson blocks",
     "lessons": "Lessons",
     "exams": "Exams",
     "attendance": "Attendance",
@@ -765,6 +766,59 @@
       "previous": "Previous",
       "next": "Next",
       "range": "{from}–{to} of {total}"
+    }
+  },
+  "dayBlocks": {
+    "title": "Non-lesson blocks",
+    "description": "Lunch, second lunch, breaks and assemblies. Each block can have its own days, time and groups.",
+    "new": "New block",
+    "newTitle": "New non-lesson block",
+    "editTitle": "Edit {name}",
+    "edit": "Edit {name}",
+    "delete": "Delete {name}",
+    "deleteTitle": "Delete {name}?",
+    "deleteDescription": "The block disappears from the timetable of every group it covers.",
+    "deleteConfirm": "Delete",
+    "deleted": "Block deleted",
+    "saved": "Block saved",
+    "cancel": "Cancel",
+    "save": "Save",
+    "empty": "No non-lesson blocks yet.",
+    "dayEmpty": "No blocks on this day.",
+    "loading": "Loading…",
+    "loadError": "Could not load the blocks.",
+    "courseN": "Course {n}",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "For example, Lunch",
+      "kind": "Type",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "timeError": "The end must be later than the start.",
+      "weekdays": "Days",
+      "scope": "Who it applies to",
+      "course": "Course",
+      "chooseCourse": "Choose a course",
+      "groups": "Groups"
+    },
+    "kind": {
+      "lunch": "Lunch",
+      "second_lunch": "Second lunch",
+      "break": "Break",
+      "assembly": "Assembly",
+      "other": "Other"
+    },
+    "scope": {
+      "all": "All groups",
+      "course": "One course",
+      "groups": "Chosen groups"
+    },
+    "weekday": {
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday"
     }
   },
   "rooms": {

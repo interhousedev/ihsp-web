@@ -21,6 +21,7 @@
     "rooms": "Xonalar",
     "terms": "Semestrlar va qoʻngʻiroqlar",
     "timetable": "Dars jadvali",
+    "dayBlocks": "Darsdan tashqari bloklar",
     "lessons": "Darslar",
     "exams": "Imtihonlar",
     "attendance": "Davomat",
@@ -765,6 +766,59 @@
       "previous": "Oldingi",
       "next": "Keyingi",
       "range": "{from}–{to} / {total}"
+    }
+  },
+  "dayBlocks": {
+    "title": "Darsdan tashqari bloklar",
+    "description": "Tushlik, ikkinchi tushlik, tanaffuslar va yigʻilishlar. Har bir blokning oʻz kunlari, vaqti va guruhlari bor.",
+    "new": "Yangi blok",
+    "newTitle": "Yangi darsdan tashqari blok",
+    "editTitle": "Tahrirlash: {name}",
+    "edit": "Tahrirlash: {name}",
+    "delete": "Oʻchirish: {name}",
+    "deleteTitle": "«{name}» oʻchirilsinmi?",
+    "deleteDescription": "Blok u tegishli boʻlgan barcha guruhlarning dars jadvalidan yoʻqoladi.",
+    "deleteConfirm": "Oʻchirish",
+    "deleted": "Blok oʻchirildi",
+    "saved": "Blok saqlandi",
+    "cancel": "Bekor qilish",
+    "save": "Saqlash",
+    "empty": "Hozircha darsdan tashqari bloklar yoʻq.",
+    "dayEmpty": "Bu kunda bloklar yoʻq.",
+    "loading": "Yuklanmoqda…",
+    "loadError": "Bloklarni yuklab boʻlmadi.",
+    "courseN": "{n}-kurs",
+    "form": {
+      "name": "Nomi",
+      "namePlaceholder": "Masalan, Tushlik",
+      "kind": "Turi",
+      "startsAt": "Boshlanishi",
+      "endsAt": "Tugashi",
+      "timeError": "Tugash vaqti boshlanishdan keyin boʻlishi kerak.",
+      "weekdays": "Kunlar",
+      "scope": "Kimlar uchun",
+      "course": "Kurs",
+      "chooseCourse": "Kursni tanlang",
+      "groups": "Guruhlar"
+    },
+    "kind": {
+      "lunch": "Tushlik",
+      "second_lunch": "Ikkinchi tushlik",
+      "break": "Tanaffus",
+      "assembly": "Yigʻilish",
+      "other": "Boshqa"
+    },
+    "scope": {
+      "all": "Barcha guruhlar",
+      "course": "Bitta kurs",
+      "groups": "Tanlangan guruhlar"
+    },
+    "weekday": {
+      "1": "Dushanba",
+      "2": "Seshanba",
+      "3": "Chorshanba",
+      "4": "Payshanba",
+      "5": "Juma"
     }
   },
   "rooms": {

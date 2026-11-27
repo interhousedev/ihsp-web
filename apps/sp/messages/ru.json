@@ -346,6 +346,8 @@
     "subgroupHint": "Ваша подгруппа ещё не указана, поэтому показаны уроки обеих подгрупп.",
     "noLessons": "В этот день уроков нет.",
     "noLessonsWeek": "На этой неделе уроков нет.",
+    "agenda": "Расписание дня",
+    "gap": {"minutes": "{count} мин", "free": "Свободно", "kind": {"lunch": "Обед", "second_lunch": "Второй обед", "break": "Перемена", "assembly": "Линейка", "other": "Перерыв"}},
     "fields": {
       "room": "Аудитория",
       "teacher": "Преподаватель",
@@ -1245,5 +1247,28 @@
     "staff": "Открыть приложение для сотрудников",
     "id": "Открыть ID",
     "logout": "Выйти"
+  },
+  "groupStanding": {
+    "course": "{course} курс",
+    "curator": "Куратор",
+    "membersCount": "Студентов: {count}",
+    "topTitle": "Лучшие студенты",
+    "byGrade": "Оценки",
+    "byAttendance": "Посещаемость",
+    "you": "Вы",
+    "noValue": "—",
+    "topEmpty": "За этот семестр пока нет данных.",
+    "ranksTitle": "Место группы",
+    "gpa": "Средний балл",
+    "attendance": "Посещаемость",
+    "placeCourse": "{place} место из {total} по курсу",
+    "placeLyceum": "{place} место из {total} по лицею",
+    "rankingTitle": "Рейтинг групп",
+    "rankingScopeCourse": "Курс",
+    "rankingScopeLyceum": "Лицей",
+    "mine": "Ваша группа",
+    "members": "Студентов: {count}",
+    "noGroupTitle": "Вы пока не в группе",
+    "noGroupHint": "Когда администрация добавит вас в группу, она появится здесь."
   }
 }

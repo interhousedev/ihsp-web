@@ -346,6 +346,8 @@
     "subgroupHint": "Kichik guruhingiz hali belgilanmagan, shuning uchun ikkala kichik guruh darslari koʻrsatilgan.",
     "noLessons": "Bu kuni dars yoʻq.",
     "noLessonsWeek": "Bu haftada dars yoʻq.",
+    "agenda": "Kun jadvali",
+    "gap": {"minutes": "{count} daq", "free": "Boʻsh", "kind": {"lunch": "Tushlik", "second_lunch": "Ikkinchi tushlik", "break": "Tanaffus", "assembly": "Saf yigʻilishi", "other": "Tanaffus"}},
     "fields": {
       "room": "Xona",
       "teacher": "Oʻqituvchi",
@@ -1245,5 +1247,28 @@
     "staff": "Xodimlar ilovasini ochish",
     "id": "ID ni ochish",
     "logout": "Chiqish"
+  },
+  "groupStanding": {
+    "course": "{course}-kurs",
+    "curator": "Kurator",
+    "membersCount": "Talabalar: {count}",
+    "topTitle": "Eng yaxshi talabalar",
+    "byGrade": "Baholar",
+    "byAttendance": "Davomat",
+    "you": "Siz",
+    "noValue": "—",
+    "topEmpty": "Bu semestr uchun hozircha maʼlumot yoʻq.",
+    "ranksTitle": "Guruh oʻrni",
+    "gpa": "Oʻrtacha baho",
+    "attendance": "Davomat",
+    "placeCourse": "Kurs boʻyicha {total} tadan {place}-oʻrin",
+    "placeLyceum": "Litsey boʻyicha {total} tadan {place}-oʻrin",
+    "rankingTitle": "Guruhlar reytingi",
+    "rankingScopeCourse": "Kurs",
+    "rankingScopeLyceum": "Litsey",
+    "mine": "Sizning guruhingiz",
+    "members": "Talabalar: {count}",
+    "noGroupTitle": "Siz hali guruhga qoʻshilmagansiz",
+    "noGroupHint": "Maʼmuriyat sizni guruhga qoʻshganda, u shu yerda koʻrinadi."
   }
 }

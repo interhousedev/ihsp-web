@@ -346,6 +346,8 @@
     "subgroupHint": "Your subgroup is not set yet, so lessons of both subgroups are shown.",
     "noLessons": "No lessons on this day.",
     "noLessonsWeek": "No lessons this week.",
+    "agenda": "Day schedule",
+    "gap": {"minutes": "{count} min", "free": "Free", "kind": {"lunch": "Lunch", "second_lunch": "Second lunch", "break": "Break", "assembly": "Assembly", "other": "Break"}},
     "fields": {
       "room": "Room",
       "teacher": "Teacher",
@@ -1245,5 +1247,28 @@
     "staff": "Open staff app",
     "id": "Open ID",
     "logout": "Log out"
+  },
+  "groupStanding": {
+    "course": "Course {course}",
+    "curator": "Curator",
+    "membersCount": "{count} students",
+    "topTitle": "Top students",
+    "byGrade": "Grades",
+    "byAttendance": "Attendance",
+    "you": "You",
+    "noValue": "—",
+    "topEmpty": "No data for this term yet.",
+    "ranksTitle": "Group standing",
+    "gpa": "Average grade",
+    "attendance": "Attendance",
+    "placeCourse": "{place} of {total} in the course",
+    "placeLyceum": "{place} of {total} in the lyceum",
+    "rankingTitle": "Groups ranking",
+    "rankingScopeCourse": "Course",
+    "rankingScopeLyceum": "Lyceum",
+    "mine": "Your group",
+    "members": "{count} students",
+    "noGroupTitle": "You are not in a group yet",
+    "noGroupHint": "When the administration adds you to a group, it will appear here."
   }
 }

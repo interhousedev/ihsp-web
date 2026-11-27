@@ -645,6 +645,8 @@
       "title": "Alerts",
       "drops": "GPA and semester mark drops",
       "dropsHint": "A message when your GPA or a semester mark goes down.",
+      "absences": "Absences (EMIS)",
+      "absencesHint": "A message in Telegram and the app when an absence is recorded in EMIS.",
       "gpaBelow": "GPA below",
       "semesterMarkBelow": "Semester mark below",
       "markBelow": "A mark below"
