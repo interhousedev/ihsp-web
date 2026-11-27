@@ -1,11 +1,15 @@
 "use client"
 
-import { getLessonHomeworkSubmissions } from "@ihsp/api"
+import { getLessonHomeworkSubmissions, type StaffSubmissionRow } from "@ihsp/api"
 import { QueryState } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, ScrollList } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
+import { SubmissionAiCheck } from "@/features/ai-tools/components/submission-ai-check"
 
+
+/** The served row carries the submission id; the hand-written `StaffSubmissionRow` of `@ihsp/api` does not declare it yet. */
+type RowWithId = StaffSubmissionRow & { id: string | null }
 type Status = "submitted" | "late" | "missing"
 
 const VARIANT: Record<Status, "secondary" | "destructive" | "outline"> = {
@@ -54,7 +58,7 @@ export function HomeworkSubmissionsSection({ lessonId }: { lessonId: string }) {
             ) : (
               <ScrollList label={t("title")} maxHeight="28rem">
                 <ul className="divide-y rounded-lg border">
-                  {data.students.map((row) => (
+                  {(data.students as RowWithId[]).map((row) => (
                     <li key={row.student.id} className="flex flex-col gap-1 p-3 text-sm">
                       <span className="flex flex-wrap items-center gap-2">
                         <span className="font-medium">
@@ -82,6 +86,9 @@ export function HomeworkSubmissionsSection({ lessonId }: { lessonId: string }) {
                             </li>
                           ))}
                         </ul>
+                      ) : null}
+                      {row.status !== "missing" && row.id ? (
+                        <SubmissionAiCheck submissionId={row.id} fileCount={row.files.length} />
                       ) : null}
                     </li>
                   ))}
