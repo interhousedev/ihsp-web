@@ -9,6 +9,7 @@ import Link from "next/link"
 import { fullName } from "../../shared/utils/people"
 import { clearPersistedQueries } from "../../offline/utils/persisted-queries"
 import { useInstallMenuItem } from "../../pwa/hooks/use-install-menu-item"
+import { useHomeHeroVisible } from "../../dashboard/hooks/use-home-hero"
 
 /** Profile menu in the header: Profile, Settings, language, theme and log out (WEB-2). */
 export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row" }) {
@@ -16,6 +17,8 @@ export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row"
   const { session } = useSession()
   const update = useUpdatePreferences()
   const platforms = usePlatformLinks()
+  // On a phone Home's hero already shows the face: the header avatar waits until the hero scrolls away.
+  const heroVisible = useHomeHeroVisible()
   const installItem = useInstallMenuItem()
   const feedback = useFeedbackMenu({ area: "my", mineHref: "/feedback/" })
   useSessionUserSync()
@@ -63,7 +66,7 @@ export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row"
   if (!isPwaMode())
     return (
       <>
-        <div className="flex min-w-0 items-center gap-2">
+        <div className={`min-w-0 items-center gap-2 ${heroVisible ? "hidden md:flex" : "flex"}`}>
           <span data-testid="header-name" className="hidden max-w-48 truncate text-sm font-medium md:inline">
             {name}
           </span>
@@ -77,7 +80,7 @@ export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row"
       <Link
         href="/settings/"
         aria-label={t("settings")}
-        className="flex size-11 items-center justify-center rounded-full md:hidden"
+        className={`size-11 items-center justify-center rounded-full md:hidden ${heroVisible ? "hidden" : "flex"}`}
       >
         <UserAvatar name={name} imageUrl={photo_url} />
       </Link>

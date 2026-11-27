@@ -6,7 +6,9 @@ import Link from "next/link"
 import { useSession, hasRole } from "@ihsp/auth"
 import { StudentCardButton } from "../../student-card/components/student-card-button"
 import { useScrolled } from "../../today/dashboard/use-scrolled"
+import { useHomeHeroObserver } from "../hooks/use-home-hero"
 import { useHomeStudent } from "../hooks/use-home-student"
+import { useRef } from "react"
 
 const PROFILE_HREF = "/profile/"
 
@@ -21,7 +23,10 @@ export function HomeHeader() {
   const student = useHomeStudent()
   const { session } = useSession()
   const isStudent = hasRole(session?.user.roles, "student")
-  const compact = useScrolled(24)
+  const heroRef = useRef<HTMLElement>(null)
+  const heroGone = useHomeHeroObserver(heroRef)
+  const scrolled = useScrolled(24)
+  const compact = heroGone ?? scrolled
   const profileLabel = student.name ? t("openProfileNamed", { name: student.name }) : t("openProfile")
 
   return (
@@ -37,19 +42,26 @@ export function HomeHeader() {
             compact ? "translate-y-0" : "-translate-y-full"
           }`}
         >
-          {/* Below md the shell's floating controls sit centred: only the face, on the start side, keeps the centre clear. */}
+          {/* Below md the shell's floating controls sit centred and already carry the face (hidden while the hero is
+              on screen): the bar adds only the QR button of the student card, on the start side. */}
+          {isStudent ? (
+            <span className="md:hidden">
+              <StudentCardButton iconOnly />
+            </span>
+          ) : null}
           <Link
             href={PROFILE_HREF}
             aria-label={profileLabel}
-            className="flex min-w-0 items-center gap-3 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-current md:flex-1"
+            className="hidden min-w-0 flex-1 items-center gap-3 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-current md:flex"
           >
             <TeacherAvatar name={student.name} photoUrl={student.photoUrl} size="default" decorative />
-            <span className="hidden min-w-0 flex-1 truncate text-base font-semibold md:block">{student.name}</span>
+            <span className="min-w-0 flex-1 truncate text-base font-semibold">{student.name}</span>
           </Link>
           <span aria-hidden className="hidden w-(--shell-controls-width,0px) shrink-0 md:block" />
         </div>
       </div>
       <header
+        ref={heroRef}
         data-testid="home-header"
         className="relative overflow-hidden rounded-b-3xl bg-[linear-gradient(135deg,var(--brand-strong),var(--brand))] text-(--brand-ink) px-4 pt-(--shell-top-reserve) pb-6 shadow-lg md:px-6"
       >
