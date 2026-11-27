@@ -75,7 +75,11 @@ export function QuestionEditDialog({
           <ul className="flex flex-col gap-2">
             {options.map((o, i) => (
               <li key={i} className="flex items-center gap-2">
-                <Checkbox checked={correct.includes(i)} onCheckedChange={() => toggle(i)} aria-label={t("bank.markCorrect", { n: String.fromCharCode(65 + i) })} />
+                <Checkbox
+                  checked={correct.includes(i)}
+                  onCheckedChange={() => toggle(i)}
+                  aria-label={t("bank.markCorrect", { n: String.fromCharCode(65 + i) })}
+                />
                 <span className="text-muted-foreground w-5 text-sm">{String.fromCharCode(65 + i)}</span>
                 <Input
                   value={o}
@@ -83,14 +87,27 @@ export function QuestionEditDialog({
                   aria-label={`${t("bank.option")} ${String.fromCharCode(65 + i)}`}
                   className={`min-h-11 md:min-h-8 ${correct.includes(i) ? "border-success" : ""}`}
                 />
-                <Button type="button" variant="ghost" size="icon-sm" disabled={options.length <= 2} onClick={() => remove(i)} aria-label={t("bank.removeOption")}>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  disabled={options.length <= 2}
+                  onClick={() => remove(i)}
+                  aria-label={t("bank.removeOption")}
+                >
                   <IconX aria-hidden />
                 </Button>
               </li>
             ))}
           </ul>
           {options.length < 8 ? (
-            <Button type="button" variant="ghost" size="sm" className="self-start" onClick={() => setOptions((o) => [...o, ""])}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="self-start"
+              onClick={() => setOptions((o) => [...o, ""])}
+            >
               <IconPlus aria-hidden />
               {t("bank.addOption")}
             </Button>

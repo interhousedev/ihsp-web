@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, IconLoader, IconSparkles, Input, StateView, Textarea } from "@ihsp/ui"
+import { Button, Spinner, IconSparkles, Input, StateView, Textarea } from "@ihsp/ui"
 import { useState } from "react"
 import { useWorkCheck } from "../hooks/use-ai-tools"
 import { FieldRow, SubjectGroupFields, useDefaultSubject, useNotebookName } from "./form-bits"
@@ -52,14 +52,26 @@ export function WorkCheckPanel() {
               className="min-h-72 max-h-[70vh] p-4 text-base leading-relaxed md:text-base"
             />
             <FieldRow label={t("form.criteria")} htmlFor="w-crit">
-              <Input id="w-crit" value={rubric} onChange={(e) => setRubric(e.target.value)} placeholder={t("form.criteriaPlaceholder")} className="min-h-11 md:min-h-8" />
+              <Input
+                id="w-crit"
+                value={rubric}
+                onChange={(e) => setRubric(e.target.value)}
+                placeholder={t("form.criteriaPlaceholder")}
+                className="min-h-11 md:min-h-8"
+              />
             </FieldRow>
-            <SubjectGroupFields subjectId={subjectId} groupId={groupId} onSubject={setSubjectChoice} onGroup={setGroupId} idPrefix="w" />
+            <SubjectGroupFields
+              subjectId={subjectId}
+              groupId={groupId}
+              onSubject={setSubjectChoice}
+              onGroup={setGroupId}
+              idPrefix="w"
+            />
           </>
         )}
         <NotebookHint destination={destination} />
         <Button type="submit" size="lg" className="self-start" disabled={(!ready && !collapsed) || pending}>
-          {pending ? <IconLoader className="animate-spin" aria-hidden /> : <IconSparkles aria-hidden />}
+          {pending ? <Spinner /> : <IconSparkles aria-hidden />}
           {pending ? t("workCheck.checking") : result ? t("workCheck.runAgain") : t("workCheck.run")}
         </Button>
       </form>

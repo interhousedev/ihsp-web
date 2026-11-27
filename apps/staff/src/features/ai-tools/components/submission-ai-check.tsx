@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, IconLoader, IconSparkles, StateView } from "@ihsp/ui"
+import { Button, Spinner, IconSparkles, StateView } from "@ihsp/ui"
 import { useWorkCheck } from "../hooks/use-ai-tools"
 import { NotebookSaved } from "./saved-to"
 import { WorkCheckResultView } from "./work-check-result"
@@ -18,8 +18,15 @@ export function SubmissionAiCheck({ submissionId, fileCount }: { submissionId: s
   return (
     <div className="flex flex-col gap-3 pt-1">
       {result ? null : (
-        <Button type="button" variant="outline" size="sm" className="self-start" disabled={pending} onClick={() => run({ submissionId })}>
-          {pending ? <IconLoader className="animate-spin" aria-hidden /> : <IconSparkles aria-hidden />}
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="self-start"
+          disabled={pending}
+          onClick={() => run({ submissionId })}
+        >
+          {pending ? <Spinner /> : <IconSparkles aria-hidden />}
           {pending ? t("workCheck.checking") : t("workCheck.inline")}
         </Button>
       )}

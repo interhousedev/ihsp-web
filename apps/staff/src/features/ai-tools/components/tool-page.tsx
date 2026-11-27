@@ -7,7 +7,7 @@ import {
   Button,
   IconCheck,
   IconCopy,
-  IconLoader,
+  Spinner,
   IconSparkles,
   Input,
   PageContainer,
@@ -18,7 +18,14 @@ import {
 } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
 import { useState } from "react"
-import { useBankPick, useBankTopics, toListQuestion, useRunTool, useSubjects, type ToolResult } from "../hooks/use-ai-tools"
+import {
+  useBankPick,
+  useBankTopics,
+  toListQuestion,
+  useRunTool,
+  useSubjects,
+  type ToolResult,
+} from "../hooks/use-ai-tools"
 import { MOCK_LESSON_TOPIC, TOOL_IDS, type Difficulty, type ToolId } from "../mock-data"
 import { FieldRow, NativeSelect, SubjectGroupFields, useDefaultSubject, useNotebookName } from "./form-bits"
 import { QuestionList } from "./question-list"
@@ -48,7 +55,15 @@ function Sheet({ text }: { text: string }) {
   )
 }
 
-function TextResult({ result, tool, destination }: { result: Extract<ToolResult, { kind: "text" }>; tool: ToolId; destination: string }) {
+function TextResult({
+  result,
+  tool,
+  destination,
+}: {
+  result: Extract<ToolResult, { kind: "text" }>
+  tool: ToolId
+  destination: string
+}) {
   const t = useT("aiTools")
   const [copied, setCopied] = useState(false)
   return (
@@ -110,7 +125,15 @@ export function ToolPage() {
       </PageContainer>
     )
   }
-  return <ToolForm tool={id} initialTopic={topicParam ?? MOCK_LESSON_TOPIC} initialSubject={subjectParam ?? ""} initialGroup={groupParam ?? ""} initialSource={sourceParam === "bank" ? "bank" : "ai"} />
+  return (
+    <ToolForm
+      tool={id}
+      initialTopic={topicParam ?? MOCK_LESSON_TOPIC}
+      initialSubject={subjectParam ?? ""}
+      initialGroup={groupParam ?? ""}
+      initialSource={sourceParam === "bank" ? "bank" : "ai"}
+    />
+  )
 }
 
 type Source = "ai" | "bank"
@@ -146,7 +169,10 @@ function ToolForm({
   const [nonce, setNonce] = useState(0)
   const fromBank = tool === "questions" && source === "bank"
   const { topics } = useBankTopics(fromBank ? subjectId : "")
-  const available = bankTopic === "" ? topics.reduce((sum, x) => sum + x.count, 0) : (topics.find((x) => x.topic === bankTopic)?.count ?? 0)
+  const available =
+    bankTopic === ""
+      ? topics.reduce((sum, x) => sum + x.count, 0)
+      : (topics.find((x) => x.topic === bankTopic)?.count ?? 0)
   const counts = [5, 10, 15, 20].filter((n) => n <= available)
   if (available > 0 && !counts.includes(available) && available < 20) counts.push(available)
   const safeCount = counts.includes(count) ? count : (counts[counts.length - 1] ?? 0)
@@ -157,7 +183,11 @@ function ToolForm({
   }
   const topicName = bankTopic === "" ? null : bankTopic
   return (
-    <PageContainer title={t(`tools.${tool}.name`)} badge={fromBank ? null : <AiMark label={t("result.aiMark")} />} className="pb-28 md:pb-6">
+    <PageContainer
+      title={t(`tools.${tool}.name`)}
+      badge={fromBank ? null : <AiMark label={t("result.aiMark")} />}
+      className="pb-28 md:pb-6"
+    >
       <BackLink href="/ai-tools/" label={t("title")} />
       <p className="text-muted-foreground max-w-2xl text-sm">{t(`tools.${tool}.desc`)}</p>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
@@ -166,7 +196,16 @@ function ToolForm({
           onSubmit={(e) => {
             e.preventDefault()
             if (fromBank) doPick()
-            else run({ subjectId, groupId: groupId || null, topic, level: LEVEL_API[level], language, count, planMinutes: 45 })
+            else
+              run({
+                subjectId,
+                groupId: groupId || null,
+                topic,
+                level: LEVEL_API[level],
+                language,
+                count,
+                planMinutes: 45,
+              })
           }}
         >
           {tool === "questions" ? (
@@ -211,7 +250,11 @@ function ToolForm({
               </FieldRow>
               <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
                 <FieldRow label={t("form.difficulty")} htmlFor="f-diff">
-                  <NativeSelect id="f-diff" value={difficulty} onChange={(e) => setDifficulty(e.target.value as Difficulty | "any")}>
+                  <NativeSelect
+                    id="f-diff"
+                    value={difficulty}
+                    onChange={(e) => setDifficulty(e.target.value as Difficulty | "any")}
+                  >
                     <option value="any">{t("form.anyDifficulty")}</option>
                     {(["easy", "medium", "hard"] as const).map((d) => (
                       <option key={d} value={d}>
@@ -221,7 +264,12 @@ function ToolForm({
                   </NativeSelect>
                 </FieldRow>
                 <FieldRow label={t("form.count")} htmlFor="f-count">
-                  <NativeSelect id="f-count" value={safeCount} disabled={available === 0} onChange={(e) => setCount(Number(e.target.value))}>
+                  <NativeSelect
+                    id="f-count"
+                    value={safeCount}
+                    disabled={available === 0}
+                    onChange={(e) => setCount(Number(e.target.value))}
+                  >
                     {counts.map((n) => (
                       <option key={n} value={n}>
                         {n}
@@ -232,13 +280,23 @@ function ToolForm({
               </div>
               <div className="flex flex-col gap-2 text-sm" aria-live="polite">
                 <p className={available === 0 ? "text-destructive font-medium" : "font-medium"}>
-                  {topicName ? t("questions.inBankTopic", { n: available }) : t("questions.inBankSubject", { n: available })}
+                  {topicName
+                    ? t("questions.inBankTopic", { n: available })
+                    : t("questions.inBankSubject", { n: available })}
                 </p>
-                {available > 0 && available < 5 ? <p className="text-muted-foreground">{t("questions.bankFew", { n: available })}</p> : null}
+                {available > 0 && available < 5 ? (
+                  <p className="text-muted-foreground">{t("questions.bankFew", { n: available })}</p>
+                ) : null}
                 {available === 0 ? (
                   <>
                     <p className="text-muted-foreground">{t("questions.bankNone")}</p>
-                    <Button type="button" variant="outline" size="sm" className="self-start" onClick={() => setSource("ai")}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="self-start"
+                      onClick={() => setSource("ai")}
+                    >
                       <IconSparkles aria-hidden />
                       {t("questions.createWithAi")}
                     </Button>
@@ -249,9 +307,20 @@ function ToolForm({
           ) : (
             <>
               <FieldRow label={t("form.topic")} htmlFor="f-topic">
-                <Input id="f-topic" value={topic} placeholder={t("form.topicPlaceholder")} onChange={(e) => setTopic(e.target.value)} className="min-h-11 md:min-h-8" />
+                <Input
+                  id="f-topic"
+                  value={topic}
+                  placeholder={t("form.topicPlaceholder")}
+                  onChange={(e) => setTopic(e.target.value)}
+                  className="min-h-11 md:min-h-8"
+                />
               </FieldRow>
-              <SubjectGroupFields subjectId={subjectId} groupId={groupId} onSubject={setSubjectChoice} onGroup={setGroupId} />
+              <SubjectGroupFields
+                subjectId={subjectId}
+                groupId={groupId}
+                onSubject={setSubjectChoice}
+                onGroup={setGroupId}
+              />
               <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
                 <FieldRow label={t("form.level")} htmlFor="f-level">
                   <NativeSelect id="f-level" value={level} onChange={(e) => setLevel(e.target.value as Level)}>
@@ -287,8 +356,14 @@ function ToolForm({
             </>
           )}
           <Button type="submit" disabled={pending || picking || subjectId === "" || (fromBank && available === 0)}>
-            {pending ? <IconLoader className="animate-spin" aria-hidden /> : <IconSparkles aria-hidden />}
-            {fromBank ? t("questions.pick") : pending ? t("form.generating") : result ? t("form.regenerate") : t("form.generate")}
+            {pending ? <Spinner /> : <IconSparkles aria-hidden />}
+            {fromBank
+              ? t("questions.pick")
+              : pending
+                ? t("form.generating")
+                : result
+                  ? t("form.regenerate")
+                  : t("form.generate")}
           </Button>
         </form>
         <section aria-live="polite" className="flex min-w-0 flex-col gap-3">
@@ -297,7 +372,12 @@ function ToolForm({
             picked === null ? (
               <StateView state="empty" emptyText={t("questions.bankEmpty")} />
             ) : (
-              <QuestionList key={nonce} questions={picked.questions.map((q) => toListQuestion(q.id, q))} subjectId={subjectId} onShuffle={doPick} />
+              <QuestionList
+                key={nonce}
+                questions={picked.questions.map((q) => toListQuestion(q.id, q))}
+                subjectId={subjectId}
+                onShuffle={doPick}
+              />
             )
           ) : (
             <>
@@ -305,7 +385,15 @@ function ToolForm({
               {error ? <p className="text-destructive text-sm">{t("result.failed")}</p> : null}
               {!pending && result === null ? <StateView state="empty" emptyText={t("result.empty")} /> : null}
               {result?.kind === "questions" ? (
-                <QuestionList key={result.questions.length + String(nonce)} questions={result.questions} destination={destination} subjectId={subjectId} difficulty={LEVEL_DIFFICULTY[level]} topic={topic} canSaveToBank />
+                <QuestionList
+                  key={result.questions.length + String(nonce)}
+                  questions={result.questions}
+                  destination={destination}
+                  subjectId={subjectId}
+                  difficulty={LEVEL_DIFFICULTY[level]}
+                  topic={topic}
+                  canSaveToBank
+                />
               ) : null}
               {result?.kind === "text" ? <TextResult result={result} tool={tool} destination={destination} /> : null}
             </>

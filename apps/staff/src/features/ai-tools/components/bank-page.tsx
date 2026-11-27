@@ -5,7 +5,15 @@ import { useT } from "@ihsp/i18n"
 import { Button, PageContainer, Pill, StateView } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
-import { deleteBankQuestion, editBankQuestion, listBankQuestions, setQuestionVisibility, type BankQuestion, type Difficulty, type Visibility } from "../api"
+import {
+  deleteBankQuestion,
+  editBankQuestion,
+  listBankQuestions,
+  setQuestionVisibility,
+  type BankQuestion,
+  type Difficulty,
+  type Visibility,
+} from "../api"
 import { useBankTopics } from "../hooks/use-ai-tools"
 import { NativeSelect, useDefaultSubject } from "./form-bits"
 import { useSubjects } from "../hooks/use-ai-tools"
@@ -37,7 +45,14 @@ export function BankPage() {
   const refresh = () => client.invalidateQueries({ queryKey: ["staff", "question-bank", subjectId] })
   const remove = useMutation({ mutationFn: deleteBankQuestion, onSuccess: refresh })
   const save = useMutation({
-    mutationFn: (q: BankQuestion) => editBankQuestion(q.id, { question: q.question, answer: q.answer, options: q.options, explanation: q.explanation, difficulty: q.difficulty }),
+    mutationFn: (q: BankQuestion) =>
+      editBankQuestion(q.id, {
+        question: q.question,
+        answer: q.answer,
+        options: q.options,
+        explanation: q.explanation,
+        difficulty: q.difficulty,
+      }),
     onSuccess: () => {
       setEditing(null)
       return refresh()
@@ -68,10 +83,14 @@ export function BankPage() {
             </option>
           ))}
         </NativeSelect>
-        <NativeSelect aria-label={t("form.emisTopic")} value={topic} onChange={(e) => {
+        <NativeSelect
+          aria-label={t("form.emisTopic")}
+          value={topic}
+          onChange={(e) => {
             setTopic(e.target.value)
             setLimit(PAGE)
-          }}>
+          }}
+        >
           <option value="">{t("bank.allTopics")}</option>
           {topics.map((x) => (
             <option key={x.topic} value={x.topic}>
@@ -81,7 +100,9 @@ export function BankPage() {
         </NativeSelect>
       </div>
       {list.isPending ? <StateView state="loading" /> : null}
-      {!list.isPending && questions.length === 0 ? <p className="text-muted-foreground text-sm">{t("bank.empty")}</p> : null}
+      {!list.isPending && questions.length === 0 ? (
+        <p className="text-muted-foreground text-sm">{t("bank.empty")}</p>
+      ) : null}
       <ul className="flex flex-col gap-3">
         {questions.map((q) => (
           <li key={q.id} className="bg-card ring-foreground/10 flex flex-col gap-2 rounded-card p-4 ring-1">
@@ -92,10 +113,25 @@ export function BankPage() {
             </div>
             {editing?.id === q.id ? (
               <div className="flex flex-col gap-2">
-                <textarea aria-label={t("bank.questionText")} className="border-input min-h-20 rounded-md border bg-transparent p-2 text-sm" value={editing.question} onChange={(e) => setEditing({ ...editing, question: e.target.value })} />
-                <textarea aria-label={t("bank.answerText")} className="border-input min-h-16 rounded-md border bg-transparent p-2 text-sm" value={editing.answer} onChange={(e) => setEditing({ ...editing, answer: e.target.value })} />
+                <textarea
+                  aria-label={t("bank.questionText")}
+                  className="border-input min-h-20 rounded-md border bg-transparent p-2 text-sm"
+                  value={editing.question}
+                  onChange={(e) => setEditing({ ...editing, question: e.target.value })}
+                />
+                <textarea
+                  aria-label={t("bank.answerText")}
+                  className="border-input min-h-16 rounded-md border bg-transparent p-2 text-sm"
+                  value={editing.answer}
+                  onChange={(e) => setEditing({ ...editing, answer: e.target.value })}
+                />
                 <div className="flex gap-2">
-                  <Button type="button" size="sm" disabled={save.isPending || !editing.question.trim() || !editing.answer.trim()} onClick={() => save.mutate(editing)}>
+                  <Button
+                    type="button"
+                    size="sm"
+                    disabled={save.isPending || !editing.question.trim() || !editing.answer.trim()}
+                    onClick={() => save.mutate(editing)}
+                  >
                     {t("bank.save")}
                   </Button>
                   <Button type="button" size="sm" variant="outline" onClick={() => setEditing(null)}>
@@ -108,13 +144,27 @@ export function BankPage() {
                 <p className="font-medium break-words">{q.question}</p>
                 <p className="text-muted-foreground text-sm break-words">{q.answer}</p>
                 <div className="flex flex-wrap gap-2">
-                  <Button type="button" variant="outline" size="sm" disabled={share.isPending} onClick={() => share.mutate({ id: q.id, visibility: q.visibility === "subject" ? "teacher" : "subject" })}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={share.isPending}
+                    onClick={() =>
+                      share.mutate({ id: q.id, visibility: q.visibility === "subject" ? "teacher" : "subject" })
+                    }
+                  >
                     {q.visibility === "subject" ? t("bank.sharedWithSubject") : t("bank.onlyMine")}
                   </Button>
                   <Button type="button" variant="outline" size="sm" onClick={() => setEditing(q)}>
                     {t("bank.edit")}
                   </Button>
-                  <Button type="button" variant="outline" size="sm" disabled={remove.isPending} onClick={() => window.confirm(t("bank.deleteTitle")) && remove.mutate(q.id)}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={remove.isPending}
+                    onClick={() => window.confirm(t("bank.deleteTitle")) && remove.mutate(q.id)}
+                  >
                     {t("bank.delete")}
                   </Button>
                 </div>

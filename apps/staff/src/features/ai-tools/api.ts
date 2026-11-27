@@ -30,7 +30,12 @@ export type CheckWorkResult = {
   suggestions: string[]
 }
 export type AuthorshipVerdict = "low" | "mid" | "high"
-export type AuthorshipResult = { verdict: AuthorshipVerdict | string; ai_likelihood: number; signals: string[]; caveat: string }
+export type AuthorshipResult = {
+  verdict: AuthorshipVerdict | string
+  ai_likelihood: number
+  signals: string[]
+  caveat: string
+}
 
 export type BankQuestion = {
   id: string
@@ -67,13 +72,20 @@ export type MediaJobBody = {
   script: { id: string; speaker?: string; text: string; source_refs?: string[] }[]
 }
 
-type StaffSubjectDto = { subject_id: string; name: string; groups: { group_id: string; group_name: string; subgroup: number | null }[] }
+type StaffSubjectDto = {
+  subject_id: string
+  name: string
+  groups: { group_id: string; group_name: string; subgroup: number | null }[]
+}
 
 export const getStaffSubjects = async (): Promise<StaffSubject[]> =>
   (await api.get<StaffSubjectDto[]>("/v1/staff/subjects")).map((s) => ({
     subject_id: s.subject_id,
     name: s.name,
-    groups: s.groups.map((g) => ({ id: g.group_id, name: g.subgroup ? `${g.group_name} · ${g.subgroup}` : g.group_name })),
+    groups: s.groups.map((g) => ({
+      id: g.group_id,
+      name: g.subgroup ? `${g.group_name} · ${g.subgroup}` : g.group_name,
+    })),
   }))
 
 export const generateQuestions = (body: {
@@ -132,7 +144,13 @@ export const listBankQuestions = (subjectId: string, q: { topic?: string; limit:
 
 export const editBankQuestion = (
   id: string,
-  body: { question: string; answer: string; options?: string[]; explanation?: string | null; difficulty?: Difficulty | null },
+  body: {
+    question: string
+    answer: string
+    options?: string[]
+    explanation?: string | null
+    difficulty?: Difficulty | null
+  },
 ) => api.put<BankQuestion>(`/v1/teacher/question-bank/questions/${seg(id)}`, body)
 
 export const deleteBankQuestion = (id: string) => api.delete<void>(`/v1/teacher/question-bank/questions/${seg(id)}`)
@@ -145,7 +163,8 @@ export const drawFromBank = (
 export const saveToBank = (
   subjectId: string,
   body: { topic: string; questions: QuestionItem[]; difficulty?: Difficulty; visibility?: Visibility },
-) => api.post<{ saved: number; skipped: number }>(`/v1/teacher/question-bank/subjects/${seg(subjectId)}/questions`, body)
+) =>
+  api.post<{ saved: number; skipped: number }>(`/v1/teacher/question-bank/subjects/${seg(subjectId)}/questions`, body)
 
 export const setQuestionVisibility = (questionId: string, visibility: Visibility) =>
   api.put<void>(`/v1/teacher/question-bank/questions/${seg(questionId)}/visibility`, { visibility })
@@ -153,5 +172,6 @@ export const setQuestionVisibility = (questionId: string, visibility: Visibility
 export const createMediaJob = (body: MediaJobBody) => api.post<MediaJob>("/v1/media/jobs", body)
 export const getMediaJob = (id: string) => api.get<MediaJob>(`/v1/media/jobs/${seg(id)}`)
 export const cancelMediaJob = (id: string) => api.post<MediaJob>(`/v1/media/jobs/${seg(id)}:cancel`, {})
-export const listMediaJobs = (limit = 20) => api.get<{ items: MediaJob[]; total: number }>(`/v1/media/jobs?limit=${limit}`)
+export const listMediaJobs = (limit = 20) =>
+  api.get<{ items: MediaJob[]; total: number }>(`/v1/media/jobs?limit=${limit}`)
 export const retryMediaJob = (id: string) => api.post<MediaJob>(`/v1/media/jobs/${seg(id)}:retry`, {})

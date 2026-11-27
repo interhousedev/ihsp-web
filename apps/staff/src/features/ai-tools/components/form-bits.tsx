@@ -6,7 +6,17 @@ import type { ComponentProps, ReactNode } from "react"
 import { useSubjects } from "../hooks/use-ai-tools"
 
 /** A label above a control. */
-export function FieldRow({ label, htmlFor, children, className }: { label: string; htmlFor?: string; children: ReactNode; className?: string }) {
+export function FieldRow({
+  label,
+  htmlFor,
+  children,
+  className,
+}: {
+  label: string
+  htmlFor?: string
+  children: ReactNode
+  className?: string
+}) {
   return (
     <div className={cn("flex min-w-0 flex-col gap-1.5", className)}>
       <label htmlFor={htmlFor} className="text-sm font-medium">

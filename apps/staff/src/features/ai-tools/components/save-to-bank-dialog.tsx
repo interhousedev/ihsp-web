@@ -38,7 +38,10 @@ export function SaveToBankDialog({
           .map((q) => ({
             question: q.text.trim().slice(0, 2000),
             answer: (q.options[q.correct[0] ?? 0] ?? "").trim().slice(0, 2000),
-            options: q.options.map((o) => o.trim()).filter((o) => o !== "").slice(0, 10),
+            options: q.options
+              .map((o) => o.trim())
+              .filter((o) => o !== "")
+              .slice(0, 10),
             explanation: null,
           }))
           .filter((q) => q.question !== "" && q.answer !== "")

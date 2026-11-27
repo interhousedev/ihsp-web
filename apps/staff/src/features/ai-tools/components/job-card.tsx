@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, IconCheck, IconClock, IconLoader, IconMicrophone, IconVideo, IconX, Pill } from "@ihsp/ui"
+import { Button, IconCheck, IconClock, IconLoader, IconMicrophone, IconVideo, IconX, Pill, Spinner } from "@ihsp/ui"
 import type { MediaJob } from "../api"
 import { DownloadMediaButton } from "./download-media-button"
 
@@ -9,7 +9,15 @@ const TONE = { queued: "neutral", voicing: "primary", rendering: "primary", done
 const ICON = { queued: IconClock, voicing: IconLoader, rendering: IconLoader, done: IconCheck, failed: IconX } as const
 
 /** One media job: its server status; a finished one offers the mp4 (or audio) download. */
-export function JobCard({ job, onRetry, retrying }: { job: MediaJob; onRetry?: (id: string) => void; retrying?: boolean }) {
+export function JobCard({
+  job,
+  onRetry,
+  retrying,
+}: {
+  job: MediaJob
+  onRetry?: (id: string) => void
+  retrying?: boolean
+}) {
   const t = useT("aiTools")
   const isVideo = job.kind === "video_with_voice"
   const Kind = isVideo ? IconVideo : IconMicrophone
@@ -24,7 +32,7 @@ export function JobCard({ job, onRetry, retrying }: { job: MediaJob; onRetry?: (
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <p className="font-medium">{isVideo ? t("studio.outputs.video") : t("studio.outputs.audio")}</p>
           <Pill tone={TONE[job.status]} className="self-start">
-            <StateIcon className={busy ? "size-3.5 animate-spin" : "size-3.5"} aria-hidden />
+            {busy ? <Spinner className="size-3.5" /> : <StateIcon className="size-3.5" aria-hidden />}
             {t(`studio.state.${job.status}`)}
           </Pill>
         </div>

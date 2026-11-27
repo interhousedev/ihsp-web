@@ -26,7 +26,17 @@ const TOOL_ICON = {
 const CARD =
   "bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex h-full items-center gap-3 rounded-card p-3 text-start ring-1 transition-colors outline-none focus-visible:ring-2 sm:min-h-32 sm:flex-col sm:items-start sm:gap-2 sm:p-4"
 
-function HubCard({ href, icon: Icon, name, desc }: { href: string; icon: typeof IconSparkles; name: string; desc: string }) {
+function HubCard({
+  href,
+  icon: Icon,
+  name,
+  desc,
+}: {
+  href: string
+  icon: typeof IconSparkles
+  name: string
+  desc: string
+}) {
   return (
     <li>
       <Link href={href} className={CARD}>
@@ -62,7 +72,13 @@ export function AiToolsPage() {
       <div className="flex flex-col gap-6">
         <ul className={`grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 ${attention ? "order-2" : ""}`}>
           {TOOL_IDS.map((id) => (
-            <HubCard key={id} href={`/ai-tools/tool/?id=${id}`} icon={TOOL_ICON[id]} name={t(`tools.${id}.name`)} desc={t(`tools.${id}.desc`)} />
+            <HubCard
+              key={id}
+              href={`/ai-tools/tool/?id=${id}`}
+              icon={TOOL_ICON[id]}
+              name={t(`tools.${id}.name`)}
+              desc={t(`tools.${id}.desc`)}
+            />
           ))}
           <HubCard href="/ai-tools/studio/" icon={IconVideo} name={t("studio.title")} desc={t("studio.desc")} />
         </ul>

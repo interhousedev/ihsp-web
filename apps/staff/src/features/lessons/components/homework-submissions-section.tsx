@@ -7,7 +7,6 @@ import { Badge, ScrollList } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { SubmissionAiCheck } from "@/features/ai-tools/components/submission-ai-check"
 
-
 /** The served row carries the submission id; the hand-written `StaffSubmissionRow` of `@ihsp/api` does not declare it yet. */
 type RowWithId = StaffSubmissionRow & { id: string | null }
 type Status = "submitted" | "late" | "missing"

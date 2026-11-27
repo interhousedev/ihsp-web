@@ -2,7 +2,7 @@
 
 import { BackLink } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Button, IconLoader, IconMicrophone, IconVideo, PageContainer, Pill, Textarea } from "@ihsp/ui"
+import { Button, Spinner, IconMicrophone, IconVideo, PageContainer, Pill, Textarea } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
 import { useState } from "react"
 import type { MediaKind } from "../api"
@@ -41,9 +41,12 @@ export function StudioPage() {
       <BackLink href="/ai-tools/" label={t("title")} />
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-5">
         {job ? (
-          <section aria-live="polite" className="bg-card ring-foreground/10 flex flex-col gap-3 rounded-card p-5 ring-1">
+          <section
+            aria-live="polite"
+            className="bg-card ring-foreground/10 flex flex-col gap-3 rounded-card p-5 ring-1"
+          >
             <Pill tone={TONE[job.status]} className="self-start">
-              {busy ? <IconLoader className="size-3.5 animate-spin" aria-hidden /> : null}
+              {busy ? <Spinner className="size-3.5" /> : null}
               {t(`studio.state.${job.status}`)}
             </Pill>
             {job.status === "done" && job.file_id ? (
@@ -80,7 +83,13 @@ export function StudioPage() {
                   ["audio_only", IconMicrophone, t("studio.outputs.audio")],
                 ] as const
               ).map(([id, Icon, label]) => (
-                <Button key={id} type="button" variant={kind === id ? "default" : "outline"} aria-pressed={kind === id} onClick={() => setKind(id)}>
+                <Button
+                  key={id}
+                  type="button"
+                  variant={kind === id ? "default" : "outline"}
+                  aria-pressed={kind === id}
+                  onClick={() => setKind(id)}
+                >
                   <Icon aria-hidden />
                   {label}
                 </Button>
@@ -97,7 +106,13 @@ export function StudioPage() {
               className="min-h-72 max-h-[70vh] p-4 text-base leading-relaxed md:text-base"
             />
             <p className="text-muted-foreground text-sm">{t("studio.scenesCount", { count: scenes.length })}</p>
-            <SubjectGroupFields subjectId={subjectId} groupId={groupId} onSubject={setSubjectChoice} onGroup={setGroupId} idPrefix="st" />
+            <SubjectGroupFields
+              subjectId={subjectId}
+              groupId={groupId}
+              onSubject={setSubjectChoice}
+              onGroup={setGroupId}
+              idPrefix="st"
+            />
             <FieldRow label={t("form.language")} htmlFor="st-lang">
               <NativeSelect id="st-lang" value={language} onChange={(e) => setLanguage(e.target.value)}>
                 <option value="ru">Русский</option>
@@ -107,8 +122,13 @@ export function StudioPage() {
             </FieldRow>
             <NotebookHint destination={destination} />
             {error ? <p className="text-destructive text-sm">{t("studio.failed")}</p> : null}
-            <Button type="submit" size="lg" className="self-start" disabled={starting || scenes.length === 0 || subjectId === ""}>
-              {starting ? <IconLoader className="animate-spin" aria-hidden /> : null}
+            <Button
+              type="submit"
+              size="lg"
+              className="self-start"
+              disabled={starting || scenes.length === 0 || subjectId === ""}
+            >
+              {starting ? <Spinner /> : null}
               {t("studio.start")}
             </Button>
           </form>

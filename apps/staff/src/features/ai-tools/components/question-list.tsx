@@ -81,12 +81,21 @@ export function QuestionList({
               <p className="font-medium break-words">
                 {i + 1}. {q.text}
               </p>
-              {isMulti(q) ? <Pill tone="warning" className="self-start">{t("questions.multi")}</Pill> : null}
+              {isMulti(q) ? (
+                <Pill tone="warning" className="self-start">
+                  {t("questions.multi")}
+                </Pill>
+              ) : null}
               <ul className="flex flex-col gap-1 text-sm">
                 {q.options.map((o, oi) => {
                   const ok = q.correct.includes(oi)
                   return (
-                    <li key={o} className={ok ? "text-success flex items-start gap-1.5 font-semibold" : "text-muted-foreground ps-5.5"}>
+                    <li
+                      key={o}
+                      className={
+                        ok ? "text-success flex items-start gap-1.5 font-semibold" : "text-muted-foreground ps-5.5"
+                      }
+                    >
                       {ok ? <IconCheck className="mt-0.5 size-4 shrink-0" aria-hidden /> : null}
                       <span>
                         {String.fromCharCode(65 + oi)}. {o}
@@ -128,7 +137,9 @@ export function QuestionList({
           question={asBank(editing)}
           onClose={() => setEditing(null)}
           onSave={(q) => {
-            setQuestions((qs) => qs.map((x) => (x.id === q.id ? { id: q.id, text: q.text, options: q.options, correct: q.correct } : x)))
+            setQuestions((qs) =>
+              qs.map((x) => (x.id === q.id ? { id: q.id, text: q.text, options: q.options, correct: q.correct } : x)),
+            )
             setEditing(null)
           }}
         />

@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, IconChecklist, IconFileText, IconLoader, IconSparkles, IconVideo, ResponsiveDialog } from "@ihsp/ui"
+import { Button, IconChecklist, IconFileText, Spinner, IconSparkles, IconVideo, ResponsiveDialog } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
 import { useRunTool } from "../hooks/use-ai-tools"
@@ -74,15 +74,27 @@ export function LessonAiActions({
                 ))}
               </NativeSelect>
             </FieldRow>
-            <Button type="button" className="col-span-2 sm:col-span-1" disabled={pending || subjectId === ""} onClick={() => run({ subjectId, groupId, topic, level, count })}>
-              {pending ? <IconLoader className="animate-spin" aria-hidden /> : <IconSparkles aria-hidden />}
+            <Button
+              type="button"
+              className="col-span-2 sm:col-span-1"
+              disabled={pending || subjectId === ""}
+              onClick={() => run({ subjectId, groupId, topic, level, count })}
+            >
+              {pending ? <Spinner /> : <IconSparkles aria-hidden />}
               {pending ? t("form.generating") : result ? t("form.regenerate") : t("form.generate")}
             </Button>
           </div>
           <NotebookHint destination={destination} />
           {pending ? <p className="text-muted-foreground text-sm">{t("lesson.generating")}</p> : null}
           {result?.kind === "questions" ? (
-            <QuestionList questions={result.questions} destination={destination} subjectId={subjectId} topic={topic} canSaveToBank inDialog />
+            <QuestionList
+              questions={result.questions}
+              destination={destination}
+              subjectId={subjectId}
+              topic={topic}
+              canSaveToBank
+              inDialog
+            />
           ) : null}
         </div>
       </ResponsiveDialog>

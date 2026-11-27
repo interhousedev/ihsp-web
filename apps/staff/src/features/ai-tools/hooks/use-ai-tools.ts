@@ -26,9 +26,7 @@ import {
 } from "../api"
 import type { MockQuestion, ToolId } from "../mock-data"
 
-export type ToolResult =
-  | { kind: "questions"; questions: MockQuestion[] }
-  | { kind: "text"; text: string }
+export type ToolResult = { kind: "questions"; questions: MockQuestion[] } | { kind: "text"; text: string }
 
 /** The subjects the signed-in teacher teaches with their groups (`GET /v1/staff/subjects`). */
 export function useSubjects() {
@@ -56,12 +54,20 @@ export type ToolParams = {
 export function useRunTool(tool: ToolId) {
   const mutation = useMutation({
     mutationFn: async (p: ToolParams): Promise<ToolResult> => {
-      const base = { topic: p.topic, subject_id: p.subjectId, group_id: p.groupId, level: p.level, language: p.language }
+      const base = {
+        topic: p.topic,
+        subject_id: p.subjectId,
+        group_id: p.groupId,
+        level: p.level,
+        language: p.language,
+      }
       if (tool === "questions") {
         const out = await generateQuestions({ ...base, count: p.count })
         return {
           kind: "questions",
-          questions: out.questions.map((q: QuestionItem, i) => toListQuestion(`g${i}`, { ...q, options: q.options ?? [] })),
+          questions: out.questions.map((q: QuestionItem, i) =>
+            toListQuestion(`g${i}`, { ...q, options: q.options ?? [] }),
+          ),
         }
       }
       if (tool === "handout") {
@@ -106,7 +112,11 @@ export function useCurriculumTopics(subjectId: string) {
 export function useBankPick() {
   const mutation = useMutation({
     mutationFn: (f: BankFilter) =>
-      drawFromBank(f.subjectId, { topic: f.topic, count: f.count, difficulty: f.difficulty === "any" ? null : f.difficulty }),
+      drawFromBank(f.subjectId, {
+        topic: f.topic,
+        count: f.count,
+        difficulty: f.difficulty === "any" ? null : f.difficulty,
+      }),
   })
   return {
     picked: mutation.data ? { questions: mutation.data } : null,
@@ -123,7 +133,9 @@ export type WorkCheckResult = {
   authorship: AuthorshipResult
 }
 
-export type WorkCheckInput = { submissionId: string } | { text: string; subjectId: string; groupId: string | null; rubric?: string }
+export type WorkCheckInput =
+  | { submissionId: string }
+  | { text: string; subjectId: string; groupId: string | null; rubric?: string }
 
 /**
  * Checks a student's work: the criteria and the signs of machine writing in one pass. A submission is read on the
