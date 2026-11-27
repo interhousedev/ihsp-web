@@ -274,6 +274,7 @@ export const attemptReview: AttemptReview = {
   user: persons.student,
   variant: { question_ids: ["q1", "q2", "q3"] },
   answers: { q1: { option_ids: ["o2"] }, q2: { option_ids: ["o4", "o6"] }, q3: { number: 8 } },
+  questions: attemptView.questions,
   revision_id: "0000000f-0000-4000-8000-000000000002",
   override_score: null,
   override_comment: null,

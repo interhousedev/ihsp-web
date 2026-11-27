@@ -411,6 +411,7 @@ export function lessonHomeworkSubmissionsFor(lessonId: string): LessonHomeworkSu
     counts: { submitted: 1, late: 0, missing: 1, total: 2 },
     students: [
       {
+        id: uuid(9, 2),
         student: { id: ids.student2, first_name: "Aisha", last_name: "Karimova" },
         group_name: "10-A",
         subgroup: null,
@@ -428,6 +429,7 @@ export function lessonHomeworkSubmissionsFor(lessonId: string): LessonHomeworkSu
         ],
       },
       {
+        id: null,
         student: { id: ids.student3, first_name: "Timur", last_name: "Nazarov" },
         group_name: "10-A",
         subgroup: null,

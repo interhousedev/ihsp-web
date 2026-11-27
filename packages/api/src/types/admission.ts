@@ -20,7 +20,9 @@ export type AdmissionBriefSuggestion = Served["BriefSuggestionOut"]
 export type AdmissionOpportunityFields = Served["OpportunityFields"]
 export type AdmissionMaterial = Served["MaterialIo"]
 export type AdmissionDatedEvent = Served["DatedEventOut"]
-export type AdmissionOpportunity = Served[`${Adm}schemas_opportunities__OpportunityOut`] & { next_deadline?: string | null }
+export type AdmissionOpportunity = Served[`${Adm}schemas_opportunities__OpportunityOut`] & {
+  next_deadline?: string | null
+}
 export type AdmissionOpportunityList = Served[`${Adm}schemas_opportunities__OpportunityListOut`]
 export type AdmissionTaxonomy = Served["TaxonomyOut"]
 export type AdmissionTaxonomyField = Served["TaxonomyFieldOut"]

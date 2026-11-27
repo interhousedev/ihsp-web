@@ -1540,6 +1540,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/activities/transfers/incoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Incoming Transfers
+         * @description Open ownership offers addressed to the caller.
+         */
+        get: operations["incoming_transfers_v1_activities_transfers_incoming_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/activities/transfers/{transfer_id}:accept": {
         parameters: {
             query?: never;
@@ -38732,6 +38752,8 @@ export interface components {
             override_score: number | null;
             /** Passed */
             passed: boolean;
+            /** Questions */
+            questions: components["schemas"]["LearningAttemptQuestionView"][];
             /** Review */
             review: components["schemas"]["LearningReviewItemView"][] | null;
             /**
@@ -39943,6 +39965,8 @@ export interface components {
             best: components["schemas"]["LearningAttemptResultView"] | null;
             /** Id */
             id: string;
+            /** Last Attempt Id */
+            last_attempt_id?: string | null;
             /** Open Attempt Id */
             open_attempt_id: string | null;
             /**
@@ -63997,6 +64021,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    incoming_transfers_v1_activities_transfers_incoming_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OwnershipTransfer"][];
                 };
             };
         };

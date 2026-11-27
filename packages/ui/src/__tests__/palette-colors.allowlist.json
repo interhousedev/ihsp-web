@@ -27,5 +27,7 @@
   "packages/ui/src/components/markdown.tsx",
   "packages/ui/src/components/qr-code-svg.tsx",
   "packages/ui/src/components/ui/chart.tsx",
-  "packages/ui/src/components/ui/file-preview.tsx"
+  "packages/ui/src/components/ui/file-preview.tsx",
+  "apps/admin/src/features/lms-badges/components/badge-form.tsx",
+  "apps/admin/src/features/lms-levels/components/draft-editor.tsx"
 ]

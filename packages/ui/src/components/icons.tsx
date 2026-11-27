@@ -1,4 +1,6 @@
 import {
+  IconAward,
+  IconTrophy,
   IconActivity,
   IconClipboardCheck,
   IconPlugConnected,
@@ -305,6 +307,8 @@ export const Icons = {
   journal: IconTable,
   exams: IconClipboardCheck,
   certificates: IconRosetteDiscountCheck,
+  award: IconAward,
+  trophy: IconTrophy,
   connectors: IconPlugConnected,
   notebooks: IconNotebook,
   library: IconBooks,

@@ -5,12 +5,19 @@ import { api } from "./client"
 import type { CallOptions } from "./client"
 import type { paths } from "./generated/openapi"
 
-type ActivitiesPath = Extract<keyof paths, `/v1/activities/${string}` | `/v1/admin/activities/${string}` | `/v1/public/clubs${string}`>
+type ActivitiesPath = Extract<
+  keyof paths,
+  `/v1/activities/${string}` | `/v1/admin/activities/${string}` | `/v1/public/clubs${string}`
+>
 type Method = "get" | "post" | "put" | "patch" | "delete"
 type MethodsOf<P extends ActivitiesPath> = { [M in Method]: paths[P][M] extends undefined | never ? never : M }[Method]
 type Operation<P extends ActivitiesPath, M extends Method> = NonNullable<paths[P][M]>
 
-type PathParams<O> = O extends { parameters: { path: infer T } } ? (T extends Record<string, unknown> ? T : never) : never
+type PathParams<O> = O extends { parameters: { path: infer T } }
+  ? T extends Record<string, unknown>
+    ? T
+    : never
+  : never
 type QueryOf<O> = O extends { parameters: { query?: infer Q } } ? Exclude<Q, undefined | never> : never
 type BodyOf<O> = O extends { requestBody: { content: { "application/json": infer B } } } ? B : never
 type ResponseOf<O> = O extends { responses: infer R }
@@ -36,7 +43,11 @@ function call<M extends Method>(method: M) {
     args: Args<Operation<P, M>> = {} as Args<Operation<P, M>>,
     options?: CallOptions,
   ): Promise<ResponseOf<Operation<P, M>>> => {
-    const { path: params, query, body } = args as { path?: Record<string, unknown>; query?: Record<string, unknown>; body?: unknown }
+    const {
+      path: params,
+      query,
+      body,
+    } = args as { path?: Record<string, unknown>; query?: Record<string, unknown>; body?: unknown }
     return api.request({
       method: method.toUpperCase() as "GET",
       path: fill(path as string, params),

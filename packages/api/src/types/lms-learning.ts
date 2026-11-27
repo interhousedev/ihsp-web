@@ -59,33 +59,33 @@ type GeneratedOutlineStep = components["schemas"]["LearningOutlineStepView"]
 export type LearnerOutlineSection = Omit<OutlineSection, "steps"> & {
   steps: (Pick<GeneratedOutlineStep, "kind" | "estimated_minutes" | "lock_reason"> &
     Omit<OutlineSection["steps"][number], "badge"> & {
-    badge?: "new" | "changed" | null
-    access?: AccessAudience
-    /** The caller may not open this lesson; it shows with a lock. */
-    locked?: boolean
-    /** Points of the lesson's tests (0 for a lesson without tests). */
-    points_total: number
-    /** Points the student earned in the lesson; `null` when not enrolled. */
-    points_earned: number | null
-  })[]
+      badge?: "new" | "changed" | null
+      access?: AccessAudience
+      /** The caller may not open this lesson; it shows with a lock. */
+      locked?: boolean
+      /** Points of the lesson's tests (0 for a lesson without tests). */
+      points_total: number
+      /** Points the student earned in the lesson; `null` when not enrolled. */
+      points_earned: number | null
+    })[]
 }
 
 export type CoursePage = CourseCard &
   Pick<components["schemas"]["LearningCoursePageView"], "continue_step_id" | "enrolled_via"> & {
-  staff: CourseStaffItem[]
-  outline: LearnerOutlineSection[]
-  enrolled: boolean
-  can_edit: boolean
-  changed_since_last_visit: string[]
-  /** Lessons the student completed; `null` when not enrolled. */
-  steps_completed: number | null
-  /** Points of all tests of the live version ("Course progress: earned/total"). */
-  points_total: number
-  /** Points the student earned; `null` when not enrolled. */
-  points_earned: number | null
-  /** Whom to ask when the course or a lesson is locked for a chosen audience. */
-  contact?: LearningContact | null
-}
+    staff: CourseStaffItem[]
+    outline: LearnerOutlineSection[]
+    enrolled: boolean
+    can_edit: boolean
+    changed_since_last_visit: string[]
+    /** Lessons the student completed; `null` when not enrolled. */
+    steps_completed: number | null
+    /** Points of all tests of the live version ("Course progress: earned/total"). */
+    points_total: number
+    /** Points the student earned; `null` when not enrolled. */
+    points_earned: number | null
+    /** Whom to ask when the course or a lesson is locked for a chosen audience. */
+    contact?: LearningContact | null
+  }
 
 /** The level of the caller: platform-wide or inside one course. */
 export type MyLevel = components["schemas"]["MyLevelOut"]
@@ -139,6 +139,7 @@ export type StepView = {
         }
         best: AttemptResult | null
         open_attempt_id: string | null
+        last_attempt_id?: string | null
         passed: boolean
         /** Points of a perfect attempt and the best result so far. */
         points_total: number
@@ -259,6 +260,7 @@ export type AttemptReview = AttemptResult & {
   user: PersonRef
   variant: Record<string, unknown> | null
   answers: Record<string, Answer>
+  questions: AttemptView["questions"]
   revision_id: string
   override_score: number | null
   override_comment: string | null
