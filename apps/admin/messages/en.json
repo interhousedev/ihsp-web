@@ -50,7 +50,10 @@
     "legal": "Legal documents",
     "erasure": "Erasure requests",
     "prompts": "AI prompts",
-    "aiHarness": "AI harness"
+    "aiHarness": "AI harness",
+    "lmsLevels": "Уровни и звания",
+    "lmsBadges": "Бейджи",
+    "activities": "Активности"
   },
   "shared": {
     "lessonList": "Lessons by date",
@@ -3028,5 +3031,355 @@
     "previewEmpty": "Nothing to preview yet.",
     "lossyNotice": "This text has formulas, tables or other Markdown that the visual editor would change. It stays in Markdown mode.",
     "lossyWarning": "This text has formulas, tables or other Markdown that the visual editor may change."
+  },
+  "lmsLevels": {
+    "title": "Levels and ranks",
+    "meta": "The active scheme is “{active}”",
+    "description": "Decide how fast learners level up and which ranks they get. XP and awarded badges are kept, and nobody’s level drops.",
+    "status": {
+      "active": "Active",
+      "draft": "Draft"
+    },
+    "drafts": "Drafts",
+    "saveDraft": "Save draft",
+    "saved": "Draft saved",
+    "unsaved": "You have unsaved changes",
+    "noChanges": "No changes",
+    "activate": "Activate…",
+    "activated": {
+      "title": "Scheme activated",
+      "body": "All courses now use the “{name}” scheme.",
+      "revert": "Restore “{name}”"
+    },
+    "newDraft": {
+      "open": "New draft",
+      "title": "New scheme",
+      "description": "Ranks are copied from the active scheme and can be edited. Growth difficulty is set when the scheme is created.",
+      "create": "Create draft",
+      "cancel": "Cancel"
+    },
+    "curve": {
+      "title": "Growth speed",
+      "description": "The harder the growth, the more XP each next level needs.",
+      "name": "Scheme name",
+      "base": "Growth difficulty",
+      "easier": "Easier",
+      "harder": "Harder",
+      "example": "Level 5 — {l5} XP, level 10 — {l10} XP",
+      "table": "XP needed for each level",
+      "level": "Lv. {level}"
+    },
+    "tiers": {
+      "title": "Ranks",
+      "description": "A rank is shown next to the level. Each lasts until the next one starts.",
+      "range": "Levels {from}–{to}",
+      "open": "Level {from} and above",
+      "titleLabel": "Title",
+      "from": "From level",
+      "reward": "Reward badge",
+      "noReward": "No reward",
+      "color": "Rank colour",
+      "add": "Add rank",
+      "remove": "Remove rank"
+    },
+    "checks": {
+      "title": "What to fix",
+      "contiguous": "The first rank must start at level 1",
+      "increasing": "Rank levels must increase",
+      "titles": "Every rank needs a title in all three languages"
+    },
+    "colors": {
+      "slate": "Grey",
+      "sky": "Sky blue",
+      "emerald": "Green",
+      "amber": "Amber",
+      "violet": "Violet",
+      "rose": "Pink"
+    },
+    "preview": {
+      "title": "What will change",
+      "description": "Based on {total} learners.",
+      "changed": "learners will get a new level (at least)",
+      "none": "No changes",
+      "note": "Nobody’s level drops.",
+      "before": "Now",
+      "after": "With the draft",
+      "chart": "Learners per level",
+      "axisX": "level",
+      "axisY": "learners"
+    },
+    "confirm": {
+      "title": "Activate “{name}”?",
+      "body": "Learners whose level goes up will get the new one. Levels never drop. You can restore “{previous}” at any time.",
+      "bodyFirst": "The scheme will apply to all courses. Levels never drop.",
+      "ok": "Activate"
+    }
+  },
+  "lmsBadges": {
+    "title": "Badges",
+    "create": "Create badge",
+    "description": "Platform badges are visible in every course and are awarded automatically for achievements across the platform. Course badges are created by that course’s teachers.",
+    "empty": "No platform badges yet.",
+    "enabled": "Badge enabled",
+    "scope": {
+      "platform": "Whole platform"
+    },
+    "created": {
+      "title": "Badge created",
+      "body": "“{name}” is on and will be awarded by the rule, including to those who already meet it."
+    },
+    "detail": {
+      "hint": "If you change the condition, the badge is also awarded to those who already meet it.",
+      "save": "Save",
+      "delete": "Delete",
+      "deleteTitle": "Delete the badge?",
+      "deleteBody": "The badge will disappear for every learner who has it.",
+      "deleteConfirm": "Delete badge"
+    },
+    "wizard": {
+      "title": "New badge",
+      "back": "Back to the list",
+      "cancel": "Cancel",
+      "create": "Create badge"
+    },
+    "rule": {
+      "note": "A platform badge is awarded for an achievement counted across all of the learner’s courses.",
+      "event": "Awarded for",
+      "events": {
+        "level_reached": "Reaching a level",
+        "coach_resolved": "Questions solved with the Coach",
+        "courses_completed": "Completed courses"
+      },
+      "count": {
+        "level_reached": "Level at least",
+        "coach_resolved": "Solved questions at least",
+        "courses_completed": "Completed courses at least"
+      },
+      "summary": "{event}: {n}"
+    },
+    "look": {
+      "name": "Name",
+      "descriptionLabel": "Description",
+      "icon": "Icon",
+      "shape": "Shape",
+      "shapes": {
+        "circle": "Circle",
+        "shield": "Shield",
+        "hexagon": "Hexagon",
+        "star": "Star"
+      },
+      "color": "Colour"
+    }
+  },
+  "clubAnalytics": {
+    "title": "Аналитика клубов",
+    "description": "Рост, посещаемость, оценки и охват объявлений по клубам. Управление клубами — на вкладке «Клубы».",
+    "kpi": {
+      "clubs": "Активных клубов",
+      "events": "Events",
+      "checkIns": "Check-ins",
+      "rsvps": "RSVPs"
+    },
+    "table": {
+      "title": "Клубы",
+      "club": "Клуб",
+      "members": "Участники",
+      "noRating": "Пока нет оценок",
+      "events": "Events",
+      "attendance": "Явка",
+      "rating": "Rating"
+    }
+  },
+  "activities": {
+    "title": "Активности",
+    "description": "Единый каталог возможностей: его видят абитуриенты и студенты.",
+    "tabs": {
+      "catalog": "Возможности",
+      "clubs": "Клубы",
+      "analytics": "Аналитика"
+    },
+    "create": "Добавить",
+    "edit": "Изменить",
+    "publish": "Опубликовать",
+    "archive": "В архив",
+    "restore": "Вернуть из архива",
+    "archivedToast": "«{title}» перенесено в архив",
+    "undo": "Отменить",
+    "count": "Найдено: {n}",
+    "empty": "Ничего не найдено.",
+    "until": "до {date}",
+    "noDeadline": "Без срока",
+    "left": "Осталось {n} дн.",
+    "expired": "Срок прошёл",
+    "leadsToClub": "ведёт в клуб «{club}»",
+    "leadsToForm": "форма клуба «{club}»",
+    "filters": {
+      "search": "Поиск по названию",
+      "kind": "Тип",
+      "allKinds": "Все типы",
+      "audience": "Для кого",
+      "allAudiences": "Вся аудитория",
+      "status": "Статус",
+      "allStatuses": "Любой статус",
+      "deadline": "Срок",
+      "anyDeadline": "Любой срок",
+      "soon": "Ближайшие 30 дней",
+      "past": "Прошёл",
+      "none": "Без срока",
+      "button": "Фильтры",
+      "buttonCount": "Фильтры ({n})",
+      "reset": "Сбросить",
+      "apply": "Показать ({n})"
+    },
+    "kinds": {
+      "exam": "Экзамен",
+      "certification": "Сертификат",
+      "course": "Курс",
+      "event": "Событие",
+      "program": "Программа",
+      "scholarship": "Стипендия",
+      "research": "Исследование",
+      "recurring": "Recurring"
+    },
+    "audiences": {
+      "applicant": "Абитуриенты",
+      "student": "Студенты",
+      "both": "Все"
+    },
+    "statuses": {
+      "draft": "Черновик",
+      "published": "Опубликовано",
+      "archived": "В архиве"
+    },
+    "form": {
+      "createTitle": "Новая активность",
+      "editTitle": "Изменить активность",
+      "back": "Назад",
+      "requiredNote": "* is required.",
+      "partner": "Организация",
+      "uploadLogo": "Загрузить логотип",
+      "logoHint": "PNG или SVG, квадрат",
+      "org": "Название организации",
+      "texts": "Название и описание",
+      "title": "Название",
+      "summary": "Описание",
+      "langFilled": "Заполнено",
+      "langEmpty": "Не заполнено",
+      "langMissing": "На узбекском и английском пока пусто: там покажем русский текст.",
+      "details": "Условия",
+      "category": "Направление",
+      "categoryPlaceholder": "Выберите направление",
+      "deadline": "Срок подачи",
+      "deadlineEmpty": "Пусто: без срока",
+      "leadsTo": "Куда ведёт",
+      "leads": {
+        "link": "Внешняя ссылка",
+        "club": "Клуб",
+        "form": "Форма набора клуба"
+      },
+      "link": "Ссылка",
+      "club": "Клуб",
+      "clubPlaceholder": "Выберите клуб",
+      "clubFill": "Организация подставится из клуба.",
+      "saveDraft": "Сохранить черновик",
+      "errTitle": "Введите название",
+      "errOrg": "Укажите организацию",
+      "errCategory": "Выберите направление",
+      "errClub": "Выберите клуб",
+      "errLink": "Укажите ссылку",
+      "seen": {
+        "applicant": "Увидят: абитуриенты",
+        "student": "Увидят: студенты в личном кабинете",
+        "both": "Увидят: абитуриенты и студенты в личном кабинете"
+      },
+      "saveChanges": "Save changes",
+      "errUrl": "The link must start with https://"
+    },
+    "clubs": {
+      "description": "Заявки, владельцы и координаторы клубов.",
+      "applications": "Заявки ({n})",
+      "owner": "Владелец: {name}",
+      "members": "участников: {n}",
+      "coordinator": "Координатор: {name}",
+      "noCoordinator": "Координатора нет",
+      "search": "Найти клуб",
+      "chipAll": "Все",
+      "status": {
+        "active": "Активен",
+        "pending_review": "На проверке",
+        "suspended": "Приостановлен",
+        "draft": "Draft",
+        "archived": "Archived"
+      },
+      "facts": {
+        "course": "Курс: {name}",
+        "noCourse": "Курс: не привязан",
+        "pointsOn": "Баллы: включены",
+        "pointsOff": "Баллы: выключены",
+        "selection": "Отбор по результатам: включён",
+        "form": {
+          "open": "Форма набора: открыта",
+          "closed": "Форма набора: закрыта",
+          "none": "Формы набора нет"
+        }
+      },
+      "menu": "Действия",
+      "approve": "Одобрить",
+      "changes": "Запросить правки",
+      "changesLabel": "Что нужно исправить",
+      "changesSend": "Отправить",
+      "changesSent": "Правки по заявке «{name}» отправлены владельцу.",
+      "goal": "Цель",
+      "schedule": "Расписание",
+      "teacher": "Куратор",
+      "change": "Изменить",
+      "transfer": "Передать",
+      "attachCourse": "Привязать курс",
+      "suspend": "Приостановить",
+      "resume": "Возобновить",
+      "suspendedAt": "Приостановлен {note}",
+      "suspendTitle": "Приостановить «{name}»?",
+      "suspendBody": "Клуб исчезнет из ленты и с публичного сайта. Участники получат уведомление.",
+      "suspendReason": "Причина",
+      "suspendUntil": "До какой даты",
+      "suspendUntilHint": "Пусто: до решения администратора",
+      "transferTitle": "Передать «{name}»",
+      "transferBody": "Сейчас владелец — {owner}. Он останется участником клуба. Новый владелец получит уведомление.",
+      "newOwner": "Найти нового владельца",
+      "noMatch": "Никого не нашли",
+      "courseTitle": "Курс клуба «{name}»",
+      "courseBody": "Участники клуба увидят курс в своём кабинете, а студенты курса — клуб.",
+      "courseNone": "Без курса",
+      "courseSave": "Сохранить",
+      "coord": {
+        "title": "Координаторы клубов",
+        "desc": "Помогают владельцам и проверяют заявки.",
+        "add": "Назначить",
+        "pick": "Найти человека",
+        "club": "Клуб",
+        "clubPlaceholder": "Выберите клуб",
+        "remove": "Снять {name} с клуба «{club}»",
+        "removeTitle": "Снять координатора?",
+        "removeBody": "{name} перестанет помогать клубу «{club}».",
+        "removeOk": "Снять"
+      },
+      "noOwner": "No owner",
+      "capabilities": "Club features",
+      "capabilitiesTitle": "Features of “{name}”",
+      "capabilitiesBody": "What the club can use in its work.",
+      "capabilitiesSave": "Save",
+      "capability": {
+        "forms": "Forms",
+        "drafting": "Selection by performance",
+        "points": "Points",
+        "roster": "Member roster"
+      },
+      "capabilityHint": {
+        "forms": "Sign-up form and member questionnaires",
+        "drafting": "Pick members by their results",
+        "points": "Award points to members",
+        "roster": "Members, attendance and roles"
+      }
+    }
   }
 }

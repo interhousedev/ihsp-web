@@ -50,7 +50,10 @@
     "legal": "Huquqiy hujjatlar",
     "erasure": "Oʻchirish soʻrovlari",
     "prompts": "AI promptlari",
-    "aiHarness": "AI infratuzilmasi"
+    "aiHarness": "AI infratuzilmasi",
+    "lmsLevels": "Уровни и звания",
+    "lmsBadges": "Бейджи",
+    "activities": "Активности"
   },
   "shared": {
     "lessonList": "Sanalar boʻyicha darslar",
@@ -3028,5 +3031,355 @@
     "previewEmpty": "Hozircha koʻrsatadigan narsa yoʻq.",
     "lossyNotice": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirib yuboradigan boshqa Markdown belgilari bor. Matn Markdown rejimida qoladi.",
     "lossyWarning": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirishi mumkin boʻlgan boshqa Markdown belgilari bor."
+  },
+  "lmsLevels": {
+    "title": "Darajalar va unvonlar",
+    "meta": "Hozir «{active}» sxemasi amal qilmoqda",
+    "description": "Bu yerda oʼquvchilar darajalar boʼyicha qanchalik tez oʼsishi va qanday unvon olishini belgilaysiz. XP va berilgan nishonlar saqlanadi, hech kimning darajasi pasaymaydi.",
+    "status": {
+      "active": "Amalda",
+      "draft": "Qoralama"
+    },
+    "drafts": "Qoralamalar",
+    "saveDraft": "Qoralamani saqlash",
+    "saved": "Qoralama saqlandi",
+    "unsaved": "Saqlanmagan oʼzgarishlar bor",
+    "noChanges": "Oʼzgarishlar yoʼq",
+    "activate": "Faollashtirish…",
+    "activated": {
+      "title": "Sxema faollashtirildi",
+      "body": "Endi barcha kurslarda «{name}» sxemasi amal qiladi.",
+      "revert": "«{name}» sxemasini qaytarish"
+    },
+    "newDraft": {
+      "open": "Yangi qoralama",
+      "title": "Yangi sxema",
+      "description": "Unvonlar amaldagi sxemadan nusxalanadi, ularni tahrirlash mumkin. Oʼsish murakkabligi yaratishda belgilanadi.",
+      "create": "Qoralama yaratish",
+      "cancel": "Bekor qilish"
+    },
+    "curve": {
+      "title": "Oʼsish tezligi",
+      "description": "Oʼsish qanchalik murakkab boʼlsa, har keyingi daraja uchun shuncha koʼp XP kerak.",
+      "name": "Sxema nomi",
+      "base": "Oʼsish murakkabligi",
+      "easier": "Yengilroq",
+      "harder": "Qiyinroq",
+      "example": "5-daraja — {l5} XP, 10-daraja — {l10} XP",
+      "table": "Daraja uchun qancha XP kerak",
+      "level": "{level}-d."
+    },
+    "tiers": {
+      "title": "Unvonlar",
+      "description": "Unvon daraja yonida koʼrsatiladi. Har biri keyingisi boshlanguncha amal qiladi.",
+      "range": "{from}–{to}-darajalar",
+      "open": "{from}-daraja va undan yuqori",
+      "titleLabel": "Nomi",
+      "from": "Daraja",
+      "reward": "Mukofot nishoni",
+      "noReward": "Mukofotsiz",
+      "color": "Unvon rangi",
+      "add": "Unvon qoʼshish",
+      "remove": "Unvonni oʼchirish"
+    },
+    "checks": {
+      "title": "Nimani tuzatish kerak",
+      "contiguous": "Birinchi unvon 1-darajadan boshlanishi kerak",
+      "increasing": "Unvon darajalari oʼsish tartibida boʼlishi kerak",
+      "titles": "Har bir unvonning uch tilda nomi boʼlishi kerak"
+    },
+    "colors": {
+      "slate": "Kulrang",
+      "sky": "Havorang",
+      "emerald": "Yashil",
+      "amber": "Qahrabo",
+      "violet": "Binafsha",
+      "rose": "Pushti"
+    },
+    "preview": {
+      "title": "Nima oʼzgaradi",
+      "description": "{total} nafar oʼquvchi boʼyicha hisob.",
+      "changed": "oʼquvchi yangi daraja oladi (kamida)",
+      "none": "Oʼzgarishlar yoʼq",
+      "note": "Hech kimning darajasi pasaymaydi.",
+      "before": "Hozir",
+      "after": "Qoralama boʼyicha",
+      "chart": "Darajalar boʼyicha oʼquvchilar",
+      "axisX": "daraja",
+      "axisY": "oʼquvchi"
+    },
+    "confirm": {
+      "title": "«{name}» faollashtirilsinmi?",
+      "body": "Darajasi oshadigan oʼquvchilar yangi daraja oladi. Darajalar pasaymaydi. «{previous}» sxemasini istalgan vaqtda qaytarish mumkin.",
+      "bodyFirst": "Sxema barcha kurslarda amal qila boshlaydi. Darajalar pasaymaydi.",
+      "ok": "Faollashtirish"
+    }
+  },
+  "lmsBadges": {
+    "title": "Nishonlar",
+    "create": "Nishon yaratish",
+    "description": "Platforma nishonlari barcha kurslarda koʼrinadi va platformadagi yutuqlar uchun avtomatik beriladi. Kurs nishonlarini oʼsha kurs oʼqituvchilari yaratadi.",
+    "empty": "Platforma nishonlari hali yoʼq.",
+    "enabled": "Nishon yoqilgan",
+    "scope": {
+      "platform": "Butun platforma"
+    },
+    "created": {
+      "title": "Nishon yaratildi",
+      "body": "«{name}» yoqildi va qoida boʼyicha beriladi, shartni allaqachon bajarganlarga ham."
+    },
+    "detail": {
+      "hint": "Shart oʼzgartirilsa, nishon uni allaqachon bajarganlarga ham beriladi.",
+      "save": "Saqlash",
+      "delete": "Oʼchirish",
+      "deleteTitle": "Nishon oʼchirilsinmi?",
+      "deleteBody": "Nishon berilgan barcha oʼquvchilardan yoʼqoladi.",
+      "deleteConfirm": "Nishonni oʼchirish"
+    },
+    "wizard": {
+      "title": "Yangi nishon",
+      "back": "Roʼyxatga",
+      "cancel": "Bekor qilish",
+      "create": "Nishon yaratish"
+    },
+    "rule": {
+      "note": "Platforma nishoni oʼquvchining barcha kurslari boʼyicha hisoblanadigan yutuq uchun beriladi.",
+      "event": "Nima uchun beriladi",
+      "events": {
+        "level_reached": "Daraja erishildi",
+        "coach_resolved": "Murabbiy bilan hal qilingan savollar",
+        "courses_completed": "Tugatilgan kurslar"
+      },
+      "count": {
+        "level_reached": "Daraja kamida",
+        "coach_resolved": "Hal qilingan savollar kamida",
+        "courses_completed": "Tugatilgan kurslar kamida"
+      },
+      "summary": "{event}: {n}"
+    },
+    "look": {
+      "name": "Nomi",
+      "descriptionLabel": "Tavsif",
+      "icon": "Belgi",
+      "shape": "Shakl",
+      "shapes": {
+        "circle": "Doira",
+        "shield": "Qalqon",
+        "hexagon": "Oltiburchak",
+        "star": "Yulduz"
+      },
+      "color": "Rang"
+    }
+  },
+  "clubAnalytics": {
+    "title": "Аналитика клубов",
+    "description": "Рост, посещаемость, оценки и охват объявлений по клубам. Управление клубами — на вкладке «Клубы».",
+    "kpi": {
+      "clubs": "Активных клубов",
+      "events": "Tadbirlar",
+      "checkIns": "Uchrashuvlardagi belgilar",
+      "rsvps": "Tadbirga yozilganlar"
+    },
+    "table": {
+      "title": "Клубы",
+      "club": "Клуб",
+      "members": "Участники",
+      "noRating": "Пока нет оценок",
+      "events": "Tadbirlar",
+      "attendance": "Явка",
+      "rating": "Reyting"
+    }
+  },
+  "activities": {
+    "title": "Активности",
+    "description": "Единый каталог возможностей: его видят абитуриенты и студенты.",
+    "tabs": {
+      "catalog": "Возможности",
+      "clubs": "Клубы",
+      "analytics": "Аналитика"
+    },
+    "create": "Добавить",
+    "edit": "Изменить",
+    "publish": "Опубликовать",
+    "archive": "В архив",
+    "restore": "Вернуть из архива",
+    "archivedToast": "«{title}» перенесено в архив",
+    "undo": "Отменить",
+    "count": "Найдено: {n}",
+    "empty": "Ничего не найдено.",
+    "until": "до {date}",
+    "noDeadline": "Без срока",
+    "left": "Осталось {n} дн.",
+    "expired": "Срок прошёл",
+    "leadsToClub": "ведёт в клуб «{club}»",
+    "leadsToForm": "форма клуба «{club}»",
+    "filters": {
+      "search": "Поиск по названию",
+      "kind": "Тип",
+      "allKinds": "Все типы",
+      "audience": "Для кого",
+      "allAudiences": "Вся аудитория",
+      "status": "Статус",
+      "allStatuses": "Любой статус",
+      "deadline": "Срок",
+      "anyDeadline": "Любой срок",
+      "soon": "Ближайшие 30 дней",
+      "past": "Прошёл",
+      "none": "Без срока",
+      "button": "Фильтры",
+      "buttonCount": "Фильтры ({n})",
+      "reset": "Сбросить",
+      "apply": "Показать ({n})"
+    },
+    "kinds": {
+      "exam": "Экзамен",
+      "certification": "Сертификат",
+      "course": "Курс",
+      "event": "Событие",
+      "program": "Программа",
+      "scholarship": "Стипендия",
+      "research": "Исследование",
+      "recurring": "Takrorlanuvchi"
+    },
+    "audiences": {
+      "applicant": "Абитуриенты",
+      "student": "Студенты",
+      "both": "Все"
+    },
+    "statuses": {
+      "draft": "Черновик",
+      "published": "Опубликовано",
+      "archived": "В архиве"
+    },
+    "form": {
+      "createTitle": "Новая активность",
+      "editTitle": "Изменить активность",
+      "back": "Назад",
+      "requiredNote": "* — majburiy.",
+      "partner": "Организация",
+      "uploadLogo": "Загрузить логотип",
+      "logoHint": "PNG или SVG, квадрат",
+      "org": "Название организации",
+      "texts": "Название и описание",
+      "title": "Название",
+      "summary": "Описание",
+      "langFilled": "Заполнено",
+      "langEmpty": "Не заполнено",
+      "langMissing": "На узбекском и английском пока пусто: там покажем русский текст.",
+      "details": "Условия",
+      "category": "Направление",
+      "categoryPlaceholder": "Выберите направление",
+      "deadline": "Срок подачи",
+      "deadlineEmpty": "Пусто: без срока",
+      "leadsTo": "Куда ведёт",
+      "leads": {
+        "link": "Внешняя ссылка",
+        "club": "Клуб",
+        "form": "Форма набора клуба"
+      },
+      "link": "Ссылка",
+      "club": "Клуб",
+      "clubPlaceholder": "Выберите клуб",
+      "clubFill": "Организация подставится из клуба.",
+      "saveDraft": "Сохранить черновик",
+      "errTitle": "Введите название",
+      "errOrg": "Укажите организацию",
+      "errCategory": "Выберите направление",
+      "errClub": "Выберите клуб",
+      "errLink": "Укажите ссылку",
+      "seen": {
+        "applicant": "Увидят: абитуриенты",
+        "student": "Увидят: студенты в личном кабинете",
+        "both": "Увидят: абитуриенты и студенты в личном кабинете"
+      },
+      "saveChanges": "Oʼzgarishlarni saqlash",
+      "errUrl": "Havola https:// bilan boshlanishi kerak"
+    },
+    "clubs": {
+      "description": "Заявки, владельцы и координаторы клубов.",
+      "applications": "Заявки ({n})",
+      "owner": "Владелец: {name}",
+      "members": "участников: {n}",
+      "coordinator": "Координатор: {name}",
+      "noCoordinator": "Координатора нет",
+      "search": "Найти клуб",
+      "chipAll": "Все",
+      "status": {
+        "active": "Активен",
+        "pending_review": "На проверке",
+        "suspended": "Приостановлен",
+        "draft": "Qoralama",
+        "archived": "Arxivda"
+      },
+      "facts": {
+        "course": "Курс: {name}",
+        "noCourse": "Курс: не привязан",
+        "pointsOn": "Баллы: включены",
+        "pointsOff": "Баллы: выключены",
+        "selection": "Отбор по результатам: включён",
+        "form": {
+          "open": "Форма набора: открыта",
+          "closed": "Форма набора: закрыта",
+          "none": "Формы набора нет"
+        }
+      },
+      "menu": "Действия",
+      "approve": "Одобрить",
+      "changes": "Запросить правки",
+      "changesLabel": "Что нужно исправить",
+      "changesSend": "Отправить",
+      "changesSent": "Правки по заявке «{name}» отправлены владельцу.",
+      "goal": "Цель",
+      "schedule": "Расписание",
+      "teacher": "Куратор",
+      "change": "Изменить",
+      "transfer": "Передать",
+      "attachCourse": "Привязать курс",
+      "suspend": "Приостановить",
+      "resume": "Возобновить",
+      "suspendedAt": "Приостановлен {note}",
+      "suspendTitle": "Приостановить «{name}»?",
+      "suspendBody": "Клуб исчезнет из ленты и с публичного сайта. Участники получат уведомление.",
+      "suspendReason": "Причина",
+      "suspendUntil": "До какой даты",
+      "suspendUntilHint": "Пусто: до решения администратора",
+      "transferTitle": "Передать «{name}»",
+      "transferBody": "Сейчас владелец — {owner}. Он останется участником клуба. Новый владелец получит уведомление.",
+      "newOwner": "Найти нового владельца",
+      "noMatch": "Никого не нашли",
+      "courseTitle": "Курс клуба «{name}»",
+      "courseBody": "Участники клуба увидят курс в своём кабинете, а студенты курса — клуб.",
+      "courseNone": "Без курса",
+      "courseSave": "Сохранить",
+      "coord": {
+        "title": "Координаторы клубов",
+        "desc": "Помогают владельцам и проверяют заявки.",
+        "add": "Назначить",
+        "pick": "Найти человека",
+        "club": "Клуб",
+        "clubPlaceholder": "Выберите клуб",
+        "remove": "Снять {name} с клуба «{club}»",
+        "removeTitle": "Снять координатора?",
+        "removeBody": "{name} перестанет помогать клубу «{club}».",
+        "removeOk": "Снять"
+      },
+      "noOwner": "Egasi yoʻq",
+      "capabilities": "Klub imkoniyatlari",
+      "capabilitiesTitle": "«{name}» klubining imkoniyatlari",
+      "capabilitiesBody": "Klub oʻz ishida nimalardan foydalana oladi.",
+      "capabilitiesSave": "Saqlash",
+      "capability": {
+        "forms": "Anketalar",
+        "drafting": "Natijalar boʻyicha tanlov",
+        "points": "Ballar",
+        "roster": "Aʼzolar roʻyxati"
+      },
+      "capabilityHint": {
+        "forms": "Qabul shakli va aʼzolar anketalari",
+        "drafting": "Aʼzolarni oʻzlashtirishi boʻyicha tanlash",
+        "points": "Aʼzolarga ball berish",
+        "roster": "Tarkib, qatnashish va rollar"
+      }
+    }
   }
 }
