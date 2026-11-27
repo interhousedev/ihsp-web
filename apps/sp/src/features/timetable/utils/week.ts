@@ -32,7 +32,7 @@ export function weekDays(monday: string, lessons: readonly { date: string }[] = 
   )
 }
 
-export function lessonsOn(lessons: readonly LessonItem[], date: string): LessonItem[] {
+export function lessonsOn<T extends LessonItem>(lessons: readonly T[], date: string): T[] {
   return lessons
     .filter((lesson) => lesson.date === date)
     .toSorted((a, b) => a.period - b.period || compareIso(a.starts_at, b.starts_at))

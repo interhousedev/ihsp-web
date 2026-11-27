@@ -22,6 +22,7 @@ import { BackLink, QueryState } from "@ihsp/features-core"
 import { useNow } from "../../shared/hooks/use-now"
 import { DESKTOP_PX_PER_MINUTE, PHONE_PX_PER_MINUTE } from "../utils/timeline"
 import { isIsoDate, lessonsOn, studyDayOf, subgroupsOf, weekDays, weekRange } from "../utils/week"
+import { getMeDayBlocksQuery } from "../api/day-blocks"
 import { parseView, stepDate, type CalendarView } from "../utils/view"
 import { ControlPeriodDialog } from "./control-period-dialog"
 import { CalendarToolbar } from "./calendar-toolbar"
@@ -60,6 +61,7 @@ function TimetableContent() {
   const month = monthOf(day)
   const range = weekRange(monday)
   const lessonsQuery = useQuery(getMeTimetableQuery(range))
+  const dayBlocks = useQuery({ ...getMeDayBlocksQuery(range), enabled: view === "day" }).data ?? []
   const resultRows = useQuery(getMeLessonResultsQuery(range)).data
   const results = useMemo(() => new Map((resultRows ?? []).map((row) => [row.lesson_id, row])), [resultRows])
   const statuses = useMemo(() => dayStatus(lessonsQuery.data ?? [], resultRows ?? []), [lessonsQuery.data, resultRows])
@@ -87,22 +89,30 @@ function TimetableContent() {
       back={<BackLink href="/" label={t("backHome")} />}
       actions={<CalendarFeedDialog />}
     >
-      <CalendarToolbar
-        view={view}
-        day={day}
-        today={focusToday}
-        onViewChange={(next) => void setView(next)}
-        onStep={(direction) => void setDay(stepDate(view, day, direction, lessonsQuery.data))}
-        onToday={() => void setDay(null)}
-      />
-      <ul className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 text-xs" aria-label={t("legend")}>
-        {legend.map(({ state, label }) => (
-          <li key={state} className="flex items-center gap-1.5">
-            <span aria-hidden className={cn("size-2.5 rounded-full", STATE_TONE[state].dot)} />
-            {label}
-          </li>
-        ))}
-      </ul>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <CalendarToolbar
+          view={view}
+          day={day}
+          today={focusToday}
+          onViewChange={(next) => void setView(next)}
+          onStep={(direction) => void setDay(stepDate(view, day, direction, lessonsQuery.data))}
+          onToday={() => void setDay(null)}
+        />
+        <ul className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 text-xs" aria-label={t("legend")}>
+          {legend.map(({ state, label }) => (
+            <li key={state} className="flex items-center gap-1.5">
+              <span aria-hidden className={cn("size-2.5 rounded-full", STATE_TONE[state].dot)} />
+              {label}
+            </li>
+          ))}
+        </ul>
+        {view !== "month" && (shown || (lessonsQuery.data ?? []).some(isOther)) ? (
+          <label className="flex min-h-11 w-fit items-center gap-2 text-sm md:min-h-8">
+            <Switch checked={shown} onCheckedChange={setShown} />
+            {t("showOtherSubgroup")}
+          </label>
+        ) : null}
+      </div>
       {view === "month" ? (
         <QueryState query={attendance} rows={4}>
           {(data) => (
@@ -132,18 +142,13 @@ function TimetableContent() {
                     <AlertDescription>{t("subgroupHint")}</AlertDescription>
                   </Alert>
                 ) : null}
-                {shown || allLessons.some(isOther) ? (
-                  <label className="flex min-h-11 w-fit items-center gap-2 text-sm md:min-h-8">
-                    <Switch checked={shown} onCheckedChange={setShown} />
-                    {t("showOtherSubgroup")}
-                  </label>
-                ) : null}
                 {view === "day" ? (
                   <TimetableDayView
                     day={day}
                     monday={monday}
                     today={today}
                     lessons={lessons}
+                    blocks={dayBlocks}
                     now={now}
                     showSubgroup={hint}
                     results={results}
