@@ -10,7 +10,13 @@ import { useMarkViewed } from "../player/hooks/use-mark-viewed"
 import { StepContent } from "../player/components/step-content"
 import { firstOpenBlock } from "../player/utils/block-nav"
 import { CoachPanel, type CoachMessage } from "./coach-panel"
-import { closeCoachSession, getLatestCoachSession, openCoachSession, requestCoachHint, sendCoachTurn } from "./coach-api"
+import {
+  closeCoachSession,
+  getLatestCoachSession,
+  openCoachSession,
+  requestCoachHint,
+  sendCoachTurn,
+} from "./coach-api"
 import { lessonCtx, lessonHref, pathHref, stepKind, useDuoCourse, useDuoStep, type DuoCourse } from "./use-duo-course"
 import "../skin/playful-lesson.css"
 import "./duo-coach.css"
@@ -64,7 +70,10 @@ function StepLesson({ course, step, stepId }: { course: DuoCourse; step: StepVie
   const nextHref = ctx.nextStepId ? lessonHref(course.slug, ctx.nextStepId) : back
 
   const flat = course.path.sections.flatMap((section) => section.nodes)
-  const position = Math.max(0, flat.findIndex((node) => node.id === stepId))
+  const position = Math.max(
+    0,
+    flat.findIndex((node) => node.id === stepId),
+  )
   const total = flat.length
 
   const [quitting, setQuitting] = useState(false)
@@ -91,7 +100,11 @@ function StepLesson({ course, step, stepId }: { course: DuoCourse; step: StepVie
         sessions.set(stepId, session.id)
         setHintLevel(Math.min(3, session.hint_level))
         setMessages(
-          turns.map((turn, index) => ({ id: `r${index}`, from: turn.role === "learner" ? "me" : "coach", text: turn.text })),
+          turns.map((turn, index) => ({
+            id: `r${index}`,
+            from: turn.role === "learner" ? "me" : "coach",
+            text: turn.text,
+          })),
         )
       })
       .catch(() => undefined)
@@ -167,20 +180,18 @@ function StepLesson({ course, step, stepId }: { course: DuoCourse; step: StepVie
   return (
     <div className="pl-lesson dc-lesson" data-testid={`duo-lesson-${kind}`}>
       {quitting ? (
-        <div className="dc-sheet-backdrop" onClick={() => setQuitting(false)}>
-          <div
-            className="dc-sheet"
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="dc-quit-title"
-            onClick={(event) => event.stopPropagation()}
-          >
+        <div
+          className="dc-sheet-backdrop"
+          role="presentation"
+          onClick={(event) => event.target === event.currentTarget && setQuitting(false)}
+        >
+          <div className="dc-sheet" role="alertdialog" aria-modal="true" aria-labelledby="dc-quit-title">
             <h2 id="dc-quit-title" className="text-xl font-extrabold">
               {t("lesson.quitTitle")}
             </h2>
             <p className="mt-2 text-sm">{t("lesson.quitDescription")}</p>
             <div className="mt-4 grid gap-2">
-              <button type="button" className="pl-btn w-full" autoFocus onClick={() => setQuitting(false)}>
+              <button type="button" className="pl-btn w-full" onClick={() => setQuitting(false)}>
                 {t("lesson.stay")}
               </button>
               <button type="button" className="dc-ghost" onClick={leave}>
@@ -203,13 +214,22 @@ function StepLesson({ course, step, stepId }: { course: DuoCourse; step: StepVie
           aria-valuenow={position}
         >
           {flat.map((node, index) => (
-            <li key={node.id} className="pl-seg" data-state={index < position ? "done" : index === position ? "current" : "todo"}>
+            <li
+              key={node.id}
+              className="pl-seg"
+              data-state={index < position ? "done" : index === position ? "current" : "todo"}
+            >
               <span />
             </li>
           ))}
         </ol>
         {coachable ? (
-          <button type="button" className="dc-ghost" aria-pressed={coachOpen} onClick={() => setCoachOpen((open) => !open)}>
+          <button
+            type="button"
+            className="dc-ghost"
+            aria-pressed={coachOpen}
+            onClick={() => setCoachOpen((open) => !open)}
+          >
             <Icons.sparkles className="size-5" aria-hidden />
             {t("coach.chip")}
           </button>
@@ -240,11 +260,21 @@ function StepLesson({ course, step, stepId }: { course: DuoCourse; step: StepVie
         <div className="pl-footer-inner">
           <span className="hidden md:block" />
           {lastBlock ? (
-            <Link href={nextHref} prefetch={false} className="pl-btn w-full md:w-auto md:min-w-48" data-testid="lesson-continue">
+            <Link
+              href={nextHref}
+              prefetch={false}
+              className="pl-btn w-full md:w-auto md:min-w-48"
+              data-testid="lesson-continue"
+            >
               {ctx.nextStepId ? t("lesson.continue") : t("lesson.finish")}
             </Link>
           ) : (
-            <button type="button" className="pl-btn w-full md:w-auto md:min-w-48" data-testid="lesson-continue" onClick={() => setBlock(block + 1)}>
+            <button
+              type="button"
+              className="pl-btn w-full md:w-auto md:min-w-48"
+              data-testid="lesson-continue"
+              onClick={() => setBlock(block + 1)}
+            >
               {t("lesson.continue")}
             </button>
           )}

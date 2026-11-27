@@ -7,7 +7,12 @@ import "./duo-coach.css"
 
 const LADDER = [{ level: 1 }, { level: 2 }, { level: 3 }] as const
 
-export type CoachMessage = { id: string; from: "coach" | "me"; text: string; tag?: "hint" | "mistake" | "ask" | "answer" }
+export type CoachMessage = {
+  id: string
+  from: "coach" | "me"
+  text: string
+  tag?: "hint" | "mistake" | "ask" | "answer"
+}
 
 /**
  * The AI Coach as the main surface of the lesson: a thread, the hint ladder (one rung at a time, level 3 only after an
@@ -72,7 +77,7 @@ export function CoachPanel({
         )}
       </div>
 
-      {(
+      {
         <div className="dc-ladder-block">
           <ol className="dc-ladder" aria-label={t("coach.ladder")}>
             {LADDER.map((hint) => {
@@ -105,7 +110,7 @@ export function CoachPanel({
           </ol>
           {exhausted ? <p className="px-4 pt-2 text-sm font-semibold">{t("coach.noMoreHints")}</p> : null}
         </div>
-      )}
+      }
 
       <form
         className="dc-ask"

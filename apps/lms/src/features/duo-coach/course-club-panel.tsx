@@ -26,7 +26,15 @@ type Pair = { clubId: string; courseId: string }
  * the club settings. A link needs both sides: the side that asks waits, the other confirms (a person who holds both sides
  * links at once). Either side can end a link or decline a request.
  */
-export function CourseClubPanel({ mode = "course", courseId, clubId }: { mode?: "course" | "club"; courseId?: string; clubId?: string }) {
+export function CourseClubPanel({
+  mode = "course",
+  courseId,
+  clubId,
+}: {
+  mode?: "course" | "club"
+  courseId?: string
+  clubId?: string
+}) {
   const t = useT("duo")
   const locale = useLocale()
   const errorMessage = useErrorMessage()
@@ -83,7 +91,10 @@ export function CourseClubPanel({ mode = "course", courseId, clubId }: { mode?: 
   const header = (
     <div className="flex flex-col gap-2">
       {mode === "course" && courseId ? (
-        <Link href={`/edit/settings/?id=${courseId}`} className="text-muted-foreground inline-flex min-h-11 items-center gap-1 self-start text-sm md:min-h-8">
+        <Link
+          href={`/edit/settings/?id=${courseId}`}
+          className="text-muted-foreground inline-flex min-h-11 items-center gap-1 self-start text-sm md:min-h-8"
+        >
           <Icons.chevronLeft className="size-4" aria-hidden />
           {t("club.backCourse")}
         </Link>
@@ -121,7 +132,10 @@ export function CourseClubPanel({ mode = "course", courseId, clubId }: { mode?: 
 
   const search = (
     <div className="relative">
-      <Icons.search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" aria-hidden />
+      <Icons.search
+        className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+        aria-hidden
+      />
       <Input
         id="club-search"
         value={query}
@@ -146,24 +160,44 @@ export function CourseClubPanel({ mode = "course", courseId, clubId }: { mode?: 
             <li key={link.id} className="flex flex-wrap items-center justify-between gap-3 p-3">
               <div className="min-w-0">
                 {mode === "club" ? (
-                  <Link href={`/edit/settings/?id=${link.course_id}`} className="block truncate font-medium hover:underline">
+                  <Link
+                    href={`/edit/settings/?id=${link.course_id}`}
+                    className="block truncate font-medium hover:underline"
+                  >
                     {label}
                   </Link>
                 ) : (
                   <p className="truncate font-medium">{label}</p>
                 )}
                 {link.status === "pending" ? (
-                  <p className="text-muted-foreground text-sm">{waitingForMe(link) ? t("club.needsMe") : t("club.awaiting")}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {waitingForMe(link) ? t("club.needsMe") : t("club.awaiting")}
+                  </p>
                 ) : null}
               </div>
               <div className="flex gap-2">
                 {waitingForMe(link) ? (
-                  <Button type="button" className="min-h-11 md:min-h-8" disabled={busy} onClick={() => confirm.mutate(pairOf(link))}>
+                  <Button
+                    type="button"
+                    className="min-h-11 md:min-h-8"
+                    disabled={busy}
+                    onClick={() => confirm.mutate(pairOf(link))}
+                  >
                     {t("club.confirm")}
                   </Button>
                 ) : null}
-                <Button type="button" variant="outline" className="min-h-11 md:min-h-8" disabled={busy} onClick={() => unlink.mutate(pairOf(link))}>
-                  {link.status === "pending" ? (waitingForMe(link) ? t("club.decline") : t("club.cancelRequest")) : t("club.unlink")}
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-11 md:min-h-8"
+                  disabled={busy}
+                  onClick={() => unlink.mutate(pairOf(link))}
+                >
+                  {link.status === "pending"
+                    ? waitingForMe(link)
+                      ? t("club.decline")
+                      : t("club.cancelRequest")
+                    : t("club.unlink")}
                 </Button>
               </div>
             </li>
@@ -171,19 +205,29 @@ export function CourseClubPanel({ mode = "course", courseId, clubId }: { mode?: 
         })}
       </ul>
     ) : (
-      <p className="text-muted-foreground rounded-lg border border-dashed p-4 text-sm">{mode === "course" ? t("club.none") : t("club.noCourses")}</p>
+      <p className="text-muted-foreground rounded-lg border border-dashed p-4 text-sm">
+        {mode === "course" ? t("club.none") : t("club.noCourses")}
+      </p>
     )
 
   const taken = new Set(rows.map(linkedTo))
   const candidates =
     mode === "course"
-      ? clubList.filter((club: MyClub) => !taken.has(club.id) && clubName(club.name, locale).toLowerCase().includes(needle))
+      ? clubList.filter(
+          (club: MyClub) => !taken.has(club.id) && clubName(club.name, locale).toLowerCase().includes(needle),
+        )
       : courseList.filter((course) => !taken.has(course.id) && course.title.toLowerCase().includes(needle))
 
   return (
-    <section aria-labelledby="course-club" className="flex flex-col gap-4" data-testid={mode === "course" ? "course-club" : "club-courses"}>
+    <section
+      aria-labelledby="course-club"
+      className="flex flex-col gap-4"
+      data-testid={mode === "course" ? "course-club" : "club-courses"}
+    >
       {header}
-      {links.isPending ? <p className="text-muted-foreground text-sm">{t("club.loading")}</p> : links.isError ? (
+      {links.isPending ? (
+        <p className="text-muted-foreground text-sm">{t("club.loading")}</p>
+      ) : links.isError ? (
         <Alert variant="destructive">
           <AlertDescription>{errorMessage(links.error)}</AlertDescription>
         </Alert>
@@ -197,7 +241,9 @@ export function CourseClubPanel({ mode = "course", courseId, clubId }: { mode?: 
         </label>
         {search}
         {candidates.length === 0 ? (
-          <p className="text-muted-foreground text-sm">{mode === "course" ? t("club.empty") : t("club.emptyCourses")}</p>
+          <p className="text-muted-foreground text-sm">
+            {mode === "course" ? t("club.empty") : t("club.emptyCourses")}
+          </p>
         ) : (
           <ul className="divide-y rounded-lg border">
             {candidates.map((item) => {
@@ -211,7 +257,11 @@ export function CourseClubPanel({ mode = "course", courseId, clubId }: { mode?: 
                     variant="outline"
                     className="min-h-11 shrink-0 md:min-h-8"
                     disabled={busy}
-                    onClick={() => request.mutate(mode === "course" ? { clubId: id, courseId: scope } : { clubId: scope, courseId: id })}
+                    onClick={() =>
+                      request.mutate(
+                        mode === "course" ? { clubId: id, courseId: scope } : { clubId: scope, courseId: id },
+                      )
+                    }
                   >
                     {t("club.pick")}
                   </Button>

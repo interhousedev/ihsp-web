@@ -457,6 +457,10 @@
     "passed": "Oʻtdi",
     "failed": "Oʻtmadi",
     "answersHidden": "Bu test uchun toʻgʻri javoblar koʻrsatilmaydi.",
+    "mistakes": "Xatolar",
+    "explainMistake": "Xatomni tushuntir",
+    "explaining": "Tushuntiryapman…",
+    "explainUnavailable": "Tushuntirishni olib boʻlmadi. Keyinroq urinib koʻring.",
     "correct": "Toʻgʻri",
     "incorrect": "Notoʻgʻri",
     "yourAnswer": "Sizning javobingiz",
@@ -1010,7 +1014,9 @@
     "poolSize": "Urinishdagi savollar soni",
     "timeLimit": "Vaqt chegarasi, daqiqa",
     "cooldown": "Urinishlar orasidagi tanaffus, daqiqa",
-    "showAnswers": "Toʻgʻri javoblarni koʻrsatish",
+    "showAnswers": "Oʻquvchiga toʻgʻri javoblarni koʻrsatish",
+    "showAnswersHint": "Natija foizini oʻquvchi har doim koʻradi. Toʻgʻri javoblar koʻrinmasligi uchun oʻchirib qoʻying.",
+    "showAnswersWhen": "Qachon koʻrsatish",
     "showAnswersOptions": {
       "never": "Hech qachon",
       "after_submit": "Yuborgandan keyin",
@@ -2393,6 +2399,9 @@
       "repeat": "«{needs}» darsini takrorlash",
       "masteryGeneric": "Boʻlimning oldingi darslarini oʻzlashtiring, shunda bu dars ochiladi.",
       "audienceGeneric": "Darsga ruxsatni oʻqituvchi beradi. Ochishni soʻrang."
+    },
+    "titles": {
+      "media": "Media"
     },
     "kind": {
       "text": "Matn",

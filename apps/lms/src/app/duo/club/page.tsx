@@ -8,7 +8,13 @@ import { LmsShell } from "@/features/shell/components/lms-shell"
 function Panel() {
   const params = useSearchParams()
   const side = params.get("side")
-  return <CourseClubPanel mode={side === "club" ? "club" : "course"} courseId={params.get("course") ?? undefined} clubId={params.get("club") ?? undefined} />
+  return (
+    <CourseClubPanel
+      mode={side === "club" ? "club" : "course"}
+      courseId={params.get("course") ?? undefined}
+      clubId={params.get("club") ?? undefined}
+    />
+  )
 }
 
 /** The course ↔ club link. Default is the "Course club" block (`?course=`); `?side=club&club=` is "Club courses". */

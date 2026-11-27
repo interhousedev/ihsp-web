@@ -88,10 +88,20 @@ export function MasteryPath() {
     return (
       <div data-skin="playful" className="min-h-dvh p-6" style={{ background: "var(--pl-bg)", color: "var(--pl-fg)" }}>
         <p role="status">
-          {slug === null || missing ? t("path.notFound") : isError ? t("path.notEnrolled") : isPending ? t("path.loading") : t("path.notFound")}
+          {slug === null || missing
+            ? t("path.notFound")
+            : isError
+              ? t("path.notEnrolled")
+              : isPending
+                ? t("path.loading")
+                : t("path.notFound")}
         </p>
         {slug !== null && isError && !missing ? (
-          <Link href={`/course/?slug=${encodeURIComponent(slug)}`} prefetch={false} className="dc-ghost mt-4 inline-block">
+          <Link
+            href={`/course/?slug=${encodeURIComponent(slug)}`}
+            prefetch={false}
+            className="dc-ghost mt-4 inline-block"
+          >
             {t("path.enroll")}
           </Link>
         ) : null}
@@ -228,14 +238,17 @@ function LockSheet({ node, onClose }: { node: PathNode; onClose: () => void }) {
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [onClose])
   return (
-    <div className="dc-sheet-backdrop" onClick={onClose}>
+    <div
+      className="dc-sheet-backdrop"
+      role="presentation"
+      onClick={(event) => event.target === event.currentTarget && onClose()}
+    >
       <div
         className="dc-sheet"
         role="dialog"
         aria-modal="true"
         aria-labelledby="dc-lock-title"
         data-testid="lock-sheet"
-        onClick={(event) => event.stopPropagation()}
       >
         <p className="dc-eyebrow">{t("lock.eyebrow")}</p>
         <h2 id="dc-lock-title" className="mt-1 text-xl font-extrabold">

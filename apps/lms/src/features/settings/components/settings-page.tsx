@@ -100,7 +100,10 @@ function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }
               {tab === "club" ? (
                 <>
                   <CourseClubPanel courseId={draft.id} />
-                  <Link href={`/duo/club/?course=${encodeURIComponent(draft.id)}`} className="text-primary inline-flex min-h-11 items-center text-sm font-medium md:min-h-8">
+                  <Link
+                    href={`/duo/club/?course=${encodeURIComponent(draft.id)}`}
+                    className="text-primary inline-flex min-h-11 items-center text-sm font-medium md:min-h-8"
+                  >
                     {tDuo("club.openPage")}
                   </Link>
                 </>

@@ -100,7 +100,9 @@ function toPath(page: CoursePage): DuoCourse {
         state,
         kind: asKind(step.kind ?? null) ?? "text",
         minutes: step.estimated_minutes ?? 1,
-        ...(locked ? { lock: { reason: step.lock_reason === "mastery" ? ("mastery" as const) : ("audience" as const) } } : {}),
+        ...(locked
+          ? { lock: { reason: step.lock_reason === "mastery" ? ("mastery" as const) : ("audience" as const) } }
+          : {}),
       }
     }),
   }))
