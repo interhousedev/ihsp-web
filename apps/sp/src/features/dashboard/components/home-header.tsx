@@ -90,7 +90,7 @@ export function HomeHeader() {
         </Link>
         {isStudent ? (
           <div className="relative mx-auto mt-3 flex w-full max-w-4xl">
-            <StudentCardButton />
+            <StudentCardButton onHero />
           </div>
         ) : null}
       </header>
