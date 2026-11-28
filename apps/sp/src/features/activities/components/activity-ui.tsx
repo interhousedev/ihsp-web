@@ -116,7 +116,7 @@ export function SectionTabs({
   return (
     <Tabs value={value} onValueChange={(v) => onChange(String(v))}>
       <div className="relative">
-        <div ref={rail} className="max-w-full overflow-x-auto">
+        <div ref={rail} className="max-w-full overflow-x-auto overflow-y-hidden py-1">
           <TabsList className="h-auto min-h-11 w-max min-w-full md:w-fit md:min-w-0">
             {tabs.map((x) => (
               <TabsTrigger key={x.value} value={x.value} className="min-h-11 px-3 whitespace-nowrap">

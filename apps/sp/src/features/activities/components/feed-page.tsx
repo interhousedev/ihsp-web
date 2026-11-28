@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
   Icons,
+  Input,
   PageContainer,
   Tabs,
   TabsList,
@@ -17,6 +18,10 @@ import Link from "next/link"
 import { useState } from "react"
 import { useClubs, useEvents, useOpportunities } from "../use-activities"
 import { ClubLogo, SELECT_CLASS } from "./activity-ui"
+import { MyClubRequests, SuggestClubDialog } from "./suggest-club-dialog"
+
+const matches = (query: string, ...fields: (string | null | undefined)[]) =>
+  query === "" || fields.some((f) => (f ?? "").toLowerCase().includes(query))
 
 const OPP_PREVIEW = 6
 const TYPES = ["all", "club", "event", "opportunity"] as const
@@ -31,25 +36,39 @@ export function FeedPage() {
   const [type, setType] = useState<(typeof TYPES)[number]>("all")
   const [category, setCategory] = useState("")
   const [allOpps, setAllOpps] = useState(false)
+  const [search, setSearch] = useState("")
+  const [suggestOpen, setSuggestOpen] = useState(false)
+  const query = search.trim().toLowerCase()
   const clubs = useClubs(category || undefined)
   const allClubs = useClubs()
   const events = useEvents()
   const opps = useOpportunities()
-  const organized = allClubs.clubs.filter((c) => c.myRole === "owner" || c.myRole === "co_owner" || c.myRole === "team")
+  const organized = allClubs.clubs.filter(
+    (c) => c.status === "active" && (c.myRole === "owner" || c.myRole === "co_owner" || c.myRole === "team"),
+  )
   const categories = [...new Set(allClubs.clubs.map((c) => c.category).filter((c): c is string => c !== null))]
   const categoryLabel = (c: string) => ((KNOWN_CATEGORIES as readonly string[]).includes(c) ? t(`categories.${c}`) : c)
   const clubName = new Map(allClubs.clubs.map((c) => [c.id, c.name]))
   const showClubs = type === "all" || type === "club"
   const showEvents = type === "all" || type === "event"
   const showOpps = (type === "all" || type === "opportunity") && category === ""
-  const oppItems = (opps.data?.items ?? []).filter((o) => o.lms_course_id === null)
+  const oppItems = (opps.data?.items ?? []).filter(
+    (o) =>
+      o.lms_course_id === null &&
+      matches(query, o.title as string, (o as { description?: string }).description, o.provider, o.host_institution),
+  )
   const visibleOpps = allOpps || type === "opportunity" ? oppItems : oppItems.slice(0, OPP_PREVIEW)
-  const eventItems = (events.data?.items ?? []).filter((e) => e.status === "scheduled")
+  const eventItems = (events.data?.items ?? []).filter(
+    (e) =>
+      e.status === "scheduled" &&
+      matches(query, e.title as string, (e as { description?: string }).description, e.location),
+  )
+  const clubItems = clubs.clubs.filter((c) => c.status === "active" && matches(query, c.name, c.description))
   const pending = clubs.isPending || events.isPending || opps.isPending
   const failed = clubs.isError && opps.isError
   const empty =
     !pending &&
-    (!showClubs || clubs.clubs.length === 0) &&
+    (!showClubs || clubItems.length === 0) &&
     (!showEvents || eventItems.length === 0) &&
     (!showOpps || oppItems.length === 0)
 
@@ -57,21 +76,27 @@ export function FeedPage() {
     <PageContainer
       title={t("title")}
       actions={
-        organized.length > 0 ? (
-          <Link
-            href={`/activities/manage/?slug=${organized[0].slug}`}
-            className={buttonVariants({ variant: "outline" })}
-          >
-            <Icons.teams data-icon="inline-start" aria-hidden />
-            {t("myClubs")}
-          </Link>
-        ) : null
+        <>
+          <Button type="button" variant="outline" onClick={() => setSuggestOpen(true)}>
+            <Icons.add data-icon="inline-start" aria-hidden />
+            {t("suggest.button")}
+          </Button>
+          {organized.length > 0 ? (
+            <Link
+              href={`/activities/manage/?slug=${organized[0].slug}`}
+              className={buttonVariants({ variant: "outline" })}
+            >
+              <Icons.teams data-icon="inline-start" aria-hidden />
+              {t("myClubs")}
+            </Link>
+          ) : null}
+        </>
       }
     >
       <p className="text-muted-foreground max-w-2xl text-sm">{t("description")}</p>
       <div className="flex flex-wrap items-center gap-3">
         <Tabs value={type} onValueChange={(v) => setType(v as (typeof TYPES)[number])}>
-          <div className="w-full max-w-full overflow-x-auto md:w-auto">
+          <div className="w-full max-w-full overflow-x-auto overflow-y-hidden py-1 md:w-auto">
             <TabsList className="h-auto min-h-11 w-max min-w-full md:w-fit md:min-w-0">
               {TYPES.map((value) => (
                 <TabsTrigger key={value} value={value} className="min-h-11 px-3">
@@ -96,7 +121,18 @@ export function FeedPage() {
             ))}
           </select>
         ) : null}
+        <Input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          aria-label={t("searchLabel")}
+          placeholder={t("searchPlaceholder")}
+          autoComplete="off"
+          className="h-11 w-full md:h-8 md:w-64"
+        />
       </div>
+      <MyClubRequests />
+      <SuggestClubDialog open={suggestOpen} onOpenChange={setSuggestOpen} />
       {pending ? <p className="text-muted-foreground text-sm">{common("loading")}</p> : null}
       {failed ? (
         <p role="alert" className="text-destructive text-sm">
@@ -106,7 +142,7 @@ export function FeedPage() {
 
       <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {showClubs
-          ? clubs.clubs.map((c) => (
+          ? clubItems.map((c) => (
               <li key={`c-${c.id}`}>
                 <Link href={`/activities/club/?slug=${c.slug}`} className="block h-full">
                   <Card className="hover:bg-accent/40 h-full transition-colors">

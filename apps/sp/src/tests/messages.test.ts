@@ -262,6 +262,7 @@ describe("keys used in the code", () => {
         "joinPolicy",
       ],
       "activities.joinPolicies.${p}": ["open", "request", "invite"],
+      "activities.suggest.status.${status}": ["draft", "pending_review"],
       "activities.formsAdmin.kind.${KIND_KEY[k]}": ["chips", "text", "number", "bool"],
       "activities.form.${k}": ["hint", "availability", "skills", "languages", "about", "save"],
       "activities.pointsAdmin.${rule.label}": [

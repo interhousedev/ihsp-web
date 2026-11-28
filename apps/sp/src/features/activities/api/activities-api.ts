@@ -263,6 +263,10 @@ export const activitiesApi = {
       activities.get("/v1/activities/clubs", category ? { query: { category } as never } : {}),
     ),
   myClubs: () => as<ItemsOut<Club>>(activities.get("/v1/activities/clubs/mine")),
+  createClub: (body: { name: string; slug: string; description: string }) =>
+    as<{ id: string; status: string }>(activities.post("/v1/activities/clubs", { body: body as never })),
+  submitClub: (club_id: string) =>
+    as<{ id: string; status: string }>(activities.post("/v1/activities/clubs/{club_id}:submit", { path: { club_id } })),
   club: (club_id: string) => as<Club>(activities.get("/v1/activities/clubs/{club_id}", { path: { club_id } })),
   myStanding: (club_id: string) =>
     as<MyClub>(activities.get("/v1/activities/clubs/{club_id}/me", { path: { club_id } })),

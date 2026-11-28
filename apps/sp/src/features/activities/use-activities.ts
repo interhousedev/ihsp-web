@@ -42,6 +42,7 @@ export type ClubSummary = {
   isMine: boolean
   myRole: string | null
   ownerId: string | null
+  status: string
 }
 
 const policy = (value: string | undefined): ClubSummary["joinPolicy"] =>
@@ -68,6 +69,7 @@ export function useClubs(category?: string) {
       isMine: my_status === "active",
       myRole: my_role,
       ownerId: c.owner_id ?? null,
+      status: c.status ?? "active",
     }))
   }, [list.data])
   return { clubs, isPending: list.isPending, isError: list.isError, error: list.error }
@@ -401,6 +403,32 @@ export function useMyPoints(clubId: string) {
 
 export function useLeaderboardOptOut() {
   return useMutation({ mutationFn: (optedOut: boolean) => activitiesApi.setLeaderboardOptOut(optedOut) })
+}
+
+/** The caller's own clubs (drafts and pending included). */
+export function useMyClubRequests() {
+  return useQuery({ queryKey: K.mine, queryFn: () => activitiesApi.myClubs() })
+}
+
+/** A club suggestion: creates the draft, then sends it to the administrator for review. */
+export function useSuggestClub() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: async (body: { name: string; slug: string; description: string }) => {
+      const draft = await activitiesApi.createClub(body)
+      return activitiesApi.submitClub(draft.id)
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: K.all }),
+  })
+}
+
+/** Sends an existing draft club for review. */
+export function useSubmitClub() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (clubId: string) => activitiesApi.submitClub(clubId),
+    onSettled: () => qc.invalidateQueries({ queryKey: K.all }),
+  })
 }
 
 /** Saves the club's own page (owner) or its functions (platform administrator) with `PATCH /clubs/{id}`. */
