@@ -140,6 +140,8 @@ export * from "./endpoints/public-student-cards"
 export type * from "./types/public-student-cards"
 export * from "./endpoints/honours"
 export type * from "./types/honours"
+export * from "./endpoints/rating"
+export type * from "./types/rating"
 
 export * from "./endpoints/student-card"
 export type * from "./types/student-card"

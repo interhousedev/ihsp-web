@@ -5,7 +5,7 @@ import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type { PublicStudentCard } from "../types/public-student-cards"
 
-/** GET /v1/public/student-cards/{token} — none; `404` unknown or expired token. */
+/** GET /v1/public/student-cards/{token} — none; `404` unknown or replaced token. */
 export function getPublicStudentCard(token: string, opts?: RequestOptions): Promise<PublicStudentCard> {
   return api.get<PublicStudentCard>(`/v1/public/student-cards/${seg(token)}`, { ...opts, auth: "none" })
 }

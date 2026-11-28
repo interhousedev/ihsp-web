@@ -1,6 +1,14 @@
-import type { components } from "../generated/openapi"
+import type { PublicStudentCard } from "./public-student-cards"
 
-/** The signed-in student's card: name, group, course, lyceum, direction and speciality. */
-export type StudentCard = components["schemas"]["StudentCardResponse"]
-/** A short-lived token for the card's QR code; `refresh_in` is the seconds until a new one should be requested. */
-export type StudentCardToken = components["schemas"]["StudentCardTokenResponse"]
+/** Which wallet buttons to show: a wallet without server settings is off. */
+export type StudentCardWalletAvailability = { apple: boolean; google: boolean }
+
+/** The signed-in student's card with its permanent QR token. */
+export type StudentCard = PublicStudentCard & {
+  qr_token: string
+  wallet: StudentCardWalletAvailability
+}
+/** The new permanent QR token; the previous one no longer works. */
+export type StudentCardToken = { token: string }
+/** The "Add to Google Wallet" link. */
+export type StudentCardGoogleWalletLink = { url: string }

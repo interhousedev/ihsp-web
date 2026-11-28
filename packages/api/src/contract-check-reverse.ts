@@ -70,10 +70,11 @@ import type { getPublicShare, postPublicReports } from "./endpoints/public"
 import type { getPublicMaintenance } from "./endpoints/public-maintenance"
 import type { getPublicStudentCard } from "./endpoints/public-student-cards"
 import type { getPushConfig, postPushSubscription } from "./endpoints/push"
+import type { getMyOverallRating } from "./endpoints/rating"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
-import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
+import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupHidden, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
 import type { getFileShares, getLinkedSets, getNotebookShares, getShareRecipients, getSharedFileUrl, getSharedFiles, getSharedNotebooks, postFileShareLink, postJoinFile, postJoinNotebook, postLinkedSet, postNotebookCopy, postNotebookShareLink } from "./endpoints/sharing"
-import type { getMeStudentCard, postMeStudentCardToken } from "./endpoints/student-card"
+import type { getMeStudentCard, postMeStudentCardGoogleWallet, postMeStudentCardToken } from "./endpoints/student-card"
 import type { deleteAdminUserPhoto, deleteStaffMePhoto, getAdminTeacherContacts, getMeTeacher, getMeTeacherTimetable, getMeTeachers, getStaffMeContacts, putAdminTeacherContacts, putAdminUserPhoto, putStaffMeContacts, putStaffMePhoto } from "./endpoints/teachers"
 import type { getAdminWorkOffStats, getAdminWorkOffs } from "./endpoints/work-offs-admin"
 import type { getMeWorkOffs } from "./endpoints/work-offs-me"
@@ -2324,6 +2325,10 @@ export const served_getPushConfig: Awaited<ReturnType<typeof getPushConfig>> = g
 declare const gen_postPushSubscription: ResponseOf<"/v1/me/push-subscriptions", "post">
 export const served_postPushSubscription: Awaited<ReturnType<typeof postPushSubscription>> = gen_postPushSubscription
 
+// GET /v1/me/rating — getMyOverallRating
+declare const gen_getMyOverallRating: ResponseOf<"/v1/me/rating", "get">
+export const served_getMyOverallRating: Awaited<ReturnType<typeof getMyOverallRating>> = gen_getMyOverallRating
+
 // POST /v1/id/register/emis — postIdRegisterEmis
 declare const gen_postIdRegisterEmis: ResponseOf<"/v1/id/register/emis", "post">
 export const served_postIdRegisterEmis: Awaited<ReturnType<typeof postIdRegisterEmis>> = gen_postIdRegisterEmis
@@ -2383,6 +2388,10 @@ export const served_getAdminGroup: Awaited<ReturnType<typeof getAdminGroup>> = g
 // PATCH /v1/admin/groups/{group_id} — patchAdminGroup
 declare const gen_patchAdminGroup: ResponseOf<"/v1/admin/groups/{group_id}", "patch">
 export const served_patchAdminGroup: Awaited<ReturnType<typeof patchAdminGroup>> = gen_patchAdminGroup
+
+// PUT /v1/admin/groups/{group_id}/hidden — putAdminGroupHidden
+declare const gen_putAdminGroupHidden: ResponseOf<"/v1/admin/groups/{group_id}/hidden", "put">
+export const served_putAdminGroupHidden: Awaited<ReturnType<typeof putAdminGroupHidden>> = gen_putAdminGroupHidden
 
 // PUT /v1/admin/groups/{group_id}/subgroups — putAdminGroupSubgroups
 declare const gen_putAdminGroupSubgroups: ResponseOf<"/v1/admin/groups/{group_id}/subgroups", "put">
@@ -2547,6 +2556,10 @@ export const served_getMeStudentCard: Awaited<ReturnType<typeof getMeStudentCard
 // POST /v1/me/student-card/tokens — postMeStudentCardToken
 declare const gen_postMeStudentCardToken: ResponseOf<"/v1/me/student-card/tokens", "post">
 export const served_postMeStudentCardToken: Awaited<ReturnType<typeof postMeStudentCardToken>> = gen_postMeStudentCardToken
+
+// POST /v1/me/student-card/wallet/google — postMeStudentCardGoogleWallet
+declare const gen_postMeStudentCardGoogleWallet: ResponseOf<"/v1/me/student-card/wallet/google", "post">
+export const served_postMeStudentCardGoogleWallet: Awaited<ReturnType<typeof postMeStudentCardGoogleWallet>> = gen_postMeStudentCardGoogleWallet
 
 // GET /v1/me/teachers — getMeTeachers
 declare const gen_getMeTeachers: ResponseOf<"/v1/me/teachers", "get">
