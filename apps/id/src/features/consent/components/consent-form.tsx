@@ -8,6 +8,7 @@ import { CodeInput, ErrorAlert, InfoAlert, useTr } from "@ihsp/features-core/id-
 import { FlowCard } from "../../shared/components/flow-card"
 import { followChallengeUsed } from "../../shared/utils/challenge"
 import { redirectTo } from "../../shared/utils/redirect"
+import { isAdmissionStaffScope } from "../utils/admission-scopes"
 import { toolsForScope } from "../utils/scope-tools"
 import { ConsentOtpSender } from "./consent-otp-sender"
 import { ScopeCheckbox } from "./scope-checkbox"
@@ -18,6 +19,7 @@ const SERVER_KEYS = {
   admin: "consent.server.admin",
   teacher: "consent.server.teacher",
   app: "consent.server.app",
+  admission: "consent.server.admission",
 } as const
 
 type ConsentFormProps = { challenge: string; info: ConsentInfo; catalog: ScopeCatalog | undefined }
@@ -47,6 +49,19 @@ export function ConsentForm({ challenge, info, catalog }: ConsentFormProps) {
     setSelected((current) => (checked ? [...current, scope] : current.filter((item) => item !== scope)))
   }
 
+  const row = (scope: string) => (
+    <ScopeCheckbox
+      key={scope}
+      scope={scope}
+      server={info.server}
+      tools={toolsForScope(catalog, info.server, scope)}
+      checked={selected.includes(scope)}
+      onCheckedChange={(checked) => toggle(scope, checked)}
+    />
+  )
+  const staffScopes = info.requested_scopes.filter((scope) => isAdmissionStaffScope(info.server, scope))
+  const ownScopes = info.requested_scopes.filter((scope) => !staffScopes.includes(scope))
+
   return (
     <FlowCard title={t("consent.title", { client: info.client_name })} description={t("consent.description")}>
       <div className="flex flex-wrap items-center gap-2">
@@ -70,16 +85,15 @@ export function ConsentForm({ challenge, info, catalog }: ConsentFormProps) {
       </dl>
       <fieldset className="grid gap-2">
         <legend className="mb-1 text-sm font-medium">{t("consent.scopes")}</legend>
-        {info.requested_scopes.map((scope) => (
-          <ScopeCheckbox
-            key={scope}
-            scope={scope}
-            tools={toolsForScope(catalog, info.server, scope)}
-            checked={selected.includes(scope)}
-            onCheckedChange={(checked) => toggle(scope, checked)}
-          />
-        ))}
+        {ownScopes.map(row)}
       </fieldset>
+      {staffScopes.length > 0 ? (
+        <fieldset className="grid gap-2">
+          <legend className="mb-1 text-sm font-medium">{t("consent.admissionStaffGroup")}</legend>
+          {staffScopes.map(row)}
+          <p className="text-muted-foreground text-xs">{t("consent.admissionStaffWarning")}</p>
+        </fieldset>
+      ) : null}
       {info.requires_otp ? (
         <div className="grid gap-3">
           <p className="text-muted-foreground text-sm">{t("consent.otpRequired")}</p>

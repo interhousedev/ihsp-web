@@ -96,7 +96,26 @@
       "lms": "LMS kurslari",
       "admin": "Maʼmuriyat",
       "teacher": "Oʻqituvchilar",
-      "app": "Barcha maktab vositalarim"
+      "app": "Barcha maktab vositalarim",
+      "admission": "Qabul"
+    },
+    "admissionStaffGroup": "Oʻquvchilar maʼlumotlari",
+    "admissionStaffWarning": "Bu AI ilovaga sizga biriktirilgan oʻquvchilarning arizalarini oʻqish imkonini beradi. Uni faqat maktabingiz ruxsat bergan vositalar bilan ishlating.",
+    "admissionScopes": {
+      "application_read": "Arizangizni oʻqish",
+      "application_write": "Arizangizni tahrirlash",
+      "documents_read": "Hujjatlaringizni oʻqish",
+      "documents_write": "Hujjatlarni yuklash",
+      "plans_read": "Rejalaringizni oʻqish",
+      "plans_write": "Rejalaringizni tahrirlash",
+      "catalog_read": "Universitetlar va imkoniyatlarni qidirish",
+      "consents_read": "Roziliklaringizni koʻrish",
+      "memory_read": "Yordamchi eslatmalarini oʻqish",
+      "memory_write": "Yordamchi eslatmalarini saqlash va oʻchirish",
+      "caseload_read": "Oʻquvchilaringiz roʻyxatini koʻrish",
+      "students_read": "Oʻquvchilaringiz arizalarini oʻqish",
+      "students_write": "Izoh qoldirish va vazifa berish",
+      "documents_review": "Oʻquvchilar hujjatlarini tekshirish"
     },
     "scopes": "Soʻralayotgan ruxsatlar",
     "tools": "Vositalar: {tools}",

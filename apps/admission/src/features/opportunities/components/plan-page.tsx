@@ -32,6 +32,7 @@ import {
   type Plan,
 } from "../api"
 import { useStudentGrade } from "../../../config/applicant"
+import { PersonalFinds } from "./personal-finds"
 import { useSchoolGrades } from "../../../lib/config"
 
 const TERMS = ["fall", "spring", "summer"] as const
@@ -317,17 +318,20 @@ export function PlanBody() {
   else if (query.isError) body = <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
   else if (query.data.entries.length === 0)
     body = (
-      <StateView
-        state="empty"
-        icon={<Icons.heart aria-hidden />}
-        title={t("planEmptyTitle")}
-        description={t("planEmptyText", { from: grades[0] ?? 9, to: grades[grades.length - 1] ?? 12 })}
-        action={
-          <Link href="/opportunities/" className={buttonVariants()}>
-            {t("browse")}
-          </Link>
-        }
-      />
+      <>
+        <StateView
+          state="empty"
+          icon={<Icons.heart aria-hidden />}
+          title={t("planEmptyTitle")}
+          description={t("planEmptyText", { from: grades[0] ?? 9, to: grades[grades.length - 1] ?? 12 })}
+          action={
+            <Link href="/opportunities/" className={buttonVariants()}>
+              {t("browse")}
+            </Link>
+          }
+        />
+        <PersonalFinds entries={query.data.personal} />
+      </>
     )
   else {
     const plan = query.data
@@ -370,6 +374,7 @@ export function PlanBody() {
         )}
         <AiPlanner titles={titles} />
         <Board plan={plan} />
+        <PersonalFinds entries={plan.personal} />
       </>
     )
   }

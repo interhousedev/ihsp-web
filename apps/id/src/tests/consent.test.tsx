@@ -110,4 +110,24 @@ describe("consent page", () => {
     expect(await screen.findByText("We sent a code to your OTP channels.")).toBeInTheDocument()
     expect(body).toEqual({ consent_challenge: "consent-1" })
   })
+
+  test("an admission request labels its scopes and groups the staff scopes with a warning", async () => {
+    server.use(
+      http.get(apiUrl("/v1/id/consent"), () =>
+        HttpResponse.json({
+          ...consentInfo,
+          server: "admission",
+          requested_scopes: ["application:read", "students:read"],
+        }),
+      ),
+    )
+    renderId(<ConsentPage />, { route: ROUTE })
+    await findHeading("Allow Claude Desktop?")
+
+    expect(screen.getByText("Admission")).toBeInTheDocument()
+    expect(screen.getByText("Read your application")).toBeInTheDocument()
+    expect(screen.getByText("Students' data")).toBeInTheDocument()
+    expect(screen.getByText("Read your students' applications")).toBeInTheDocument()
+    expect(screen.getByText(/students assigned to you/)).toBeInTheDocument()
+  })
 })

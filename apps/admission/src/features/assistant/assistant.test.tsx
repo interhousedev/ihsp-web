@@ -23,6 +23,9 @@ const detail: ChatDetail = { ...chatDetailPending, id: CHAT, title: "New chat", 
 
 const connection = {
   url: "https://api.example.test/mcp/admission",
+  oauth_scopes: ["application:read", "memory:write"],
+  app_url: "https://api.example.test/mcp/app",
+  connectors_url: "https://id.example.test/connectors/",
   scopes: ["admission:read", "admission:memory", "admission:docs"],
   max_expiry_days: 90,
   example_config: {
@@ -117,6 +120,12 @@ describe("McpPanel", () => {
     )
     const { user } = renderAdmissionApp(<McpPanel onBack={() => {}} />)
 
+    expect(await screen.findByText("Read your application")).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: "Open connection steps" })).toHaveAttribute(
+      "href",
+      "https://id.example.test/connectors/",
+    )
+    await user.click(screen.getByText("Advanced: personal token"))
     await user.type(await screen.findByLabelText("Token name"), "Claude")
     expect(screen.getByRole("button", { name: "Create token" })).toBeDisabled()
     await user.click(screen.getByRole("button", { name: "Send code" }))
