@@ -1,7 +1,17 @@
 "use client"
 
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button, buttonVariants, Card, CardContent, Icons, PageContainer, Textarea } from "@ihsp/ui"
+import {
+  Badge,
+  Button,
+  buttonVariants,
+  Card,
+  CardContent,
+  ConfirmDialog,
+  Icons,
+  PageContainer,
+  Textarea,
+} from "@ihsp/ui"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -166,6 +176,10 @@ function Announcements({ clubId }: { clubId: string }) {
   )
 }
 
+type MemberRow = { user_id: string; display_name: string; role: string; status: string }
+type MemberConfirm = { kind: "remove" | "decline" | "ban" | "transfer"; member: MemberRow }
+
+/** Join requests first (approve or decline), then the members; removing and handing over ask for confirmation. */
 function Members({
   clubId,
   members,
@@ -173,74 +187,148 @@ function Members({
   canApprove,
 }: {
   clubId: string
-  members: { user_id: string; display_name: string; role: string; status: string }[]
+  members: MemberRow[]
   isOwner: boolean
   canApprove: boolean
 }) {
   const t = useT("activities")
   const errorMessage = useErrorMessage()
-  const { approve, remove, transfer } = useMemberActions(clubId)
+  const { approve, decline, remove, ban, transfer } = useMemberActions(clubId)
+  const [confirm, setConfirm] = useState<MemberConfirm | null>(null)
+  const [offered, setOffered] = useState<string | null>(null)
+  const requests = members.filter((m) => m.status === "requested")
+  const active = members.filter((m) => m.status === "active")
+  const close = () => setConfirm(null)
+  const BTN = "min-h-11 md:min-h-8"
   return (
-    <div className="grid gap-3">
-      {members.length === 0 ? <p className="text-muted-foreground text-sm">{t("empty")}</p> : null}
-      <ul className="grid gap-2">
-        {members.map((m) => (
-          <li key={m.user_id}>
-            <Card>
-              <CardContent className="flex flex-wrap items-center gap-3">
-                <PersonAvatar person={{ name: m.display_name }} />
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium">{m.display_name}</p>
-                  <p className="text-muted-foreground text-sm">{t(`roles.${m.role}`)}</p>
-                </div>
-                {m.status === "requested" && canApprove ? (
-                  <Button
-                    type="button"
-                    size="sm"
-                    disabled={approve.isPending}
-                    onClick={() => approve.mutate(m.user_id)}
-                  >
-                    {t("approve")}
-                  </Button>
-                ) : null}
-                {m.role === "member" && m.status === "active" ? (
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    hidden={!canApprove}
-                    disabled={remove.isPending}
-                    onClick={() => remove.mutate(m.user_id)}
-                  >
-                    {t("remove")}
-                  </Button>
-                ) : null}
-                {isOwner && m.role !== "owner" && m.status === "active" ? (
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    disabled={transfer.isPending}
-                    onClick={() => transfer.mutate(m.user_id)}
-                  >
-                    {t("transfer.offer")}
-                  </Button>
-                ) : null}
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ul>
-      {transfer.isSuccess ? (
-        <p role="status" className="text-sm">
-          {t("transfer.pending")}
+    <div className="grid gap-6">
+      {canApprove && requests.length > 0 ? (
+        <Section title={t("clubActions.requestsTitle", { count: requests.length })}>
+          <ul className="grid gap-2">
+            {requests.map((m) => (
+              <li key={m.user_id}>
+                <Card>
+                  <CardContent className="flex flex-wrap items-center gap-3">
+                    <PersonAvatar person={{ name: m.display_name }} />
+                    <p className="min-w-0 flex-1 font-medium">{m.display_name}</p>
+                    <Button
+                      type="button"
+                      size="sm"
+                      className={BTN}
+                      disabled={approve.isPending}
+                      onClick={() => approve.mutate(m.user_id)}
+                    >
+                      {t("approve")}
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className={BTN}
+                      onClick={() => setConfirm({ kind: "decline", member: m })}
+                    >
+                      {t("clubActions.decline")}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
+      <Section title={t("clubActions.membersTitle", { count: active.length })}>
+        {active.length === 0 ? <p className="text-muted-foreground text-sm">{t("clubActions.noMembers")}</p> : null}
+        <ul className="grid gap-2">
+          {active.map((m) => (
+            <li key={m.user_id}>
+              <Card>
+                <CardContent className="flex flex-wrap items-center gap-3">
+                  <PersonAvatar person={{ name: m.display_name }} />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium">{m.display_name}</p>
+                    <p className="text-muted-foreground text-sm">{t(`roles.${m.role}`)}</p>
+                  </div>
+                  {canApprove && m.role === "member" ? (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className={BTN}
+                      onClick={() => setConfirm({ kind: "remove", member: m })}
+                    >
+                      {t("remove")}
+                    </Button>
+                  ) : null}
+                  {canApprove && m.role === "member" ? (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      className={`${BTN} text-destructive`}
+                      onClick={() => setConfirm({ kind: "ban", member: m })}
+                    >
+                      {t("clubActions.ban")}
+                    </Button>
+                  ) : null}
+                  {isOwner && m.role !== "owner" ? (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className={BTN}
+                      onClick={() => setConfirm({ kind: "transfer", member: m })}
+                    >
+                      {t("transfer.offer")}
+                    </Button>
+                  ) : null}
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </Section>
+      {offered ? (
+        <p role="status" className="bg-muted rounded-lg px-3 py-2 text-sm">
+          {t("transfer.pendingBody", { name: offered })}
         </p>
       ) : null}
-      {approve.isError || remove.isError || transfer.isError ? (
+      {approve.isError || decline.isError || remove.isError || ban.isError || transfer.isError ? (
         <p role="alert" className="text-destructive text-sm">
-          {errorMessage(approve.error ?? remove.error ?? transfer.error)}
+          {errorMessage(approve.error ?? decline.error ?? remove.error ?? ban.error ?? transfer.error)}
         </p>
       ) : null}
+      <ConfirmDialog
+        open={confirm !== null}
+        onOpenChange={(open) => !open && close()}
+        title={
+          confirm?.kind === "transfer"
+            ? t("transfer.title")
+            : t(`clubActions.${confirm?.kind ?? "remove"}Title`, { name: confirm?.member.display_name ?? "" })
+        }
+        description={
+          confirm?.kind === "transfer"
+            ? `${confirm.member.display_name}. ${t("transfer.body")}`
+            : t(`clubActions.${confirm?.kind ?? "remove"}Body`)
+        }
+        confirmLabel={
+          confirm?.kind === "transfer"
+            ? t("transfer.offer")
+            : confirm?.kind === "decline"
+              ? t("clubActions.decline")
+              : confirm?.kind === "ban"
+                ? t("clubActions.ban")
+                : t("remove")
+        }
+        destructive={confirm?.kind !== "transfer"}
+        loading={decline.isPending || remove.isPending || ban.isPending || transfer.isPending}
+        onConfirm={() => {
+          if (!confirm) return
+          const { kind, member } = confirm
+          if (kind === "transfer")
+            transfer.mutate(member.user_id, { onSuccess: () => setOffered(member.display_name), onSettled: close })
+          else ({ decline, remove, ban })[kind].mutate(member.user_id, { onSettled: close })
+        }}
+      />
     </div>
   )
 }

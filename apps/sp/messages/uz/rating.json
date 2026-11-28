@@ -1,0 +1,32 @@
+{
+  "rating": {
+    "title": "Oʻquvchilar reytingi",
+    "year": "{label} oʻquv yili",
+    "yourPlace": "Sizning oʻrningiz: {place} / {total}",
+    "points": "{score} ball",
+    "notRanked": "Siz hali reytingda yoʻqsiz.",
+    "notRankedHint": "Platformada maʼlumotlaringiz paydo boʻlgach, oʻrningiz koʻrinadi.",
+    "breakdownTitle": "Ball nimalardan iborat",
+    "base": "Boshlangʻich ball",
+    "certificates": "Sertifikatlar",
+    "marks": "Baholar",
+    "marksAverage": "{count} ta baho boʻyicha oʻrtacha {average}",
+    "marksNone": "Hozircha baho yoʻq",
+    "absences": "Qoldirilgan darslar",
+    "absencesCount": "Qoldirilgan: {count}",
+    "workOffs": "Ishlab berilmagan topshiriqlar",
+    "workOffsCount": "Ishlab berish: {count}",
+    "certificatesNone": "Bu yil sertifikat yoʻq",
+    "explainTitle": "Hisoblash qoidalari",
+    "explainBase": "Hamma {base} balldan boshlaydi.",
+    "explainCertificates": "Yilning har bir sertifikati ball qoʻshadi. Qancha ekani toifa va darajaga bogʻliq.",
+    "explainMarks": "Oʻrtacha bahoyingiz {threshold} yoki undan yuqori boʻlsa, {points} ball olasiz.",
+    "explainAbsences": "Har bir qoldirilgan dars {points} ball ayiradi. EMISʼda ham, platformada ham yozilgan dars bir marta hisoblanadi.",
+    "explainWorkOffs": "Har bir ishlab berilmagan topshiriq {points} ball ayiradi.",
+    "topTitle": "Reyting",
+    "you": "Siz",
+    "photoOf": "{name} surati",
+    "empty": "Reyting hozircha boʻsh.",
+    "noYear": "Reyting uchun oʻquv yili hali yoʻq."
+  }
+}

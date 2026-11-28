@@ -61,7 +61,8 @@ export function SuggestClubDialog({ open, onOpenChange }: { open: boolean; onOpe
   const [slug, setSlug] = useState("")
   const [description, setDescription] = useState("")
   const sent = suggest.isSuccess
-  const valid = name.trim().length > 0 && /^[a-z0-9-]{1,60}$/.test(slug)
+  // The same rule as the server: 3 to 40 characters, starting with a letter or a digit.
+  const valid = name.trim().length > 0 && /^[a-z0-9][a-z0-9-]{2,39}$/.test(slug)
 
   const close = (next: boolean) => {
     onOpenChange(next)

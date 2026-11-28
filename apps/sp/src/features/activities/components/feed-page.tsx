@@ -39,7 +39,6 @@ export function FeedPage() {
   const [search, setSearch] = useState("")
   const [suggestOpen, setSuggestOpen] = useState(false)
   const query = search.trim().toLowerCase()
-  const clubs = useClubs(category || undefined)
   const allClubs = useClubs()
   const events = useEvents()
   const opps = useOpportunities()
@@ -58,14 +57,30 @@ export function FeedPage() {
       matches(query, o.title as string, (o as { description?: string }).description, o.provider, o.host_institution),
   )
   const visibleOpps = allOpps || type === "opportunity" ? oppItems : oppItems.slice(0, OPP_PREVIEW)
+  const clubItems = allClubs.clubs.filter(
+    (c) =>
+      c.status === "active" && (category === "" || c.category === category) && matches(query, c.name, c.description),
+  )
+  const categoryClubs = new Set(clubItems.map((c) => c.id))
   const eventItems = (events.data?.items ?? []).filter(
     (e) =>
       e.status === "scheduled" &&
-      matches(query, e.title as string, (e as { description?: string }).description, e.location),
+      (category === "" || categoryClubs.has(e.club_id)) &&
+      matches(
+        query,
+        e.title as string,
+        (e as { description?: string }).description,
+        e.location,
+        clubName.get(e.club_id),
+      ),
   )
-  const clubItems = clubs.clubs.filter((c) => c.status === "active" && matches(query, c.name, c.description))
-  const pending = clubs.isPending || events.isPending || opps.isPending
-  const failed = clubs.isError && opps.isError
+  const pending = allClubs.isPending || events.isPending || opps.isPending
+  // Each source fails on its own: the rest of the feed stays usable and the error names the reason.
+  const failure =
+    (showClubs && allClubs.isError ? allClubs.error : null) ??
+    (showEvents && events.isError ? events.error : null) ??
+    (showOpps && opps.isError ? opps.error : null)
+  const filtered = query !== "" || category !== "" || type !== "all"
   const empty =
     !pending &&
     (!showClubs || clubItems.length === 0) &&
@@ -81,13 +96,13 @@ export function FeedPage() {
             <Icons.add data-icon="inline-start" aria-hidden />
             {t("suggest.button")}
           </Button>
-          {organized.length > 0 ? (
+          {organized.length === 1 ? (
             <Link
               href={`/activities/manage/?slug=${organized[0].slug}`}
               className={buttonVariants({ variant: "outline" })}
             >
               <Icons.teams data-icon="inline-start" aria-hidden />
-              {t("myClubs")}
+              {t("manage")}
             </Link>
           ) : null}
         </>
@@ -131,12 +146,31 @@ export function FeedPage() {
           className="h-11 w-full md:h-8 md:w-64"
         />
       </div>
+      {organized.length > 1 ? (
+        <nav aria-label={t("myClubs")} className="flex flex-wrap items-center gap-2">
+          <span className="text-sm font-semibold">{t("myClubs")}</span>
+          {organized.map((c) => (
+            <Link
+              key={c.id}
+              href={`/activities/manage/?slug=${c.slug}`}
+              className={buttonVariants({ variant: "outline", size: "sm", className: "min-h-11 md:min-h-8" })}
+            >
+              <Icons.teams data-icon="inline-start" aria-hidden />
+              {c.name}
+            </Link>
+          ))}
+        </nav>
+      ) : null}
       <MyClubRequests />
       <SuggestClubDialog open={suggestOpen} onOpenChange={setSuggestOpen} />
-      {pending ? <p className="text-muted-foreground text-sm">{common("loading")}</p> : null}
-      {failed ? (
+      {pending ? (
+        <p role="status" className="text-muted-foreground text-sm">
+          {common("loading")}
+        </p>
+      ) : null}
+      {failure ? (
         <p role="alert" className="text-destructive text-sm">
-          {errorMessage(clubs.error ?? opps.error)}
+          {errorMessage(failure)}
         </p>
       ) : null}
 
@@ -201,7 +235,7 @@ export function FeedPage() {
               const deadline = o.registration_deadlines[0]
               const href = o.url
               const body = (
-                <Card className="h-full border-dashed">
+                <Card className={href ? "hover:bg-accent/40 h-full transition-colors" : "h-full"}>
                   <CardContent className="flex h-full flex-col gap-2">
                     <Badge variant="warning" className="w-fit">
                       {t("types.opportunity")}
@@ -237,7 +271,34 @@ export function FeedPage() {
           {t("showAllOpps", { count: oppItems.length })}
         </Button>
       ) : null}
-      {empty && !failed ? <p className="text-muted-foreground text-sm">{t("empty")}</p> : null}
+      {empty && !failure ? (
+        <div className="grid justify-items-start gap-2">
+          <p className="text-muted-foreground text-sm">{t(filtered ? "empty" : "clubActions.emptyFeed")}</p>
+          {filtered ? (
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11 md:min-h-8"
+              onClick={() => {
+                setSearch("")
+                setCategory("")
+                setType("all")
+              }}
+            >
+              {t("clubActions.resetFilters")}
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11 md:min-h-8"
+              onClick={() => setSuggestOpen(true)}
+            >
+              {t("suggest.button")}
+            </Button>
+          )}
+        </div>
+      ) : null}
     </PageContainer>
   )
 }

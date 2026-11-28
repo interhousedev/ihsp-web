@@ -1,13 +1,19 @@
 {
   "studentCard": {
     "title": "Студенческий билет",
+    "label": "Студент",
     "group": "Группа",
-    "course": "Курс",
-    "direction": "Направление",
+    "studentId": "ID студента",
     "speciality": "Специальность",
     "qrLabel": "QR-код студенческого билета",
-    "refreshIn": "Новый код через {seconds} с",
-    "qrFailed": "Не удалось создать код. Пробуем снова.",
+    "regenerate": "Обновить код",
+    "regenerateTitle": "Создать новый QR-код?",
+    "regenerateDescription": "Вы получите новый QR-код. Старый сразу перестанет работать, в том числе на скриншотах и в ранее добавленных картах Wallet.",
+    "regenerateConfirm": "Обновить",
+    "regenerateFailed": "Не удалось обновить код. Повторите попытку.",
+    "addToAppleWallet": "Добавить в Apple Wallet",
+    "addToGoogleWallet": "Добавить в Google Кошелек",
+    "walletFailed": "Не удалось добавить билет в Wallet. Повторите попытку.",
     "loadFailed": "Не удалось загрузить билет.",
     "relinkHint": "Нужно обновить связь с EMIS. Обновите пароль EMIS и повторите попытку.",
     "relinkAction": "Обновить пароль EMIS"
