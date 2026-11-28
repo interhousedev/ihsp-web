@@ -198,6 +198,12 @@ export const scheduleHandlers = [
     if (!group) return notFound("Group")
     return HttpResponse.json(applySubgroups(group, await readJson<SubgroupAssignmentsBody>(request)))
   }),
+  http.put(apiUrl("/v1/admin/groups/:id/hidden"), async ({ params, request }) => {
+    const group = groupDetailFor(param(params, "id"))
+    if (!group) return notFound("Group")
+    const body = await readJson<{ hidden: boolean }>(request)
+    return HttpResponse.json({ ...group, hidden: body.hidden })
+  }),
   http.get(apiUrl("/v1/staff/groups"), () => HttpResponse.json([group2TN2])),
   http.get(apiUrl("/v1/staff/groups/:id"), ({ params }) => {
     const group = groupDetailFor(param(params, "id"))

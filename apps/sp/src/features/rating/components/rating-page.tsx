@@ -33,7 +33,10 @@ function MyScoreCard({ me, total }: { me: MyRatingRow; total: number }) {
   const num = useNum()
   const b = me.breakdown
   return (
-    <section aria-label={t("breakdownTitle")} className="bg-card text-card-foreground flex flex-col gap-3 rounded-card border p-4">
+    <section
+      aria-label={t("breakdownTitle")}
+      className="bg-card text-card-foreground flex flex-col gap-3 rounded-card border p-4"
+    >
       <div>
         <p className="text-2xl font-semibold">{t("yourPlace", { place: me.place, total })}</p>
         <p className="text-muted-foreground text-sm tabular-nums">{t("points", { score: num(me.score) })}</p>
@@ -55,8 +58,16 @@ function MyScoreCard({ me, total }: { me: MyRatingRow; total: number }) {
           }
           value={num(b.marks_points, true)}
         />
-        <BreakdownLine label={t("absences")} detail={t("absencesCount", { count: b.absences })} value={num(b.absence_points)} />
-        <BreakdownLine label={t("workOffs")} detail={t("workOffsCount", { count: b.work_offs })} value={num(b.work_off_points)} />
+        <BreakdownLine
+          label={t("absences")}
+          detail={t("absencesCount", { count: b.absences })}
+          value={num(b.absence_points)}
+        />
+        <BreakdownLine
+          label={t("workOffs")}
+          detail={t("workOffsCount", { count: b.work_offs })}
+          value={num(b.work_off_points)}
+        />
       </ul>
     </section>
   )
@@ -66,7 +77,10 @@ function Explanation({ weights }: { weights: OverallRating["weights"] }) {
   const t = useT("rating")
   const num = useNum()
   return (
-    <section aria-label={t("explainTitle")} className="bg-card text-card-foreground flex flex-col gap-2 rounded-card border p-4">
+    <section
+      aria-label={t("explainTitle")}
+      className="bg-card text-card-foreground flex flex-col gap-2 rounded-card border p-4"
+    >
       <h2 className="text-sm font-semibold">{t("explainTitle")}</h2>
       <ul className="text-muted-foreground flex list-disc flex-col gap-1 pl-5 text-sm">
         <li>{t("explainBase", { base: num(weights.base) })}</li>
