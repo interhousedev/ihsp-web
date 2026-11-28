@@ -24,7 +24,8 @@
     "subjects": "Fanlar",
     "certificates": "Sertifikatlar",
     "temporaryMarks": "EMIS kutmoqda",
-    "excuses": "Sababli qoldirishlar"
+    "excuses": "Sababli qoldirishlar",
+    "aiTools": "AI vositalari"
   },
   "audience": {
     "subgroup": "{group} · {number}-kichik guruh"
@@ -563,7 +564,7 @@
   },
   "temporaryMarks": {
     "journalTitle": "Jurnal",
-    "note": "Bu baholar EMISga kiritilgunча vaqtinchalik.",
+    "note": "Bu baholar EMISga kiritilguncha vaqtinchalik.",
     "valueFor": "{name} uchun baho",
     "setValue": "{name}ga {value} qo'yish",
     "commentFor": "{name} uchun izoh",
@@ -665,6 +666,302 @@
       "created": "Oʻquvchi ozod qilindi",
       "noGroup": "Siz guruhga rahbarlik qilmaysiz.",
       "clearEnd": "Tugash sanasini olib tashlash"
+    }
+  },
+  "aiTools": {
+    "title": "AI vositalari",
+    "subtitle": "Dars materiallari bir necha daqiqada. Natijani doim tahrirlash mumkin.",
+    "sections": {
+      "tools": "Tayyorlanish uchun",
+      "jobs": "Oxirgi vazifalar",
+      "jobsEmpty": "Hozircha vazifalar yoʼq. Video yoki ovozli material yarating — u shu yerda paydo boʼladi."
+    },
+    "savedTo": "Daftarga saqlandi: {name}",
+    "openNotebook": "Daftarni ochish",
+    "tools": {
+      "questions": {
+        "name": "Savollar",
+        "desc": "AIʼdan yangi savollar yoki bankdan tasodifiy tanlov.",
+        "cta": "Savollar yaratish"
+      },
+      "handout": {
+        "name": "Tarqatma material",
+        "desc": "Chop etish uchun konspekt yoki ish varaqasi.",
+        "cta": "Material yaratish"
+      },
+      "workCheck": {
+        "name": "Talaba ishini tekshirish",
+        "desc": "Mezonlar boʼyicha baho va matn AI tomonidan yozilganiga oid belgilar.",
+        "cta": "Ishni tekshirish"
+      },
+      "lessonPlan": {
+        "name": "Dars rejasi",
+        "desc": "Kafedra shabloni boʼyicha reja.",
+        "cta": "Reja tuzish"
+      }
+    },
+    "form": {
+      "topic": "Mavzu",
+      "topicPlaceholder": "Masalan: kvadrat tenglamalar",
+      "group": "Guruh",
+      "subject": "Fan",
+      "emisTopic": "EMIS rejasidagi mavzu",
+      "difficulty": "Qiyinlik",
+      "anyDifficulty": "Istalgan qiyinlik",
+      "level": "Daraja",
+      "levels": {
+        "basic": "Boshlangʼich",
+        "medium": "Oʼrta",
+        "advanced": "Chuqurlashtirilgan"
+      },
+      "language": "Til",
+      "count": "Soni",
+      "template": "Reja shabloni",
+      "criteria": "Mezonlar (ixtiyoriy)",
+      "criteriaPlaceholder": "Nimani baholash: dalillar, tuzilma, savodxonlik",
+      "generate": "Yaratish",
+      "generating": "Yaratilmoqda…",
+      "regenerate": "Qaytadan yaratish",
+      "text": "Ish matni",
+      "allGroups": "Barcha guruhlar",
+      "allMyGroups": "Mening barcha guruhlarim"
+    },
+    "difficulty": {
+      "easy": "Oson",
+      "medium": "Oʼrta",
+      "hard": "Qiyin"
+    },
+    "result": {
+      "title": "Natija",
+      "copy": "Nusxalash",
+      "copied": "Nusxalandi",
+      "download": "Word yuklab olish",
+      "attach": "Darsga biriktirish",
+      "attached": "Darsga biriktirildi",
+      "empty": "Shaklni toʼldiring va «Yaratish» tugmasini bosing",
+      "aiMark": "AI yaratgan, foydalanishdan oldin tekshiring",
+      "failed": "Bajarib boʼlmadi. Qayta urinib koʼring."
+    },
+    "questions": {
+      "sourceAi": "AIʼdan yangi",
+      "sourceBank": "Bankdan",
+      "pick": "Tanlash",
+      "pickAgain": "Qayta tanlash",
+      "shuffleAgain": "Yana aralashtirish",
+      "bankEmpty": "Fan va mavzuni tanlang va «Tanlash» tugmasini bosing",
+      "bankNone": "Bu shartlar boʼyicha bankda hozircha savol yoʼq.",
+      "bankFew": "Savollar kam: bankda faqat {n} ta.",
+      "saveToBank": "Bankka saqlash",
+      "selected": "Tanlandi: {count}",
+      "selectAll": "Hammasini tanlash",
+      "addToTest": "Testga qoʼshish",
+      "answer": "Javob",
+      "correct": "toʼgʼri",
+      "multi": "Bir nechta javob",
+      "single": "Bitta javob",
+      "inBankTopic": "Bankda mavzu boʼyicha: {n}",
+      "inBankSubject": "Bankda fan boʼyicha: {n}",
+      "createWithAi": "AI bilan savollar yaratish",
+      "replace": "Almashtirish",
+      "remove": "Olib tashlash",
+      "saveToNotebook": "Daftarga saqlash ({count})"
+    },
+    "saveToBank": {
+      "otherTopic": "Boshqa mavzu…",
+      "noPlan": "EMIS rejasi hali yuklanmagan: mavzuni qoʼlda kiriting.",
+      "error": "Savollarni saqlab boʼlmadi. Mavzuni tekshirib, qayta urinib koʼring.",
+      "title": "Savollar bankiga saqlash",
+      "desc": "Savollar tanlangan fan va mavzu bankiga tushadi.",
+      "confirm": "{count} tasini saqlash",
+      "done": "Savollar bankka saqlandi: {topic}.",
+      "open": "Bankni ochish",
+      "close": "Yopish",
+      "duplicates": "Bankda allaqachon bor, oʼtkazib yuboriladi: {n}"
+    },
+    "bank": {
+      "title": "Savollar banki",
+      "hubDesc": "EMIS fanlari va mavzulari boʼyicha savollaringiz.",
+      "desc": "«{subject}» fani savollarini fanning barcha oʼqituvchilari koʼradi.",
+      "allTopics": "Barcha mavzular",
+      "search": "Savollar boʼyicha qidiruv",
+      "originAi": "AI",
+      "count": "savollar: {n}",
+      "empty": "Savollar topilmadi",
+      "add": "Savol qoʼshish",
+      "edit": "Tahrirlash",
+      "delete": "Oʼchirish",
+      "deleteTitle": "Savol oʼchirilsinmi?",
+      "editTitle": "Savol",
+      "questionText": "Savol matni",
+      "save": "Saqlash",
+      "anyDifficulty": "Istalgan qiyinlik",
+      "anyAuthor": "Istalgan muallif",
+      "author": "Muallif",
+      "you": "Men",
+      "addTitle": "Yangi savol",
+      "options": "Javob variantlari",
+      "optionsHint": "Bir yoki bir nechta toʼgʼri javobni belgilang.",
+      "markCorrect": "Toʼgʼri javob {n}",
+      "option": "Variant",
+      "removeOption": "Variantni olib tashlash",
+      "addOption": "Variant qoʼshish",
+      "toTestCount": "Testga ({n})",
+      "buildTest": "Bankdan test tuzish",
+      "sharedWithSubject": "Fanning barcha oʼqituvchilari koʼradi",
+      "onlyMine": "Faqat meniki",
+      "answerText": "Javob",
+      "cancel": "Bekor qilish",
+      "more": "Yana koʻrsatish"
+    },
+    "addToTest": {
+      "title": "Testga qoʼshish",
+      "desc": "Savollar kursning tanlangan darsiga kiradi.",
+      "course": "Kurs",
+      "step": "Kurs darsi",
+      "position": "Qayerga",
+      "end": "Dars oxiriga",
+      "new": "Yangi test",
+      "confirm": "{count} tasini qoʼshish",
+      "done": "Testga qoʼshildi",
+      "open": "Bosqichni LMSʼda ochish",
+      "cancel": "Bekor qilish"
+    },
+    "lesson": {
+      "title": "Dars uchun AI",
+      "desc": "Dars mavzusi, fani va guruhi oʼzi qoʼyiladi.",
+      "plan": "Darsni rejalashtirish",
+      "questions": "Savollar yaratish",
+      "media": "Video yoki ovozlashtirish",
+      "questionsTitle": "Savollar",
+      "generating": "Savollar yaratilmoqda…",
+      "handout": "Tarqatma material"
+    },
+    "studio": {
+      "title": "Video va ovozlashtirish",
+      "desc": "Ovozli video yoki faqat audio: bitta ssenariy, dars uchun tayyor fayl.",
+      "steps": {
+        "settings": "Sozlamalar",
+        "script": "Ssenariy",
+        "render": "Yaratish",
+        "result": "Natija"
+      },
+      "outputs": {
+        "video": "Ovozli video",
+        "videoDesc": "Rasm, ovoz va subtitrli rolik",
+        "audio": "Faqat audio",
+        "audioDesc": "Matnni videosiz ovozlashtirish"
+      },
+      "settings": {
+        "output": "Nima yaratiladi",
+        "topic": "Mavzu",
+        "voice": "Ovoz",
+        "length": "Davomiyligi",
+        "min": "daq",
+        "language": "Til",
+        "next": "Ssenariyga",
+        "modeTopic": "Mavzu boʼyicha ssenariy yozish",
+        "modeText": "Matnimni ovozlashtirish",
+        "ownText": "Sizning matningiz",
+        "ownTextPlaceholder": "Ovozlashtirish kerak boʼlgan matnni qoʼying",
+        "voiceFemale": "ayol ovozi",
+        "voiceMale": "erkak ovozi",
+        "listen": "Tinglash"
+      },
+      "script": {
+        "title": "Ssenariyni tekshiring",
+        "desc": "Kerak boʼlsa, matnni oʼzgartiring. Oʼzgarishlardan keyin vaqt qayta hisoblanadi.",
+        "approveVideo": "Video yaratish",
+        "approveAudio": "Audio yaratish",
+        "back": "Orqaga",
+        "addPart": "Qism qoʼshish",
+        "removePart": "Qismni oʼchirish",
+        "newPart": "Yangi qism"
+      },
+      "stages": {
+        "queued": "Navbatda",
+        "voice": "Ovozlashtirish",
+        "compose": "Videoni yigʼish",
+        "ready": "Tayyor"
+      },
+      "state": {
+        "queued": "Navbatda",
+        "running": "Yaratilmoqda",
+        "ready": "Tayyor",
+        "failed": "Chiqmadi",
+        "cancelled": "Bekor qilindi",
+        "voicing": "Ovozlashtirilmoqda",
+        "rendering": "Video yigʼilmoqda",
+        "done": "Tayyor"
+      },
+      "queuePos": "Navbatdagi oʼrni: {n}",
+      "eta": "Taxminan {m} daq qoldi",
+      "cancel": "Bekor qilish",
+      "retry": "Qayta urinish",
+      "result": {
+        "ready": "Tayyor",
+        "toLesson": "Darsga qoʼshish",
+        "added": "Darsga qoʼshildi",
+        "downloadVideo": ".mp4 yuklab olish",
+        "downloadAudio": "Audioni yuklab olish",
+        "again": "Yana yaratish",
+        "transcript": "Mazmuni",
+        "addedTo": "Qoʼshildi: {name}",
+        "pickLesson": "Darsga qoʼshish",
+        "lesson": "Dars"
+      },
+      "stepOf": "{n}-qadam / {total} · {name}",
+      "failedKept": "Ssenariy va ovozlashtirish saqlandi.",
+      "retryFrom": "Qayta urinish",
+      "editScript": "Ssenariyni oʼzgartirish",
+      "leaveHint": "Sahifadan chiqib ketish mumkin: tayyor fayl «Oxirgi vazifalar»da paydo boʼladi.",
+      "scriptLabel": "Ssenariy",
+      "scriptPlaceholder": "Ssenariyni yozing. Boʼsh qator bilan ajratilgan har bir abzats sahnaga aylanadi.",
+      "scenesCount": "Sahnalar: {count}",
+      "start": "Yaratish",
+      "another": "Yana yaratish",
+      "failed": "Ishga tushirib boʼlmadi. Qayta urinib koʼring."
+    },
+    "jobs": {
+      "empty": "Hozircha vazifalar yoʼq",
+      "open": "Ochish"
+    },
+    "langs": {
+      "ru": "Rus tili",
+      "uz": "Oʼzbek tili",
+      "en": "Ingliz tili"
+    },
+    "saveHint": "Natija daftarga saqlanadi: {name}.",
+    "saveToNotebook": "Daftarga saqlash",
+    "workCheck": {
+      "placeholder": "Ishning toʼliq matnini qoʼying",
+      "upload": "Fayl yuklash",
+      "formats": "Word, PDF yoki matn",
+      "run": "Ishni tekshirish",
+      "runAgain": "Qayta tekshirish",
+      "checking": "Tekshirilmoqda…",
+      "editText": "Matnni oʼzgartirish",
+      "inline": "Ishni AI bilan tekshirish",
+      "checkedFile": "Fayl tekshirildi: {name}",
+      "checkedComment": "Ishga izoh tekshirildi",
+      "teacherOnly": "Faqat siz koʼrasiz",
+      "tabCriteria": "Mezonlar boʼyicha",
+      "tabAi": "AI belgilari",
+      "score": "AI bahosi: {score} / {max}",
+      "legend": "AI matniga oʼxshash parchalar belgilangan",
+      "caveat": "Bu baho, dalil emas.",
+      "showText": "Matnni koʼrsatish",
+      "hideText": "Matnni yashirish",
+      "verdict": {
+        "low": "Ehtimol, inson yozgan",
+        "mid": "Shubhalar bor",
+        "high": "AI matniga oʼxshaydi"
+      },
+      "strengths": "Kuchli tomonlari",
+      "issues": "Izohlar",
+      "suggestions": "Nimani yaxshilash",
+      "checkedFiles": "Izoh va ish fayllari tekshirildi: {count}",
+      "lessonNotebook": "dars fani daftari",
+      "failed": "Ishni tekshirib boʼlmadi. Qayta urinib koʼring."
     }
   }
 }

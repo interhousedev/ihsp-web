@@ -25,6 +25,12 @@ export function AlertsSection({
         checked={preferences.alerts_drops}
         onCheckedChange={(value) => onChange({ alerts_drops: value })}
       />
+      <PreferenceSwitch
+        label={t("alerts.absences")}
+        description={t("alerts.absencesHint")}
+        checked={preferences.notify_absences}
+        onCheckedChange={(value) => onChange({ notify_absences: value })}
+      />
       <ThresholdField
         label={t("alerts.gpaBelow")}
         value={preferences.alerts_gpa_below}

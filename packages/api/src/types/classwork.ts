@@ -48,6 +48,8 @@ export type HomeworkSubmissionBody = { file_ids: string[]; comment?: string | nu
 export type StaffSubmissionFile = HomeworkSubmissionFile & { download_url: string }
 
 export type StaffSubmissionRow = {
+  /** The submission id; null when the student handed nothing in. */
+  id: string | null
   student: PersonRef
   group_name: string
   subgroup: number | null

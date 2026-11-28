@@ -15,11 +15,12 @@ export function OfflineIndicator() {
   const failed = useNetworkFailure()
   const online = useOnline()
   const cachedAt = useCachedDataAge()
-  const offline = failed || !online
+  const showFailure = failed
+  const offline = showFailure || !online
   const updated = offline && cachedAt !== null ? t("updated", { when: f.relative(cachedAt) }) : null
   return (
     <span className="flex min-w-0 items-center gap-2">
-      <OfflineBadge forceVisible={failed} />
+      <OfflineBadge forceVisible={showFailure} />
       {updated ? (
         <span
           title={updated}

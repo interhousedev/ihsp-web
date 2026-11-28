@@ -36,9 +36,13 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("rooms"), url: "/rooms/", icon: "rooms" },
             { title: t("terms"), url: "/terms/", icon: "terms" },
             { title: t("timetable"), url: "/timetable/", icon: "timetable" },
+            { title: t("dayBlocks"), url: "/day-blocks/", icon: "pizza" },
             { title: t("lessons"), url: "/lessons/", icon: "calendarEvent" },
             { title: t("exams"), url: "/exams/", icon: "exams" },
             { title: t("knowledge"), url: "/knowledge/", icon: "library" },
+            { title: t("lmsLevels"), url: "/lms-levels/", icon: "trendingUp" },
+            { title: t("activities"), url: "/activities/", icon: "trophy" },
+            { title: t("lmsBadges"), url: "/lms-badges/", icon: "award" },
           ],
         },
         {

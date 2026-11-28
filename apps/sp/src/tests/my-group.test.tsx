@@ -14,13 +14,13 @@ describe("my group", () => {
     renderSp(<MyGroupPage />)
 
     const card = await screen.findByRole("region", { name: "2TN2" })
-    expect(within(card).getByText("Students: 4")).toBeInTheDocument()
+    expect(within(card).getByText(/Students: 4/)).toBeInTheDocument()
   })
 
   test("shows the homeroom teacher with role label, initials and public contacts", async () => {
     renderSp(<MyGroupPage />)
 
-    const teacher = await screen.findByRole("group", { name: "Homeroom teacher" })
+    const teacher = await screen.findByRole("group", { name: "Curator" })
     expect(within(teacher).getByText("DR")).toBeInTheDocument()
     expect(within(teacher).getByText("Dilnoza Rakhimova")).toBeInTheDocument()
     expect(within(teacher).getByText("@dilnoza_r")).toBeInTheDocument()
@@ -66,7 +66,7 @@ describe("my group", () => {
 
     renderSp(<MyGroupPage />)
 
-    const teacher = await screen.findByRole("group", { name: "Homeroom teacher" })
+    const teacher = await screen.findByRole("group", { name: "Curator" })
     expect(within(teacher).getByText("Not assigned yet")).toBeInTheDocument()
     const head = screen.getByRole("group", { name: "Head student" })
     expect(within(head).getByText("Not assigned yet")).toBeInTheDocument()

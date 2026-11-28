@@ -15,7 +15,8 @@
       "integrations": "Integrations",
       "control": "Control",
       "faq": "Questions",
-      "open": "Open app"
+      "open": "Open app",
+      "clubs": "Clubs"
     },
     "hero": {
       "title": "Your school day, answered in a chat",
@@ -237,7 +238,8 @@
       "features": "Features",
       "integrations": "Integrations",
       "faq": "Questions",
-      "tagline": "Timetable, marks, library and courses in one account."
+      "tagline": "Timetable, marks, library and courses in one account.",
+      "clubs": "Clubs"
     },
     "banner": {
       "label": "Questions from applicants",
@@ -534,6 +536,44 @@
           "a": "Uzbek, Russian and English."
         }
       }
+    },
+    "clubsTeaser": {
+      "eyebrow": "Clubs",
+      "title": "Lyceum clubs",
+      "lead": "Clubs, sections and communities: find your thing and join.",
+      "all": "All clubs"
     }
+  },
+  "clubsPublic": {
+    "title": "Club of the lyceum",
+    "lead": "Clubs and communities of {orgName}. Join through the app or write to the club leader.",
+    "members": "Members: {count}",
+    "all": "All clubs",
+    "goals": "Goals and schedule",
+    "team": "Team",
+    "partners": "Partners",
+    "events": "Upcoming events",
+    "contactTitle": "Write to the club leader",
+    "contactLead": "The club leader will get your message. Your email address is not published.",
+    "contact": {
+      "name": "Your name",
+      "email": "Email",
+      "emailHint": "Only needed for the reply.",
+      "message": "Message",
+      "send": "Send",
+      "sentTitle": "Message sent",
+      "sentBody": "The leader of the club “{club}” will reply to your email.",
+      "failed": "Could not send the message. Please try again.",
+      "unavailable": "Contacting the club leader is unavailable right now. Please try again later."
+    },
+    "eyebrow": "Clubs",
+    "coursesEyebrow": "Learning",
+    "courses": "Club courses",
+    "eventsEyebrow": "Events",
+    "join": "Join in {appMy}",
+    "contactCta": "Write to the club leader",
+    "openCourse": "Open in {appLms}",
+    "loadFailed": "Could not load the clubs. Please try again later.",
+    "noClubs": "No clubs are published yet."
   }
 }

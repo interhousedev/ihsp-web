@@ -21,11 +21,12 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     const subjects = { title: t("subjects"), url: "/subjects/", icon: "subjects" } as const
     const pendingMarks = { title: t("temporaryMarks"), url: "/temporary-marks/", icon: "forms" } as const
     const notebooks = { title: t("notebooks"), url: "/notebooks/", icon: "notebooks" } as const
+    const aiTools = { title: t("aiTools"), url: "/ai-tools/", icon: "assistant" } as const
     const groups: NavGroup[] = [
       { items: [today] },
       {
         label: t("groupTeaching"),
-        items: [timetable, journal, subjects, pendingMarks, studentSearch, notebooks, exams],
+        items: [timetable, journal, subjects, pendingMarks, studentSearch, notebooks, aiTools, exams],
       },
     ]
     if (isCurator) {

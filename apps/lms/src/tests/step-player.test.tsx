@@ -3,6 +3,7 @@ import type { StepView } from "@ihsp/api"
 import {
   apiUrl,
   attemptResultPassed,
+  attemptReview,
   attemptView,
   ids,
   lmsCardStudy,
@@ -198,9 +199,11 @@ describe("step player: tests", () => {
     // After the submit the review follows the server's answer.
     const result = await screen.findByRole("region", { name: "Result" })
     expect(result).toHaveTextContent("2/3")
-    expect(await screen.findByText("Question 3 · Incorrect")).toBeInTheDocument()
+    // Only the missed question is listed, with the correct answer and the explanation the policy allows.
+    expect(await screen.findByText("Incorrect")).toBeInTheDocument()
     expect(screen.getByText("d/dx x^3 at x=2 is 3x^2 = 12.")).toBeInTheDocument()
-    expect(screen.getByText("Question 1 · Correct")).toBeInTheDocument()
+    expect(screen.getByText(/Correct answer: 12/)).toBeInTheDocument()
+    expect(screen.getAllByText("Incorrect")).toHaveLength(1)
   })
 
   it("keeps the answers hidden when the test policy sends no review", async () => {
@@ -209,13 +212,25 @@ describe("step player: tests", () => {
       http.post(apiUrl("/v1/lms/attempts/:id/submit"), () =>
         HttpResponse.json({ ...attemptResultPassed, review: null }),
       ),
+      // The policy hides the answers: the review has the flags only, no correct_answer and no explanation.
+      http.get(apiUrl("/v1/lms/attempts/:id"), () =>
+        HttpResponse.json({
+          ...attemptReview,
+          review: [
+            { question_id: "q1", correct: true },
+            { question_id: "q2", correct: true },
+            { question_id: "q3", correct: false },
+          ],
+        }),
+      ),
     )
     const { user } = renderPlayer(ids.courseStepTest)
     await user.click(await screen.findByRole("button", { name: "Try again" }))
     await screen.findByText("What is the derivative of x^2?")
     await user.click(screen.getByRole("button", { name: "Submit" }))
     expect(await screen.findByText("Correct answers are not shown for this test.")).toBeInTheDocument()
-    expect(screen.queryByText(/Question 1 · /)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Correct answer:/)).not.toBeInTheDocument()
+    expect(screen.queryByText("d/dx x^3 at x=2 is 3x^2 = 12.")).not.toBeInTheDocument()
   })
 
   it("submits by itself when the timer runs out, after saving the answers", async () => {

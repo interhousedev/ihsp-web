@@ -24,7 +24,8 @@
     "subjects": "Subjects",
     "certificates": "Certificates",
     "temporaryMarks": "Pending for EMIS",
-    "excuses": "Excuses"
+    "excuses": "Excuses",
+    "aiTools": "AI tools"
   },
   "audience": {
     "subgroup": "{group} · subgroup {number}"
@@ -665,6 +666,302 @@
       "created": "Student excused",
       "noGroup": "You do not curate a group.",
       "clearEnd": "Clear end date"
+    }
+  },
+  "aiTools": {
+    "title": "AI tools",
+    "subtitle": "Lesson materials in a couple of minutes. You can always edit the result.",
+    "sections": {
+      "tools": "For preparation",
+      "jobs": "Recent jobs",
+      "jobsEmpty": "No tasks yet. Create a video or voice-over and it will appear here."
+    },
+    "savedTo": "Saved to notebook: {name}",
+    "openNotebook": "Open notebook",
+    "tools": {
+      "questions": {
+        "name": "Questions",
+        "desc": "New AI questions or a random pick from the bank.",
+        "cta": "Create questions"
+      },
+      "handout": {
+        "name": "Handout",
+        "desc": "Notes or a worksheet to print.",
+        "cta": "Create handout"
+      },
+      "workCheck": {
+        "name": "Student work check",
+        "desc": "Scoring by criteria and signs that the text was written by AI.",
+        "cta": "Check work"
+      },
+      "lessonPlan": {
+        "name": "Lesson plan",
+        "desc": "A plan following your department template.",
+        "cta": "Create plan"
+      }
+    },
+    "form": {
+      "topic": "Topic",
+      "topicPlaceholder": "For example: quadratic equations",
+      "group": "Group",
+      "subject": "Subject",
+      "emisTopic": "EMIS plan topic",
+      "difficulty": "Difficulty",
+      "anyDifficulty": "Any difficulty",
+      "level": "Level",
+      "levels": {
+        "basic": "Basic",
+        "medium": "Intermediate",
+        "advanced": "Advanced"
+      },
+      "language": "Language",
+      "count": "Count",
+      "template": "Plan template",
+      "criteria": "Criteria (optional)",
+      "criteriaPlaceholder": "What to assess: argument, structure, literacy",
+      "generate": "Create",
+      "generating": "Creating…",
+      "regenerate": "Create again",
+      "text": "Work text",
+      "allGroups": "All groups",
+      "allMyGroups": "All my groups"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "result": {
+      "title": "Result",
+      "copy": "Copy",
+      "copied": "Copied",
+      "download": "Download Word",
+      "attach": "Attach to lesson",
+      "attached": "Attached to the lesson",
+      "empty": "Fill in the form and press “Create”",
+      "aiMark": "Created by AI, check before use",
+      "failed": "Could not complete. Please try again."
+    },
+    "questions": {
+      "sourceAi": "New from AI",
+      "sourceBank": "From the bank",
+      "pick": "Pick",
+      "pickAgain": "Pick again",
+      "shuffleAgain": "Shuffle again",
+      "bankEmpty": "Choose a subject and topic and press “Pick”",
+      "bankNone": "There are no questions in the bank for these conditions yet.",
+      "bankFew": "Few questions: the bank has only {n}.",
+      "saveToBank": "Save to bank",
+      "selected": "Selected: {count}",
+      "selectAll": "Select all",
+      "addToTest": "Add to test",
+      "answer": "Answer",
+      "correct": "correct",
+      "multi": "Several answers",
+      "single": "One answer",
+      "inBankTopic": "In the bank for the topic: {n}",
+      "inBankSubject": "In the bank for the subject: {n}",
+      "createWithAi": "Create questions with AI",
+      "replace": "Replace",
+      "remove": "Remove",
+      "saveToNotebook": "Save to notebook ({count})"
+    },
+    "saveToBank": {
+      "otherTopic": "Other topic…",
+      "noPlan": "The EMIS plan is not loaded yet: enter the topic manually.",
+      "error": "Could not save the questions. Check the topic and try again.",
+      "title": "Save to the question bank",
+      "desc": "The questions go to the bank of the chosen subject and topic.",
+      "confirm": "Save {count}",
+      "done": "Questions saved to the bank: {topic}.",
+      "open": "Open bank",
+      "close": "Close",
+      "duplicates": "Already in the bank and will be skipped: {n}"
+    },
+    "bank": {
+      "title": "Question bank",
+      "hubDesc": "Your questions by EMIS subjects and topics.",
+      "desc": "Questions for the subject “{subject}” are visible to all teachers of the subject.",
+      "allTopics": "All topics",
+      "search": "Search questions",
+      "originAi": "AI",
+      "count": "questions: {n}",
+      "empty": "No questions found",
+      "add": "Add question",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteTitle": "Delete the question?",
+      "editTitle": "Question",
+      "questionText": "Question text",
+      "save": "Save",
+      "anyDifficulty": "Any difficulty",
+      "anyAuthor": "Any author",
+      "author": "Author",
+      "you": "Me",
+      "addTitle": "New question",
+      "options": "Answer options",
+      "optionsHint": "Mark one or more correct answers.",
+      "markCorrect": "Correct answer {n}",
+      "option": "Option",
+      "removeOption": "Remove option",
+      "addOption": "Add option",
+      "toTestCount": "To test ({n})",
+      "buildTest": "Build a test from the bank",
+      "sharedWithSubject": "Visible to all teachers of the subject",
+      "onlyMine": "Only mine",
+      "answerText": "Answer",
+      "cancel": "Cancel",
+      "more": "Show more"
+    },
+    "addToTest": {
+      "title": "Add to test",
+      "desc": "The questions go into the chosen course lesson.",
+      "course": "Course",
+      "step": "Course lesson",
+      "position": "Where",
+      "end": "To the end of the lesson",
+      "new": "New test",
+      "confirm": "Add {count}",
+      "done": "Added to the test",
+      "open": "Open the step in LMS",
+      "cancel": "Cancel"
+    },
+    "lesson": {
+      "title": "AI for the lesson",
+      "desc": "The topic, subject and group of the lesson are filled in automatically.",
+      "plan": "Plan the lesson",
+      "questions": "Create questions",
+      "media": "Video or voice-over",
+      "questionsTitle": "Questions",
+      "generating": "Creating questions…",
+      "handout": "Handout"
+    },
+    "studio": {
+      "title": "Video and voice-over",
+      "desc": "A video with voice or audio only: one script, a ready file for the lesson.",
+      "steps": {
+        "settings": "Settings",
+        "script": "Script",
+        "render": "Creating",
+        "result": "Result"
+      },
+      "outputs": {
+        "video": "Video with voice-over",
+        "videoDesc": "A clip with pictures, voice and subtitles",
+        "audio": "Audio only",
+        "audioDesc": "Voice-over of the text without video"
+      },
+      "settings": {
+        "output": "What to create",
+        "topic": "Topic",
+        "voice": "Voice",
+        "length": "Length",
+        "min": "min",
+        "language": "Language",
+        "next": "To the script",
+        "modeTopic": "Write a script from a topic",
+        "modeText": "Voice my text",
+        "ownText": "Your text",
+        "ownTextPlaceholder": "Paste the text to voice",
+        "voiceFemale": "female voice",
+        "voiceMale": "male voice",
+        "listen": "Listen"
+      },
+      "script": {
+        "title": "Check the script",
+        "desc": "Edit the text if needed. The timing is recalculated after changes.",
+        "approveVideo": "Create video",
+        "approveAudio": "Create audio",
+        "back": "Back",
+        "addPart": "Add part",
+        "removePart": "Remove part",
+        "newPart": "New part"
+      },
+      "stages": {
+        "queued": "Queued",
+        "voice": "Voice-over",
+        "compose": "Assembling video",
+        "ready": "Ready"
+      },
+      "state": {
+        "queued": "Queued",
+        "running": "Being created",
+        "ready": "Ready",
+        "failed": "Failed",
+        "cancelled": "Cancelled",
+        "voicing": "Voicing",
+        "rendering": "Assembling video",
+        "done": "Ready"
+      },
+      "queuePos": "Queue position: {n}",
+      "eta": "About {m} min left",
+      "cancel": "Cancel",
+      "retry": "Retry",
+      "result": {
+        "ready": "Ready",
+        "toLesson": "Add to lesson",
+        "added": "Added to the lesson",
+        "downloadVideo": "Download .mp4",
+        "downloadAudio": "Download audio",
+        "again": "Create another",
+        "transcript": "Contents",
+        "addedTo": "Added: {name}",
+        "pickLesson": "Add to lesson",
+        "lesson": "Lesson"
+      },
+      "stepOf": "Step {n} of {total} · {name}",
+      "failedKept": "The script and voice-over are saved.",
+      "retryFrom": "Retry",
+      "editScript": "Edit script",
+      "leaveHint": "You can leave the page: the finished file will appear in “Recent jobs”.",
+      "scriptLabel": "Script",
+      "scriptPlaceholder": "Write the script. Each paragraph separated by an empty line becomes a scene.",
+      "scenesCount": "Scenes: {count}",
+      "start": "Create",
+      "another": "Create another",
+      "failed": "Could not start. Please try again."
+    },
+    "jobs": {
+      "empty": "No jobs yet",
+      "open": "Open"
+    },
+    "langs": {
+      "ru": "Russian",
+      "uz": "Uzbek",
+      "en": "English"
+    },
+    "saveHint": "The result will be saved to the notebook: {name}.",
+    "saveToNotebook": "Save to notebook",
+    "workCheck": {
+      "placeholder": "Paste the whole text of the work",
+      "upload": "Upload a file",
+      "formats": "Word, PDF or text",
+      "run": "Check work",
+      "runAgain": "Check again",
+      "checking": "Checking…",
+      "editText": "Edit text",
+      "inline": "Check the work with AI",
+      "checkedFile": "File checked: {name}",
+      "checkedComment": "The comment on the work was checked",
+      "teacherOnly": "Only you can see this",
+      "tabCriteria": "By criteria",
+      "tabAi": "AI signs",
+      "score": "AI score: {score} of {max}",
+      "legend": "Fragments that look like AI text are highlighted",
+      "caveat": "This is an estimate, not proof.",
+      "showText": "Show text",
+      "hideText": "Hide text",
+      "verdict": {
+        "low": "Most likely written by a human",
+        "mid": "Some doubts",
+        "high": "Looks like AI text"
+      },
+      "strengths": "Strengths",
+      "issues": "Remarks",
+      "suggestions": "What to improve",
+      "checkedFiles": "Comment and work files checked: {count}",
+      "lessonNotebook": "the lesson's subject notebook",
+      "failed": "Could not check the work. Please try again."
     }
   }
 }

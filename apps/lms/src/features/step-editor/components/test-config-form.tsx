@@ -66,19 +66,32 @@ export function TestConfigForm({ config, onChange }: { config: TestConfig; onCha
         min={0}
         onChange={(minutes) => onChange({ ...config, cooldown_sec: minutesToSeconds(minutes) })}
       />
-      <Field>
-        <FieldLabel htmlFor={showId}>{t("showAnswers")}</FieldLabel>
-        <Dropdown
-          id={showId}
-          value={config.show_answers}
-          onValueChange={(value) => {
-            const next = SHOW_ANSWERS.find((item) => item === value)
-            if (next) onChange({ ...config, show_answers: next })
-          }}
-          className="w-full"
-          options={SHOW_ANSWERS.map((item) => ({ value: item, label: t(`showAnswersOptions.${item}`) }))}
+      <div className="flex flex-col gap-1 sm:col-span-2">
+        <SwitchField
+          label={t("showAnswers")}
+          checked={config.show_answers !== "never"}
+          onChange={(on) => onChange({ ...config, show_answers: on ? "after_submit" : "never" })}
         />
-      </Field>
+        <p className="text-muted-foreground text-xs">{t("showAnswersHint")}</p>
+      </div>
+      {config.show_answers !== "never" ? (
+        <Field>
+          <FieldLabel htmlFor={showId}>{t("showAnswersWhen")}</FieldLabel>
+          <Dropdown
+            id={showId}
+            value={config.show_answers}
+            onValueChange={(value) => {
+              const next = SHOW_ANSWERS.find((item) => item === value)
+              if (next) onChange({ ...config, show_answers: next })
+            }}
+            className="w-full"
+            options={SHOW_ANSWERS.filter((item) => item !== "never").map((item) => ({
+              value: item,
+              label: t(`showAnswersOptions.${item}`),
+            }))}
+          />
+        </Field>
+      ) : null}
       <SwitchField
         label={t("shuffleQuestions")}
         checked={config.shuffle_questions}

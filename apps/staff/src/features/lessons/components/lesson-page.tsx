@@ -5,6 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
 import { useEffect } from "react"
+import { LessonAiActions } from "@/features/ai-tools/components/lesson-ai-actions"
 import { HomeworkSubmissionsSection } from "./homework-submissions-section"
 import { TemporaryMarksSection } from "./temporary-marks-section"
 
@@ -46,6 +47,11 @@ export function LessonPage() {
               data={data}
               addMaterialOpen={add === "material"}
               onAddMaterialClosed={() => void setAdd(null)}
+            />
+            <LessonAiActions
+              topic={data.lesson.topic ?? undefined}
+              subjectId={data.lesson.subject.id}
+              groupId={data.lesson.audience.length === 1 ? (data.lesson.audience[0]?.group_id ?? null) : null}
             />
             {data.homework ? <HomeworkSubmissionsSection lessonId={data.lesson.id} /> : null}
             <TemporaryMarksSection lessonId={data.lesson.id} roster={data.attendance.roster} />

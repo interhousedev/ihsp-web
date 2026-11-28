@@ -21,6 +21,7 @@
     "rooms": "Rooms",
     "terms": "Terms & bells",
     "timetable": "Timetable",
+    "dayBlocks": "Non-lesson blocks",
     "lessons": "Lessons",
     "exams": "Exams",
     "attendance": "Attendance",
@@ -49,7 +50,10 @@
     "legal": "Legal documents",
     "erasure": "Erasure requests",
     "prompts": "AI prompts",
-    "aiHarness": "AI harness"
+    "aiHarness": "AI harness",
+    "lmsLevels": "Уровни и звания",
+    "lmsBadges": "Бейджи",
+    "activities": "Активности"
   },
   "shared": {
     "lessonList": "Lessons by date",
@@ -765,6 +769,59 @@
       "previous": "Previous",
       "next": "Next",
       "range": "{from}–{to} of {total}"
+    }
+  },
+  "dayBlocks": {
+    "title": "Non-lesson blocks",
+    "description": "Lunch, second lunch, breaks and assemblies. Each block can have its own days, time and groups.",
+    "new": "New block",
+    "newTitle": "New non-lesson block",
+    "editTitle": "Edit {name}",
+    "edit": "Edit {name}",
+    "delete": "Delete {name}",
+    "deleteTitle": "Delete {name}?",
+    "deleteDescription": "The block disappears from the timetable of every group it covers.",
+    "deleteConfirm": "Delete",
+    "deleted": "Block deleted",
+    "saved": "Block saved",
+    "cancel": "Cancel",
+    "save": "Save",
+    "empty": "No non-lesson blocks yet.",
+    "dayEmpty": "No blocks on this day.",
+    "loading": "Loading…",
+    "loadError": "Could not load the blocks.",
+    "courseN": "Course {n}",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "For example, Lunch",
+      "kind": "Type",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "timeError": "The end must be later than the start.",
+      "weekdays": "Days",
+      "scope": "Who it applies to",
+      "course": "Course",
+      "chooseCourse": "Choose a course",
+      "groups": "Groups"
+    },
+    "kind": {
+      "lunch": "Lunch",
+      "second_lunch": "Second lunch",
+      "break": "Break",
+      "assembly": "Assembly",
+      "other": "Other"
+    },
+    "scope": {
+      "all": "All groups",
+      "course": "One course",
+      "groups": "Chosen groups"
+    },
+    "weekday": {
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday"
     }
   },
   "rooms": {
@@ -2974,5 +3031,365 @@
     "previewEmpty": "Nothing to preview yet.",
     "lossyNotice": "This text has formulas, tables or other Markdown that the visual editor would change. It stays in Markdown mode.",
     "lossyWarning": "This text has formulas, tables or other Markdown that the visual editor may change."
+  },
+  "lmsLevels": {
+    "title": "Levels and ranks",
+    "meta": "The active scheme is “{active}”",
+    "description": "Decide how fast learners level up and which ranks they get. XP and awarded badges are kept, and nobody’s level drops.",
+    "status": {
+      "active": "Active",
+      "draft": "Draft"
+    },
+    "drafts": "Drafts",
+    "saveDraft": "Save draft",
+    "saved": "Draft saved",
+    "unsaved": "You have unsaved changes",
+    "noChanges": "No changes",
+    "activate": "Activate…",
+    "activated": {
+      "title": "Scheme activated",
+      "body": "All courses now use the “{name}” scheme.",
+      "revert": "Restore “{name}”"
+    },
+    "newDraft": {
+      "open": "New draft",
+      "title": "New scheme",
+      "description": "Ranks are copied from the active scheme and can be edited. Growth difficulty is set when the scheme is created.",
+      "create": "Create draft",
+      "cancel": "Cancel"
+    },
+    "curve": {
+      "title": "Growth speed",
+      "description": "The harder the growth, the more XP each next level needs.",
+      "name": "Scheme name",
+      "base": "Growth difficulty",
+      "easier": "Easier",
+      "harder": "Harder",
+      "example": "Level 5 — {l5} XP, level 10 — {l10} XP",
+      "table": "XP needed for each level",
+      "level": "Lv. {level}"
+    },
+    "tiers": {
+      "title": "Ranks",
+      "description": "A rank is shown next to the level. Each lasts until the next one starts.",
+      "range": "Levels {from}–{to}",
+      "open": "Level {from} and above",
+      "titleLabel": "Title",
+      "from": "From level",
+      "reward": "Reward badge",
+      "noReward": "No reward",
+      "color": "Rank colour",
+      "add": "Add rank",
+      "remove": "Remove rank"
+    },
+    "checks": {
+      "title": "What to fix",
+      "contiguous": "The first rank must start at level 1",
+      "increasing": "Rank levels must increase",
+      "titles": "Every rank needs a title in all three languages"
+    },
+    "colors": {
+      "slate": "Grey",
+      "sky": "Sky blue",
+      "emerald": "Green",
+      "amber": "Amber",
+      "violet": "Violet",
+      "rose": "Pink"
+    },
+    "preview": {
+      "title": "What will change",
+      "description": "Based on {total} learners.",
+      "changed": "learners will get a new level (at least)",
+      "none": "No changes",
+      "note": "Nobody’s level drops.",
+      "before": "Now",
+      "after": "With the draft",
+      "chart": "Learners per level",
+      "axisX": "level",
+      "axisY": "learners"
+    },
+    "confirm": {
+      "title": "Activate “{name}”?",
+      "body": "Learners whose level goes up will get the new one. Levels never drop. You can restore “{previous}” at any time.",
+      "bodyFirst": "The scheme will apply to all courses. Levels never drop.",
+      "ok": "Activate"
+    }
+  },
+  "lmsBadges": {
+    "title": "Badges",
+    "create": "Create badge",
+    "description": "Platform badges are visible in every course and are awarded automatically for achievements across the platform. Course badges are created by that course’s teachers.",
+    "empty": "No platform badges yet.",
+    "enabled": "Badge enabled",
+    "scope": {
+      "platform": "Whole platform"
+    },
+    "created": {
+      "title": "Badge created",
+      "body": "“{name}” is on and will be awarded by the rule, including to those who already meet it."
+    },
+    "detail": {
+      "hint": "If you change the condition, the badge is also awarded to those who already meet it.",
+      "save": "Save",
+      "delete": "Delete",
+      "deleteTitle": "Delete the badge?",
+      "deleteBody": "The badge will disappear for every learner who has it.",
+      "deleteConfirm": "Delete badge"
+    },
+    "wizard": {
+      "title": "New badge",
+      "back": "Back to the list",
+      "cancel": "Cancel",
+      "create": "Create badge"
+    },
+    "rule": {
+      "note": "A platform badge is awarded for an achievement counted across all of the learner’s courses.",
+      "event": "Awarded for",
+      "events": {
+        "level_reached": "Reaching a level",
+        "coach_resolved": "Questions solved with the Coach",
+        "courses_completed": "Completed courses"
+      },
+      "count": {
+        "level_reached": "Level at least",
+        "coach_resolved": "Solved questions at least",
+        "courses_completed": "Completed courses at least"
+      },
+      "summary": "{event}: {n}"
+    },
+    "look": {
+      "name": "Name",
+      "descriptionLabel": "Description",
+      "icon": "Icon",
+      "shape": "Shape",
+      "shapes": {
+        "circle": "Circle",
+        "shield": "Shield",
+        "hexagon": "Hexagon",
+        "star": "Star"
+      },
+      "color": "Colour"
+    }
+  },
+  "clubAnalytics": {
+    "title": "Аналитика клубов",
+    "description": "Рост, посещаемость, оценки и охват объявлений по клубам. Управление клубами — на вкладке «Клубы».",
+    "kpi": {
+      "clubs": "Активных клубов",
+      "events": "Events",
+      "checkIns": "Check-ins",
+      "rsvps": "RSVPs"
+    },
+    "table": {
+      "title": "Клубы",
+      "club": "Клуб",
+      "members": "Участники",
+      "noRating": "Пока нет оценок",
+      "events": "Events",
+      "attendance": "Явка",
+      "rating": "Rating"
+    }
+  },
+  "activities": {
+    "title": "Activities",
+    "description": "A single catalog of opportunities, visible to applicants and students.",
+    "tabs": {
+      "catalog": "Opportunities",
+      "clubs": "Clubs",
+      "analytics": "Analytics"
+    },
+    "create": "Add",
+    "edit": "Edit",
+    "publish": "Publish",
+    "archive": "Archive",
+    "restore": "Restore from archive",
+    "archivedToast": "“{title}” moved to the archive",
+    "undo": "Undo",
+    "count": "Found: {n}",
+    "empty": "Nothing found.",
+    "until": "until {date}",
+    "noDeadline": "No deadline",
+    "left": "{n} d. left",
+    "expired": "Deadline passed",
+    "leadsToClub": "leads to the club “{club}”",
+    "leadsToForm": "form of the club “{club}”",
+    "filters": {
+      "search": "Search by title",
+      "kind": "Type",
+      "allKinds": "All types",
+      "audience": "For whom",
+      "allAudiences": "All audiences",
+      "status": "Status",
+      "allStatuses": "Any status",
+      "deadline": "Deadline",
+      "anyDeadline": "Any deadline",
+      "soon": "Next 30 days",
+      "past": "Passed",
+      "none": "No deadline",
+      "button": "Filters",
+      "buttonCount": "Filters ({n})",
+      "reset": "Reset",
+      "apply": "Show ({n})"
+    },
+    "kinds": {
+      "exam": "Exam",
+      "certification": "Certificate",
+      "course": "Course",
+      "event": "Event",
+      "program": "Program",
+      "scholarship": "Scholarship",
+      "research": "Research",
+      "recurring": "Recurring"
+    },
+    "audiences": {
+      "applicant": "Applicants",
+      "student": "Students",
+      "both": "Everyone"
+    },
+    "statuses": {
+      "draft": "Draft",
+      "published": "Published",
+      "archived": "Archived"
+    },
+    "form": {
+      "createTitle": "New activity",
+      "editTitle": "Edit activity",
+      "back": "Back",
+      "requiredNote": "* is required.",
+      "partner": "Organization",
+      "uploadLogo": "Upload logo",
+      "logoHint": "PNG or SVG, square",
+      "org": "Organization name",
+      "texts": "Title and description",
+      "title": "Title",
+      "summary": "Description",
+      "langFilled": "Filled in",
+      "langEmpty": "Not filled in",
+      "langMissing": "Uzbek and English are still empty: the Russian text will be shown there.",
+      "details": "Terms",
+      "category": "Category",
+      "categoryPlaceholder": "Choose a category",
+      "deadline": "Application deadline",
+      "deadlineEmpty": "Empty: no deadline",
+      "leadsTo": "Leads to",
+      "leads": {
+        "link": "External link",
+        "club": "Club",
+        "form": "Club sign-up form"
+      },
+      "link": "Link",
+      "club": "Club",
+      "clubPlaceholder": "Choose a club",
+      "clubFill": "The organization will be filled in from the club.",
+      "saveDraft": "Save draft",
+      "errTitle": "Enter a title",
+      "errOrg": "Specify the organization",
+      "errCategory": "Choose a category",
+      "errClub": "Choose a club",
+      "errLink": "Specify a link",
+      "seen": {
+        "applicant": "Visible to: applicants",
+        "student": "Visible to: students in their account",
+        "both": "Visible to: applicants and students in their account"
+      },
+      "saveChanges": "Save changes",
+      "errUrl": "The link must start with https://"
+    },
+    "clubs": {
+      "description": "Applications, owners and coordinators of clubs.",
+      "applications": "Applications ({n})",
+      "owner": "Owner: {name}",
+      "members": "members: {n}",
+      "coordinator": "Coordinator: {name}",
+      "noCoordinator": "No coordinator",
+      "search": "Find a club",
+      "chipAll": "All",
+      "status": {
+        "active": "Active",
+        "pending_review": "Under review",
+        "suspended": "Suspended",
+        "draft": "Draft",
+        "archived": "Archived"
+      },
+      "facts": {
+        "course": "Course: {name}",
+        "noCourse": "Course: not linked",
+        "pointsOn": "Points: enabled",
+        "pointsOff": "Points: disabled",
+        "selection": "Selection by performance: enabled",
+        "form": {
+          "open": "Sign-up form: open",
+          "closed": "Sign-up form: closed",
+          "none": "No sign-up form"
+        }
+      },
+      "menu": "Actions",
+      "approve": "Approve",
+      "changes": "Request changes",
+      "changesLabel": "What needs to be fixed",
+      "changesSend": "Send",
+      "changesSent": "Changes for the application “{name}” were sent to the owner.",
+      "goal": "Goal",
+      "schedule": "Schedule",
+      "teacher": "Supervisor",
+      "change": "Change",
+      "transfer": "Transfer",
+      "attachCourse": "Link a course",
+      "suspend": "Suspend",
+      "resume": "Resume",
+      "suspendedAt": "Suspended {note}",
+      "suspendTitle": "Suspend “{name}”?",
+      "suspendBody": "The club will disappear from the feed and the public site. Members will be notified.",
+      "suspendReason": "Reason",
+      "suspendUntil": "Until which date",
+      "suspendUntilHint": "Empty: until the administrator decides",
+      "transferTitle": "Transfer “{name}”",
+      "transferBody": "The current owner is {owner}. They will stay a member of the club. The new owner will be notified.",
+      "newOwner": "Find the new owner",
+      "noMatch": "No one found",
+      "courseTitle": "Course of the club “{name}”",
+      "courseBody": "Club members will see the course in their account, and course students will see the club.",
+      "courseNone": "No course",
+      "courseSave": "Save",
+      "coord": {
+        "title": "Club coordinators",
+        "desc": "They help owners and review applications.",
+        "add": "Assign",
+        "pick": "Find a person",
+        "club": "Club",
+        "clubPlaceholder": "Choose a club",
+        "remove": "Remove {name} from the club “{club}”",
+        "removeTitle": "Remove the coordinator?",
+        "removeBody": "{name} will no longer help the club “{club}”.",
+        "removeOk": "Remove"
+      },
+      "noOwner": "No owner",
+      "capabilities": "Club features",
+      "capabilitiesTitle": "Features of “{name}”",
+      "capabilitiesBody": "What the club can use in its work.",
+      "capabilitiesSave": "Save",
+      "capability": {
+        "forms": "Forms",
+        "drafting": "Selection by performance",
+        "points": "Points",
+        "roster": "Member roster"
+      },
+      "capabilityHint": {
+        "forms": "Sign-up form and member questionnaires",
+        "drafting": "Pick members by their results",
+        "points": "Award points to members",
+        "roster": "Members, attendance and roles"
+      },
+      "create": "Create club",
+      "createTitle": "New club",
+      "createBody": "The club is created already approved; the chosen person becomes its owner.",
+      "createName": "Name",
+      "createSlug": "Address (slug)",
+      "createSlugHint": "Lowercase Latin letters, digits and hyphens only.",
+      "createDescription": "Description",
+      "createOwner": "Owner",
+      "createSubmit": "Create",
+      "created": "Club “{name}” created."
+    }
   }
 }

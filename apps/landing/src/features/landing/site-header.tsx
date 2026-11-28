@@ -3,6 +3,7 @@
 import { BRAND } from "@ihsp/config/brand"
 import { useT } from "@ihsp/i18n"
 import { IconBrandTelegram, IconMenu2, IconX, cn } from "@ihsp/ui"
+import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { ctaPrimary, ctaSecondary } from "./cta-styles"
 import { useLandingLinks } from "./links"
@@ -12,7 +13,7 @@ import { focusables, useModal } from "./use-modal"
 const ANCHORS = ["features", "apps", "integrations", "control", "faq"] as const
 
 /** Transparent over the hero; a floating glass pill once the page is scrolled. Below 1024px a glass menu panel. */
-export function SiteHeader() {
+export function SiteHeader({ base = "" }: { base?: string }) {
   const t = useT("landing")
   const links = useLandingLinks()
   const [compact, setCompact] = useState(false)
@@ -54,17 +55,20 @@ export function SiteHeader() {
   return (
     <header className="hdr" data-compact={compact}>
       <div className={cn("hdr-bar", compact ? "lnd-glass" : "lnd-on-dawn")}>
-        <a href="#top" className="hdr-brand">
+        <a href={`${base}#top`} className="hdr-brand">
           {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public */}
           <img src={BRAND.logos.svg} alt={t("logoAlt")} width={32} height={32} className="size-8 rounded-lg" />
           <span className="hdr-brand-text">{t("brand")}</span>
         </a>
         <nav aria-label={t("nav.label")} className="hdr-nav">
           {ANCHORS.map((key) => (
-            <a key={key} href={`#${key}`} className="hdr-link">
+            <a key={key} href={`${base}#${key}`} className="hdr-link">
               {t(`nav.${key}`)}
             </a>
           ))}
+          <Link href="/clubs/" className="hdr-link">
+            {t("nav.clubs")}
+          </Link>
         </nav>
         <div className="hdr-end">
           <LocaleSwitch />
@@ -95,10 +99,13 @@ export function SiteHeader() {
         >
           <nav aria-label={t("nav.label")} className="grid">
             {ANCHORS.map((key) => (
-              <a key={key} href={`#${key}`} onClick={() => close(false)} className="hdr-link">
+              <a key={key} href={`${base}#${key}`} onClick={() => close(false)} className="hdr-link">
                 {t(`nav.${key}`)}
               </a>
             ))}
+            <Link href="/clubs/" onClick={() => close(false)} className="hdr-link">
+              {t("nav.clubs")}
+            </Link>
           </nav>
           <div className="hdr-panel-row">
             <LocaleSwitch />

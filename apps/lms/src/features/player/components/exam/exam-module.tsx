@@ -229,7 +229,7 @@ export function ExamModuleRunner({
       {/* top bar */}
       <header className="flex flex-wrap items-center justify-between gap-2 border-b border-dashed px-3 py-2">
         <div className="flex min-w-0 flex-col">
-          <h1 className="truncate text-sm font-semibold md:text-base">{title}</h1>
+          <h1 className="line-clamp-2 text-sm font-semibold md:text-base">{title}</h1>
           <Button
             variant="link"
             size="sm"
@@ -251,7 +251,7 @@ export function ExamModuleRunner({
           <Button
             variant="outline"
             size="sm"
-            className="h-6 rounded-full px-2 text-xs"
+            className="h-6 rounded-full px-2 text-xs whitespace-nowrap"
             onClick={() => setTimerHidden(!timerHidden)}
           >
             {timerHidden ? t("show") : t("hide")}
@@ -465,8 +465,8 @@ export function ExamModuleRunner({
           aria-expanded={navOpen}
           onClick={() => setNavOpen(!navOpen)}
         >
-          <span className="truncate">
-            {checking ? t("checkShort") : t("questionOf", { number: index + 1, total: questions.length })}
+          <span className="truncate whitespace-nowrap">
+            {checking ? t("checkShort") : `${index + 1} / ${questions.length}`}
           </span>
           <Icons.chevronUp aria-hidden />
         </Button>

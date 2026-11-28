@@ -7,6 +7,7 @@ import {
   type GroupPersonRef,
   type GroupTeacherRef,
   type TeacherContacts,
+  isApiError,
 } from "@ihsp/api"
 import { GroupProgressSection } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
@@ -17,6 +18,8 @@ import { HidePhotoSwitch } from "./hide-photo-switch"
 import { GroupRatingSection } from "@/features/grades/components/group-rating-section"
 import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
 import { studentRecordStatusOf } from "../../shared/hooks/use-student-record-state"
+import { NO_GROUP, type GroupStanding as Standing } from "../api/group-standing"
+import { GroupRanksSection, GroupTopSection } from "./group-standing"
 
 type Person = GroupPersonRef | GroupTeacherRef
 
@@ -111,9 +114,14 @@ function MemberList({ members }: { members: GroupMemberRow[] }) {
 /** My group: the group card, the homeroom teacher and head student, the members, and for the head student the marks. */
 export function MyGroupPage() {
   const t = useT("myGroup")
+  const ts = useT("groupStanding")
   const nav = useT("nav")
   const query = useQuery(getMyGroupQuery())
   const group = query.data
+  // The contract fields (course, curator, tops, ranks) ride on the same response; typed by hand until regeneration.
+  const standing = group as Standing | undefined
+  const course = standing?.group?.course ?? null
+  const noGroup = query.isError && isApiError(query.error) && query.error.type === NO_GROUP
   const recordStatus = query.isError ? studentRecordStatusOf(query.error) : null
 
   return (
@@ -125,11 +133,14 @@ export function MyGroupPage() {
             className="bg-card text-card-foreground flex flex-col gap-1 rounded-card border p-4"
           >
             <h2 className="text-lg font-semibold">{group.name}</h2>
-            <p className="text-muted-foreground text-sm tabular-nums">{t("size", { count: group.size })}</p>
+            <p className="text-muted-foreground text-sm tabular-nums">
+              {course !== null ? `${ts("course", { course })} · ` : ""}
+              {t("size", { count: standing?.members_count ?? group.size })}
+            </p>
           </section>
 
           <div className="grid gap-3 min-[400px]:grid-cols-2">
-            <RoleCard label={t("homeroomTeacher")} person={group.homeroom_teacher}>
+            <RoleCard label={ts("curator")} person={group.homeroom_teacher}>
               {group.homeroom_teacher ? <TeacherContactList contacts={group.homeroom_teacher.contacts} /> : null}
             </RoleCard>
             <RoleCard label={t("headStudent")} person={group.head_student} />
@@ -138,6 +149,9 @@ export function MyGroupPage() {
           <div className="bg-card rounded-card border px-4 py-1">
             <HidePhotoSwitch />
           </div>
+
+          {standing ? <GroupRanksSection standing={standing} /> : null}
+          {standing ? <GroupTopSection standing={standing} /> : null}
 
           <MemberList members={group.members} />
 
@@ -148,6 +162,8 @@ export function MyGroupPage() {
             </>
           ) : null}
         </div>
+      ) : noGroup ? (
+        <StateView state="empty" title={ts("noGroupTitle")} description={ts("noGroupHint")} />
       ) : recordStatus === "missing" || recordStatus === "emis-failed" ? (
         <NoStudentRecordNotice reason={recordStatus} />
       ) : (

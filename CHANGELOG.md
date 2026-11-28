@@ -4,6 +4,41 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.15.2] - 2026-11-28
+
+### Added
+
+- Activities on my.iht: a search field that filters clubs, events and opportunities.
+- Students can suggest a club ("Предложить клуб"); it goes to review, and "Мои заявки" shows its status.
+- Admin: "Создать клуб" creates an active club with a chosen owner.
+
+### Fixed
+
+- Activities on my.iht: the tab row and the horizontal card rail no longer scroll vertically.
+- The club management page showed a raw message key instead of its title.
+- Activities texts in English and Uzbek (student app and admin) were still in Russian.
+
+## [1.15.1] - 2026-11-28
+
+### Security
+
+- The image picks up the Alpine `libxml2` fixes (CVE-2026-11979 and five more; the 1.15.0 image build stopped at the Trivy gate and was not published).
+
+## [1.15.0] - 2026-11-28
+
+### Added
+
+- LMS Duo: one path line through every stage and lesson, real lesson content for all block kinds, coach, levels and badges.
+- Tests: a "show correct answers to the student" switch for the test creator; students always see their score and missed questions, and, when allowed, the correct answers with an AI explanation of the mistake.
+- Staff Studio: tests from or into the question bank by EMIS subject and topic, one media tool for video with voice-over (mp4 download), a roomier AI text check that is also in the homework checker, and materials saved to the subject notebook.
+- my.iht activities: clubs (IHT Volunteers included), events, ratings, opportunities, club to course links, and an accept or decline dialog for club ownership transfers.
+- Admin: activities and opportunities management, clubs with capabilities, club analytics, LMS levels and badges.
+- Landing: the public clubs page uses the ihsu.uz design and is linked from the main landing.
+
+### Known issues
+
+- The clubs contact form needs the Turnstile keys set in production.
+
 ## [1.14.0] - 2026-11-23
 
 ### Added

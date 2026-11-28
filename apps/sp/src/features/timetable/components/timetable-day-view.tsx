@@ -1,31 +1,30 @@
 "use client"
 
-import type { ControlPeriodItem, LessonItem, LessonResult } from "@ihsp/api"
-import { useFormatters, useT } from "@ihsp/i18n"
+import type { ControlPeriodItem, LessonResult, StudentLessonItem } from "@ihsp/api"
+import { useT } from "@ihsp/i18n"
 import { DatePicker, StateView } from "@ihsp/ui"
 import { useRef, type TouchEvent } from "react"
 import type { MarkedState } from "../../attendance/utils/lesson-states"
+import type { DayBlockItem } from "../api/day-blocks"
 import { periodEdge, periodOn } from "../utils/control-periods"
 import { lessonsOn, weekDays } from "../utils/week"
-import { PHONE_PX_PER_MINUTE } from "../utils/timeline"
 import { ControlPeriodBar } from "./control-period-bar"
-import { TimeGrid } from "./time-grid"
+import { DayAgenda } from "./day-agenda"
 import { DayPills } from "./day-pills"
 
 /** A horizontal swipe of at least this many px (and more horizontal than vertical) changes the day. */
 const SWIPE_MIN_PX = 56
-/** The day view always draws 08:00 to 18:00. */
-const DAY_RANGE = { startMin: 8 * 60, endMin: 18 * 60 }
 
 /**
- * One day as a calendar day view: the week strip to pick the day, then the time axis with the lessons placed by their
- * minutes. Swiping left and right moves to the next or previous day.
+ * One day as an agenda: the week strip and the date picker in one row, then the lessons in time order with the
+ * lunches, breaks and free time between them as compact rows. Swiping left and right moves to the next or previous day.
  */
 export function TimetableDayView({
   day,
   monday,
   today,
   lessons,
+  blocks,
   now,
   showSubgroup,
   results,
@@ -40,7 +39,8 @@ export function TimetableDayView({
   day: string
   monday: string
   today: string
-  lessons: LessonItem[]
+  lessons: StudentLessonItem[]
+  blocks: readonly DayBlockItem[]
   now: number
   showSubgroup: boolean
   results: ReadonlyMap<string, LessonResult>
@@ -53,8 +53,8 @@ export function TimetableDayView({
   onOpenLesson: (lessonId: string) => void
 }) {
   const t = useT("timetable")
-  const f = useFormatters()
   const items = lessonsOn(lessons, day)
+  const dayBlocks = blocks.filter((block) => block.date === day)
   const period = periodOn(periods, day)
   const start = useRef<{ x: number; y: number } | null>(null)
 
@@ -75,10 +75,16 @@ export function TimetableDayView({
 
   return (
     <div className="flex flex-col gap-3" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <div className="flex items-center justify-between gap-2">
-        <p className="text-base font-semibold first-letter:uppercase">
-          {f.date(day, { month: "long", year: "numeric" })}
-        </p>
+      <div className="flex items-center gap-2">
+        <div className="min-w-0 flex-1">
+          <DayPills
+            days={weekDays(monday, [{ date: day }])}
+            selected={day}
+            today={today}
+            statuses={statuses}
+            onChange={onDayChange}
+          />
+        </div>
         <DatePicker
           iconOnly
           value={day}
@@ -86,13 +92,6 @@ export function TimetableDayView({
           aria-label={t("openCalendar")}
         />
       </div>
-      <DayPills
-        days={weekDays(monday, [{ date: day }])}
-        selected={day}
-        today={today}
-        statuses={statuses}
-        onChange={onDayChange}
-      />
       {period ? (
         <ControlPeriodBar
           period={period}
@@ -105,25 +104,14 @@ export function TimetableDayView({
       {items.length === 0 ? (
         <StateView state="empty" emptyText={t("noLessons")} />
       ) : (
-        <TimeGrid
-          columns={[
-            {
-              key: day,
-              label: f.weekday(day, "long"),
-              sublabel: f.date(day, { day: "numeric", month: "long" }),
-              today: day === today,
-              lessons: items,
-            },
-          ]}
-          pxPerMinute={PHONE_PX_PER_MINUTE}
-          minColumnWidth={0}
-          showHeaders={false}
+        <DayAgenda
+          lessons={items}
+          blocks={dayBlocks}
           now={now}
           showSubgroup={showSubgroup}
           results={results}
           excusedLessonIds={excusedLessonIds}
           onOpenLesson={onOpenLesson}
-          baseRange={DAY_RANGE}
         />
       )}
     </div>

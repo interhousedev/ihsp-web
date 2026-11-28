@@ -15,7 +15,8 @@
       "integrations": "Integratsiyalar",
       "control": "Nazorat",
       "faq": "Savollar",
-      "open": "Ilovani ochish"
+      "open": "Ilovani ochish",
+      "clubs": "Klublar"
     },
     "hero": {
       "title": "Maktab kuningiz: javob chatda",
@@ -237,7 +238,8 @@
       "features": "Imkoniyatlar",
       "integrations": "Integratsiyalar",
       "faq": "Savollar",
-      "tagline": "Dars jadvali, baholar, kutubxona va kurslar bitta akkauntda."
+      "tagline": "Dars jadvali, baholar, kutubxona va kurslar bitta akkauntda.",
+      "clubs": "Klublar"
     },
     "banner": {
       "label": "Abituriyentlar savollari",
@@ -534,6 +536,44 @@
           "a": "Oʻzbek, rus va ingliz tillari."
         }
       }
+    },
+    "clubsTeaser": {
+      "eyebrow": "Klublar",
+      "title": "Litsey klublari",
+      "lead": "To'garaklar, seksiyalar va jamoalar: o'zingizga yoqqanini toping va qo'shiling.",
+      "all": "Barcha klublar"
     }
+  },
+  "clubsPublic": {
+    "title": "Litsey klublari",
+    "lead": "{orgName} klublari va jamoalari. Ilova orqali qoʻshiling yoki klub rahbariga yozing.",
+    "members": "Aʼzolar: {count}",
+    "all": "Barcha klublar",
+    "goals": "Maqsadlar va jadval",
+    "team": "Jamoa",
+    "partners": "Hamkorlar",
+    "events": "Yaqin tadbirlar",
+    "contactTitle": "Klub rahbariga yozish",
+    "contactLead": "Xabarni klub rahbari oladi. Elektron pochta manzilingiz eʼlon qilinmaydi.",
+    "contact": {
+      "name": "Ismingiz",
+      "email": "Elektron pochta",
+      "emailHint": "Faqat javob uchun kerak.",
+      "message": "Xabar",
+      "send": "Yuborish",
+      "sentTitle": "Xabar yuborildi",
+      "sentBody": "“{club}” klubi rahbari elektron pochtangizga javob beradi.",
+      "failed": "Xabarni yuborib boʼlmadi. Qayta urinib koʼring.",
+      "unavailable": "Hozir rahbar bilan bogʼlanib boʼlmaydi. Keyinroq urinib koʼring."
+    },
+    "eyebrow": "Klublar",
+    "coursesEyebrow": "O'qish",
+    "courses": "Klub kurslari",
+    "eventsEyebrow": "Afisha",
+    "join": "{appMy}ga qoʻshilish",
+    "contactCta": "Klub rahbariga yozish",
+    "openCourse": "{appLms}da ochish",
+    "loadFailed": "Klublarni yuklab boʼlmadi. Keyinroq urinib koʼring.",
+    "noClubs": "Klublar hali eʼlon qilinmagan."
   }
 }

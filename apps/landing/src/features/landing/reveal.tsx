@@ -28,10 +28,18 @@ export function Reveal({
 }) {
   const reduced = useReducedMotion()
   const ref = useRef<HTMLDivElement>(null)
+  // Content is visible by default; it is only hidden once the effect confirms the block sits below the fold.
+  const [armed, setArmed] = useState(false)
   const [seen, setSeen] = useState(false)
   useEffect(() => {
     const node = ref.current
     if (reduced || !node) return
+    if (node.getBoundingClientRect().top < window.innerHeight) {
+      setSeen(true)
+      return
+    }
+    setArmed(true)
+    const fallback = window.setTimeout(() => setSeen(true), 4000)
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -42,9 +50,12 @@ export function Reveal({
       { rootMargin: "0px 0px -10% 0px" },
     )
     observer.observe(node)
-    return () => observer.disconnect()
+    return () => {
+      window.clearTimeout(fallback)
+      observer.disconnect()
+    }
   }, [reduced])
-  const hidden = !reduced && !seen
+  const hidden = !reduced && armed && !seen
   return (
     <div
       ref={ref}

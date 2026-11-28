@@ -4,7 +4,6 @@ import {
   isApiError,
   keys,
   postLmsStepBlockAttempts,
-  type Answer,
   type AttemptResult,
   type AttemptView,
   type StepView,
@@ -21,7 +20,7 @@ import { AttemptRunner } from "./attempt-runner"
 
 type TestBlockData = Extract<StepView["blocks"][number], { type: "test" }>
 
-type Finished = { attempt: AttemptView; result: AttemptResult; answers: Record<string, Answer> }
+type Finished = { result: AttemptResult }
 
 /** `params.available_at` of a refused start: the pause between attempts is not over (UF-LMS-04, 2b). */
 function availableAt(error: unknown): string | null {
@@ -73,11 +72,9 @@ export function TestBlock({
   })
 
   const submitted = useCallback(
-    (result: AttemptResult, answers: Record<string, Answer>) => {
-      setAttempt((current) => {
-        if (current) setFinished({ attempt: current, result, answers })
-        return null
-      })
+    (result: AttemptResult) => {
+      setFinished({ result })
+      setAttempt(null)
       refresh()
     },
     [refresh],
@@ -143,7 +140,14 @@ export function TestBlock({
             ) : null}
 
             {finished ? (
-              <AttemptResultView attempt={finished.attempt} result={finished.result} answers={finished.answers} />
+              <AttemptResultView
+                attemptId={finished.result.id}
+                stepId={stepId}
+                blockId={block.id}
+                result={finished.result}
+              />
+            ) : !preview && best && block.last_attempt_id ? (
+              <AttemptResultView attemptId={block.last_attempt_id} stepId={stepId} blockId={block.id} result={best} />
             ) : null}
 
             {start.isError ? (

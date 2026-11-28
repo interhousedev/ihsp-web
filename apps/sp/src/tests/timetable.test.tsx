@@ -30,7 +30,9 @@ function blockOf(id: string): HTMLElement {
 
 /** The lesson slots of the day or week columns (other lists on the page belong to the attendance overview). */
 function lessonSlots(): Element[] {
-  return Array.from(document.querySelectorAll("ol[aria-label] > li"))
+  return Array.from(document.querySelectorAll("ol[aria-label] > li")).filter((li) =>
+    li.querySelector("[data-lesson-id]"),
+  )
 }
 
 /** The positioned slot (`li`) of a block: its top and height are the minutes times the scale. */
@@ -238,21 +240,21 @@ describe("calendar week view", () => {
 })
 
 describe("calendar day view on a phone", () => {
-  test("the day is a time axis with the lessons at their minutes and the now line", async () => {
+  test("the day is an agenda: the lessons in time order, with the breaks between them", async () => {
     setViewportWidth(360)
     renderSp(<TimetablePage />, { route: "/timetable/" })
 
     expect(await screen.findByRole("group", { name: "Days of the week" })).toBeInTheDocument()
     expect(screen.queryByRole("table")).not.toBeInTheDocument()
-    // Wednesday is today: six lessons, the axis from 08:00, the now line at 10:12 (132 minutes at 1.5 px).
+    // Wednesday is today: six lessons in one schedule list, in time order.
     await waitFor(() => expect(lessonSlots()).toHaveLength(6))
-    expect(screen.getByText("08:00")).toBeInTheDocument()
-    expect((document.querySelector("[data-now]") as HTMLElement).style.top).toBe("198px")
-    expect(slotOf(lessonId(3, 1)).style.top).toBe("45px")
-    expect(slotOf(lessonId(3, 1)).style.height).toBe("67.5px")
+    expect(screen.getByRole("list", { name: "Day schedule" })).toBeInTheDocument()
+    const ids = lessonSlots().map((li) => li.querySelector("[data-lesson-id]")?.getAttribute("data-lesson-id"))
+    expect(ids[0]).toBe(lessonId(3, 1))
+    expect(document.querySelector("[data-now]")).toBeNull()
   })
 
-  test("a free gap of 30 minutes or more is labelled and the empty time is left empty", async () => {
+  test("free time between lessons is a compact free-time row with its length", async () => {
     setViewportWidth(360)
     server.use(
       http.get(apiUrl("/v1/me/timetable"), () =>
@@ -265,8 +267,8 @@ describe("calendar day view on a phone", () => {
     renderSp(<TimetablePage />, { route: "/timetable/" })
 
     // 09:15 to 11:25 is 130 minutes of free time.
-    expect(await screen.findByText("Free: 130 min")).toBeInTheDocument()
-    expect(document.querySelector('[data-gap="free"]')).not.toBeNull()
+    expect(await screen.findByText("130 min")).toBeInTheDocument()
+    expect(screen.getByText("Free")).toBeInTheDocument()
     expect(lessonSlots()).toHaveLength(2)
   })
 
@@ -279,7 +281,7 @@ describe("calendar day view on a phone", () => {
     await waitFor(() => expect(lessonSlots()).toHaveLength(3))
     expect(screen.getByRole("button", { name: /^Thursday/ })).toHaveAttribute("aria-pressed", "true")
 
-    const day = screen.getByRole("list", { name: /^Thursday/ })
+    const day = screen.getByRole("list", { name: "Day schedule" })
     fireEvent.touchStart(day, { touches: [{ clientX: 260, clientY: 300 }] })
     fireEvent.touchEnd(day, { changedTouches: [{ clientX: 120, clientY: 306 }] })
     await waitFor(() => expect(screen.getByRole("button", { name: /^Friday/ })).toHaveAttribute("aria-pressed", "true"))

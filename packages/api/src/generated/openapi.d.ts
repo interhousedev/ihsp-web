@@ -204,6 +204,1634 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/activities/announcements/{announcement_id}:cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel Announcement
+         * @description Cancel a scheduled announcement.
+         */
+        post: operations["cancel_announcement_v1_activities_announcements__announcement_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/applications/{application_id}:accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Accept
+         * @description Accept an application.
+         */
+        post: operations["accept_v1_activities_applications__application_id__accept_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/applications/{application_id}:reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reject
+         * @description Reject an application.
+         */
+        post: operations["reject_v1_activities_applications__application_id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/applications/{application_id}:shortlist": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Shortlist
+         * @description Shortlist an application.
+         */
+        post: operations["shortlist_v1_activities_applications__application_id__shortlist_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/applications/{application_id}:withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Withdraw
+         * @description Withdraw own application.
+         */
+        post: operations["withdraw_v1_activities_applications__application_id__withdraw_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/check-in/qr": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Check In Qr
+         * @description Check in by scanning the QR code.
+         */
+        post: operations["check_in_qr_v1_activities_check_in_qr_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Clubs
+         * @description Active public clubs and the caller's own, with member counts.
+         */
+        get: operations["list_clubs_v1_activities_clubs_get"];
+        put?: never;
+        /**
+         * Create Club
+         * @description Start a club as a draft.
+         */
+        post: operations["create_club_v1_activities_clubs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Clubs
+         * @description Clubs the caller belongs to.
+         */
+        get: operations["my_clubs_v1_activities_clubs_mine_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Club
+         * @description One club.
+         */
+        get: operations["get_club_v1_activities_clubs__club_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update Club
+         * @description Edit a club.
+         */
+        patch: operations["update_club_v1_activities_clubs__club_id__patch"];
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/announcements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Announcements
+         * @description Announcements of a club.
+         */
+        get: operations["list_announcements_v1_activities_clubs__club_id__announcements_get"];
+        put?: never;
+        /**
+         * Send Announcement
+         * @description Send or schedule an announcement.
+         */
+        post: operations["send_announcement_v1_activities_clubs__club_id__announcements_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/attendance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Attendance
+         * @description Attendance of a club.
+         */
+        get: operations["attendance_v1_activities_clubs__club_id__attendance_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/courses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Club Courses
+         * @description Courses linked to a club.
+         */
+        get: operations["club_courses_v1_activities_clubs__club_id__courses_get"];
+        put?: never;
+        /**
+         * Request Course
+         * @description Ask to link a course (the other side confirms).
+         */
+        post: operations["request_course_v1_activities_clubs__club_id__courses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/courses/{course_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Unlink Course
+         * @description Remove a link.
+         */
+        delete: operations["unlink_course_v1_activities_clubs__club_id__courses__course_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/courses/{course_id}:confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirm Course
+         * @description Confirm a requested link.
+         */
+        post: operations["confirm_course_v1_activities_clubs__club_id__courses__course_id__confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/draft-rounds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Rounds
+         * @description Calls for volunteers of a club.
+         */
+        get: operations["list_rounds_v1_activities_clubs__club_id__draft_rounds_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Club Events
+         * @description Events of a club.
+         */
+        get: operations["list_club_events_v1_activities_clubs__club_id__events_get"];
+        put?: never;
+        /**
+         * Create Event
+         * @description Create an event draft.
+         */
+        post: operations["create_event_v1_activities_clubs__club_id__events_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/form-answers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Form Answers
+         * @description Answers of every member (organizers).
+         */
+        get: operations["form_answers_v1_activities_clubs__club_id__form_answers_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/form-fields": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Form Fields
+         * @description The club's form questions.
+         */
+        get: operations["get_form_fields_v1_activities_clubs__club_id__form_fields_get"];
+        /**
+         * Put Form Fields
+         * @description Replace the club's form questions.
+         */
+        put: operations["put_form_fields_v1_activities_clubs__club_id__form_fields_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join Club
+         * @description Join or ask to join.
+         */
+        post: operations["join_club_v1_activities_clubs__club_id__join_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/leave": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Leave Club
+         * @description Leave a club.
+         */
+        post: operations["leave_club_v1_activities_clubs__club_id__leave_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Club Logo
+         * @description The logo of an active public club; anonymous, since it is public info.
+         */
+        get: operations["club_logo_v1_activities_clubs__club_id__logo_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Club State
+         * @description The caller's membership, role and staff flags in a club.
+         */
+        get: operations["my_club_state_v1_activities_clubs__club_id__me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Members
+         * @description Members of a club.
+         */
+        get: operations["members_v1_activities_clubs__club_id__members_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/members/{user_id}:approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve Member
+         * @description Accept a join request.
+         */
+        post: operations["approve_member_v1_activities_clubs__club_id__members__user_id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/members/{user_id}:ban": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Ban Member
+         * @description Remove and ban a member.
+         */
+        post: operations["ban_member_v1_activities_clubs__club_id__members__user_id__ban_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/planner": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Board
+         * @description The planner board.
+         */
+        get: operations["board_v1_activities_clubs__club_id__planner_get"];
+        put?: never;
+        /**
+         * Add Card
+         * @description Add a task or idea.
+         */
+        post: operations["add_card_v1_activities_clubs__club_id__planner_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/points/awards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Award Points
+         * @description Credit or deduct points by hand.
+         */
+        post: operations["award_points_v1_activities_clubs__club_id__points_awards_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/points/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Points
+         * @description The caller's points in a club.
+         */
+        get: operations["my_points_v1_activities_clubs__club_id__points_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/points/rules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Points Rules
+         * @description Points per kind of activity.
+         */
+        get: operations["get_points_rules_v1_activities_clubs__club_id__points_rules_get"];
+        /**
+         * Put Points Rules
+         * @description Replace the club's point values.
+         */
+        put: operations["put_points_rules_v1_activities_clubs__club_id__points_rules_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/positions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Positions
+         * @description Team positions.
+         */
+        get: operations["list_positions_v1_activities_clubs__club_id__positions_get"];
+        put?: never;
+        /**
+         * Create Position
+         * @description Open a team position.
+         */
+        post: operations["create_position_v1_activities_clubs__club_id__positions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Profile
+         * @description The caller's answers to the club form.
+         */
+        get: operations["my_profile_v1_activities_clubs__club_id__profile_get"];
+        /**
+         * Save Profile
+         * @description Save the caller's answers to the club form.
+         */
+        put: operations["save_profile_v1_activities_clubs__club_id__profile_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/ratings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rate Club
+         * @description Rate a club you belong to.
+         */
+        post: operations["rate_club_v1_activities_clubs__club_id__ratings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/ratings/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Ratings Summary
+         * @description Aggregates for organizers.
+         */
+        get: operations["ratings_summary_v1_activities_clubs__club_id__ratings_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/transfers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Offer Transfer
+         * @description Offer ownership of the club.
+         */
+        post: operations["offer_transfer_v1_activities_clubs__club_id__transfers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}:submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit Club
+         * @description Send the draft to review.
+         */
+        post: operations["submit_club_v1_activities_clubs__club_id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/courses/{course_id}/clubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Course Clubs
+         * @description Clubs linked to a course.
+         */
+        get: operations["course_clubs_v1_activities_courses__course_id__clubs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/draft-rounds/{round_id}/picks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pick
+         * @description Pick a person for a role.
+         */
+        post: operations["pick_v1_activities_draft_rounds__round_id__picks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/draft-rounds/{round_id}/ranking": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Ranking
+         * @description Candidates ranked by past performance.
+         */
+        get: operations["ranking_v1_activities_draft_rounds__round_id__ranking_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/draft-rounds/{round_id}/signups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Signups
+         * @description Who offered to help (organizers).
+         */
+        get: operations["list_signups_v1_activities_draft_rounds__round_id__signups_get"];
+        put?: never;
+        /**
+         * Signup
+         * @description Sign up for a role.
+         */
+        post: operations["signup_v1_activities_draft_rounds__round_id__signups_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Events Feed
+         * @description Upcoming events of my clubs and public clubs.
+         */
+        get: operations["events_feed_v1_activities_events_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Event
+         * @description One event.
+         */
+        get: operations["get_event_v1_activities_events__event_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/check-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Check In
+         * @description Mark an attendee present.
+         */
+        post: operations["check_in_v1_activities_events__event_id__check_in_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/draft-rounds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Open Round
+         * @description Open drafting for an event.
+         */
+        post: operations["open_round_v1_activities_events__event_id__draft_rounds_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/qr": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Event Qr
+         * @description The token behind the event's check-in QR code.
+         */
+        get: operations["event_qr_v1_activities_events__event_id__qr_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/ratings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rate Event
+         * @description Rate an event you attended.
+         */
+        post: operations["rate_event_v1_activities_events__event_id__ratings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/rsvp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Rsvp
+         * @description My place at the event, or null.
+         */
+        get: operations["my_rsvp_v1_activities_events__event_id__rsvp_get"];
+        /**
+         * Rsvp
+         * @description Take a place (going, waitlist or requested).
+         */
+        put: operations["rsvp_v1_activities_events__event_id__rsvp_put"];
+        post?: never;
+        /**
+         * Cancel Rsvp
+         * @description Give the place back.
+         */
+        delete: operations["cancel_rsvp_v1_activities_events__event_id__rsvp_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/rsvps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Rsvps
+         * @description Who signed up.
+         */
+        get: operations["list_rsvps_v1_activities_events__event_id__rsvps_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/rsvps/{user_id}/role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Assign Role
+         * @description Give an attendee a role.
+         */
+        put: operations["assign_role_v1_activities_events__event_id__rsvps__user_id__role_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}:cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel Event
+         * @description Cancel the event.
+         */
+        post: operations["cancel_event_v1_activities_events__event_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}:finish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Finish Event
+         * @description Close the event.
+         */
+        post: operations["finish_event_v1_activities_events__event_id__finish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}:publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish Event
+         * @description Open the event.
+         */
+        post: operations["publish_event_v1_activities_events__event_id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}:reschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reschedule Event
+         * @description Move the event.
+         */
+        post: operations["reschedule_event_v1_activities_events__event_id__reschedule_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/leaderboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Leaderboard
+         * @description One club's points table, or the caller's clubs combined.
+         */
+        get: operations["leaderboard_v1_activities_leaderboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/me/leaderboard-opt-out": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Opt Out
+         * @description Hide or show the caller on leaderboards.
+         */
+        put: operations["opt_out_v1_activities_me_leaderboard_opt_out_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/me/seats/{seat_id}/public-consent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Consent
+         * @description The seat holder's own consent to appear publicly.
+         */
+        put: operations["set_consent_v1_activities_me_seats__seat_id__public_consent_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Opportunities
+         * @description Opportunities shown on my.iht.
+         */
+        get: operations["list_opportunities_v1_activities_opportunities_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/opportunities/{opportunity_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Opportunity
+         * @description One opportunity; hidden ones answer 404.
+         */
+        get: operations["get_opportunity_v1_activities_opportunities__opportunity_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/picks/{pick_id}:complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete
+         * @description Mark the role as done (awards points).
+         */
+        post: operations["complete_v1_activities_picks__pick_id__complete_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/picks/{pick_id}:invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Invite
+         * @description Invite the picked person.
+         */
+        post: operations["invite_v1_activities_picks__pick_id__invite_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/picks/{pick_id}:respond": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Respond
+         * @description The picked person answers.
+         */
+        post: operations["respond_v1_activities_picks__pick_id__respond_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/planner/{item_id}:move": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Move Card
+         * @description Move a card to another column.
+         */
+        post: operations["move_card_v1_activities_planner__item_id__move_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/positions/{position_id}/applications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Position Applications
+         * @description Applications to a position.
+         */
+        get: operations["position_applications_v1_activities_positions__position_id__applications_get"];
+        put?: never;
+        /**
+         * Apply Position
+         * @description Apply for a position.
+         */
+        post: operations["apply_position_v1_activities_positions__position_id__applications_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/ratings/{rating_id}:reveal-author": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reveal Author
+         * @description Administrators unmask an author (audited).
+         */
+        post: operations["reveal_author_v1_activities_ratings__rating_id__reveal_author_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/seats/{seat_id}/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Public
+         * @description Show or hide a seat on the public page.
+         */
+        put: operations["set_public_v1_activities_seats__seat_id__public_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/transfers/incoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Incoming Transfers
+         * @description Open ownership offers addressed to the caller.
+         */
+        get: operations["incoming_transfers_v1_activities_transfers_incoming_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/transfers/{transfer_id}:accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Accept Transfer
+         * @description Accept an offer.
+         */
+        post: operations["accept_transfer_v1_activities_transfers__transfer_id__accept_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/transfers/{transfer_id}:cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel Transfer
+         * @description Withdraw an offer.
+         */
+        post: operations["cancel_transfer_v1_activities_transfers__transfer_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/transfers/{transfer_id}:decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Decline Transfer
+         * @description Decline an offer.
+         */
+        post: operations["decline_transfer_v1_activities_transfers__transfer_id__decline_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/analytics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Analytics
+         * @description Platform-wide club figures.
+         */
+        get: operations["analytics_v1_admin_activities_analytics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/clubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Clubs
+         * @description Every club of any status, with owner and member count.
+         */
+        get: operations["list_clubs_v1_admin_activities_clubs_get"];
+        put?: never;
+        /**
+         * Create Club
+         * @description Create an approved club owned by the given person.
+         */
+        post: operations["create_club_v1_admin_activities_clubs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/clubs/{club_id}/capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Capabilities
+         * @description Switch club features (forms, drafting, points) on or off.
+         */
+        put: operations["set_capabilities_v1_admin_activities_clubs__club_id__capabilities_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/clubs/{club_id}:force-transfer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Force Transfer
+         * @description Hand a club to another person without an offer.
+         */
+        post: operations["force_transfer_v1_admin_activities_clubs__club_id__force_transfer_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/clubs/{club_id}:resume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resume Club
+         * @description Bring a suspended club back.
+         */
+        post: operations["resume_club_v1_admin_activities_clubs__club_id__resume_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/clubs/{club_id}:review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Review Club
+         * @description Approve a club or send it back with a reason.
+         */
+        post: operations["review_club_v1_admin_activities_clubs__club_id__review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/clubs/{club_id}:suspend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Suspend Club
+         * @description Suspend a club.
+         */
+        post: operations["suspend_club_v1_admin_activities_clubs__club_id__suspend_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Opportunities
+         * @description Every entry of both audiences.
+         */
+        get: operations["list_opportunities_v1_admin_activities_opportunities_get"];
+        put?: never;
+        /**
+         * Create Opportunity
+         * @description Add an entry to the one catalog.
+         */
+        post: operations["create_opportunity_v1_admin_activities_opportunities_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/opportunities/{opportunity_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Opportunity
+         * @description Delete an unused entry.
+         */
+        delete: operations["delete_opportunity_v1_admin_activities_opportunities__opportunity_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Opportunity
+         * @description Overwrite an entry; a stale `lock_version` conflicts.
+         */
+        patch: operations["update_opportunity_v1_admin_activities_opportunities__opportunity_id__patch"];
+        trace?: never;
+    };
+    "/v1/admin/activities/opportunities/{opportunity_id}:archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Archive Opportunity
+         * @description Hide or restore an entry.
+         */
+        post: operations["archive_opportunity_v1_admin_activities_opportunities__opportunity_id__archive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/ai/analytics/prompt-sizes": {
         parameters: {
             query?: never;
@@ -1108,6 +2736,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/day-blocks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Day Blocks
+         * @description List every non-lesson block, ordered by start time.
+         */
+        get: operations["list_day_blocks_v1_admin_day_blocks_get"];
+        put?: never;
+        /**
+         * Create Day Block
+         * @description Add a non-lesson block.
+         */
+        post: operations["create_day_block_v1_admin_day_blocks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/day-blocks/{block_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update Day Block
+         * @description Replace every field of a non-lesson block.
+         */
+        put: operations["update_day_block_v1_admin_day_blocks__block_id__put"];
+        post?: never;
+        /**
+         * Delete Day Block
+         * @description Delete a non-lesson block.
+         */
+        delete: operations["delete_day_block_v1_admin_day_blocks__block_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/devices": {
         parameters: {
             query?: never;
@@ -1522,6 +3198,26 @@ export interface paths {
          * @description Read the curriculum from EMIS now and return what is stored for the group.
          */
         post: operations["sync_curriculum_v1_admin_groups__group_id__curriculum_sync_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/groups/{group_id}/head-student": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Head Student
+         * @description Assign the head student (an active member of the group); null clears it.
+         */
+        put: operations["set_head_student_v1_admin_groups__group_id__head_student_put"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2018,6 +3714,158 @@ export interface paths {
          * @description Remove a link from the moderation queue without disabling it.
          */
         post: operations["dismiss_reports_v1_admin_links__link_id__dismiss_reports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/lms/badges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Admin List Badges
+         * @description Return the platform badges (LMS administrators).
+         */
+        get: operations["lms_admin_list_badges"];
+        put?: never;
+        /**
+         * Admin Create Badge
+         * @description Create a platform badge on an aggregate event (LMS administrators).
+         */
+        post: operations["lms_admin_create_badge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/lms/badges/{badge_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Admin Delete Badge
+         * @description Delete a platform badge with its awards (LMS administrators).
+         */
+        delete: operations["lms_admin_delete_badge"];
+        options?: never;
+        head?: never;
+        /**
+         * Admin Update Badge
+         * @description Change a platform badge; a new rule backfills (LMS administrators).
+         */
+        patch: operations["lms_admin_update_badge"];
+        trace?: never;
+    };
+    "/v1/admin/lms/badges:preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Admin Preview Badge
+         * @description Count who on the platform would earn a rule (LMS administrators).
+         */
+        post: operations["lms_admin_preview_badge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/lms/level-schemes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Level Schemes
+         * @description List the level schemes (LMS admins).
+         */
+        get: operations["lms_list_level_schemes"];
+        put?: never;
+        /**
+         * Create Level Scheme
+         * @description Create a draft scheme: platform (LMS admin) or course (course editor).
+         */
+        post: operations["lms_create_level_scheme"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/lms/level-schemes/{scheme_id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview Level Scheme
+         * @description Show the learners per level before and after the scheme goes live.
+         */
+        get: operations["lms_preview_level_scheme"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/lms/level-schemes/{scheme_id}/tiers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Level Scheme Tiers
+         * @description Replace the tiers of a scheme.
+         */
+        put: operations["lms_put_level_scheme_tiers"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/lms/level-schemes/{scheme_id}:activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Activate Level Scheme
+         * @description Make the scheme live for its platform or course.
+         */
+        post: operations["lms_activate_level_scheme"];
         delete?: never;
         options?: never;
         head?: never;
@@ -8259,6 +10107,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/staff/catalog/push/countries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Push Catalog Countries
+         * @description Upsert country facts by ISO code as drafts; verified ones are skipped.
+         */
+        post: operations["admission_catalog_push_countries"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/catalog/push/institutions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Push Catalog Institutions
+         * @description Upsert institutions in the seed shape by slug.
+         */
+        post: operations["admission_catalog_push_institutions"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/staff/catalog/scorecard/search": {
         parameters: {
             query?: never;
@@ -13823,6 +15711,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/badge-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Badge Templates
+         * @description Return the badge templates (any signed-in user).
+         */
+        get: operations["lms_list_badge_templates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/badges/awards/{award_id}/seen": {
         parameters: {
             query?: never;
@@ -13857,6 +15765,86 @@ export interface paths {
         get: operations["lms_my_badges"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/coach/sessions/{session_id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Close Coach Session
+         * @description Close the session once; a repeat returns the stored outcome.
+         */
+        post: operations["lms_close_coach_session"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/coach/sessions/{session_id}/explain-mistake": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Coach Explain Mistake
+         * @description Explain what is wrong in an answer without giving the solution.
+         */
+        post: operations["lms_coach_explain_mistake"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/coach/sessions/{session_id}/hint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Coach Hint
+         * @description Climb one rung of the hint ladder (three rungs at most).
+         */
+        post: operations["lms_coach_hint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/coach/sessions/{session_id}/turns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Coach Turn
+         * @description Send a message to the Coach; it hints and never gives the answer.
+         */
+        post: operations["lms_coach_turn"];
         delete?: never;
         options?: never;
         head?: never;
@@ -14013,6 +16001,66 @@ export interface paths {
          * @description Upload the badge image: PNG, JPEG or WebP, at most 512 KB.
          */
         post: operations["lms_upload_course_badge_image"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/badges:draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Draft Badge
+         * @description Suggest a rule and names from a wish (course staff with `edit`).
+         */
+        post: operations["lms_draft_badge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/badges:preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview Badge
+         * @description Count who would earn a rule (course staff with `edit`); awards nothing.
+         */
+        post: operations["lms_preview_badge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/coach/insights": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Coach Insights
+         * @description Return the Coach sessions by step (course staff with `review`).
+         */
+        get: operations["lms_coach_insights"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -14259,6 +16307,26 @@ export interface paths {
          * @description Replace the invite code; old invite links stop working.
          */
         post: operations["rotate_invite_code_v1_lms_courses__course_id__invite_code_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/level-scheme": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Attach Course Level Scheme
+         * @description Make a scheme of this course live for it (course editors).
+         */
+        put: operations["lms_attach_course_level_scheme"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -14809,6 +16877,50 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks:from-questions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add Blocks From Questions
+         * @description Add a test block built from the questions at the position (or the end).
+         */
+        post: operations["add_blocks_from_questions_v1_lms_courses__course_id__steps__step_id__blocks_from_questions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/solution-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Solution Keys
+         * @description Return the solution keys of the step (course staff with `edit`).
+         */
+        get: operations["lms_get_solution_keys"];
+        /**
+         * Put Solution Keys
+         * @description Replace the solution keys of the step (course staff with `edit`).
+         */
+        put: operations["lms_put_solution_keys"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/students": {
         parameters: {
             query?: never;
@@ -15103,6 +17215,26 @@ export interface paths {
          * @description Join with an invite code (rate limited); a wrong code is a 404.
          */
         post: operations["join_v1_lms_join_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/me/level": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Level
+         * @description Return my level on the platform, or in a course with `course_id`.
+         */
+        get: operations["lms_my_level"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -15487,6 +17619,30 @@ export interface paths {
          * @description Freeze the current draft of the step under a name.
          */
         post: operations["save_checkpoint_v1_lms_steps__step_id__checkpoints_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/steps/{step_id}/coach/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Latest Coach Session
+         * @description Return the learner's newest session on the step (`latest=1`).
+         */
+        get: operations["lms_latest_coach_session"];
+        put?: never;
+        /**
+         * Open Coach Session
+         * @description Open a Coach session on a step the learner may read.
+         */
+        post: operations["lms_open_coach_session"];
         delete?: never;
         options?: never;
         head?: never;
@@ -16773,6 +18929,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/group/rankings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Group Rankings
+         * @description Aggregates of every ranked group; members of other groups are never shown.
+         */
+        get: operations["get_my_group_rankings_v1_me_group_rankings_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/group/rating": {
         parameters: {
             query?: never;
@@ -17784,6 +19960,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/timetable/day-blocks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Day Blocks
+         * @description Lunch, breaks and other non-lesson blocks of the student's group per date.
+         */
+        get: operations["get_day_blocks_v1_me_timetable_day_blocks_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/today": {
         parameters: {
             query?: never;
@@ -17818,6 +20014,90 @@ export interface paths {
         get: operations["list_my_work_offs_v1_me_work_offs_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/media/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Jobs
+         * @description My jobs, newest first.
+         */
+        get: operations["list_jobs_v1_media_jobs_get"];
+        put?: never;
+        /**
+         * Create Job
+         * @description Queue a job; the result lands in the subject notebook with its timecodes.
+         */
+        post: operations["create_job_v1_media_jobs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/media/jobs/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Job
+         * @description One job of the caller.
+         */
+        get: operations["get_job_v1_media_jobs__job_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/media/jobs/{job_id}:cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel Job
+         * @description Stop a job that has not finished; nothing is stored or charged afterwards.
+         */
+        post: operations["cancel_job_v1_media_jobs__job_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/media/jobs/{job_id}:retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retry Job
+         * @description Start a failed job again.
+         */
+        post: operations["retry_job_v1_media_jobs__job_id__retry_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -19376,6 +21656,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/public/clubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Clubs
+         * @description Active public clubs.
+         */
+        get: operations["list_clubs_v1_public_clubs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/clubs/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Club
+         * @description One club page.
+         */
+        get: operations["get_club_v1_public_clubs__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/clubs/{slug}/contact": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Contact
+         * @description Send a message to the club owner on Telegram; nothing is stored.
+         */
+        post: operations["contact_v1_public_clubs__slug__contact_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/public/lyceum-logo": {
         parameters: {
             query?: never;
@@ -20682,6 +23022,258 @@ export interface paths {
         patch: operations["update_work_off_v1_staff_work_offs__id__patch"];
         trace?: never;
     };
+    "/v1/teacher/ai/authorship-check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Authorship Check
+         * @description Estimate machine authorship.
+         */
+        post: operations["authorship_check_v1_teacher_ai_authorship_check_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/ai/handout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Handout
+         * @description Generate a handout.
+         */
+        post: operations["handout_v1_teacher_ai_handout_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/ai/lesson-plan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Lesson Plan
+         * @description Generate a lesson plan.
+         */
+        post: operations["lesson_plan_v1_teacher_ai_lesson_plan_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/ai/plan-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Templates
+         * @description The teacher's plan templates.
+         */
+        get: operations["list_templates_v1_teacher_ai_plan_templates_get"];
+        put?: never;
+        /**
+         * Register Template
+         * @description Store a plan template.
+         */
+        post: operations["register_template_v1_teacher_ai_plan_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/ai/questions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Questions
+         * @description Generate questions.
+         */
+        post: operations["questions_v1_teacher_ai_questions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/ai/work-check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Work Check
+         * @description Check a student's work, pasted or by submission.
+         */
+        post: operations["work_check_v1_teacher_ai_work_check_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/question-bank/questions/{question_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Edit Question
+         * @description Rewrite a question the caller owns (an administrator may edit any).
+         */
+        put: operations["edit_question_v1_teacher_question_bank_questions__question_id__put"];
+        post?: never;
+        /**
+         * Delete Question
+         * @description Remove a question the caller owns (an administrator may remove any).
+         */
+        delete: operations["delete_question_v1_teacher_question_bank_questions__question_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/question-bank/questions/{question_id}/visibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Visibility
+         * @description Change who sees a question the caller owns.
+         */
+        put: operations["set_visibility_v1_teacher_question_bank_questions__question_id__visibility_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/question-bank/subjects/{subject_id}/curriculum-topics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Curriculum Topics
+         * @description The EMIS curriculum topics of the subject, in plan order.
+         */
+        get: operations["curriculum_topics_v1_teacher_question_bank_subjects__subject_id__curriculum_topics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/question-bank/subjects/{subject_id}/draw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Draw
+         * @description A random set of questions without repeats.
+         */
+        post: operations["draw_v1_teacher_question_bank_subjects__subject_id__draw_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/question-bank/subjects/{subject_id}/questions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Questions
+         * @description One page of the questions the caller sees, optionally of one topic.
+         */
+        get: operations["list_questions_v1_teacher_question_bank_subjects__subject_id__questions_get"];
+        put?: never;
+        /**
+         * Save
+         * @description Store questions; ones the caller already sees are skipped.
+         */
+        post: operations["save_v1_teacher_question_bank_subjects__subject_id__questions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/teacher/question-bank/subjects/{subject_id}/topics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Topics
+         * @description Every topic of the subject with the number of questions the caller sees.
+         */
+        get: operations["topics_v1_teacher_question_bank_subjects__subject_id__topics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -20947,6 +23539,63 @@ export interface components {
              * @default true
              */
             show_on_page?: boolean;
+        };
+        /**
+         * AdminClubCreateIn
+         * @description A club created already approved, for the named owner.
+         */
+        AdminClubCreateIn: {
+            /**
+             * Description
+             * @default
+             */
+            description?: string;
+            /** Name */
+            name: string;
+            /**
+             * Owner User Id
+             * Format: uuid
+             */
+            owner_user_id: string;
+            /** Slug */
+            slug: string;
+        };
+        /**
+         * AdminClubListOut
+         * @description A page of clubs.
+         */
+        AdminClubListOut: {
+            /** Items */
+            items: components["schemas"]["AdminClubOut"][];
+            /** Total */
+            total: number;
+        };
+        /**
+         * AdminClubOut
+         * @description A club row of the admin list.
+         */
+        AdminClubOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Member Count */
+            member_count: number;
+            /** Name */
+            name: unknown;
+            /** Owner Id */
+            owner_id: string | null;
+            /** Owner Name */
+            owner_name: string | null;
+            /** Slug */
+            slug: string;
+            /** Status */
+            status: string;
         };
         /**
          * AdminDashboardResponse
@@ -22007,24 +24656,6 @@ export interface components {
             where: "uzbekistan" | "abroad";
         };
         /**
-         * AnalyticsOut
-         * @description Load per `grade:term` ("10:fall"; fall/spring/summer/any), coverage by field.
-         */
-        AnalyticsOut: {
-            /** Conflicts */
-            conflicts: components["schemas"]["ConflictOut"][];
-            /** Coverage */
-            coverage: {
-                [key: string]: number;
-            };
-            /** Load */
-            load: {
-                [key: string]: number;
-            };
-            /** Unplaced */
-            unplaced: number;
-        };
-        /**
          * AnchorPassages
          * @description Pins passages (flash card or quiz Explain, "Ask about this", mind map node).
          */
@@ -22162,6 +24793,47 @@ export interface components {
             items: components["schemas"]["AnnotationResponse"][];
         };
         /**
+         * Announcement
+         * @description A message from the club to a part of its people.
+         */
+        Announcement: {
+            /** Audience */
+            audience: string;
+            /**
+             * Author Id
+             * Format: uuid
+             */
+            author_id: string;
+            /**
+             * Cancelled
+             * @default false
+             */
+            cancelled?: boolean;
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Created At */
+            created_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /**
+             * Recipient Count
+             * @default 0
+             */
+            recipient_count?: number;
+            /** Scheduled At */
+            scheduled_at?: string | null;
+            /** Sent At */
+            sent_at?: string | null;
+            /** Text */
+            text: string;
+        };
+        /**
          * AnnouncementBody
          * @description Send a draft broadcast through the selected bots, in this order.
          */
@@ -22178,6 +24850,21 @@ export interface components {
              * @description Step-up code from POST /v1/id/me/step-up.
              */
             otp_code: string;
+        };
+        /**
+         * AnnouncementIn
+         * @description A message to a part of the club.
+         */
+        AnnouncementIn: {
+            /**
+             * Audience
+             * @default members
+             */
+            audience?: string;
+            /** Scheduled At */
+            scheduled_at?: string | null;
+            /** Text */
+            text: string;
         };
         /**
          * AnnouncementOut
@@ -22378,6 +25065,16 @@ export interface components {
             target_step_id?: string | null;
         };
         /**
+         * ApplyIn
+         * @description Application answers.
+         */
+        ApplyIn: {
+            /** Answers */
+            answers?: {
+                [key: string]: unknown;
+            };
+        };
+        /**
          * ApplyPreviewResponse
          * @description The dry run of an Apply: what would change, what is wrong, what was reduced.
          */
@@ -22436,14 +25133,6 @@ export interface components {
              * Format: uuid
              */
             item_id: string;
-        };
-        /**
-         * ArchiveIn
-         * @description Hide or restore an entry.
-         */
-        ArchiveIn: {
-            /** Archived */
-            archived: boolean;
         };
         /**
          * ArtifactDetailResponse
@@ -22886,6 +25575,17 @@ export interface components {
             role?: "material" | "attachment";
         };
         /**
+         * AttachBody
+         * @description The course scheme to make live.
+         */
+        AttachBody: {
+            /**
+             * Scheme Id
+             * Format: uuid
+             */
+            scheme_id: string;
+        };
+        /**
          * AttachBookIn
          * @description Attach a library book.
          */
@@ -23053,6 +25753,25 @@ export interface components {
             view: string;
         };
         /**
+         * AttendanceRow
+         * @description Attendance and shift counts of a member.
+         */
+        AttendanceRow: {
+            /** Attended */
+            attended: number;
+            /** Display Name */
+            display_name: string;
+            /** No Shows */
+            no_shows: number;
+            /** Shifts */
+            shifts: number;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
          * AttendanceRowResponse
          * @description A row of ``AttendanceReport``.
          */
@@ -23193,6 +25912,20 @@ export interface components {
             staff_role_id: string | null;
         };
         /**
+         * AuthorshipBody
+         * @description A text or a submission to judge.
+         */
+        AuthorshipBody: {
+            /** Context */
+            context?: string | null;
+            /** Language */
+            language?: string | null;
+            /** Submission Id */
+            submission_id?: string | null;
+            /** Text */
+            text?: string | null;
+        };
+        /**
          * AutoSettingsResponse
          * @description `AutoSettings`: what the system syncs into a subject or lesson notebook.
          */
@@ -23215,6 +25948,36 @@ export interface components {
             lesson: number | null;
             /** Midterm */
             midterm: number | null;
+        };
+        /**
+         * AwardIn
+         * @description A manual award or deduction.
+         */
+        AwardIn: {
+            /** Points */
+            points: number;
+            /** Reason */
+            reason: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * AwardOut
+         * @description The stored manual entry.
+         */
+        AwardOut: {
+            /** Points */
+            points: number;
+            /** Reason */
+            reason: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
         };
         /**
          * AxisFitOut
@@ -23311,7 +26074,7 @@ export interface components {
          * @description The WHEN block: what happened to the learner.
          * @enum {string}
          */
-        BadgeEvent: "step_completed" | "section_completed" | "test_passed" | "exam_scored" | "streak_reached" | "course_completed" | "reviews_done";
+        BadgeEvent: "step_completed" | "section_completed" | "test_passed" | "exam_scored" | "streak_reached" | "course_completed" | "reviews_done" | "level_reached" | "coach_resolved" | "courses_completed";
         /**
          * BadgeIcon
          * @description The built-in icon set.
@@ -23349,6 +26112,51 @@ export interface components {
             show_locked: boolean;
         };
         /**
+         * BadgeOut
+         * @description A badge with its scope and rule.
+         */
+        BadgeOut: {
+            /** Course Id */
+            course_id: string | null;
+            /** Description */
+            description: {
+                [key: string]: string;
+            };
+            design: components["schemas"]["DesignDoc"];
+            /** Enabled */
+            enabled: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: {
+                [key: string]: string;
+            };
+            /** Rule */
+            rule: {
+                [key: string]: unknown;
+            };
+            scope: components["schemas"]["BadgeScope"];
+            /** Template Code */
+            template_code: string | null;
+            /** Template Params */
+            template_params: {
+                [key: string]: unknown;
+            } | null;
+            /** Version */
+            version: number;
+        };
+        /**
+         * BadgeOutList
+         * @description Platform badges.
+         */
+        BadgeOutList: {
+            /** Items */
+            items: components["schemas"]["BadgeOut"][];
+        };
+        /**
          * BadgePublicView
          * @description A badge as learners see it (no rule).
          */
@@ -23362,6 +26170,12 @@ export interface components {
             id: string;
             name: components["schemas"]["LocalizedText"];
         };
+        /**
+         * BadgeScope
+         * @description Where a badge lives: one course, or the whole platform.
+         * @enum {string}
+         */
+        BadgeScope: "course" | "platform";
         /**
          * BadgeSettingsInput
          * @description PUT body of the course badge settings.
@@ -23424,6 +26238,17 @@ export interface components {
             target: number;
             /** Unlabelled */
             unlabelled: number;
+        };
+        /**
+         * BanIn
+         * @description Ban reason.
+         */
+        BanIn: {
+            /**
+             * Reason
+             * @default
+             */
+            reason?: string;
         };
         /**
          * BaseReviewOut
@@ -24483,6 +27308,14 @@ export interface components {
             reason: string;
             /** Word */
             word: string;
+        };
+        /**
+         * CapabilitiesIn
+         * @description Club capabilities.
+         */
+        CapabilitiesIn: {
+            /** Capabilities */
+            capabilities: string[];
         };
         /**
          * CaptionTrack
@@ -25685,6 +28518,22 @@ export interface components {
          */
         ChatStyle: "default" | "learning_guide" | "custom";
         /**
+         * CheckInIn
+         * @description Manual check-in.
+         */
+        CheckInIn: {
+            /**
+             * Method
+             * @default manual
+             */
+            method?: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
          * CheckResponse
          * @description Result of POST /v1/admin/timetable/check.
          */
@@ -25939,6 +28788,375 @@ export interface components {
             login_cues: boolean;
         };
         /**
+         * CloseBody
+         * @description How the session ended.
+         */
+        CloseBody: {
+            outcome: components["schemas"]["CoachOutcome"];
+        };
+        /**
+         * CloseOut
+         * @description The stored outcome.
+         */
+        CloseOut: {
+            outcome: components["schemas"]["CoachOutcome"];
+        };
+        /**
+         * Club
+         * @description A club.
+         */
+        Club: {
+            /**
+             * Capabilities
+             * @default []
+             */
+            capabilities?: components["schemas"]["ClubCapability"][];
+            /**
+             * Category
+             * @default
+             */
+            category?: string;
+            /**
+             * Contact Enabled
+             * @default false
+             */
+            contact_enabled?: boolean;
+            /**
+             * Created By
+             * Format: uuid
+             */
+            created_by: string;
+            /**
+             * Description
+             * @default
+             */
+            description?: string;
+            /** Form Fields */
+            form_fields?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Goals
+             * @default
+             */
+            goals?: string;
+            /**
+             * Has Minor Members
+             * @default false
+             */
+            has_minor_members?: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** @default open */
+            join_policy?: components["schemas"]["JoinPolicy"];
+            kind: components["schemas"]["ClubKind"];
+            /** Logo File Id */
+            logo_file_id?: string | null;
+            /** Name */
+            name: unknown;
+            /** Owner Id */
+            owner_id?: string | null;
+            /** Partners */
+            partners?: string[];
+            /** Points Rules */
+            points_rules?: {
+                [key: string]: number;
+            };
+            /**
+             * Published Once
+             * @default false
+             */
+            published_once?: boolean;
+            /**
+             * Rules
+             * @default
+             */
+            rules?: string;
+            /**
+             * Schedule
+             * @default
+             */
+            schedule?: string;
+            /** Slug */
+            slug: string;
+            /** @default draft */
+            status?: components["schemas"]["ClubStatus"];
+            /**
+             * Visibility Public
+             * @default true
+             */
+            visibility_public?: boolean;
+        };
+        /**
+         * ClubAnalyticsOut
+         * @description Figures of one club for the period.
+         */
+        ClubAnalyticsOut: {
+            /** Attendance Rate */
+            attendance_rate: number | null;
+            /** Avg Rating */
+            avg_rating: number | null;
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Events */
+            events: number;
+            /** Members */
+            members: number;
+            /** Name */
+            name: unknown;
+            /** Slug */
+            slug: string;
+            /** Status */
+            status: string;
+        };
+        /**
+         * ClubCapability
+         * @description Optional abilities that only SU switches on.
+         * @enum {string}
+         */
+        ClubCapability: "forms" | "drafting" | "points" | "roster";
+        /**
+         * ClubCountsOut
+         * @description Clubs by status.
+         */
+        ClubCountsOut: {
+            /** Active */
+            active: number;
+            /** By Status */
+            by_status: {
+                [key: string]: number;
+            };
+        };
+        /**
+         * ClubCourseLink
+         * @description A link between a club and a course.
+         */
+        ClubCourseLink: {
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Confirmed At */
+            confirmed_at?: string | null;
+            /** Confirmed By */
+            confirmed_by?: string | null;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /**
+             * Requested By
+             * Format: uuid
+             */
+            requested_by: string;
+            /** Requested Side */
+            requested_side: string;
+            /** Status */
+            status: string;
+        };
+        /**
+         * ClubIn
+         * @description Create a club draft.
+         */
+        ClubIn: {
+            /**
+             * Description
+             * @default
+             */
+            description?: string;
+            /** Name */
+            name: string;
+            /** Slug */
+            slug: string;
+        };
+        /**
+         * ClubKind
+         * @description Student club or an SU body.
+         * @enum {string}
+         */
+        ClubKind: "club" | "su";
+        /**
+         * ClubListItem
+         * @description A club in the directory.
+         */
+        ClubListItem: {
+            club: components["schemas"]["ClubOut"];
+            /** Member Count */
+            member_count: number;
+            /** My Role */
+            my_role: string | null;
+            /** My Status */
+            my_status: string | null;
+        };
+        /**
+         * ClubOut
+         * @description A club with the served address of its logo.
+         */
+        ClubOut: {
+            /**
+             * Capabilities
+             * @default []
+             */
+            capabilities?: components["schemas"]["ClubCapability"][];
+            /**
+             * Category
+             * @default
+             */
+            category?: string;
+            /**
+             * Contact Enabled
+             * @default false
+             */
+            contact_enabled?: boolean;
+            /**
+             * Created By
+             * Format: uuid
+             */
+            created_by: string;
+            /**
+             * Description
+             * @default
+             */
+            description?: string;
+            /** Form Fields */
+            form_fields?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Goals
+             * @default
+             */
+            goals?: string;
+            /**
+             * Has Minor Members
+             * @default false
+             */
+            has_minor_members?: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** @default open */
+            join_policy?: components["schemas"]["JoinPolicy"];
+            kind: components["schemas"]["ClubKind"];
+            /** Logo File Id */
+            logo_file_id?: string | null;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Name */
+            name: unknown;
+            /** Owner Id */
+            owner_id?: string | null;
+            /** Partners */
+            partners?: string[];
+            /** Points Rules */
+            points_rules?: {
+                [key: string]: number;
+            };
+            /**
+             * Published Once
+             * @default false
+             */
+            published_once?: boolean;
+            /**
+             * Rules
+             * @default
+             */
+            rules?: string;
+            /**
+             * Schedule
+             * @default
+             */
+            schedule?: string;
+            /** Slug */
+            slug: string;
+            /** @default draft */
+            status?: components["schemas"]["ClubStatus"];
+            /**
+             * Visibility Public
+             * @default true
+             */
+            visibility_public?: boolean;
+        };
+        /**
+         * ClubPatch
+         * @description Editable club fields; only the sent ones change.
+         */
+        ClubPatch: {
+            /** Category */
+            category?: string | null;
+            /** Contact Enabled */
+            contact_enabled?: boolean | null;
+            /** Description */
+            description?: string | null;
+            /** Goals */
+            goals?: string | null;
+            /** Join Policy */
+            join_policy?: string | null;
+            /** Logo File Id */
+            logo_file_id?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Partners */
+            partners?: string[] | null;
+            /** Rules */
+            rules?: string | null;
+            /** Schedule */
+            schedule?: string | null;
+            /** Visibility Public */
+            visibility_public?: boolean | null;
+        };
+        /**
+         * ClubProfile
+         * @description A member's reusable answers for one club.
+         */
+        ClubProfile: {
+            /** Answers */
+            answers: {
+                [key: string]: unknown;
+            };
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * ClubStatus
+         * @description Club lifecycle.
+         * @enum {string}
+         */
+        ClubStatus: "draft" | "pending_review" | "active" | "suspended" | "archived";
+        /**
          * CoachCheckDimensionOut
          * @description One rubric dimension: score 0-5, a verified quote and a comment.
          */
@@ -26040,6 +29258,12 @@ export interface components {
             hints: string[];
         };
         /**
+         * CoachOutcome
+         * @description How a session ended.
+         * @enum {string}
+         */
+        CoachOutcome: "resolved" | "abandoned" | "escalated";
+        /**
          * CoachOutlineOut
          * @description Proposed outline sections.
          */
@@ -26067,6 +29291,18 @@ export interface components {
             action: "reword" | "transition" | "merge";
             /** Text */
             text: string;
+        };
+        /**
+         * CoachReplyView
+         * @description The Coach's answer to a turn.
+         */
+        CoachReplyView: {
+            /** Ask Back */
+            ask_back: boolean;
+            /** Hint Level */
+            hint_level: number;
+            /** Message */
+            message: string;
         };
         /**
          * CoachReviewIn
@@ -26106,6 +29342,24 @@ export interface components {
             comment: string;
             /** Quote */
             quote: string;
+        };
+        /**
+         * CoachTrigger
+         * @description What made the learner open the Coach.
+         * @enum {string}
+         */
+        CoachTrigger: "learner_tap" | "wrong_answer" | "attempts_exhausted" | "idle";
+        /**
+         * CoachTurnView
+         * @description One stored message.
+         */
+        CoachTurnView: {
+            /** Hint Level */
+            hint_level: number;
+            /** Role */
+            role: string;
+            /** Text */
+            text: string;
         };
         /**
          * CodeBlock
@@ -26604,14 +29858,6 @@ export interface components {
             otp_code?: string | null;
         };
         /**
-         * ConsentIn
-         * @description Purposes to grant.
-         */
-        ConsentIn: {
-            /** Purposes */
-            purposes: string[];
-        };
-        /**
          * ConsentInfoResponse
          * @description GET /v1/id/consent.
          */
@@ -26813,6 +30059,36 @@ export interface components {
              * @default
              */
             location?: string;
+        };
+        /**
+         * ContactIn
+         * @description A visitor's message to the club.
+         */
+        ContactIn: {
+            /**
+             * Captcha Token
+             * @default
+             */
+            captcha_token?: string;
+            /** Email */
+            email: string;
+            /** Message */
+            message: string;
+            /** Name */
+            name: string;
+            /** Website */
+            website?: string | null;
+        };
+        /**
+         * ContactOut
+         * @description Accepted for delivery.
+         */
+        ContactOut: {
+            /**
+             * Status
+             * @default accepted
+             */
+            status?: string;
         };
         /**
          * ControlExamResponse
@@ -27087,6 +30363,43 @@ export interface components {
             region: string;
         };
         /**
+         * CountryPushIn
+         * @description A batch of countries, upserted by ISO code as drafts.
+         */
+        CountryPushIn: {
+            /** Items */
+            items: components["schemas"]["CountryPushItemIn"][];
+            /**
+             * Overwrite Verified
+             * @description Replace countries a curator already verified.
+             * @default false
+             */
+            overwrite_verified?: boolean;
+        };
+        /**
+         * CountryPushItemIn
+         * @description One country in the shape of `country_facts.json`; checked per item.
+         */
+        CountryPushItemIn: {
+            /**
+             * As Of
+             * @description Month of the facts, `YYYY-MM`.
+             */
+            as_of: string;
+            /**
+             * Country
+             * @description ISO 3166-1 alpha-2 code.
+             */
+            country: string;
+            /**
+             * Facts
+             * @description Facts keyed by fact name, as `PUT .../countries/{code}` takes.
+             */
+            facts: {
+                [key: string]: unknown;
+            };
+        };
+        /**
          * CountryRankingOut
          * @description One ranking of an institution (`overall` or a subject).
          */
@@ -27290,6 +30603,17 @@ export interface components {
         CourseIncludedIn: {
             /** Included */
             included: boolean;
+        };
+        /**
+         * CourseLinkIn
+         * @description Link the club to an LMS course.
+         */
+        CourseLinkIn: {
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
         };
         /**
          * CourseListOut
@@ -27726,7 +31050,7 @@ export interface components {
             /** Otp Code */
             otp_code?: string | null;
             /** Scopes */
-            scopes: ("me:read" | "me:write" | "admission:read" | "admission:memory" | "admission:docs" | "admission:documents" | "admission:catalog")[];
+            scopes: ("me:read" | "me:write" | "admission:read" | "admission:memory" | "admission:docs" | "admission:documents" | "admission:catalog" | "admission:catalog-write")[];
         };
         /**
          * CreateReadingListBody
@@ -28058,6 +31382,21 @@ export interface components {
             status: "synced" | "no_student";
         };
         /**
+         * CurveDoc
+         * @description A quadratic curve (`base`) or a cumulative table (`steps`).
+         */
+        CurveDoc: {
+            /** Base */
+            base?: number | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "quadratic" | "table";
+            /** Steps */
+            steps?: number[] | null;
+        };
+        /**
          * CustomFieldInput
          * @description A custom input field of a type (admin).
          */
@@ -28231,6 +31570,116 @@ export interface components {
             kind: string;
             /** Projected */
             projected: boolean;
+        };
+        /**
+         * DayBlockBody
+         * @description Body of POST /v1/admin/day-blocks and PUT /v1/admin/day-blocks/{id}.
+         *
+         *     `weekdays` are ISO numbers, Monday 1 … Friday 5. `course` is required for the
+         *     scope `course`; `group_ids` must not be empty for the scope `groups`.
+         */
+        DayBlockBody: {
+            /** Course */
+            course?: number | null;
+            /**
+             * Ends At
+             * Format: time
+             */
+            ends_at: string;
+            /** Group Ids */
+            group_ids?: string[];
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lunch" | "second_lunch" | "break" | "assembly" | "other";
+            /** Name */
+            name: string;
+            /**
+             * Scope
+             * @default all
+             * @enum {string}
+             */
+            scope?: "all" | "course" | "groups";
+            /**
+             * Starts At
+             * Format: time
+             */
+            starts_at: string;
+            /** Weekdays */
+            weekdays: number[];
+        };
+        /**
+         * DayBlockOccurrenceResponse
+         * @description A non-lesson block on one date of the student's timetable.
+         */
+        DayBlockOccurrenceResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Ends At
+             * Format: time
+             */
+            ends_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lunch" | "second_lunch" | "break" | "assembly" | "other";
+            /** Name */
+            name: string;
+            /**
+             * Starts At
+             * Format: time
+             */
+            starts_at: string;
+        };
+        /**
+         * DayBlockResponse
+         * @description A non-lesson block (lunch, second lunch, break, assembly).
+         */
+        DayBlockResponse: {
+            /** Course */
+            course: number | null;
+            /**
+             * Ends At
+             * Format: time
+             */
+            ends_at: string;
+            /** Group Ids */
+            group_ids: string[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lunch" | "second_lunch" | "break" | "assembly" | "other";
+            /** Name */
+            name: string;
+            /**
+             * Scope
+             * @enum {string}
+             */
+            scope: "all" | "course" | "groups";
+            /**
+             * Starts At
+             * Format: time
+             */
+            starts_at: string;
+            /** Weekdays */
+            weekdays: number[];
         };
         /**
          * DayCount
@@ -28562,6 +32011,21 @@ export interface components {
             band_changed: boolean;
             /** Score Delta */
             score_delta: number | null;
+        };
+        /**
+         * DesignDoc
+         * @description The look of a badge.
+         */
+        DesignDoc: {
+            /**
+             * Color
+             * @default #336699
+             */
+            color?: string;
+            /** @default star */
+            icon?: components["schemas"]["BadgeIcon"];
+            /** @default circle */
+            shape?: components["schemas"]["BadgeShape"];
         };
         /**
          * DetailGroupOut
@@ -28896,6 +32360,14 @@ export interface components {
             url: string;
         };
         /**
+         * DraftBody
+         * @description The teacher's wish.
+         */
+        DraftBody: {
+            /** Prompt */
+            prompt: string;
+        };
+        /**
          * DraftIn
          * @description Body of PUT /v1/admin/legal/drafts/{kind}; keys are uz, ru and en.
          */
@@ -28912,6 +32384,134 @@ export interface components {
             title?: {
                 [key: string]: string;
             };
+        };
+        /**
+         * DraftOut
+         * @description A suggested badge; nothing is stored.
+         */
+        DraftOut: {
+            /** Description */
+            description: {
+                [key: string]: string;
+            };
+            /** Name */
+            name: {
+                [key: string]: string;
+            };
+            /** Params */
+            params: {
+                [key: string]: unknown;
+            };
+            /** Rule */
+            rule: {
+                [key: string]: unknown;
+            };
+            /** Template */
+            template: string;
+        };
+        /**
+         * DraftPick
+         * @description An organizer's choice of a volunteer for a role.
+         */
+        DraftPick: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Role */
+            role: string;
+            /**
+             * Round Id
+             * Format: uuid
+             */
+            round_id: string;
+            /**
+             * Status
+             * @default proposed
+             */
+            status?: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * DraftRound
+         * @description A call for volunteers for one event of the club.
+         */
+        DraftRound: {
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /**
+             * Event Id
+             * Format: uuid
+             */
+            event_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Needed */
+            needed: {
+                [key: string]: number;
+            };
+            /**
+             * Status
+             * @default open
+             */
+            status?: string;
+        };
+        /**
+         * DraftSignup
+         * @description A member offering to fill a role.
+         */
+        DraftSignup: {
+            /** Answers */
+            answers: {
+                [key: string]: unknown;
+            };
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Role */
+            role: string;
+            /**
+             * Round Id
+             * Format: uuid
+             */
+            round_id: string;
+            /**
+             * Status
+             * @default submitted
+             */
+            status?: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * DrawBody
+         * @description A random test drawn from the bank.
+         */
+        DrawBody: {
+            /** Count */
+            count: number;
+            /** Difficulty */
+            difficulty?: ("easy" | "medium" | "hard") | null;
+            /** Seed */
+            seed?: number | null;
+            /** Topic */
+            topic: string;
         };
         /**
          * EarnedBadgeView
@@ -28946,6 +32546,22 @@ export interface components {
             after: string;
             /** Before */
             before: string;
+        };
+        /**
+         * EditBody
+         * @description The new text of a question.
+         */
+        EditBody: {
+            /** Answer */
+            answer: string;
+            /** Difficulty */
+            difficulty?: ("easy" | "medium" | "hard") | null;
+            /** Explanation */
+            explanation?: string | null;
+            /** Options */
+            options?: string[];
+            /** Question */
+            question: string;
         };
         /**
          * EffectiveOut
@@ -29671,7 +33287,7 @@ export interface components {
              * Source
              * @enum {string}
              */
-            source: "step" | "test" | "review" | "quest" | "exam" | "widget";
+            source: "step" | "test" | "review" | "quest" | "exam" | "widget" | "coach";
             /** Xp */
             xp: number;
         };
@@ -30049,6 +33665,94 @@ export interface components {
             /** Verified */
             verified: boolean;
         };
+        /**
+         * Event
+         * @description A club event.
+         */
+        Event: {
+            /** Capacity */
+            capacity: number | null;
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Course Id */
+            course_id?: string | null;
+            /** Created By */
+            created_by?: string | null;
+            /** Description */
+            description?: unknown;
+            /**
+             * Ends At
+             * Format: date-time
+             */
+            ends_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Location */
+            location?: string | null;
+            /** Opportunity Id */
+            opportunity_id?: string | null;
+            /** Rating Requested At */
+            rating_requested_at?: string | null;
+            rsvp_policy: components["schemas"]["RsvpPolicy"];
+            /**
+             * Schedule Revision
+             * @default 0
+             */
+            schedule_revision?: number;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            status: components["schemas"]["EventStatus"];
+            /** Title */
+            title: unknown;
+        };
+        /**
+         * EventIn
+         * @description A new event (a draft until published).
+         */
+        EventIn: {
+            /** Capacity */
+            capacity?: number | null;
+            /** Course Id */
+            course_id?: string | null;
+            /** Description */
+            description?: unknown;
+            /**
+             * Ends At
+             * Format: date-time
+             */
+            ends_at: string;
+            /** Location */
+            location?: string | null;
+            /** Opportunity Id */
+            opportunity_id?: string | null;
+            /**
+             * Rsvp Policy
+             * @default open
+             */
+            rsvp_policy?: string;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /** Title */
+            title: unknown;
+        };
+        /**
+         * EventStatus
+         * @description Event lifecycle.
+         * @enum {string}
+         */
+        EventStatus: "draft" | "scheduled" | "cancelled" | "done";
         /**
          * EvidenceIn
          * @description An own item and why it supports the spike.
@@ -30851,6 +34555,14 @@ export interface components {
             note?: string | null;
             /** Score */
             score: number;
+        };
+        /**
+         * ExplainBody
+         * @description The answer the learner wants explained.
+         */
+        ExplainBody: {
+            /** Answer */
+            answer: string;
         };
         /**
          * ExportBody
@@ -31800,6 +35512,17 @@ export interface components {
             text: string;
         };
         /**
+         * ForceTransferIn
+         * @description The new owner.
+         */
+        ForceTransferIn: {
+            /**
+             * To User Id
+             * Format: uuid
+             */
+            to_user_id: string;
+        };
+        /**
          * ForkIn
          * @description The prompt of the group the new essay takes (`null` owner: Common App).
          */
@@ -31816,6 +35539,46 @@ export interface components {
         ForkOut: {
             essay: components["schemas"]["EssayOut"];
             parent: components["schemas"]["EssayOut"];
+        };
+        /**
+         * FormFieldIn
+         * @description One question of a club form.
+         */
+        FormFieldIn: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: unknown;
+            /** Options */
+            options?: unknown[];
+            /**
+             * Required
+             * @default false
+             */
+            required?: boolean;
+            /**
+             * Type
+             * @default text
+             */
+            type?: string;
+        };
+        /**
+         * FormFieldsIn
+         * @description The club's whole form.
+         */
+        FormFieldsIn: {
+            /** Fields */
+            fields: components["schemas"]["FormFieldIn"][];
+        };
+        /**
+         * FormFieldsOut
+         * @description The club's form questions.
+         */
+        FormFieldsOut: {
+            /** Fields */
+            fields: {
+                [key: string]: unknown;
+            }[];
         };
         /**
          * FormulaSpec
@@ -31962,6 +35725,21 @@ export interface components {
             subject: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__SubjectRefResponse"];
         };
         /**
+         * GroupCard
+         * @description The caller's group.
+         */
+        GroupCard: {
+            /** Course */
+            course: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
          * GroupCountsResponse
          * @description Counts per value of one group, and the group's average of a starred number.
          */
@@ -32008,6 +35786,21 @@ export interface components {
             refresh?: boolean;
         };
         /**
+         * GroupCuratorRef
+         * @description The curator (homeroom teacher) by full name.
+         */
+        GroupCuratorRef: {
+            /** Full Name */
+            full_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Photo Url */
+            photo_url: string | null;
+        };
+        /**
          * GroupDetailResponse
          * @description GroupDetail.
          */
@@ -32040,6 +35833,25 @@ export interface components {
             subgroups_assigned: number;
             /** Unregistered Count */
             unregistered_count: number;
+        };
+        /**
+         * GroupHeadRef
+         * @description The head student, with first, last and full name.
+         */
+        GroupHeadRef: {
+            /** First Name */
+            first_name: string;
+            /** Full Name */
+            full_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Name */
+            last_name: string;
+            /** Photo Url */
+            photo_url: string | null;
         };
         /**
          * GroupMemberRow
@@ -32079,21 +35891,14 @@ export interface components {
             status?: ("active" | "archived") | null;
         };
         /**
-         * GroupPersonRef
-         * @description A person of the group, by name.
+         * GroupPlace
+         * @description The group's place among `total` ranked groups.
          */
-        GroupPersonRef: {
-            /** First Name */
-            first_name: string;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Last Name */
-            last_name: string;
-            /** Photo Url */
-            photo_url: string | null;
+        GroupPlace: {
+            /** Place */
+            place: number;
+            /** Total */
+            total: number;
         };
         /**
          * GroupProgressCell
@@ -32177,6 +35982,45 @@ export interface components {
             student: components["schemas"]["app__interfaces__http__v1__me_marks__schemas__PersonRef"];
         };
         /**
+         * GroupRankingItem
+         * @description One group in a ranking: aggregates only, never members.
+         */
+        GroupRankingItem: {
+            /** Course */
+            course: number | null;
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+            /** Is Mine */
+            is_mine: boolean;
+            /** Members Count */
+            members_count: number;
+            /** Place */
+            place: number;
+            /** Value */
+            value: number | null;
+        };
+        /**
+         * GroupRankingsResponse
+         * @description Groups ranked best first; groups without a value this term are left out.
+         */
+        GroupRankingsResponse: {
+            /** Items */
+            items: components["schemas"]["GroupRankingItem"][];
+        };
+        /**
+         * GroupRanks
+         * @description The group's place in its course and in the lyceum.
+         */
+        GroupRanks: {
+            course: components["schemas"]["GroupScopeRanks"];
+            lyceum: components["schemas"]["GroupScopeRanks"];
+        };
+        /**
          * GroupRatingRow
          * @description One student of the group in the GPA rating (`rank` None when no GPA).
          */
@@ -32204,6 +36048,14 @@ export interface components {
             id: string;
             /** Name */
             name: string;
+        };
+        /**
+         * GroupScopeRanks
+         * @description The group's place by GPA and attendance; null when the group has no value.
+         */
+        GroupScopeRanks: {
+            attendance: components["schemas"]["GroupPlace"] | null;
+            gpa: components["schemas"]["GroupPlace"] | null;
         };
         /**
          * GroupStatsItemResponse
@@ -32261,6 +36113,27 @@ export interface components {
             last_name: string;
             /** Photo Url */
             photo_url: string | null;
+        };
+        /**
+         * GroupTopRow
+         * @description A classmate in a top; equal values share a rank.
+         */
+        GroupTopRow: {
+            /** Full Name */
+            full_name: string;
+            /** Is Me */
+            is_me: boolean;
+            /** Photo Url */
+            photo_url: string | null;
+            /** Rank */
+            rank: number;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Value */
+            value: number | null;
         };
         /**
          * GuestCommentOut
@@ -32407,6 +36280,41 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * HandoutBody
+         * @description A handout on a topic.
+         */
+        HandoutBody: {
+            /** Group Id */
+            group_id?: string | null;
+            /** Language */
+            language?: string | null;
+            /**
+             * Length
+             * @default medium
+             * @enum {string}
+             */
+            length?: "short" | "medium" | "long";
+            /** Level */
+            level?: string | null;
+            /** Source Text */
+            source_text?: string | null;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Topic */
+            topic: string;
+        };
+        /**
+         * HeadStudentBody
+         * @description Body of PUT /v1/admin/groups/{id}/head-student; null clears the head student.
+         */
+        HeadStudentBody: {
+            /** Student Id */
+            student_id: string | null;
         };
         /**
          * HelperContacts
@@ -32895,6 +36803,14 @@ export interface components {
             uz?: string;
         };
         /**
+         * IdOut
+         * @description A created thing.
+         */
+        IdOut: {
+            /** Id */
+            id: string;
+        };
+        /**
          * IdeaFitIn
          * @description An idea text to match against the prompts.
          */
@@ -33215,6 +37131,33 @@ export interface components {
             style?: "clean" | "sketch" | "bento" | "scientific" | "playful";
         };
         /**
+         * InsightRowOut
+         * @description Sessions of one step in the period.
+         */
+        InsightRowOut: {
+            /** Escalated */
+            escalated: number;
+            /** Max Hint Level */
+            max_hint_level: number;
+            /** Resolved */
+            resolved: number;
+            /** Sessions */
+            sessions: number;
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+        };
+        /**
+         * InsightsOut
+         * @description The Coach sessions of a course by step.
+         */
+        InsightsOut: {
+            /** Steps */
+            steps: components["schemas"]["InsightRowOut"][];
+        };
+        /**
          * InsightsResponse
          * @description GET /v1/admin/insights.
          */
@@ -33335,6 +37278,19 @@ export interface components {
             items: components["schemas"]["InstitutionOut"][];
             /** Next Cursor */
             next_cursor: number | null;
+        };
+        /**
+         * InstitutionPushIn
+         * @description A batch of institutions in the seed catalog shape, upserted by slug.
+         */
+        InstitutionPushIn: {
+            /**
+             * Items
+             * @description Seed `Institution` entries, optionally with `logo_url`, `cover_url` (https; mirrored into our storage).
+             */
+            items: {
+                [key: string]: unknown;
+            }[];
         };
         /**
          * IntakeDraftIO
@@ -34054,6 +38010,81 @@ export interface components {
          * @enum {string}
          */
         ItemType: "textbook" | "manual" | "fiction" | "poetry" | "drama" | "nonfiction" | "reference" | "dictionary" | "lab_manual" | "problem_book" | "article" | "teaching_material" | "presentation" | "worksheet" | "lecture_notes" | "notes" | "practice_set" | "formula_sheet" | "other";
+        /** ItemsOut[Announcement] */
+        ItemsOut_Announcement_: {
+            /** Items */
+            items: components["schemas"]["Announcement"][];
+        };
+        /** ItemsOut[AttendanceRow] */
+        ItemsOut_AttendanceRow_: {
+            /** Items */
+            items: components["schemas"]["AttendanceRow"][];
+        };
+        /** ItemsOut[ClubCourseLink] */
+        ItemsOut_ClubCourseLink_: {
+            /** Items */
+            items: components["schemas"]["ClubCourseLink"][];
+        };
+        /** ItemsOut[ClubListItem] */
+        ItemsOut_ClubListItem_: {
+            /** Items */
+            items: components["schemas"]["ClubListItem"][];
+        };
+        /** ItemsOut[Club] */
+        ItemsOut_Club_: {
+            /** Items */
+            items: components["schemas"]["Club"][];
+        };
+        /** ItemsOut[DraftRound] */
+        ItemsOut_DraftRound_: {
+            /** Items */
+            items: components["schemas"]["DraftRound"][];
+        };
+        /** ItemsOut[DraftSignup] */
+        ItemsOut_DraftSignup_: {
+            /** Items */
+            items: components["schemas"]["DraftSignup"][];
+        };
+        /** ItemsOut[Event] */
+        ItemsOut_Event_: {
+            /** Items */
+            items: components["schemas"]["Event"][];
+        };
+        /** ItemsOut[LeaderRowOut] */
+        ItemsOut_LeaderRowOut_: {
+            /** Items */
+            items: components["schemas"]["LeaderRowOut"][];
+        };
+        /** ItemsOut[MemberAnswersOut] */
+        ItemsOut_MemberAnswersOut_: {
+            /** Items */
+            items: components["schemas"]["MemberAnswersOut"][];
+        };
+        /** ItemsOut[MemberView] */
+        ItemsOut_MemberView_: {
+            /** Items */
+            items: components["schemas"]["MemberView"][];
+        };
+        /** ItemsOut[PositionApplication] */
+        ItemsOut_PositionApplication_: {
+            /** Items */
+            items: components["schemas"]["PositionApplication"][];
+        };
+        /** ItemsOut[Ranked] */
+        ItemsOut_Ranked_: {
+            /** Items */
+            items: components["schemas"]["Ranked"][];
+        };
+        /** ItemsOut[Rsvp] */
+        ItemsOut_Rsvp_: {
+            /** Items */
+            items: components["schemas"]["Rsvp"][];
+        };
+        /** ItemsOut[TeamPosition] */
+        ItemsOut_TeamPosition_: {
+            /** Items */
+            items: components["schemas"]["TeamPosition"][];
+        };
         /**
          * JobListResponse
          * @description Active jobs (queued, running, stopping) and those finished today.
@@ -34102,6 +38133,20 @@ export interface components {
             /** Token */
             token: string;
         };
+        /**
+         * JoinIn
+         * @description Join request.
+         */
+        JoinIn: {
+            /** Message */
+            message?: string | null;
+        };
+        /**
+         * JoinPolicy
+         * @description How people join.
+         * @enum {string}
+         */
+        JoinPolicy: "open" | "request" | "invite";
         /**
          * JoinShareBody
          * @description The token of a share link, in the body so that it stays out of access logs.
@@ -34300,6 +38345,12 @@ export interface components {
             /** Items */
             items: components["schemas"]["KbArticleOut"][];
         };
+        /**
+         * KeyStatus
+         * @description A key is a draft until the teacher approves it.
+         * @enum {string}
+         */
+        KeyStatus: "draft" | "approved";
         /**
          * KindOverviewOut
          * @description One document series: current version, draft and every version.
@@ -34551,6 +38602,27 @@ export interface components {
             word_limit: number | null;
         };
         /**
+         * LatestSessionOut
+         * @description The newest session of the learner on a step with its messages.
+         */
+        LatestSessionOut: {
+            session: components["schemas"]["TutorSessionView"] | null;
+            /** Turns */
+            turns: components["schemas"]["CoachTurnView"][];
+        };
+        /**
+         * LeaderRowOut
+         * @description One line of a points table.
+         */
+        LeaderRowOut: {
+            /** Display Name */
+            display_name: string;
+            /** Points */
+            points: number;
+            /** Rank */
+            rank: number;
+        };
+        /**
          * LearningAiReviewBlockView
          * @description An AI review of my work; the teacher's prompt and files are not included.
          */
@@ -34704,6 +38776,8 @@ export interface components {
             override_score: number | null;
             /** Passed */
             passed: boolean;
+            /** Questions */
+            questions: components["schemas"]["LearningAttemptQuestionView"][];
             /** Review */
             review: components["schemas"]["LearningReviewItemView"][] | null;
             /**
@@ -34996,6 +39070,8 @@ export interface components {
             /** Changed Since Last Visit */
             changed_since_last_visit: string[];
             contact?: components["schemas"]["LearningContactView"] | null;
+            /** Continue Step Id */
+            continue_step_id?: string | null;
             /** Cover File Id */
             cover_file_id?: string | null;
             /** Cover Url */
@@ -35004,6 +39080,8 @@ export interface components {
             description: string;
             /** Enrolled */
             enrolled: boolean;
+            /** Enrolled Via */
+            enrolled_via?: string | null;
             /**
              * Id
              * Format: uuid
@@ -35428,6 +39506,8 @@ export interface components {
             /** Changed Since Last Visit */
             changed_since_last_visit: string[];
             contact?: components["schemas"]["LearningContactView"] | null;
+            /** Continue Step Id */
+            continue_step_id?: string | null;
             /** Cover File Id */
             cover_file_id?: string | null;
             /** Cover Url */
@@ -35436,6 +39516,8 @@ export interface components {
             description: string;
             /** Enrolled */
             enrolled: boolean;
+            /** Enrolled Via */
+            enrolled_via?: string | null;
             /**
              * Id
              * Format: uuid
@@ -35848,6 +39930,12 @@ export interface components {
             badge?: ("new" | "changed") | null;
             /** Completed */
             completed?: boolean | null;
+            /** Estimated Minutes */
+            estimated_minutes?: number | null;
+            /** Kind */
+            kind?: string | null;
+            /** Lock Reason */
+            lock_reason?: ("access" | "mastery") | null;
             /**
              * Locked
              * @default false
@@ -35901,6 +39989,8 @@ export interface components {
             best: components["schemas"]["LearningAttemptResultView"] | null;
             /** Id */
             id: string;
+            /** Last Attempt Id */
+            last_attempt_id?: string | null;
             /** Open Attempt Id */
             open_attempt_id: string | null;
             /**
@@ -35944,7 +40034,7 @@ export interface components {
          * @description `POST /v1/lms/steps/{step_id}/cards/{card_id}/review`: the rating button.
          */
         LearningReviewCardBody: {
-            rating: components["schemas"]["Rating"];
+            rating: components["schemas"]["Rating-Input"];
         };
         /**
          * LearningReviewItemView
@@ -36144,6 +40234,17 @@ export interface components {
             score_pct: number;
         };
         /**
+         * LeftOut
+         * @description The caller left the club.
+         */
+        LeftOut: {
+            /**
+             * Status
+             * @default left
+             */
+            status?: string;
+        };
+        /**
          * LegalDocumentListOut
          * @description Current documents, one per published kind.
          */
@@ -36313,6 +40414,34 @@ export interface components {
             teacher_id?: string | null;
             /** Topic */
             topic?: string | null;
+        };
+        /**
+         * LessonPlanBody
+         * @description A lesson plan.
+         */
+        LessonPlanBody: {
+            /**
+             * Duration Minutes
+             * @default 45
+             */
+            duration_minutes?: number;
+            /** Group Id */
+            group_id?: string | null;
+            /** Language */
+            language?: string | null;
+            /** Lesson Id */
+            lesson_id?: string | null;
+            /** Notes */
+            notes?: string | null;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Template Id */
+            template_id?: string | null;
+            /** Topic */
+            topic: string;
         };
         /**
          * LessonRefBody
@@ -38032,6 +42161,88 @@ export interface components {
             items: components["schemas"]["MediaGrantItem"][];
         };
         /**
+         * MediaJobBody
+         * @description What to voice and where the result goes.
+         */
+        MediaJobBody: {
+            /** Group Id */
+            group_id?: string | null;
+            /** @default video_with_voice */
+            kind?: components["schemas"]["MediaKind"];
+            /**
+             * Language
+             * @default ru
+             */
+            language?: string;
+            /**
+             * Length
+             * @default medium
+             */
+            length?: string;
+            /** Script */
+            script: components["schemas"]["SegmentBody"][];
+            /**
+             * Speed
+             * @default 1
+             */
+            speed?: number;
+            /**
+             * Style
+             * @default explainer
+             */
+            style?: string;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /**
+             * Voice Id
+             * @default default
+             */
+            voice_id?: string;
+        };
+        /**
+         * MediaJobPage
+         * @description One page of the caller's jobs.
+         */
+        MediaJobPage: {
+            /** Items */
+            items: components["schemas"]["MediaJobView"][];
+            /** Total */
+            total: number;
+        };
+        /**
+         * MediaJobView
+         * @description A job as the teacher sees it: status and the file to download.
+         */
+        MediaJobView: {
+            /** Error */
+            error: string | null;
+            /** File Id */
+            file_id: string | null;
+            /** Group Id */
+            group_id: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["MediaKind"];
+            status: components["schemas"]["MediaStatus"];
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+        };
+        /**
+         * MediaKind
+         * @description What the teacher gets.
+         * @enum {string}
+         */
+        MediaKind: "video_with_voice" | "audio_only";
+        /**
          * MediaRedeemBody
          * @description `POST /v1/lms/media/redeem`: the token from the fragment of the link.
          */
@@ -38055,6 +42266,87 @@ export interface components {
             title: string;
             /** Url */
             url: string;
+        };
+        /**
+         * MediaStatus
+         * @description Where the job is.
+         * @enum {string}
+         */
+        MediaStatus: "queued" | "voicing" | "rendering" | "done" | "failed";
+        /**
+         * MemberAnswersOut
+         * @description One member's stored answers.
+         */
+        MemberAnswersOut: {
+            /** Answers */
+            answers: {
+                [key: string]: unknown;
+            };
+            /** Display Name */
+            display_name: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * MemberRole
+         * @description Role inside a club.
+         * @enum {string}
+         */
+        MemberRole: "owner" | "co_owner" | "team" | "member";
+        /**
+         * MemberStatus
+         * @description Membership lifecycle.
+         * @enum {string}
+         */
+        MemberStatus: "requested" | "active" | "left" | "removed" | "banned";
+        /**
+         * MemberView
+         * @description A member as shown to the club team.
+         */
+        MemberView: {
+            /** Display Name */
+            display_name: string;
+            /** Role */
+            role: string;
+            /** Status */
+            status: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * Membership
+         * @description A person's place in a club.
+         */
+        Membership: {
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Declaration Version */
+            declaration_version: number;
+            /** Joined At */
+            joined_at: string | null;
+            /** Left At */
+            left_at: string | null;
+            role: components["schemas"]["MemberRole"];
+            status: components["schemas"]["MemberStatus"];
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
         };
         /**
          * MemoryNoteIn
@@ -38376,6 +42668,16 @@ export interface components {
             score_pct: number;
         };
         /**
+         * MisconceptionDoc
+         * @description A typical mistake and the nudge for it.
+         */
+        MisconceptionDoc: {
+            /** Nudge */
+            nudge: string;
+            /** Pattern */
+            pattern: string;
+        };
+        /**
          * MissingAttendanceResponse
          * @description A teacher and the lessons without submitted attendance.
          */
@@ -38477,6 +42779,13 @@ export interface components {
             parent_id?: string | null;
         };
         /**
+         * MoveIn
+         * @description Planner column.
+         */
+        MoveIn: {
+            status: components["schemas"]["PlannerStatus"];
+        };
+        /**
          * MoveSection
          * @description Move a section to a new index.
          */
@@ -38562,6 +42871,33 @@ export interface components {
             verify_url: string;
         };
         /**
+         * MyClubOut
+         * @description The caller's place and rights in one club.
+         */
+        MyClubOut: {
+            /** Can Approve */
+            can_approve: boolean;
+            /** Can Edit */
+            can_edit: boolean;
+            /** Can Manage Events */
+            can_manage_events: boolean;
+            /** Can View Members */
+            can_view_members: boolean;
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Is Member */
+            is_member: boolean;
+            /** Is Organizer */
+            is_organizer: boolean;
+            /** Role */
+            role: string | null;
+            /** Status */
+            status: string | null;
+        };
+        /**
          * MyErasureOut
          * @description The caller's open request, if any.
          */
@@ -38570,13 +42906,17 @@ export interface components {
         };
         /**
          * MyGroupResponse
-         * @description The caller's group: homeroom teacher, head student and members.
+         * @description The caller's group: homeroom teacher, head student, members and standings.
          *
-         *     `homeroom_teacher` and `head_student` are null when not assigned.
+         *     `homeroom_teacher`, `curator` and `head_student` are null when not assigned.
          *     `is_head_student` tells whether group progress and rating are open to the caller.
+         *     The tops rank classmates by current-term GPA (mean mark) and attendance percent
+         *     (late counts as present); classmates without a value are left out.
          */
         MyGroupResponse: {
-            head_student: components["schemas"]["GroupPersonRef"] | null;
+            curator: components["schemas"]["GroupCuratorRef"] | null;
+            group: components["schemas"]["GroupCard"];
+            head_student: components["schemas"]["GroupHeadRef"] | null;
             homeroom_teacher: components["schemas"]["GroupTeacherRef"] | null;
             /**
              * Id
@@ -38587,10 +42927,49 @@ export interface components {
             is_head_student: boolean;
             /** Members */
             members: components["schemas"]["GroupMemberRow"][];
+            /** Members Count */
+            members_count: number;
             /** Name */
             name: string;
+            ranks: components["schemas"]["GroupRanks"];
             /** Size */
             size: number;
+            /** Top By Attendance */
+            top_by_attendance: components["schemas"]["GroupTopRow"][];
+            /** Top By Grade */
+            top_by_grade: components["schemas"]["GroupTopRow"][];
+        };
+        /**
+         * MyLevelOut
+         * @description The signed-in learner's level in one scope.
+         */
+        MyLevelOut: {
+            /** Course Id */
+            course_id: string | null;
+            /** Level */
+            level: number;
+            /**
+             * Scope
+             * @enum {string}
+             */
+            scope: "platform" | "course";
+            tier: components["schemas"]["TierDoc"] | null;
+            /** Xp For Next */
+            xp_for_next: number;
+            /** Xp Into Level */
+            xp_into_level: number;
+            /** Xp Total */
+            xp_total: number;
+        };
+        /**
+         * MyPointsOut
+         * @description The caller's points in a club.
+         */
+        MyPointsOut: {
+            /** Entries */
+            entries: components["schemas"]["PointEntryOut"][];
+            /** Total */
+            total: number;
         };
         /**
          * MyProfessionListOut
@@ -38985,22 +43364,6 @@ export interface components {
              * @enum {string}
              */
             status: "done" | "in_progress" | "skipped";
-        };
-        /**
-         * NoteIn
-         * @description My own note, or a reply to a comment.
-         */
-        NoteIn: {
-            /** Anchor End */
-            anchor_end?: number | null;
-            /** Anchor Start */
-            anchor_start?: number | null;
-            /** Body */
-            body: string;
-            /** Parent Id */
-            parent_id?: string | null;
-            /** Quote */
-            quote?: string | null;
         };
         /**
          * NoteInput
@@ -39491,6 +43854,15 @@ export interface components {
             token: string;
         };
         /**
+         * OpenSessionBody
+         * @description What opens the Coach.
+         */
+        OpenSessionBody: {
+            /** Block Id */
+            block_id?: string | null;
+            trigger: components["schemas"]["CoachTrigger"];
+        };
+        /**
          * OppCommentIn
          * @description Post a comment.
          */
@@ -39743,23 +44115,97 @@ export interface components {
             url?: string | null;
         };
         /**
-         * OpportunityListOut
-         * @description One page of filtered entries; `total` counts all matches.
+         * OpportunityIn
+         * @description Create or overwrite an entry; `lock_version` guards an overwrite.
          */
-        OpportunityListOut: {
-            /** Items */
-            items: components["schemas"]["OpportunityOut"][];
-            /** Page */
-            page: number;
-            /** Size */
-            size: number;
+        OpportunityIn: {
+            /** Acceptance Rate */
+            acceptance_rate?: number | null;
+            /** Amount Text */
+            amount_text?: string | null;
+            /** Amount Value */
+            amount_value?: number | null;
+            /** Audience */
+            audience?: ("admission" | "my_iht")[];
+            /** Award Type */
+            award_type?: ("scholarship" | "fellowship" | "grant" | "tuition_waiver" | "program") | null;
+            /** College Credit */
+            college_credit?: ("none" | "possible" | "yes") | null;
+            /** Country */
+            country?: string | null;
+            /** Coverage */
+            coverage?: ("full_tuition" | "partial_tuition" | "stipend" | "cash" | "travel")[];
+            /** Credit Note */
+            credit_note?: string | null;
+            /** Currency */
+            currency?: string | null;
+            /** Duration Weeks */
+            duration_weeks?: number | null;
+            /** Eligibility */
+            eligibility?: string | null;
             /**
-             * Sort
+             * Essay Required
+             * @default false
+             */
+            essay_required?: boolean;
+            /** Exam Dates */
+            exam_dates?: string[];
+            /** Grades */
+            grades?: number[];
+            /** Host Institution */
+            host_institution?: string | null;
+            /** Hours Per Week */
+            hours_per_week?: number | null;
+            /**
+             * Kind
              * @enum {string}
              */
-            sort: "title" | "ranking" | "acceptance" | "tuition" | "relevance" | "deadline";
-            /** Total */
-            total: number;
+            kind: "exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research";
+            /** Last Year Dates */
+            last_year_dates?: string[];
+            /** Lms Course Id */
+            lms_course_id?: string | null;
+            /** Location */
+            location?: string | null;
+            /** Lock Version */
+            lock_version?: number | null;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Materials */
+            materials?: components["schemas"]["MaterialIo"][];
+            /**
+             * Online
+             * @default false
+             */
+            online?: boolean;
+            /** Org Id */
+            org_id?: string | null;
+            /** Provider */
+            provider?: string | null;
+            /** Ranking */
+            ranking?: number | null;
+            /** Recurrence */
+            recurrence?: string | null;
+            /** Registration Deadlines */
+            registration_deadlines?: string[];
+            /** Scope */
+            scope?: ("local" | "international") | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Starts On */
+            starts_on?: string | null;
+            /** Study Field Ids */
+            study_field_ids?: string[];
+            /** Subject Ids */
+            subject_ids?: string[];
+            /** Summary */
+            summary?: string | null;
+            /** Title */
+            title: string;
+            /** Tuition Usd */
+            tuition_usd?: number | null;
+            /** Url */
+            url?: string | null;
         };
         /**
          * OpportunityLookupIn
@@ -39808,51 +44254,20 @@ export interface components {
             url: string | null;
         };
         /**
-         * OpportunityOut
-         * @description A published entry with its next dates.
+         * OptOutIn
+         * @description Hide the caller from leaderboards.
          */
-        OpportunityOut: {
-            /** Archived */
-            archived: boolean;
-            /**
-             * Comment Count
-             * @default 0
-             */
-            comment_count?: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
-             * Delivery
-             * @default external
-             * @enum {string}
-             */
-            delivery?: "local" | "external";
-            fields: components["schemas"]["OpportunityFields"];
-            /**
-             * For You
-             * @default false
-             */
-            for_you?: boolean;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Lock Version */
-            lock_version: number;
-            /** Next Deadline */
-            next_deadline: string | null;
-            org?: components["schemas"]["OrgOut"] | null;
-            /** Upcoming */
-            upcoming: components["schemas"]["DatedEventOut"][];
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at: string;
+        OptOutIn: {
+            /** Opted Out */
+            opted_out: boolean;
+        };
+        /**
+         * OptOutOut
+         * @description The leaderboard visibility choice.
+         */
+        OptOutOut: {
+            /** Opted Out */
+            opted_out: boolean;
         };
         /**
          * Option
@@ -40256,6 +44671,39 @@ export interface components {
             /** Groups */
             groups: components["schemas"]["ScopeOverviewOut"][];
         };
+        /**
+         * OwnershipTransfer
+         * @description An offer to hand a club over.
+         */
+        OwnershipTransfer: {
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /**
+             * From User
+             * Format: uuid
+             */
+            from_user: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** @default offered */
+            status?: components["schemas"]["TransferStatus"];
+            /**
+             * To User
+             * Format: uuid
+             */
+            to_user: string;
+        };
         /** PageResponse[NotebookItemResponse] */
         PageResponse_NotebookItemResponse_: {
             /** Items */
@@ -40429,6 +44877,20 @@ export interface components {
              * @enum {string}
              */
             strength: "strong" | "ok" | "weak";
+        };
+        /**
+         * ParamOut
+         * @description One tunable parameter of a template.
+         */
+        ParamOut: {
+            /** Default */
+            default: number | string | null;
+            /** Max */
+            max: number | null;
+            /** Min */
+            min: number | null;
+            /** Name */
+            name: string;
         };
         /**
          * PartnerBody
@@ -40768,6 +45230,19 @@ export interface components {
             scopes: string[];
         };
         /**
+         * PickIn
+         * @description Pick a person for a role.
+         */
+        PickIn: {
+            /** Role */
+            role: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
          * PinExternalBody
          * @description `PinExternalBody`: the category decides the link of the record.
          */
@@ -40957,13 +45432,13 @@ export interface components {
          * @description A student's plan.
          */
         PlanOut: {
-            analytics: components["schemas"]["AnalyticsOut"];
+            analytics: components["schemas"]["app__interfaces__http__v1__admission__schemas_opportunities__AnalyticsOut"];
             /** Deadlines */
             deadlines: components["schemas"]["app__interfaces__http__v1__admission__schemas_opportunities__DeadlineOut"][];
             /** Entries */
             entries: components["schemas"]["PlanEntryOut"][];
             /** Opportunities */
-            opportunities: components["schemas"]["OpportunityOut"][];
+            opportunities: components["schemas"]["app__interfaces__http__v1__admission__schemas_opportunities__OpportunityOut"][];
         };
         /**
          * PlanPreviewResponse
@@ -41118,6 +45593,69 @@ export interface components {
             title?: string | null;
         };
         /**
+         * PlannerBoardOut
+         * @description Planner items and the share done.
+         */
+        PlannerBoardOut: {
+            /** Completion */
+            completion: number;
+            /** Items */
+            items: components["schemas"]["PlannerItem"][];
+        };
+        /**
+         * PlannerIn
+         * @description A planner card.
+         */
+        PlannerIn: {
+            /** Assignee Id */
+            assignee_id?: string | null;
+            /**
+             * Body
+             * @default
+             */
+            body?: string;
+            /** Due At */
+            due_at?: string | null;
+            /**
+             * Kind
+             * @default task
+             */
+            kind?: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * PlannerItem
+         * @description A task or idea on the board.
+         */
+        PlannerItem: {
+            /** Assignee Id */
+            assignee_id: string | null;
+            /** Body */
+            body: string;
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Due At */
+            due_at: string | null;
+            /** Event Id */
+            event_id: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Kind */
+            kind: string;
+            status: components["schemas"]["PlannerStatus"];
+            /** Term */
+            term: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * PlannerPair
          * @description The lowest final that works when the midterm gets ``midterm``.
          */
@@ -41172,6 +45710,12 @@ export interface components {
             count: number;
         };
         /**
+         * PlannerStatus
+         * @description Board columns.
+         * @enum {string}
+         */
+        PlannerStatus: "backlog" | "planned" | "doing" | "done";
+        /**
          * PlannerTarget
          * @description What it takes to end the semester with one grade.
          */
@@ -41211,6 +45755,52 @@ export interface components {
             type: "lesson" | "midterm" | "final";
             /** Value */
             value: number;
+        };
+        /**
+         * PlatformBadgeBody
+         * @description A platform badge to create.
+         */
+        PlatformBadgeBody: {
+            /** Description */
+            description?: {
+                [key: string]: string;
+            };
+            design?: components["schemas"]["DesignDoc"];
+            /** Name */
+            name?: {
+                [key: string]: string;
+            };
+            /** Rule */
+            rule?: {
+                [key: string]: unknown;
+            };
+            /** Template Code */
+            template_code?: string | null;
+            /** Template Params */
+            template_params?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /**
+         * PlatformBadgePatch
+         * @description Changes of a platform badge.
+         */
+        PlatformBadgePatch: {
+            /** Description */
+            description?: {
+                [key: string]: string;
+            } | null;
+            design?: components["schemas"]["DesignDoc"] | null;
+            /** Enabled */
+            enabled?: boolean | null;
+            /** Name */
+            name?: {
+                [key: string]: string;
+            } | null;
+            /** Rule */
+            rule?: {
+                [key: string]: unknown;
+            } | null;
         };
         /**
          * PlatformSettingsBody
@@ -41260,6 +45850,97 @@ export interface components {
             school_name: string;
             /** Support Contact */
             support_contact: string;
+        };
+        /**
+         * PointEntryOut
+         * @description One points entry.
+         */
+        PointEntryOut: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** Points */
+            points: number;
+            /** Reason */
+            reason: string;
+        };
+        /**
+         * PointsRulesIn
+         * @description Points per kind of activity.
+         */
+        PointsRulesIn: {
+            /** Rules */
+            rules: {
+                [key: string]: number;
+            };
+        };
+        /**
+         * PointsRulesOut
+         * @description Effective points per kind of activity.
+         */
+        PointsRulesOut: {
+            /** Rules */
+            rules: {
+                [key: string]: number;
+            };
+        };
+        /**
+         * PositionApplication
+         * @description A student's application to a position.
+         */
+        PositionApplication: {
+            /** Answers */
+            answers: {
+                [key: string]: unknown;
+            };
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Note */
+            note?: string | null;
+            /**
+             * Position Id
+             * Format: uuid
+             */
+            position_id: string;
+            /**
+             * Status
+             * @default submitted
+             */
+            status?: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * PositionIn
+         * @description A team position.
+         */
+        PositionIn: {
+            /** Description */
+            description?: unknown;
+            /** Form Schema */
+            form_schema?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Open For Applications
+             * @default true
+             */
+            open_for_applications?: boolean;
+            /**
+             * Slots
+             * @default 1
+             */
+            slots?: number;
+            /** Title */
+            title: unknown;
         };
         /**
          * PostCreate
@@ -41553,6 +46234,8 @@ export interface components {
             marks_types?: ("lesson" | "midterm" | "final")[] | null;
             /** Marks Values */
             marks_values?: number[] | null;
+            /** Notify Absences */
+            notify_absences?: boolean | null;
             /** Notify Push */
             notify_push?: boolean | null;
             /** Onboarding Dismissed */
@@ -41656,6 +46339,16 @@ export interface components {
             scopes: string[];
         };
         /**
+         * PreviewBody
+         * @description The rule to preview.
+         */
+        PreviewBody: {
+            /** Rule */
+            rule: {
+                [key: string]: unknown;
+            };
+        };
+        /**
          * PreviewFieldResponse
          * @description One field of an approval card.
          */
@@ -41721,6 +46414,16 @@ export interface components {
             step_id: string;
             /** Title */
             title: string;
+        };
+        /**
+         * ProbeOut
+         * @description The level a probe XP total reaches under the live and the previewed scheme.
+         */
+        ProbeOut: {
+            /** After */
+            after: number;
+            /** Before */
+            before: number;
         };
         /**
          * ProblemOut
@@ -41811,6 +46514,16 @@ export interface components {
             missing: components["schemas"]["MissingDetailOut"][];
             /** Three Words */
             three_words: string[];
+        };
+        /**
+         * ProfileIn
+         * @description The member's answers to the club's form.
+         */
+        ProfileIn: {
+            /** Answers */
+            answers?: {
+                [key: string]: unknown;
+            };
         };
         /**
          * ProfileOut
@@ -42583,6 +47296,60 @@ export interface components {
             created: boolean;
         };
         /**
+         * PublicClubListOut
+         * @description Public clubs and the public Turnstile key of the contact form.
+         */
+        PublicClubListOut: {
+            /** Captcha Site Key */
+            captcha_site_key: string;
+            /** Items */
+            items: components["schemas"]["PublicClubOut"][];
+        };
+        /**
+         * PublicClubOut
+         * @description A club as the public sees it; no person ids, no addresses.
+         */
+        PublicClubOut: {
+            /** Contact Enabled */
+            contact_enabled: boolean;
+            /** Description */
+            description: string;
+            /** Id */
+            id: string;
+            /** Join Policy */
+            join_policy: string;
+            /** Logo Url */
+            logo_url: string | null;
+            /** Name */
+            name: unknown;
+            /** Slug */
+            slug: string;
+        };
+        /**
+         * PublicClubPageOut
+         * @description A club page with its public team and the contact form's Turnstile key.
+         */
+        PublicClubPageOut: {
+            /** Captcha Site Key */
+            captcha_site_key: string;
+            /** Contact Enabled */
+            contact_enabled: boolean;
+            /** Description */
+            description: string;
+            /** Id */
+            id: string;
+            /** Join Policy */
+            join_policy: string;
+            /** Logo Url */
+            logo_url: string | null;
+            /** Name */
+            name: unknown;
+            /** Slug */
+            slug: string;
+            /** Team */
+            team: components["schemas"]["PublicTeamMemberOut"][];
+        };
+        /**
          * PublicCourseInfo
          * @description Certificate facts for the course landing page.
          */
@@ -42597,6 +47364,14 @@ export interface components {
             sample_url: string | null;
             /** Tiers */
             tiers: components["schemas"]["Labels"][];
+        };
+        /**
+         * PublicIn
+         * @description Show or hide a seat on the public page.
+         */
+        PublicIn: {
+            /** Public */
+            public: boolean;
         };
         /**
          * PublicPartner
@@ -42658,6 +47433,20 @@ export interface components {
             lyceum_name: components["schemas"]["LyceumNameOut"] | null;
             /** Speciality */
             speciality: string | null;
+        };
+        /**
+         * PublicTeamMemberOut
+         * @description A consenting team member shown on the public page.
+         */
+        PublicTeamMemberOut: {
+            /** Bio */
+            bio: unknown;
+            /** Name */
+            name: string;
+            /** Photo Url */
+            photo_url: string | null;
+            /** Position */
+            position: unknown;
         };
         /**
          * PublicVisualization
@@ -42757,6 +47546,42 @@ export interface components {
             p256dh: string;
         };
         /**
+         * PushResultListOut
+         * @description One result per pushed item, in order.
+         */
+        PushResultListOut: {
+            /** Items */
+            items: components["schemas"]["PushResultOut"][];
+        };
+        /**
+         * PushResultOut
+         * @description What happened to one item of the batch.
+         */
+        PushResultOut: {
+            /**
+             * Field
+             * @description The invalid field when `invalid`.
+             */
+            field: string | null;
+            /** Index */
+            index: number;
+            /**
+             * Key
+             * @description ISO code or institution slug.
+             */
+            key: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "created" | "updated" | "unchanged" | "skipped" | "invalid";
+            /**
+             * Warnings
+             * @description Fields saved without their value, e.g. a logo not fetched.
+             */
+            warnings: string[];
+        };
+        /**
          * PushSubscriptionBody
          * @description POST /v1/me/push-subscriptions: `PushSubscription.toJSON()` plus the agent.
          */
@@ -42805,6 +47630,14 @@ export interface components {
             subject_id: string;
             /** Year Of Study */
             year_of_study: number;
+        };
+        /**
+         * QrCheckInIn
+         * @description Check-in by the event's QR token.
+         */
+        QrCheckInIn: {
+            /** Token */
+            token: string;
         };
         /**
          * QrStyle
@@ -42868,6 +47701,16 @@ export interface components {
              * @enum {string}
              */
             type: "single" | "multiple" | "text" | "number" | "sorting" | "matching" | "table" | "blanks" | "random_number" | "formula" | "free" | "code";
+        };
+        /**
+         * QuestionBlocksBody
+         * @description Questions to turn into one test block of the step.
+         */
+        QuestionBlocksBody: {
+            /** Position */
+            position?: number | null;
+            /** Questions */
+            questions: components["schemas"]["app__interfaces__http__v1__lms_authoring__question_blocks__QuestionBody"][];
         };
         /**
          * QuestionIn
@@ -43002,6 +47845,38 @@ export interface components {
              * @description For random_number.
              */
             variables?: components["schemas"]["VariableInput"][] | null;
+        };
+        /**
+         * QuestionsBody
+         * @description Questions for a topic; the output lands in the subject notebook.
+         */
+        QuestionsBody: {
+            /**
+             * Count
+             * @default 10
+             */
+            count?: number;
+            /** Group Id */
+            group_id?: string | null;
+            /** Language */
+            language?: string | null;
+            /** Level */
+            level?: string | null;
+            /**
+             * Question Type
+             * @default mixed
+             * @enum {string}
+             */
+            question_type?: "multiple_choice" | "short_answer" | "true_false" | "mixed";
+            /** Source Text */
+            source_text?: string | null;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Topic */
+            topic: string;
         };
         /**
          * QuestionsOut
@@ -43185,6 +48060,19 @@ export interface components {
             variables?: components["schemas"]["Variable"][];
         };
         /**
+         * Ranked
+         * @description A candidate with a score in [0, 1].
+         */
+        Ranked: {
+            /** Score */
+            score: number;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
          * RankingItem
          * @description One ranked student: ``value`` is the best score of the type (null: none).
          */
@@ -43227,7 +48115,59 @@ export interface components {
          * @description Answer buttons.
          * @enum {string}
          */
-        Rating: "again" | "hard" | "medium" | "easy";
+        "Rating-Input": "again" | "hard" | "medium" | "easy";
+        /**
+         * Rating
+         * @description A 1..5 rating with optional aspects and comment.
+         */
+        "Rating-Output": {
+            /** Anonymous To Club */
+            anonymous_to_club: boolean;
+            /** Aspects */
+            aspects: {
+                [key: string]: number;
+            };
+            /** Comment */
+            comment: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Score */
+            score: number;
+            /**
+             * Target Id
+             * Format: uuid
+             */
+            target_id: string;
+            /** Target Type */
+            target_type: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * RatingAggregate
+         * @description Count and averages of ratings.
+         */
+        RatingAggregate: {
+            /** Aspects */
+            aspects: {
+                [key: string]: number;
+            };
+            /** Avg */
+            avg: number | null;
+            /** Count */
+            count: number;
+        };
         /**
          * RatingBookResponse
          * @description Link to the EMIS rating book PDF.
@@ -43235,6 +48175,51 @@ export interface components {
         RatingBookResponse: {
             /** Url */
             url: string;
+        };
+        /**
+         * RatingCommentOut
+         * @description A rating comment; the author only when not anonymous.
+         */
+        RatingCommentOut: {
+            /** Aspects */
+            aspects: {
+                [key: string]: number;
+            };
+            /** Comment */
+            comment: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Score */
+            score: number;
+            /** User Id */
+            user_id?: string | null;
+        };
+        /**
+         * RatingIn
+         * @description A 1..5 rating.
+         */
+        RatingIn: {
+            /**
+             * Anonymous To Club
+             * @default false
+             */
+            anonymous_to_club?: boolean;
+            /** Aspects */
+            aspects?: {
+                [key: string]: number;
+            };
+            /** Comment */
+            comment?: string | null;
+            /** Score */
+            score: number;
         };
         /**
          * RatingsBody
@@ -43281,6 +48266,16 @@ export interface components {
              * @default 5
              */
             social?: number;
+        };
+        /**
+         * RatingsSummaryOut
+         * @description Ratings of a club and its events.
+         */
+        RatingsSummaryOut: {
+            club: components["schemas"]["RatingAggregate"];
+            /** Comments */
+            comments: components["schemas"]["RatingCommentOut"][];
+            events: components["schemas"]["RatingAggregate"];
         };
         /**
          * ReadHistoryItemOut
@@ -43477,6 +48472,14 @@ export interface components {
             url?: string | null;
             /** Week Label */
             week_label?: string | null;
+        };
+        /**
+         * ReasonIn
+         * @description A reason.
+         */
+        ReasonIn: {
+            /** Reason */
+            reason: string;
         };
         /**
          * RecapCardOut
@@ -44049,6 +49052,22 @@ export interface components {
             items: components["schemas"]["RequestOut"][];
         };
         /**
+         * RescheduleIn
+         * @description New times.
+         */
+        RescheduleIn: {
+            /**
+             * Ends At
+             * Format: date-time
+             */
+            ends_at: string;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+        };
+        /**
          * ResolveAction
          * @description What a librarian decides about the open reports of an item.
          * @enum {string}
@@ -44165,6 +49184,14 @@ export interface components {
             url: string;
         };
         /**
+         * RespondIn
+         * @description Accept or decline a pick.
+         */
+        RespondIn: {
+            /** Accept */
+            accept: boolean;
+        };
+        /**
          * ResponseIn
          * @description Body of POST /v1/admin/feedback/{id}/responses.
          */
@@ -44228,6 +49255,14 @@ export interface components {
         ResyncMaterialsBody: {
             /** Terms */
             terms: components["schemas"]["TermChoice"][];
+        };
+        /**
+         * RevealIn
+         * @description Why an author is unmasked.
+         */
+        RevealIn: {
+            /** Reason */
+            reason: string;
         };
         /**
          * ReviewActionOut
@@ -44620,7 +49655,15 @@ export interface components {
          * @description Global roles stored in users.roles.
          * @enum {string}
          */
-        Role: "student" | "teacher" | "admin" | "lms_admin" | "lms_creator" | "librarian" | "counselor" | "mentor" | "transcript_officer";
+        Role: "student" | "teacher" | "admin" | "lms_admin" | "lms_creator" | "librarian" | "counselor" | "mentor" | "transcript_officer" | "su" | "activities_admin";
+        /**
+         * RoleIn
+         * @description An event role of an attendee.
+         */
+        RoleIn: {
+            /** Role */
+            role: string;
+        };
         /**
          * RolesBody
          * @description POST /v1/admin/users/{id}/roles.
@@ -44782,6 +49825,21 @@ export interface components {
             unreadable: number;
         };
         /**
+         * RoundIn
+         * @description Open a drafting round for an event.
+         */
+        RoundIn: {
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Needed */
+            needed: {
+                [key: string]: number;
+            };
+        };
+        /**
          * RoundOptionOut
          * @description An application round id; a binding round needs a resolved affordability.
          */
@@ -44809,6 +49867,46 @@ export interface components {
             /** Updated At */
             updated_at: string | null;
         };
+        /**
+         * Rsvp
+         * @description A person's place at an event.
+         */
+        Rsvp: {
+            /** Check In Method */
+            check_in_method?: string | null;
+            /** Checked In At */
+            checked_in_at?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Event Id
+             * Format: uuid
+             */
+            event_id: string;
+            /** Event Role */
+            event_role?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Status */
+            status: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * RsvpPolicy
+         * @description Who may RSVP and how.
+         * @enum {string}
+         */
+        RsvpPolicy: "open" | "members" | "approval";
         /**
          * RunOut
          * @description One model run.
@@ -44929,6 +50027,28 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /**
+         * SaveBody
+         * @description Questions saved to the bank of a topic.
+         */
+        SaveBody: {
+            /**
+             * Difficulty
+             * @default medium
+             * @enum {string}
+             */
+            difficulty?: "easy" | "medium" | "hard";
+            /** Questions */
+            questions: components["schemas"]["app__interfaces__http__v1__teacher_ai__question_bank__QuestionBody"][];
+            /** Topic */
+            topic: string;
+            /**
+             * Visibility
+             * @default teacher
+             * @enum {string}
+             */
+            visibility?: "teacher" | "subject";
         };
         /**
          * SaveDashboardRequest
@@ -45088,6 +50208,59 @@ export interface components {
         ScanResponse: {
             /** Findings */
             findings: string[];
+        };
+        /**
+         * SchemeCreate
+         * @description A new draft scheme.
+         */
+        SchemeCreate: {
+            /** Course Id */
+            course_id?: string | null;
+            curve: components["schemas"]["CurveDoc"];
+            /** Name */
+            name: {
+                [key: string]: string;
+            };
+            /**
+             * Scope
+             * @enum {string}
+             */
+            scope: "platform" | "course";
+        };
+        /**
+         * SchemeList
+         * @description Every scheme.
+         */
+        SchemeList: {
+            /** Items */
+            items: components["schemas"]["SchemeOut"][];
+        };
+        /**
+         * SchemeOut
+         * @description A level scheme.
+         */
+        SchemeOut: {
+            /** Active */
+            active: boolean;
+            /** Course Id */
+            course_id: string | null;
+            curve: components["schemas"]["CurveDoc"];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: {
+                [key: string]: string;
+            };
+            /**
+             * Scope
+             * @enum {string}
+             */
+            scope: "platform" | "course";
+            /** Tiers */
+            tiers: components["schemas"]["TierDoc"][];
         };
         /**
          * ScholarshipOut
@@ -45630,6 +50803,23 @@ export interface components {
             recovery_codes_left: number;
             /** Totp Enabled */
             totp_enabled: boolean;
+        };
+        /**
+         * SegmentBody
+         * @description One spoken piece of the script.
+         */
+        SegmentBody: {
+            /** Id */
+            id: string;
+            /** Source Refs */
+            source_refs?: string[];
+            /**
+             * Speaker
+             * @default host
+             */
+            speaker?: string;
+            /** Text */
+            text: string;
         };
         /**
          * SelectSourcesBody
@@ -46292,6 +51482,18 @@ export interface components {
             note?: string | null;
         };
         /**
+         * SignupIn
+         * @description Sign up for a role.
+         */
+        SignupIn: {
+            /** Answers */
+            answers?: {
+                [key: string]: unknown;
+            };
+            /** Role */
+            role: string;
+        };
+        /**
          * SlideChange
          * @description One instruction of a revision.
          */
@@ -46411,6 +51613,32 @@ export interface components {
         SnoozeIn: {
             /** Key */
             key: string;
+        };
+        /**
+         * SolutionKeyDoc
+         * @description The solution of one question as the teacher wrote it.
+         */
+        SolutionKeyDoc: {
+            /** Answers */
+            answers?: string[];
+            /** Block Id */
+            block_id: string;
+            /** Misconceptions */
+            misconceptions?: components["schemas"]["MisconceptionDoc"][];
+            /** Question Id */
+            question_id: string;
+            /** @default draft */
+            status?: components["schemas"]["KeyStatus"];
+            /** Steps */
+            steps?: string[];
+        };
+        /**
+         * SolutionKeysDoc
+         * @description The keys of one step.
+         */
+        SolutionKeysDoc: {
+            /** Keys */
+            keys: components["schemas"]["SolutionKeyDoc"][];
         };
         /**
          * SourceDetailResponse
@@ -47352,6 +52580,8 @@ export interface components {
             files: components["schemas"]["StaffSubmissionFileResponse"][];
             /** Group Name */
             group_name: string;
+            /** Id */
+            id: string | null;
             /**
              * Status
              * @enum {string}
@@ -47476,6 +52706,16 @@ export interface components {
              * Format: password
              */
             emis_password: string;
+        };
+        /**
+         * StatusOut
+         * @description A thing with its status.
+         */
+        StatusOut: {
+            /** Id */
+            id: string;
+            /** Status */
+            status: string;
         };
         /**
          * StatusReasonCode
@@ -49708,6 +54948,79 @@ export interface components {
             subject_name: string;
         };
         /**
+         * TeamPosition
+         * @description A seat the club recruits for.
+         */
+        TeamPosition: {
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Description */
+            description: unknown;
+            /** Form Schema */
+            form_schema: {
+                [key: string]: unknown;
+            };
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Open For Applications */
+            open_for_applications: boolean;
+            /**
+             * Order
+             * @default 0
+             */
+            order?: number;
+            /** Slots */
+            slots: number;
+            /** Title */
+            title: unknown;
+        };
+        /**
+         * TeamSeat
+         * @description A team person. Public only with the manager flag AND the student's consent.
+         */
+        TeamSeat: {
+            /** Bio */
+            bio: unknown;
+            /** Consent Changed At */
+            consent_changed_at?: string | null;
+            /** Consent Public */
+            consent_public: boolean;
+            /** Experience */
+            experience: unknown[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Photo Url */
+            photo_url?: string | null;
+            /**
+             * Position Id
+             * Format: uuid
+             */
+            position_id: string;
+            /** Public */
+            public: boolean;
+            /**
+             * Since
+             * Format: date-time
+             */
+            since: string;
+            /** Until */
+            until: string | null;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
          * TelegramLinkStatusBody
          * @description The one-time code of the registration's Telegram step.
          */
@@ -49800,6 +55113,20 @@ export interface components {
             init_data: string;
         };
         /**
+         * TemplateBody
+         * @description A lesson plan template.
+         */
+        TemplateBody: {
+            /** Description */
+            description?: string | null;
+            /** File Id */
+            file_id?: string | null;
+            /** Name */
+            name: string;
+            /** Template */
+            template?: string | null;
+        };
+        /**
          * TemplateCreate
          * @description A new template.
          */
@@ -49856,12 +55183,15 @@ export interface components {
             y: number;
         };
         /**
-         * TemplateList
-         * @description Templates of a course.
+         * TemplateOut
+         * @description A badge template.
          */
-        TemplateList: {
-            /** Items */
-            items: components["schemas"]["TemplateResponse"][];
+        TemplateOut: {
+            /** Code */
+            code: string;
+            /** Params */
+            params: components["schemas"]["ParamOut"][];
+            scope: components["schemas"]["BadgeScope"];
         };
         /**
          * TemplateResponse
@@ -50278,6 +55608,32 @@ export interface components {
             require_optional?: boolean;
         };
         /**
+         * TierDoc
+         * @description A named band of levels.
+         */
+        TierDoc: {
+            /** Color */
+            color: string;
+            /** Icon */
+            icon: string;
+            /** Level From */
+            level_from: number;
+            /** Reward Badge Id */
+            reward_badge_id?: string | null;
+            /** Title */
+            title: {
+                [key: string]: string;
+            };
+        };
+        /**
+         * TiersBody
+         * @description The new tiers of a scheme.
+         */
+        TiersBody: {
+            /** Tiers */
+            tiers: components["schemas"]["TierDoc"][];
+        };
+        /**
          * TimetableEntryInputBody
          * @description TimetableEntryInput.
          */
@@ -50489,6 +55845,14 @@ export interface components {
             code_verifier: string;
             /** Redirect Uri */
             redirect_uri: string;
+        };
+        /**
+         * TokenOut
+         * @description A check-in token.
+         */
+        TokenOut: {
+            /** Token */
+            token: string;
         };
         /**
          * TokenResponse
@@ -50859,6 +56223,42 @@ export interface components {
             text: string;
         };
         /**
+         * TransferIn
+         * @description Offer the club to a person.
+         */
+        TransferIn: {
+            /**
+             * To User Id
+             * Format: uuid
+             */
+            to_user_id: string;
+        };
+        /**
+         * TransferStatus
+         * @description Transfer lifecycle.
+         * @enum {string}
+         */
+        TransferStatus: "offered" | "accepted" | "declined" | "cancelled" | "expired";
+        /**
+         * TransferredOut
+         * @description Ownership was handed over.
+         */
+        TransferredOut: {
+            /**
+             * Status
+             * @default transferred
+             */
+            status?: string;
+        };
+        /**
+         * TurnBody
+         * @description A message of the learner.
+         */
+        TurnBody: {
+            /** Message */
+            message: string;
+        };
+        /**
          * TurnResultResponse
          * @description TurnResult.
          */
@@ -50917,6 +56317,23 @@ export interface components {
             role: "student" | "tutor";
             /** Text */
             text: string;
+        };
+        /**
+         * TutorSessionView
+         * @description A session as the learner sees it.
+         */
+        TutorSessionView: {
+            /** Closed */
+            closed: boolean;
+            /** Hint Level */
+            hint_level: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Mode */
+            mode: string;
         };
         /**
          * TypeName
@@ -51722,6 +57139,11 @@ export interface components {
              */
             marks_values?: number[];
             /**
+             * Notify Absences
+             * @default true
+             */
+            notify_absences?: boolean;
+            /**
              * Notify Push
              * @default true
              */
@@ -52081,6 +57503,17 @@ export interface components {
          */
         "Visibility-Output": "public" | "lyceum" | "hidden";
         /**
+         * VisibilityBody
+         * @description Share with the subject's teachers, or take it back.
+         */
+        VisibilityBody: {
+            /**
+             * Visibility
+             * @enum {string}
+             */
+            visibility: "teacher" | "subject";
+        };
+        /**
          * VoiceFieldIn
          * @description One field of the caller's form.
          */
@@ -52304,6 +57737,28 @@ export interface components {
             words: string[];
         };
         /**
+         * WorkCheckBody
+         * @description Pasted work with a destination, or a submission id.
+         */
+        WorkCheckBody: {
+            /** Assignment */
+            assignment?: string | null;
+            /** Group Id */
+            group_id?: string | null;
+            /** Language */
+            language?: string | null;
+            /** Max Score */
+            max_score?: number | null;
+            /** Rubric */
+            rubric?: string | null;
+            /** Student Work */
+            student_work?: string | null;
+            /** Subject Id */
+            subject_id?: string | null;
+            /** Submission Id */
+            submission_id?: string | null;
+        };
+        /**
          * WorkOffChoiceBody
          * @description A work-off choice for one absent student.
          */
@@ -52500,6 +57955,166 @@ export interface components {
             task_sources: string[];
             /** Task Statuses */
             task_statuses: string[];
+        };
+        /**
+         * ConsentIn
+         * @description Public-page consent of a team seat.
+         */
+        app__interfaces__http__v1__activities__clubs__ConsentIn: {
+            /** Granted */
+            granted: boolean;
+        };
+        /**
+         * NoteIn
+         * @description A short note.
+         */
+        app__interfaces__http__v1__activities__clubs__NoteIn: {
+            /** Note */
+            note?: string | null;
+        };
+        /**
+         * AnalyticsOut
+         * @description Platform-wide club figures for a period.
+         */
+        app__interfaces__http__v1__admin_activities__schemas__AnalyticsOut: {
+            /** Check Ins */
+            check_ins: number;
+            clubs: components["schemas"]["ClubCountsOut"];
+            /** Events */
+            events: number;
+            /** Per Club */
+            per_club?: components["schemas"]["ClubAnalyticsOut"][];
+            /** Rsvps */
+            rsvps: number;
+        };
+        /**
+         * ArchiveIn
+         * @description Hide or show an entry.
+         */
+        app__interfaces__http__v1__admin_activities__schemas__ArchiveIn: {
+            /**
+             * Archived
+             * @default true
+             */
+            archived?: boolean;
+        };
+        /**
+         * OpportunityListOut
+         * @description Entries.
+         */
+        app__interfaces__http__v1__admin_activities__schemas__OpportunityListOut: {
+            /** Items */
+            items: components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__OpportunityOut"][];
+        };
+        /**
+         * OpportunityOut
+         * @description An entry with its audience and version.
+         */
+        app__interfaces__http__v1__admin_activities__schemas__OpportunityOut: {
+            /** Acceptance Rate */
+            acceptance_rate?: number | null;
+            /** Amount Text */
+            amount_text?: string | null;
+            /** Amount Value */
+            amount_value?: number | null;
+            /** Archived */
+            archived: boolean;
+            /** Audience */
+            audience: ("admission" | "my_iht")[];
+            /** Award Type */
+            award_type?: ("scholarship" | "fellowship" | "grant" | "tuition_waiver" | "program") | null;
+            /** College Credit */
+            college_credit?: ("none" | "possible" | "yes") | null;
+            /** Country */
+            country?: string | null;
+            /** Coverage */
+            coverage?: ("full_tuition" | "partial_tuition" | "stipend" | "cash" | "travel")[];
+            /** Credit Note */
+            credit_note?: string | null;
+            /** Currency */
+            currency?: string | null;
+            /** Duration Weeks */
+            duration_weeks?: number | null;
+            /** Eligibility */
+            eligibility?: string | null;
+            /**
+             * Essay Required
+             * @default false
+             */
+            essay_required?: boolean;
+            /** Exam Dates */
+            exam_dates?: string[];
+            /** Grades */
+            grades?: number[];
+            /** Host Institution */
+            host_institution?: string | null;
+            /** Hours Per Week */
+            hours_per_week?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research";
+            /** Last Year Dates */
+            last_year_dates?: string[];
+            /** Lms Course Id */
+            lms_course_id?: string | null;
+            /** Location */
+            location?: string | null;
+            /** Lock Version */
+            lock_version: number;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Materials */
+            materials?: components["schemas"]["MaterialIo"][];
+            /**
+             * Online
+             * @default false
+             */
+            online?: boolean;
+            /** Org Id */
+            org_id?: string | null;
+            /** Provider */
+            provider?: string | null;
+            /** Ranking */
+            ranking?: number | null;
+            /** Recurrence */
+            recurrence?: string | null;
+            /** Registration Deadlines */
+            registration_deadlines?: string[];
+            /** Scope */
+            scope?: ("local" | "international") | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Starts On */
+            starts_on?: string | null;
+            /** Study Field Ids */
+            study_field_ids?: string[];
+            /** Subject Ids */
+            subject_ids?: string[];
+            /** Summary */
+            summary?: string | null;
+            /** Title */
+            title: string;
+            /** Tuition Usd */
+            tuition_usd?: number | null;
+            /** Url */
+            url?: string | null;
+        };
+        /**
+         * ReviewIn
+         * @description A club review decision.
+         */
+        app__interfaces__http__v1__admin_activities__schemas__ReviewIn: {
+            /** Approve */
+            approve: boolean;
+            /** Reason */
+            reason?: string | null;
         };
         /**
          * AudienceBody
@@ -53143,6 +58758,22 @@ export interface components {
             resolved_at: string | null;
         };
         /**
+         * NoteIn
+         * @description My own note, or a reply to a comment.
+         */
+        app__interfaces__http__v1__admission__routes_essay_invites__NoteIn: {
+            /** Anchor End */
+            anchor_end?: number | null;
+            /** Anchor Start */
+            anchor_start?: number | null;
+            /** Body */
+            body: string;
+            /** Parent Id */
+            parent_id?: string | null;
+            /** Quote */
+            quote?: string | null;
+        };
+        /**
          * CommentIn
          * @description A guest comment, optionally anchored to a quoted span.
          */
@@ -53338,6 +58969,32 @@ export interface components {
             visible_to: string;
         };
         /**
+         * AnalyticsOut
+         * @description Load per `grade:term` ("10:fall"; fall/spring/summer/any), coverage by field.
+         */
+        app__interfaces__http__v1__admission__schemas_opportunities__AnalyticsOut: {
+            /** Conflicts */
+            conflicts: components["schemas"]["ConflictOut"][];
+            /** Coverage */
+            coverage: {
+                [key: string]: number;
+            };
+            /** Load */
+            load: {
+                [key: string]: number;
+            };
+            /** Unplaced */
+            unplaced: number;
+        };
+        /**
+         * ArchiveIn
+         * @description Hide or restore an entry.
+         */
+        app__interfaces__http__v1__admission__schemas_opportunities__ArchiveIn: {
+            /** Archived */
+            archived: boolean;
+        };
+        /**
          * DeadlineOut
          * @description A dated event of a saved entry.
          */
@@ -53358,6 +59015,72 @@ export interface components {
             projected: boolean;
             /** Title */
             title: string;
+        };
+        /**
+         * OpportunityListOut
+         * @description One page of filtered entries; `total` counts all matches.
+         */
+        app__interfaces__http__v1__admission__schemas_opportunities__OpportunityListOut: {
+            /** Items */
+            items: components["schemas"]["app__interfaces__http__v1__admission__schemas_opportunities__OpportunityOut"][];
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /**
+             * Sort
+             * @enum {string}
+             */
+            sort: "title" | "ranking" | "acceptance" | "tuition" | "relevance" | "deadline";
+            /** Total */
+            total: number;
+        };
+        /**
+         * OpportunityOut
+         * @description A published entry with its next dates.
+         */
+        app__interfaces__http__v1__admission__schemas_opportunities__OpportunityOut: {
+            /** Archived */
+            archived: boolean;
+            /**
+             * Comment Count
+             * @default 0
+             */
+            comment_count?: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Delivery
+             * @default external
+             * @enum {string}
+             */
+            delivery?: "local" | "external";
+            fields: components["schemas"]["OpportunityFields"];
+            /**
+             * For You
+             * @default false
+             */
+            for_you?: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Lock Version */
+            lock_version: number;
+            /** Next Deadline */
+            next_deadline: string | null;
+            org?: components["schemas"]["OrgOut"] | null;
+            /** Upcoming */
+            upcoming: components["schemas"]["DatedEventOut"][];
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
         };
         /**
          * ReviewIn
@@ -53439,6 +59162,14 @@ export interface components {
              * @enum {string}
              */
             visibility?: "staff_only" | "student_and_staff";
+        };
+        /**
+         * ConsentIn
+         * @description Purposes to grant.
+         */
+        app__interfaces__http__v1__admission__schemas_staff__ConsentIn: {
+            /** Purposes */
+            purposes: string[];
         };
         /**
          * SendMessageBody
@@ -53907,6 +59638,14 @@ export interface components {
             tiers: components["schemas"]["TierBody"][];
         };
         /**
+         * TemplateList
+         * @description Templates of a course.
+         */
+        app__interfaces__http__v1__course_certificates__TemplateList: {
+            /** Items */
+            items: components["schemas"]["TemplateResponse"][];
+        };
+        /**
          * AttachmentOut
          * @description An attached file; ``download_url`` is presigned and valid for one hour.
          */
@@ -54288,6 +60027,20 @@ export interface components {
             title: string;
         };
         /**
+         * QuestionBody
+         * @description One generated question.
+         */
+        app__interfaces__http__v1__lms_authoring__question_blocks__QuestionBody: {
+            /** Answer */
+            answer: string;
+            /** Explanation */
+            explanation?: string | null;
+            /** Options */
+            options?: string[];
+            /** Question */
+            question: string;
+        };
+        /**
          * SettingsBody
          * @description Change course settings; omitted fields stay as they are.
          */
@@ -54296,6 +60049,45 @@ export interface components {
             cover_file_id?: string | null;
             status?: components["schemas"]["CourseStatus"] | null;
             visibility?: components["schemas"]["app__modules__lms__domain__authoring__enums__Visibility"] | null;
+        };
+        /**
+         * PreviewOut
+         * @description Who would earn the rule.
+         */
+        app__interfaces__http__v1__lms_learning__badge_authoring__PreviewOut: {
+            /** Examined */
+            examined: number;
+            /** Sample */
+            sample: string[];
+            /** Total */
+            total: number;
+            /** Truncated */
+            truncated: boolean;
+            /** Would Earn */
+            would_earn: number;
+        };
+        /**
+         * TemplateList
+         * @description The template catalogue.
+         */
+        app__interfaces__http__v1__lms_learning__badge_authoring__TemplateList: {
+            /** Items */
+            items: components["schemas"]["TemplateOut"][];
+        };
+        /**
+         * PreviewOut
+         * @description Learners per level under the live scheme and under the previewed one.
+         */
+        app__interfaces__http__v1__lms_learning__levels__PreviewOut: {
+            /** After */
+            after: {
+                [key: string]: number;
+            };
+            /** Before */
+            before: {
+                [key: string]: number;
+            };
+            probe?: components["schemas"]["ProbeOut"] | null;
         };
         /**
          * AbsenceDayResponse
@@ -55028,6 +60820,20 @@ export interface components {
             };
         };
         /**
+         * QuestionBody
+         * @description One question to store.
+         */
+        app__interfaces__http__v1__teacher_ai__question_bank__QuestionBody: {
+            /** Answer */
+            answer: string;
+            /** Explanation */
+            explanation?: string | null;
+            /** Options */
+            options?: string[];
+            /** Question */
+            question: string;
+        };
+        /**
          * Visibility
          * @description Who may see a published item.
          * @enum {string}
@@ -55734,6 +61540,3047 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EmisClassResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_announcement_v1_activities_announcements__announcement_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                announcement_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Announcement"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accept_v1_activities_applications__application_id__accept_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                application_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeamSeat"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reject_v1_activities_applications__application_id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                application_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__activities__clubs__NoteIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PositionApplication"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    shortlist_v1_activities_applications__application_id__shortlist_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                application_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PositionApplication"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    withdraw_v1_activities_applications__application_id__withdraw_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                application_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PositionApplication"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    check_in_qr_v1_activities_check_in_qr_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QrCheckInIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rsvp"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_clubs_v1_activities_clubs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_ClubListItem_"];
+                };
+            };
+        };
+    };
+    create_club_v1_activities_clubs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClubIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_clubs_v1_activities_clubs_mine_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_Club_"];
+                };
+            };
+        };
+    };
+    get_club_v1_activities_clubs__club_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClubOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_club_v1_activities_clubs__club_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClubPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_announcements_v1_activities_clubs__club_id__announcements_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_Announcement_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_announcement_v1_activities_clubs__club_id__announcements_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnouncementIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Announcement"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attendance_v1_activities_clubs__club_id__attendance_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_AttendanceRow_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    club_courses_v1_activities_clubs__club_id__courses_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_ClubCourseLink_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_course_v1_activities_clubs__club_id__courses_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseLinkIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClubCourseLink"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unlink_course_v1_activities_clubs__club_id__courses__course_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    confirm_course_v1_activities_clubs__club_id__courses__course_id__confirm_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClubCourseLink"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_rounds_v1_activities_clubs__club_id__draft_rounds_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_DraftRound_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_club_events_v1_activities_clubs__club_id__events_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_Event_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_event_v1_activities_clubs__club_id__events_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EventIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    form_answers_v1_activities_clubs__club_id__form_answers_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_MemberAnswersOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_form_fields_v1_activities_clubs__club_id__form_fields_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FormFieldsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_form_fields_v1_activities_clubs__club_id__form_fields_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FormFieldsIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FormFieldsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    join_club_v1_activities_clubs__club_id__join_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["JoinIn"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Membership"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leave_club_v1_activities_clubs__club_id__leave_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeftOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    club_logo_v1_activities_clubs__club_id__logo_get: {
+        parameters: {
+            query?: {
+                v?: string | null;
+            };
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/*": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_club_state_v1_activities_clubs__club_id__me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyClubOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    members_v1_activities_clubs__club_id__members_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_MemberView_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_member_v1_activities_clubs__club_id__members__user_id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Membership"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ban_member_v1_activities_clubs__club_id__members__user_id__ban_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BanIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Membership"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    board_v1_activities_clubs__club_id__planner_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlannerBoardOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_card_v1_activities_clubs__club_id__planner_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlannerIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlannerItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    award_points_v1_activities_clubs__club_id__points_awards_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AwardIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AwardOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_points_v1_activities_clubs__club_id__points_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyPointsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_points_rules_v1_activities_clubs__club_id__points_rules_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PointsRulesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_points_rules_v1_activities_clubs__club_id__points_rules_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PointsRulesIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PointsRulesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_positions_v1_activities_clubs__club_id__positions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_TeamPosition_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_position_v1_activities_clubs__club_id__positions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PositionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeamPosition"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_profile_v1_activities_clubs__club_id__profile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClubProfile"] | null;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_profile_v1_activities_clubs__club_id__profile_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProfileIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClubProfile"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rate_club_v1_activities_clubs__club_id__ratings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RatingIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rating-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ratings_summary_v1_activities_clubs__club_id__ratings_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RatingsSummaryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    offer_transfer_v1_activities_clubs__club_id__transfers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransferIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OwnershipTransfer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_club_v1_activities_clubs__club_id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    course_clubs_v1_activities_courses__course_id__clubs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_ClubCourseLink_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pick_v1_activities_draft_rounds__round_id__picks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                round_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PickIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DraftPick"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ranking_v1_activities_draft_rounds__round_id__ranking_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                round_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_Ranked_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_signups_v1_activities_draft_rounds__round_id__signups_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                round_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_DraftSignup_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    signup_v1_activities_draft_rounds__round_id__signups_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                round_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SignupIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DraftSignup"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    events_feed_v1_activities_events_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_Event_"];
+                };
+            };
+        };
+    };
+    get_event_v1_activities_events__event_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Event"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    check_in_v1_activities_events__event_id__check_in_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CheckInIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rsvp"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    open_round_v1_activities_events__event_id__draft_rounds_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoundIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DraftRound"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    event_qr_v1_activities_events__event_id__qr_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TokenOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rate_event_v1_activities_events__event_id__ratings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RatingIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rating-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_rsvp_v1_activities_events__event_id__rsvp_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rsvp"] | null;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rsvp_v1_activities_events__event_id__rsvp_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rsvp"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_rsvp_v1_activities_events__event_id__rsvp_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_rsvps_v1_activities_events__event_id__rsvps_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_Rsvp_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_role_v1_activities_events__event_id__rsvps__user_id__role_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoleIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rsvp"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_event_v1_activities_events__event_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Event"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    finish_event_v1_activities_events__event_id__finish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Event"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_event_v1_activities_events__event_id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Event"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reschedule_event_v1_activities_events__event_id__reschedule_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RescheduleIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Event"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leaderboard_v1_activities_leaderboard_get: {
+        parameters: {
+            query?: {
+                club_id?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_LeaderRowOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    opt_out_v1_activities_me_leaderboard_opt_out_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OptOutIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OptOutOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_consent_v1_activities_me_seats__seat_id__public_consent_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                seat_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__activities__clubs__ConsentIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeamSeat"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_opportunities_v1_activities_opportunities_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__OpportunityListOut"];
+                };
+            };
+        };
+    };
+    get_opportunity_v1_activities_opportunities__opportunity_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__OpportunityOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    complete_v1_activities_picks__pick_id__complete_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pick_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DraftPick"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    invite_v1_activities_picks__pick_id__invite_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pick_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DraftPick"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    respond_v1_activities_picks__pick_id__respond_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pick_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RespondIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DraftPick"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    move_card_v1_activities_planner__item_id__move_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MoveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlannerItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    position_applications_v1_activities_positions__position_id__applications_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                position_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemsOut_PositionApplication_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_position_v1_activities_positions__position_id__applications_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                position_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplyIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PositionApplication"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reveal_author_v1_activities_ratings__rating_id__reveal_author_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                rating_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevealIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Rating-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_public_v1_activities_seats__seat_id__public_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                seat_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PublicIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeamSeat"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    incoming_transfers_v1_activities_transfers_incoming_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OwnershipTransfer"][];
+                };
+            };
+        };
+    };
+    accept_transfer_v1_activities_transfers__transfer_id__accept_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                transfer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OwnershipTransfer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_transfer_v1_activities_transfers__transfer_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                transfer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OwnershipTransfer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decline_transfer_v1_activities_transfers__transfer_id__decline_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                transfer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OwnershipTransfer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    analytics_v1_admin_activities_analytics_get: {
+        parameters: {
+            query?: {
+                since?: string | null;
+                until?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__AnalyticsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_clubs_v1_admin_activities_clubs_get: {
+        parameters: {
+            query?: {
+                status?: components["schemas"]["ClubStatus"] | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminClubListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_club_v1_admin_activities_clubs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdminClubCreateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_capabilities_v1_admin_activities_clubs__club_id__capabilities_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CapabilitiesIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    force_transfer_v1_admin_activities_clubs__club_id__force_transfer_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ForceTransferIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransferredOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resume_club_v1_admin_activities_clubs__club_id__resume_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_club_v1_admin_activities_clubs__club_id__review_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__ReviewIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    suspend_club_v1_admin_activities_clubs__club_id__suspend_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_opportunities_v1_admin_activities_opportunities_get: {
+        parameters: {
+            query?: {
+                include_archived?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__OpportunityListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_opportunity_v1_admin_activities_opportunities_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OpportunityIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__OpportunityOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_opportunity_v1_admin_activities_opportunities__opportunity_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_opportunity_v1_admin_activities_opportunities__opportunity_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OpportunityIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__OpportunityOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    archive_opportunity_v1_admin_activities_opportunities__opportunity_id__archive_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__ArchiveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_activities__schemas__OpportunityOut"];
                 };
             };
             /** @description Validation Error */
@@ -57529,6 +66376,123 @@ export interface operations {
             };
         };
     };
+    list_day_blocks_v1_admin_day_blocks_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayBlockResponse"][];
+                };
+            };
+        };
+    };
+    create_day_block_v1_admin_day_blocks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DayBlockBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayBlockResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_day_block_v1_admin_day_blocks__block_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DayBlockBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayBlockResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_day_block_v1_admin_day_blocks__block_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_devices_v1_admin_devices_get: {
         parameters: {
             query?: never;
@@ -58286,6 +67250,39 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["CurriculumSyncResponse"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_head_student_v1_admin_groups__group_id__head_student_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HeadStudentBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -59239,6 +68236,309 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ModerationItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_admin_list_badges: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BadgeOutList"];
+                };
+            };
+        };
+    };
+    lms_admin_create_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlatformBadgeBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BadgeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_admin_delete_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                badge_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_admin_update_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                badge_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlatformBadgePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BadgeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_admin_preview_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreviewBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__lms_learning__badge_authoring__PreviewOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_list_level_schemes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SchemeList"];
+                };
+            };
+        };
+    };
+    lms_create_level_scheme: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SchemeCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SchemeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_preview_level_scheme: {
+        parameters: {
+            query?: {
+                /** @description Probe XP total */
+                xp?: number | null;
+            };
+            header?: never;
+            path: {
+                scheme_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__lms_learning__levels__PreviewOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_put_level_scheme_tiers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                scheme_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TiersBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SchemeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_activate_level_scheme: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                scheme_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SchemeOut"];
                 };
             };
             /** @description Validation Error */
@@ -63568,7 +72868,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ConsentIn"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__admission__schemas_staff__ConsentIn"];
             };
         };
         responses: {
@@ -65951,7 +75251,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["NoteIn"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__admission__routes_essay_invites__NoteIn"];
             };
         };
         responses: {
@@ -69305,7 +78605,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OpportunityListOut"];
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admission__schemas_opportunities__OpportunityListOut"];
                 };
             };
             /** @description Validation Error */
@@ -71345,6 +80645,72 @@ export interface operations {
             };
         };
     };
+    admission_catalog_push_countries: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CountryPushIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushResultListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_catalog_push_institutions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InstitutionPushIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushResultListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_staff_scorecard_search: {
         parameters: {
             query: {
@@ -72303,7 +81669,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ArchiveIn"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__admission__schemas_opportunities__ArchiveIn"];
             };
         };
         responses: {
@@ -76443,7 +85809,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TemplateList"];
+                    "application/json": components["schemas"]["app__interfaces__http__v1__course_certificates__TemplateList"];
                 };
             };
             /** @description Validation Error */
@@ -81945,6 +91311,26 @@ export interface operations {
             };
         };
     };
+    lms_list_badge_templates: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__lms_learning__badge_authoring__TemplateList"];
+                };
+            };
+        };
+    };
     lms_mark_badge_award_seen: {
         parameters: {
             query?: never;
@@ -81990,6 +91376,142 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MyBadgesView"];
+                };
+            };
+        };
+    };
+    lms_close_coach_session: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CloseBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CloseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_coach_explain_mistake: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExplainBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CoachReplyView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_coach_hint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CoachReplyView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_coach_turn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TurnBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CoachReplyView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -82347,6 +91869,110 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["BadgeView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_draft_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DraftBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DraftOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_preview_badge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreviewBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__lms_learning__badge_authoring__PreviewOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_coach_insights: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsightsOut"];
                 };
             };
             /** @description Validation Error */
@@ -82773,6 +92399,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["InviteCodeResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_attach_course_level_scheme: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SchemeOut"];
                 };
             };
             /** @description Validation Error */
@@ -83849,6 +93510,112 @@ export interface operations {
             };
         };
     };
+    add_blocks_from_questions_v1_lms_courses__course_id__steps__step_id__blocks_from_questions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuestionBlocksBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_get_solution_keys: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SolutionKeysDoc"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_put_solution_keys: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SolutionKeysDoc"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SolutionKeysDoc"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_students_v1_lms_courses__course_id__students_get: {
         parameters: {
             query?: never;
@@ -84282,6 +94049,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LearningCoursePageView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_my_level: {
+        parameters: {
+            query?: {
+                course_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyLevelOut"];
                 };
             };
             /** @description Validation Error */
@@ -84920,6 +94718,74 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RevisionItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_latest_coach_session: {
+        parameters: {
+            query?: {
+                latest?: number;
+            };
+            header?: never;
+            path: {
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LatestSessionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lms_open_coach_session: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OpenSessionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TutorSessionView"];
                 };
             };
             /** @description Validation Error */
@@ -87388,6 +97254,38 @@ export interface operations {
             };
         };
     };
+    get_my_group_rankings_v1_me_group_rankings_get: {
+        parameters: {
+            query?: {
+                scope?: "course" | "lyceum";
+                metric?: "gpa" | "attendance";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupRankingsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_my_group_rating_v1_me_group_rating_get: {
         parameters: {
             query?: {
@@ -89153,6 +99051,38 @@ export interface operations {
             };
         };
     };
+    get_day_blocks_v1_me_timetable_day_blocks_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayBlockOccurrenceResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_today_v1_me_today_get: {
         parameters: {
             query?: never;
@@ -89191,6 +99121,164 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MyWorkOffResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_jobs_v1_media_jobs_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaJobPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_job_v1_media_jobs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MediaJobBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaJobView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_job_v1_media_jobs__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaJobView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_job_v1_media_jobs__job_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaJobView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    retry_job_v1_media_jobs__job_id__retry_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaJobView"];
                 };
             };
             /** @description Validation Error */
@@ -92191,6 +102279,106 @@ export interface operations {
             };
         };
     };
+    list_clubs_v1_public_clubs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicClubListOut"];
+                };
+            };
+        };
+    };
+    get_club_v1_public_clubs__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicClubPageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    contact_v1_public_clubs__slug__contact_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ContactIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContactOut"];
+                };
+            };
+            /** @description The club owner cannot receive messages */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description Too many messages; see Retry-After */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     get_lyceum_logo_v1_public_lyceum_logo_get: {
         parameters: {
             query?: {
@@ -94621,6 +104809,488 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["WorkOffResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    authorship_check_v1_teacher_ai_authorship_check_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AuthorshipBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    handout_v1_teacher_ai_handout_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HandoutBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lesson_plan_v1_teacher_ai_lesson_plan_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonPlanBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_templates_v1_teacher_ai_plan_templates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    register_template_v1_teacher_ai_plan_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    questions_v1_teacher_ai_questions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuestionsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    work_check_v1_teacher_ai_work_check_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkCheckBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_question_v1_teacher_question_bank_questions__question_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                question_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_question_v1_teacher_question_bank_questions__question_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                question_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_visibility_v1_teacher_question_bank_questions__question_id__visibility_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                question_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VisibilityBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    curriculum_topics_v1_teacher_question_bank_subjects__subject_id__curriculum_topics_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    draw_v1_teacher_question_bank_subjects__subject_id__draw_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DrawBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_questions_v1_teacher_question_bank_subjects__subject_id__questions_get: {
+        parameters: {
+            query?: {
+                topic?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_v1_teacher_question_bank_subjects__subject_id__questions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SaveBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    topics_v1_teacher_question_bank_subjects__subject_id__topics_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

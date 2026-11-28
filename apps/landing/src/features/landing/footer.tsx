@@ -52,7 +52,7 @@ export function FinalCta() {
   )
 }
 
-export function SiteFooter({ onOpenManifesto }: { onOpenManifesto: () => void }) {
+export function SiteFooter({ onOpenManifesto, base = "" }: { onOpenManifesto: () => void; base?: string }) {
   const t = useT("landing")
   const links = useLandingLinks()
   // The bot is the one entry that leaves the site, so it opens in a new tab like the other external links.
@@ -61,6 +61,7 @@ export function SiteFooter({ onOpenManifesto }: { onOpenManifesto: () => void })
     [t("footer.staff"), `${links.staff}/`, false],
     [t("footer.lms"), `${links.lms}/`, false],
     [t("footer.library"), `${links.library}/`, false],
+    [t("footer.clubs"), "/clubs/", false],
     [t("footer.bot"), links.bot, true],
   ]
   return (
@@ -91,17 +92,17 @@ export function SiteFooter({ onOpenManifesto }: { onOpenManifesto: () => void })
           <h2>{t("footer.resources")}</h2>
           <ul>
             <li>
-              <a href="#features" className="ftr-link">
+              <a href={`${base}#features`} className="ftr-link">
                 {t("footer.features")}
               </a>
             </li>
             <li>
-              <a href="#integrations" className="ftr-link">
+              <a href={`${base}#integrations`} className="ftr-link">
                 {t("footer.integrations")}
               </a>
             </li>
             <li>
-              <a href="#faq" className="ftr-link">
+              <a href={`${base}#faq`} className="ftr-link">
                 {t("footer.faq")}
               </a>
             </li>

@@ -1,7 +1,7 @@
 "use client"
 
 import { deleteIdPersonalToken, getIdPersonalTokensQuery, postStepUp, type PersonalTokenCreated } from "@ihsp/api"
-import { createCatalogToken, OtpInvalidError } from "../api"
+import { CATALOG_TOKEN_SCOPES, createCatalogToken, OtpInvalidError, type CatalogTokenScope } from "../api"
 import { CopyLinkButton } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, Label } from "@ihsp/ui"
@@ -9,7 +9,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useId, useState } from "react"
 import { toast } from "sonner"
 
-const SCOPE = "admission:catalog"
+const SCOPE_LABEL = { "admission:catalog": "tokenScopePropose", "admission:catalog-write": "tokenScopeWrite" } as const
+const isCatalogScope = (scope: string): scope is CatalogTokenScope =>
+  (CATALOG_TOKEN_SCOPES as readonly string[]).includes(scope)
 /** The backend allows 30, 90 or 365 days and caps a catalog token at 90. */
 const DAYS = [30, 90] as const
 
@@ -19,7 +21,7 @@ function TokenList() {
   const queryClient = useQueryClient()
   const tokens = useQuery({
     ...getIdPersonalTokensQuery(),
-    select: (all) => all.filter((token) => token.scopes.includes(SCOPE) && !token.revoked_at),
+    select: (all) => all.filter((token) => token.scopes.some(isCatalogScope) && !token.revoked_at),
   })
   const revoke = useMutation({
     mutationFn: (id: string) => deleteIdPersonalToken(id),
@@ -37,7 +39,7 @@ function TokenList() {
           <div className="min-w-0">
             <p className="truncate text-sm font-medium">{token.name}</p>
             <p className="text-muted-foreground text-xs">
-              {token.prefix}… ·{" "}
+              {token.prefix}… · {t(SCOPE_LABEL[token.scopes.find(isCatalogScope) ?? "admission:catalog"])} ·{" "}
               {t("tokenExpires", { date: format.date(token.expires_at, { day: "numeric", month: "short" }) })}
             </p>
           </div>
@@ -66,11 +68,12 @@ function TokenCreate() {
   const codeId = useId()
   const [name, setName] = useState("")
   const [days, setDays] = useState<(typeof DAYS)[number]>(30)
+  const [scope, setScope] = useState<CatalogTokenScope>("admission:catalog")
   const [code, setCode] = useState("")
   const [created, setCreated] = useState<PersonalTokenCreated | null>(null)
   const [codeInvalid, setCodeInvalid] = useState(false)
   const create = useMutation({
-    mutationFn: () => createCatalogToken({ name: name.trim(), expires_in_days: days, otp_code: code }),
+    mutationFn: () => createCatalogToken({ name: name.trim(), scope, expires_in_days: days, otp_code: code }),
     onSuccess: (result) => {
       setCreated(result)
       setName("")
@@ -117,6 +120,27 @@ function TokenCreate() {
         <Label htmlFor={nameId}>{t("tokenName")}</Label>
         <Input id={nameId} value={name} maxLength={80} onChange={(event) => setName(event.target.value)} />
       </div>
+      <fieldset className="flex flex-col gap-2">
+        <legend className="mb-1 text-sm font-medium">{t("tokenScope")}</legend>
+        <div className="flex flex-wrap gap-2">
+          {CATALOG_TOKEN_SCOPES.map((option) => (
+            <Button
+              key={option}
+              type="button"
+              size="sm"
+              className="min-h-11 md:min-h-8"
+              variant={scope === option ? "default" : "outline"}
+              aria-pressed={scope === option}
+              onClick={() => setScope(option)}
+            >
+              {t(SCOPE_LABEL[option])}
+            </Button>
+          ))}
+        </div>
+        {scope === "admission:catalog-write" ? (
+          <p className="text-muted-foreground text-[13px]">{t("tokenScopeWriteHelp")}</p>
+        ) : null}
+      </fieldset>
       <fieldset className="flex flex-wrap gap-2">
         <legend className="mb-1 text-sm font-medium">{t("tokenExpiry")}</legend>
         {DAYS.map((option) => (

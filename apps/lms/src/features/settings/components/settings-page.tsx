@@ -4,6 +4,7 @@ import { keys, putLmsCourseDraftMeta, type CourseDraft } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, SaveBar, cn } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { useCourseDraft } from "../../editor/hooks/use-course-draft"
@@ -15,15 +16,17 @@ import { DetailsTab } from "./details-tab"
 import { NavigationTab } from "./navigation-tab"
 import { SettingsSidebar } from "./settings-sidebar"
 import { VisibilityTab } from "./visibility-tab"
+import { CourseClubPanel } from "../../duo-coach/course-club-panel"
 import { EngagementSettingsTab } from "../../engagement/components/engagement-settings-tab"
 
-const TABS = ["details", "visibility", "access", "navigation", "engagement"] as const
+const TABS = ["details", "visibility", "access", "navigation", "engagement", "club"] as const
 /** Tabs that save on their own; the save bar shows there only with unsaved form changes. */
-const SELF_SAVING: Partial<Record<Tab, true>> = { access: true, engagement: true }
+const SELF_SAVING: Partial<Record<Tab, true>> = { access: true, engagement: true, club: true }
 type Tab = (typeof TABS)[number]
 
 function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }) {
   const t = useT("courseSettings")
+  const tDuo = useT("duo")
   const errorMessage = useErrorMessage()
   const queryClient = useQueryClient()
   const form = useSettingsForm(draft.id)
@@ -94,6 +97,17 @@ function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }
               {tab === "visibility" ? <VisibilityTab form={form} draft={draft} /> : null}
               {tab === "access" ? <CourseAccessTab courseId={draft.id} permissions={draft.my_permissions} /> : null}
               {tab === "navigation" ? <NavigationTab form={form} /> : null}
+              {tab === "club" ? (
+                <>
+                  <CourseClubPanel courseId={draft.id} />
+                  <Link
+                    href={`/duo/club/?course=${encodeURIComponent(draft.id)}`}
+                    className="text-primary inline-flex min-h-11 items-center text-sm font-medium md:min-h-8"
+                  >
+                    {tDuo("club.openPage")}
+                  </Link>
+                </>
+              ) : null}
               {tab === "engagement" ? <EngagementSettingsTab courseId={draft.id} /> : null}
             </div>
             {form.serverError ? (

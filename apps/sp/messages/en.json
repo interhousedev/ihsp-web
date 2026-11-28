@@ -81,7 +81,8 @@
     "groupInbox": "Messages",
     "groupAccount": "Account",
     "mail": "Email",
-    "excuses": "Excuses"
+    "excuses": "Excuses",
+    "activities": "Activities"
   },
   "attendanceStates": {
     "late": "Late",
@@ -346,6 +347,18 @@
     "subgroupHint": "Your subgroup is not set yet, so lessons of both subgroups are shown.",
     "noLessons": "No lessons on this day.",
     "noLessonsWeek": "No lessons this week.",
+    "agenda": "Day schedule",
+    "gap": {
+      "minutes": "{count} min",
+      "free": "Free",
+      "kind": {
+        "lunch": "Lunch",
+        "second_lunch": "Second lunch",
+        "break": "Break",
+        "assembly": "Assembly",
+        "other": "Break"
+      }
+    },
     "fields": {
       "room": "Room",
       "teacher": "Teacher",
@@ -1245,5 +1258,430 @@
     "staff": "Open staff app",
     "id": "Open ID",
     "logout": "Log out"
+  },
+  "groupStanding": {
+    "course": "Course {course}",
+    "curator": "Curator",
+    "membersCount": "{count} students",
+    "topTitle": "Top students",
+    "byGrade": "Grades",
+    "byAttendance": "Attendance",
+    "you": "You",
+    "noValue": "—",
+    "topEmpty": "No data for this term yet.",
+    "ranksTitle": "Group standing",
+    "gpa": "Average grade",
+    "attendance": "Attendance",
+    "placeCourse": "{place} of {total} in the course",
+    "placeLyceum": "{place} of {total} in the lyceum",
+    "rankingTitle": "Groups ranking",
+    "rankingScopeCourse": "Course",
+    "rankingScopeLyceum": "Lyceum",
+    "mine": "Your group",
+    "members": "{count} students",
+    "noGroupTitle": "You are not in a group yet",
+    "noGroupHint": "When the administration adds you to a group, it will appear here."
+  },
+  "activities": {
+    "deadline": "Deadline: {date}",
+    "showAllOpps": "Show all ({count})",
+    "choosePlaceholder": "Choose an option",
+    "numberPlaceholder": "Enter a number",
+    "answerPlaceholder": "Your answer",
+    "title": "Activities",
+    "description": "Clubs, Student Council events and opportunities for you, all in one feed.",
+    "myClubs": "My clubs",
+    "categoryLabel": "Category",
+    "empty": "Nothing found. Reset the filters.",
+    "types": {
+      "all": "All",
+      "club": "Clubs",
+      "clubBadge": "Club",
+      "event": "Events",
+      "opportunity": "Opportunities"
+    },
+    "categories": {
+      "tech": "Technology",
+      "sport": "Sports",
+      "arts": "Arts",
+      "debate": "Debate",
+      "volunteering": "Volunteering",
+      "academic": "Academics"
+    },
+    "kinds": {
+      "club": "Club"
+    },
+    "members": "{count, plural, one {# member} other {# members}}",
+    "suEvent": "Student Council",
+    "needVolunteers": "Volunteers needed",
+    "going": "{going} of {capacity} going",
+    "back": "Back to the feed",
+    "manage": "Manage club",
+    "youAreMember": "You are a member",
+    "requestSent": "Request sent",
+    "byInvite": "By invitation only",
+    "join": "Join",
+    "requestJoin": "Request to join",
+    "requestSentTitle": "Request sent",
+    "requestSentBody": "The club leader will review it.",
+    "clubTabs": {
+      "about": "About",
+      "team": "Team",
+      "partners": "Partners",
+      "events": "Events",
+      "ratings": "Ratings",
+      "forms": "Questionnaire",
+      "drafting": "Event staffing",
+      "points": "Leaderboard",
+      "courses": "Courses"
+    },
+    "goals": "Goals",
+    "rules": "Rules",
+    "noTeam": "The team has not been published yet.",
+    "hiddenPublic": "Not visible on the public site",
+    "since": "since {year}",
+    "experience": "Experience",
+    "openPositions": "Open positions",
+    "openPositionsHint": "Apply: the owner will see your answers.",
+    "applied": "Application sent",
+    "appliedBody": "Position “{position}”. The decision will appear in your notifications.",
+    "slots": "{count, plural, one {# spot} other {# spots}}",
+    "apply": "Apply",
+    "noPartners": "No partners yet.",
+    "noEvents": "No events yet.",
+    "partnerKinds": {
+      "sponsor": "Sponsor",
+      "partner": "Partner",
+      "media": "Media partner"
+    },
+    "ratingsCount": "{count, plural, one {# rating} other {# ratings}}",
+    "rated": "Thanks for rating",
+    "rate": "Rate the club",
+    "aspects": {
+      "organization": "Organization",
+      "usefulness": "Usefulness",
+      "atmosphere": "Atmosphere"
+    },
+    "applyTitle": "Application: {position}",
+    "applyDescription": "Answer the club owner’s questions.",
+    "cancel": "Cancel",
+    "send": "Send",
+    "rateTitle": "Rating: {name}",
+    "rateDescription": "Rate each aspect from 1 to 5.",
+    "comment": "Comment",
+    "anonymous": "Hide my name from the club (an administrator can see the author)",
+    "organizer": "Organizer: {name}",
+    "when": "When",
+    "where": "Where",
+    "audience": "Who it’s for",
+    "places": "{count, plural, one {# place} other {# places}}",
+    "audiences": {
+      "public": "Everyone",
+      "students": "Lyceum students",
+      "members": "Club members"
+    },
+    "cancelRsvp": "Cancel registration",
+    "rsvp": "Register",
+    "joinWaitlist": "Join the waitlist",
+    "volunteersBody": "The organizers need students’ help. Sign-up goes through the community draft.",
+    "openDraft": "Open the draft",
+    "reminders": {
+      "title": "Reminders",
+      "on": "They will arrive as you set up your notifications.",
+      "needRsvp": "Register to turn on reminders.",
+      "before": "{minutes} min before the start"
+    },
+    "ticket": {
+      "title": "Your ticket",
+      "hint": "Show the code at the entrance to check in."
+    },
+    "rateEvent": {
+      "title": "Rate the event",
+      "hint": "Rating opens after the event ends for those who checked in at the entrance and closes after 14 days. A reminder will arrive after 2 hours."
+    },
+    "manageTitle": "Club management",
+    "manageTabs": {
+      "announcements": "Announcements",
+      "members": "Members",
+      "courses": "Courses",
+      "events": "Events",
+      "volunteering": "Volunteering",
+      "settings": "Settings"
+    },
+    "planner": {
+      "suggest": "Suggest a plan (AI)",
+      "intake": "Event from an announcement text",
+      "suggestedTitle": "AI added 2 items",
+      "suggestedBody": "They appeared in the “Ideas” column. Review them and move the ones you need.",
+      "intakeLabel": "Paste a Telegram post or a link",
+      "draftTitle": "Event draft",
+      "draftBody": "Meeting: we are building the first robot. Tuesday, December 2, 16:00, room 214. Check the fields and confirm.",
+      "confirm": "Confirm and create",
+      "move": "Status",
+      "columns": {
+        "backlog": "Ideas",
+        "planned": "Planned",
+        "doing": "In progress",
+        "done": "Done"
+      },
+      "kinds": {
+        "idea": "Idea",
+        "task": "Task",
+        "milestone": "Milestone",
+        "event_plan": "Event plan"
+      }
+    },
+    "announce": {
+      "new": "New announcement",
+      "placeholder": "What should the members know?",
+      "audience": "To whom",
+      "aud": {
+        "members": "All members",
+        "team": "Team",
+        "event": "Event participants"
+      },
+      "schedule": "Schedule",
+      "send": "Send",
+      "sent": "Announcement sent",
+      "history": "History",
+      "scheduled": "Scheduled",
+      "reach": "delivered {count}",
+      "scheduleToggle": "Schedule sending",
+      "scheduleAt": "When to send",
+      "scheduledSent": "Announcement scheduled",
+      "cancel": "Cancel"
+    },
+    "roles": {
+      "owner": "Owner",
+      "co_owner": "Co-owner",
+      "team": "Team",
+      "member": "Member"
+    },
+    "approve": "Approve",
+    "reject": "Decline",
+    "remove": "Remove",
+    "transfer": {
+      "title": "Transfer ownership",
+      "body": "A club member will receive the offer. It is valid for 7 days: if the member does not respond, you remain the owner.",
+      "to": "Transfer to",
+      "offer": "Offer ownership",
+      "pending": "Offer sent",
+      "pendingBody": "{name} received the offer. Response deadline: 7 days."
+    },
+    "appStatus": {
+      "submitted": "New",
+      "shortlisted": "Shortlisted",
+      "accepted": "Accepted",
+      "rejected": "Declined"
+    },
+    "appActions": {
+      "shortlist": "Shortlist"
+    },
+    "form": {
+      "hint": "Coordinators use the questionnaire to pick your shifts. Only the club founder and co-owners can see it.",
+      "availability": "When you are free",
+      "skills": "Skills",
+      "languages": "Languages",
+      "about": "About me",
+      "save": "Save"
+    },
+    "draft": {
+      "open": "Signing up",
+      "closed": "Sign-up closed",
+      "filled": "{count} of {total} signed up",
+      "signedUp": "You are signed up: {role}",
+      "signUp": "Sign up",
+      "picks": "Proposed lineup",
+      "reliability": "reliability {value}%",
+      "pick": {
+        "accepted": "Accepted",
+        "invited": "Invited",
+        "proposed": "Proposed"
+      },
+      "need": "need {count}",
+      "pickRole": "Choose a role",
+      "invited": "You are invited: {role}",
+      "accept": "Accept",
+      "decline": "Decline",
+      "declined": "You declined the invitation",
+      "cancelSignup": "Cancel sign-up"
+    },
+    "leaderboard": {
+      "scopes": {
+        "group": "My group",
+        "club": "Club"
+      },
+      "you": "you",
+      "yourPoints": "Your points: {count}",
+      "empty": "No one has earned points yet.",
+      "detail": "{attended, plural, one {# visit} other {# visits}} · {volunteered, plural, one {# shift} other {# shifts}}",
+      "optOut": "Show me as “Student №”",
+      "points": "{count, plural, one {# point} other {# points}}"
+    },
+    "noAccess": "This page is for the club team only.",
+    "caps": {
+      "title": "Club features",
+      "forms": {
+        "name": "Member questionnaires",
+        "hint": "Members fill in the questionnaire; only the club founder and co-owners see the answers."
+      },
+      "drafting": {
+        "name": "Event staffing",
+        "hint": "Staffing events from questionnaires and past reliability."
+      },
+      "points": {
+        "name": "Points and leaderboard",
+        "hint": "Points for visits and shifts, a ranking of the most active."
+      },
+      "roster": {
+        "name": "Attendance tracking",
+        "hint": "Each member’s visits and shifts."
+      },
+      "saved": "Saved"
+    },
+    "courses": {
+      "empty": "No courses are linked to the club yet.",
+      "link": "Link",
+      "unlink": "Unlink",
+      "pick": "Course to link",
+      "none": "No courses to link",
+      "teacher": "Teacher: {name}",
+      "lessons": "{count, plural, one {# lesson} other {# lessons}}",
+      "open": "Open the course",
+      "placeholder": "Choose a course",
+      "request": "Send request",
+      "pending": "Awaiting the teacher’s confirmation",
+      "withdraw": "Withdraw",
+      "manageHint": "Your own course is linked right away. Someone else’s is linked once its teacher confirms the request.",
+      "unlinkTitle": "Unlink the course “{title}”?",
+      "unlinkBody": "The course stays in the LMS but disappears from the club page."
+    },
+    "formsAdmin": {
+      "title": "Questionnaire fields",
+      "newField": "Field name",
+      "add": "Add",
+      "kind": {
+        "chips": "Options",
+        "text": "Text",
+        "number": "Number",
+        "bool": "Yes / no"
+      },
+      "answers": "{count} of {total} filled in",
+      "delete": "Delete",
+      "fieldType": "Field type",
+      "options": "Options",
+      "optionsHint": "Comma-separated: Weekends, Holidays",
+      "answersTitle": "Members’ answers",
+      "noAnswers": "Nobody has filled in the form yet."
+    },
+    "draftBoard": {
+      "round": "Event",
+      "progress": "Invited {done} of {total}",
+      "inviteFirst": "Invite the first {count}",
+      "invite": "Invite",
+      "invited": "Invited",
+      "hint": "The student will see the invitation on the club page and accept or decline it.",
+      "newRound": "Open recruitment for an event",
+      "role": "Role",
+      "count": "How many needed",
+      "create": "Open recruitment"
+    },
+    "pointsAdmin": {
+      "invalidRule": "Rule values cannot be negative: enter the penalty as a positive number.",
+      "title": "How many points to give",
+      "attend": "For attending",
+      "shift": "For an event shift",
+      "event": "For organizing an event",
+      "noShow": "For a no-show without notice",
+      "save": "Save",
+      "saved": "Saved",
+      "manualTitle": "Award points manually",
+      "member": "Member",
+      "amount": "Points (minus to deduct)",
+      "reason": "Reason",
+      "award": "Record",
+      "log": "History"
+    },
+    "roster": {
+      "stats": "attended {attended}, shifts {shifts}"
+    },
+    "allTopics": "All topics",
+    "leave": "Leave the club",
+    "nextEvent": "Next event",
+    "fillFormTitle": "Fill in the questionnaire",
+    "fillFormBody": "Coordinators invite people to shifts based on the questionnaire. It takes a couple of minutes.",
+    "fillFormAction": "Fill in the questionnaire",
+    "noAccessAction": "Open the club page",
+    "volunteeringTabs": {
+      "forms": "Questionnaire",
+      "drafting": "Event staffing",
+      "points": "Leaderboard and points"
+    },
+    "memberList": {
+      "requests": "Requests ({count})",
+      "requestFrom": "Request · {when}",
+      "list": "Members ({count})",
+      "actions": "Actions: {name}",
+      "makeTeam": "Make a team member",
+      "makeMember": "Make a regular member",
+      "removeTitle": "Remove {name}?",
+      "removeBody": "The member will lose access to the club’s private sections. They can return only with a new request.",
+      "positions": "Position requests"
+    },
+    "profile": {
+      "title": "Club page",
+      "name": "Name",
+      "category": "Category",
+      "description": "Description",
+      "goals": "Goals",
+      "rules": "Rules",
+      "schedule": "Schedule",
+      "partners": "Partners",
+      "partnersHint": "One per line.",
+      "joinPolicy": "How people join"
+    },
+    "joinPolicies": {
+      "open": "Open to everyone",
+      "request": "By request",
+      "invite": "Invitation only"
+    },
+    "eventsAdmin": {
+      "title": "New event",
+      "name": "Title",
+      "starts": "Starts",
+      "ends": "Ends",
+      "location": "Location",
+      "capacity": "Places",
+      "create": "Create event"
+    },
+    "transferOffer": {
+      "title": "Take over “{name}”?",
+      "body": "The offer is valid for 7 days. If you decline, the current owner stays.",
+      "accepted": "You are now the club owner.",
+      "declined": "You declined the offer.",
+      "close": "Close"
+    },
+    "searchLabel": "Search the feed",
+    "searchPlaceholder": "Search clubs, events, opportunities",
+    "suggest": {
+      "button": "Suggest a club",
+      "title": "Suggest a club",
+      "description": "Describe the club you would like to create. An administrator will review the request.",
+      "name": "Club name",
+      "slug": "Club address",
+      "slugEdit": "Edit address",
+      "slugAuto": "Derive from the name",
+      "slugHint": "Latin letters a–z, digits and dashes.",
+      "descriptionLabel": "Description",
+      "submit": "Send for review",
+      "sent": "Request sent for review",
+      "close": "Close",
+      "myRequests": "My requests",
+      "submitAgain": "Send for review",
+      "status": {
+        "draft": "Draft",
+        "pending_review": "On review"
+      }
+    }
   }
 }

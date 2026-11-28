@@ -29,6 +29,7 @@ export const userPreferences: UserPreferences = {
   alerts_gpa_below: null,
   alerts_semester_mark_below: null,
   alerts_mark_below: null,
+  notify_absences: true,
   lessons_links_lead_min: 5,
   lessons_prompt_enabled: true,
   mail_forward_to_telegram: true,

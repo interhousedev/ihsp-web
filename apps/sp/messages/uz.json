@@ -81,7 +81,8 @@
     "groupInbox": "Xabarlar",
     "groupAccount": "Hisob",
     "mail": "Pochta",
-    "excuses": "Sababli qoldirish"
+    "excuses": "Sababli qoldirish",
+    "activities": "Faolliklar"
   },
   "attendanceStates": {
     "late": "Kech qoldi",
@@ -346,6 +347,18 @@
     "subgroupHint": "Kichik guruhingiz hali belgilanmagan, shuning uchun ikkala kichik guruh darslari koʻrsatilgan.",
     "noLessons": "Bu kuni dars yoʻq.",
     "noLessonsWeek": "Bu haftada dars yoʻq.",
+    "agenda": "Kun jadvali",
+    "gap": {
+      "minutes": "{count} daq",
+      "free": "Boʻsh",
+      "kind": {
+        "lunch": "Tushlik",
+        "second_lunch": "Ikkinchi tushlik",
+        "break": "Tanaffus",
+        "assembly": "Saf yigʻilishi",
+        "other": "Tanaffus"
+      }
+    },
     "fields": {
       "room": "Xona",
       "teacher": "Oʻqituvchi",
@@ -1245,5 +1258,430 @@
     "staff": "Xodimlar ilovasini ochish",
     "id": "ID ni ochish",
     "logout": "Chiqish"
+  },
+  "groupStanding": {
+    "course": "{course}-kurs",
+    "curator": "Kurator",
+    "membersCount": "Talabalar: {count}",
+    "topTitle": "Eng yaxshi talabalar",
+    "byGrade": "Baholar",
+    "byAttendance": "Davomat",
+    "you": "Siz",
+    "noValue": "—",
+    "topEmpty": "Bu semestr uchun hozircha maʼlumot yoʻq.",
+    "ranksTitle": "Guruh oʻrni",
+    "gpa": "Oʻrtacha baho",
+    "attendance": "Davomat",
+    "placeCourse": "Kurs boʻyicha {total} tadan {place}-oʻrin",
+    "placeLyceum": "Litsey boʻyicha {total} tadan {place}-oʻrin",
+    "rankingTitle": "Guruhlar reytingi",
+    "rankingScopeCourse": "Kurs",
+    "rankingScopeLyceum": "Litsey",
+    "mine": "Sizning guruhingiz",
+    "members": "Talabalar: {count}",
+    "noGroupTitle": "Siz hali guruhga qoʻshilmagansiz",
+    "noGroupHint": "Maʼmuriyat sizni guruhga qoʻshganda, u shu yerda koʻrinadi."
+  },
+  "activities": {
+    "deadline": "Muddat: {date}",
+    "showAllOpps": "Hammasini koʻrsatish ({count})",
+    "choosePlaceholder": "Variantni tanlang",
+    "numberPlaceholder": "Raqam kiriting",
+    "answerPlaceholder": "Javobingiz",
+    "title": "Faolliklar",
+    "description": "Klublar, Talabalar kengashi tadbirlari va siz uchun imkoniyatlar: hammasi bir lentada.",
+    "myClubs": "Mening klublarim",
+    "categoryLabel": "Kategoriya",
+    "empty": "Hech narsa topilmadi. Filtrlarni tozalang.",
+    "types": {
+      "all": "Hammasi",
+      "club": "Klublar",
+      "clubBadge": "Klub",
+      "event": "Tadbirlar",
+      "opportunity": "Imkoniyatlar"
+    },
+    "categories": {
+      "tech": "Texnologiya",
+      "sport": "Sport",
+      "arts": "Ijod",
+      "debate": "Munozara",
+      "volunteering": "Volontyorlik",
+      "academic": "Oʻqish"
+    },
+    "kinds": {
+      "club": "Klub"
+    },
+    "members": "{count} ishtirokchi",
+    "suEvent": "Talabalar kengashi",
+    "needVolunteers": "Volontyorlar kerak",
+    "going": "{capacity} tadan {going} nafar boradi",
+    "back": "Lentaga qaytish",
+    "manage": "Klubni boshqarish",
+    "youAreMember": "Siz ishtirokchisiz",
+    "requestSent": "Ariza yuborildi",
+    "byInvite": "Faqat taklif bilan",
+    "join": "Qoʻshilish",
+    "requestJoin": "Ariza topshirish",
+    "requestSentTitle": "Ariza yuborildi",
+    "requestSentBody": "Klub rahbari uni koʻrib chiqadi.",
+    "clubTabs": {
+      "about": "Klub haqida",
+      "team": "Jamoa",
+      "partners": "Hamkorlar",
+      "events": "Tadbirlar",
+      "ratings": "Baholar",
+      "forms": "Anketa",
+      "drafting": "Tadbirlarga yigʻish",
+      "points": "Reyting",
+      "courses": "Kurslar"
+    },
+    "goals": "Maqsadlar",
+    "rules": "Qoidalar",
+    "noTeam": "Jamoa hozircha eʼlon qilinmagan.",
+    "hiddenPublic": "Ommaviy saytda koʻrinmaydi",
+    "since": "{year}-yildan",
+    "experience": "Tajriba",
+    "openPositions": "Ochiq lavozimlar",
+    "openPositionsHint": "Ariza bering: egasi javoblaringizni koʻradi.",
+    "applied": "Ariza yuborildi",
+    "appliedBody": "“{position}” lavozimi. Qaror bildirishnomalarda paydo boʻladi.",
+    "slots": "{count} ta oʻrin",
+    "apply": "Ariza topshirish",
+    "noPartners": "Hamkorlar hozircha yoʻq.",
+    "noEvents": "Tadbirlar hozircha yoʻq.",
+    "partnerKinds": {
+      "sponsor": "Homiy",
+      "partner": "Hamkor",
+      "media": "Media hamkor"
+    },
+    "ratingsCount": "{count} ta baho",
+    "rated": "Baho uchun rahmat",
+    "rate": "Klubni baholash",
+    "aspects": {
+      "organization": "Tashkilotchilik",
+      "usefulness": "Foyda",
+      "atmosphere": "Muhit"
+    },
+    "applyTitle": "Ariza: {position}",
+    "applyDescription": "Klub egasining savollariga javob bering.",
+    "cancel": "Bekor qilish",
+    "send": "Yuborish",
+    "rateTitle": "Baho: {name}",
+    "rateDescription": "Har bir jihatni 1 dan 5 gacha baholang.",
+    "comment": "Izoh",
+    "anonymous": "Ismimni klubdan yashirish (administrator muallifni koʻradi)",
+    "organizer": "Tashkilotchi: {name}",
+    "when": "Qachon",
+    "where": "Qayerda",
+    "audience": "Kimlar uchun",
+    "places": "{count} ta joy",
+    "audiences": {
+      "public": "Hamma uchun",
+      "students": "Litsey talabalari",
+      "members": "Klub ishtirokchilari"
+    },
+    "cancelRsvp": "Roʻyxatdan oʻtishni bekor qilish",
+    "rsvp": "Roʻyxatdan oʻtish",
+    "joinWaitlist": "Kutish roʻyxatiga yozilish",
+    "volunteersBody": "Tashkilotchilarga talabalar yordami kerak. Roʻyxatga olish hamjamiyat draftlari orqali boʻladi.",
+    "openDraft": "Draftni ochish",
+    "reminders": {
+      "title": "Eslatmalar",
+      "on": "Ular bildirishnoma sozlamalaringizga muvofiq keladi.",
+      "needRsvp": "Eslatmalarni yoqish uchun roʻyxatdan oʻting.",
+      "before": "Boshlanishidan {minutes} daqiqa oldin"
+    },
+    "ticket": {
+      "title": "Sizning chiptangiz",
+      "hint": "Belgilanish uchun kirishda kodni koʻrsating."
+    },
+    "rateEvent": {
+      "title": "Tadbirni baholash",
+      "hint": "Baholash tadbir tugagach, kirishda belgilanganlar uchun ochiladi va 14 kundan keyin yopiladi. Eslatma 2 soatdan keyin keladi."
+    },
+    "manageTitle": "Klubni boshqarish",
+    "manageTabs": {
+      "announcements": "Eʼlonlar",
+      "members": "Ishtirokchilar",
+      "courses": "Kurslar",
+      "events": "Tadbirlar",
+      "volunteering": "Volontyorlik",
+      "settings": "Sozlamalar"
+    },
+    "planner": {
+      "suggest": "Reja taklif qilish (AI)",
+      "intake": "Eʼlon matnidan tadbir",
+      "suggestedTitle": "AI 2 ta band qoʻshdi",
+      "suggestedBody": "Ular “Gʻoyalar” ustunida paydo boʻldi. Tekshiring va kerakligini koʻchiring.",
+      "intakeLabel": "Telegram postini yoki havolani qoʻying",
+      "draftTitle": "Tadbir qoralamasi",
+      "draftBody": "Uchrashuv: birinchi robotni yigʻamiz. Seshanba, 2-dekabr, 16:00, 214-xona. Maydonlarni tekshiring va tasdiqlang.",
+      "confirm": "Tasdiqlash va yaratish",
+      "move": "Holat",
+      "columns": {
+        "backlog": "Gʻoyalar",
+        "planned": "Rejalashtirilgan",
+        "doing": "Jarayonda",
+        "done": "Bajarildi"
+      },
+      "kinds": {
+        "idea": "Gʻoya",
+        "task": "Vazifa",
+        "milestone": "Muhim bosqich",
+        "event_plan": "Tadbir rejasi"
+      }
+    },
+    "announce": {
+      "new": "Yangi eʼlon",
+      "placeholder": "Ishtirokchilarga nima aytish kerak?",
+      "audience": "Kimga",
+      "aud": {
+        "members": "Barcha ishtirokchilar",
+        "team": "Jamoa",
+        "event": "Tadbir ishtirokchilari"
+      },
+      "schedule": "Rejalashtirish",
+      "send": "Yuborish",
+      "sent": "Eʼlon yuborildi",
+      "history": "Tarix",
+      "scheduled": "Rejalashtirilgan",
+      "reach": "yetkazildi: {count}",
+      "scheduleToggle": "Yuborishni rejalashtirish",
+      "scheduleAt": "Qachon yuborish",
+      "scheduledSent": "Eʼlon rejalashtirildi",
+      "cancel": "Bekor qilish"
+    },
+    "roles": {
+      "owner": "Egasi",
+      "co_owner": "Hammuallif",
+      "team": "Jamoa",
+      "member": "Ishtirokchi"
+    },
+    "approve": "Qabul qilish",
+    "reject": "Rad etish",
+    "remove": "Chiqarib yuborish",
+    "transfer": {
+      "title": "Egalikni topshirish",
+      "body": "Taklifni klub ishtirokchisi oladi. U 7 kun amal qiladi: ishtirokchi javob bermasa, egasi oʻzingiz qolasiz.",
+      "to": "Kimga topshirish",
+      "offer": "Egalikni taklif qilish",
+      "pending": "Taklif yuborildi",
+      "pendingBody": "{name} taklifni oldi. Javob muddati: 7 kun."
+    },
+    "appStatus": {
+      "submitted": "Yangi",
+      "shortlisted": "Qisqa roʻyxatda",
+      "accepted": "Qabul qilindi",
+      "rejected": "Rad etildi"
+    },
+    "appActions": {
+      "shortlist": "Qisqa roʻyxatga"
+    },
+    "form": {
+      "hint": "Anketa asosida koordinatorlar sizga smenalarni tanlaydi. Uni faqat klub asoschisi va hammualliflar koʻra oladi.",
+      "availability": "Qachon boʻshsiz",
+      "skills": "Koʻnikmalar",
+      "languages": "Tillar",
+      "about": "Oʻzim haqimda",
+      "save": "Saqlash"
+    },
+    "draft": {
+      "open": "Yigʻish davom etmoqda",
+      "closed": "Yigʻish yopilgan",
+      "filled": "{total} tadan {count} nafar yozildi",
+      "signedUp": "Siz yozildingiz: {role}",
+      "signUp": "Yozilish",
+      "picks": "Taklif qilingan tarkib",
+      "reliability": "ishonchlilik {value}%",
+      "pick": {
+        "accepted": "Qabul qildi",
+        "invited": "Taklif qilindi",
+        "proposed": "Taklif etildi"
+      },
+      "need": "kerak: {count}",
+      "pickRole": "Rolni tanlang",
+      "invited": "Sizni taklif qilishdi: {role}",
+      "accept": "Qabul qilish",
+      "decline": "Rad etish",
+      "declined": "Siz taklifdan voz kechdingiz",
+      "cancelSignup": "Yozilishni bekor qilish"
+    },
+    "leaderboard": {
+      "scopes": {
+        "group": "Mening guruhim",
+        "club": "Klub"
+      },
+      "you": "siz",
+      "yourPoints": "Ballaringiz: {count}",
+      "empty": "Hozircha hech kim ball toʻplamagan.",
+      "detail": "{attended} ta tashrif · {volunteered} ta smena",
+      "optOut": "Meni “Talaba №” sifatida koʻrsatish",
+      "points": "{count} ball"
+    },
+    "noAccess": "Bu sahifa faqat klub jamoasi uchun.",
+    "caps": {
+      "title": "Klub funksiyalari",
+      "forms": {
+        "name": "Ishtirokchi anketalari",
+        "hint": "Ishtirokchilar anketani toʻldiradi, javoblarni faqat klub asoschisi va hammualliflar koʻradi."
+      },
+      "drafting": {
+        "name": "Tadbirlarga saralash",
+        "hint": "Anketa va oldingi ishonchlilik asosida tadbirlarga odam yigʻish."
+      },
+      "points": {
+        "name": "Ballar va reyting",
+        "hint": "Tashriflar va smenalar uchun ballar, eng faollar reytingi."
+      },
+      "roster": {
+        "name": "Davomat hisobi",
+        "hint": "Har bir ishtirokchining tashriflari va smenalari."
+      },
+      "saved": "Saqlandi"
+    },
+    "courses": {
+      "empty": "Klubga hozircha kurslar biriktirilmagan.",
+      "link": "Biriktirish",
+      "unlink": "Ajratish",
+      "pick": "Biriktiriladigan kurs",
+      "none": "Biriktirish uchun kurslar yoʻq",
+      "teacher": "Oʻqituvchi: {name}",
+      "lessons": "{count} ta dars",
+      "open": "Kursni ochish",
+      "placeholder": "Kursni tanlang",
+      "request": "Soʻrov yuborish",
+      "pending": "Oʻqituvchi tasdigʻini kutmoqda",
+      "withdraw": "Qaytarib olish",
+      "manageHint": "Oʻz kursingiz darhol biriktiriladi. Boshqasining kursi oʻqituvchisi soʻrovni tasdiqlagach biriktiriladi.",
+      "unlinkTitle": "“{title}” kursini ajratamizmi?",
+      "unlinkBody": "Kurs LMSda qoladi, ammo klub sahifasidan yoʻqoladi."
+    },
+    "formsAdmin": {
+      "title": "Anketa maydonlari",
+      "newField": "Maydon nomi",
+      "add": "Qoʻshish",
+      "kind": {
+        "chips": "Variantlar",
+        "text": "Matn",
+        "number": "Son",
+        "bool": "Ha / yoʻq"
+      },
+      "answers": "{total} tadan {count} nafari toʻldirdi",
+      "delete": "Oʻchirish",
+      "fieldType": "Maydon turi",
+      "options": "Variantlar",
+      "optionsHint": "Vergul bilan: Dam olish kunlari, Taʼtil",
+      "answersTitle": "Ishtirokchilar javoblari",
+      "noAnswers": "Hozircha hech kim anketani toʻldirmagan."
+    },
+    "draftBoard": {
+      "round": "Tadbir",
+      "progress": "{total} tadan {done} nafari taklif qilindi",
+      "inviteFirst": "Dastlabki {count} nafarini taklif qilish",
+      "invite": "Taklif qilish",
+      "invited": "Taklif qilindi",
+      "hint": "Talaba taklifni klub sahifasida koʻradi va qabul qiladi yoki rad etadi.",
+      "newRound": "Tadbirga saralashni ochish",
+      "role": "Rol",
+      "count": "Nechta kerak",
+      "create": "Saralashni ochish"
+    },
+    "pointsAdmin": {
+      "invalidRule": "Qoida qiymatlari manfiy boʻlishi mumkin emas: jarimani musbat son sifatida kiriting.",
+      "title": "Necha ball beramiz",
+      "attend": "Tashrif uchun",
+      "shift": "Tadbirdagi smena uchun",
+      "event": "Tadbirni tashkil etgani uchun",
+      "noShow": "Ogohlantirmasdan kelmagani uchun",
+      "save": "Saqlash",
+      "saved": "Saqlandi",
+      "manualTitle": "Ballarni qoʻlda berish",
+      "member": "Ishtirokchi",
+      "amount": "Ballar (minus — ayirish)",
+      "reason": "Sabab",
+      "award": "Yozish",
+      "log": "Tarix"
+    },
+    "roster": {
+      "stats": "tashrif: {attended}, smena: {shifts}"
+    },
+    "allTopics": "Barcha mavzular",
+    "leave": "Klubdan chiqish",
+    "nextEvent": "Eng yaqin tadbir",
+    "fillFormTitle": "Anketani toʻldiring",
+    "fillFormBody": "Koordinatorlar smenalarga anketa asosida taklif qiladi. Bu bir necha daqiqa oladi.",
+    "fillFormAction": "Anketani toʻldirish",
+    "noAccessAction": "Klub sahifasini ochish",
+    "volunteeringTabs": {
+      "forms": "Anketa",
+      "drafting": "Tadbirlarga yigʻish",
+      "points": "Reyting va ballar"
+    },
+    "memberList": {
+      "requests": "Arizalar ({count})",
+      "requestFrom": "Ariza · {when}",
+      "list": "Ishtirokchilar ({count})",
+      "actions": "Amallar: {name}",
+      "makeTeam": "Jamoa aʼzosi qilish",
+      "makeMember": "Oddiy ishtirokchi qilish",
+      "removeTitle": "{name} chiqarib yuborilsinmi?",
+      "removeBody": "Ishtirokchi klubning yopiq boʻlimlariga kirish huquqini yoʻqotadi. U faqat yangi ariza bilan qaytishi mumkin.",
+      "positions": "Lavozimga arizalar"
+    },
+    "profile": {
+      "title": "Klub sahifasi",
+      "name": "Nomi",
+      "category": "Toifa",
+      "description": "Tavsif",
+      "goals": "Maqsadlar",
+      "rules": "Qoidalar",
+      "schedule": "Jadval",
+      "partners": "Hamkorlar",
+      "partnersHint": "Har birini alohida qatorga yozing.",
+      "joinPolicy": "Qanday qoʻshilishadi"
+    },
+    "joinPolicies": {
+      "open": "Erkin kirish",
+      "request": "Ariza bilan",
+      "invite": "Faqat taklif bilan"
+    },
+    "eventsAdmin": {
+      "title": "Yangi tadbir",
+      "name": "Nomi",
+      "starts": "Boshlanishi",
+      "ends": "Tugashi",
+      "location": "Joyi",
+      "capacity": "Oʻrinlar soni",
+      "create": "Tadbir yaratish"
+    },
+    "transferOffer": {
+      "title": "«{name}» klubini boshqarish sizga topshirilmoqda",
+      "body": "Taklif 7 kun amal qiladi. Rad etsangiz, hozirgi egasi qoladi.",
+      "accepted": "Siz klub egasi boʻldingiz.",
+      "declined": "Siz taklifni rad etdingiz.",
+      "close": "Yopish"
+    },
+    "searchLabel": "Lentadan qidirish",
+    "searchPlaceholder": "Klub, tadbir, imkoniyat qidirish",
+    "suggest": {
+      "button": "Klub taklif qilish",
+      "title": "Klub taklif qilish",
+      "description": "Yaratmoqchi boʻlgan klubingizni tavsiflang. Administrator arizani koʻrib chiqadi.",
+      "name": "Klub nomi",
+      "slug": "Klub manzili",
+      "slugEdit": "Manzilni tahrirlash",
+      "slugAuto": "Nomdan olish",
+      "slugHint": "Lotin harflari a–z, raqamlar va chiziqchalar.",
+      "descriptionLabel": "Tavsif",
+      "submit": "Tekshiruvga yuborish",
+      "sent": "Ariza tekshiruvga yuborildi",
+      "close": "Yopish",
+      "myRequests": "Mening arizalarim",
+      "submitAgain": "Tekshiruvga yuborish",
+      "status": {
+        "draft": "Qoralama",
+        "pending_review": "Tekshiruvda"
+      }
+    }
   }
 }

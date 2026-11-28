@@ -23,7 +23,19 @@ export const myGroupForHead: MyGroup = {
   size: 4,
   is_head_student: true,
   homeroom_teacher: homeroom,
-  head_student: { id: ids.student, first_name: "Demo", last_name: "Student", photo_url: null },
+  head_student: {
+    id: ids.student,
+    first_name: "Demo",
+    last_name: "Student",
+    photo_url: null,
+    full_name: "Demo Student",
+  },
+  group: { id: ids.group2TN2, name: "2TN2", course: 2 },
+  curator: null,
+  members_count: 4,
+  top_by_grade: [],
+  top_by_attendance: [],
+  ranks: { course: { gpa: null, attendance: null }, lyceum: { gpa: null, attendance: null } },
   members: [
     {
       id: ids.student2,
@@ -57,7 +69,13 @@ export const myGroupForHead: MyGroup = {
 export const myGroupForMember: MyGroup = {
   ...myGroupForHead,
   is_head_student: false,
-  head_student: { id: ids.student2, first_name: "Aziza", last_name: "Karimova", photo_url: null },
+  head_student: {
+    id: ids.student2,
+    first_name: "Aziza",
+    last_name: "Karimova",
+    photo_url: null,
+    full_name: "Aziza Karimova",
+  },
   members: myGroupForHead.members.map((m) => ({
     ...m,
     is_head_student: m.id === ids.student2,
