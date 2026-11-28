@@ -4,6 +4,20 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.15.2] - 2026-11-28
+
+### Added
+
+- Activities on my.iht: a search field that filters clubs, events and opportunities.
+- Students can suggest a club ("Предложить клуб"); it goes to review, and "Мои заявки" shows its status.
+- Admin: "Создать клуб" creates an active club with a chosen owner.
+
+### Fixed
+
+- Activities on my.iht: the tab row and the horizontal card rail no longer scroll vertically.
+- The club management page showed a raw message key instead of its title.
+- Activities texts in English and Uzbek (student app and admin) were still in Russian.
+
 ## [1.15.1] - 2026-11-28
 
 ### Security
