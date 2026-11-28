@@ -3,8 +3,13 @@ import type {
   AttendanceSubmitBody,
   HomeworkDoneBody,
   HomeworkNoteBody,
+  HomeworkReviewBody,
+  HomeworkSettings,
+  HomeworkSettingsBody,
   HomeworkSubmission,
   HomeworkSubmissionBody,
+  LessonHomeworkSwitchesBody,
+  StaffSubmissionRow,
   JournalToggleBody,
   StaffHomeworkBody,
   StaffTopicBody,
@@ -48,13 +53,27 @@ function withSubmission<T extends { lesson_id: string }>(item: T): T & { submiss
   return {
     ...item,
     submission: saved
-      ? { status: saved.status, file_count: saved.files.length, submitted_at: saved.submitted_at }
+      ? {
+          status: saved.status,
+          file_count: saved.files.length,
+          submitted_at: saved.submitted_at,
+          review_status: saved.review_status,
+          grade: saved.grade,
+        }
       : null,
   }
 }
 
 function homeworkFor(lessonId: string) {
   return homeworkItems.find((item) => item.lesson_id === lessonId)
+}
+
+/** The teacher's homework defaults; `PUT /v1/staff/homework/settings` changes them. */
+let homeworkSettings: HomeworkSettings = { accept_by_default: true, notify_on_submission: true }
+
+/** A submission of the teacher-view fixture by its id. */
+function staffSubmissionRow(id: string): StaffSubmissionRow | undefined {
+  return lessonHomeworkSubmissionsFor("").students.find((row) => row.id === id)
 }
 
 /** The staff lesson with the work-offs the work-off handlers hold for it. */
@@ -113,6 +132,13 @@ export const classworkHandlers = [
         content_type: "application/pdf",
       })),
       submitted_at: FIXTURE_NOW,
+      text: body.text ?? null,
+      review_status: "pending",
+      grade: null,
+      teacher_comment: null,
+      previous_comment: null,
+      reviewed_at: null,
+      reviewer: null,
     }
     submissions.set(lessonId, saved)
     return HttpResponse.json(saved)
@@ -144,15 +170,67 @@ export const classworkHandlers = [
     const lesson = staffLessonFor(param(params, "id"))
     if (!lesson) return notFound("Lesson")
     const body = await readJson<StaffHomeworkBody>(request)
+    const homework = lesson.homework
     return HttpResponse.json({
       ...lesson,
       homework: {
-        text: body.text ?? "",
+        text: body.text ?? homework?.text ?? "",
         due_date: body.due_date ?? "2026-10-09",
-        due_auto: body.due_date === undefined,
+        due_auto: body.due_date === undefined || body.due_date === null,
+        source: homework?.source ?? "teacher",
+        accept_submissions:
+          body.accept_submissions ?? homework?.accept_submissions ?? homeworkSettings.accept_by_default,
+        notify: homework?.notify ?? null,
+        notify_effective: homework?.notify_effective ?? homeworkSettings.notify_on_submission,
+        emis_files: homework?.emis_files ?? [],
+        emis_topic_description: homework?.emis_topic_description ?? null,
       },
     })
   }),
+  http.patch(apiUrl("/v1/staff/lessons/:id/homework/settings"), async ({ params, request }) => {
+    const lesson = staffLessonFor(param(params, "id"))
+    if (!lesson?.homework) return notFound("Homework")
+    const body = await readJson<LessonHomeworkSwitchesBody>(request)
+    const notify = body.notify === undefined ? lesson.homework.notify : body.notify
+    return HttpResponse.json({
+      ...lesson,
+      homework: {
+        ...lesson.homework,
+        accept_submissions: body.accept_submissions ?? lesson.homework.accept_submissions,
+        notify,
+        notify_effective: notify ?? homeworkSettings.notify_on_submission,
+      },
+    })
+  }),
+  http.get(apiUrl("/v1/staff/homework/settings"), () => HttpResponse.json(homeworkSettings)),
+  http.put(apiUrl("/v1/staff/homework/settings"), async ({ request }) => {
+    const body = await readJson<HomeworkSettingsBody>(request)
+    homeworkSettings = {
+      accept_by_default: body.accept_by_default ?? homeworkSettings.accept_by_default,
+      notify_on_submission: body.notify_on_submission ?? homeworkSettings.notify_on_submission,
+    }
+    return HttpResponse.json(homeworkSettings)
+  }),
+  http.get(apiUrl("/v1/staff/homework/submissions/:id"), ({ params }) => {
+    const row = staffSubmissionRow(param(params, "id"))
+    return row ? HttpResponse.json(row) : notFound("Submission")
+  }),
+  http.put(apiUrl("/v1/staff/homework/submissions/:id/review"), async ({ params, request }) => {
+    const row = staffSubmissionRow(param(params, "id"))
+    if (!row) return notFound("Submission")
+    const body = await readJson<HomeworkReviewBody>(request)
+    const graded = body.action === "grade"
+    return HttpResponse.json({
+      ...row,
+      review_status: graded ? "graded" : "returned",
+      grade: graded ? (body.grade ?? null) : null,
+      teacher_comment: body.comment ?? null,
+      reviewed_at: FIXTURE_NOW,
+    } satisfies StaffSubmissionRow)
+  }),
+  http.delete(apiUrl("/v1/staff/homework/submissions/:id/review"), ({ params }) =>
+    staffSubmissionRow(param(params, "id")) ? noContent() : notFound("Submission"),
+  ),
   http.delete(apiUrl("/v1/staff/lessons/:id/homework"), ({ params }) => {
     const lesson = staffLessonFor(param(params, "id"))
     return lesson ? HttpResponse.json({ ...lesson, homework: null }) : notFound("Lesson")
