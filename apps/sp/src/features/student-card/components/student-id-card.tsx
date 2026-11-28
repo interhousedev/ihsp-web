@@ -40,7 +40,8 @@ export function StudentIdCard({
   qrValue: string
 }) {
   const t = useT("studentCard")
-  const lyceum = card.lyceum_name?.[useLocale()]
+  const locale = useLocale()
+  const lyceum = card.lyceum_name?.[locale as keyof NonNullable<PublicStudentCard["lyceum_name"]>]
   const fields: [string, string | number | null][] = [
     [t("group"), card.group],
     [t("studentId"), card.student_id],
