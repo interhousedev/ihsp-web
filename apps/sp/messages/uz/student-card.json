@@ -1,13 +1,19 @@
 {
   "studentCard": {
     "title": "Talaba kartasi",
+    "label": "Talaba",
     "group": "Guruh",
-    "course": "Kurs",
-    "direction": "Yoʻnalish",
+    "studentId": "Talaba ID",
     "speciality": "Mutaxassislik",
     "qrLabel": "Talaba kartasining QR kodi",
-    "refreshIn": "Yangi kod {seconds} soniyadan keyin",
-    "qrFailed": "Kodni yaratib boʻlmadi. Qayta urinilmoqda.",
+    "regenerate": "Kodni yangilash",
+    "regenerateTitle": "Yangi QR kod yaratilsinmi?",
+    "regenerateDescription": "Sizga yangi QR kod beriladi. Eskisi darhol ishlamay qoladi, jumladan skrinshotlarda va avval qoʻshilgan Wallet kartalarida ham.",
+    "regenerateConfirm": "Yangilash",
+    "regenerateFailed": "Kodni yangilab boʻlmadi. Qayta urinib koʻring.",
+    "addToAppleWallet": "Apple Walletga qoʻshish",
+    "addToGoogleWallet": "Google Walletga qoʻshish",
+    "walletFailed": "Kartani Walletga qoʻshib boʻlmadi. Qayta urinib koʻring.",
     "loadFailed": "Kartani yuklab boʻlmadi.",
     "relinkHint": "EMIS bilan bogʻlanishni yangilash kerak. EMIS parolini yangilang va qayta urinib koʻring.",
     "relinkAction": "EMIS parolini yangilash"

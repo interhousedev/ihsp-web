@@ -17,11 +17,11 @@ describe("my group", () => {
     expect(within(card).getByText(/Students: 4/)).toBeInTheDocument()
   })
 
-  test("shows the homeroom teacher with role label, initials and public contacts", async () => {
+  test("shows the homeroom teacher with role label, silhouette and public contacts", async () => {
     renderSp(<MyGroupPage />)
 
     const teacher = await screen.findByRole("group", { name: "Curator" })
-    expect(within(teacher).getByText("DR")).toBeInTheDocument()
+    expect(within(teacher).getByTestId("person-silhouette")).toBeInTheDocument()
     expect(within(teacher).getByText("Dilnoza Rakhimova")).toBeInTheDocument()
     expect(within(teacher).getByText("@dilnoza_r")).toBeInTheDocument()
     expect(within(teacher).getByText("204")).toBeInTheDocument()
@@ -80,14 +80,14 @@ describe("my group", () => {
     expect(await screen.findByRole("alert")).toBeInTheDocument()
   })
 
-  test("classmates are shown in a grid with an initials fallback", async () => {
+  test("classmates are shown in a grid with a silhouette fallback", async () => {
     renderSp(<MyGroupPage />)
 
     const members = await screen.findByRole("list", { name: "Members" })
     const bobur = within(members)
       .getAllByRole("listitem")
       .find((item) => item.textContent?.includes("Bobur Rashidov"))
-    expect(bobur).toHaveTextContent("BR")
+    expect(within(bobur as HTMLElement).getByTestId("person-silhouette")).toBeInTheDocument()
   })
 
   test("shows a loading state before the group arrives", () => {
@@ -123,11 +123,11 @@ describe("my group", () => {
     )
     renderSp(<MyGroupPage />)
 
-    const toggle = await screen.findByRole("switch", { name: "Do not show my photo to my classmates" })
+    const toggle = await screen.findByRole("switch", { name: "Hide my photo from others" })
     expect(toggle).not.toBeChecked()
     await userEvent.click(toggle)
 
-    await waitFor(() => expect(patches).toEqual([{ hide_photo_from_classmates: true }]))
+    await waitFor(() => expect(patches).toEqual([{ hide_photo_from_public: true }]))
     await waitFor(() => expect(toggle).toBeChecked())
   })
 })

@@ -51,7 +51,17 @@ export function OpportunityDetailBody() {
   const saved = plan.data?.entries.some((e) => e.opportunity_id === item.id) ?? false
   const busy = save.isPending || remove.isPending
   const onError = (error: unknown) => toast.error(errorMessage(error))
-  const toggle = () => (saved ? remove.mutate(item.id, { onError }) : save.mutate({ id: item.id }, { onError }))
+  const entry = plan.data?.entries.find((e) => e.opportunity_id === item.id)
+  const add = () => save.mutate({ id: item.id }, { onError, onSuccess: () => toast.success(t("saved")) })
+  const restore = () =>
+    save.mutate({ id: item.id, planned_grade: entry?.planned_grade, planned_term: entry?.planned_term }, { onError })
+  const toggle = () =>
+    saved
+      ? remove.mutate(item.id, {
+          onError,
+          onSuccess: () => toast(t("removedFromPlan"), { action: { label: t("undo"), onClick: restore } }),
+        })
+      : add()
 
   return (
     <div className={pageClass()}>

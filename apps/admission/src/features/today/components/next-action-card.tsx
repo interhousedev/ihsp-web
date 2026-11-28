@@ -15,11 +15,14 @@ export function NextActionCard({
   actions,
   snoozed,
   onSnooze,
+  quiet = false,
   className,
 }: {
   actions: TodayAction[]
   snoozed: string[]
   onSnooze: (key: string) => void
+  /** True when the path guide above already holds the page's main button: this one steps back to an outline. */
+  quiet?: boolean
   className?: string
 }) {
   const t = useT("today")
@@ -61,7 +64,13 @@ export function NextActionCard({
           </span>
         </p>
         <div className="flex flex-wrap items-center gap-2">
-          <Link href={top.href} className={cn(buttonVariants({ size: "lg" }), "max-md:h-10 max-sm:flex-1")}>
+          <Link
+            href={top.href}
+            className={cn(
+              buttonVariants({ size: "lg", variant: quiet ? "outline" : "default" }),
+              "max-md:h-10 max-sm:flex-1",
+            )}
+          >
             {t(`next.action.${KINDS.includes(top.kind ?? "") ? top.kind : "task"}`)}
             <Icons.arrowRight aria-hidden />
           </Link>

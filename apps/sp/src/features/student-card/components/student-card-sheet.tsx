@@ -1,39 +1,60 @@
 "use client"
 
-import { apiAbsoluteUrl, clientConfigQuery, getMeStudentCardQuery } from "@ihsp/api"
+import {
+  apiAbsoluteUrl,
+  clientConfigQuery,
+  getMeStudentCardQuery,
+  keys,
+  postMeStudentCardToken,
+  type StudentCard,
+} from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { BRAND } from "@ihsp/config/brand"
 import { getConfig } from "@ihsp/config"
-import { TeacherAvatar } from "@ihsp/features-core"
-import { useLocale, useT } from "@ihsp/i18n"
-import { QrCode, ResponsiveDialog, StateView } from "@ihsp/ui"
-import { useQuery } from "@tanstack/react-query"
-import { useCardToken } from "../hooks/use-card-token"
+import { useT } from "@ihsp/i18n"
+import { Button, ConfirmDialog, ResponsiveDialog, StateView } from "@ihsp/ui"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useState } from "react"
 import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
 import { studentRecordStatusOf } from "../../shared/hooks/use-student-record-state"
-import { StudentCardError, retryCardQuery } from "./student-card-error"
 import { cardUrl } from "../utils/card-url"
+import type { WalletPlatform } from "../utils/wallet-platform"
+import { StudentCardError, retryCardQuery } from "./student-card-error"
+import { StudentIdCard } from "./student-id-card"
+import { WalletButtons } from "./wallet-buttons"
 
-/** The student card in a bottom sheet (a dialog on a desktop) with a QR code of a token that renews while it is open. */
-export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+/**
+ * The student card in a bottom sheet (a dialog on a desktop): the ID with the QR code of its permanent token, the
+ * wallet buttons and "Regenerate code", which replaces the token after a confirmation.
+ */
+export function StudentCardSheet({
+  open,
+  onOpenChange,
+  walletPlatform,
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  /** Overrides the detected device for the wallet buttons (tests). */
+  walletPlatform?: WalletPlatform
+}) {
   const t = useT("studentCard")
-  const locale = useLocale() as "uz" | "ru" | "en"
   const { session } = useSession()
+  const queryClient = useQueryClient()
   const card = useQuery({ ...getMeStudentCardQuery(), enabled: open, retry: retryCardQuery })
-  const qr = useCardToken(open)
   const clientConfig = useQuery(clientConfigQuery())
   const logoPath = clientConfig.data?.branding.lyceum_logo_url
+  const [confirming, setConfirming] = useState(false)
+  const regenerate = useMutation({
+    mutationFn: () => postMeStudentCardToken(),
+    onSuccess: ({ token }) => {
+      queryClient.setQueryData<StudentCard>(keys.me.studentCard(), (current) =>
+        current ? { ...current, qr_token: token } : current,
+      )
+      setConfirming(false)
+    },
+  })
 
   const data = card.data
-  const name = data ? `${data.first_name} ${data.last_name}`.trim() : ""
-  const facts: [string, string | number | null][] = data
-    ? [
-        [t("group"), data.group],
-        [t("course"), data.course],
-        [t("direction"), data.direction],
-        [t("speciality"), data.speciality],
-      ]
-    : []
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange} title={t("title")} size="sm">
@@ -48,54 +69,40 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
           <StateView state="loading" rows={3} />
         )
       ) : (
-        <div className="flex flex-col items-center gap-4 text-center">
-          {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file or URL */}
-          <img
-            data-testid="card-lyceum-logo"
-            src={logoPath ? apiAbsoluteUrl(logoPath) : BRAND.lyceumLogo}
-            alt={data.lyceum_name ? (data.lyceum_name[locale] ?? data.lyceum_name.en) : ""}
-            className="size-14 rounded-full object-cover"
+        <div className="flex flex-col items-center gap-4">
+          <StudentIdCard
+            card={data}
+            logoSrc={logoPath ? apiAbsoluteUrl(logoPath) : BRAND.lyceumLogo}
+            photoUrl={data.has_photo ? (session?.user.photo_url ?? null) : null}
+            qrValue={cardUrl(getConfig().SHARE_URL, data.qr_token)}
           />
-          <TeacherAvatar name={name} photoUrl={data.has_photo ? (session?.user.photo_url ?? null) : null} size="lg" />
-          <div className="flex flex-col gap-0.5">
-            <p className="text-xl font-semibold">{data.first_name}</p>
-            <p className="text-xl font-semibold">{data.last_name}</p>
-            {data.lyceum_name ? (
-              <p className="text-muted-foreground text-sm">{data.lyceum_name[locale] ?? data.lyceum_name.en}</p>
-            ) : null}
-          </div>
-          <dl className="grid w-full grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-left text-sm">
-            {facts
-              .filter(([, value]) => value !== null && value !== "")
-              .map(([label, value]) => (
-                <div key={label} className="col-span-2 grid grid-cols-subgrid">
-                  <dt className="text-muted-foreground">{label}</dt>
-                  <dd className="font-medium">{value}</dd>
-                </div>
-              ))}
-          </dl>
-          <div className="flex flex-col items-center gap-2">
-            {qr.token ? (
-              <div
-                data-testid="card-qr"
-                data-stale={qr.failed}
-                className={qr.failed ? "opacity-30" : undefined}
-                data-card-url={cardUrl(getConfig().SHARE_URL, qr.token)}
-              >
-                <QrCode value={cardUrl(getConfig().SHARE_URL, qr.token)} label={t("qrLabel")} />
-              </div>
-            ) : (
-              <StateView state="loading" rows={1} />
-            )}
-            {qr.failed ? (
+          <WalletButtons wallet={data.wallet} platform={walletPlatform} />
+          <Button type="button" variant="outline" onClick={() => setConfirming(true)}>
+            {t("regenerate")}
+          </Button>
+          {regenerate.isError && !confirming ? (
+            <p role="alert" className="text-destructive text-sm">
+              {t("regenerateFailed")}
+            </p>
+          ) : null}
+          <ConfirmDialog
+            open={confirming}
+            onOpenChange={(next) => {
+              if (!next) regenerate.reset()
+              setConfirming(next)
+            }}
+            title={t("regenerateTitle")}
+            description={t("regenerateDescription")}
+            confirmLabel={t("regenerateConfirm")}
+            loading={regenerate.isPending}
+            onConfirm={() => regenerate.mutate()}
+          >
+            {regenerate.isError ? (
               <p role="alert" className="text-destructive text-sm">
-                {t("qrFailed")}
+                {t("regenerateFailed")}
               </p>
             ) : null}
-            <p role="timer" aria-live="off" className="text-muted-foreground text-sm">
-              {t("refreshIn", { seconds: qr.secondsLeft })}
-            </p>
-          </div>
+          </ConfirmDialog>
         </div>
       )}
     </ResponsiveDialog>

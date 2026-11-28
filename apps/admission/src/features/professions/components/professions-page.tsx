@@ -10,10 +10,11 @@ import { AdmissionShell } from "../../shell/components/admission-shell"
 import { myProfessionsQuery, professionKeys, putMyProfessions, type MyProfession, type Profession } from "../api"
 import { addPick, MAX_PICKS } from "../model"
 import { careerPlanQuery } from "../../career/api"
-import { CareerQuizButton } from "../../career/components/career-quiz-dialog"
+import { CareerQuizButton, useQuizAnswers } from "../../career/components/career-quiz-dialog"
 import { FitImpact } from "./fit-impact"
 import { AddOwnProfession } from "./add-own-profession"
 import { IkigaiRow } from "./ikigai-row"
+import { ToolCard } from "./tool-card"
 import { SuggestedRow } from "./suggested-row"
 import { MyProfessions } from "./my-professions"
 import { ProfessionSearch } from "./profession-search"
@@ -25,6 +26,7 @@ export function ProfessionsPage() {
   const [sheet, setSheet] = useState(false)
   const plan = useQuery(careerPlanQuery())
   const mine = useQuery(myProfessionsQuery(locale))
+  const { done: quizDone } = useQuizAnswers()
   const { groups } = useStudyFields()
   const labels = new Map(groups.flatMap((g) => g.items.map((i) => [i.id, i.label] as const)))
   const picks: MyProfession[] = [...(mine.data?.items ?? [])].sort((a, b) => a.rank - b.rank)
@@ -67,12 +69,22 @@ export function ProfessionsPage() {
     <AdmissionShell>
       <div className={pageClass("gap-3 md:gap-3.5")}>
         <AppPageHeader icon="user2" title={t("title")} meta={t("subtitle")} />
-        <section className="bg-card rounded-card flex min-w-0 flex-col gap-2.5 border p-3 md:px-4">
-          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-            <IkigaiRow />
-            <CareerQuizButton />
+        <section aria-label={t("quizTool.label")} className="flex min-w-0 flex-col gap-2.5">
+          <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+            <ToolCard
+              icon={Icons.sparkles}
+              step={1}
+              title={t("quizTool.title")}
+              hint={t("quizTool.hint")}
+              status={t(quizDone ? "quizTool.done" : "quizTool.todo")}
+              done={quizDone}
+              action={<CareerQuizButton variant={quizDone ? "outline" : "default"} />}
+            />
+            <IkigaiRow step={2} />
           </div>
-          <SuggestedRow pickedIds={picks.map((p) => p.id)} pickedFull={picks.length >= MAX_PICKS} onAdd={add} />
+          <div className="bg-card rounded-card min-w-0 border px-3 pb-3 empty:hidden md:px-4 [&>section]:border-t-0">
+            <SuggestedRow pickedIds={picks.map((p) => p.id)} pickedFull={picks.length >= MAX_PICKS} onAdd={add} />
+          </div>
         </section>
         <div className="grid min-w-0 items-start gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
           <section aria-labelledby="prof-browse" className="flex min-w-0 flex-col gap-2">

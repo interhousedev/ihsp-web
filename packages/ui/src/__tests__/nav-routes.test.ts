@@ -144,6 +144,6 @@ describe("the same destination reads the same everywhere", () => {
     const short = navMessages("sp", "en").short as Record<string, string>
     expect(short.homework).toBe("Homework")
     expect(navMessages("sp", "en").dashboard).toBe("Home")
-    expect((navMessages("sp", "ru").short as Record<string, string>).assistant).toBe("Ассистент")
+    expect((navMessages("sp", "ru").short as Record<string, string>).assistant).toBe("ИИ-чат")
   })
 })

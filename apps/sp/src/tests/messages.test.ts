@@ -24,6 +24,8 @@ const STUDY_TOOLS = [
   "features/pwa",
   // Red diploma and medals: keys live in `messages/<locale>/honours.json`, checked by honours.test.tsx.
   "features/honours",
+  // The student rating page: keys live in `messages/<locale>/rating.json`, checked by features/rating/components/rating-page.test.tsx.
+  "features/rating",
   "app/honours",
   // The student card sheet: keys live in `messages/<locale>/student-card.json`, checked by student-card.test.tsx.
   "features/student-card",
@@ -286,6 +288,7 @@ describe("keys used in the code", () => {
       "activities.planner.kinds.${item.kind}": ["idea", "task", "milestone", "event_plan"],
       "activities.announce.aud.${a}": ["members", "team", "event"],
       "activities.roles.${m.role}": ["owner", "co_owner", "team", "member"],
+      "activities.eventsAdmin.status.${e.status}": ["draft", "scheduled", "cancelled", "done"],
       "timetable.gap.kind.${entry.block.kind}": ["lunch", "second_lunch", "break", "assembly", "other"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))

@@ -22,6 +22,7 @@ import { ScrollFade } from "@/components/scroll-fade"
 import { incompleteFields, useMoveItem, useReorderItems, type Item, type ItemKind, type ItemStatus } from "../api"
 import { ItemCard } from "./item-card"
 import { missingFields, toForm } from "./item-fields"
+import { ITEM_HEADING } from "./item-ui"
 
 const STATUSES: ItemStatus[] = ["draft", "ready"]
 const TONE = { draft: "warning", ready: "success" } as const
@@ -97,14 +98,14 @@ function Column({
         drop.isOver ? "ring-primary/40 ring-2 ring-offset-4" : ""
       }`}
     >
-      <h2 className="flex items-center gap-2 text-sm font-medium">
+      <h2 className={ITEM_HEADING}>
         {t(`column.${status}`)}
         <Pill tone={TONE[status]} className="h-5 px-2 text-xs">
           {items.length}
         </Pill>
       </h2>
       {items.length === 0 ? (
-        <p className="text-muted-foreground border-hairline rounded-card border border-dashed p-4 text-sm">
+        <p className="text-muted-foreground border-hairline rounded-card border border-dashed p-3 text-sm">
           {t(`column.empty.${status}`)}
         </p>
       ) : (

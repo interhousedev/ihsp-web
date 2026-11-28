@@ -30,7 +30,7 @@
     "broadcasts": "Xabarnomalar",
     "moderation": "Moderatsiya",
     "callForImprovements": "Takomillashtirish boʻyicha chaqiruv",
-    "assistant": "Yordamchi",
+    "assistant": "AI chat",
     "reports": "Hisobotlar",
     "settings": "Sozlamalar",
     "limits": "Limitlar va xarajatlar",
@@ -569,6 +569,24 @@
     "new": "Yangi guruh",
     "empty": "Hozircha guruhlar yoʻq.",
     "notSelected": "Roʻyxatdan guruhni tanlang.",
+    "showHidden": "Yashirin guruhlarni koʻrsatish",
+    "hiddenBadge": "Yashirin",
+    "hide": {
+      "action": "Guruhni yashirish",
+      "title": "{name} guruhi yashirilsinmi?",
+      "description": "Guruh roʻyxatlar, tanlovlar va reytinglardan yoʻqoladi. Hech narsa oʻchirilmaydi: talabalar, baholar va jadval qoladi, guruhni istalgan vaqtda qayta koʻrsatish mumkin.",
+      "submit": "Guruhni yashirish",
+      "keep": "Koʻrinadigan qoldirish",
+      "done": "{name} guruhi yashirildi"
+    },
+    "unhide": {
+      "action": "Guruhni koʻrsatish",
+      "title": "{name} guruhi yana koʻrsatilsinmi?",
+      "description": "Guruh roʻyxatlar, tanlovlar va reytinglarga qaytadi.",
+      "submit": "Guruhni koʻrsatish",
+      "keep": "Yashirin qoldirish",
+      "done": "{name} guruhi yana koʻrinadi"
+    },
     "delete": {
       "action": "Guruhni oʻchirish",
       "title": "{name} guruhi oʻchirilsinmi?",
@@ -1605,7 +1623,6 @@
       "lms": "Kurslar (LMS)",
       "mail": "Talabalar pochtasi",
       "push": "Push-bildirishnomalar",
-      "emis_sync": "EMIS bilan sinxronlash",
       "library": "Kutubxona",
       "web_search": "Veb-qidiruv",
       "vector_search": "Maʼno boʻyicha qidiruv",
@@ -1618,7 +1635,6 @@
       "lms": "Kurslar yaratish va oʻqish marshrutlari.",
       "mail": "Talabalar pochta qutilari va ularning fon vazifalari.",
       "push": "Brauzerga Web Push; VAPID kalitlari ham kerak.",
-      "emis_sync": "EMIS bilan rejali sinxronlash.",
       "library": "Kutubxona sayti va uning rejali vazifalari.",
       "web_search": "Yordamchi, bloknotlar va Discoverʼdagi veb-qidiruv tugmasi.",
       "vector_search": "Bloknotlarda maʼno boʻyicha qidiruv; vektor baza kerak.",
@@ -3172,21 +3188,21 @@
     }
   },
   "clubAnalytics": {
-    "title": "Аналитика клубов",
-    "description": "Рост, посещаемость, оценки и охват объявлений по клубам. Управление клубами — на вкладке «Клубы».",
+    "title": "Klublar tahlili",
+    "description": "Klublar boʻyicha oʻsish, davomat, baholar va eʼlonlar qamrovi. Klublarni boshqarish uchun «Klublar» boʻlimini oching.",
     "kpi": {
-      "clubs": "Активных клубов",
+      "clubs": "Faol klublar",
       "events": "Tadbirlar",
-      "checkIns": "Uchrashuvlardagi belgilar",
+      "checkIns": "Uchrashuvlarda qatnashganlar",
       "rsvps": "Tadbirga yozilganlar"
     },
     "table": {
-      "title": "Клубы",
-      "club": "Клуб",
-      "members": "Участники",
-      "noRating": "Пока нет оценок",
+      "title": "Klublar",
+      "club": "Klub",
+      "members": "Aʼzolar",
+      "noRating": "Hali baholar yoʻq",
       "events": "Tadbirlar",
-      "attendance": "Явка",
+      "attendance": "Davomat",
       "rating": "Reyting"
     }
   },
@@ -3385,7 +3401,11 @@
       "createBody": "Klub darhol tasdiqlangan holda yaratiladi, tanlangan odam uning egasi boʼladi.",
       "createName": "Nomi",
       "createSlug": "Manzil (slug)",
-      "createSlugHint": "Faqat kichik lotin harflari, raqamlar va defis.",
+      "createSlugHint": "3–40 belgi: kichik lotin harflari, raqamlar va defis. Nom lotin harflarida boʻlmasa, manzilni qoʻlda kiriting.",
+      "resumed": "“{name}” klubi yana faol.",
+      "emptyList": "Hozircha klublar yoʻq. Birinchisini yarating.",
+      "emptyFiltered": "Qidiruv yoki tanlangan holat boʻyicha klub topilmadi.",
+      "resetSearch": "Barcha klublarni koʻrsatish",
       "createDescription": "Tavsif",
       "createOwner": "Egasi",
       "createSubmit": "Yaratish",

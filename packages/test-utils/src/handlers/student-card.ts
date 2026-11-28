@@ -12,4 +12,17 @@ export function resetStudentCardTokens(): void {
 export const studentCardHandlers = [
   http.get(apiUrl("/v1/me/student-card"), () => HttpResponse.json(studentCard())),
   http.post(apiUrl("/v1/me/student-card/tokens"), () => HttpResponse.json(studentCardToken(++issued))),
+  http.get(
+    apiUrl("/v1/me/student-card/wallet/apple"),
+    () =>
+      new HttpResponse(new Uint8Array([80, 75, 3, 4]), {
+        headers: {
+          "Content-Type": "application/vnd.apple.pkpass",
+          "Content-Disposition": 'attachment; filename="student-card.pkpass"',
+        },
+      }),
+  ),
+  http.post(apiUrl("/v1/me/student-card/wallet/google"), () =>
+    HttpResponse.json({ url: "https://pay.google.com/gp/v/save/test-jwt" }),
+  ),
 ]

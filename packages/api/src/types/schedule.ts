@@ -54,6 +54,7 @@ export type Term = Omit<TermInput, "control_periods"> & {
 }
 
 export type GroupItem = {
+  hidden: boolean
   id: string
   name: string
   slug: string
@@ -231,7 +232,7 @@ export type GroupPatchBody = {
   name?: string
   current_semester?: number
 }
-export type AdminGroupsParams = { status?: "active" | "archived" }
+export type AdminGroupsParams = { status?: "active" | "archived"; include_hidden?: boolean }
 
 export type SubgroupAssignmentsBody = {
   assignments: { user_id: string; subgroup: 1 | 2 | null }[]

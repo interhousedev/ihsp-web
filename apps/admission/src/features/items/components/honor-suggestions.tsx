@@ -11,6 +11,7 @@ import {
   type HonorSuggestion,
   type Item,
 } from "../api"
+import { ITEM_CARD, ITEM_HEADING } from "./item-ui"
 
 /** The honor fields a certificate prefills, as the create body. */
 export function suggestionInput(s: HonorSuggestion) {
@@ -37,16 +38,13 @@ export function HonorSuggestionsRow() {
   if (rows.length === 0) return null
   return (
     <section aria-label={t("suggestions.title")} className="flex flex-col gap-1.5">
-      <h2 title={t("suggestions.hint")} className="flex items-center gap-2 text-sm font-medium">
+      <h2 title={t("suggestions.hint")} className={ITEM_HEADING}>
         <Icons.certificates aria-hidden className="text-primary size-4" />
         {t("suggestions.title")}
       </h2>
       <ul className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
         {rows.map((s) => (
-          <li
-            key={s.entry_id}
-            className="border-hairline bg-card rounded-card flex w-72 shrink-0 snap-start items-center gap-1 border py-1 pr-1 pl-3"
-          >
+          <li key={s.entry_id} className={`${ITEM_CARD} flex w-72 shrink-0 snap-start items-center gap-1 pr-1`}>
             <div className="flex min-w-0 flex-1 flex-col">
               <span className="truncate text-sm font-medium">{s.title}</span>
               <span className="text-muted-foreground line-clamp-2 text-xs">
@@ -101,11 +99,8 @@ export function CertificatePicker({ onPick }: { onPick: (s: HonorSuggestion) => 
   const suggestions = useHonorSuggestions()
   const rows = suggestions.data?.available ?? []
   return (
-    <section
-      aria-label={t("suggestions.pickTitle")}
-      className="border-hairline rounded-card flex flex-col gap-2 border p-3"
-    >
-      <h3 className="text-sm font-medium">{t("suggestions.pickTitle")}</h3>
+    <section aria-label={t("suggestions.pickTitle")} className={`${ITEM_CARD} flex flex-col gap-2`}>
+      <h3 className={ITEM_HEADING}>{t("suggestions.pickTitle")}</h3>
       {rows.length === 0 ? (
         <p className="text-muted-foreground text-sm">{t("suggestions.pickEmpty")}</p>
       ) : (
@@ -149,11 +144,8 @@ export function HonorDistribution({ items }: { items: Item[] }) {
     .filter((r) => r.ready + r.draft > 0)
   const max = Math.max(1, ...rows.map((r) => r.ready + r.draft))
   return (
-    <section
-      aria-label={t("distribution.title")}
-      className="border-hairline bg-card rounded-card flex flex-col gap-2 border px-4 py-3"
-    >
-      <h2 title={t("distribution.hint")} className="text-sm font-medium">
+    <section aria-label={t("distribution.title")} className={`${ITEM_CARD} flex flex-col gap-2`}>
+      <h2 title={t("distribution.hint")} className={ITEM_HEADING}>
         {t("distribution.title")}
       </h2>
       {rows.length === 0 ? (

@@ -1,11 +1,14 @@
 "use client"
 
-import { usePreferences, useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Switch } from "@ihsp/ui"
 import { useId } from "react"
+import { usePreferences, useUpdatePreferences } from "../notification-settings-form"
 
-/** "Do not show my photo to my classmates": saved in the account preferences, used by Settings and My group. */
+/**
+ * "Hide my photo from the public": saved in the account preferences. The photo stays stored (the entrance device
+ * still recognises the face); only the student and staff see it, everyone else gets a gray placeholder.
+ */
 export function HidePhotoSwitch() {
   const t = useT("myGroup")
   const preferences = usePreferences()
@@ -22,8 +25,8 @@ export function HidePhotoSwitch() {
       </span>
       <Switch
         aria-labelledby={labelId}
-        checked={preferences.hide_photo_from_classmates}
-        onCheckedChange={(value) => update.mutate({ hide_photo_from_classmates: value })}
+        checked={preferences.hide_photo_from_public}
+        onCheckedChange={(value) => update.mutate({ hide_photo_from_public: value })}
       />
     </label>
   )

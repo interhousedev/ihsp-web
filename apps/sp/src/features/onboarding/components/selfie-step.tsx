@@ -1,7 +1,7 @@
 "use client"
 
 import { keys, putMyFace } from "@ihsp/api"
-import { refreshSessionUser, useCamera } from "@ihsp/features-core"
+import { HidePhotoSwitch, refreshSessionUser, useCamera } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
@@ -137,6 +137,8 @@ export function SelfieStep() {
           {failure}
         </p>
       ) : null}
+
+      <HidePhotoSwitch />
 
       <div className="flex flex-col gap-2">
         {chosen ? (

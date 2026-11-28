@@ -2,7 +2,7 @@
 
 import { isApiError } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Input, LoadingButton } from "@ihsp/ui"
+import { Button, ConfirmDialog, Input, LoadingButton } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { ImageUrlField, isHttpsImageUrl } from "../../../components/lib/image-url-field"
@@ -44,6 +44,7 @@ export function OrgsEditor() {
   const { create, update, remove } = useOrgMutations()
   const [editing, setEditing] = useState<string | null>(null)
   const [draft, setDraft] = useState<Draft>(EMPTY)
+  const [deleting, setDeleting] = useState<Org | null>(null)
   const set = <K extends keyof Draft>(key: K, value: Draft[K]) => setDraft((d) => ({ ...d, [key]: value }))
   const onError = (error: unknown) => toast.error(errorMessage(error))
   const body = {
@@ -69,6 +70,7 @@ export function OrgsEditor() {
       onSuccess: () => {
         if (editing === org.id) reset()
       },
+      onSettled: () => setDeleting(null),
       onError: (error) => (isApiError(error) && error.status === 409 ? toast.error(t("orgs.inUse")) : onError(error)),
     })
   }
@@ -94,12 +96,24 @@ export function OrgsEditor() {
             >
               {t("orgs.edit")}
             </Button>
-            <Button size="sm" variant="ghost" disabled={remove.isPending} onClick={() => del(org)}>
+            <Button size="sm" variant="ghost" disabled={remove.isPending} onClick={() => setDeleting(org)}>
               {t("orgs.delete")}
             </Button>
           </li>
         ))}
       </ul>
+      <ConfirmDialog
+        open={deleting !== null}
+        onOpenChange={(open) => !open && setDeleting(null)}
+        title={t("orgs.deleteTitle", { name: deleting?.name ?? "" })}
+        description={t("orgs.deleteBody")}
+        confirmLabel={t("orgs.delete")}
+        destructive
+        loading={remove.isPending}
+        onConfirm={() => {
+          if (deleting) del(deleting)
+        }}
+      />
       <form className="grid gap-3 sm:grid-cols-2" onSubmit={submit}>
         <Input
           aria-label={t("orgs.name")}

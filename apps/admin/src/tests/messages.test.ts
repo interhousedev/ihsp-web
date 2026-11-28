@@ -55,7 +55,6 @@ const FEATURE_FLAGS = [
   "lms",
   "mail",
   "push",
-  "emis_sync",
   "library",
   "web_search",
   "vector_search",

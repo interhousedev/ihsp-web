@@ -728,6 +728,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/activities/clubs/{club_id}/members/{user_id}:decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Decline Member
+         * @description Turn a join request down; the person may ask again.
+         */
+        post: operations["decline_member_v1_activities_clubs__club_id__members__user_id__decline_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/members/{user_id}:remove": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Remove Member
+         * @description Remove a member without a ban; the person may join again.
+         */
+        post: operations["remove_member_v1_activities_clubs__club_id__members__user_id__remove_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/activities/clubs/{club_id}/planner": {
         parameters: {
             query?: never;
@@ -3101,7 +3141,7 @@ export interface paths {
         };
         /**
          * List Groups
-         * @description List groups with student and subgroup counts.
+         * @description List groups with student and subgroup counts; hidden ones on request.
          */
         get: operations["list_groups_v1_admin_groups_get"];
         put?: never;
@@ -3217,6 +3257,26 @@ export interface paths {
          * @description Assign the head student (an active member of the group); null clears it.
          */
         put: operations["set_head_student_v1_admin_groups__group_id__head_student_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/groups/{group_id}/hidden": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Group Hidden
+         * @description Hide a group from lists, pickers and standings, or show it again.
+         */
+        put: operations["set_group_hidden_v1_admin_groups__group_id__hidden_put"];
         post?: never;
         delete?: never;
         options?: never;
@@ -19656,6 +19716,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/rating": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Overall Rating
+         * @description The lyceum's students ranked by the overall score of the year.
+         */
+        get: operations["get_overall_rating_v1_me_rating_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/record-book": {
         parameters: {
             query?: never;
@@ -19745,7 +19825,7 @@ export interface paths {
         };
         /**
          * Get Student Card
-         * @description Return the caller's student card.
+         * @description Return the caller's student card and its QR token.
          */
         get: operations["get_student_card_v1_me_student_card_get"];
         put?: never;
@@ -19766,10 +19846,50 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Issue Student Card Token
-         * @description Issue a two-minute token that shows the card to a verifier.
+         * Regenerate Student Card Token
+         * @description Replace the QR token; the printed or shared old code stops working.
          */
-        post: operations["issue_student_card_token_v1_me_student_card_tokens_post"];
+        post: operations["regenerate_student_card_token_v1_me_student_card_tokens_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/student-card/wallet/apple": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Student Card Apple Pass
+         * @description Return the signed Apple Wallet pass; 404 when Apple Wallet is off.
+         */
+        get: operations["get_student_card_apple_pass_v1_me_student_card_wallet_apple_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/student-card/wallet/google": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get Student Card Google Link
+         * @description Return the "Add to Google Wallet" link; 404 when Google Wallet is off.
+         */
+        post: operations["get_student_card_google_link_v1_me_student_card_wallet_google_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -21805,7 +21925,7 @@ export interface paths {
         };
         /**
          * Get Public Student Card
-         * @description Return the card behind a token; 404 when it is unknown or expired.
+         * @description Return the card behind a token; 404 when it is unknown or was replaced.
          */
         get: operations["get_public_student_card_v1_public_student_cards__token__get"];
         put?: never;
@@ -21825,7 +21945,7 @@ export interface paths {
         };
         /**
          * Get Public Student Card Photo
-         * @description Return the photo behind a token; never cached.
+         * @description Return the photo behind a token; 404 when none or hidden from the public.
          */
         get: operations["get_public_student_card_photo_v1_public_student_cards__token__photo_get"];
         put?: never;
@@ -26249,6 +26369,47 @@ export interface components {
              * @default
              */
             reason?: string;
+        };
+        /**
+         * BankQuestionOut
+         * @description A stored question as the staff app reads it.
+         */
+        BankQuestionOut: {
+            /** Answer */
+            answer: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Difficulty
+             * @enum {string}
+             */
+            difficulty: "easy" | "medium" | "hard";
+            /** Explanation */
+            explanation: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Options */
+            options: string[];
+            /**
+             * Origin
+             * @enum {string}
+             */
+            origin: "ai" | "teacher";
+            /** Question */
+            question: string;
+            /** Topic */
+            topic: string;
+            /**
+             * Visibility
+             * @enum {string}
+             */
+            visibility: "teacher" | "subject";
         };
         /**
          * BaseReviewOut
@@ -31382,6 +31543,16 @@ export interface components {
             status: "synced" | "no_student";
         };
         /**
+         * CurriculumTopicOut
+         * @description A curriculum topic of the subject.
+         */
+        CurriculumTopicOut: {
+            /** Grade */
+            grade: number | null;
+            /** Topic */
+            topic: string;
+        };
+        /**
          * CurveDoc
          * @description A quadratic curve (`base`) or a cumulative table (`steps`).
          */
@@ -35683,6 +35854,14 @@ export interface components {
             items: components["schemas"]["MilestonePutIn"][];
         };
         /**
+         * GoogleWalletLinkResponse
+         * @description The "Add to Google Wallet" link.
+         */
+        GoogleWalletLinkResponse: {
+            /** Url */
+            url: string;
+        };
+        /**
          * GradeRow
          * @description A subject row of the grade table.
          */
@@ -35811,6 +35990,8 @@ export interface components {
             /** Emis Group Id */
             emis_group_id: number | null;
             head_student: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__PersonRefResponse"] | null;
+            /** Hidden */
+            hidden: boolean;
             /**
              * Id
              * Format: uuid
@@ -35852,6 +36033,14 @@ export interface components {
             last_name: string;
             /** Photo Url */
             photo_url: string | null;
+        };
+        /**
+         * GroupHiddenBody
+         * @description Body of PUT /v1/admin/groups/{id}/hidden.
+         */
+        GroupHiddenBody: {
+            /** Hidden */
+            hidden: boolean;
         };
         /**
          * GroupMemberRow
@@ -41351,7 +41540,7 @@ export interface components {
         };
         /**
          * LyceumNameOut
-         * @description The lyceum name in the three languages.
+         * @description The lyceum name in the three languages, as EMIS gives it.
          */
         LyceumNameOut: {
             /** En */
@@ -43015,6 +43204,30 @@ export interface components {
             sources: components["schemas"]["ProfessionSourceOut"][];
         };
         /**
+         * MyRatingRow
+         * @description The caller's row with the breakdown.
+         */
+        MyRatingRow: {
+            breakdown: components["schemas"]["RatingBreakdown"];
+            /** Full Name */
+            full_name: string;
+            /** Group Name */
+            group_name: string;
+            /** Is Me */
+            is_me: boolean;
+            /** Photo Url */
+            photo_url: string | null;
+            /** Place */
+            place: number;
+            /** Score */
+            score: number;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+        };
+        /**
          * MySuggestionResponse
          * @description `MySuggestion`: one of the signed-in person's suggestions and its status.
          */
@@ -44652,6 +44865,19 @@ export interface components {
             title: string;
         };
         /**
+         * OverallRatingResponse
+         * @description Top students, the caller's place and the weights.
+         */
+        OverallRatingResponse: {
+            academic_year: components["schemas"]["RatingYear"] | null;
+            me: components["schemas"]["MyRatingRow"] | null;
+            /** Top */
+            top: components["schemas"]["RatingRow"][];
+            /** Total */
+            total: number;
+            weights: components["schemas"]["RatingWeightsResponse"];
+        };
+        /**
          * OverlapOut
          * @description Preference tags a university meets, out of those it can be judged on.
          */
@@ -44703,6 +44929,16 @@ export interface components {
              * Format: uuid
              */
             to_user: string;
+        };
+        /**
+         * PageOut
+         * @description One page of questions and the total behind it.
+         */
+        PageOut: {
+            /** Items */
+            items: components["schemas"]["BankQuestionOut"][];
+            /** Total */
+            total: number;
         };
         /** PageResponse[NotebookItemResponse] */
         PageResponse_NotebookItemResponse_: {
@@ -46210,8 +46446,8 @@ export interface components {
             alerts_semester_mark_below?: number | null;
             /** Bottom Nav */
             bottom_nav?: string[] | null;
-            /** Hide Photo From Classmates */
-            hide_photo_from_classmates?: boolean | null;
+            /** Hide Photo From Public */
+            hide_photo_from_public?: boolean | null;
             /** Lessons Links Lead Min */
             lessons_links_lead_min?: number | null;
             /** Lessons Prompt Enabled */
@@ -46670,16 +46906,33 @@ export interface components {
             application_effect: string;
             /** Challenges */
             challenges: string[];
+            /**
+             * Deliverable
+             * @default
+             */
+            deliverable?: string;
             /** First Steps */
             first_steps: string[];
             /** Help Tags */
             help_tags: ("website_tech" | "business_growth" | "pitching" | "org_outreach" | "fundraising" | "product_dev")[];
             /** Key */
             key: string;
+            /**
+             * Measure
+             * @default
+             */
+            measure?: string;
             /** Summary */
             summary: string;
             /** Title */
             title: string;
+            /** Weeks */
+            weeks?: number | null;
+            /**
+             * Why You
+             * @default
+             */
+            why_you?: string;
         };
         /**
          * ProjectPatchBody
@@ -47410,20 +47663,19 @@ export interface components {
         };
         /**
          * PublicStudentCardResponse
-         * @description The card seen through a token; the owner's id is not part of it.
+         * @description The card as a verifier sees it through the QR code; no owner id.
          */
         PublicStudentCardResponse: {
+            /** Academic Year */
+            academic_year: string;
             /** Course */
             course: number | null;
             /** Direction */
             direction: string | null;
-            /**
-             * Expires At
-             * Format: date-time
-             */
-            expires_at: string;
             /** First Name */
             first_name: string;
+            /** Full Name */
+            full_name: string;
             /** Group */
             group: string | null;
             /** Has Photo */
@@ -47431,8 +47683,14 @@ export interface components {
             /** Last Name */
             last_name: string;
             lyceum_name: components["schemas"]["LyceumNameOut"] | null;
+            /** Middle Name */
+            middle_name: string | null;
+            /** Org Name */
+            org_name: string;
             /** Speciality */
             speciality: string | null;
+            /** Student Id */
+            student_id: string | null;
         };
         /**
          * PublicTeamMemberOut
@@ -48177,6 +48435,46 @@ export interface components {
             url: string;
         };
         /**
+         * RatingBreakdown
+         * @description The parts of the caller's score (penalties negative).
+         */
+        RatingBreakdown: {
+            /** Absence Points */
+            absence_points: number;
+            /** Absences */
+            absences: number;
+            /** Base */
+            base: number;
+            /** Certificate Points */
+            certificate_points: number;
+            /** Certificates */
+            certificates: components["schemas"]["RatingCertificate"][];
+            /** Mark Average */
+            mark_average: number | null;
+            /** Mark Count */
+            mark_count: number;
+            /** Marks Points */
+            marks_points: number;
+            /** Work Off Points */
+            work_off_points: number;
+            /** Work Offs */
+            work_offs: number;
+        };
+        /**
+         * RatingCertificate
+         * @description A certificate of the year with its points.
+         */
+        RatingCertificate: {
+            /** Category */
+            category: string;
+            /** Level */
+            level: string | null;
+            /** Name */
+            name: string;
+            /** Points */
+            points: number;
+        };
+        /**
          * RatingCommentOut
          * @description A rating comment; the author only when not anonymous.
          */
@@ -48220,6 +48518,71 @@ export interface components {
             comment?: string | null;
             /** Score */
             score: number;
+        };
+        /**
+         * RatingRow
+         * @description One ranked student.
+         */
+        RatingRow: {
+            /** Full Name */
+            full_name: string;
+            /** Group Name */
+            group_name: string;
+            /** Is Me */
+            is_me: boolean;
+            /** Photo Url */
+            photo_url: string | null;
+            /** Place */
+            place: number;
+            /** Score */
+            score: number;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+        };
+        /**
+         * RatingWeightsResponse
+         * @description How the score is built (penalties are positive numbers here).
+         */
+        RatingWeightsResponse: {
+            /** Absence Points */
+            absence_points: number;
+            /** Base */
+            base: number;
+            /** Category Points */
+            category_points: {
+                [key: string]: number;
+            };
+            /** Level Points */
+            level_points: {
+                [key: string]: number;
+            };
+            /** Marks Points */
+            marks_points: number;
+            /** Marks Threshold */
+            marks_threshold: number;
+            /** Work Off Points */
+            work_off_points: number;
+        };
+        /**
+         * RatingYear
+         * @description The rated academic year.
+         */
+        RatingYear: {
+            /**
+             * Ends On
+             * Format: date
+             */
+            ends_on: string;
+            /** Label */
+            label: string;
+            /**
+             * Starts On
+             * Format: date
+             */
+            starts_on: string;
         };
         /**
          * RatingsBody
@@ -50086,6 +50449,16 @@ export interface components {
         SaveNoteBody: {
             /** Title */
             title?: string | null;
+        };
+        /**
+         * SaveOut
+         * @description How many questions were stored and how many were duplicates.
+         */
+        SaveOut: {
+            /** Saved */
+            saved: number;
+            /** Skipped */
+            skipped: number;
         };
         /**
          * SaveStepDraftBody
@@ -52991,15 +53364,19 @@ export interface components {
         };
         /**
          * StudentCardResponse
-         * @description The student's own card.
+         * @description The student's own card with its permanent QR token.
          */
         StudentCardResponse: {
+            /** Academic Year */
+            academic_year: string;
             /** Course */
             course: number | null;
             /** Direction */
             direction: string | null;
             /** First Name */
             first_name: string;
+            /** Full Name */
+            full_name: string;
             /** Group */
             group: string | null;
             /** Has Photo */
@@ -53007,21 +53384,23 @@ export interface components {
             /** Last Name */
             last_name: string;
             lyceum_name: components["schemas"]["LyceumNameOut"] | null;
+            /** Middle Name */
+            middle_name: string | null;
+            /** Org Name */
+            org_name: string;
+            /** Qr Token */
+            qr_token: string;
             /** Speciality */
             speciality: string | null;
+            /** Student Id */
+            student_id: string | null;
+            wallet: components["schemas"]["WalletAvailabilityOut"];
         };
         /**
          * StudentCardTokenResponse
-         * @description A share token: shown as a QR code, valid for two minutes.
+         * @description The new permanent QR token; the previous one no longer works.
          */
         StudentCardTokenResponse: {
-            /**
-             * Expires At
-             * Format: date-time
-             */
-            expires_at: string;
-            /** Refresh In */
-            refresh_in: number;
             /** Token */
             token: string;
         };
@@ -55965,6 +56344,16 @@ export interface components {
             user_id: string;
         };
         /**
+         * TopicCountOut
+         * @description A curriculum topic with the questions the caller sees in it.
+         */
+        TopicCountOut: {
+            /** Count */
+            count: number;
+            /** Topic */
+            topic: string;
+        };
+        /**
          * TopicRefSchema
          * @description A topic the item feeds, with the page range.
          */
@@ -57075,10 +57464,10 @@ export interface components {
             /** @default {} */
             contacts?: components["schemas"]["TeacherContacts"];
             /**
-             * Hide Photo From Classmates
+             * Hide Photo From Public
              * @default false
              */
-            hide_photo_from_classmates?: boolean;
+            hide_photo_from_public?: boolean;
             /**
              * Lessons Links Lead Min
              * @default 5
@@ -57557,6 +57946,16 @@ export interface components {
             values: {
                 [key: string]: string;
             };
+        };
+        /**
+         * WalletAvailabilityOut
+         * @description Which wallet buttons to show: a wallet without settings is off.
+         */
+        WalletAvailabilityOut: {
+            /** Apple */
+            apple: boolean;
+            /** Google */
+            google: boolean;
         };
         /**
          * WebAuthnOptionsResponse
@@ -58171,6 +58570,8 @@ export interface components {
             /** Current Semester */
             current_semester: number | null;
             head_student: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__PersonRefResponse"] | null;
+            /** Hidden */
+            hidden: boolean;
             /**
              * Id
              * Format: uuid
@@ -62511,6 +62912,70 @@ export interface operations {
                 "application/json": components["schemas"]["BanIn"];
             };
         };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Membership"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decline_member_v1_activities_clubs__club_id__members__user_id__decline_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Membership"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_member_v1_activities_clubs__club_id__members__user_id__remove_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -67023,6 +67488,7 @@ export interface operations {
         parameters: {
             query?: {
                 status?: ("active" | "archived") | null;
+                include_hidden?: boolean;
             };
             header?: never;
             path?: never;
@@ -67283,6 +67749,41 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_group_hidden_v1_admin_groups__group_id__hidden_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GroupHiddenBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupDetailResponse"];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -98627,6 +99128,37 @@ export interface operations {
             };
         };
     };
+    get_overall_rating_v1_me_rating_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OverallRatingResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_record_book_v1_me_record_book_get: {
         parameters: {
             query?: never;
@@ -98738,7 +99270,7 @@ export interface operations {
             };
         };
     };
-    issue_student_card_token_v1_me_student_card_tokens_post: {
+    regenerate_student_card_token_v1_me_student_card_tokens_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -98754,6 +99286,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StudentCardTokenResponse"];
+                };
+            };
+        };
+    };
+    get_student_card_apple_pass_v1_me_student_card_wallet_apple_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/vnd.apple.pkpass": unknown;
+                };
+            };
+        };
+    };
+    get_student_card_google_link_v1_me_student_card_wallet_google_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GoogleWalletLinkResponse"];
                 };
             };
         };
@@ -105061,7 +105633,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["BankQuestionOut"];
                 };
             };
             /** @description Validation Error */
@@ -105154,7 +105726,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["CurriculumTopicOut"][];
                 };
             };
             /** @description Validation Error */
@@ -105189,7 +105761,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["BankQuestionOut"][];
                 };
             };
             /** @description Validation Error */
@@ -105224,7 +105796,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["PageOut"];
                 };
             };
             /** @description Validation Error */
@@ -105259,7 +105831,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["SaveOut"];
                 };
             };
             /** @description Validation Error */
@@ -105290,7 +105862,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["TopicCountOut"][];
                 };
             };
             /** @description Validation Error */

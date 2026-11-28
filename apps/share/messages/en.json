@@ -62,34 +62,13 @@
       "openApp": "Open {appMy}"
     },
     "card": {
-      "expiredTitle": "This card code has expired",
-      "expiredDescription": "Ask the student to show a new QR code.",
-      "lyceum": "Lyceum",
+      "invalidTitle": "This card code is not valid",
+      "invalidDescription": "The student may have replaced it. Ask them to show their current QR code.",
+      "label": "Student",
       "group": "Group",
-      "course": "Course",
-      "direction": "Direction",
-      "speciality": "Speciality",
-      "validUntil": "Valid until {time}",
-      "expiresIn": "{time} left"
-    },
-    "admissionGuest": {
-      "title": "Help {name}",
-      "student": "a student",
-      "validUntil": "Link valid until {time}",
-      "activities": "Activities",
-      "responses": "Replies",
-      "text": "Your reply",
-      "url": "Link (https), optional",
-      "urlInvalid": "Only https links are accepted",
-      "send": "Send",
-      "thanks": "Thank you, {name} will see it",
-      "claimHint": "Sign in with an account to keep your replies in one place.",
-      "missingTitle": "This link is incomplete",
-      "missingText": "Open the full link you received.",
-      "unavailableTitle": "This link no longer works",
-      "unavailableText": "It expired or was revoked. Ask for a new one.",
-      "limitedTitle": "Too many attempts",
-      "limitedText": "Try again in a few minutes."
+      "studentId": "Student ID",
+      "speciality": "Specialization",
+      "photoAlt": "Student photo"
     },
     "essayReview": {
       "name": "Your name",

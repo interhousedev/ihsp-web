@@ -1,6 +1,6 @@
 "use client"
 
-import { useT } from "@ihsp/i18n"
+import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Icons, PageHeader, Pill, StateView, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
@@ -35,6 +35,7 @@ export function ItemList() {
   const caps = useAdmissionConfig().data?.item_caps
   const cap = caps?.[CAP_KEY[kind]]
   const remove = useDeleteItem()
+  const errorMessage = useErrorMessage()
   const pathname = usePathname()
   const itemParam = params.get("item")
   const fromParam = params.get("from")
@@ -126,6 +127,16 @@ export function ItemList() {
                 title={t(`empty.${kind}.title`)}
                 description={t(`empty.${kind}.text`)}
                 icon={kind === "honor" ? <Icons.certificates aria-hidden /> : <Icons.sparkles aria-hidden />}
+                action={
+                  <Button
+                    type="button"
+                    disabled={draftFull}
+                    onClick={() => setParams((next) => next.set("item", "new"), true)}
+                  >
+                    <Icons.add aria-hidden />
+                    {t("add")}
+                  </Button>
+                }
               />
             </div>
           ) : null}
@@ -166,9 +177,14 @@ export function ItemList() {
         description={t("delete.text")}
         confirmLabel={t("delete.button")}
         destructive
+        loading={remove.isPending}
         onConfirm={() => {
-          if (deleting) remove.mutate(deleting.id)
-          setDeleting(null)
+          if (!deleting) return
+          remove.mutate(deleting.id, {
+            onSuccess: () => toast.success(t("delete.done", { title: deleting.title })),
+            onError: (error) => toast.error(errorMessage(error)),
+            onSettled: () => setDeleting(null),
+          })
         }}
       />
     </>

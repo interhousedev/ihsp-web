@@ -1,0 +1,32 @@
+{
+  "rating": {
+    "title": "Student rating",
+    "year": "Academic year {label}",
+    "yourPlace": "Your place {place} of {total}",
+    "points": "{score} points",
+    "notRanked": "You are not in the rating yet.",
+    "notRankedHint": "Your place appears once the platform has your records.",
+    "breakdownTitle": "How your score is built",
+    "base": "Starting points",
+    "certificates": "Certificates",
+    "marks": "Marks",
+    "marksAverage": "Average mark {average} over {count} marks",
+    "marksNone": "No marks yet",
+    "absences": "Absences",
+    "absencesCount": "{count} absences",
+    "workOffs": "Open work-offs",
+    "workOffsCount": "{count} work-offs",
+    "certificatesNone": "No certificates this year",
+    "explainTitle": "Rules of the score",
+    "explainBase": "Everyone starts with {base} points.",
+    "explainCertificates": "Each certificate of the year adds points. The number depends on its category and level.",
+    "explainMarks": "If your average mark is {threshold} or higher, you get {points} points.",
+    "explainAbsences": "Each absence takes away {points} points. An absence recorded both in EMIS and on the platform counts once.",
+    "explainWorkOffs": "Each work-off you still owe takes away {points} points.",
+    "topTitle": "Ranking",
+    "you": "You",
+    "photoOf": "Photo of {name}",
+    "empty": "The rating is empty for now.",
+    "noYear": "There is no academic year to rate yet."
+  }
+}

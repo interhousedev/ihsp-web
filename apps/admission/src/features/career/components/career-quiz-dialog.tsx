@@ -41,7 +41,7 @@ export function CareerQuizButton({
   variant = "outline",
   renderExtra,
 }: {
-  variant?: "outline" | "secondary" | "ghost"
+  variant?: "default" | "outline" | "secondary" | "ghost"
   renderExtra?: (context: QuestionnaireExtraContext) => ReactNode
 }) {
   const t = useT("career")

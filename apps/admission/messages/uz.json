@@ -3201,7 +3201,8 @@
     "delete": {
       "button": "Oʻchirish",
       "title": "Yozuv oʻchirilsinmi?",
-      "text": "Uning raqamlari, baholari va dalillari ham oʻchadi."
+      "text": "Uning raqamlari, baholari va dalillari ham oʻchadi.",
+      "done": "“{title}” oʻchirildi"
     },
     "metrics": {
       "title": "Raqamlar",
@@ -4099,6 +4100,8 @@
       "reportReason": "Sabab",
       "reportSend": "Shikoyatni yuborish",
       "reported": "Shikoyat yuborildi",
+      "deleteTitle": "Izohingiz oʻchirilsinmi?",
+      "deleteBody": "Izoh hamma uchun yoʻqoladi. Buni bekor qilib boʻlmaydi.",
       "hide": "Yashirish",
       "unhide": "Koʻrsatish",
       "hiddenPill": "Yashirilgan",
@@ -4149,6 +4152,8 @@
     },
     "saveToPlan": "Rejaga qoʻshish",
     "removeFromPlan": "Olib tashlash",
+    "removedFromPlan": "Rejadan olib tashlandi",
+    "undo": "Qaytarish",
     "saved": "Rejaga qoʻshildi",
     "emptyTitle": "Hech narsa topilmadi",
     "emptyText": "Boshqa filtrlarni tanlang yoki yozuv taklif qiling.",
@@ -4165,8 +4170,22 @@
     "registrationLabel": "Roʻyxatdan oʻtish muddati",
     "examLabel": "Imtihon sanasi",
     "lastYearLabel": "Oʻtgan yilgi sana",
-    "recurrenceLabel": "Takrorlanish qoidasi",
+    "moreDetails": "Qoʻshimcha maʼlumotlar",
+    "moreDetailsHint": "ixtiyoriy: tashkilotchi, sinflar, sanalar, narx, izoh",
     "noteLabel": "Tekshiruvchi uchun izoh",
+    "needs": {
+      "title": "Yuborish uchun nomini yozing.",
+      "subjects": "Yuborish uchun kamida bitta fan tanlang.",
+      "repeat": "Yuborish uchun qanchalik tez-tez takrorlanishini tanlang."
+    },
+    "repeat": {
+      "label": "Qanchalik tez-tez takrorlanadi",
+      "choose": "Tanlang",
+      "WEEKLY": "Har hafta",
+      "MONTHLY": "Har oy",
+      "YEARLY": "Har yili",
+      "custom": "Oʻz jadvali"
+    },
     "planTitle": "Saqlangan imkoniyatlar",
     "planEmptyTitle": "Reja hozircha boʻsh",
     "planEmptyText": "Imtihon, kurs va tadbirlarni saqlab, ularni {from}–{to}-sinflarga taqsimlang.",
@@ -4256,6 +4275,7 @@
       "untitled": "Nomsiz",
       "pendingTwin": "Buni allaqachon taklif qilishgan; moderatsiyani kutmoqda.",
       "propose": "Profilga qoʻshish",
+      "fill": "Shaklni toʻldirish",
       "linked": "Imkoniyat bogʻlandi",
       "linkTitle": "Imkoniyat",
       "open": "Imkoniyatni bogʻlash",
@@ -4270,6 +4290,8 @@
     "findMore": "Imkoniyat topish"
   },
   "opportunitiesStaff": {
+    "deleteNodeTitle": "“{name}” oʻchirilsinmi?",
+    "deleteNodeBody": "Uning ichidagi hamma narsa ham oʻchiriladi. Undan foydalangan yozuvlar bu belgini yoʻqotadi.",
     "reports": {
       "title": "Izohlarga shikoyatlar",
       "empty": "Koʻrib chiqiladigan shikoyat yoʻq.",
@@ -4291,6 +4313,8 @@
       "edit": "Tahrirlash",
       "delete": "Oʻchirish",
       "inUse": "Tashkilot imkoniyatlarda ishlatilmoqda, uni oʻchirib boʻlmaydi.",
+      "deleteTitle": "“{name}” oʻchirilsinmi?",
+      "deleteBody": "Imkoniyatlarda hali ishlatilayotgan tashkilotni oʻchirib boʻlmaydi.",
       "kind": {
         "university": "Universitet",
         "company": "Kompaniya",
@@ -5828,6 +5852,100 @@
         "documents": "Hujjatlar",
         "apply": "Arizalar",
         "results": "Natijalar"
+      },
+      "guide": {
+        "label": "Hozir nima qilish kerak",
+        "step": "{n}-qadam, jami {total}",
+        "finished": "Yoʻl bosib oʻtildi",
+        "done": "{total} tadan {done} tasi tayyor",
+        "how": "Buni qanday qilish kerak",
+        "progress": "Hozirgacha bajarildi: {progress}",
+        "then": "Keyin: {name}",
+        "last": "Bu oxirgi qadam",
+        "allDone": {
+          "title": "Siz butun yoʻlni bosib oʻtdingiz",
+          "text": "Barcha qadamlar bajarildi. Quyida muddatlar va universitetlar javoblarini kuzatib boring."
+        },
+        "countries": {
+          "title": "Qayerda oʻqishni xohlashingizni tanlang",
+          "why": "Davlatlarda narx, imtihon va muddatlar har xil, shuning uchun qolgan hammasi shu tanlovga bogʻliq.",
+          "s1": "Qisqa sozlashni oching va davlatlar haqidagi savollarga javob bering.",
+          "s2": "Uchtagacha davlat tanlang: ularni istalgan vaqtda oʻzgartirish mumkin.",
+          "s3": "Saqlang: testlar, muddatlar va universitetlar tanlovingizga moslashadi.",
+          "cta": "Davlatlarni tanlash"
+        },
+        "major": {
+          "title": "Nimani oʻqishni xohlashingizni tanlang",
+          "why": "Universitetlar yoʻnalishga qabul qiladi, mashgʻulotlaringiz va esselaringiz ham shunga ishora qilishi kerak.",
+          "s1": "Hali ishonchingiz komil emasmi? Avval «Profil» boʻlimida qisqa qiziqishlar testidan oʻting.",
+          "s2": "Sozlashni oching va bir yoki ikkita yoʻnalish tanlang.",
+          "s3": "Saqlang: universitetlar va gʻoyalar shu yoʻnalishlarga qarab tanlanadi.",
+          "cta": "Yoʻnalishni tanlash"
+        },
+        "activities": {
+          "title": "Darsdan tashqari nima bilan shugʻullanishingizni yozing",
+          "why": "Qabul komissiyasi baholardan keyin darhol mashgʻulotlaringizni oʻqiydi: ular kimligingizni koʻrsatadi.",
+          "s1": "Bitta mashgʻulot qoʻshing: toʻgarak, loyiha, tanlov, koʻngillilik, ish.",
+          "s2": "Aynan nima qilganingizni va natijasini raqamlar bilan yozing.",
+          "s3": "Uni tayyor deb belgilang va maqsadga yetguncha keyingisini qoʻshing.",
+          "cta": "Mashgʻulot qoʻshish"
+        },
+        "tests": {
+          "title": "Testlarni rejalashtiring va topshiring",
+          "why": "Deyarli barcha xorijiy universitetlar til testini, koʻplari esa SAT yoki shunga oʻxshash imtihonni soʻraydi.",
+          "s1": "Davlatlaringiz va universitetlaringiz qaysi testlarni soʻrashini koʻring.",
+          "s2": "Sanani tanlang va testni rejaga qoʻshing.",
+          "s3": "Natija kelganda ballni shu yerga kiriting.",
+          "cta": "Testlarni ochish"
+        },
+        "list": {
+          "title": "Universitetlar roʻyxatini tuzing",
+          "why": "Yaxshi roʻyxatda dadil, real va ishonchli variantlar boʻladi, shunda kamida bitta taklif olasiz.",
+          "s1": "Universitetlar qidiruvini oching: u davlatlaringiz va yoʻnalishingizni allaqachon biladi.",
+          "s2": "Narx, talablar va imkoniyatingizni solishtiring.",
+          "s3": "Maqsadga yetguncha universitetlarni roʻyxatga qoʻshing.",
+          "cta": "Universitetlarni tanlash"
+        },
+        "statement": {
+          "title": "Asosiy esseni yozing",
+          "why": "Bu universitetlar sizning ovozingizni eshitadigan yagona joy va u deyarli hammasiga yuboriladi.",
+          "s1": "Faqat siz aytib bera oladigan voqeani tanlang.",
+          "s2": "Birinchi qoralamani yozing: u hali yaxshi boʻlishi shart emas.",
+          "s3": "Fikrlarni oʻqing, qayta yozing va esseni yakuniy deb belgilang.",
+          "cta": "Esseni ochish"
+        },
+        "supplements": {
+          "title": "Har bir universitet uchun esse yozing",
+          "why": "Koʻp universitetlar oʻzining qisqa savollarini beradi, odatda nega aynan ularni tanlaganingiz haqida.",
+          "s1": "Universitetlaringiz savollari roʻyxatini oching.",
+          "s2": "Eng erta muddatdan boshlang.",
+          "s3": "Har bir esse tayyor boʻlganda uni yakuniy deb belgilang.",
+          "cta": "Esselarni ochish"
+        },
+        "documents": {
+          "title": "Hujjatlarni toʻplang",
+          "why": "Baholar koʻchirmasi, tavsiyanomalar va sertifikatlar haftalab tayyorlanadi, shuning uchun erta boshlang.",
+          "s1": "Roʻyxatni oching: unda faqat universitetlaringizga kerakli hujjatlar bor.",
+          "s2": "Oʻqituvchilardan tavsiyanomani kamida bir oy oldin soʻrang.",
+          "s3": "Har bir hujjat tayyor boʻlganda belgilang.",
+          "cta": "Hujjatlarni ochish"
+        },
+        "apply": {
+          "title": "Arizalarni yuboring",
+          "why": "Hammasi tayyor. Endi har bir universitet saytida arizani oʻz vaqtida topshirish qoldi.",
+          "s1": "Roʻyxatingizni oching va eng yaqin muddatdan boshlang.",
+          "s2": "Universitet saytida ariza topshiring va toʻlov boʻlsa, toʻlang.",
+          "s3": "Qaytib keling va ariza yuborilganini belgilang.",
+          "cta": "Roʻyxatimni ochish"
+        },
+        "results": {
+          "title": "Javoblarni yozib qoʻying",
+          "why": "Barcha javoblar bir joyda boʻlsa, takliflar va stipendiyalarni solishtirish osonroq.",
+          "s1": "Pochtangizni va universitetlardagi shaxsiy kabinetlarni tekshiring.",
+          "s2": "Roʻyxatda har bir javobni belgilang: qabul qilindi, kutish roʻyxati yoki rad etildi.",
+          "s3": "Takliflarni solishtiring va qayerga borishingizni tanlang.",
+          "cta": "Roʻyxatimni ochish"
+        }
       }
     },
     "creative": {
@@ -6007,7 +6125,15 @@
       "title": "Ikigai",
       "count": "{total} doiradan {n}",
       "fill": "Toʻldirish",
-      "edit": "Oʻzgartirish"
+      "edit": "Oʻzgartirish",
+      "hint": "Toʻrtta doira: nimani yaxshi koʻrasiz, nimani uddalaysiz, dunyoga nima kerak va nimaga haq toʻlanadi. Kasblar shular asosida tanlanadi."
+    },
+    "quizTool": {
+      "label": "Avval oʻzingizni bilib oling",
+      "title": "Kasb tanlash testi",
+      "hint": "Besh daqiqalik oddiy savollar. Javoblar yoʻnalishlarni taklif qiladi va ikigayingizni oʻzi toʻldiradi.",
+      "todo": "Hali topshirilmagan",
+      "done": "Topshirilgan"
     },
     "suggest": {
       "title": "Sizga mos",
@@ -6456,7 +6582,7 @@
       "budgetOrder": "Maksimum minimumdan kichik boʻlmasligi kerak.",
       "submit": "Loyihalarni taklif qilish",
       "future": "Kelajakda nima bilan shugʻullanmoqchisiz yoki nimani oʻqimoqchisiz?",
-      "futureHint": "Soha, kasb, orzu: biz uni hozir yoqtirgan narsangiz bilan uygʻunlashtiramiz"
+      "futureHint": "Soha, kasb, orzu: gʻoyalar sizni shu tomonga yetaklaydi"
     },
     "running": {
       "title": "Loyiha gʻoyalari izlanmoqda…",
@@ -6465,7 +6591,8 @@
     "results": {
       "title": "Loyiha gʻoyalari",
       "count": "{count, plural, one {# gʻoya} other {# gʻoya}}",
-      "noSearch": "Internet qidiruvi hozir mavjud emas; gʻoyalarni faqat model taklif qildi."
+      "lead": "Bittasini tanlang va shu hafta boshlang. Eng real gʻoyalar birinchi turadi.",
+      "noSearch": "Bu safar internetdan qidirib boʻlmadi, shuning uchun oʻxshash loyihalar havolasiz berildi."
     },
     "history": {
       "title": "Oldingi urinishlar"
@@ -6480,8 +6607,16 @@
       "effect": "Bu arizangizni qanday oʻzgartiradi",
       "steps": "Birinchi qadamlar",
       "help": "Qanday yordam kerak boʻlishi mumkin",
-      "copyPrompt": "Promptni nusxalash",
-      "copied": "Prompt nusxalandi",
+      "copyPrompt": "SI bilan muhokama qilish uchun nusxalash",
+      "whyYou": "Nega aynan siz:",
+      "deliverable": "Oxirida sizda nima boʻladi",
+      "measure": "Natija berganini qanday bilasiz",
+      "weeks": "{count, plural, one {taxminan # hafta} other {taxminan # hafta}}",
+      "more": "Qiyinchiliklar, oʻxshash loyihalar va arizaga foydasi",
+      "take": "Shu loyihani olaman",
+      "taken": "Mashgʻulotlaringiz qoralamalariga qoʻshildi",
+      "openDraft": "Mashgʻulotlarimda ochish",
+      "copied": "Nusxalandi",
       "copyFailed": "Nusxalab boʻlmadi",
       "helpers": "Yordamchilar"
     },

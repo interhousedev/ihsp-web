@@ -1,13 +1,15 @@
 "use client"
 
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Button, Card, CardContent, Label, ResponsiveDialog, Textarea } from "@ihsp/ui"
+import { Badge, Button, Card, CardContent, ConfirmDialog, Label, ResponsiveDialog, Textarea } from "@ihsp/ui"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import type { Club, FormFieldDef, JoinPolicy, MemberView } from "../api/activities-api"
 import {
   useClubEvents,
   useClubFormFields,
   useCreateEvent,
+  useEventActions,
   useFormAnswers,
   usePatchClub,
   usePointsActions,
@@ -403,89 +405,219 @@ export function PointsAdmin({ clubId, members }: { clubId: string; members: Memb
   )
 }
 
-/** Club events and the form that adds one. */
+const EVENT_BADGE = { draft: "neutral", scheduled: "success", cancelled: "destructive", done: "outline" } as const
+const EMPTY_EVENT = { title: "", description: "", starts: "", ends: "", location: "", capacity: "" }
+
+/** Club events: the form that adds one (published at once or kept as a draft) and the list with its actions. */
 export function EventsAdmin({ clubId }: { clubId: string }) {
   const t = useT("activities")
+  const common = useT("common")
   const fmt = useFormatters()
   const list = useClubEvents(clubId)
   const create = useCreateEvent(clubId)
-  const [v, setV] = useState({ title: "", starts: "", ends: "", location: "", capacity: "" })
+  const { publish, cancel, finish } = useEventActions()
+  const [v, setV] = useState(EMPTY_EVENT)
+  const [publishNow, setPublishNow] = useState(true)
+  const [created, setCreated] = useState<"published" | "draft" | null>(null)
+  const [cancelling, setCancelling] = useState<{ id: string; title: string } | null>(null)
   const set = (key: keyof typeof v) => (e: { target: { value: string } }) =>
     setV((s) => ({ ...s, [key]: e.target.value }))
-  const ok = v.title.trim() !== "" && v.starts !== "" && v.ends !== "" && new Date(v.ends) > new Date(v.starts)
+  const filled = v.title.trim() !== "" && v.starts !== "" && v.ends !== ""
+  const order = v.starts === "" || v.ends === "" || new Date(v.ends) > new Date(v.starts)
+  const busy = publish.isPending || cancel.isPending || finish.isPending
+  const events = [...(list.data?.items ?? [])].sort((a, b) => b.starts_at.localeCompare(a.starts_at))
   return (
     <div className="grid gap-4">
       <Card>
-        <CardContent className="grid gap-3">
-          <h3 className="font-semibold">{t("eventsAdmin.title")}</h3>
-          <input
-            className={SELECT_CLASS}
-            placeholder={t("eventsAdmin.name")}
-            maxLength={200}
-            value={v.title}
-            onChange={set("title")}
-          />
-          <div className="grid gap-2 md:grid-cols-2">
-            <label className="grid gap-1 text-sm">
-              {t("eventsAdmin.starts")}
-              <input type="datetime-local" className={SELECT_CLASS} value={v.starts} onChange={set("starts")} />
-            </label>
-            <label className="grid gap-1 text-sm">
-              {t("eventsAdmin.ends")}
-              <input type="datetime-local" className={SELECT_CLASS} value={v.ends} onChange={set("ends")} />
-            </label>
-          </div>
-          <div className="grid gap-2 md:grid-cols-2">
-            <input
-              className={SELECT_CLASS}
-              placeholder={t("eventsAdmin.location")}
-              value={v.location}
-              onChange={set("location")}
-            />
-            <input
-              type="number"
-              min={1}
-              className={SELECT_CLASS}
-              placeholder={t("eventsAdmin.capacity")}
-              value={v.capacity}
-              onChange={set("capacity")}
-            />
-          </div>
-          <Button
-            type="button"
-            className="w-fit"
-            disabled={!ok || create.isPending}
-            onClick={() =>
+        <CardContent>
+          <form
+            className="grid gap-3"
+            onSubmit={(e) => {
+              e.preventDefault()
+              if (!filled || !order || create.isPending) return
+              setCreated(null)
               create.mutate(
                 {
-                  title: v.title.trim(),
-                  description: "",
-                  starts_at: new Date(v.starts).toISOString(),
-                  ends_at: new Date(v.ends).toISOString(),
-                  location: v.location.trim() || null,
-                  capacity: v.capacity ? Number(v.capacity) : null,
+                  body: {
+                    title: v.title.trim(),
+                    description: v.description.trim(),
+                    starts_at: new Date(v.starts).toISOString(),
+                    ends_at: new Date(v.ends).toISOString(),
+                    location: v.location.trim() || null,
+                    capacity: v.capacity ? Number(v.capacity) : null,
+                  },
+                  publish: publishNow,
                 },
-                { onSuccess: () => setV({ title: "", starts: "", ends: "", location: "", capacity: "" }) },
+                {
+                  onSuccess: () => {
+                    setV(EMPTY_EVENT)
+                    setCreated(publishNow ? "published" : "draft")
+                  },
+                },
               )
-            }
+            }}
           >
-            {t("eventsAdmin.create")}
-          </Button>
-          <Failure error={create.error} />
+            <h3 className="font-semibold">{t("eventsAdmin.title")}</h3>
+            <label className="grid gap-1 text-sm">
+              {t("eventsAdmin.name")}
+              <input className={SELECT_CLASS} maxLength={200} required value={v.title} onChange={set("title")} />
+            </label>
+            <label className="grid gap-1 text-sm">
+              {t("eventsAdmin.about")}
+              <Textarea rows={3} maxLength={4000} value={v.description} onChange={set("description")} />
+            </label>
+            <div className="grid gap-2 md:grid-cols-2">
+              <label className="grid gap-1 text-sm">
+                {t("eventsAdmin.starts")}
+                <input
+                  type="datetime-local"
+                  required
+                  className={SELECT_CLASS}
+                  value={v.starts}
+                  onChange={set("starts")}
+                />
+              </label>
+              <label className="grid gap-1 text-sm">
+                {t("eventsAdmin.ends")}
+                <input
+                  type="datetime-local"
+                  required
+                  min={v.starts || undefined}
+                  className={SELECT_CLASS}
+                  value={v.ends}
+                  onChange={set("ends")}
+                />
+              </label>
+            </div>
+            {order ? null : (
+              <p role="alert" className="text-destructive text-sm">
+                {t("eventsAdmin.endsAfterStart")}
+              </p>
+            )}
+            <div className="grid gap-2 md:grid-cols-2">
+              <label className="grid gap-1 text-sm">
+                {t("eventsAdmin.location")}
+                <input className={SELECT_CLASS} maxLength={200} value={v.location} onChange={set("location")} />
+              </label>
+              <label className="grid gap-1 text-sm">
+                {t("eventsAdmin.capacity")}
+                <input
+                  type="number"
+                  min={1}
+                  className={SELECT_CLASS}
+                  placeholder={t("eventsAdmin.capacityHint")}
+                  value={v.capacity}
+                  onChange={set("capacity")}
+                />
+              </label>
+            </div>
+            <label className="flex min-h-11 items-start gap-2 text-sm md:min-h-8">
+              <input
+                type="checkbox"
+                className="mt-1"
+                checked={publishNow}
+                onChange={(e) => setPublishNow(e.target.checked)}
+              />
+              <span className="grid">
+                <span className="font-medium">{t("eventsAdmin.publishNow")}</span>
+                <span className="text-muted-foreground">{t("eventsAdmin.publishNowHint")}</span>
+              </span>
+            </label>
+            <Button
+              type="submit"
+              className="min-h-11 w-fit md:min-h-8"
+              disabled={!filled || !order || create.isPending}
+            >
+              {create.isPending ? common("loading") : publishNow ? t("eventsAdmin.create") : t("eventsAdmin.saveDraft")}
+            </Button>
+            {created ? (
+              <p role="status" className="text-success text-sm">
+                {t(created === "published" ? "eventsAdmin.created" : "eventsAdmin.createdDraft")}
+              </p>
+            ) : null}
+            <Failure error={create.error} />
+          </form>
         </CardContent>
       </Card>
-      <ul className="grid gap-2">
-        {(list.data?.items ?? []).map((e) => (
-          <li key={e.id}>
-            <Card>
-              <CardContent className="text-sm">
-                <p className="font-medium">{e.title}</p>
-                <p className="text-muted-foreground">{fmt.dateTime(e.starts_at)}</p>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ul>
+      <Section title={t("eventsAdmin.listTitle")}>
+        {list.isPending ? <p className="text-muted-foreground text-sm">{common("loading")}</p> : null}
+        <Failure error={list.error ?? publish.error ?? cancel.error ?? finish.error} />
+        {!list.isPending && !list.isError && events.length === 0 ? (
+          <p className="text-muted-foreground text-sm">{t("eventsAdmin.empty")}</p>
+        ) : null}
+        <ul className="grid gap-2">
+          {events.map((e) => (
+            <li key={e.id}>
+              <Card>
+                <CardContent className="flex flex-wrap items-center gap-3 text-sm">
+                  <div className="min-w-0 flex-1 basis-56">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Link href={`/activities/event/?id=${e.id}`} className="font-medium hover:underline">
+                        {e.title}
+                      </Link>
+                      <Badge variant={EVENT_BADGE[e.status]}>{t(`eventsAdmin.status.${e.status}`)}</Badge>
+                    </div>
+                    <p className="text-muted-foreground">
+                      {fmt.dateTime(e.starts_at)}
+                      {e.location ? ` · ${e.location}` : ""}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {e.status === "draft" ? (
+                      <Button
+                        type="button"
+                        size="sm"
+                        className="min-h-11 md:min-h-8"
+                        disabled={busy}
+                        onClick={() => publish.mutate(e.id)}
+                      >
+                        {t("eventsAdmin.publish")}
+                      </Button>
+                    ) : null}
+                    {e.status === "scheduled" ? (
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="min-h-11 md:min-h-8"
+                        disabled={busy}
+                        onClick={() => finish.mutate(e.id)}
+                      >
+                        {t("eventsAdmin.finish")}
+                      </Button>
+                    ) : null}
+                    {e.status === "draft" || e.status === "scheduled" ? (
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="ghost"
+                        className="min-h-11 md:min-h-8"
+                        disabled={busy}
+                        onClick={() => setCancelling({ id: e.id, title: e.title })}
+                      >
+                        {t("eventsAdmin.cancel")}
+                      </Button>
+                    ) : null}
+                  </div>
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </Section>
+      <ConfirmDialog
+        open={cancelling !== null}
+        onOpenChange={(open) => !open && setCancelling(null)}
+        title={t("eventsAdmin.cancelTitle", { title: cancelling?.title ?? "" })}
+        description={t("eventsAdmin.cancelBody")}
+        confirmLabel={t("eventsAdmin.cancel")}
+        cancelLabel={t("eventsAdmin.keep")}
+        destructive
+        loading={cancel.isPending}
+        onConfirm={() => {
+          if (cancelling) cancel.mutate(cancelling.id, { onSettled: () => setCancelling(null) })
+        }}
+      />
     </div>
   )
 }

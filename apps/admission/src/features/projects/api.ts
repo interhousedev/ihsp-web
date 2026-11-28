@@ -44,6 +44,10 @@ export type Project = {
   application_effect: string
   first_steps: string[]
   help_tags: string[]
+  why_you?: string
+  deliverable?: string
+  measure?: string
+  weeks?: number | null
 }
 
 export type ProjectRun = {

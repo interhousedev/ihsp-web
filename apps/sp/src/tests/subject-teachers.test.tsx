@@ -1,7 +1,7 @@
 /** The subject's teacher on its Overview: a pill with the photo or the initials that opens the teacher's page. */
 import { describe, expect, test } from "bun:test"
 import { ids, persons, subjectDetailPhysics } from "@ihsp/test-utils"
-import { screen } from "@testing-library/react"
+import { screen, within } from "@testing-library/react"
 import { SubjectOverviewTab } from "../features/subjects/components/subject-overview-tab"
 import { configureTests, renderSp } from "./helpers"
 
@@ -15,13 +15,13 @@ function normalizeHref(href: string | null): string | null {
 }
 
 describe("subject teacher pill", () => {
-  test("shows the initials without a photo and opens the teacher's page", () => {
+  test("shows the silhouette without a photo and opens the teacher's page", () => {
     renderSp(<SubjectOverviewTab detail={subjectDetailPhysics} />)
 
     const pill = screen.getByRole("link", { name: "Kalandarova Gavxar" })
     expect(normalizeHref(pill.getAttribute("href"))).toBe(`/teachers/view/?id=${ids.teacherKalandarova}`)
     expect(pill.querySelector("img")).toBeNull()
-    expect(pill.querySelector("[data-testid='teacher-avatar']")).toHaveTextContent("KG")
+    expect(within(pill).getByTestId("person-silhouette")).toBeInTheDocument()
   })
 
   test("shows the teacher's photo", () => {

@@ -10,6 +10,7 @@ import {
   buttonVariants,
   Card,
   CardContent,
+  ConfirmDialog,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -23,7 +24,7 @@ import {
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
-import type { FormField, TeamPosition } from "../api/activities-api"
+import type { TeamPosition } from "../api/activities-api"
 import {
   useApply,
   useClub,
@@ -57,6 +58,7 @@ export function ClubPage() {
   const { join, leave } = useJoinClub(clubId)
   const apply = useApply()
   const rate = useRateClub(clubId)
+  const [leaving, setLeaving] = useState(false)
   const [tabRaw, setTab] = useState(params.get("tab") ?? "about")
   const [applying, setApplying] = useState<TeamPosition | null>(null)
   const [answers, setAnswers] = useState<Record<string, unknown>>({})
@@ -154,7 +156,11 @@ export function ClubPage() {
                 <Icons.chevronDown data-icon="inline-end" aria-hidden />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem variant="destructive" className="min-h-11 md:min-h-8" onClick={() => leave.mutate()}>
+                <DropdownMenuItem
+                  variant="destructive"
+                  className="min-h-11 md:min-h-8"
+                  onClick={() => setLeaving(true)}
+                >
                   {t("leave")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -187,10 +193,27 @@ export function ClubPage() {
         </div>
       </div>
 
+      <ConfirmDialog
+        open={leaving}
+        onOpenChange={setLeaving}
+        title={t("clubActions.leaveTitle", { name: club.name })}
+        description={t("clubActions.leaveBody")}
+        confirmLabel={t("leave")}
+        destructive
+        loading={leave.isPending}
+        onConfirm={() => leave.mutate(undefined, { onSettled: () => setLeaving(false) })}
+      />
       {join.isError || leave.isError ? (
         <p role="alert" className="text-destructive text-sm">
           {errorMessage(join.error ?? leave.error)}
         </p>
+      ) : null}
+      {join.isSuccess && join.data?.status === "active" ? (
+        <Alert role="status">
+          <Icons.check aria-hidden />
+          <AlertTitle>{t("clubActions.joined", { name: club.name })}</AlertTitle>
+          <AlertDescription>{t("clubActions.joinedBody")}</AlertDescription>
+        </Alert>
       ) : null}
       {requested ? (
         <Alert role="status">

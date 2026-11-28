@@ -73,7 +73,7 @@ export type UserPreferences = {
   lessons_prompt_enabled: boolean
   mail_forward_to_telegram: boolean
   /** Web Push on the account's devices (each device is switched on in its own settings). */
-  hide_photo_from_classmates: boolean
+  hide_photo_from_public: boolean
   notify_push: boolean
   /** Langfuse keeps the text of the general chat only (web and Telegram); other AI requests go without text. */
   limit_ai_tracing: boolean

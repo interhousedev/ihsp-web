@@ -9,17 +9,16 @@ import {
   type TeacherContacts,
   isApiError,
 } from "@ihsp/api"
-import { GroupProgressSection } from "@ihsp/features-core"
+import { GroupProgressSection, HidePhotoSwitch } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Badge, PageContainer, StateView, UserAvatar } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import type { ReactNode } from "react"
-import { HidePhotoSwitch } from "./hide-photo-switch"
 import { GroupRatingSection } from "@/features/grades/components/group-rating-section"
 import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
 import { studentRecordStatusOf } from "../../shared/hooks/use-student-record-state"
 import { NO_GROUP, type GroupStanding as Standing } from "../api/group-standing"
-import { GroupRanksSection, GroupTopSection } from "./group-standing"
+import { GroupRanksSection, GroupTopSection, LyceumRatingLink } from "./group-standing"
 
 type Person = GroupPersonRef | GroupTeacherRef
 
@@ -60,7 +59,12 @@ function RoleCard({ label, person, children }: { label: string; person: Person |
       <p className="text-muted-foreground text-xs font-medium">{label}</p>
       {person ? (
         <div className="flex items-center gap-3">
-          <UserAvatar name={fullName(person)} imageUrl={person.photo_url} className="size-14 text-base" />
+          <UserAvatar
+            name={fullName(person)}
+            imageUrl={person.photo_url}
+            placeholder="person"
+            className="size-14 text-base"
+          />
           <p className="min-w-0 font-semibold break-words">{fullName(person)}</p>
         </div>
       ) : (
@@ -98,7 +102,12 @@ function MemberList({ members }: { members: GroupMemberRow[] }) {
       <ul aria-label={t("members")} className="grid grid-cols-1 gap-2 min-[400px]:grid-cols-2 lg:grid-cols-3">
         {members.map((member) => (
           <li key={member.id} className="bg-card flex min-h-14 items-center gap-3 rounded-card border p-3">
-            <UserAvatar name={fullName(member)} imageUrl={member.photo_url} className="size-10 text-sm" />
+            <UserAvatar
+              name={fullName(member)}
+              imageUrl={member.photo_url}
+              placeholder="person"
+              className="size-10 text-sm"
+            />
             <span className="min-w-0 flex-1 break-words">{fullName(member)}</span>
             <span className="flex shrink-0 gap-1">
               {member.is_head_student ? <Badge variant="secondary">{t("head")}</Badge> : null}
@@ -152,6 +161,7 @@ export function MyGroupPage() {
 
           {standing ? <GroupRanksSection standing={standing} /> : null}
           {standing ? <GroupTopSection standing={standing} /> : null}
+          <LyceumRatingLink />
 
           <MemberList members={group.members} />
 

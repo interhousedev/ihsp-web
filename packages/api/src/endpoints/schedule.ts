@@ -99,6 +99,11 @@ export function patchAdminGroup(id: string, body: GroupPatchBody, opts?: Request
   return api.patch<GroupDetail>(`/v1/admin/groups/${seg(id)}`, body, opts)
 }
 
+/** PUT /v1/admin/groups/{id}/hidden — admin; hide a group from lists, pickers and standings, or show it again. */
+export function putAdminGroupHidden(id: string, hidden: boolean, opts?: RequestOptions): Promise<GroupDetail> {
+  return api.put<GroupDetail>(`/v1/admin/groups/${seg(id)}/hidden`, { hidden }, opts)
+}
+
 /**
  * DELETE /v1/admin/groups/{id} — admin; students are detached, not deleted, or moved to `moveStudentsTo`
  * (a group other than the deleted one, else 422 `academic/target-group-invalid`); `204`.

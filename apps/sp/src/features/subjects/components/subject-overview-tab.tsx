@@ -29,7 +29,13 @@ export function SubjectOverviewTab({ detail }: { detail: SubjectDetail }) {
                   href={teacherHref(teacher.id)}
                   className="hover:bg-muted inline-flex min-h-11 items-center gap-2 rounded-full border py-1 pr-3 pl-1 text-sm md:min-h-8"
                 >
-                  <TeacherAvatar name={fullName(teacher)} photoUrl={teacher.photo_url} size="sm" decorative />
+                  <TeacherAvatar
+                    name={fullName(teacher)}
+                    photoUrl={teacher.photo_url}
+                    placeholder="person"
+                    size="sm"
+                    decorative
+                  />
                   <span>{fullName(teacher)}</span>
                 </Link>
               </li>

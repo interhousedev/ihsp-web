@@ -32,11 +32,14 @@ function Results({ run }: { run: ProjectRun }) {
   const t = useT("projects")
   return (
     <section className="flex flex-col gap-3" aria-label={t("results.title")}>
-      <h2 className="text-lg font-semibold">{t("results.count", { count: run.projects.length })}</h2>
+      <div className="flex flex-col gap-1">
+        <h2 className="text-lg font-semibold">{t("results.count", { count: run.projects.length })}</h2>
+        <p className="text-muted-foreground text-sm">{t("results.lead")}</p>
+      </div>
       {!run.search_used && <p className="text-muted-foreground text-sm">{t("results.noSearch")}</p>}
       <ul className="grid gap-4 lg:grid-cols-2">
-        {run.projects.map((p) => (
-          <ProjectCard key={p.key} project={p} />
+        {run.projects.map((p, index) => (
+          <ProjectCard key={p.key} project={p} rank={index + 1} />
         ))}
       </ul>
     </section>

@@ -258,9 +258,13 @@ export const activitiesApi = {
   // Clubs
   publicClubs: () => as<{ items: PublicClub[] }>(activities.get("/v1/public/clubs")),
   publicClub: (slug: string) => as<PublicClubPage>(activities.get("/v1/public/clubs/{slug}", { path: { slug } })),
-  clubList: (category?: string) =>
-    as<ItemsOut<ClubListItem>>(
-      activities.get("/v1/activities/clubs", category ? { query: { category } as never } : {}),
+  clubList: () => as<ItemsOut<ClubListItem>>(activities.get("/v1/activities/clubs")),
+  setCapabilities: (club_id: string, capabilities: ClubCapability[]) =>
+    as<Club>(
+      activities.put("/v1/admin/activities/clubs/{club_id}/capabilities", {
+        path: { club_id },
+        body: { capabilities },
+      }),
     ),
   myClubs: () => as<ItemsOut<Club>>(activities.get("/v1/activities/clubs/mine")),
   createClub: (body: { name: string; slug: string; description: string }) =>
@@ -286,6 +290,14 @@ export const activitiesApi = {
   approveMember: (club_id: string, user_id: string) =>
     as<Membership>(
       activities.post("/v1/activities/clubs/{club_id}/members/{user_id}:approve", { path: { club_id, user_id } }),
+    ),
+  declineMember: (club_id: string, user_id: string) =>
+    as<Membership>(
+      activities.post("/v1/activities/clubs/{club_id}/members/{user_id}:decline", { path: { club_id, user_id } }),
+    ),
+  removeMember: (club_id: string, user_id: string) =>
+    as<Membership>(
+      activities.post("/v1/activities/clubs/{club_id}/members/{user_id}:remove", { path: { club_id, user_id } }),
     ),
   banMember: (club_id: string, user_id: string, reason?: string) =>
     as<Membership>(
@@ -317,6 +329,12 @@ export const activitiesApi = {
     as<{ id: string }>(
       activities.post("/v1/activities/clubs/{club_id}/events", { path: { club_id }, body: body as never }),
     ),
+  publishEvent: (event_id: string) =>
+    as<ClubEvent>(activities.post("/v1/activities/events/{event_id}:publish", { path: { event_id } })),
+  cancelEvent: (event_id: string) =>
+    as<ClubEvent>(activities.post("/v1/activities/events/{event_id}:cancel", { path: { event_id } })),
+  finishEvent: (event_id: string) =>
+    as<ClubEvent>(activities.post("/v1/activities/events/{event_id}:finish", { path: { event_id } })),
   myRsvp: (event_id: string) =>
     as<Rsvp | null>(activities.get("/v1/activities/events/{event_id}/rsvp", { path: { event_id } })),
   rsvp: (event_id: string) => as<Rsvp>(activities.put("/v1/activities/events/{event_id}/rsvp", { path: { event_id } })),

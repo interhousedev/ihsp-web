@@ -2,7 +2,7 @@
 
 import { getAdminGroupsQuery, getGroupsStats, keys, type GroupItem, type GroupStat } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, PageContainer, ListToolbar, type ToolbarFilter } from "@ihsp/ui"
+import { Badge, Button, Icons, Label, PageContainer, ListToolbar, Switch, type ToolbarFilter } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useMemo, useState } from "react"
@@ -31,7 +31,9 @@ export function GroupsPage() {
   const status =
     filters.values.status === "active" || filters.values.status === "archived" ? filters.values.status : undefined
 
-  const groups = useQuery(getAdminGroupsQuery({ status }))
+  const [showHidden, setShowHidden] = useState(false)
+
+  const groups = useQuery(getAdminGroupsQuery({ status, include_hidden: showHidden || undefined }))
   const stats = useQuery({ queryKey: keys.admin.groups.stats(), queryFn: ({ signal }) => getGroupsStats({ signal }) })
   const source = useArrayList<Row>({
     data: groups.data?.map((group) => ({ ...group, stat: stats.data?.find((item) => item.group_id === group.id) })),
@@ -63,12 +65,15 @@ export function GroupsPage() {
   const columns = useMemo(
     () => [
       col<Row>("name", t("columns.name"), (group) => (
-        <Link
-          href={`/groups/view/?id=${encodeURIComponent(group.id)}`}
-          className="font-medium underline-offset-4 hover:underline"
-        >
-          {group.name}
-        </Link>
+        <span className="flex flex-wrap items-center gap-2">
+          <Link
+            href={`/groups/view/?id=${encodeURIComponent(group.id)}`}
+            className="font-medium underline-offset-4 hover:underline"
+          >
+            {group.name}
+          </Link>
+          {group.hidden ? <Badge variant="outline">{t("hiddenBadge")}</Badge> : null}
+        </span>
       )),
       col<Row>("semester", t("columns.semester"), (group) => group.current_semester ?? "—"),
       col<Row>("students", t("columns.students"), (group) => group.students_count),
@@ -88,10 +93,16 @@ export function GroupsPage() {
     <PageContainer
       title={t("title")}
       actions={
-        <Button type="button" className={TOUCH} onClick={() => setCreateOpen(true)}>
-          <Icons.add aria-hidden />
-          {t("new")}
-        </Button>
+        <>
+          <div className="flex items-center gap-2">
+            <Switch id="groups-show-hidden" checked={showHidden} onCheckedChange={setShowHidden} />
+            <Label htmlFor="groups-show-hidden">{t("showHidden")}</Label>
+          </div>
+          <Button type="button" className={TOUCH} onClick={() => setCreateOpen(true)}>
+            <Icons.add aria-hidden />
+            {t("new")}
+          </Button>
+        </>
       }
     >
       <PagedTable

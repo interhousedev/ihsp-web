@@ -211,7 +211,22 @@ function Placement({ item, entry }: { item: Opportunity; entry: Plan["entries"][
           variant="ghost"
           aria-label={t("removeFromPlan")}
           disabled={remove.isPending}
-          onClick={() => remove.mutate(item.id, { onError })}
+          onClick={() =>
+            remove.mutate(item.id, {
+              onError,
+              onSuccess: () =>
+                toast(t("removedFromPlan"), {
+                  action: {
+                    label: t("undo"),
+                    onClick: () =>
+                      save.mutate(
+                        { id: item.id, planned_grade: entry.planned_grade, planned_term: entry.planned_term },
+                        { onError },
+                      ),
+                  },
+                }),
+            })
+          }
         >
           <Icons.close aria-hidden className="size-4" />
         </Button>
@@ -299,7 +314,7 @@ export function PlanBody() {
   const titles = useMemo(() => new Map(query.data?.opportunities.map((o) => [o.id, o.fields.title])), [query.data])
   let body
   if (query.isPending) body = <Skeleton className="h-40 w-full" />
-  else if (query.isError) body = <StateView state="error" onRetry={() => void query.refetch()} />
+  else if (query.isError) body = <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
   else if (query.data.entries.length === 0)
     body = (
       <StateView

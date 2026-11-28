@@ -62,34 +62,13 @@
       "openApp": "Открыть {appMy}"
     },
     "card": {
-      "expiredTitle": "Срок действия кода карточки истёк",
-      "expiredDescription": "Попросите студента показать новый QR-код.",
-      "lyceum": "Лицей",
+      "invalidTitle": "Код билета недействителен",
+      "invalidDescription": "Возможно, студент заменил его. Попросите показать текущий QR-код.",
+      "label": "Студент",
       "group": "Группа",
-      "course": "Курс",
-      "direction": "Направление",
+      "studentId": "ID студента",
       "speciality": "Специальность",
-      "validUntil": "Действует до {time}",
-      "expiresIn": "осталось {time}"
-    },
-    "admissionGuest": {
-      "title": "Помощь: {name}",
-      "student": "ученику",
-      "validUntil": "Ссылка действует до {time}",
-      "activities": "Активности",
-      "responses": "Ответы",
-      "text": "Ваш ответ",
-      "url": "Ссылка (https), необязательно",
-      "urlInvalid": "Принимаются только https-ссылки",
-      "send": "Отправить",
-      "thanks": "Спасибо, {name} это увидит",
-      "claimHint": "Войдите в аккаунт, чтобы хранить ответы в одном месте.",
-      "missingTitle": "Ссылка неполная",
-      "missingText": "Откройте ссылку целиком.",
-      "unavailableTitle": "Ссылка больше не работает",
-      "unavailableText": "Она истекла или отозвана. Попросите новую.",
-      "limitedTitle": "Слишком много попыток",
-      "limitedText": "Повторите через несколько минут."
+      "photoAlt": "Фото студента"
     },
     "essayReview": {
       "name": "Ваше имя",

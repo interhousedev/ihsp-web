@@ -1,7 +1,7 @@
 "use client"
 
 import { deleteMyFace, getMyFaceQuery, keys, putMyFace } from "@ihsp/api"
-import { BackLink, FacePhotoEditor, QueryState, refreshSessionUser } from "@ihsp/features-core"
+import { BackLink, FacePhotoEditor, HidePhotoSwitch, QueryState, refreshSessionUser } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Card, CardContent, CardHeader, CardTitle, PageContainer } from "@ihsp/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
@@ -43,6 +43,7 @@ export function FacePage() {
                   await refresh()
                 }}
               />
+              <HidePhotoSwitch />
               <p className="text-muted-foreground text-sm">{t("purpose")}</p>
               <p className="text-sm font-medium">{t("rule")}</p>
               <p className="text-muted-foreground text-sm">{t("privacy")}</p>

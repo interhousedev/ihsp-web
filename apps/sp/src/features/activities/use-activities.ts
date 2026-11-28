@@ -49,10 +49,10 @@ const policy = (value: string | undefined): ClubSummary["joinPolicy"] =>
   value === "open" || value === "invite" ? value : "request"
 
 /** Active clubs with member counts and the caller's role (`GET /clubs`). */
-export function useClubs(category?: string) {
+export function useClubs() {
   const list = useQuery({
-    queryKey: [...K.all, "list", category ?? ""],
-    queryFn: () => activitiesApi.clubList(category),
+    queryKey: [...K.all, "list"],
+    queryFn: () => activitiesApi.clubList(),
   })
   const clubs = useMemo<ClubSummary[]>(() => {
     return (list.data?.items ?? []).map(({ club: c, member_count, my_role, my_status }) => ({
@@ -209,10 +209,8 @@ export function useRsvpMutation(eventId: string) {
 
 export function useJoinClub(clubId: string) {
   const qc = useQueryClient()
-  const refresh = () => {
-    void qc.invalidateQueries({ queryKey: K.mine })
-    void qc.invalidateQueries({ queryKey: club(clubId) })
-  }
+  // Joining and leaving change the feed row (count, role), the club page and "my clubs".
+  const refresh = () => qc.invalidateQueries({ queryKey: K.all })
   const join = useMutation({
     mutationFn: (message?: string) => activitiesApi.join(clubId, message),
     onSuccess: refresh,
@@ -280,8 +278,19 @@ export function useMemberActions(clubId: string) {
       mutationFn: (userId: string) => activitiesApi.approveMember(clubId, userId),
       onSuccess: done,
     }),
-    remove: useMutation({ mutationFn: (userId: string) => activitiesApi.banMember(clubId, userId), onSuccess: done }),
-    transfer: useMutation({ mutationFn: (userId: string) => activitiesApi.transferOwnership(clubId, userId) }),
+    decline: useMutation({
+      mutationFn: (userId: string) => activitiesApi.declineMember(clubId, userId),
+      onSuccess: done,
+    }),
+    remove: useMutation({
+      mutationFn: (userId: string) => activitiesApi.removeMember(clubId, userId),
+      onSuccess: done,
+    }),
+    ban: useMutation({ mutationFn: (userId: string) => activitiesApi.banMember(clubId, userId), onSuccess: done }),
+    transfer: useMutation({
+      mutationFn: (userId: string) => activitiesApi.transferOwnership(clubId, userId),
+      onSuccess: done,
+    }),
   }
 }
 
@@ -431,7 +440,7 @@ export function useSubmitClub() {
   })
 }
 
-/** Saves the club's own page (owner) or its functions (platform administrator) with `PATCH /clubs/{id}`. */
+/** Saves the club's own page with `PATCH /clubs/{id}`. */
 export function usePatchClub(clubId: string) {
   const qc = useQueryClient()
   return useMutation({
@@ -440,9 +449,13 @@ export function usePatchClub(clubId: string) {
   })
 }
 
+/** A platform administrator switches the functions of a club (`PUT /admin/activities/clubs/{id}/capabilities`). */
 export function useCapabilities(clubId: string) {
-  const patch = usePatchClub(clubId)
-  return { ...patch, mutate: (capabilities: ClubCapability[]) => patch.mutate({ capabilities }) }
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (capabilities: ClubCapability[]) => activitiesApi.setCapabilities(clubId, capabilities),
+    onSuccess: () => qc.invalidateQueries({ queryKey: K.all }),
+  })
 }
 
 export function useClubFormFields(clubId: string) {
@@ -492,12 +505,35 @@ export function usePointsActions(clubId: string) {
   }
 }
 
+/** Creates an event; with `publish` it is opened to students at once, otherwise it stays a draft. */
 export function useCreateEvent(clubId: string) {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (body: Parameters<typeof activitiesApi.createEvent>[1]) => activitiesApi.createEvent(clubId, body),
-    onSuccess: () => qc.invalidateQueries({ queryKey: club(clubId, "events") }),
+    mutationFn: async ({
+      body,
+      publish,
+    }: {
+      body: Parameters<typeof activitiesApi.createEvent>[1]
+      publish: boolean
+    }) => {
+      const created = await activitiesApi.createEvent(clubId, body)
+      if (publish) await activitiesApi.publishEvent(created.id)
+      return created
+    },
+    // A failed publish still leaves the draft, so the lists are refreshed either way.
+    onSettled: () => qc.invalidateQueries({ queryKey: K.all }),
   })
+}
+
+/** Publishing a draft, cancelling and finishing an event. */
+export function useEventActions() {
+  const qc = useQueryClient()
+  const done = () => qc.invalidateQueries({ queryKey: K.all })
+  return {
+    publish: useMutation({ mutationFn: (id: string) => activitiesApi.publishEvent(id), onSuccess: done }),
+    cancel: useMutation({ mutationFn: (id: string) => activitiesApi.cancelEvent(id), onSuccess: done }),
+    finish: useMutation({ mutationFn: (id: string) => activitiesApi.finishEvent(id), onSuccess: done }),
+  }
 }
 
 export function useCreateRound(clubId: string) {

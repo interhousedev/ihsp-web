@@ -21,7 +21,7 @@ import { ActivityForm } from "./activity-form"
 export const SELECT_CLASS =
   "border-input bg-background h-9 min-h-11 w-full rounded-lg border px-2 text-sm md:min-h-9 focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none"
 const STATUS_VARIANT = { published: "success", archived: "neutral" } as const
-const TODAY = "2026-11-27"
+const TODAY = new Date().toISOString().slice(0, 10)
 
 export function Logo({ name }: { name: string }) {
   const words = name.trim().split(/\s+/)

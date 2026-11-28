@@ -78,7 +78,7 @@ export function OpportunityCard({
       </div>
       {f.summary && (
         <div className="flex flex-col gap-1">
-          <p lang="en" className="text-sm">
+          <p lang="en" className="line-clamp-4 text-sm">
             {f.summary}
           </p>
           <span className="text-muted-foreground text-xs">{t("sourceLanguage")}</span>
@@ -128,7 +128,13 @@ export function OpportunityCard({
           )}
           {(f.materials ?? []).map((m, i) =>
             m.url ? (
-              <a key={i} className="text-primary underline" href={m.url} target="_blank" rel="noreferrer">
+              <a
+                key={i}
+                className="text-primary inline-flex min-h-11 items-center underline"
+                href={m.url}
+                target="_blank"
+                rel="noreferrer"
+              >
                 {t(`material.${m.kind}`)}: {m.title}
               </a>
             ) : (

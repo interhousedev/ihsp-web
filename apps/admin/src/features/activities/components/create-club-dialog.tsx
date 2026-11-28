@@ -6,7 +6,9 @@ import { useState } from "react"
 import { UserPicker } from "../../shared/components/user-picker"
 import { useCreateClub } from "../clubs-api"
 
-const SLUG_MAX = 60
+// The server rule: 3 to 40 characters, starting with a letter or a digit.
+const SLUG_MAX = 40
+const SLUG_RE = /^[a-z0-9][a-z0-9-]{2,39}$/
 
 function slugOf(name: string): string {
   return name
@@ -46,7 +48,7 @@ export function CreateClubDialog({
     onCreated(club.name)
     close()
   })
-  const valid = name.trim() !== "" && slug !== "" && owner !== null
+  const valid = name.trim() !== "" && SLUG_RE.test(slug) && owner !== null
 
   return (
     <ResponsiveDialog

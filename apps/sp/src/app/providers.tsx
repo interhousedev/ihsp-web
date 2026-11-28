@@ -55,15 +55,16 @@ function TelegramBridge({ children }: { children: ReactNode }) {
  * `messages/<locale>/pwa.json` (the installable app: install page, update toast, menu entry).
  */
 async function loadAppMessages(locale: Locale): Promise<Messages> {
-  const [base, tools, notebooks, pwa, honours, studentCard] = await Promise.all([
+  const [base, tools, notebooks, pwa, honours, studentCard, rating] = await Promise.all([
     import(`../../messages/${locale}.json`),
     import(`../../messages/${locale}/tools.json`),
     import(`../../messages/${locale}/notebooks.json`),
     import(`../../messages/${locale}/pwa.json`),
     import(`../../messages/${locale}/honours.json`),
     import(`../../messages/${locale}/student-card.json`),
+    import(`../../messages/${locale}/rating.json`),
   ])
-  return mergeMessages(
+  const merged = mergeMessages(
     mergeMessages(
       mergeMessages(
         mergeMessages(
@@ -76,6 +77,7 @@ async function loadAppMessages(locale: Locale): Promise<Messages> {
     ),
     studentCard.default as Messages,
   )
+  return mergeMessages(merged, rating.default as Messages)
 }
 
 /**
