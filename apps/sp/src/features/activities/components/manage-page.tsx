@@ -15,7 +15,7 @@ import {
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
-import type { PlannerStatus } from "../api/activities-api"
+import type { ClubMedia, PlannerStatus } from "../api/activities-api"
 import {
   useAnnouncementActions,
   useAnnouncements,
@@ -24,9 +24,11 @@ import {
   usePlanner,
   usePlannerActions,
 } from "../use-activities"
+import { ANNOUNCEMENT_PHOTOS_MAX, mediaUrl, uploadClubMedia } from "../use-club-media"
 import { ClubProfileEditor, EventsAdmin, FormBuilder, PointsAdmin } from "./club-admin"
 import { CapabilityToggles, ClubCourses, DraftBoard, Leaderboard } from "./club-capabilities"
 import { PersonAvatar, SELECT_CLASS, Section, SectionTabs } from "./activity-ui"
+import { MediaUploadButton } from "./club-media"
 
 const COLUMNS: PlannerStatus[] = ["backlog", "planned", "doing", "done"]
 const AUDIENCES = ["members", "team", "event"] as const
@@ -106,6 +108,24 @@ function Announcements({ clubId }: { clubId: string }) {
   const { send, cancel } = useAnnouncementActions(clubId)
   const [text, setText] = useState("")
   const [audience, setAudience] = useState<(typeof AUDIENCES)[number]>("members")
+  const media = useT("clubMedia")
+  const [photos, setPhotos] = useState<ClubMedia[]>([])
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<unknown>(null)
+  const addPhotos = async (files: File[], consentAttested: boolean) => {
+    setUploading(true)
+    setUploadError(null)
+    try {
+      for (const file of files.slice(0, ANNOUNCEMENT_PHOTOS_MAX - photos.length)) {
+        const uploaded = await uploadClubMedia(clubId, file, { consentAttested })
+        setPhotos((prev) => [...prev, uploaded])
+      }
+    } catch (error) {
+      setUploadError(error)
+    } finally {
+      setUploading(false)
+    }
+  }
   return (
     <div className="grid gap-4">
       <Card>
@@ -129,17 +149,62 @@ function Announcements({ clubId }: { clubId: string }) {
               </option>
             ))}
           </select>
+          {photos.length > 0 ? (
+            <ul className="flex flex-wrap gap-2" aria-label={media("announce.photos")}>
+              {photos.map((p) => {
+                const src = mediaUrl(p.thumb_url)
+                return (
+                  <li key={p.id} className="bg-muted relative size-16 overflow-hidden rounded-md">
+                    {src ? (
+                      <img src={src} alt="" className="size-full object-cover" />
+                    ) : (
+                      <span className="text-muted-foreground grid size-full place-items-center text-[10px]">
+                        {media("processing")}
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      className="bg-background/80 absolute end-0.5 top-0.5 grid size-6 place-items-center rounded-full"
+                      aria-label={media("announce.removePhoto")}
+                      onClick={() => setPhotos((prev) => prev.filter((x) => x.id !== p.id))}
+                    >
+                      <Icons.close className="size-3.5" aria-hidden />
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          ) : null}
+          {photos.length < ANNOUNCEMENT_PHOTOS_MAX ? (
+            <MediaUploadButton
+              accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+              max={ANNOUNCEMENT_PHOTOS_MAX - photos.length}
+              pending={uploading}
+              label={media("announce.addPhotos", { max: ANNOUNCEMENT_PHOTOS_MAX })}
+              onFiles={(files, consent) => void addPhotos(files, consent)}
+            />
+          ) : null}
           <Button
             type="button"
             className="w-fit"
-            disabled={!text.trim() || send.isPending}
-            onClick={() => send.mutate({ text: text.trim(), audience }, { onSuccess: () => setText("") })}
+            disabled={!text.trim() || send.isPending || uploading}
+            onClick={() =>
+              send.mutate(
+                { text: text.trim(), audience, media_ids: photos.map((p) => p.id) },
+                {
+                  onSuccess: () => {
+                    setText("")
+                    setPhotos([])
+                  },
+                },
+              )
+            }
           >
             {t("announce.send")}
           </Button>
-          {send.isError || cancel.isError ? (
+          {send.isError || cancel.isError || uploadError ? (
             <p role="alert" className="text-destructive text-sm">
-              {errorMessage(send.error ?? cancel.error)}
+              {errorMessage(send.error ?? cancel.error ?? uploadError)}
             </p>
           ) : null}
         </CardContent>

@@ -5,6 +5,12 @@ import { join, relative } from "node:path"
 import shared from "@ihsp/i18n/messages/en.json"
 import { mergeMessages, type Messages } from "@ihsp/i18n"
 import { messages } from "./helpers"
+import reviewEn from "../../messages/en/homework-review.json"
+import reviewRu from "../../messages/ru/homework-review.json"
+import reviewUz from "../../messages/uz/homework-review.json"
+import mediaEn from "../../messages/en/club-media.json"
+import mediaRu from "../../messages/ru/club-media.json"
+import mediaUz from "../../messages/uz/club-media.json"
 
 const ROOT = join(import.meta.dir, "..", "..", "..", "..")
 /** Folders whose keys live in `messages/<locale>/tools.json` (study tools) or `notebooks.json` (notebooks). */
@@ -63,10 +69,14 @@ function argumentNames(text: string): string[] {
   return [...names].toSorted()
 }
 
-const en = flatten(messages.en)
-const ru = flatten(messages.ru)
-const uz = flatten(messages.uz)
-const available = flatten(mergeMessages(shared as Messages, messages.en))
+// Homework review (submissions, EMIS homework) and club media (albums, covers, announcement photos): keys live in
+// `messages/<locale>/homework-review.json` and `messages/<locale>/club-media.json`.
+const withNamespaces = (base: Messages, ...files: unknown[]) =>
+  files.reduce<Messages>((merged, file) => mergeMessages(merged, file as Messages), base)
+const en = flatten(withNamespaces(messages.en as Messages, reviewEn, mediaEn))
+const ru = flatten(withNamespaces(messages.ru as Messages, reviewRu, mediaRu))
+const uz = flatten(withNamespaces(messages.uz as Messages, reviewUz, mediaUz))
+const available = flatten(withNamespaces(mergeMessages(shared as Messages, messages.en), reviewEn, mediaEn))
 
 describe("message files", () => {
   test("uz and ru have exactly the keys of en", () => {

@@ -1,0 +1,14 @@
+{
+  "homeworkReview": {
+    "emis": "EMIS",
+    "topic": "Topic: {topic}",
+    "emisFiles": "Files from EMIS",
+    "answer": "Your answer (optional if you attach files)",
+    "pending": "Awaiting review",
+    "returned": "Returned for revision",
+    "graded": "Grade: {grade}",
+    "teacherComment": "Teacher's comment",
+    "readOnly": "This work has been graded and can no longer be changed.",
+    "closed": "The teacher is not accepting submissions for this homework."
+  }
+}

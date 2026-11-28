@@ -5,6 +5,7 @@ import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Checkbox, cn } from "@ihsp/ui"
 import Link from "next/link"
 import { shortName } from "../../shared/utils/people"
+import { ResourceList } from "../../lessons/components/resource-list"
 import { useSetHomeworkDone } from "../hooks/use-homework"
 import { HomeworkNoteField } from "./homework-note-field"
 import { HomeworkSubmissionPanel } from "./homework-submission-panel"
@@ -15,6 +16,7 @@ import { HomeworkSubmissionPanel } from "./homework-submission-panel"
  */
 export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem; withNote?: boolean }) {
   const t = useT("homework")
+  const tr = useT("homeworkReview")
   const f = useFormatters()
   const errorMessage = useErrorMessage()
   const setDone = useSetHomeworkDone()
@@ -45,8 +47,20 @@ export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem
           <span className="text-sm font-semibold">{item.subject.name}</span>
           {overdue ? <Badge variant="destructive">{t("overdueBy", { count: item.days_overdue })}</Badge> : null}
           {item.updated ? <Badge variant="secondary">{t("updated")}</Badge> : null}
+          {item.source === "emis" || item.source === "both" ? <Badge variant="outline">{tr("emis")}</Badge> : null}
         </div>
-        <p className={cn("text-sm break-words", done && "text-muted-foreground line-through")}>{item.text}</p>
+        {item.text ? (
+          <p className={cn("text-sm break-words", done && "text-muted-foreground line-through")}>{item.text}</p>
+        ) : null}
+        {item.topic ? (
+          <p className="text-muted-foreground text-sm break-words">{tr("topic", { topic: item.topic })}</p>
+        ) : null}
+        {item.emis_files.length > 0 ? (
+          <div className="mt-1">
+            <p className="text-muted-foreground text-xs">{tr("emisFiles")}</p>
+            <ResourceList items={item.emis_files} />
+          </div>
+        ) : null}
         <p className="text-muted-foreground mt-1 text-xs">
           {[
             item.teacher ? shortName(item.teacher) : null,
@@ -65,7 +79,11 @@ export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem
           </Link>
         </div>
         <div className="mt-2">
-          <HomeworkSubmissionPanel lessonId={item.lesson_id} submission={item.submission ?? null} />
+          <HomeworkSubmissionPanel
+            lessonId={item.lesson_id}
+            submission={item.submission ?? null}
+            acceptsSubmissions={item.accepts_submissions}
+          />
         </div>
         {withNote ? (
           <div className="mt-2">

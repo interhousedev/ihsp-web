@@ -1,0 +1,52 @@
+{
+  "clubMedia": {
+    "title": "Album",
+    "titleOf": "Album: {title}",
+    "backToEvent": "Back to the event",
+    "noAlbum": "No album yet.",
+    "empty": "No photos or videos yet.",
+    "more": "Show more",
+    "open": "Open album",
+    "create": "Create album",
+    "count": "{count, plural, one {# item} other {# items}}",
+    "openPhoto": "Open photo",
+    "openVideo": "Open video",
+    "processing": "Processing…",
+    "failed": "Could not process",
+    "position": "{current} of {total}",
+    "previous": "Previous",
+    "next": "Next",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "setCover": "Make event cover",
+    "isCover": "Event cover",
+    "memberUploads": "Members can add photos and videos",
+    "upload": {
+      "button": "Upload photos or videos",
+      "uploading": "Uploading…",
+      "consent": "I confirm that the people in these photos and videos agreed to be shown to club members."
+    },
+    "report": {
+      "action": "Report",
+      "title": "Report this item",
+      "description": "Organizers and moderators will review it. If you are in the photo, it is hidden right away.",
+      "reason": "What is wrong?",
+      "isSubject": "I am in this photo or video",
+      "submit": "Send report"
+    },
+    "edit": {
+      "action": "Edit",
+      "title": "Edit event",
+      "save": "Save",
+      "name": "Title",
+      "about": "Description",
+      "location": "Place",
+      "capacity": "Places (empty: no limit)"
+    },
+    "announce": {
+      "photos": "Attached photos",
+      "removePhoto": "Remove photo",
+      "addPhotos": "Add photos (up to {max})"
+    }
+  }
+}
