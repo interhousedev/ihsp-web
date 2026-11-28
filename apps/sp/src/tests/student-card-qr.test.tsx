@@ -1,5 +1,5 @@
-/** CARD-2: the student-card QR token is issued on every open and renewed while open. */
-import { afterEach, beforeEach, describe, expect, jest, test } from "bun:test"
+/** CARD-2: the QR shows the permanent token; "Regenerate code" replaces it after a confirmation. */
+import { beforeEach, describe, expect, test } from "bun:test"
 import { apiUrl, resetStudentCardTokens, server, studentCardToken } from "@ihsp/test-utils"
 import { mergeMessages, type Messages } from "@ihsp/i18n"
 import { HttpResponse, http } from "msw"
@@ -25,7 +25,6 @@ beforeEach(() => {
     }),
   )
 })
-afterEach(() => jest.useRealTimers())
 
 function Harness() {
   const [open, setOpen] = useState(false)
@@ -40,28 +39,37 @@ function Harness() {
 const qrUrl = () => screen.findByTestId("card-qr").then((node) => node.getAttribute("data-card-url"))
 
 describe("CARD-2: the QR token", () => {
-  test("a new token on each open, renewed after refresh_in, stopped on close", async () => {
-    jest.useFakeTimers({ doNotFake: ["setImmediate", "nextTick", "queueMicrotask"] } as Parameters<
-      typeof jest.useFakeTimers
-    >[0])
+  test("the permanent token is shown as is; opening the card issues no token", async () => {
     renderSp(<Harness />, { messages })
-
     await act(async () => (await screen.findByText("open card")).click())
+
+    expect(await qrUrl()).toBe(cardUrl("http://localhost:3006", "my-card-token-0"))
+    expect(screen.queryByRole("timer")).not.toBeInTheDocument()
+    expect(tokenRequests).toBe(0)
+  })
+
+  test("regenerating asks first, then shows the new token", async () => {
+    renderSp(<Harness />, { messages })
+    await act(async () => (await screen.findByText("open card")).click())
+    await qrUrl()
+
+    await act(async () => screen.getByRole("button", { name: "Regenerate code" }).click())
+    expect(await screen.findByText(/The old one stops working at once/)).toBeInTheDocument()
+    expect(tokenRequests).toBe(0)
+
+    await act(async () => screen.getByRole("button", { name: "Regenerate" }).click())
     await waitFor(async () => expect(await qrUrl()).toBe(cardUrl("http://localhost:3006", "my-card-token-1")))
-    expect(screen.getByRole("timer")).toHaveTextContent("New code in 60 s")
+    expect(tokenRequests).toBe(1)
+  })
 
-    act(() => jest.advanceTimersByTime(10_000))
-    expect(screen.getByRole("timer")).toHaveTextContent("New code in 50 s")
+  test("cancelling the confirmation keeps the token", async () => {
+    renderSp(<Harness />, { messages })
+    await act(async () => (await screen.findByText("open card")).click())
+    await qrUrl()
 
-    act(() => jest.advanceTimersByTime(50_000))
-    await waitFor(async () => expect(await qrUrl()).toBe(cardUrl("http://localhost:3006", "my-card-token-2")))
-    expect(tokenRequests).toBe(2)
-
-    await act(async () => (await screen.findByRole("button", { name: /close/i })).click())
-    act(() => jest.advanceTimersByTime(120_000))
-    expect(tokenRequests).toBe(2)
-
-    await act(async () => screen.getByText("open card").click())
-    await waitFor(() => expect(tokenRequests).toBe(3))
+    await act(async () => screen.getByRole("button", { name: "Regenerate code" }).click())
+    await act(async () => (await screen.findByRole("button", { name: /cancel/i })).click())
+    expect(await qrUrl()).toBe(cardUrl("http://localhost:3006", "my-card-token-0"))
+    expect(tokenRequests).toBe(0)
   })
 })

@@ -16,7 +16,7 @@ export function DashboardPage() {
   const nav = useT("nav")
   const record = useStudentRecordState()
   return (
-    <div data-shell-flush className="flex min-w-0 flex-1 flex-col gap-5 pb-24 max-md:-mt-(--shell-top-reserve)">
+    <div className="flex min-w-0 flex-1 flex-col gap-5 pt-4 pb-24 md:pt-6">
       <h1 className="sr-only">{nav("dashboard")}</h1>
       <HomeHeader />
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-5 px-4 md:px-6">

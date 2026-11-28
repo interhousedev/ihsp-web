@@ -38,7 +38,7 @@ function TeacherBody({ teacher }: { teacher: MyTeacher }) {
   return (
     <>
       <header className="flex flex-wrap items-start gap-4">
-        <TeacherAvatar name={name} photoUrl={teacher.photo_url} size="lg" />
+        <TeacherAvatar name={name} photoUrl={teacher.photo_url} placeholder="person" size="lg" />
         <div className="flex min-w-0 flex-1 flex-col gap-3">
           <div className="flex flex-col gap-1.5">
             <span className="text-muted-foreground text-xs">{t("subjects")}</span>

@@ -15,7 +15,7 @@ export function TeacherCard({ teacher }: { teacher: MyTeacher }) {
   return (
     <article data-testid="teacher-card" className="bg-card flex flex-col gap-3 rounded-card border p-4">
       <div className="flex items-start gap-3">
-        <TeacherAvatar name={name} photoUrl={teacher.photo_url} />
+        <TeacherAvatar name={name} photoUrl={teacher.photo_url} placeholder="person" />
         <div className="flex min-w-0 flex-col gap-1.5">
           <h2 className="text-base font-semibold">
             <Link href={teacherHref(teacher.id)} className="hover:underline">

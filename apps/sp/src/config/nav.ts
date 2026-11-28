@@ -37,11 +37,13 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[]; search:
             { title: t("teachers"), url: "/teachers/", icon: IconUserCircle },
             { title: t("myGroup"), url: "/my-group/", icon: "groups" },
             { title: t("activities"), url: "/activities/", icon: "pin" },
+            { title: t("rating"), url: "/rating/", icon: "trophy" },
           ],
         },
         {
           label: t("groupStudyTools"),
           items: [
+            { title: t("assistant"), url: "/assistant/", icon: "sparkles" },
             { title: t("notebooks"), url: "/notebooks/", icon: "notebooks" },
             { title: t("flashcards"), url: "/flashcards/", icon: "flashcards" },
             { title: t("files"), url: "/files/", icon: "files" },
