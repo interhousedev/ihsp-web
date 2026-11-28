@@ -3,6 +3,7 @@ import type {
   AttendanceSubmitBody,
   HomeworkDoneBody,
   HomeworkNoteBody,
+  HomeworkBoard,
   HomeworkReviewBody,
   HomeworkSettings,
   HomeworkSettingsBody,
@@ -201,6 +202,17 @@ export const classworkHandlers = [
         notify_effective: notify ?? homeworkSettings.notify_on_submission,
       },
     })
+  }),
+  http.get(apiUrl("/v1/staff/homework"), ({ request }) => {
+    const url = new URL(request.url)
+    const board: HomeworkBoard = {
+      subject: { id: url.searchParams.get("subject_id") ?? "", name: "", short_name: null },
+      audience_key: url.searchParams.get("audience_key") ?? "",
+      label: "",
+      lessons: [],
+      settings: homeworkSettings,
+    }
+    return HttpResponse.json(board)
   }),
   http.get(apiUrl("/v1/staff/homework/settings"), () => HttpResponse.json(homeworkSettings)),
   http.put(apiUrl("/v1/staff/homework/settings"), async ({ request }) => {
