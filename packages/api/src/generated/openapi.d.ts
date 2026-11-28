@@ -1653,7 +1653,11 @@ export interface paths {
          */
         get: operations["list_clubs_v1_admin_activities_clubs_get"];
         put?: never;
-        post?: never;
+        /**
+         * Create Club
+         * @description Create an approved club owned by the given person.
+         */
+        post: operations["create_club_v1_admin_activities_clubs_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -23535,6 +23539,26 @@ export interface components {
              * @default true
              */
             show_on_page?: boolean;
+        };
+        /**
+         * AdminClubCreateIn
+         * @description A club created already approved, for the named owner.
+         */
+        AdminClubCreateIn: {
+            /**
+             * Description
+             * @default
+             */
+            description?: string;
+            /** Name */
+            name: string;
+            /**
+             * Owner User Id
+             * Format: uuid
+             */
+            owner_user_id: string;
+            /** Slug */
+            slug: string;
         };
         /**
          * AdminClubListOut
@@ -64190,6 +64214,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AdminClubListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_club_v1_admin_activities_clubs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdminClubCreateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
                 };
             };
             /** @description Validation Error */
