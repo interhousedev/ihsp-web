@@ -10,9 +10,10 @@ const TABS = [
   { href: "/activities/", key: "catalog" },
   { href: "/activities/clubs/", key: "clubs" },
   { href: "/activities/analytics/", key: "analytics" },
+  { href: "/activities/media/", key: "media" },
 ] as const
 
-/** The three pages of the Activities section; the clubs tab shows the number of club applications on the clubs tab, `end` sits at the right of the row. */
+/** The pages of the Activities section; the clubs tab shows the number of club applications, `end` sits at the right of the row. */
 export function ActivitiesTabs({ current, end }: { current: (typeof TABS)[number]["key"]; end?: ReactNode }) {
   const pending = usePendingClubs()
   const t = useT("activities")
