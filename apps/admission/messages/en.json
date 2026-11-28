@@ -3201,7 +3201,8 @@
     "delete": {
       "button": "Delete",
       "title": "Delete this item?",
-      "text": "Its numbers, reviews and proofs are removed too."
+      "text": "Its numbers, reviews and proofs are removed too.",
+      "done": "“{title}” deleted"
     },
     "metrics": {
       "title": "Numbers",
@@ -4099,6 +4100,8 @@
       "reportReason": "Reason",
       "reportSend": "Send report",
       "reported": "Report sent",
+      "deleteTitle": "Delete your comment?",
+      "deleteBody": "The comment will disappear for everyone. This cannot be undone.",
       "hide": "Hide",
       "unhide": "Show",
       "hiddenPill": "Hidden",
@@ -4149,6 +4152,8 @@
     },
     "saveToPlan": "Save to plan",
     "removeFromPlan": "Remove",
+    "removedFromPlan": "Removed from your plan",
+    "undo": "Undo",
     "saved": "Saved to your plan",
     "emptyTitle": "Nothing found",
     "emptyText": "Try other filters or suggest an entry.",
@@ -4165,8 +4170,22 @@
     "registrationLabel": "Registration deadline",
     "examLabel": "Exam date",
     "lastYearLabel": "Last year's date",
-    "recurrenceLabel": "Repeat rule",
+    "moreDetails": "More details",
+    "moreDetailsHint": "optional: organiser, grades, dates, cost, note",
     "noteLabel": "Note for the reviewer",
+    "needs": {
+      "title": "To send it, add a name.",
+      "subjects": "To send it, choose at least one subject.",
+      "repeat": "To send it, choose how often it repeats."
+    },
+    "repeat": {
+      "label": "How often it repeats",
+      "choose": "Choose",
+      "WEEKLY": "Every week",
+      "MONTHLY": "Every month",
+      "YEARLY": "Every year",
+      "custom": "Its own schedule"
+    },
     "planTitle": "Saved opportunities",
     "planEmptyTitle": "Your plan is empty",
     "planEmptyText": "Save exams, courses and events to plan grades {from} to {to}.",
@@ -4256,6 +4275,7 @@
       "untitled": "Untitled",
       "pendingTwin": "Someone already proposed this; it is waiting for moderation.",
       "propose": "Add to profile",
+      "fill": "Fill in the form",
       "linked": "Opportunity linked",
       "linkTitle": "Opportunity",
       "open": "Link an opportunity",
@@ -4270,6 +4290,8 @@
     "findMore": "Find opportunities"
   },
   "opportunitiesStaff": {
+    "deleteNodeTitle": "Delete “{name}”?",
+    "deleteNodeBody": "Everything nested under it is deleted too. Entries that use it lose this tag.",
     "reports": {
       "title": "Comment reports",
       "empty": "No reports to review.",
@@ -4291,6 +4313,8 @@
       "edit": "Edit",
       "delete": "Delete",
       "inUse": "This organization is used by opportunities and cannot be deleted.",
+      "deleteTitle": "Delete “{name}”?",
+      "deleteBody": "An organization that opportunities still use cannot be deleted.",
       "kind": {
         "university": "University",
         "company": "Company",
@@ -5828,6 +5852,100 @@
         "documents": "Documents",
         "apply": "Applications",
         "results": "Results"
+      },
+      "guide": {
+        "label": "What to do now",
+        "step": "Step {n} of {total}",
+        "finished": "Path complete",
+        "done": "{done} of {total} done",
+        "how": "How to do it",
+        "progress": "Done so far: {progress}",
+        "then": "Then: {name}",
+        "last": "This is the last step",
+        "allDone": {
+          "title": "You have walked the whole path",
+          "text": "Every step is done. Keep an eye on the deadlines and the answers from universities below."
+        },
+        "countries": {
+          "title": "Choose where you want to study",
+          "why": "Countries differ in cost, exams and deadlines, so everything else depends on this choice.",
+          "s1": "Open the short setup and answer the questions about countries.",
+          "s2": "Pick up to three countries: you can change them at any time.",
+          "s3": "Save: tests, deadlines and universities will adjust to your choice.",
+          "cta": "Choose countries"
+        },
+        "major": {
+          "title": "Choose what you want to study",
+          "why": "Universities admit to a field of study, and your activities and essays should point to it.",
+          "s1": "Not sure yet? Take the short interests quiz in “Profile” first.",
+          "s2": "Open the setup and pick one or two fields.",
+          "s3": "Save: universities and ideas will be matched to these fields.",
+          "cta": "Choose a field"
+        },
+        "activities": {
+          "title": "Describe what you do outside lessons",
+          "why": "Admission officers read your activities right after your grades: they show who you are.",
+          "s1": "Add one activity: a club, a project, a competition, volunteering, a job.",
+          "s2": "Write what exactly you did and what came out of it, with numbers.",
+          "s3": "Mark it as ready and add the next one until you reach the goal.",
+          "cta": "Add an activity"
+        },
+        "tests": {
+          "title": "Plan and take your tests",
+          "why": "Most universities abroad ask for a language test, and many ask for the SAT or a similar exam.",
+          "s1": "See which tests your countries and universities ask for.",
+          "s2": "Choose a date and add the test to your plan.",
+          "s3": "When the result arrives, enter your score here.",
+          "cta": "Open tests"
+        },
+        "list": {
+          "title": "Build your list of universities",
+          "why": "A balanced list has ambitious, realistic and safe options, so you get at least one offer.",
+          "s1": "Open the university search: it already knows your countries and field.",
+          "s2": "Compare cost, requirements and your chances.",
+          "s3": "Add universities to your list until you reach the goal.",
+          "cta": "Choose universities"
+        },
+        "statement": {
+          "title": "Write your main essay",
+          "why": "It is the one place where universities hear your own voice, and it goes to almost all of them.",
+          "s1": "Choose a story only you can tell.",
+          "s2": "Write a first draft: it does not have to be good yet.",
+          "s3": "Read the feedback, rewrite, and mark the essay as final.",
+          "cta": "Open the essay"
+        },
+        "supplements": {
+          "title": "Write the essays for each university",
+          "why": "Many universities ask their own short questions, usually about why you chose them.",
+          "s1": "Open the list of questions for your universities.",
+          "s2": "Start with the earliest deadline.",
+          "s3": "Mark each essay as final when it is ready.",
+          "cta": "Open the essays"
+        },
+        "documents": {
+          "title": "Collect your documents",
+          "why": "Transcripts, recommendations and certificates take weeks to prepare, so start early.",
+          "s1": "Open the checklist: it shows only what your universities need.",
+          "s2": "Ask teachers for recommendations at least a month ahead.",
+          "s3": "Tick each document when it is ready.",
+          "cta": "Open documents"
+        },
+        "apply": {
+          "title": "Send your applications",
+          "why": "Everything is ready. What is left is to submit on time on each university's site.",
+          "s1": "Open your list and start with the nearest deadline.",
+          "s2": "Submit the application on the university's site and pay the fee if there is one.",
+          "s3": "Come back and mark the university as submitted.",
+          "cta": "Open my list"
+        },
+        "results": {
+          "title": "Record the answers",
+          "why": "With all the answers in one place it is easier to compare offers and scholarships.",
+          "s1": "Check your email and the university accounts.",
+          "s2": "Mark each answer in your list: accepted, waitlist or refused.",
+          "s3": "Compare the offers and choose where you will go.",
+          "cta": "Open my list"
+        }
       }
     },
     "creative": {
@@ -6007,7 +6125,15 @@
       "title": "Ikigai",
       "count": "{n} of {total} circles",
       "fill": "Fill in",
-      "edit": "Edit"
+      "edit": "Edit",
+      "hint": "Four circles: what you love, what you are good at, what the world needs and what pays. Professions are suggested from them."
+    },
+    "quizTool": {
+      "label": "Get to know yourself first",
+      "title": "Career test",
+      "hint": "Five minutes of simple questions. The answers suggest fields of study and fill in your ikigai for you.",
+      "todo": "Not taken yet",
+      "done": "Taken"
     },
     "suggest": {
       "title": "Suits you",
@@ -6456,7 +6582,7 @@
       "budgetOrder": "The maximum must not be below the minimum.",
       "submit": "Suggest projects",
       "future": "What do you want to do or study in the future?",
-      "futureHint": "A field, a profession, a dream: we cross it with what you like now"
+      "futureHint": "A field, a profession, a dream: ideas will move you towards it"
     },
     "running": {
       "title": "Looking for project ideas…",
@@ -6465,7 +6591,8 @@
     "results": {
       "title": "Project ideas",
       "count": "{count, plural, one {# idea} other {# ideas}}",
-      "noSearch": "The web search was not available this time; ideas come from the model only."
+      "lead": "Pick one and start this week. The most realistic ideas come first.",
+      "noSearch": "We could not search the web this time, so similar projects come without links."
     },
     "history": {
       "title": "Earlier runs"
@@ -6480,8 +6607,16 @@
       "effect": "How it changes your application",
       "steps": "First steps",
       "help": "Help you may need",
-      "copyPrompt": "Copy prompt",
-      "copied": "Prompt copied",
+      "copyPrompt": "Copy to discuss with AI",
+      "whyYou": "Why you:",
+      "deliverable": "What you will have at the end",
+      "measure": "How you will know it worked",
+      "weeks": "{count, plural, one {about # week} other {about # weeks}}",
+      "more": "Obstacles, similar projects and what it gives your application",
+      "take": "Take this project",
+      "taken": "Added to your activity drafts",
+      "openDraft": "Open in my activities",
+      "copied": "Copied",
       "copyFailed": "Could not copy",
       "helpers": "Helpers"
     },

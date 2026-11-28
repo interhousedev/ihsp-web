@@ -37,7 +37,7 @@ describe("project ideas", () => {
     const link = screen.getByRole("link", { name: /River Watch/ })
     expect(link.getAttribute("target")).toBe("_blank")
 
-    fireEvent.click(screen.getByRole("button", { name: "Copy prompt" }))
+    fireEvent.click(screen.getByRole("button", { name: "Copy to discuss with AI" }))
     await waitFor(() => expect(written).toHaveLength(1))
     expect(written[0]).toContain("Water quality tracker")
     expect(written[0]).toContain("Calibrating the sensor")

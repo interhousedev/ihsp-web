@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconArrowUpRight, IconChevronLeft } from "@ihsp/ui"
+import { IconArrowUpRight, IconChevronLeft, Input } from "@ihsp/ui"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -10,6 +10,7 @@ import { FinalCta, SiteFooter } from "../landing/footer"
 import { ManifestoDialog } from "../landing/manifesto-dialog"
 import { SectionHead } from "../landing/parts/section-head"
 import { Reveal } from "../landing/reveal"
+import { useLandingLinks } from "../landing/links"
 import { SiteHeader } from "../landing/site-header"
 import { ClubLogo } from "./club-logo"
 import { ContactFounderForm } from "./contact-founder-form"
@@ -19,10 +20,14 @@ import { usePublicClubList, usePublicClubPage } from "./use-public-clubs"
 /** Public clubs site in the design of the landing: same header, footer, headings and glass panels. */
 export function ClubsPublicPage() {
   const t = useT("clubsPublic")
+  const links = useLandingLinks()
   const slug = useSearchParams().get("club")
   const list = usePublicClubList()
   const page = usePublicClubPage(slug)
   const clubs = list.data?.items ?? []
+  const [search, setSearch] = useState("")
+  const needle = search.trim().toLowerCase()
+  const shown = clubs.filter((c) => needle === "" || `${c.name} ${c.description ?? ""}`.toLowerCase().includes(needle))
   const captchaKey = list.data?.captcha_site_key ?? ""
   const club = page.data
   const [manifesto, setManifesto] = useState(false)
@@ -39,6 +44,11 @@ export function ClubsPublicPage() {
             <SectionHead id="clubs-title" eyebrow={t("eyebrow")} title={t("title")}>
               <p className="lnd-body max-w-2xl">{t("lead")}</p>
             </SectionHead>
+            {list.loading ? (
+              <p role="status" className="lnd-body mb-6">
+                {t("loading")}
+              </p>
+            ) : null}
             {list.failed ? (
               <p role="alert" className="lnd-body mb-6">
                 {t("loadFailed")}
@@ -47,8 +57,29 @@ export function ClubsPublicPage() {
             {!list.loading && !list.failed && clubs.length === 0 ? (
               <p className="lnd-body mb-6">{t("noClubs")}</p>
             ) : null}
+            {clubs.length > 0 ? (
+              <Input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-label={t("search")}
+                placeholder={t("search")}
+                autoComplete="off"
+                className="mb-6 h-11 w-full max-w-md"
+              />
+            ) : null}
+            {clubs.length > 0 && shown.length === 0 ? (
+              <div className="mb-6 grid justify-items-start gap-3">
+                <p role="status" className="lnd-body">
+                  {t("searchEmpty", { query: search.trim() })}
+                </p>
+                <button type="button" className="lnd-btn" onClick={() => setSearch("")}>
+                  {t("searchReset")}
+                </button>
+              </div>
+            ) : null}
             <ul className="lnd-bento lnd-bento--auto">
-              {clubs.map((c, index) => (
+              {shown.map((c, index) => (
                 <li key={c.slug} className="lnd-bento-cell">
                   <Reveal delay={index * 60} className="h-full w-full">
                     <Link href={`/clubs/?club=${c.slug}`} className="lnd-tile lnd-panel">
@@ -70,11 +101,15 @@ export function ClubsPublicPage() {
               <IconChevronLeft aria-hidden className="size-4" />
               {t("all")}
             </Link>
-            {page.failed ? (
-              <p role="alert" className="lnd-body">
-                {t("loadFailed")}
+            {page.loading ? (
+              <p role="status" className="lnd-body">
+                {t("loading")}
               </p>
-            ) : null}
+            ) : (
+              <p role="alert" className="lnd-body">
+                {t(page.failed ? "loadFailed" : "notFound")}
+              </p>
+            )}
           </section>
         ) : (
           <>
@@ -92,7 +127,7 @@ export function ClubsPublicPage() {
                   <p className="lnd-body">{club.description}</p>
                   <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <a
-                      href={`https://app.ihsu.uz/activities/club/?slug=${club.slug}`}
+                      href={`${links.sp.replace(/\/+$/, "")}/activities/club/?slug=${encodeURIComponent(club.slug)}`}
                       className="lnd-btn lnd-btn--solid justify-center"
                     >
                       {t("join")}

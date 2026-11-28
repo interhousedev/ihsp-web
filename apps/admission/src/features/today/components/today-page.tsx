@@ -13,6 +13,7 @@ import { DeadlineStrip } from "./deadline-strip"
 import { CreativePractice } from "./creative-practice"
 import { NewPrograms } from "./new-programs"
 import { NextActionCard, QueuedActions } from "./next-action-card"
+import { PathGuide } from "./path-guide"
 import { Roadmap } from "./roadmap"
 import { Rhythm } from "./rhythm"
 import { SeasonCard } from "./season-card"
@@ -71,24 +72,26 @@ export function TodayPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-3 md:gap-3.5 lg:grid-cols-[16rem_minmax(0,1.5fr)_minmax(0,1fr)] lg:grid-rows-[auto_auto_auto]">
+          <div className="grid grid-cols-1 gap-3 md:gap-3.5 lg:grid-cols-[16rem_minmax(0,1.5fr)_minmax(0,1fr)]">
+            <PathGuide nodes={data.roadmap ?? []} className="order-first lg:col-span-2 lg:col-start-2 lg:row-start-1" />
             {data.next.some((a) => !snoozed.includes(a.key)) ? (
               <NextActionCard
                 actions={data.next}
                 snoozed={snoozed}
                 onSnooze={(key) => setSnoozed((ids) => [...ids, key])}
-                className="order-3 lg:col-start-2 lg:row-start-1"
+                quiet={(data.roadmap ?? []).length > 0}
+                className="order-3 lg:col-start-2 lg:row-start-2"
               />
             ) : (
-              <CreativePractice className="order-3 lg:col-start-2 lg:row-start-1" />
+              <CreativePractice className="order-3 lg:col-start-2 lg:row-start-2" />
             )}
             <Roadmap
               nodes={data.roadmap ?? []}
               streakDays={data.streak.days}
-              className="order-2 lg:col-start-1 lg:row-span-3 lg:row-start-1"
+              className="order-2 lg:col-start-1 lg:row-span-4 lg:row-start-1"
             />
             {data.programs ? (
-              <NewPrograms programs={data.programs} className="order-5 lg:col-span-2 lg:col-start-2 lg:row-start-3" />
+              <NewPrograms programs={data.programs} className="order-5 lg:col-span-2 lg:col-start-2 lg:row-start-4" />
             ) : null}
             <QueuedActions actions={data.next} snoozed={snoozed} className="order-6 lg:hidden" />
             <UniSection
@@ -98,7 +101,7 @@ export function TodayPage() {
               loading={fit.isPending}
               failed={Boolean(fit.error)}
               onRetry={fit.refetch}
-              className="order-4 lg:col-span-2 lg:col-start-2 lg:row-start-2"
+              className="order-4 lg:col-span-2 lg:col-start-2 lg:row-start-3"
             />
             <div className="bg-card rounded-card order-1 flex flex-col gap-3 border px-3.5 py-3 lg:hidden">
               <Rhythm streak={data.streak} readiness={data.readiness.percent} />
@@ -113,7 +116,7 @@ export function TodayPage() {
               readiness={data.readiness.percent}
               deadlines={data.deadlines}
               today={iso}
-              className="order-7 lg:col-start-3 lg:row-start-1"
+              className="order-7 lg:col-start-3 lg:row-start-2"
             />
           </div>
         )}

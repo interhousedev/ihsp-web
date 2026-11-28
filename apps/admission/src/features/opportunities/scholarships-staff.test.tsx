@@ -1,5 +1,5 @@
 import { apiUrl, server } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { toast } from "sonner"
 import { describe, expect, spyOn, test } from "bun:test"
@@ -111,6 +111,9 @@ describe("orgs editor", () => {
     )
     renderAdmissionApp(<OrgsEditor />)
     fireEvent.click(await screen.findByRole("button", { name: "Delete" }))
+    const dialog = await screen.findByRole("alertdialog")
+    expect(within(dialog).getByText(/Lumiere/)).toBeTruthy()
+    fireEvent.click(within(dialog).getByRole("button", { name: "Delete" }))
     await waitFor(() =>
       expect(error).toHaveBeenCalledWith("This organization is used by opportunities and cannot be deleted."),
     )

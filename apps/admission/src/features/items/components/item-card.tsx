@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ACTIVITY_CATEGORIES, type Item } from "../api"
 import { ItemGrades } from "./item-grades"
 import { POST_GRAD } from "./item-fields"
+import { ITEM_CARD } from "./item-ui"
 
 const chip = "bg-muted text-muted-foreground rounded-full px-2 py-0.5 text-xs"
 
@@ -48,7 +49,8 @@ export function ItemCard({
   return (
     <div
       className={cn(
-        "border-hairline bg-card animate-in fade-in slide-in-from-bottom-1 rounded-card flex flex-1 items-start gap-1 border p-3",
+        ITEM_CARD,
+        "animate-in fade-in slide-in-from-bottom-1 flex flex-1 items-start gap-1",
         MOTION.slide,
         className,
       )}

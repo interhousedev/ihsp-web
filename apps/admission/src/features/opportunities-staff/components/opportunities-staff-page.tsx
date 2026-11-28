@@ -2,7 +2,7 @@
 
 import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
-import { Button, Icons, Input, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
+import { Button, ConfirmDialog, Icons, Input, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
@@ -122,6 +122,7 @@ function TaxonomyEditor() {
   const remove = useDeleteTaxonomyNode()
   const [parent, setParent] = useState<{ id: string | null; level: TaxonomyLevel }>({ id: null, level: "field" })
   const [names, setNames] = useState<Names>({ uz: "", ru: "", en: "" })
+  const [deleting, setDeleting] = useState<{ id: string; name: string } | null>(null)
   const onError = (error: unknown) => toast.error(errorMessage(error))
 
   function add(event: FormEvent) {
@@ -151,7 +152,7 @@ function TaxonomyEditor() {
         size="sm"
         variant="ghost"
         aria-label={t("delete")}
-        onClick={() => remove.mutate(id, { onError })}
+        onClick={() => setDeleting({ id, name: localName(name, locale) })}
       >
         <Icons.trash aria-hidden className="size-4" />
       </Button>
@@ -161,6 +162,18 @@ function TaxonomyEditor() {
   return (
     <section className="bg-card flex flex-col gap-3 rounded-card border p-4">
       <h2 className="font-medium">{t("taxonomyTitle")}</h2>
+      <ConfirmDialog
+        open={deleting !== null}
+        onOpenChange={(open) => !open && setDeleting(null)}
+        title={t("deleteNodeTitle", { name: deleting?.name ?? "" })}
+        description={t("deleteNodeBody")}
+        confirmLabel={t("delete")}
+        destructive
+        loading={remove.isPending}
+        onConfirm={() => {
+          if (deleting) remove.mutate(deleting.id, { onError, onSettled: () => setDeleting(null) })
+        }}
+      />
       <ul className="flex flex-col gap-1 text-sm">
         {taxonomy.data?.fields.map((f) => (
           <li key={f.id}>

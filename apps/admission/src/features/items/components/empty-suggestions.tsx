@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { buttonVariants, Icons } from "@ihsp/ui"
 import Link from "next/link"
+import { ITEM_CARD } from "./item-ui"
 
 const SUGGESTIONS = [
   { key: "course", href: "/opportunities/?kind=course", icon: Icons.courses },
@@ -24,7 +25,7 @@ export function EmptySuggestions({ collapsed }: { collapsed: boolean }) {
           <li key={key}>
             <Link
               href={href}
-              className="border-hairline bg-card hover:bg-muted/40 rounded-card flex h-full min-h-11 flex-col gap-1.5 border p-3 transition-colors"
+              className={`${ITEM_CARD} hover:bg-muted/40 flex h-full min-h-11 flex-col gap-1.5 transition-colors`}
             >
               <Icon aria-hidden className="text-primary size-5" />
               <span className="font-medium">{t(`suggest.${key}.title`)}</span>

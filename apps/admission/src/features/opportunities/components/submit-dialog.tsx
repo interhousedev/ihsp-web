@@ -65,6 +65,9 @@ function NativeSelect<T extends string>({
   )
 }
 
+/** The repeat choices a person can read; each is stored as the matching repeat rule. */
+const REPEATS = ["WEEKLY", "MONTHLY", "YEARLY"] as const
+
 /** Every add or edit goes to the moderation queue; `target` makes it an edit of a published entry. */
 export function SubmitDialog({
   open,
@@ -110,7 +113,8 @@ export function SubmitDialog({
   const [sourceUrl, setSourceUrl] = useState(base?.source_url ?? "")
   const [credit, setCredit] = useState<CreditKind>(base?.college_credit ?? "none")
   const [creditNote, setCreditNote] = useState(base?.credit_note ?? "")
-  const ready = title.trim() !== "" && subjects.length > 0
+  const needsRepeat = kind === "recurring" && recurrence.trim() === ""
+  const ready = title.trim() !== "" && subjects.length > 0 && !needsRepeat
 
   const toggle = <T,>(list: T[], value: T) =>
     list.includes(value) ? list.filter((v) => v !== value) : [...list, value]
@@ -166,14 +170,22 @@ export function SubmitDialog({
       title={target ? t("editTitle") : t("suggestTitle")}
       onSubmit={send}
       footer={
-        <LoadingButton type="submit" disabled={!ready} loading={submit.isPending}>
-          {t("send")}
-        </LoadingButton>
+        <div className="flex w-full flex-wrap items-center justify-end gap-x-3 gap-y-1">
+          {!ready && (
+            <p className="text-muted-foreground min-w-0 flex-1 text-xs">
+              {t(title.trim() === "" ? "needs.title" : subjects.length === 0 ? "needs.subjects" : "needs.repeat")}
+            </p>
+          )}
+          <LoadingButton type="submit" disabled={!ready} loading={submit.isPending}>
+            {t("send")}
+          </LoadingButton>
+        </div>
       }
     >
       <div className="flex flex-col gap-3">
         {!target && (
           <NotInList
+            proposeLabel={t("notInList.fill")}
             onPick={(id) => {
               onOpenChange(false)
               router.push(detailHref(id))
@@ -191,6 +203,7 @@ export function SubmitDialog({
             }}
           />
         )}
+        <span className="-mb-2 text-sm">{t("kindLabel")}</span>
         <Select value={kind} onValueChange={(v) => setKind(v as OpportunityKind)}>
           <SelectTrigger aria-label={t("kindLabel")}>
             <SelectValue />
@@ -217,14 +230,9 @@ export function SubmitDialog({
             minHeight="8rem"
           />
         </div>
-        <StudyFieldsField value={studyFields} onChange={setStudyFields} />
         <label className="flex flex-col gap-1 text-sm">
           {t("urlLabel")}
           <Input type="url" value={url} onChange={(e) => setUrl(e.target.value)} />
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
-          {t("providerLabel")}
-          <Input value={provider} onChange={(e) => setProvider(e.target.value)} maxLength={300} />
         </label>
         <fieldset className="flex flex-col gap-1 text-sm">
           <legend>{t("subjectsLabel")}</legend>
@@ -247,148 +255,172 @@ export function SubmitDialog({
             )}
           </div>
         </fieldset>
-        <fieldset className="flex flex-col gap-1 text-sm">
-          <legend>{t("gradesLabel")}</legend>
-          <div className="flex gap-1">
-            {GRADES.map((g) => (
-              <Button
-                key={g}
-                type="button"
-                size="sm"
-                variant={grades.includes(g) ? "default" : "outline"}
-                aria-pressed={grades.includes(g)}
-                onClick={() => setGrades(toggle(grades, g))}
-              >
-                {t("gradeShort", { grade: g })}
-              </Button>
-            ))}
-          </div>
-        </fieldset>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <label className="flex flex-col gap-1 text-sm">
-            {t("registrationLabel")}
-            <Input type="date" value={registration} onChange={(e) => setRegistration(e.target.value)} />
-          </label>
-          <label className="flex flex-col gap-1 text-sm">
-            {t("examLabel")}
-            <Input type="date" value={exam} onChange={(e) => setExam(e.target.value)} />
-          </label>
-          <label className="flex flex-col gap-1 text-sm">
-            {t("lastYearLabel")}
-            <Input type="date" value={lastYear} onChange={(e) => setLastYear(e.target.value)} />
-          </label>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <label className="flex flex-col gap-1 text-sm">
-            {t("startsOnLabel")}
-            <Input type="date" value={startsOn} onChange={(e) => setStartsOn(e.target.value)} />
-          </label>
-          <label className="flex flex-col gap-1 text-sm">
-            {t("hoursLabel")}
-            <Input
-              type="number"
-              min={0.5}
-              max={80}
-              step={0.5}
-              value={hours}
-              onChange={(e) => setHours(e.target.value)}
-            />
-          </label>
-          <label className="flex flex-col gap-1 text-sm">
-            {t("costLabel")}
-            <Input type="number" min={0} step={1} value={cost} onChange={(e) => setCost(e.target.value)} />
-          </label>
-        </div>
-        {kind === "recurring" && (
-          <label className="flex flex-col gap-1 text-sm">
-            {t("recurrenceLabel")}
-            <Input
-              value={recurrence}
-              onChange={(e) => setRecurrence(e.target.value)}
-              placeholder="FREQ=MONTHLY;BYMONTHDAY=15"
-            />
-          </label>
-        )}
-        {kind === "scholarship" && (
-          <fieldset className="flex flex-col gap-3 text-sm">
-            <legend className="sr-only">{t("scholarships.title")}</legend>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <NativeSelect label={t("scholarships.orgLabel")} value={orgId} onChange={setOrgId}>
-                <option value="">{t("any")}</option>
-                {orgs.data?.items.map((o) => (
-                  <option key={o.id} value={o.id}>
-                    {o.name}
-                  </option>
-                ))}
-              </NativeSelect>
-              <NativeSelect label={t("scholarships.awardLabel")} value={awardType} onChange={setAwardType}>
-                <option value="">{t("any")}</option>
-                {AWARDS.map((a) => (
-                  <option key={a} value={a}>
-                    {t(`award.${a}`)}
-                  </option>
-                ))}
-              </NativeSelect>
-              <NativeSelect label={t("scholarships.scopeLabel")} value={scope} onChange={setScope}>
-                <option value="">{t("any")}</option>
-                {SCOPES.map((s) => (
-                  <option key={s} value={s}>
-                    {t(`scope.${s}`)}
-                  </option>
-                ))}
-              </NativeSelect>
-            </div>
-            <div className="flex flex-wrap gap-1" role="group" aria-label={t("scholarships.coverageLabel")}>
-              {COVERAGES.map((c) => (
-                <Button
-                  key={c}
-                  type="button"
-                  size="sm"
-                  variant={coverage.includes(c) ? "default" : "outline"}
-                  aria-pressed={coverage.includes(c)}
-                  onClick={() => setCoverage(toggle(coverage, c))}
-                >
-                  {t(`coverage.${c}`)}
-                </Button>
-              ))}
-            </div>
-            <label className="flex flex-col gap-1">
-              {t("scholarships.amountLabel")}
-              <Input value={amountText} onChange={(e) => setAmountText(e.target.value)} maxLength={200} />
-            </label>
-            <label className="flex items-center gap-2">
-              <input type="checkbox" checked={essay} onChange={(e) => setEssay(e.target.checked)} />
-              {t("scholarships.essay")}
-            </label>
-            <label className="flex flex-col gap-1">
-              {t("scholarships.eligibilityLabel")}
-              <Textarea value={eligibility} onChange={(e) => setEligibility(e.target.value)} maxLength={2000} />
-            </label>
-            <label className="flex flex-col gap-1">
-              {t("scholarships.sourceLabel")}
-              <Input type="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} />
-            </label>
-          </fieldset>
-        )}
-        {(kind === "scholarship" || kind === "course") && (
-          <div className="grid gap-3 sm:grid-cols-2">
-            <NativeSelect label={t("scholarships.creditLabel")} value={credit} onChange={(v) => setCredit(v || "none")}>
-              {CREDITS.map((c) => (
-                <option key={c} value={c}>
-                  {t(`credit.${c}`)}
-                </option>
-              ))}
-            </NativeSelect>
-            <label className="flex flex-col gap-1 text-sm">
-              {t("scholarships.creditNoteLabel")}
-              <Input value={creditNote} onChange={(e) => setCreditNote(e.target.value)} maxLength={500} />
-            </label>
-          </div>
-        )}
-        <label className="flex flex-col gap-1 text-sm">
-          {t("noteLabel")}
-          <Textarea value={note} onChange={(e) => setNote(e.target.value)} maxLength={1000} />
+        <label className="flex flex-col gap-1 text-sm sm:max-w-56">
+          {t("registrationLabel")}
+          <Input type="date" value={registration} onChange={(e) => setRegistration(e.target.value)} />
         </label>
+        {kind === "recurring" && (
+          <NativeSelect label={t("repeat.label")} value={recurrence} onChange={setRecurrence}>
+            <option value="">{t("repeat.choose")}</option>
+            {REPEATS.map((r) => (
+              <option key={r} value={`FREQ=${r}`}>
+                {t(`repeat.${r}`)}
+              </option>
+            ))}
+            {recurrence !== "" && !REPEATS.some((r) => recurrence === `FREQ=${r}`) && (
+              <option value={recurrence}>{t("repeat.custom")}</option>
+            )}
+          </NativeSelect>
+        )}
+        {/* Everything below is optional: it stays folded for a new suggestion and open when editing one. */}
+        <details open={Boolean(target) || undefined} className="group rounded-lg border">
+          <summary className="flex min-h-11 cursor-pointer list-none flex-wrap items-center gap-x-2 px-3 py-2 text-sm font-medium [&::-webkit-details-marker]:hidden">
+            <span aria-hidden className="transition-transform group-open:rotate-90">
+              ›
+            </span>
+            {t("moreDetails")}
+            <span className="text-muted-foreground font-normal">{t("moreDetailsHint")}</span>
+          </summary>
+          <div className="flex flex-col gap-3 border-t p-3">
+            <StudyFieldsField value={studyFields} onChange={setStudyFields} />
+            <label className="flex flex-col gap-1 text-sm">
+              {t("providerLabel")}
+              <Input value={provider} onChange={(e) => setProvider(e.target.value)} maxLength={300} />
+            </label>
+            <fieldset className="flex flex-col gap-1 text-sm">
+              <legend>{t("gradesLabel")}</legend>
+              <div className="flex gap-1">
+                {GRADES.map((g) => (
+                  <Button
+                    key={g}
+                    type="button"
+                    size="sm"
+                    variant={grades.includes(g) ? "default" : "outline"}
+                    aria-pressed={grades.includes(g)}
+                    onClick={() => setGrades(toggle(grades, g))}
+                  >
+                    {t("gradeShort", { grade: g })}
+                  </Button>
+                ))}
+              </div>
+            </fieldset>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <label className="flex flex-col gap-1 text-sm">
+                {t("examLabel")}
+                <Input type="date" value={exam} onChange={(e) => setExam(e.target.value)} />
+              </label>
+              <label className="flex flex-col gap-1 text-sm">
+                {t("lastYearLabel")}
+                <Input type="date" value={lastYear} onChange={(e) => setLastYear(e.target.value)} />
+              </label>
+              <label className="flex flex-col gap-1 text-sm">
+                {t("startsOnLabel")}
+                <Input type="date" value={startsOn} onChange={(e) => setStartsOn(e.target.value)} />
+              </label>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <label className="flex flex-col gap-1 text-sm">
+                {t("hoursLabel")}
+                <Input
+                  type="number"
+                  min={0.5}
+                  max={80}
+                  step={0.5}
+                  value={hours}
+                  onChange={(e) => setHours(e.target.value)}
+                />
+              </label>
+              <label className="flex flex-col gap-1 text-sm">
+                {t("costLabel")}
+                <Input type="number" min={0} step={1} value={cost} onChange={(e) => setCost(e.target.value)} />
+              </label>
+            </div>
+            {kind === "scholarship" && (
+              <fieldset className="flex flex-col gap-3 text-sm">
+                <legend className="sr-only">{t("scholarships.title")}</legend>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <NativeSelect label={t("scholarships.orgLabel")} value={orgId} onChange={setOrgId}>
+                    <option value="">{t("any")}</option>
+                    {orgs.data?.items.map((o) => (
+                      <option key={o.id} value={o.id}>
+                        {o.name}
+                      </option>
+                    ))}
+                  </NativeSelect>
+                  <NativeSelect label={t("scholarships.awardLabel")} value={awardType} onChange={setAwardType}>
+                    <option value="">{t("any")}</option>
+                    {AWARDS.map((a) => (
+                      <option key={a} value={a}>
+                        {t(`award.${a}`)}
+                      </option>
+                    ))}
+                  </NativeSelect>
+                  <NativeSelect label={t("scholarships.scopeLabel")} value={scope} onChange={setScope}>
+                    <option value="">{t("any")}</option>
+                    {SCOPES.map((s) => (
+                      <option key={s} value={s}>
+                        {t(`scope.${s}`)}
+                      </option>
+                    ))}
+                  </NativeSelect>
+                </div>
+                <div className="flex flex-wrap gap-1" role="group" aria-label={t("scholarships.coverageLabel")}>
+                  {COVERAGES.map((c) => (
+                    <Button
+                      key={c}
+                      type="button"
+                      size="sm"
+                      variant={coverage.includes(c) ? "default" : "outline"}
+                      aria-pressed={coverage.includes(c)}
+                      onClick={() => setCoverage(toggle(coverage, c))}
+                    >
+                      {t(`coverage.${c}`)}
+                    </Button>
+                  ))}
+                </div>
+                <label className="flex flex-col gap-1">
+                  {t("scholarships.amountLabel")}
+                  <Input value={amountText} onChange={(e) => setAmountText(e.target.value)} maxLength={200} />
+                </label>
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" checked={essay} onChange={(e) => setEssay(e.target.checked)} />
+                  {t("scholarships.essay")}
+                </label>
+                <label className="flex flex-col gap-1">
+                  {t("scholarships.eligibilityLabel")}
+                  <Textarea value={eligibility} onChange={(e) => setEligibility(e.target.value)} maxLength={2000} />
+                </label>
+                <label className="flex flex-col gap-1">
+                  {t("scholarships.sourceLabel")}
+                  <Input type="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} />
+                </label>
+              </fieldset>
+            )}
+            {(kind === "scholarship" || kind === "course") && (
+              <div className="grid gap-3 sm:grid-cols-2">
+                <NativeSelect
+                  label={t("scholarships.creditLabel")}
+                  value={credit}
+                  onChange={(v) => setCredit(v || "none")}
+                >
+                  {CREDITS.map((c) => (
+                    <option key={c} value={c}>
+                      {t(`credit.${c}`)}
+                    </option>
+                  ))}
+                </NativeSelect>
+                <label className="flex flex-col gap-1 text-sm">
+                  {t("scholarships.creditNoteLabel")}
+                  <Input value={creditNote} onChange={(e) => setCreditNote(e.target.value)} maxLength={500} />
+                </label>
+              </div>
+            )}
+            <label className="flex flex-col gap-1 text-sm">
+              {t("noteLabel")}
+              <Textarea value={note} onChange={(e) => setNote(e.target.value)} maxLength={1000} />
+            </label>
+          </div>
+        </details>
       </div>
     </ResponsiveDialog>
   )

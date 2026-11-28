@@ -167,6 +167,12 @@ export function CatalogBody() {
           icon={<Icons.search aria-hidden />}
           title={t("emptyTitle")}
           description={t("emptyText")}
+          action={
+            <Button type="button" variant="outline" onClick={() => setSuggesting(true)}>
+              <Icons.add aria-hidden />
+              {t("suggest")}
+            </Button>
+          }
         />
       )
   else if (scholarship)

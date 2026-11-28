@@ -6,6 +6,8 @@ import type { Project } from "./api"
  */
 export function buildProjectPrompt(project: Project): string {
   const lines = [`Project idea: ${project.title}`, "", project.summary]
+  if (project.deliverable) lines.push("", `Result: ${project.deliverable}`)
+  if (project.measure) lines.push(`Measure of success: ${project.measure}`)
   if (project.analogs.length > 0) {
     lines.push("", "Similar projects:")
     for (const a of project.analogs) lines.push(`- ${a.name}${a.url ? ` (${a.url})` : ""}`)

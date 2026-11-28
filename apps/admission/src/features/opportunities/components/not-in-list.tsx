@@ -15,10 +15,13 @@ export function NotInList({
   onPick,
   onPropose,
   busy = false,
+  proposeLabel,
 }: {
   onPick: (opportunityId: string) => void
   onPropose: (draft: IntakeDraft) => void
   busy?: boolean
+  /** The button under the found draft; the default says the draft goes to the profile. */
+  proposeLabel?: string
 }) {
   const t = useT("opportunities")
   const locale = useLocale()
@@ -94,7 +97,7 @@ export function NotInList({
               disabled={busy || result.draft.title.trim() === ""}
               onClick={() => onPropose(result.draft)}
             >
-              {t("notInList.propose")}
+              {proposeLabel ?? t("notInList.propose")}
             </Button>
           </div>
         </div>

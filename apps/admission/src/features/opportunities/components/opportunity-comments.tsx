@@ -2,7 +2,7 @@
 
 import { useSession } from "@ihsp/auth"
 import { formatDateTime, useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons, LoadingButton, Pill, Textarea } from "@ihsp/ui"
+import { Button, ConfirmDialog, Icons, LoadingButton, Pill, Textarea } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { useCommentMutations, type OppComment } from "../api"
@@ -69,6 +69,7 @@ function CommentRow({
   const { session } = useSession()
   const { remove, report, hide } = useCommentMutations(opportunityId)
   const [reporting, setReporting] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const mine = session?.user.id === comment.author_id
   const hidden = comment.status === "hidden"
   const onError = (error: unknown) => toast.error(errorMessage(error))
@@ -98,7 +99,7 @@ function CommentRow({
               size="icon"
               aria-label={t("detail.delete")}
               disabled={remove.isPending}
-              onClick={() => remove.mutate(comment.id, { onError })}
+              onClick={() => setDeleting(true)}
             >
               <Icons.trash aria-hidden className="size-4" />
             </Button>
@@ -125,6 +126,16 @@ function CommentRow({
         {comment.body}
       </p>
       {reporting ? <ReportForm comment={comment} send={sendReport} onDone={() => setReporting(false)} /> : null}
+      <ConfirmDialog
+        open={deleting}
+        onOpenChange={setDeleting}
+        title={t("detail.deleteTitle")}
+        description={t("detail.deleteBody")}
+        confirmLabel={t("detail.delete")}
+        destructive
+        loading={remove.isPending}
+        onConfirm={() => remove.mutate(comment.id, { onError, onSettled: () => setDeleting(false) })}
+      />
     </li>
   )
 }

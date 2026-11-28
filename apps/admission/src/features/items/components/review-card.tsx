@@ -7,6 +7,7 @@ import { AiTabCard } from "@/components/ai-tab-card"
 import Link from "next/link"
 import { useState } from "react"
 import { DIMENSIONS, useReview, useReviewFeedback, type Review } from "../api"
+import { ITEM_CARD } from "./item-ui"
 
 const isGrade = (value: string | null | undefined): value is Grade =>
   !!value && (GRADES as readonly string[]).includes(value)
@@ -69,10 +70,7 @@ export function ReviewCard({ review, stale }: { review: Review; stale?: boolean 
   }
   const dims = review.payload.dimensions ?? []
   return (
-    <article
-      aria-labelledby={`review-${review.id}`}
-      className="border-hairline flex flex-col gap-3 rounded-card border p-4"
-    >
+    <article aria-labelledby={`review-${review.id}`} className={`${ITEM_CARD} flex flex-col gap-3`}>
       <div className="flex items-center gap-3">
         {grade("overall", review.overall)}
         <h3 id={`review-${review.id}`} className="text-base font-semibold">
