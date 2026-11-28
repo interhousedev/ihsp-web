@@ -27,10 +27,13 @@ export function parseSubtitles(source: string): Cue[] {
     if (at === -1) continue
     const match = TIMING.exec(lines[at] ?? "")
     if (!match?.[1] || !match[2]) continue
-    const text = lines
-      .slice(at + 1)
-      .join(" ")
-      .replace(/<[^>]*>/g, "")
+    let text = lines.slice(at + 1).join(" ")
+    for (let before = ""; before !== text;) {
+      before = text
+      text = text.replace(/<[^>]*>/g, "")
+    }
+    text = text
+      .replace(/[<>]/g, "")
       .replace(/\{\\[^}]*\}/g, "")
       .replace(/\s+/g, " ")
       .trim()

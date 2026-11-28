@@ -43,7 +43,11 @@ test.beforeAll(async () => {
       return res.writeHead(200, { "access-control-allow-origin": "*" }).end("{}")
     }
     const file = path.join(publicDir, path.normalize(url.pathname))
-    if (!file.startsWith(publicDir) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+    let body: Buffer
+    try {
+      if (!file.startsWith(publicDir)) return res.writeHead(404).end()
+      body = fs.readFileSync(file)
+    } catch {
       return res.writeHead(404).end()
     }
     const headers: Record<string, string> = {
@@ -56,7 +60,7 @@ test.beforeAll(async () => {
       headers["access-control-allow-origin"] = "*"
       headers["cross-origin-resource-policy"] = "cross-origin"
     }
-    res.writeHead(200, headers).end(fs.readFileSync(file))
+    res.writeHead(200, headers).end(body)
   })
   other = http.createServer((req, res) => {
     otherHits.push(req.url ?? "")

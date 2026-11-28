@@ -51,8 +51,10 @@ export function useCodeRunner(title: string) {
         setState((current) => ({ ...current, phase: message.status }))
       } else if (message.kind === "output") {
         setState((current) => {
-          const next = appendOutput(current[message.stream], message.text)
-          return { ...current, [message.stream]: next.text, truncated: current.truncated || next.truncated }
+          const isOut = message.stream === "stdout"
+          const next = appendOutput(isOut ? current.stdout : current.stderr, message.text)
+          const truncated = current.truncated || next.truncated
+          return isOut ? { ...current, stdout: next.text, truncated } : { ...current, stderr: next.text, truncated }
         })
       } else {
         const result = {
