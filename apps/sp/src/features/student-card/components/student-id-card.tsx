@@ -1,7 +1,7 @@
 "use client"
 
 import type { PublicStudentCard } from "@ihsp/api"
-import { useT } from "@ihsp/i18n"
+import { useLocale, useT } from "@ihsp/i18n"
 import { PersonSilhouette, QrCode } from "@ihsp/ui"
 
 /** A graduation cap, the mark of the card's top-right corner. */
@@ -40,6 +40,7 @@ export function StudentIdCard({
   qrValue: string
 }) {
   const t = useT("studentCard")
+  const lyceum = card.lyceum_name?.[useLocale()]
   const fields: [string, string | number | null][] = [
     [t("group"), card.group],
     [t("studentId"), card.student_id],
@@ -55,7 +56,10 @@ export function StudentIdCard({
           {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file or URL */}
           <img data-testid="card-lyceum-logo" src={logoSrc} alt="" className="size-full object-contain" />
         </span>
-        <p className="min-w-0 flex-1 text-xs leading-snug font-medium text-white/85">{card.org_name}</p>
+        <p className="min-w-0 flex-1 text-xs leading-snug font-medium text-white/85">
+          {card.org_name}
+          {lyceum ? <span className="block font-semibold text-white">{lyceum}</span> : null}
+        </p>
         <GraduationCap className="size-7 shrink-0 text-white/80" />
       </header>
       <div className="flex items-start gap-4">
