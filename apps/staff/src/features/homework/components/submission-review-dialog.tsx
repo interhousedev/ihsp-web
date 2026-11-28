@@ -38,9 +38,7 @@ export function SubmissionReviewDialog({
     <ResponsiveDialog
       open={submissionId !== null}
       onOpenChange={onOpenChange}
-      title={
-        query.data ? `${query.data.student.last_name} ${query.data.student.first_name}` : t("review.title")
-      }
+      title={query.data ? `${query.data.student.last_name} ${query.data.student.first_name}` : t("review.title")}
       description={query.data?.group_name}
       size="lg"
     >
@@ -100,9 +98,7 @@ function ReviewBodyView({ row, lessonId, onDone }: { row: StaffSubmissionRow; le
       <p className="flex flex-wrap items-center gap-2">
         <Badge variant="secondary">{t(`review.status.${row.review_status}`)}</Badge>
         {row.grade ? <Badge>{t("review.gradeValue", { grade: row.grade })}</Badge> : null}
-        {row.submitted_at ? (
-          <span className="text-muted-foreground">{f.dateTime(row.submitted_at)}</span>
-        ) : null}
+        {row.submitted_at ? <span className="text-muted-foreground">{f.dateTime(row.submitted_at)}</span> : null}
         {row.status === "late" ? <Badge variant="destructive">{t("review.late")}</Badge> : null}
       </p>
       {row.text ? <p className="bg-muted/50 rounded-lg p-3 break-words whitespace-pre-wrap">{row.text}</p> : null}
@@ -190,12 +186,7 @@ function ReviewBodyView({ row, lessonId, onDone }: { row: StaffSubmissionRow; le
           {t("review.returnAction")}
         </LoadingButton>
         {row.review_status !== "pending" ? (
-          <Button
-            variant="ghost"
-            className="min-h-11 md:min-h-8"
-            disabled={busy}
-            onClick={() => clear.mutate()}
-          >
+          <Button variant="ghost" className="min-h-11 md:min-h-8" disabled={busy} onClick={() => clear.mutate()}>
             {t("review.clearAction")}
           </Button>
         ) : null}

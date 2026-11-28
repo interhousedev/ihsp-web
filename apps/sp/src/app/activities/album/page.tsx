@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import { AlbumPage } from "@/features/activities/components/album-page";
-import { SpShell } from "@/features/shell/components/sp-shell";
-import { Suspense } from "react";
+import { AlbumPage } from "@/features/activities/components/album-page"
+import { SpShell } from "@/features/shell/components/sp-shell"
+import { Suspense } from "react"
 
 export default function AlbumPageRoute() {
   return (
@@ -11,5 +11,5 @@ export default function AlbumPageRoute() {
         <AlbumPage />
       </Suspense>
     </SpShell>
-  );
+  )
 }

@@ -7,7 +7,13 @@ import { EmisFiles } from "./emis-files"
 import { HomeworkSwitches } from "./homework-switches"
 
 /** On the lesson page: where the homework came from, the EMIS topic and files, and the lesson's two switches. */
-export function LessonHomeworkPanel({ lessonId, homework }: { lessonId: string; homework: NonNullable<StaffLesson["homework"]> }) {
+export function LessonHomeworkPanel({
+  lessonId,
+  homework,
+}: {
+  lessonId: string
+  homework: NonNullable<StaffLesson["homework"]>
+}) {
   const t = useT("homework")
   return (
     <section aria-labelledby="homework-panel-title" className="flex flex-col gap-3 text-sm">

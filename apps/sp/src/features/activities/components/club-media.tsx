@@ -1,24 +1,16 @@
-"use client";
+"use client"
 
-import { useErrorMessage, useT } from "@ihsp/i18n";
-import { Button, Checkbox, Icons, ResponsiveDialog, Textarea } from "@ihsp/ui";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import type { ClubMedia } from "../api/activities-api";
-import { MEDIA_ACCEPT, mediaUrl, useMedia } from "../use-club-media";
+import { useErrorMessage, useT } from "@ihsp/i18n"
+import { Button, Checkbox, Icons, ResponsiveDialog, Textarea } from "@ihsp/ui"
+import { useEffect, useRef, useState, type ReactNode } from "react"
+import type { ClubMedia } from "../api/activities-api"
+import { MEDIA_ACCEPT, mediaUrl, useMedia } from "../use-club-media"
 
 /** Event cover: the signed thumbnail of `cover_media_id`, or nothing. */
-export function EventCover({
-  mediaId,
-  className,
-}: {
-  mediaId: string | null | undefined;
-  className?: string;
-}) {
-  const media = useMedia(mediaId);
-  const src = mediaUrl(
-    media.data?.preview_url ?? media.data?.thumb_url ?? media.data?.poster_url,
-  );
-  if (!src) return null;
+export function EventCover({ mediaId, className }: { mediaId: string | null | undefined; className?: string }) {
+  const media = useMedia(mediaId)
+  const src = mediaUrl(media.data?.preview_url ?? media.data?.thumb_url ?? media.data?.poster_url)
+  if (!src) return null
   return (
     <img
       src={src}
@@ -27,27 +19,18 @@ export function EventCover({
       decoding="async"
       className={className ?? "aspect-video w-full rounded-md object-cover"}
     />
-  );
+  )
 }
 
 /** Square tiles of photos and videos; a tile opens the lightbox. */
-export function MediaGrid({
-  items,
-  onOpen,
-}: {
-  items: ClubMedia[];
-  onOpen: (index: number) => void;
-}) {
-  const t = useT("clubMedia");
+export function MediaGrid({ items, onOpen }: { items: ClubMedia[]; onOpen: (index: number) => void }) {
+  const t = useT("clubMedia")
   return (
     <ul className="grid grid-cols-3 gap-1 sm:grid-cols-4 lg:grid-cols-6">
       {items.map((m, i) => {
-        const src = mediaUrl(m.thumb_url ?? m.poster_url);
+        const src = mediaUrl(m.thumb_url ?? m.poster_url)
         return (
-          <li
-            key={m.id}
-            className="bg-muted relative aspect-square overflow-hidden rounded-sm"
-          >
+          <li key={m.id} className="bg-muted relative aspect-square overflow-hidden rounded-sm">
             <button
               type="button"
               className="focus-visible:ring-ring size-full focus-visible:ring-2 focus-visible:outline-none"
@@ -69,17 +52,14 @@ export function MediaGrid({
                 </span>
               )}
               {m.kind === "video" ? (
-                <Icons.play
-                  className="absolute right-1 bottom-1 size-5 text-white drop-shadow"
-                  aria-hidden
-                />
+                <Icons.play className="absolute right-1 bottom-1 size-5 text-white drop-shadow" aria-hidden />
               ) : null}
             </button>
           </li>
-        );
+        )
       })}
     </ul>
-  );
+  )
 }
 
 /** Full-size view with previous/next (arrow keys and swipe), plus the per-item actions. */
@@ -90,31 +70,29 @@ export function MediaLightbox({
   onClose,
   actions,
 }: {
-  items: ClubMedia[];
-  index: number | null;
-  onIndex: (index: number) => void;
-  onClose: () => void;
+  items: ClubMedia[]
+  index: number | null
+  onIndex: (index: number) => void
+  onClose: () => void
   /** Buttons for the item on screen (cover, delete, report). */
-  actions: ReactNode;
+  actions: ReactNode
 }) {
-  const t = useT("clubMedia");
-  const touchX = useRef<number | null>(null);
-  const media = index == null ? null : items[index];
-  const count = items.length;
+  const t = useT("clubMedia")
+  const touchX = useRef<number | null>(null)
+  const media = index == null ? null : items[index]
+  const count = items.length
   useEffect(() => {
-    if (index == null) return;
+    if (index == null) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") onIndex((index + 1) % count);
-      if (e.key === "ArrowLeft") onIndex((index - 1 + count) % count);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [index, count, onIndex]);
-  if (!media || index == null) return null;
-  const video = mediaUrl(media.video_url);
-  const image = mediaUrl(
-    media.preview_url ?? media.original_url ?? media.thumb_url,
-  );
+      if (e.key === "ArrowRight") onIndex((index + 1) % count)
+      if (e.key === "ArrowLeft") onIndex((index - 1 + count) % count)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [index, count, onIndex])
+  if (!media || index == null) return null
+  const video = mediaUrl(media.video_url)
+  const image = mediaUrl(media.preview_url ?? media.original_url ?? media.thumb_url)
   return (
     <ResponsiveDialog
       open
@@ -153,22 +131,14 @@ export function MediaLightbox({
       <div
         className="grid place-items-center"
         onTouchStart={(e) => {
-          touchX.current = e.touches[0]?.clientX ?? null;
+          touchX.current = e.touches[0]?.clientX ?? null
         }}
         onTouchEnd={(e) => {
-          const start = touchX.current;
-          const end = e.changedTouches[0]?.clientX;
-          touchX.current = null;
-          if (
-            start == null ||
-            end == null ||
-            Math.abs(end - start) < 40 ||
-            count < 2
-          )
-            return;
-          onIndex(
-            end < start ? (index + 1) % count : (index - 1 + count) % count,
-          );
+          const start = touchX.current
+          const end = e.changedTouches[0]?.clientX
+          touchX.current = null
+          if (start == null || end == null || Math.abs(end - start) < 40 || count < 2) return
+          onIndex(end < start ? (index + 1) % count : (index - 1 + count) % count)
         }}
       >
         {media.kind === "video" && video ? (
@@ -184,16 +154,11 @@ export function MediaLightbox({
             <track kind="captions" />
           </video>
         ) : image ? (
-          <img
-            key={media.id}
-            src={image}
-            alt={media.caption ?? ""}
-            className="max-h-[70vh] w-auto rounded-md"
-          />
+          <img key={media.id} src={image} alt={media.caption ?? ""} className="max-h-[70vh] w-auto rounded-md" />
         ) : null}
       </div>
     </ResponsiveDialog>
-  );
+  )
 }
 
 /** "Report" form: reason and "this is me" (subject asks for removal). */
@@ -204,16 +169,16 @@ export function ReportMediaDialog({
   error,
   onSubmit,
 }: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  pending: boolean;
-  error: unknown;
-  onSubmit: (reason: string, isSubject: boolean) => void;
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  pending: boolean
+  error: unknown
+  onSubmit: (reason: string, isSubject: boolean) => void
 }) {
-  const t = useT("clubMedia");
-  const errorMessage = useErrorMessage();
-  const [reason, setReason] = useState("");
-  const [isSubject, setIsSubject] = useState(false);
+  const t = useT("clubMedia")
+  const errorMessage = useErrorMessage()
+  const [reason, setReason] = useState("")
+  const [isSubject, setIsSubject] = useState(false)
   return (
     <ResponsiveDialog
       open={open}
@@ -221,16 +186,12 @@ export function ReportMediaDialog({
       title={t("report.title")}
       description={t("report.description")}
       onSubmit={(e) => {
-        e.preventDefault();
-        if (reason.trim() && !pending) onSubmit(reason.trim(), isSubject);
+        e.preventDefault()
+        if (reason.trim() && !pending) onSubmit(reason.trim(), isSubject)
       }}
       footer={
         <>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-          >
+          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
             {t("cancel")}
           </Button>
           <Button type="submit" disabled={!reason.trim() || pending}>
@@ -249,10 +210,7 @@ export function ReportMediaDialog({
           onChange={(e) => setReason(e.target.value)}
         />
         <label className="flex items-center gap-2 text-sm">
-          <Checkbox
-            checked={isSubject}
-            onCheckedChange={(v) => setIsSubject(v === true)}
-          />
+          <Checkbox checked={isSubject} onCheckedChange={(v) => setIsSubject(v === true)} />
           {t("report.isSubject")}
         </label>
         {error ? (
@@ -262,7 +220,7 @@ export function ReportMediaDialog({
         ) : null}
       </div>
     </ResponsiveDialog>
-  );
+  )
 }
 
 /** File picker with the consent attestation the backend requires for every upload. */
@@ -273,23 +231,19 @@ export function MediaUploadButton({
   max,
   label,
 }: {
-  pending: boolean;
-  onFiles: (files: File[], consentAttested: boolean) => void;
-  accept?: string;
-  max?: number;
-  label?: string;
+  pending: boolean
+  onFiles: (files: File[], consentAttested: boolean) => void
+  accept?: string
+  max?: number
+  label?: string
 }) {
-  const t = useT("clubMedia");
-  const input = useRef<HTMLInputElement>(null);
-  const [consent, setConsent] = useState(false);
+  const t = useT("clubMedia")
+  const input = useRef<HTMLInputElement>(null)
+  const [consent, setConsent] = useState(false)
   return (
     <div className="grid gap-2">
       <label className="flex items-start gap-2 text-sm">
-        <Checkbox
-          checked={consent}
-          onCheckedChange={(v) => setConsent(v === true)}
-          className="mt-0.5"
-        />
+        <Checkbox checked={consent} onCheckedChange={(v) => setConsent(v === true)} className="mt-0.5" />
         <span>{t("upload.consent")}</span>
       </label>
       <input
@@ -299,9 +253,9 @@ export function MediaUploadButton({
         accept={accept}
         className="hidden"
         onChange={(e) => {
-          const files = [...(e.target.files ?? [])].slice(0, max);
-          e.target.value = "";
-          if (files.length > 0) onFiles(files, consent);
+          const files = [...(e.target.files ?? [])].slice(0, max)
+          e.target.value = ""
+          if (files.length > 0) onFiles(files, consent)
         }}
       />
       <Button
@@ -315,5 +269,5 @@ export function MediaUploadButton({
         {pending ? t("upload.uploading") : (label ?? t("upload.button"))}
       </Button>
     </div>
-  );
+  )
 }

@@ -22,7 +22,7 @@ import type { getAdminBotPost, getAdminBotPostTree, patchAdminBotPost, postAdmin
 import type { getAdminBots, patchAdminBot, postAdminBot, postAdminBotAnnouncement, postAdminBotRotateToken } from "./endpoints/bots"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
 import type { getCertificateFileUrl, getCertificateGroups, getCertificateRanking, getCertificateStats, getCertificateTypes, getCustomFieldValues, getMyCertificates, getStaffCertificates, patchCertificateType, postCertificateExport, postCertificateType, postImportCertificatesFromEmis, postMyCertificate, postMyCertificateFile } from "./endpoints/certificates"
-import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getHomeworkSubmission, getLessonHomeworkSubmissions, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffLessonTemporaryMarks, getStaffTemporaryMarksPending, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTemporaryMark, putStaffLessonTopic, submitHomework } from "./endpoints/classwork"
+import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getHomeworkSubmission, getLessonHomeworkSubmissions, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffHomeworkBoard, getStaffHomeworkSettings, getStaffHomeworkSubmission, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffLessonTemporaryMarks, getStaffTemporaryMarksPending, getStaffToday, patchStaffLessonHomeworkSettings, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffHomeworkReview, putStaffHomeworkSettings, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTemporaryMark, putStaffLessonTopic, submitHomework } from "./endpoints/classwork"
 import type { getClientConfig } from "./endpoints/client-config"
 import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeOutboundMail, getMeSearch, postMeCalendarToken, postMeOutboundMail } from "./endpoints/composition"
 import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
@@ -88,7 +88,7 @@ import type { BotPostCreate, BotPostMove, BotPostPatch, BotPostReorder } from ".
 import type { BotAnnouncementCreate, BotCreate, BotPatch, BotTokenRotate } from "./types/bots"
 import type { AudienceCountBody, BroadcastInput, BroadcastPatchBody, BroadcastSendBody, BroadcastsParams } from "./types/broadcasts"
 import type { CertificateEntryInput, CertificateExportBody, CertificateFilters, CertificateTypeInput, StaffCertificateParams } from "./types/certificates"
-import type { AdminAttendanceParams, AttendanceExcuseBody, AttendanceSubmitBody, GroupAttendanceParams, HomeworkDoneBody, HomeworkListParams, HomeworkNoteBody, HomeworkSubmissionBody, JournalParams, JournalToggleBody, MissingAttendanceParams, StaffHomeworkBody, StaffTopicBody, StudentAttendanceParams, TemporaryMarkBody } from "./types/classwork"
+import type { AdminAttendanceParams, AttendanceExcuseBody, AttendanceSubmitBody, GroupAttendanceParams, HomeworkBoardParams, HomeworkDoneBody, HomeworkListParams, HomeworkNoteBody, HomeworkReviewBody, HomeworkSettingsBody, HomeworkSubmissionBody, JournalParams, JournalToggleBody, LessonHomeworkSwitchesBody, MissingAttendanceParams, StaffHomeworkBody, StaffTopicBody, StudentAttendanceParams, TemporaryMarkBody } from "./types/classwork"
 import type { PageParams } from "./types/common"
 import type { SearchParams, SendOutboundMailBody, SentMailParams } from "./types/composition"
 import type { ApplyBody, CourseWorkspaceBody } from "./types/course-workspace"
@@ -748,6 +748,42 @@ export const request_putStaffLessonHomework: RequestOf<"/v1/staff/lessons/{id}/h
 // DELETE /v1/staff/lessons/{id}/homework — deleteStaffLessonHomework
 declare const res_deleteStaffLessonHomework: Awaited<ReturnType<typeof deleteStaffLessonHomework>>
 export const response_deleteStaffLessonHomework: ResponseOf<"/v1/staff/lessons/{id}/homework", "delete"> = res_deleteStaffLessonHomework
+
+// PATCH /v1/staff/lessons/{id}/homework/settings — patchStaffLessonHomeworkSettings
+declare const res_patchStaffLessonHomeworkSettings: Awaited<ReturnType<typeof patchStaffLessonHomeworkSettings>>
+export const response_patchStaffLessonHomeworkSettings: ResponseOf<"/v1/staff/lessons/{id}/homework/settings", "patch"> = res_patchStaffLessonHomeworkSettings
+declare const req_patchStaffLessonHomeworkSettings: LessonHomeworkSwitchesBody
+export const request_patchStaffLessonHomeworkSettings: RequestOf<"/v1/staff/lessons/{id}/homework/settings", "patch"> = req_patchStaffLessonHomeworkSettings
+
+// GET /v1/staff/homework — getStaffHomeworkBoard
+declare const res_getStaffHomeworkBoard: Awaited<ReturnType<typeof getStaffHomeworkBoard>>
+export const response_getStaffHomeworkBoard: ResponseOf<"/v1/staff/homework", "get"> = res_getStaffHomeworkBoard
+declare const query_getStaffHomeworkBoard: HomeworkBoardParams
+export const query_ok_getStaffHomeworkBoard: QueryOf<"/v1/staff/homework", "get"> = query_getStaffHomeworkBoard
+
+// GET /v1/staff/homework/settings — getStaffHomeworkSettings
+declare const res_getStaffHomeworkSettings: Awaited<ReturnType<typeof getStaffHomeworkSettings>>
+export const response_getStaffHomeworkSettings: ResponseOf<"/v1/staff/homework/settings", "get"> = res_getStaffHomeworkSettings
+
+// PUT /v1/staff/homework/settings — putStaffHomeworkSettings
+declare const res_putStaffHomeworkSettings: Awaited<ReturnType<typeof putStaffHomeworkSettings>>
+export const response_putStaffHomeworkSettings: ResponseOf<"/v1/staff/homework/settings", "put"> = res_putStaffHomeworkSettings
+declare const req_putStaffHomeworkSettings: HomeworkSettingsBody
+export const request_putStaffHomeworkSettings: RequestOf<"/v1/staff/homework/settings", "put"> = req_putStaffHomeworkSettings
+
+// GET /v1/staff/homework/submissions/{submission_id} — getStaffHomeworkSubmission
+declare const res_getStaffHomeworkSubmission: Awaited<ReturnType<typeof getStaffHomeworkSubmission>>
+export const response_getStaffHomeworkSubmission: ResponseOf<"/v1/staff/homework/submissions/{submission_id}", "get"> = res_getStaffHomeworkSubmission
+
+// PUT /v1/staff/homework/submissions/{submission_id}/review — putStaffHomeworkReview
+declare const res_putStaffHomeworkReview: Awaited<ReturnType<typeof putStaffHomeworkReview>>
+export const response_putStaffHomeworkReview: ResponseOf<"/v1/staff/homework/submissions/{submission_id}/review", "put"> = res_putStaffHomeworkReview
+declare const req_putStaffHomeworkReview: HomeworkReviewBody
+export const request_putStaffHomeworkReview: RequestOf<"/v1/staff/homework/submissions/{submission_id}/review", "put"> = req_putStaffHomeworkReview
+
+// DELETE /v1/staff/homework/submissions/{submission_id}/review — deleteStaffHomeworkReview
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteStaffHomeworkReview = OperationOf<"/v1/staff/homework/submissions/{submission_id}/review", "delete">
 
 // PUT /v1/staff/lessons/{id}/topic — putStaffLessonTopic
 declare const res_putStaffLessonTopic: Awaited<ReturnType<typeof putStaffLessonTopic>>

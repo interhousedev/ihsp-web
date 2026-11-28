@@ -1,41 +1,31 @@
-"use client";
+"use client"
 
-import { useErrorMessage, useT } from "@ihsp/i18n";
-import { Button, buttonVariants, Icons, PageContainer, Switch } from "@ihsp/ui";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { useEvent } from "../use-activities";
-import {
-  useAlbumActions,
-  useAlbumMedia,
-  useEventAlbum,
-  useEventEdit,
-} from "../use-club-media";
-import {
-  MediaGrid,
-  MediaLightbox,
-  MediaUploadButton,
-  ReportMediaDialog,
-} from "./club-media";
+import { useErrorMessage, useT } from "@ihsp/i18n"
+import { Button, buttonVariants, Icons, PageContainer, Switch } from "@ihsp/ui"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { useState } from "react"
+import { useEvent } from "../use-activities"
+import { useAlbumActions, useAlbumMedia, useEventAlbum, useEventEdit } from "../use-club-media"
+import { MediaGrid, MediaLightbox, MediaUploadButton, ReportMediaDialog } from "./club-media"
 
 /** Event album (`/activities/album/?event=<id>`): photos and videos, lightbox, report; organizers upload and curate. */
 export function AlbumPage() {
-  const t = useT("clubMedia");
-  const common = useT("common");
-  const errorMessage = useErrorMessage();
-  const eventId = useSearchParams().get("event");
-  const event = useEvent(eventId);
-  const album = useEventAlbum(eventId);
-  const a = album.data ?? null;
-  const media = useAlbumMedia(a?.id ?? null);
-  const actions = useAlbumActions(eventId ?? "", a?.id ?? null);
-  const { setCover } = useEventEdit(eventId ?? "");
-  const [open, setOpen] = useState<number | null>(null);
-  const [reporting, setReporting] = useState<string | null>(null);
-  const items = (media.data?.pages ?? []).flatMap((p) => p.items);
-  const m = open == null ? null : items[open];
-  const e = event.data;
+  const t = useT("clubMedia")
+  const common = useT("common")
+  const errorMessage = useErrorMessage()
+  const eventId = useSearchParams().get("event")
+  const event = useEvent(eventId)
+  const album = useEventAlbum(eventId)
+  const a = album.data ?? null
+  const media = useAlbumMedia(a?.id ?? null)
+  const actions = useAlbumActions(eventId ?? "", a?.id ?? null)
+  const { setCover } = useEventEdit(eventId ?? "")
+  const [open, setOpen] = useState<number | null>(null)
+  const [reporting, setReporting] = useState<string | null>(null)
+  const items = (media.data?.pages ?? []).flatMap((p) => p.items)
+  const m = open == null ? null : items[open]
+  const e = event.data
   const back = (
     <Link
       href={eventId ? `/activities/event/?id=${eventId}` : "/activities/"}
@@ -44,25 +34,18 @@ export function AlbumPage() {
       <Icons.chevronLeft data-icon="inline-start" aria-hidden />
       {t("backToEvent")}
     </Link>
-  );
+  )
   if (event.isPending || album.isPending)
     return (
       <PageContainer title={common("loading")} back={back}>
         {null}
       </PageContainer>
-    );
-  const failure = event.error ?? album.error ?? media.error;
+    )
+  const failure = event.error ?? album.error ?? media.error
   const mutationError =
-    actions.upload.error ??
-    actions.remove.error ??
-    actions.setMemberUploads.error ??
-    setCover.error ??
-    null;
+    actions.upload.error ?? actions.remove.error ?? actions.setMemberUploads.error ?? setCover.error ?? null
   return (
-    <PageContainer
-      title={e ? t("titleOf", { title: e.title }) : t("title")}
-      back={back}
-    >
+    <PageContainer title={e ? t("titleOf", { title: e.title }) : t("title")} back={back}>
       {failure ? (
         <p role="alert" className="text-destructive text-sm">
           {errorMessage(failure)}
@@ -152,12 +135,7 @@ export function AlbumPage() {
                   {t("delete")}
                 </Button>
               ) : (
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setReporting(m.id)}
-                >
+                <Button type="button" size="sm" variant="ghost" onClick={() => setReporting(m.id)}>
                   <Icons.flag data-icon="inline-start" aria-hidden />
                   {t("report.action")}
                 </Button>
@@ -178,13 +156,13 @@ export function AlbumPage() {
             { id: reporting, reason, isSubject },
             {
               onSuccess: () => {
-                setReporting(null);
-                setOpen(null);
+                setReporting(null)
+                setOpen(null)
               },
             },
           )
         }
       />
     </PageContainer>
-  );
+  )
 }

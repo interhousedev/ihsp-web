@@ -57,12 +57,7 @@ export function HomeworkPage() {
   return (
     <PageContainer title={t("title")}>
       <HomeworkDefaults />
-      <QueryState
-        query={optionsQuery}
-        rows={2}
-        isEmpty={(options) => options.length === 0}
-        emptyText={t("noOptions")}
-      >
+      <QueryState query={optionsQuery} rows={2} isEmpty={(options) => options.length === 0} emptyText={t("noOptions")}>
         {(options) => (
           <>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
