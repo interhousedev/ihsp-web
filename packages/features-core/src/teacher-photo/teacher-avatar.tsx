@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { cn, initials } from "@ihsp/ui"
+import { cn, initials, PersonSilhouette } from "@ihsp/ui"
 import { useState } from "react"
 
 const SIZES = {
@@ -17,6 +17,8 @@ export type TeacherAvatarProps = {
   size?: keyof typeof SIZES
   /** A decorative avatar next to the name it belongs to: no alt text, hidden from assistive technology. */
   decorative?: boolean
+  /** Without a photo (or when it is hidden from the viewer): the initials, or a gray default-person silhouette. */
+  placeholder?: "initials" | "person"
   className?: string
 }
 
@@ -24,7 +26,14 @@ export type TeacherAvatarProps = {
  * A person's photo in a circle. The initials are always underneath: they show while the photo loads and stay when it
  * fails (an expired presigned address, a 404), so the circle is never empty.
  */
-export function TeacherAvatar({ name, photoUrl, size = "default", decorative = false, className }: TeacherAvatarProps) {
+export function TeacherAvatar({
+  name,
+  photoUrl,
+  size = "default",
+  decorative = false,
+  placeholder = "initials",
+  className,
+}: TeacherAvatarProps) {
   const t = useT("teacherPhoto")
   // The address that failed; a new address gets another try.
   const [failedUrl, setFailedUrl] = useState<string | null>(null)
@@ -39,9 +48,13 @@ export function TeacherAvatar({ name, photoUrl, size = "default", decorative = f
         className,
       )}
     >
-      <span data-testid="teacher-avatar-initials" aria-hidden={photo !== null || undefined}>
-        {initials(name)}
-      </span>
+      {placeholder === "person" ? (
+        <PersonSilhouette />
+      ) : (
+        <span data-testid="teacher-avatar-initials" aria-hidden={photo !== null || undefined}>
+          {initials(name)}
+        </span>
+      )}
       {photo ? (
         <img
           src={photo}

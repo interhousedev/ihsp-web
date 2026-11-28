@@ -1,4 +1,6 @@
 [
+  "apps/admin/src/features/lms-badges/components/badge-form.tsx",
+  "apps/admin/src/features/lms-levels/components/draft-editor.tsx",
   "apps/landing/src/features/landing/flags.tsx",
   "apps/landing/src/features/landing/phone-frame.tsx",
   "apps/lms/src/features/badges/components/badges-page.tsx",
@@ -10,6 +12,7 @@
   "apps/lms/src/features/settings/utils/color.ts",
   "apps/lms/src/features/step-editor/components/block-toolbar.tsx",
   "apps/share/src/features/share/visualization-view.tsx",
+  "apps/sp/src/features/student-card/components/wallet-buttons.tsx",
   "apps/sp/src/features/today/dashboard/model.ts",
   "packages/config/src/boot-splash.tsx",
   "packages/config/src/brand.ts",
@@ -27,7 +30,5 @@
   "packages/ui/src/components/markdown.tsx",
   "packages/ui/src/components/qr-code-svg.tsx",
   "packages/ui/src/components/ui/chart.tsx",
-  "packages/ui/src/components/ui/file-preview.tsx",
-  "apps/admin/src/features/lms-badges/components/badge-form.tsx",
-  "apps/admin/src/features/lms-levels/components/draft-editor.tsx"
+  "packages/ui/src/components/ui/file-preview.tsx"
 ]

@@ -200,7 +200,7 @@ export function FileUploader(props: FileUploaderProps) {
             )}
             {...dropzoneProps}
           >
-            <input {...getInputProps()} aria-label="Upload files" />
+            <input {...getInputProps()} aria-label={t("files.upload.button")} />
             {isDragActive ? (
               <div className="flex flex-col items-center justify-center gap-4 sm:px-5">
                 <div className="rounded-full border border-dashed p-3">
