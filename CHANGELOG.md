@@ -4,6 +4,31 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.16.0] - 2026-11-28
+
+### Added
+
+- my.iht: a student card in the lyceum ID style with photo, full name, group, ID, speciality and a permanent QR; "Add to Apple Wallet" or "Add to Google Wallet" by device, once configured.
+- my.iht: the lyceum rating page ("Рейтинг лицея").
+- "Hide my photo from others" on the selfie step, the face page and the id account; others see a gray placeholder.
+- Admin: hide and show groups, a "show hidden groups" switch, draft clubs with a filter.
+- Club managers can decline a request or remove a member without banning; ban is separate.
+
+### Changed
+
+- my.iht: "AI chat" is back in the sidebar; the dashboard header has space above it; the group page explains the group's standing first.
+- Admission: clearer opportunity cards with "More details", undo after removing from the plan, unified item cards with delete feedback and a mobile add button.
+- The EMIS sync switch is removed from admin settings: attendance always syncs.
+- Error messages exist for every backend error code in uz, ru and en.
+
+### Removed
+
+- The share admission guest page.
+
+### Known issues
+
+- Wallet buttons stay hidden until the backend has signing credentials; the badges are drawn, not the official artwork.
+
 ## [1.15.2] - 2026-11-28
 
 ### Added
