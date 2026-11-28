@@ -35,6 +35,7 @@ import {
   type ClubStatus,
 } from "../clubs-api"
 import { ActivitiesTabs } from "./activities-tabs"
+import { CreateClubDialog } from "./create-club-dialog"
 
 const VARIANT = {
   draft: "outline",
@@ -81,6 +82,7 @@ export function ClubsPage() {
   const [caps, setCaps] = useState<AdminClub | null>(null)
   const [picked, setPicked] = useState<ClubCapability[] | null>(null)
   const [sent, setSent] = useState<string | null>(null)
+  const [creating, setCreating] = useState(false)
 
   const closeReview = () => {
     setOpen(null)
@@ -116,7 +118,15 @@ export function ClubsPage() {
   const MENU = "min-h-11 md:min-h-8"
 
   return (
-    <PageContainer title={t("title")} meta={t("clubs.description")}>
+    <PageContainer
+      title={t("title")}
+      meta={t("clubs.description")}
+      actions={
+        <Button type="button" className="min-h-11 md:min-h-9" onClick={() => setCreating(true)}>
+          {t("clubs.create")}
+        </Button>
+      }
+    >
       <ActivitiesTabs current="clubs" />
       {sent ? (
         <p role="status" className="bg-muted rounded-lg px-3 py-2 text-sm">
@@ -252,6 +262,15 @@ export function ClubsPage() {
           </ul>
         )}
       </QueryState>
+
+      <CreateClubDialog
+        open={creating}
+        onClose={() => setCreating(false)}
+        onCreated={(name) => {
+          setSent(null)
+          toast.success(t("clubs.created", { name }))
+        }}
+      />
 
       <ResponsiveDialog
         open={open !== null}

@@ -126,3 +126,17 @@ export function useSetCapabilities(onDone: () => void) {
 export function usePendingClubs(): number {
   return (useAdminClubs("pending_review").data ?? []).length
 }
+
+export type CreateClubInput = { name: string; slug: string; description: string; ownerUserId: string }
+
+/** Creates a club that is already approved; the chosen user becomes its owner. */
+export function useCreateClub(onDone: (club: { name: string }) => void) {
+  return useAdminMutation<CreateClubInput, { name: unknown }>({
+    mutationFn: ({ name, slug, description, ownerUserId }) =>
+      activities.post("/v1/admin/activities/clubs", {
+        body: { name, slug, description, owner_user_id: ownerUserId },
+      }),
+    invalidate: [adminClubsKey, clubAnalyticsKey],
+    onSuccess: (club) => onDone({ name: nameOf(club.name) }),
+  })
+}
