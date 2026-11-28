@@ -44,8 +44,8 @@ const VARIANT = {
   suspended: "destructive",
   archived: "secondary",
 } as const satisfies Record<ClubStatus, string>
-type Chip = "all" | "active" | "suspended" | "archived"
-const CHIPS: readonly Chip[] = ["all", "active", "suspended", "archived"]
+type Chip = "all" | "active" | "draft" | "suspended" | "archived"
+const CHIPS: readonly Chip[] = ["all", "active", "draft", "suspended", "archived"]
 
 /** The club picture, or its initials when none is uploaded. */
 function ClubLogo({ club }: { club: Pick<AdminClub, "name" | "logoUrl"> }) {
@@ -112,9 +112,10 @@ export function ClubsPage() {
     setPicked(current.includes(c) ? current.filter((x) => x !== c) : [...current, c])
 
   const pending = pendingQuery.data ?? []
+  const needle = q.trim().toLowerCase()
   const rest = (clubsQuery.data ?? [])
-    .filter((c) => c.status !== "pending_review" && c.status !== "draft")
-    .filter((c) => c.name.toLowerCase().includes(q.trim().toLowerCase()))
+    .filter((c) => c.status !== "pending_review")
+    .filter((c) => `${c.name} ${c.slug} ${c.ownerName ?? ""}`.toLowerCase().includes(needle))
   const MENU = "min-h-11 md:min-h-8"
 
   return (
@@ -234,7 +235,12 @@ export function ClubsPage() {
                             <DropdownMenuItem
                               className={MENU}
                               disabled={resumeClub.isPending}
-                              onClick={() => resumeClub.mutate({ id: c.id })}
+                              onClick={() =>
+                                resumeClub.mutate(
+                                  { id: c.id },
+                                  { onSuccess: () => toast.success(t("clubs.resumed", { name: c.name })) },
+                                )
+                              }
                             >
                               {t("clubs.resume")}
                             </DropdownMenuItem>
@@ -257,7 +263,27 @@ export function ClubsPage() {
               </li>
             ))}
             {rest.length === 0 ? (
-              <li className="text-muted-foreground py-6 text-center text-sm">{t("empty")}</li>
+              <li className="text-muted-foreground grid justify-items-center gap-2 py-6 text-center text-sm">
+                {t(needle || chip !== "all" ? "clubs.emptyFiltered" : "clubs.emptyList")}
+                {needle || chip !== "all" ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="min-h-11 md:min-h-8"
+                    onClick={() => {
+                      setQ("")
+                      setChip("all")
+                    }}
+                  >
+                    {t("clubs.resetSearch")}
+                  </Button>
+                ) : (
+                  <Button type="button" size="sm" className="min-h-11 md:min-h-8" onClick={() => setCreating(true)}>
+                    {t("clubs.create")}
+                  </Button>
+                )}
+              </li>
             ) : null}
           </ul>
         )}

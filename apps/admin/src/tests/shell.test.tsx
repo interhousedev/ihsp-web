@@ -36,7 +36,7 @@ describe("app frame", () => {
       Monitoring: "/monitoring/",
       Broadcasts: "/broadcasts/",
       Moderation: "/moderation/",
-      Assistant: "/assistant/",
+      "AI chat": "/assistant/",
       Settings: "/settings/",
     }
     for (const [name, href] of Object.entries(expected)) {

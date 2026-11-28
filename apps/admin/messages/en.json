@@ -30,7 +30,7 @@
     "broadcasts": "Broadcasts",
     "moderation": "Moderation",
     "callForImprovements": "Call for improvements",
-    "assistant": "Assistant",
+    "assistant": "AI chat",
     "reports": "Reports",
     "settings": "Settings",
     "limits": "Limits & usage",
@@ -569,6 +569,24 @@
     "new": "New group",
     "empty": "No groups yet.",
     "notSelected": "Choose a group from the list.",
+    "showHidden": "Show hidden groups",
+    "hiddenBadge": "Hidden",
+    "hide": {
+      "action": "Hide group",
+      "title": "Hide group {name}?",
+      "description": "The group disappears from lists, pickers and ratings. Nothing is deleted: its students, marks and schedule stay, and you can show the group again at any time.",
+      "submit": "Hide group",
+      "keep": "Keep visible",
+      "done": "Group {name} hidden"
+    },
+    "unhide": {
+      "action": "Show group",
+      "title": "Show group {name} again?",
+      "description": "The group returns to lists, pickers and ratings.",
+      "submit": "Show group",
+      "keep": "Keep hidden",
+      "done": "Group {name} is visible again"
+    },
     "delete": {
       "action": "Delete group",
       "title": "Delete group {name}?",
@@ -1605,7 +1623,6 @@
       "lms": "Courses (LMS)",
       "mail": "Student mail",
       "push": "Push notifications",
-      "emis_sync": "EMIS sync",
       "library": "Library",
       "web_search": "Web search",
       "vector_search": "Search by meaning",
@@ -1618,7 +1635,6 @@
       "lms": "Course authoring and the learning routes.",
       "mail": "Student mailboxes and their background jobs.",
       "push": "Web Push to the browser; also needs the VAPID keys.",
-      "emis_sync": "Scheduled synchronization with EMIS.",
       "library": "The library site and its scheduled jobs.",
       "web_search": "The web search switch in the assistant, notebooks and Discover.",
       "vector_search": "Search by meaning in notebooks; needs the vector database.",
@@ -3172,21 +3188,21 @@
     }
   },
   "clubAnalytics": {
-    "title": "Аналитика клубов",
-    "description": "Рост, посещаемость, оценки и охват объявлений по клубам. Управление клубами — на вкладке «Клубы».",
+    "title": "Club analytics",
+    "description": "Growth, attendance, ratings and announcement reach by club. To manage clubs, open the “Clubs” tab.",
     "kpi": {
-      "clubs": "Активных клубов",
+      "clubs": "Active clubs",
       "events": "Events",
-      "checkIns": "Check-ins",
-      "rsvps": "RSVPs"
+      "checkIns": "Marked present at meetings",
+      "rsvps": "Event sign-ups"
     },
     "table": {
-      "title": "Клубы",
-      "club": "Клуб",
-      "members": "Участники",
-      "noRating": "Пока нет оценок",
+      "title": "Clubs",
+      "club": "Club",
+      "members": "Members",
+      "noRating": "No ratings yet",
       "events": "Events",
-      "attendance": "Явка",
+      "attendance": "Attendance",
       "rating": "Rating"
     }
   },
@@ -3385,7 +3401,11 @@
       "createBody": "The club is created already approved; the chosen person becomes its owner.",
       "createName": "Name",
       "createSlug": "Address (slug)",
-      "createSlugHint": "Lowercase Latin letters, digits and hyphens only.",
+      "createSlugHint": "3–40 characters: lowercase Latin letters, digits and hyphens. Type it by hand if the name is not in Latin letters.",
+      "resumed": "Club “{name}” is active again.",
+      "emptyList": "No clubs yet. Create the first one.",
+      "emptyFiltered": "No clubs match the search or the status filter.",
+      "resetSearch": "Show all clubs",
       "createDescription": "Description",
       "createOwner": "Owner",
       "createSubmit": "Create",

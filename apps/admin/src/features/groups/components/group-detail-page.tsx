@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs"
 import { BackLink, QueryState } from "@ihsp/features-core"
 import { DeleteGroupButton } from "./delete-group-button"
+import { HideGroupButton } from "./hide-group-button"
 import { GroupCurriculumTab } from "./group-curriculum-tab"
 import { GroupPeopleCard } from "./group-people-card"
 import { GroupPhotosExportButton } from "./group-photos-export-button"
@@ -42,12 +43,14 @@ export function GroupDetailPage() {
           meta={[
             group.current_semester ? t("view.semester", { semester: group.current_semester }) : null,
             group.emis_group_id ? `EMIS ${group.emis_group_id}` : null,
+            group.hidden ? t("hiddenBadge") : null,
           ]
             .filter(Boolean)
             .join(" · ")}
           actions={
             <>
               <GroupPhotosExportButton groupId={group.id} groupName={group.name} />
+              <HideGroupButton groupId={group.id} groupName={group.name} hidden={group.hidden} />
               <DeleteGroupButton groupId={group.id} groupName={group.name} />
               <BackLink href="/groups/" label={t("title")} />
             </>
