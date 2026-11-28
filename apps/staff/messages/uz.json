@@ -25,7 +25,8 @@
     "certificates": "Sertifikatlar",
     "temporaryMarks": "EMIS kutmoqda",
     "excuses": "Sababli qoldirishlar",
-    "aiTools": "AI vositalari"
+    "aiTools": "AI vositalari",
+    "homework": "Uy vazifalari"
   },
   "audience": {
     "subgroup": "{group} · {number}-kichik guruh"
@@ -962,6 +963,68 @@
       "checkedFiles": "Izoh va ish fayllari tekshirildi: {count}",
       "lessonNotebook": "dars fani daftari",
       "failed": "Ishni tekshirib boʼlmadi. Qayta urinib koʼring."
+    }
+  },
+  "homework": {
+    "title": "Uy vazifalari",
+    "noOptions": "Koʻrsatish uchun fanlar yoʻq.",
+    "from": "Dan",
+    "to": "Gacha",
+    "termStart": "Chorak boshi",
+    "termEnd": "Bugun va keyin",
+    "only": {
+      "label": "Koʻrsatish",
+      "all": "Barcha darslar",
+      "with_homework": "Uy vazifasi borlari",
+      "to_review": "Tekshirish kerak"
+    },
+    "noLessons": "Filtrga mos dars yoʻq.",
+    "lessonWhen": "{date}, {period}-dars",
+    "source": {
+      "teacher": "Sizning vazifangiz",
+      "emis": "EMISdan",
+      "both": "EMIS va sizniki"
+    },
+    "counts": {
+      "toReview": "{count, plural, other {Tekshirish kerak: #}}",
+      "summary": "Topshirdi: {handedIn}/{total} · Tekshirish kerak: {toReview} · Baholandi: {graded}"
+    },
+    "due": "Muddat: {date}",
+    "noHomework": "Uy vazifasi yoʻq.",
+    "openLesson": "Darsni ochish",
+    "emisFiles": "EMIS fayllari",
+    "panelTitle": "Uy vazifasi sozlamalari",
+    "acceptSubmissions": "Oʻquvchilar topshira oladi",
+    "notify": "Har bir topshiriq haqida xabar berish",
+    "notifyDefault": "(mening sozlamam)",
+    "notifyReset": "Mening sozlamamdan foydalanish",
+    "defaults": {
+      "title": "Uy vazifasi sozlamalarim",
+      "description": "Yangi vazifalarga qoʻllanadi; har bir darsda oʻzgartirish mumkin.",
+      "accept": "Yangi vazifalar boʻyicha ishlarni qabul qilish",
+      "notify": "Oʻquvchi ish topshirganda xabar berish"
+    },
+    "review": {
+      "title": "Oʻquvchi ishi",
+      "open": "Tekshirish",
+      "saved": "Tekshiruv saqlandi",
+      "cleared": "Tekshiruv bekor qilindi",
+      "status": {
+        "pending": "Tekshirilmagan",
+        "returned": "Qaytarilgan",
+        "graded": "Baholangan"
+      },
+      "gradeValue": "Baho: {grade}",
+      "late": "Kechikib",
+      "studentComment": "Oʻquvchi izohi",
+      "previousComment": "Avvalgi izohingiz",
+      "reviewedBy": "Tekshirdi: {name}, {date}",
+      "grade": "Baho",
+      "comment": "Izoh",
+      "commentHint": "Ishni qaytarish uchun majburiy",
+      "gradeAction": "Baholash",
+      "returnAction": "Qayta ishlashga qaytarish",
+      "clearAction": "Tekshiruvni bekor qilish"
     }
   }
 }

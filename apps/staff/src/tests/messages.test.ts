@@ -130,6 +130,9 @@ describe("keys used in the code", () => {
       "notebooks.list.folders.${key}": ["subject", "course", "mine"],
       "files.drive.types.${entry.id}": ["all", "documents", "images", "video", "presentations", "spreadsheets", "pdf"],
       "homeworkSubmissions.status.${row.status}": ["submitted", "late", "missing"],
+      "homework.source.${homework.source}": ["teacher", "emis", "both"],
+      "homework.only.${value}": ["all", "with_homework", "to_review"],
+      "homework.review.status.${row.review_status}": ["pending", "returned", "graded"],
       "aiTools.difficulty.${d}": ["easy", "medium", "hard"],
       "aiTools.workCheck.${key}": [
         "placeholder",
