@@ -110,7 +110,10 @@ export type ClubEvent = {
   status: "draft" | "scheduled" | "cancelled" | "done"
   course_id?: string | null
   opportunity_id?: string | null
+  /** Ready photo of the club that illustrates the event (`PUT /events/{id}/cover`). */
+  cover_media_id?: string | null
 }
+export type EventPatch = Partial<Pick<ClubEvent, "title" | "description" | "location" | "capacity" | "rsvp_policy">>
 export type Rsvp = {
   event_id: string
   user_id: string
@@ -132,7 +135,68 @@ export type Announcement = {
   cancelled?: boolean
   created_at?: string | null
 }
-export type AnnouncementIn = { text: string; audience?: string; scheduled_at?: string | null }
+export type AnnouncementIn = { text: string; audience?: string; scheduled_at?: string | null; media_ids?: string[] }
+
+export type MediaKind = "photo" | "video"
+/** One photo or video of a club. The `*_url` fields are signed, self-authorising paths (`<img>` sends no Bearer). */
+export type ClubMedia = {
+  id: string
+  club_id: string
+  kind: MediaKind
+  status: string
+  usage: string
+  album_id: string | null
+  event_id: string | null
+  announcement_id: string | null
+  caption: string | null
+  width: number | null
+  height: number | null
+  duration_ms: number | null
+  byte_size: number
+  position: number
+  uploaded_by: string | null
+  hidden_source: string | null
+  created_at: string | null
+  thumb_url: string | null
+  preview_url: string | null
+  poster_url: string | null
+  video_url: string | null
+  original_url: string | null
+  can_delete: boolean
+  can_moderate: boolean
+}
+export type ClubAlbum = {
+  id: string
+  club_id: string
+  title: string
+  description: string | null
+  visibility: string
+  allow_download: boolean
+  member_uploads: boolean
+  event_id: string | null
+  parent_id: string | null
+  event_date: string | null
+  cover_media_id: string | null
+  created_at: string | null
+  item_count: number
+  folder_count: number
+  can_upload: boolean
+  can_moderate: boolean
+}
+export type MediaPage = { items: ClubMedia[]; next_cursor: string | null }
+export type UploadIn = {
+  name: string
+  size: number
+  content_type: string
+  sha256_b64: string
+  consent_attested: boolean
+  album_id?: string | null
+  caption?: string | null
+}
+export type UploadStarted = {
+  media: ClubMedia
+  upload: { url: string; method: string; headers: Record<string, string> }
+}
 
 export type TeamPosition = {
   id: string
@@ -331,6 +395,10 @@ export const activitiesApi = {
     ),
   publishEvent: (event_id: string) =>
     as<ClubEvent>(activities.post("/v1/activities/events/{event_id}:publish", { path: { event_id } })),
+  updateEvent: (event_id: string, body: EventPatch) =>
+    as<ClubEvent>(activities.patch("/v1/activities/events/{event_id}", { path: { event_id }, body: body as never })),
+  setEventCover: (event_id: string, media_id: string | null) =>
+    as<ClubEvent>(activities.put("/v1/activities/events/{event_id}/cover", { path: { event_id }, body: { media_id } })),
   cancelEvent: (event_id: string) =>
     as<ClubEvent>(activities.post("/v1/activities/events/{event_id}:cancel", { path: { event_id } })),
   finishEvent: (event_id: string) =>
@@ -480,4 +548,32 @@ export const activitiesApi = {
 
   // Opportunities feed (shared with admission)
   opportunities: () => as<ItemsOut<Opportunity>>(activities.get("/v1/activities/opportunities")),
+
+  // Club media: albums, photos and videos (two-step upload: request a presigned PUT, then `:complete`)
+  eventAlbum: (event_id: string) =>
+    as<ClubAlbum | null>(activities.get("/v1/activities/events/{event_id}/album", { path: { event_id } })),
+  ensureEventAlbum: (event_id: string) =>
+    as<ClubAlbum>(activities.put("/v1/activities/events/{event_id}/album", { path: { event_id } })),
+  updateAlbum: (album_id: string, body: { member_uploads?: boolean; cover_media_id?: string | null }) =>
+    as<ClubAlbum>(activities.patch("/v1/activities/albums/{album_id}", { path: { album_id }, body: body as never })),
+  albumMedia: (album_id: string, cursor?: string | null) =>
+    as<MediaPage>(
+      activities.get("/v1/activities/albums/{album_id}/media", {
+        path: { album_id },
+        query: { limit: 60, ...(cursor ? { cursor } : {}) },
+      }),
+    ),
+  media: (media_id: string) => as<ClubMedia>(activities.get("/v1/activities/media/{media_id}", { path: { media_id } })),
+  requestUpload: (club_id: string, body: UploadIn) =>
+    as<UploadStarted>(
+      activities.post("/v1/activities/clubs/{club_id}/media:request-upload", {
+        path: { club_id },
+        body: body as never,
+      }),
+    ),
+  completeMedia: (media_id: string) =>
+    as<ClubMedia>(activities.post("/v1/activities/media/{media_id}:complete", { path: { media_id } })),
+  deleteMedia: (media_id: string) => activities.delete("/v1/activities/media/{media_id}", { path: { media_id } }),
+  reportMedia: (media_id: string, body: { reason: string; is_subject: boolean }) =>
+    activities.post("/v1/activities/media/{media_id}:report", { path: { media_id }, body }),
 }

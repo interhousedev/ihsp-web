@@ -40,6 +40,7 @@ const opportunity: Opportunity = {
 } as Opportunity
 
 const plan: Plan = {
+  personal: [],
   entries: [
     {
       id: "e1",

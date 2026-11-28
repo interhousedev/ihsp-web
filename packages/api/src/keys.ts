@@ -164,6 +164,14 @@ export const keys = {
     timetable: (filters?: object) => ["staff", "timetable", params(filters)] as const,
     lesson: (id: string) => ["staff", "lessons", id] as const,
     lessonTemporaryMarks: (id: string) => ["staff", "lessons", id, "temporary-marks"] as const,
+    lessonHomeworkSubmissions: (id: string) => ["staff", "lessons", id, "homework-submissions"] as const,
+    homework: {
+      all: () => ["staff", "homework"] as const,
+      boardAll: () => ["staff", "homework", "board"] as const,
+      board: (filters: object) => ["staff", "homework", "board", filters] as const,
+      settings: () => ["staff", "homework", "settings"] as const,
+      submission: (id: string) => ["staff", "homework", "submissions", id] as const,
+    },
     temporaryMarksPending: () => ["staff", "temporary-marks", "pending"] as const,
     groups: {
       list: () => ["staff", "groups"] as const,

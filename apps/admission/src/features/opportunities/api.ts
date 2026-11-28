@@ -147,6 +147,52 @@ export function useRemoveFromPlan() {
   })
 }
 
+export type PersonalEntry = Plan["personal"][number]
+export type PersonalKind = PersonalEntry["kind"]
+export type PersonalFields = Pick<
+  PersonalEntry,
+  | "kind"
+  | "title"
+  | "provider"
+  | "url"
+  | "summary"
+  | "note"
+  | "starts_on"
+  | "ends_on"
+  | "registration_deadline"
+  | "planned_grade"
+  | "planned_term"
+>
+/** Saved find, or the school list entry the backend planned instead because it matched (`merged`). */
+export type PersonalAdded = {
+  entry: PersonalEntry | null
+  merged: boolean
+  planned_opportunity_id: string | null
+}
+
+const personalPath = (id?: string) => `${BASE}/plan/personal${id ? `/${encodeURIComponent(id)}` : ""}`
+
+export function usePersonalMutations() {
+  const client = useQueryClient()
+  const onSuccess = () => client.invalidateQueries({ queryKey: PLAN_KEY })
+  return {
+    add: useMutation({
+      mutationFn: (body: PersonalFields & { propose: boolean }) =>
+        getApiClient().post<PersonalAdded>(personalPath(), body),
+      onSuccess,
+    }),
+    update: useMutation({
+      mutationFn: ({ id, ...body }: PersonalFields & { id: string; lock_version: number }) =>
+        getApiClient().patch<PersonalEntry>(personalPath(id), body),
+      onSuccess,
+    }),
+    remove: useMutation({
+      mutationFn: (id: string) => getApiClient().delete<void>(personalPath(id)),
+      onSuccess,
+    }),
+  }
+}
+
 const AI_KEY = [...PLAN_KEY, "ai"] as const
 
 export function useAiPlan() {

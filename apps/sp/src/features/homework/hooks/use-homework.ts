@@ -2,6 +2,7 @@
 
 import {
   ApiError,
+  getHomeworkSubmission,
   getMeHomeworkQuery,
   getMeWorkOffsQuery,
   keys,
@@ -46,22 +47,38 @@ export function useSetHomeworkNote() {
 function refreshHomework(queryClient: ReturnType<typeof useQueryClient>, lessonId: string): void {
   void queryClient.invalidateQueries({ queryKey: keys.me.homework() })
   void queryClient.invalidateQueries({ queryKey: keys.lessons.detail(lessonId) })
+  void queryClient.invalidateQueries({ queryKey: homeworkSubmissionKey(lessonId) })
+}
+
+const homeworkSubmissionKey = (lessonId: string) => ["me", "homework-submission", lessonId] as const
+
+/** `GET /v1/me/homework/{lesson_id}/submission`: the full submission with the teacher's review; only when one exists. */
+export function useHomeworkSubmission(lessonId: string, enabled: boolean) {
+  return useQuery({
+    queryKey: homeworkSubmissionKey(lessonId),
+    queryFn: () => getHomeworkSubmission(lessonId),
+    enabled,
+  })
 }
 
 /**
  * `PUT /v1/me/homework/{lesson_id}/submission`: uploads the picked files (`purpose: "link"`), then saves or replaces the
- * submission. A file the backend rejects after the upload stops the submission.
+ * submission with an optional text answer. A file the backend rejects after the upload stops the submission.
  */
 export function useSubmitHomework() {
   const queryClient = useQueryClient()
-  return useMutation<HomeworkSubmission, unknown, { lessonId: string; files: File[]; comment: string | null }>({
-    mutationFn: async ({ lessonId, files, comment }) => {
+  return useMutation<
+    HomeworkSubmission,
+    unknown,
+    { lessonId: string; files: File[]; comment: string | null; text: string | null }
+  >({
+    mutationFn: async ({ lessonId, files, comment, text }) => {
       const uploaded = await Promise.all(files.map((file) => uploadFile(file, "link")))
       const rejected = uploaded.find((file) => file.status === "rejected")
       if (rejected) {
         throw new ApiError({ type: "files/rejected", status: 422, title: `${rejected.name} was rejected` })
       }
-      return submitHomework(lessonId, { file_ids: uploaded.map((file) => file.id), comment })
+      return submitHomework(lessonId, { file_ids: uploaded.map((file) => file.id), comment, text })
     },
     onSuccess: (_submission, { lessonId }) => refreshHomework(queryClient, lessonId),
   })

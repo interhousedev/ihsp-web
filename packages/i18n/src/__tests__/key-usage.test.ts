@@ -18,7 +18,7 @@ const PACKAGES_DIR = join(ROOT, "packages")
 /** Message files that an app loads next to its own `messages/<locale>.json` (see its `providers.tsx`). */
 const SP = (name: string) => join("apps", "sp", "messages", "<locale>", `${name}.json`)
 const EXTRA_FILES: Record<string, string[]> = {
-  sp: ["tools", "notebooks", "pwa", "honours", "student-card", "rating"].map(SP),
+  sp: ["tools", "notebooks", "pwa", "honours", "student-card", "rating", "club-media", "homework-review"].map(SP),
   lms: [SP("notebooks")],
   share: [SP("notebooks")],
   staff: [SP("notebooks")],

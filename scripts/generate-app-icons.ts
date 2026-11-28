@@ -4,7 +4,8 @@
  * and `packages/ui/src/components/layout/platform-marks.ts` (the same glyphs, used by the sidebar and the app switcher).
  * Staff has no hand-drawn svg yet: its glyph is defined here. Run: `bun scripts/generate-app-icons.ts`.
  */
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs"
+import { tmpdir } from "node:os"
 import { join } from "node:path"
 import sharp from "sharp"
 
@@ -54,12 +55,14 @@ for (const app of APPS) {
     writeFileSync(join(icons, "badge-96.png"), await png(tile(app, 1, "none", "white"), 96))
   }
   const sizes = await Promise.all([16, 32, 48].map((size) => png(any, size)))
+  const tmpDir = mkdtempSync(join(tmpdir(), `ihsp-ico-${app}-`))
   const tmp = sizes.map((buffer, i) => {
-    const path = `/tmp/ihsp-ico-${app}-${i}.png`
+    const path = join(tmpDir, `${i}.png`)
     writeFileSync(path, buffer)
     return path
   })
   const proc = Bun.spawnSync(["magick", ...tmp, join(dir, "favicon.ico")])
+  rmSync(tmpDir, { recursive: true, force: true })
   if (proc.exitCode !== 0) throw new Error(`favicon.ico of ${app}: ${proc.stderr.toString()}`)
 }
 

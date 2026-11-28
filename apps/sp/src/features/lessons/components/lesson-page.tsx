@@ -50,7 +50,7 @@ function LessonContent({ data }: { data: StudentLesson }) {
       </Section>
 
       <Section title={t("homework")}>
-        {data.homework?.text ? (
+        {data.homework?.source ? (
           <ul>
             <HomeworkItemCard item={data.homework} />
           </ul>

@@ -20,13 +20,14 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     const studentSearch = { title: t("studentSearch"), url: "/students/", icon: "search" } as const
     const subjects = { title: t("subjects"), url: "/subjects/", icon: "subjects" } as const
     const pendingMarks = { title: t("temporaryMarks"), url: "/temporary-marks/", icon: "forms" } as const
+    const homework = { title: t("homework"), url: "/homework/", icon: "homework" } as const
     const notebooks = { title: t("notebooks"), url: "/notebooks/", icon: "notebooks" } as const
     const aiTools = { title: t("aiTools"), url: "/ai-tools/", icon: "assistant" } as const
     const groups: NavGroup[] = [
       { items: [today] },
       {
         label: t("groupTeaching"),
-        items: [timetable, journal, subjects, pendingMarks, studentSearch, notebooks, aiTools, exams],
+        items: [timetable, journal, homework, subjects, pendingMarks, studentSearch, notebooks, aiTools, exams],
       },
     ]
     if (isCurator) {

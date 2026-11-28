@@ -54,6 +54,7 @@ const opportunity: Opportunity = {
 }
 
 const plan: Plan = {
+  personal: [],
   entries: [
     {
       id: "e1",

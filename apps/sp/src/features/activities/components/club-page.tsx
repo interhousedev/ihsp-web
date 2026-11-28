@@ -38,6 +38,7 @@ import {
 import { TransferDialog } from "./club-admin"
 import { ClubCourses, Leaderboard, MemberDraft, MemberForm } from "./club-capabilities"
 import { ApplyField, ClubLogo, PersonAvatar, Section, SectionTabs, Stars } from "./activity-ui"
+import { EventCover } from "./club-media"
 
 const ASPECTS = ["organization", "usefulness", "atmosphere"] as const
 
@@ -396,6 +397,10 @@ export function ClubPage() {
                   <Link href={`/activities/event/?id=${e.id}`} className="block">
                     <Card className="hover:bg-accent/40 transition-colors">
                       <CardContent className="grid gap-1">
+                        <EventCover
+                          mediaId={e.cover_media_id}
+                          className="mb-1 aspect-video w-full rounded-md object-cover"
+                        />
                         <p className="font-semibold">{e.title}</p>
                         <p className="text-muted-foreground text-sm">
                           {fmt.dateTime(e.starts_at)}

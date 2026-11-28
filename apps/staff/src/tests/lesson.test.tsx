@@ -114,7 +114,7 @@ describe("homework", () => {
         bodies.push(body)
         return HttpResponse.json({
           ...lessonData,
-          homework: { text: body.text, due_date: "2026-10-08", due_auto: true },
+          homework: { ...lessonData.homework, text: body.text, due_date: "2026-10-08", due_auto: true },
         })
       }),
     )
@@ -128,14 +128,27 @@ describe("homework", () => {
   })
 
   test("a due date the teacher chose is sent again when only the text changes", async () => {
-    const manual: StaffLesson = { ...lessonData, homework: { text: "Old", due_date: "2026-10-09", due_auto: false } }
+    const manual: StaffLesson = {
+      ...lessonData,
+      homework: {
+        text: "Old",
+        due_date: "2026-10-09",
+        due_auto: false,
+        source: "teacher",
+        accept_submissions: true,
+        notify: null,
+        notify_effective: true,
+        emis_files: [],
+        emis_topic_description: null,
+      },
+    }
     server.use(http.get(apiUrl("/v1/staff/lessons/:id"), () => HttpResponse.json(manual)))
     const bodies: unknown[] = []
     server.use(
       http.put(apiUrl("/v1/staff/lessons/:id/homework"), async ({ request }) => {
         const body = (await request.json()) as { text: string }
         bodies.push(body)
-        return HttpResponse.json({ ...manual, homework: { text: body.text, due_date: "2026-10-09", due_auto: false } })
+        return HttpResponse.json({ ...manual, homework: { ...manual.homework, text: body.text } })
       }),
     )
     const { user } = renderStaff(<LessonPage />, { route: ROUTE })
@@ -148,7 +161,20 @@ describe("homework", () => {
   })
 
   test("with no next lesson the teacher is asked for a date", async () => {
-    const noNext: StaffLesson = { ...lessonData, homework: { text: "Read", due_date: null, due_auto: true } }
+    const noNext: StaffLesson = {
+      ...lessonData,
+      homework: {
+        text: "Read",
+        due_date: null,
+        due_auto: true,
+        source: "teacher",
+        accept_submissions: true,
+        notify: null,
+        notify_effective: true,
+        emis_files: [],
+        emis_topic_description: null,
+      },
+    }
     server.use(http.get(apiUrl("/v1/staff/lessons/:id"), () => HttpResponse.json(noNext)))
     const { user } = renderStaff(<LessonPage />, { route: ROUTE })
     await openPopUp(user, "Homework")

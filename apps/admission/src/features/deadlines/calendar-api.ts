@@ -53,3 +53,21 @@ export function useRevokeCalendarFeed() {
     onSuccess: () => client.invalidateQueries({ queryKey: FEED_KEY }),
   })
 }
+
+export const EXPORT_MAX_KEYS = 50
+
+/** Downloads the .ics export: the chosen entries (at most 50) or everything between `from` and `to`. */
+export async function downloadCalendarIcs(params: { keys: string[] } | { from: string; to: string }, locale: string) {
+  const query = "keys" in params ? { key: params.keys } : { from: params.from, to: params.to }
+  const text = await getApiClient().get<string>(`${BASE}/export.ics`, {
+    query,
+    responseType: "text",
+    headers: { "Accept-Language": locale },
+  })
+  const url = URL.createObjectURL(new Blob([text], { type: "text/calendar;charset=utf-8" }))
+  const link = document.createElement("a")
+  link.href = url
+  link.download = "admission-deadlines.ics"
+  link.click()
+  URL.revokeObjectURL(url)
+}

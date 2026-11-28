@@ -1,14 +1,14 @@
 "use client"
 
-import { getLessonHomeworkSubmissions, type StaffSubmissionRow } from "@ihsp/api"
+import { getLessonHomeworkSubmissions, keys, type StaffSubmissionRow } from "@ihsp/api"
 import { QueryState } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, ScrollList } from "@ihsp/ui"
+import { Badge, Button, ScrollList } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
+import { useState } from "react"
 import { SubmissionAiCheck } from "@/features/ai-tools/components/submission-ai-check"
+import { SubmissionReviewDialog } from "@/features/homework/components/submission-review-dialog"
 
-/** The served row carries the submission id; the hand-written `StaffSubmissionRow` of `@ihsp/api` does not declare it yet. */
-type RowWithId = StaffSubmissionRow & { id: string | null }
 type Status = "submitted" | "late" | "missing"
 
 const VARIANT: Record<Status, "secondary" | "destructive" | "outline"> = {
@@ -26,9 +26,11 @@ export function SubmissionsBadge({ submitted, total }: { submitted: number; tota
 /** The lesson's homework hand-ins: the counts and, per student, the status, time, comment and files. */
 export function HomeworkSubmissionsSection({ lessonId }: { lessonId: string }) {
   const t = useT("homeworkSubmissions")
+  const tr = useT("homework")
   const f = useFormatters()
+  const [reviewing, setReviewing] = useState<string | null>(null)
   const query = useQuery({
-    queryKey: ["staff", "lesson", lessonId, "homework-submissions"],
+    queryKey: keys.staff.lessonHomeworkSubmissions(lessonId),
     queryFn: () => getLessonHomeworkSubmissions(lessonId),
   })
   return (
@@ -57,7 +59,7 @@ export function HomeworkSubmissionsSection({ lessonId }: { lessonId: string }) {
             ) : (
               <ScrollList label={t("title")} maxHeight="28rem">
                 <ul className="divide-y rounded-lg border">
-                  {(data.students as RowWithId[]).map((row) => (
+                  {data.students.map((row) => (
                     <li key={row.student.id} className="flex flex-col gap-1 p-3 text-sm">
                       <span className="flex flex-wrap items-center gap-2">
                         <span className="font-medium">
@@ -65,6 +67,13 @@ export function HomeworkSubmissionsSection({ lessonId }: { lessonId: string }) {
                         </span>
                         <span className="text-muted-foreground">{row.group_name}</span>
                         <Badge variant={VARIANT[row.status]}>{t(`status.${row.status}`)}</Badge>
+                        {row.status !== "missing" && row.review_status ? (
+                          <Badge variant={row.review_status === "pending" ? "outline" : "secondary"}>
+                            {row.grade
+                              ? tr("review.gradeValue", { grade: row.grade })
+                              : tr(`review.status.${row.review_status}`)}
+                          </Badge>
+                        ) : null}
                         {row.submitted_at ? (
                           <span className="text-muted-foreground">{f.dateTime(row.submitted_at)}</span>
                         ) : null}
@@ -87,7 +96,16 @@ export function HomeworkSubmissionsSection({ lessonId }: { lessonId: string }) {
                         </ul>
                       ) : null}
                       {row.status !== "missing" && row.id ? (
-                        <SubmissionAiCheck submissionId={row.id} fileCount={row.files.length} />
+                        <>
+                          <Button
+                            variant="outline"
+                            className="min-h-11 self-start md:min-h-8"
+                            onClick={() => setReviewing(row.id)}
+                          >
+                            {tr("review.open")}
+                          </Button>
+                          <SubmissionAiCheck submissionId={row.id} fileCount={row.files.length} />
+                        </>
                       ) : null}
                     </li>
                   ))}
@@ -97,6 +115,13 @@ export function HomeworkSubmissionsSection({ lessonId }: { lessonId: string }) {
           </>
         )}
       </QueryState>
+      <SubmissionReviewDialog
+        submissionId={reviewing}
+        lessonId={lessonId}
+        onOpenChange={(open) => {
+          if (!open) setReviewing(null)
+        }}
+      />
     </section>
   )
 }

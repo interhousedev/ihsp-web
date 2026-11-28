@@ -25,7 +25,8 @@
     "certificates": "Сертификаты",
     "temporaryMarks": "Ожидают EMIS",
     "excuses": "Уважительные причины",
-    "aiTools": "ИИ-инструменты"
+    "aiTools": "ИИ-инструменты",
+    "homework": "Домашние задания"
   },
   "audience": {
     "subgroup": "{group} · подгруппа {number}"
@@ -962,6 +963,68 @@
       "checkedFiles": "Проверены комментарий и файлы работы: {count}",
       "lessonNotebook": "блокнот предмета урока",
       "failed": "Не удалось проверить работу. Попробуйте ещё раз."
+    }
+  },
+  "homework": {
+    "title": "Домашние задания",
+    "noOptions": "Нет предметов для показа.",
+    "from": "С",
+    "to": "По",
+    "termStart": "Начало четверти",
+    "termEnd": "Сегодня и позже",
+    "only": {
+      "label": "Показать",
+      "all": "Все занятия",
+      "with_homework": "С домашним заданием",
+      "to_review": "На проверку"
+    },
+    "noLessons": "Нет занятий по этому фильтру.",
+    "lessonWhen": "{date}, {period}-й урок",
+    "source": {
+      "teacher": "Ваше задание",
+      "emis": "Из EMIS",
+      "both": "EMIS и ваше"
+    },
+    "counts": {
+      "toReview": "{count, plural, one {# на проверку} few {# на проверку} many {# на проверку} other {# на проверку}}",
+      "summary": "Сдали: {handedIn}/{total} · На проверку: {toReview} · Оценено: {graded}"
+    },
+    "due": "Срок: {date}",
+    "noHomework": "Домашнего задания нет.",
+    "openLesson": "Открыть урок",
+    "emisFiles": "Файлы EMIS",
+    "panelTitle": "Настройки домашнего задания",
+    "acceptSubmissions": "Ученики могут сдать работу",
+    "notify": "Уведомлять о каждой сдаче",
+    "notifyDefault": "(моя настройка)",
+    "notifyReset": "Как в моих настройках",
+    "defaults": {
+      "title": "Мои настройки домашних заданий",
+      "description": "Применяются к новым заданиям; у каждого урока их можно изменить.",
+      "accept": "Принимать работы по новым заданиям",
+      "notify": "Уведомлять, когда ученик сдаёт работу"
+    },
+    "review": {
+      "title": "Работа ученика",
+      "open": "Проверить",
+      "saved": "Проверка сохранена",
+      "cleared": "Проверка снята",
+      "status": {
+        "pending": "Не проверено",
+        "returned": "Возвращено",
+        "graded": "Оценено"
+      },
+      "gradeValue": "Оценка {grade}",
+      "late": "С опозданием",
+      "studentComment": "Комментарий ученика",
+      "previousComment": "Ваш прежний комментарий",
+      "reviewedBy": "Проверил(а) {name}, {date}",
+      "grade": "Оценка",
+      "comment": "Комментарий",
+      "commentHint": "Обязателен при возврате работы",
+      "gradeAction": "Поставить оценку",
+      "returnAction": "Вернуть на доработку",
+      "clearAction": "Снять проверку"
     }
   }
 }

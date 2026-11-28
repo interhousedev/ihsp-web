@@ -96,7 +96,26 @@
       "lms": "LMS Course",
       "admin": "Administration",
       "teacher": "Teachers",
-      "app": "All my school tools"
+      "app": "All my school tools",
+      "admission": "Admission"
+    },
+    "admissionStaffGroup": "Students' data",
+    "admissionStaffWarning": "This lets the AI app read applications of students assigned to you. Use it only with tools your school allows.",
+    "admissionScopes": {
+      "application_read": "Read your application",
+      "application_write": "Edit your application",
+      "documents_read": "Read your documents",
+      "documents_write": "Upload documents",
+      "plans_read": "Read your plans",
+      "plans_write": "Edit your plans",
+      "catalog_read": "Search universities and opportunities",
+      "consents_read": "See your consents",
+      "memory_read": "Read assistant notes",
+      "memory_write": "Save and delete assistant notes",
+      "caseload_read": "See your students list",
+      "students_read": "Read your students' applications",
+      "students_write": "Comment and assign tasks",
+      "documents_review": "Review students' documents"
     },
     "scopes": "Access it asks for",
     "tools": "Tools: {tools}",

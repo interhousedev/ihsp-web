@@ -55,7 +55,7 @@ function TelegramBridge({ children }: { children: ReactNode }) {
  * `messages/<locale>/pwa.json` (the installable app: install page, update toast, menu entry).
  */
 async function loadAppMessages(locale: Locale): Promise<Messages> {
-  const [base, tools, notebooks, pwa, honours, studentCard, rating] = await Promise.all([
+  const [base, ...namespaces] = await Promise.all([
     import(`../../messages/${locale}.json`),
     import(`../../messages/${locale}/tools.json`),
     import(`../../messages/${locale}/notebooks.json`),
@@ -63,21 +63,13 @@ async function loadAppMessages(locale: Locale): Promise<Messages> {
     import(`../../messages/${locale}/honours.json`),
     import(`../../messages/${locale}/student-card.json`),
     import(`../../messages/${locale}/rating.json`),
+    import(`../../messages/${locale}/homework-review.json`),
+    import(`../../messages/${locale}/club-media.json`),
   ])
-  const merged = mergeMessages(
-    mergeMessages(
-      mergeMessages(
-        mergeMessages(
-          mergeMessages(base.default as Messages, tools.default as Messages),
-          notebooks.default as Messages,
-        ),
-        pwa.default as Messages,
-      ),
-      honours.default as Messages,
-    ),
-    studentCard.default as Messages,
+  return namespaces.reduce<Messages>(
+    (merged, file) => mergeMessages(merged, file.default as Messages),
+    base.default as Messages,
   )
-  return mergeMessages(merged, rating.default as Messages)
 }
 
 /**

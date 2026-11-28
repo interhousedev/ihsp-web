@@ -108,7 +108,17 @@ describe("lesson page", () => {
       http.get(apiUrl("/v1/me/lessons/:id"), () =>
         HttpResponse.json({
           ...lesson,
-          homework: { ...homeworkPhysics, text: "", due_date: null, done_at: null, note: null },
+          // A lesson without homework: the served contract sends `source: null` and an empty text.
+          homework: {
+            ...homeworkPhysics,
+            text: "",
+            source: null,
+            emis_files: [],
+            topic: null,
+            due_date: null,
+            done_at: null,
+            note: null,
+          },
         }),
       ),
       http.put(apiUrl("/v1/me/homework/:lessonId/note"), async ({ request }) => {

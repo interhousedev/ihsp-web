@@ -29,7 +29,7 @@ export function isAttendanceTaken(
  */
 export function lessonHref(
   id: string,
-  hash?: "attendance" | "homework" | "materials",
+  hash?: "attendance" | "homework" | "materials" | "submissions",
   add?: "material",
   from?: "today",
 ): string {

@@ -1,0 +1,14 @@
+{
+  "homeworkReview": {
+    "emis": "EMIS",
+    "topic": "Mavzu: {topic}",
+    "emisFiles": "EMIS fayllari",
+    "answer": "Javobingiz (fayl biriktirsangiz, majburiy emas)",
+    "pending": "Tekshirilishi kutilmoqda",
+    "returned": "Qayta ishlashga qaytarildi",
+    "graded": "Baho: {grade}",
+    "teacherComment": "Oʻqituvchi izohi",
+    "readOnly": "Ish baholangan, uni endi oʻzgartirib boʻlmaydi.",
+    "closed": "Oʻqituvchi bu vazifa boʻyicha ishlarni qabul qilmayapti."
+  }
+}

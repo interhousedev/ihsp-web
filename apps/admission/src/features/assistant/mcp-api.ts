@@ -5,6 +5,12 @@ export type McpScope = "admission:read" | "admission:memory" | "admission:docs" 
 
 export type McpConnection = {
   url: string
+  /** OAuth scopes of the admission server the caller's roles may hold. */
+  oauth_scopes: string[]
+  /** URL of the all-in-one `/mcp/app` server. */
+  app_url: string
+  /** The id app page where the user connects AI services. */
+  connectors_url: string
   scopes: McpScope[]
   max_expiry_days: number
   example_config: Record<string, unknown>

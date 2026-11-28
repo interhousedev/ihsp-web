@@ -1571,6 +1571,8 @@
       "dueDate": "Topshirish muddati",
       "pickDate": "Sanani tanlang",
       "useAutomatic": "Avtomatik sanaga qaytish",
+      "acceptSubmissions": "Talabalardan ishlarni qabul qilish",
+      "textOptional": "Bu vazifa EMISda allaqachon bor; matningiz ixtiyoriy.",
       "autoHint": "Saqlaganingizda muddat shu fanning keyingi darsiga qoʻyiladi.",
       "autoDate": "Avtomatik: keyingi dars, {date}.",
       "manualDate": "Bu sanani siz tanladingiz.",

@@ -204,6 +204,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/activities/albums/{album_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Album
+         * @description One album.
+         */
+        get: operations["get_album_v1_activities_albums__album_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Album
+         * @description Delete an album and its items (soft).
+         */
+        delete: operations["delete_album_v1_activities_albums__album_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Album
+         * @description Album fields.
+         */
+        patch: operations["update_album_v1_activities_albums__album_id__patch"];
+        trace?: never;
+    };
+    "/v1/activities/albums/{album_id}/media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Album Media
+         * @description Items of an album, oldest position first.
+         */
+        get: operations["album_media_v1_activities_albums__album_id__media_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/activities/announcements/{announcement_id}:cancel": {
         parameters: {
             query?: never;
@@ -390,6 +438,30 @@ export interface paths {
          * @description Edit a club.
          */
         patch: operations["update_club_v1_activities_clubs__club_id__patch"];
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/albums": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Albums
+         * @description Albums under a parent (root when omitted) that the caller may see.
+         */
+        get: operations["list_albums_v1_activities_clubs__club_id__albums_get"];
+        put?: never;
+        /**
+         * Create Album
+         * @description A new album.
+         */
+        post: operations["create_album_v1_activities_clubs__club_id__albums_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/activities/clubs/{club_id}/announcements": {
@@ -662,6 +734,46 @@ export interface paths {
         get: operations["my_club_state_v1_activities_clubs__club_id__me_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/media/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Media Usage
+         * @description Storage use and limits of the club.
+         */
+        get: operations["media_usage_v1_activities_clubs__club_id__media_usage_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/clubs/{club_id}/media:request-upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Request Upload
+         * @description Reserve an item and get a presigned PUT for its bytes.
+         */
+        post: operations["request_upload_v1_activities_clubs__club_id__media_request_upload_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1105,6 +1217,34 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
+        /**
+         * Update Event
+         * @description Edit the event's text, place, capacity or RSVP policy.
+         */
+        patch: operations["update_event_v1_activities_events__event_id__patch"];
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/album": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Event Album
+         * @description The event's album, or null.
+         */
+        get: operations["event_album_v1_activities_events__event_id__album_get"];
+        /**
+         * Ensure Event Album
+         * @description Create the event's album if missing (idempotent).
+         */
+        put: operations["ensure_event_album_v1_activities_events__event_id__album_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
         patch?: never;
         trace?: never;
     };
@@ -1122,6 +1262,26 @@ export interface paths {
          * @description Mark an attendee present.
          */
         post: operations["check_in_v1_activities_events__event_id__check_in_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/events/{event_id}/cover": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Event Cover
+         * @description Set, replace or remove the event's preview image.
+         */
+        put: operations["set_event_cover_v1_activities_events__event_id__cover_put"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1390,6 +1550,114 @@ export interface paths {
          */
         put: operations["set_consent_v1_activities_me_seats__seat_id__public_consent_put"];
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/media/{media_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Media
+         * @description One item (poll while it is processing).
+         */
+        get: operations["get_media_v1_activities_media__media_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Media
+         * @description Delete an own item (or any, for moderators).
+         */
+        delete: operations["delete_media_v1_activities_media__media_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Media
+         * @description Caption, album, or the uploader's own hide/show.
+         */
+        patch: operations["update_media_v1_activities_media__media_id__patch"];
+        trace?: never;
+    };
+    "/v1/activities/media/{media_id}/{variant}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Media File
+         * @description Signed file route: no Bearer; the signature and the item state decide.
+         */
+        get: operations["media_file_v1_activities_media__media_id___variant__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/media/{media_id}:complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete Upload
+         * @description The bytes are uploaded; processing starts.
+         */
+        post: operations["complete_upload_v1_activities_media__media_id__complete_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/media/{media_id}:report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Report Media
+         * @description Report an item; "I am in this photo" hides it at once.
+         */
+        post: operations["report_media_v1_activities_media__media_id__report_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/activities/media:batch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Batch
+         * @description Move or delete several items of one club.
+         */
+        post: operations["batch_v1_activities_media_batch_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1724,6 +1992,34 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/activities/clubs/{club_id}/media-limits": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Media Limits
+         * @description Storage use, limits in force and the club's overrides.
+         */
+        get: operations["get_media_limits_v1_admin_activities_clubs__club_id__media_limits_get"];
+        /**
+         * Set Media Limits
+         * @description Replace the club's overrides; a null field falls back to the default.
+         */
+        put: operations["set_media_limits_v1_admin_activities_clubs__club_id__media_limits_put"];
+        post?: never;
+        /**
+         * Clear Media Limits
+         * @description Drop every override of the club.
+         */
+        delete: operations["clear_media_limits_v1_admin_activities_clubs__club_id__media_limits_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/activities/clubs/{club_id}:force-transfer": {
         parameters: {
             query?: never;
@@ -1798,6 +2094,170 @@ export interface paths {
          * @description Suspend a club.
          */
         post: operations["suspend_club_v1_admin_activities_clubs__club_id__suspend_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Media Queue
+         * @description Club media awaiting review: reported or hidden items with their reports.
+         */
+        get: operations["media_queue_v1_admin_activities_media_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/media-blocks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Media Blocks
+         * @description Upload blocks of a club, or the global ones.
+         */
+        get: operations["list_media_blocks_v1_admin_activities_media_blocks_get"];
+        put?: never;
+        /**
+         * Block Uploader
+         * @description Bar a user from uploading club media.
+         */
+        post: operations["block_uploader_v1_admin_activities_media_blocks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/media-blocks/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Unblock Uploader
+         * @description Lift an upload block.
+         */
+        delete: operations["unblock_uploader_v1_admin_activities_media_blocks__user_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/media-reports/{report_id}:dismiss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Dismiss Report
+         * @description Close a report as unfounded; the item returns when no report stays open.
+         */
+        post: operations["dismiss_report_v1_admin_activities_media_reports__report_id__dismiss_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/media-reports/{report_id}:uphold": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Uphold Report
+         * @description Agree with a report; the item stays hidden.
+         */
+        post: operations["uphold_report_v1_admin_activities_media_reports__report_id__uphold_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/media/{media_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Purge Media
+         * @description Remove an item and its files now.
+         */
+        delete: operations["purge_media_v1_admin_activities_media__media_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/media/{media_id}:hide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Hide Media
+         * @description Hide an item from everyone but moderators.
+         */
+        post: operations["hide_media_v1_admin_activities_media__media_id__hide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/activities/media/{media_id}:restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restore Media
+         * @description Show a hidden item again.
+         */
+        post: operations["restore_media_v1_admin_activities_media__media_id__restore_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5682,6 +6142,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/calendar/export.ics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Calendar Ics
+         * @description A one-off `.ics` of my own entries: chosen `key`s or a `from`–`to` range.
+         */
+        get: operations["admission_export_calendar_ics"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/calendar/feed": {
         parameters: {
             query?: never;
@@ -9172,7 +9652,7 @@ export interface paths {
         };
         /**
          * Get My Opportunity Plan
-         * @description The caller's saved entries with analytics.
+         * @description The caller's saved entries with analytics and own finds.
          */
         get: operations["admission_get_my_opportunity_plan"];
         put?: never;
@@ -9225,6 +9705,50 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/opportunities/plan/personal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add Personal Plan Entry
+         * @description Add an own find; a school list match is planned instead (200, `merged`).
+         */
+        post: operations["admission_add_personal_plan_entry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/opportunities/plan/personal/{entry_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Personal Plan Entry
+         * @description Remove an own find; a sent proposal stays in moderation.
+         */
+        delete: operations["admission_delete_personal_plan_entry"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Personal Plan Entry
+         * @description Change an own find (optimistic lock: 409 on a stale `lock_version`).
+         */
+        patch: operations["admission_update_personal_plan_entry"];
         trace?: never;
     };
     "/v1/admission/opportunities/plan/{opportunity_id}": {
@@ -11304,7 +11828,7 @@ export interface paths {
         };
         /**
          * Get Student Opportunity Plan
-         * @description A student's plan for assigned staff.
+         * @description A student's plan for assigned staff (own finds read-only).
          */
         get: operations["admission_get_student_opportunity_plan"];
         put?: never;
@@ -19107,6 +19631,8 @@ export interface paths {
         /**
          * Submit Homework
          * @description Save or replace the submission; after the due date it counts as late.
+         *
+         *     409 when the teacher does not accept submissions or the work is graded.
          */
         put: operations["submit_homework_v1_me_homework__lesson_id__submission_put"];
         post?: never;
@@ -22332,6 +22858,96 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/homework": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Homework Board
+         * @description Return the lessons with homework, switches and counts; current term by default.
+         *
+         *     404 when the option is not the teacher's or there is no current term.
+         */
+        get: operations["get_homework_board_v1_staff_homework_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/homework/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Homework Settings
+         * @description Return whether new homework accepts submissions and notifies by default.
+         */
+        get: operations["get_homework_settings_v1_staff_homework_settings_get"];
+        /**
+         * Save Homework Settings
+         * @description Save the given settings; an omitted field keeps its value.
+         */
+        put: operations["save_homework_settings_v1_staff_homework_settings_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/homework/submissions/{submission_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Homework Submission
+         * @description Return one submission with time-limited file links.
+         */
+        get: operations["get_homework_submission_v1_staff_homework_submissions__submission_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/homework/submissions/{submission_id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Review Homework Submission
+         * @description Grade the work (also a temporary mark) or return it with a comment.
+         */
+        put: operations["review_homework_submission_v1_staff_homework_submissions__submission_id__review_put"];
+        post?: never;
+        /**
+         * Clear Homework Review
+         * @description Put the submission back to pending and delete the grade's mark.
+         */
+        delete: operations["clear_homework_review_v1_staff_homework_submissions__submission_id__review_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/journal": {
         parameters: {
             query?: never;
@@ -22483,6 +23099,8 @@ export interface paths {
         /**
          * Set Homework
          * @description Save the homework; the due date defaults to the next lesson (ACA-10).
+         *
+         *     ``text`` may be omitted when the lesson has EMIS homework.
          */
         put: operations["set_homework_v1_staff_lessons__id__homework_put"];
         post?: never;
@@ -22494,6 +23112,29 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/lessons/{id}/homework/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Set Homework Settings
+         * @description Open or close submissions and override the notification setting.
+         *
+         *     ``notify`` sent as null makes the lesson follow the teacher's setting again;
+         *     an omitted field is kept.
+         */
+        patch: operations["set_homework_settings_v1_staff_lessons__id__homework_settings_patch"];
         trace?: never;
     };
     "/v1/staff/lessons/{id}/temporary-marks": {
@@ -23991,7 +24632,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher" | "app";
+            server: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
             /** Tool */
             tool: string;
             /**
@@ -24718,6 +25359,111 @@ export interface components {
             offsets: number[];
         };
         /**
+         * AlbumIn
+         * @description A new album (an event album when `event_id` is given).
+         */
+        AlbumIn: {
+            /**
+             * Allow Download
+             * @default true
+             */
+            allow_download?: boolean;
+            /** Description */
+            description?: string | null;
+            /** Event Date */
+            event_date?: string | null;
+            /** Event Id */
+            event_id?: string | null;
+            /**
+             * Member Uploads
+             * @default false
+             */
+            member_uploads?: boolean;
+            /** Parent Id */
+            parent_id?: string | null;
+            /** Title */
+            title: string;
+            /** @default school */
+            visibility?: components["schemas"]["AlbumVisibility"];
+        };
+        /**
+         * AlbumListOut
+         * @description Albums under one parent.
+         */
+        AlbumListOut: {
+            /** Items */
+            items: components["schemas"]["AlbumOut"][];
+        };
+        /**
+         * AlbumOut
+         * @description An album with counters and the caller's rights.
+         */
+        AlbumOut: {
+            /** Allow Download */
+            allow_download: boolean;
+            /** Can Moderate */
+            can_moderate: boolean;
+            /** Can Upload */
+            can_upload: boolean;
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Cover Media Id */
+            cover_media_id: string | null;
+            /** Created At */
+            created_at: string | null;
+            /** Description */
+            description: string | null;
+            /** Event Date */
+            event_date: string | null;
+            /** Event Id */
+            event_id: string | null;
+            /** Folder Count */
+            folder_count: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Item Count */
+            item_count: number;
+            /** Member Uploads */
+            member_uploads: boolean;
+            /** Parent Id */
+            parent_id: string | null;
+            /** Title */
+            title: string;
+            /** Visibility */
+            visibility: string;
+        };
+        /**
+         * AlbumPatch
+         * @description Album fields; only the sent ones change.
+         */
+        AlbumPatch: {
+            /** Allow Download */
+            allow_download?: boolean | null;
+            /** Cover Media Id */
+            cover_media_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Event Date */
+            event_date?: string | null;
+            /** Member Uploads */
+            member_uploads?: boolean | null;
+            /** Title */
+            title?: string | null;
+            visibility?: components["schemas"]["AlbumVisibility"] | null;
+        };
+        /**
+         * AlbumVisibility
+         * @description Who sees an album.
+         * @enum {string}
+         */
+        AlbumVisibility: "members" | "school";
+        /**
          * AlertResponse
          * @description `Alert`.
          */
@@ -24981,6 +25727,8 @@ export interface components {
              * @default members
              */
             audience?: string;
+            /** Media Ids */
+            media_ids?: string[];
             /** Scheduled At */
             scheduled_at?: string | null;
             /** Text */
@@ -26442,6 +27190,21 @@ export interface components {
             word_limit: number | null;
         };
         /**
+         * BatchIn
+         * @description Move or delete up to 100 items of one club.
+         */
+        BatchIn: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "move" | "delete";
+            /** Album Id */
+            album_id?: string | null;
+            /** Ids */
+            ids: string[];
+        };
+        /**
          * Bell
          * @description Start and end of one period on some weekdays (jsonb of Term.bells).
          *
@@ -26591,6 +27354,32 @@ export interface components {
             [key: string]: unknown;
         };
         /**
+         * BlockIn
+         * @description Bar a user from uploading club media (club_id null = every club).
+         */
+        BlockIn: {
+            /** Club Id */
+            club_id?: string | null;
+            /**
+             * Reason
+             * @default
+             */
+            reason?: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * BlockListOut
+         * @description Upload blocks.
+         */
+        BlockListOut: {
+            /** Items */
+            items: components["schemas"]["BlockOut"][];
+        };
+        /**
          * BlockOption
          * @description An answer option of a choice question.
          */
@@ -26614,6 +27403,33 @@ export interface components {
             text: string;
         } & {
             [key: string]: unknown;
+        };
+        /**
+         * BlockOut
+         * @description A user barred from uploading (club_id null = every club).
+         */
+        BlockOut: {
+            /** Club Id */
+            club_id: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Created By */
+            created_by: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Reason */
+            reason: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
         };
         /**
          * BlockQuestion
@@ -26644,6 +27460,73 @@ export interface components {
             type: "single" | "multiple" | "text" | "number" | "sorting" | "matching" | "table" | "blanks" | "random_number" | "formula" | "free" | "code";
         } & {
             [key: string]: unknown;
+        };
+        /**
+         * BoardCountsResponse
+         * @description Submission counts of a board lesson; ``total`` is the expected roster.
+         */
+        BoardCountsResponse: {
+            /** Graded */
+            graded: number;
+            /** Late */
+            late: number;
+            /** Missing */
+            missing: number;
+            /** Submitted */
+            submitted: number;
+            /** To Review */
+            to_review: number;
+            /** Total */
+            total: number;
+        };
+        /**
+         * BoardHomeworkResponse
+         * @description Homework of a board lesson.
+         */
+        BoardHomeworkResponse: {
+            /** Due Auto */
+            due_auto: boolean;
+            /** Due Date */
+            due_date: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "teacher" | "emis" | "both";
+            /** Text */
+            text: string;
+        };
+        /**
+         * BoardLessonResponse
+         * @description A lesson of the homework board.
+         */
+        BoardLessonResponse: {
+            /** Accept Submissions */
+            accept_submissions: boolean;
+            counts: components["schemas"]["BoardCountsResponse"] | null;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Emis Files */
+            emis_files: components["schemas"]["ResourceItemResponse"][];
+            /** Emis Topic Description */
+            emis_topic_description: string | null;
+            homework: components["schemas"]["BoardHomeworkResponse"] | null;
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /** Notify */
+            notify: boolean | null;
+            /** Notify Effective */
+            notify_effective: boolean;
+            /** Period */
+            period: number;
+            /** Topic */
+            topic: string | null;
         };
         /** Body_add_entry_file_v1_certificates_me__entry_id__files_post */
         Body_add_entry_file_v1_certificates_me__entry_id__files_post: {
@@ -27401,7 +28284,7 @@ export interface components {
              * Source
              * @enum {string}
              */
-            source: "university" | "checklist" | "exam" | "opportunity" | "test_score";
+            source: "university" | "checklist" | "exam" | "opportunity" | "test_score" | "personal" | "milestone";
             /** Title */
             title: string;
             /** Url Path */
@@ -29975,7 +30858,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher" | "app";
+            server: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
             /** Token Prefix */
             token_prefix: string | null;
         };
@@ -30036,7 +30919,7 @@ export interface components {
             /** Requires Otp */
             requires_otp: boolean;
             /** Server */
-            server: ("student" | "lms" | "admin" | "teacher" | "app") | null;
+            server: ("student" | "lms" | "admin" | "teacher" | "app" | "admission") | null;
             /** Verified */
             verified: boolean;
         };
@@ -31013,6 +31896,14 @@ export interface components {
             title: string;
         };
         /**
+         * CoverIn
+         * @description The event's preview image (a staged, ready photo), or null to remove it.
+         */
+        CoverIn: {
+            /** Media Id */
+            media_id: string | null;
+        };
+        /**
          * CoveringOfficerIn
          * @description Make a transcript officer cover every student (admin only).
          */
@@ -31110,7 +32001,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher" | "app";
+            server: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
         };
         /**
          * CreateCourseBody
@@ -31179,7 +32070,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher" | "app";
+            server: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
             /**
              * Service
              * @enum {string}
@@ -33850,6 +34741,8 @@ export interface components {
             club_id: string;
             /** Course Id */
             course_id?: string | null;
+            /** Cover Media Id */
+            cover_media_id?: string | null;
             /** Created By */
             created_by?: string | null;
             /** Description */
@@ -33917,6 +34810,22 @@ export interface components {
             starts_at: string;
             /** Title */
             title: unknown;
+        };
+        /**
+         * EventPatch
+         * @description Editable event fields; times change through `:reschedule`.
+         */
+        EventPatch: {
+            /** Capacity */
+            capacity?: number | null;
+            /** Description */
+            description?: unknown;
+            /** Location */
+            location?: string | null;
+            /** Rsvp Policy */
+            rsvp_policy?: string | null;
+            /** Title */
+            title?: unknown;
         };
         /**
          * EventStatus
@@ -35338,7 +36247,7 @@ export interface components {
          * @description Why a file was uploaded.
          * @enum {string}
          */
-        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo" | "certificate" | "feedback" | "admission_document" | "lms_ai_review" | "lms_captions";
+        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo" | "certificate" | "feedback" | "admission_document" | "lms_ai_review" | "lms_captions" | "club_media";
         /**
          * FileShareLinkResponse
          * @description A new token: it is shown this once, only its hash is stored.
@@ -36610,6 +37519,17 @@ export interface components {
             uz?: string;
         };
         /**
+         * HideIn
+         * @description Why a moderator hides an item.
+         */
+        HideIn: {
+            /**
+             * Reason
+             * @default
+             */
+            reason?: string;
+        };
+        /**
          * HideResourceBody
          * @description Hide or show a resource.
          */
@@ -36670,29 +37590,65 @@ export interface components {
             note: string | null;
         };
         /**
+         * HomeworkSettingsBody
+         * @description Body of ``PUT /v1/staff/homework/settings``; an omitted field is kept.
+         */
+        HomeworkSettingsBody: {
+            /** Accept By Default */
+            accept_by_default?: boolean | null;
+            /** Notify On Submission */
+            notify_on_submission?: boolean | null;
+        };
+        /**
+         * HomeworkSettingsResponse
+         * @description The teacher's own homework settings.
+         */
+        HomeworkSettingsResponse: {
+            /** Accept By Default */
+            accept_by_default: boolean;
+            /** Notify On Submission */
+            notify_on_submission: boolean;
+        };
+        /**
          * HomeworkSubmissionBody
          * @description Body of ``PUT /v1/me/homework/{lesson_id}/submission``.
+         *
+         *     A text answer, files or both; an empty submission is refused with 422.
          */
         HomeworkSubmissionBody: {
             /** Comment */
             comment?: string | null;
             /** File Ids */
-            file_ids: string[];
+            file_ids?: string[];
+            /** Text */
+            text?: string | null;
         };
         /**
          * HomeworkSubmissionResponse
-         * @description ``HomeworkSubmission``: the student's own submission.
+         * @description ``HomeworkSubmission``: the student's own submission and its review.
          */
         HomeworkSubmissionResponse: {
             /** Comment */
             comment: string | null;
             /** Files */
             files: components["schemas"]["SubmissionFileResponse"][];
+            /** Grade */
+            grade: number | null;
             /**
              * Lesson Id
              * Format: uuid
              */
             lesson_id: string;
+            /** Previous Comment */
+            previous_comment: string | null;
+            /**
+             * Review Status
+             * @enum {string}
+             */
+            review_status: "pending" | "returned" | "graded";
+            /** Reviewed At */
+            reviewed_at: string | null;
+            reviewer: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /**
              * Status
              * @enum {string}
@@ -36703,6 +37659,10 @@ export interface components {
              * Format: date-time
              */
             submitted_at: string;
+            /** Teacher Comment */
+            teacher_comment: string | null;
+            /** Text */
+            text: string | null;
         };
         /**
          * HomeworkSubmissionsResponse
@@ -40514,6 +41474,18 @@ export interface components {
             topic?: string | null;
         };
         /**
+         * LessonHomeworkSwitchesBody
+         * @description Body of ``PATCH /v1/staff/lessons/{id}/homework/settings``.
+         *
+         *     An omitted field is kept; ``notify: null`` follows the teacher's setting again.
+         */
+        LessonHomeworkSwitchesBody: {
+            /** Accept Submissions */
+            accept_submissions?: boolean | null;
+            /** Notify */
+            notify?: boolean | null;
+        };
+        /**
          * LessonItem
          * @description A lesson in lists.
          */
@@ -42175,7 +43147,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher" | "app";
+            server: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
             /** Tool */
             tool: string;
         };
@@ -42209,7 +43181,7 @@ export interface components {
             /** Redirect Uris */
             redirect_uris: string[];
             /** Server */
-            server: ("student" | "lms" | "admin" | "teacher" | "app") | null;
+            server: ("student" | "lms" | "admin" | "teacher" | "app" | "admission") | null;
             /** Service */
             service: string | null;
         };
@@ -42218,12 +43190,27 @@ export interface components {
          * @description What the web shows on the "connect your AI agent" panel.
          */
         McpConnectionOut: {
+            /**
+             * App Url
+             * @description URL of the combined `/app` MCP server
+             */
+            app_url: string;
+            /**
+             * Connectors Url
+             * @description Page where the user connects AI services
+             */
+            connectors_url: string;
             /** Example Config */
             example_config: {
                 [key: string]: unknown;
             };
             /** Max Expiry Days */
             max_expiry_days: number;
+            /**
+             * Oauth Scopes
+             * @description OAuth scopes of the admission server this caller's roles may hold
+             */
+            oauth_scopes: string[];
             /** Scopes */
             scopes: string[];
             /** Url */
@@ -42250,7 +43237,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher" | "app";
+            server: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
             /** Server Url */
             server_url: string;
             /**
@@ -42357,7 +43344,7 @@ export interface components {
             /** Group Id */
             group_id?: string | null;
             /** @default video_with_voice */
-            kind?: components["schemas"]["MediaKind"];
+            kind?: components["schemas"]["app__modules__media__domain__media_job__MediaKind"];
             /**
              * Language
              * @default ru
@@ -42417,7 +43404,7 @@ export interface components {
              * Format: uuid
              */
             id: string;
-            kind: components["schemas"]["MediaKind"];
+            kind: components["schemas"]["MediaKind-Output"];
             status: components["schemas"]["MediaStatus"];
             /**
              * Subject Id
@@ -42430,7 +43417,109 @@ export interface components {
          * @description What the teacher gets.
          * @enum {string}
          */
-        MediaKind: "video_with_voice" | "audio_only";
+        "MediaKind-Output": "video_with_voice" | "audio_only";
+        /**
+         * MediaLimitsIn
+         * @description Per-club media limits in bytes; null keeps the settings default.
+         */
+        MediaLimitsIn: {
+            /** Photo Max Bytes */
+            photo_max_bytes?: number | null;
+            /** Quota Bytes */
+            quota_bytes?: number | null;
+            /** Video Max Bytes */
+            video_max_bytes?: number | null;
+        };
+        /**
+         * MediaListOut
+         * @description Items.
+         */
+        MediaListOut: {
+            /** Items */
+            items: components["schemas"]["MediaOut"][];
+        };
+        /**
+         * MediaOut
+         * @description A photo or video with signed relative URLs (null while not served).
+         */
+        MediaOut: {
+            /** Album Id */
+            album_id: string | null;
+            /** Announcement Id */
+            announcement_id: string | null;
+            /** Byte Size */
+            byte_size: number;
+            /** Can Delete */
+            can_delete: boolean;
+            /** Can Moderate */
+            can_moderate: boolean;
+            /** Caption */
+            caption: string | null;
+            /**
+             * Club Id
+             * Format: uuid
+             */
+            club_id: string;
+            /** Created At */
+            created_at: string | null;
+            /** Duration Ms */
+            duration_ms: number | null;
+            /** Event Id */
+            event_id: string | null;
+            /** Height */
+            height: number | null;
+            /** Hidden Source */
+            hidden_source: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Original Url */
+            original_url: string | null;
+            /** Position */
+            position: number;
+            /** Poster Url */
+            poster_url: string | null;
+            /** Preview Url */
+            preview_url: string | null;
+            /** Status */
+            status: string;
+            /** Thumb Url */
+            thumb_url: string | null;
+            /** Uploaded By */
+            uploaded_by: string | null;
+            /** Usage */
+            usage: string;
+            /** Video Url */
+            video_url: string | null;
+            /** Width */
+            width: number | null;
+        };
+        /**
+         * MediaPageOut
+         * @description A page of album items.
+         */
+        MediaPageOut: {
+            /** Items */
+            items: components["schemas"]["MediaOut"][];
+            /** Next Cursor */
+            next_cursor: string | null;
+        };
+        /**
+         * MediaPatch
+         * @description Caption, album or the uploader's own hide switch.
+         */
+        MediaPatch: {
+            /** Album Id */
+            album_id?: string | null;
+            /** Caption */
+            caption?: string | null;
+            /** Hidden */
+            hidden?: boolean | null;
+        };
         /**
          * MediaRedeemBody
          * @description `POST /v1/lms/media/redeem`: the token from the fragment of the link.
@@ -45435,6 +46524,113 @@ export interface components {
             name: string;
         };
         /**
+         * PersonalAddedOut
+         * @description The saved find, or the school list entry planned instead (`merged`).
+         */
+        PersonalAddedOut: {
+            entry: components["schemas"]["PersonalEntryOut"] | null;
+            /** Merged */
+            merged: boolean;
+            /** Planned Opportunity Id */
+            planned_opportunity_id: string | null;
+        };
+        /**
+         * PersonalCreateIn
+         * @description A new find; `propose` also sends it to the school list moderators.
+         */
+        PersonalCreateIn: {
+            /** Ends On */
+            ends_on?: string | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research";
+            /** Note */
+            note?: string | null;
+            /** Planned Grade */
+            planned_grade?: number | null;
+            /** Planned Term */
+            planned_term?: ("fall" | "spring" | "summer") | null;
+            /**
+             * Propose
+             * @default false
+             */
+            propose?: boolean;
+            /** Provider */
+            provider?: string | null;
+            /** Registration Deadline */
+            registration_deadline?: string | null;
+            /** Starts On */
+            starts_on?: string | null;
+            /** Summary */
+            summary?: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url?: string | null;
+        };
+        /**
+         * PersonalEntryOut
+         * @description A find of the student, not verified by the school.
+         */
+        PersonalEntryOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Ends On */
+            ends_on: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research";
+            /** Lock Version */
+            lock_version: number;
+            /** Note */
+            note: string | null;
+            /**
+             * Origin
+             * @enum {string}
+             */
+            origin: "web" | "mcp";
+            /** Planned Grade */
+            planned_grade: number | null;
+            /** Planned Term */
+            planned_term: ("fall" | "spring" | "summer") | null;
+            proposal: components["schemas"]["ProposalOut"] | null;
+            /** Provider */
+            provider: string | null;
+            /** Registration Deadline */
+            registration_deadline: string | null;
+            /** Starts On */
+            starts_on: string | null;
+            /** Summary */
+            summary: string | null;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Url */
+            url: string | null;
+            /**
+             * Verified
+             * @default false
+             * @constant
+             */
+            verified?: false;
+        };
+        /**
          * PersonalTokenResponse
          * @description Personal token metadata (never the secret).
          */
@@ -45464,6 +46660,39 @@ export interface components {
             revoked_at: string | null;
             /** Scopes */
             scopes: string[];
+        };
+        /**
+         * PersonalUpdateIn
+         * @description A changed find; `lock_version` as read.
+         */
+        PersonalUpdateIn: {
+            /** Ends On */
+            ends_on?: string | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research";
+            /** Lock Version */
+            lock_version: number;
+            /** Note */
+            note?: string | null;
+            /** Planned Grade */
+            planned_grade?: number | null;
+            /** Planned Term */
+            planned_term?: ("fall" | "spring" | "summer") | null;
+            /** Provider */
+            provider?: string | null;
+            /** Registration Deadline */
+            registration_deadline?: string | null;
+            /** Starts On */
+            starts_on?: string | null;
+            /** Summary */
+            summary?: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url?: string | null;
         };
         /**
          * PickIn
@@ -45665,7 +46894,7 @@ export interface components {
         };
         /**
          * PlanOut
-         * @description A student's plan.
+         * @description A student's plan; `personal` are the student's own finds.
          */
         PlanOut: {
             analytics: components["schemas"]["app__interfaces__http__v1__admission__schemas_opportunities__AnalyticsOut"];
@@ -45675,6 +46904,8 @@ export interface components {
             entries: components["schemas"]["PlanEntryOut"][];
             /** Opportunities */
             opportunities: components["schemas"]["app__interfaces__http__v1__admission__schemas_opportunities__OpportunityOut"][];
+            /** Personal */
+            personal: components["schemas"]["PersonalEntryOut"][];
         };
         /**
          * PlanPreviewResponse
@@ -47538,6 +48769,22 @@ export interface components {
             title?: string;
         };
         /**
+         * ProposalOut
+         * @description Moderation state of a find sent to the school list.
+         */
+        ProposalOut: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending" | "approved" | "rejected";
+            /**
+             * Submission Id
+             * Format: uuid
+             */
+            submission_id: string;
+        };
+        /**
          * ProvisionedMcpSetupResponse
          * @description A pre-created client; `client_secret` is set only when this call created it.
          */
@@ -49219,6 +50466,22 @@ export interface components {
          */
         ReportFormat: "conspect" | "study_guide" | "briefing" | "faq" | "timeline" | "article" | "custom";
         /**
+         * ReportIn
+         * @description Report an item; `is_subject` ("I am in this photo") hides it at once.
+         */
+        ReportIn: {
+            /**
+             * Is Subject
+             * @default false
+             */
+            is_subject?: boolean;
+            /**
+             * Reason
+             * @default
+             */
+            reason?: string;
+        };
+        /**
          * ReportOptions
          * @description `ReportOptions` of § 4.4; ``style`` belongs to conspects only.
          */
@@ -49236,16 +50499,6 @@ export interface components {
             source_ids?: string[] | null;
             /** Style */
             style?: ("outline" | "cornell" | "thesis") | null;
-        };
-        /**
-         * ReportOut
-         * @description The comparison on every sample.
-         */
-        ReportOut: {
-            /** Results */
-            results: components["schemas"]["SampleResultOut"][];
-            /** Warnings */
-            warnings: components["schemas"]["IssueOut"][];
         };
         /**
          * ReportReason
@@ -49652,22 +50905,6 @@ export interface components {
             answer: components["schemas"]["LearningAnswerBody"];
         };
         /**
-         * ReviewBody
-         * @description POST /v1/me/flashcards/{card_id}/review.
-         *
-         *     `duration_ms` is how long the student looked at the card (the server keeps at
-         *     most one minute of it).
-         */
-        ReviewBody: {
-            /** Duration Ms */
-            duration_ms?: number | null;
-            /**
-             * Rating
-             * @enum {string}
-             */
-            rating: "again" | "hard" | "medium" | "easy";
-        };
-        /**
          * ReviewFindingOut
          * @description One finding of a section with the references of its evidence.
          */
@@ -49698,6 +50935,15 @@ export interface components {
             rating: number;
         };
         /**
+         * ReviewItemOut
+         * @description An item in the moderation queue with its reports.
+         */
+        ReviewItemOut: {
+            media: components["schemas"]["MediaOut"];
+            /** Reports */
+            reports: components["schemas"]["app__interfaces__http__v1__activities__schemas_media__ReportOut"][];
+        };
+        /**
          * ReviewLinkOut
          * @description The screen a finding or subsection opens; `ref` is empty for a whole screen.
          */
@@ -49713,6 +50959,16 @@ export interface components {
              * @default
              */
             ref?: string;
+        };
+        /**
+         * ReviewListOut
+         * @description A page of the moderation queue.
+         */
+        ReviewListOut: {
+            /** Items */
+            items: components["schemas"]["ReviewItemOut"][];
+            /** Total */
+            total: number;
         };
         /**
          * ReviewOut
@@ -50730,7 +51986,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher" | "app";
+            server: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
             /** Write Scopes */
             write_scopes: string[];
         };
@@ -51340,7 +52596,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher" | "app";
+            server: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
         };
         /**
          * SetDetailResponse
@@ -51385,12 +52641,17 @@ export interface components {
         /**
          * SetHomeworkBody
          * @description Body of ``PUT /v1/staff/lessons/{id}/homework``.
+         *
+         *     ``text`` may be omitted when the lesson has EMIS homework; then only the due
+         *     date and the switch change. ``accept_submissions`` omitted keeps the switch.
          */
         SetHomeworkBody: {
+            /** Accept Submissions */
+            accept_submissions?: boolean | null;
             /** Due Date */
             due_date?: string | null;
             /** Text */
-            text: string;
+            text?: string | null;
         };
         /**
          * SetItemResponse
@@ -52526,14 +53787,46 @@ export interface components {
             subgroups: string[];
         };
         /**
+         * StaffHomeworkBoardResponse
+         * @description ``StaffHomeworkBoard``: the lessons of one journal option, newest first.
+         */
+        StaffHomeworkBoardResponse: {
+            /** Audience Key */
+            audience_key: string;
+            /** Label */
+            label: string;
+            /** Lessons */
+            lessons: components["schemas"]["BoardLessonResponse"][];
+            settings: components["schemas"]["HomeworkSettingsResponse"];
+            subject: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__SubjectRefResponse"];
+        };
+        /**
          * StaffHomeworkResponse
          * @description Homework of a lesson as the teacher sees it.
+         *
+         *     ``text`` is empty for homework that only EMIS gave; ``notify`` None follows the
+         *     teacher's own setting, ``notify_effective`` is the value in force.
          */
         StaffHomeworkResponse: {
+            /** Accept Submissions */
+            accept_submissions: boolean;
             /** Due Auto */
             due_auto: boolean;
             /** Due Date */
             due_date: string | null;
+            /** Emis Files */
+            emis_files: components["schemas"]["ResourceItemResponse"][];
+            /** Emis Topic Description */
+            emis_topic_description: string | null;
+            /** Notify */
+            notify: boolean | null;
+            /** Notify Effective */
+            notify_effective: boolean;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "teacher" | "emis" | "both";
             submissions?: components["schemas"]["SubmissionCountsShortResponse"] | null;
             /** Text */
             text: string;
@@ -52944,17 +54237,29 @@ export interface components {
         };
         /**
          * StaffSubmissionRowResponse
-         * @description One student of the lesson and what they handed in.
+         * @description One student of the lesson, what they handed in and the review.
          */
         StaffSubmissionRowResponse: {
             /** Comment */
             comment: string | null;
             /** Files */
             files: components["schemas"]["StaffSubmissionFileResponse"][];
+            /** Grade */
+            grade: number | null;
             /** Group Name */
             group_name: string;
             /** Id */
             id: string | null;
+            /** Previous Comment */
+            previous_comment: string | null;
+            /**
+             * Review Status
+             * @enum {string}
+             */
+            review_status: "pending" | "returned" | "graded";
+            /** Reviewed At */
+            reviewed_at: string | null;
+            reviewer: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /**
              * Status
              * @enum {string}
@@ -52965,6 +54270,10 @@ export interface components {
             subgroup: number | null;
             /** Submitted At */
             submitted_at: string | null;
+            /** Teacher Comment */
+            teacher_comment: string | null;
+            /** Text */
+            text: string | null;
         };
         /**
          * StaffTodayResponse
@@ -54228,12 +55537,18 @@ export interface components {
          * @description Totals over the lesson's students.
          */
         SubmissionCountsResponse: {
+            /** Graded */
+            graded: number;
             /** Late */
             late: number;
             /** Missing */
             missing: number;
+            /** Returned */
+            returned: number;
             /** Submitted */
             submitted: number;
+            /** To Review */
+            to_review: number;
             /** Total */
             total: number;
         };
@@ -54333,11 +55648,18 @@ export interface components {
         };
         /**
          * SubmissionSummaryResponse
-         * @description What the student handed in for a homework item.
+         * @description What the student handed in for a homework item and how it was reviewed.
          */
         SubmissionSummaryResponse: {
             /** File Count */
             file_count: number;
+            /** Grade */
+            grade: number | null;
+            /**
+             * Review Status
+             * @enum {string}
+             */
+            review_status: "pending" | "returned" | "graded";
             /**
              * Status
              * @enum {string}
@@ -57121,6 +58443,26 @@ export interface components {
             day: string;
         };
         /**
+         * UploadIn
+         * @description Reserve an upload; the browser then PUTs the bytes to `upload.url`.
+         */
+        UploadIn: {
+            /** Album Id */
+            album_id?: string | null;
+            /** Caption */
+            caption?: string | null;
+            /** Consent Attested */
+            consent_attested: boolean;
+            /** Content Type */
+            content_type: string;
+            /** Name */
+            name: string;
+            /** Sha256 B64 */
+            sha256_b64: string;
+            /** Size */
+            size: number;
+        };
+        /**
          * UploadInfo
          * @description The request the client sends to storage.
          */
@@ -57137,6 +58479,14 @@ export interface components {
             method?: "PUT";
             /** Url */
             url: string;
+        };
+        /**
+         * UploadOut
+         * @description The reserved item and its upload target.
+         */
+        UploadOut: {
+            media: components["schemas"]["MediaOut"];
+            upload: components["schemas"]["UploadTargetOut"];
         };
         /**
          * UploadResponse
@@ -57159,6 +58509,20 @@ export interface components {
             /** Review Message */
             review_message: string | null;
             status: components["schemas"]["ItemStatus"];
+        };
+        /**
+         * UploadTargetOut
+         * @description Where and how to PUT the bytes.
+         */
+        UploadTargetOut: {
+            /** Headers */
+            headers: {
+                [key: string]: string;
+            };
+            /** Method */
+            method: string;
+            /** Url */
+            url: string;
         };
         /**
          * UploaderResponse
@@ -57236,6 +58600,28 @@ export interface components {
             /** Sign Ins */
             sign_ins: components["schemas"]["DayCount"][];
             storage: components["schemas"]["StorageUsage"];
+        };
+        /**
+         * UsageOut
+         * @description Storage use and limits of a club; overrides are null when not set.
+         */
+        UsageOut: {
+            /** Item Count */
+            item_count: number;
+            /** Override Photo Max Bytes */
+            override_photo_max_bytes: number | null;
+            /** Override Quota Bytes */
+            override_quota_bytes: number | null;
+            /** Override Video Max Bytes */
+            override_video_max_bytes: number | null;
+            /** Photo Max Bytes */
+            photo_max_bytes: number;
+            /** Quota Bytes */
+            quota_bytes: number;
+            /** Used Bytes */
+            used_bytes: number;
+            /** Video Max Bytes */
+            video_max_bytes: number;
         };
         /**
          * UsageResponse
@@ -58372,6 +59758,38 @@ export interface components {
             note?: string | null;
         };
         /**
+         * ReportOut
+         * @description A report of an item.
+         */
+        app__interfaces__http__v1__activities__schemas_media__ReportOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Subject */
+            is_subject: boolean;
+            /**
+             * Media Id
+             * Format: uuid
+             */
+            media_id: string;
+            /** Reason */
+            reason: string;
+            /**
+             * Reporter Id
+             * Format: uuid
+             */
+            reporter_id: string;
+            /** Status */
+            status: string;
+        };
+        /**
          * AnalyticsOut
          * @description Platform-wide club figures for a period.
          */
@@ -59281,6 +60699,16 @@ export interface components {
             note?: string | null;
         };
         /**
+         * ReportOut
+         * @description The comparison on every sample.
+         */
+        app__interfaces__http__v1__admission__routes_prompt_studio__ReportOut: {
+            /** Results */
+            results: components["schemas"]["SampleResultOut"][];
+            /** Warnings */
+            warnings: components["schemas"]["IssueOut"][];
+        };
+        /**
          * VersionOut
          * @description One stored prompt version.
          */
@@ -60184,6 +61612,22 @@ export interface components {
             share_slug: string;
         };
         /**
+         * ReviewBody
+         * @description POST /v1/me/flashcards/{card_id}/review.
+         *
+         *     `duration_ms` is how long the student looked at the card (the server keeps at
+         *     most one minute of it).
+         */
+        app__interfaces__http__v1__flashcards__schemas__ReviewBody: {
+            /** Duration Ms */
+            duration_ms?: number | null;
+            /**
+             * Rating
+             * @enum {string}
+             */
+            rating: "again" | "hard" | "medium" | "easy";
+        };
+        /**
          * RestoreBody
          * @description POST /v1/id/login/restore and /login/restore/decline.
          */
@@ -60521,14 +61965,22 @@ export interface components {
         /**
          * HomeworkItemResponse
          * @description ``HomeworkItem``; ``days_overdue`` is 0 unless the open item is past due.
+         *
+         *     ``text`` is empty for homework that only EMIS gave (``source`` ``emis``) and on a
+         *     lesson page without homework (``source`` None);
+         *     ``emis_files`` are the EMIS homework files and ``topic`` the EMIS topic text.
          */
         app__interfaces__http__v1__me_classwork__schemas__HomeworkItemResponse: {
+            /** Accepts Submissions */
+            accepts_submissions: boolean;
             /** Days Overdue */
             days_overdue: number;
             /** Done At */
             done_at: string | null;
             /** Due Date */
             due_date: string | null;
+            /** Emis Files */
+            emis_files: components["schemas"]["ResourceItemResponse"][];
             /**
              * Given On
              * Format: date
@@ -60541,11 +61993,15 @@ export interface components {
             lesson_id: string;
             /** Note */
             note: string | null;
+            /** Source */
+            source: ("teacher" | "emis" | "both") | null;
             subject: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__SubjectRefResponse"];
             submission?: components["schemas"]["SubmissionSummaryResponse"] | null;
             teacher: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /** Text */
             text: string;
+            /** Topic */
+            topic: string | null;
             /** Updated */
             updated: boolean;
         };
@@ -61221,6 +62677,23 @@ export interface components {
             };
         };
         /**
+         * ReviewBody
+         * @description Body of ``PUT /v1/staff/homework/submissions/{submission_id}/review``.
+         *
+         *     ``grade`` (2..5) is required for ``grade``, ``comment`` for ``return``.
+         */
+        app__interfaces__http__v1__staff_classwork__schemas__ReviewBody: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "grade" | "return";
+            /** Comment */
+            comment?: string | null;
+            /** Grade */
+            grade?: number | null;
+        };
+        /**
          * QuestionBody
          * @description One question to store.
          */
@@ -61234,6 +62707,12 @@ export interface components {
             /** Question */
             question: string;
         };
+        /**
+         * MediaKind
+         * @description Photo or video.
+         * @enum {string}
+         */
+        app__modules__activities__domain__media__MediaKind: "photo" | "video";
         /**
          * Visibility
          * @description Who may see a published item.
@@ -61626,6 +63105,12 @@ export interface components {
              */
             url?: string;
         };
+        /**
+         * MediaKind
+         * @description What the teacher gets.
+         * @enum {string}
+         */
+        app__modules__media__domain__media_job__MediaKind: "video_with_voice" | "audio_only";
     };
     responses: never;
     parameters: never;
@@ -61941,6 +63426,136 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EmisClassResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_album_v1_activities_albums__album_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                album_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlbumOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_album_v1_activities_albums__album_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                album_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_album_v1_activities_albums__album_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                album_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlbumPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlbumOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    album_media_v1_activities_albums__album_id__media_get: {
+        parameters: {
+            query?: {
+                cursor?: string | null;
+                limit?: number;
+                kind?: components["schemas"]["app__modules__activities__domain__media__MediaKind"] | null;
+            };
+            header?: never;
+            path: {
+                album_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaPageOut"];
                 };
             };
             /** @description Validation Error */
@@ -62272,6 +63887,74 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_albums_v1_activities_clubs__club_id__albums_get: {
+        parameters: {
+            query?: {
+                parent_id?: string | null;
+            };
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlbumListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_album_v1_activities_clubs__club_id__albums_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlbumIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlbumOut"];
                 };
             };
             /** @description Validation Error */
@@ -62821,6 +64504,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MyClubOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    media_usage_v1_activities_clubs__club_id__media_usage_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_upload_v1_activities_clubs__club_id__media_request_upload_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UploadIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadOut"];
                 };
             };
             /** @description Validation Error */
@@ -63673,6 +65422,103 @@ export interface operations {
             };
         };
     };
+    update_event_v1_activities_events__event_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EventPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Event"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    event_album_v1_activities_events__event_id__album_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlbumOut"] | null;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ensure_event_album_v1_activities_events__event_id__album_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlbumOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     check_in_v1_activities_events__event_id__check_in_post: {
         parameters: {
             query?: never;
@@ -63695,6 +65541,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Rsvp"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_event_cover_v1_activities_events__event_id__cover_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CoverIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Event"];
                 };
             };
             /** @description Validation Error */
@@ -64182,6 +66063,247 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TeamSeat"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_media_v1_activities_media__media_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                media_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_media_v1_activities_media__media_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                media_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_media_v1_activities_media__media_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                media_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MediaPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    media_file_v1_activities_media__media_id___variant__get: {
+        parameters: {
+            query?: {
+                e?: number | null;
+                s?: string | null;
+            };
+            header?: never;
+            path: {
+                media_id: string;
+                variant: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/webp": unknown;
+                };
+            };
+            /** @description Presigned storage URL */
+            302: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad or expired signature, or item not served */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    complete_upload_v1_activities_media__media_id__complete_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                media_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    report_media_v1_activities_media__media_id__report_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                media_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReportIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    batch_v1_activities_media_batch_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BatchIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaListOut"];
                 };
             };
             /** @description Validation Error */
@@ -64760,6 +66882,103 @@ export interface operations {
             };
         };
     };
+    get_media_limits_v1_admin_activities_clubs__club_id__media_limits_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_media_limits_v1_admin_activities_clubs__club_id__media_limits_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MediaLimitsIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    clear_media_limits_v1_admin_activities_clubs__club_id__media_limits_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                club_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     force_transfer_v1_admin_activities_clubs__club_id__force_transfer_post: {
         parameters: {
             query?: never;
@@ -64883,6 +67102,292 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Club"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    media_queue_v1_admin_activities_media_get: {
+        parameters: {
+            query?: {
+                state?: "reported" | "hidden";
+                club_id?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_media_blocks_v1_admin_activities_media_blocks_get: {
+        parameters: {
+            query?: {
+                club_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlockListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    block_uploader_v1_admin_activities_media_blocks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BlockIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlockOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unblock_uploader_v1_admin_activities_media_blocks__user_id__delete: {
+        parameters: {
+            query?: {
+                club_id?: string | null;
+            };
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dismiss_report_v1_admin_activities_media_reports__report_id__dismiss_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                report_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    uphold_report_v1_admin_activities_media_reports__report_id__uphold_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                report_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    purge_media_v1_admin_activities_media__media_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                media_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hide_media_v1_admin_activities_media__media_id__hide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                media_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HideIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    restore_media_v1_admin_activities_media__media_id__restore_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                media_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaOut"];
                 };
             };
             /** @description Validation Error */
@@ -69251,7 +71756,7 @@ export interface operations {
             query?: {
                 user_id?: string | null;
                 connector_id?: string | null;
-                server?: ("student" | "lms" | "admin" | "teacher" | "app") | null;
+                server?: ("student" | "lms" | "admin" | "teacher" | "app" | "admission") | null;
                 tool?: string | null;
                 outcome?: ("ok" | "denied" | "rate_limited" | "not_found" | "invalid" | "error") | null;
                 from?: string | null;
@@ -72238,6 +74743,41 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_export_calendar_ics: {
+        parameters: {
+            query?: {
+                key?: string[] | null;
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/calendar": unknown;
+                };
             };
             /** @description Validation Error */
             422: {
@@ -79258,6 +81798,103 @@ export interface operations {
             };
         };
     };
+    admission_add_personal_plan_entry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PersonalCreateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PersonalAddedOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_delete_personal_plan_entry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_update_personal_plan_entry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PersonalUpdateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PersonalEntryOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_save_opportunity_to_plan: {
         parameters: {
             query?: never;
@@ -82706,7 +85343,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ReportOut"];
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admission__routes_prompt_studio__ReportOut"];
                 };
             };
             /** @description The caller may not edit the essay prompts */
@@ -88864,7 +91501,7 @@ export interface operations {
     get_mcp_setup_v1_id_me_mcp_setup__service__get: {
         parameters: {
             query?: {
-                server?: "student" | "lms" | "admin" | "teacher" | "app";
+                server?: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
             };
             header?: never;
             path: {
@@ -88897,7 +91534,7 @@ export interface operations {
     provision_mcp_setup_v1_id_me_mcp_setup__service__post: {
         parameters: {
             query?: {
-                server?: "student" | "lms" | "admin" | "teacher" | "app";
+                server?: "student" | "lms" | "admin" | "teacher" | "app" | "admission";
             };
             header?: never;
             path: {
@@ -97618,7 +100255,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ReviewBody"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__flashcards__schemas__ReviewBody"];
             };
         };
         responses: {
@@ -103838,6 +106475,189 @@ export interface operations {
             };
         };
     };
+    get_homework_board_v1_staff_homework_get: {
+        parameters: {
+            query: {
+                subject_id: string;
+                audience_key: string;
+                from?: string | null;
+                to?: string | null;
+                only?: "all" | "with_homework" | "to_review";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffHomeworkBoardResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_homework_settings_v1_staff_homework_settings_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HomeworkSettingsResponse"];
+                };
+            };
+        };
+    };
+    save_homework_settings_v1_staff_homework_settings_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HomeworkSettingsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HomeworkSettingsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_homework_submission_v1_staff_homework_submissions__submission_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                submission_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffSubmissionRowResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_homework_submission_v1_staff_homework_submissions__submission_id__review_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                submission_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__staff_classwork__schemas__ReviewBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffSubmissionRowResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    clear_homework_review_v1_staff_homework_submissions__submission_id__review_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                submission_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_journal_v1_staff_journal_get: {
         parameters: {
             query: {
@@ -104101,6 +106921,41 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffLessonResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_homework_settings_v1_staff_lessons__id__homework_settings_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonHomeworkSwitchesBody"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {

@@ -38,6 +38,7 @@ import {
 } from "../gantt-model"
 import { PrefsForm } from "./prefs-form"
 import { CalendarFeed } from "./calendar-feed"
+import { CalendarExport } from "./calendar-export"
 
 const DAY = 86_400_000
 /** Pixels a day takes on the fixed zoom levels; "fit" stretches the whole span to the width of the panel. */
@@ -521,6 +522,7 @@ export function DeadlinesGantt({
         <div className="flex flex-col gap-4">
           <PrefsForm />
           <CalendarFeed />
+          <CalendarExport from={range.from} to={range.to} />
         </div>
       </ResponsiveDialog>
     </div>

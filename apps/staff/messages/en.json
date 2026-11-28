@@ -25,7 +25,8 @@
     "certificates": "Certificates",
     "temporaryMarks": "Pending for EMIS",
     "excuses": "Excuses",
-    "aiTools": "AI tools"
+    "aiTools": "AI tools",
+    "homework": "Homework"
   },
   "audience": {
     "subgroup": "{group} · subgroup {number}"
@@ -962,6 +963,68 @@
       "checkedFiles": "Comment and work files checked: {count}",
       "lessonNotebook": "the lesson's subject notebook",
       "failed": "Could not check the work. Please try again."
+    }
+  },
+  "homework": {
+    "title": "Homework",
+    "noOptions": "You have no subjects to show.",
+    "from": "From",
+    "to": "To",
+    "termStart": "Term start",
+    "termEnd": "Today and later",
+    "only": {
+      "label": "Show",
+      "all": "All lessons",
+      "with_homework": "With homework",
+      "to_review": "To review"
+    },
+    "noLessons": "No lessons match the filter.",
+    "lessonWhen": "{date}, lesson {period}",
+    "source": {
+      "teacher": "Your homework",
+      "emis": "From EMIS",
+      "both": "EMIS and yours"
+    },
+    "counts": {
+      "toReview": "{count, plural, one {# to review} other {# to review}}",
+      "summary": "Handed in: {handedIn}/{total} · To review: {toReview} · Graded: {graded}"
+    },
+    "due": "Due {date}",
+    "noHomework": "No homework.",
+    "openLesson": "Open lesson",
+    "emisFiles": "EMIS files",
+    "panelTitle": "Homework settings",
+    "acceptSubmissions": "Students can hand it in",
+    "notify": "Notify me of each hand-in",
+    "notifyDefault": "(my setting)",
+    "notifyReset": "Use my setting",
+    "defaults": {
+      "title": "My homework defaults",
+      "description": "Used for new homework; each lesson can change them.",
+      "accept": "Accept hand-ins for new homework",
+      "notify": "Notify me when a student hands in"
+    },
+    "review": {
+      "title": "Hand-in",
+      "open": "Review",
+      "saved": "Review saved",
+      "cleared": "Review cleared",
+      "status": {
+        "pending": "Not reviewed",
+        "returned": "Returned",
+        "graded": "Graded"
+      },
+      "gradeValue": "Grade {grade}",
+      "late": "Late",
+      "studentComment": "Student's comment",
+      "previousComment": "Your earlier comment",
+      "reviewedBy": "Reviewed by {name}, {date}",
+      "grade": "Grade",
+      "comment": "Comment",
+      "commentHint": "Required to return the work",
+      "gradeAction": "Grade",
+      "returnAction": "Return for rework",
+      "clearAction": "Clear review"
     }
   }
 }

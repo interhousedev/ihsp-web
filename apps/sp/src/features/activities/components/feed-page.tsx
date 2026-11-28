@@ -18,6 +18,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { useClubs, useEvents, useOpportunities } from "../use-activities"
 import { ClubLogo, SELECT_CLASS } from "./activity-ui"
+import { EventCover } from "./club-media"
 import { MyClubRequests, SuggestClubDialog } from "./suggest-club-dialog"
 
 const matches = (query: string, ...fields: (string | null | undefined)[]) =>
@@ -213,6 +214,7 @@ export function FeedPage() {
                 <Link href={`/activities/event/?id=${e.id}`} className="block h-full">
                   <Card className="hover:bg-accent/40 h-full transition-colors">
                     <CardContent className="flex h-full flex-col gap-2">
+                      <EventCover mediaId={e.cover_media_id} />
                       <Badge variant="neutral" className="w-fit">
                         {t("types.event")}
                       </Badge>

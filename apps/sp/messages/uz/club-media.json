@@ -1,0 +1,52 @@
+{
+  "clubMedia": {
+    "title": "Albom",
+    "titleOf": "Albom: {title}",
+    "backToEvent": "Tadbirga qaytish",
+    "noAlbum": "Albom hali yoʻq.",
+    "empty": "Hali rasm va video yoʻq.",
+    "more": "Yana koʻrsatish",
+    "open": "Albomni ochish",
+    "create": "Albom yaratish",
+    "count": "{count, plural, one {# ta fayl} other {# ta fayl}}",
+    "openPhoto": "Rasmni ochish",
+    "openVideo": "Videoni ochish",
+    "processing": "Ishlanmoqda…",
+    "failed": "Ishlab boʻlmadi",
+    "position": "{current} / {total}",
+    "previous": "Oldingi",
+    "next": "Keyingi",
+    "cancel": "Bekor qilish",
+    "delete": "Oʻchirish",
+    "setCover": "Tadbir muqovasi qilish",
+    "isCover": "Tadbir muqovasi",
+    "memberUploads": "Aʼzolar rasm va video qoʻsha oladi",
+    "upload": {
+      "button": "Rasm yoki video yuklash",
+      "uploading": "Yuklanmoqda…",
+      "consent": "Ushbu rasm va videolardagi odamlar ularni klub aʼzolari koʻrishiga rozi ekanini tasdiqlayman."
+    },
+    "report": {
+      "action": "Shikoyat qilish",
+      "title": "Fayl ustidan shikoyat",
+      "description": "Tashkilotchilar va moderatorlar shikoyatni koʻrib chiqadi. Agar rasmda siz boʻlsangiz, u darhol yashiriladi.",
+      "reason": "Nima notoʻgʻri?",
+      "isSubject": "Bu rasm yoki videoda men bor",
+      "submit": "Shikoyat yuborish"
+    },
+    "edit": {
+      "action": "Tahrirlash",
+      "title": "Tadbirni tahrirlash",
+      "save": "Saqlash",
+      "name": "Nomi",
+      "about": "Tavsif",
+      "location": "Joy",
+      "capacity": "Oʻrinlar (boʻsh — cheklovsiz)"
+    },
+    "announce": {
+      "photos": "Biriktirilgan rasmlar",
+      "removePhoto": "Rasmni olib tashlash",
+      "addPhotos": "Rasm qoʻshish ({max} tagacha)"
+    }
+  }
+}

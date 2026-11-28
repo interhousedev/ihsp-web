@@ -18,7 +18,17 @@ describe("homework submissions", () => {
       http.get(apiUrl("/v1/staff/lessons/:id"), () =>
         HttpResponse.json({
           ...lessonData,
-          homework: { text: "Problems", due_date: "2026-10-08", due_auto: true },
+          homework: {
+            text: "Problems",
+            due_date: "2026-10-08",
+            due_auto: true,
+            source: "teacher",
+            accept_submissions: true,
+            notify: null,
+            notify_effective: true,
+            emis_files: [],
+            emis_topic_description: null,
+          },
         }),
       ),
       http.get(apiUrl("/v1/staff/lessons/:id/homework/submissions"), () =>

@@ -495,6 +495,8 @@ describe("keys used in the code", () => {
       "lmsBadges.rule.events.${rule.event as PlatformEvent}": ["level_reached", "coach_resolved", "courses_completed"],
       "lmsBadges.rule.count.${draft.event}": ["level_reached", "coach_resolved", "courses_completed"],
       "lmsBadges.look.shapes.${s}": ["circle", "shield", "hexagon", "star"],
+      "activities.media.state.${s}": ["reported", "hidden"],
+      "activities.media.field.${f.key}": ["photo", "video", "quota"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))
     expect(unknown).toEqual([])

@@ -1571,6 +1571,8 @@
       "dueDate": "Due date",
       "pickDate": "Pick a date",
       "useAutomatic": "Use the automatic date",
+      "acceptSubmissions": "Accept submissions from students",
+      "textOptional": "EMIS already gave this homework; your text is optional.",
       "autoHint": "The due date is set to the next lesson of this subject when you save.",
       "autoDate": "Automatic: the next lesson, {date}.",
       "manualDate": "You chose this date.",
