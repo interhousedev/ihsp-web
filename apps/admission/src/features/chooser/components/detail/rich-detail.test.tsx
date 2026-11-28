@@ -15,7 +15,7 @@ describe("rich school details", () => {
     expect(screen.getByRole("heading", { name: "Selectivity" })).toBeTruthy()
     expect(screen.queryByRole("heading", { name: "Visa" })).toBeNull()
     expect(screen.getByText("4-6%")).toBeTruthy()
-    const link = screen.getByRole("link", { name: /^.*rich\.edu/ })
+    const link = screen.getByRole("link", { name: (name) => name.includes("rich.edu") })
     expect(link.getAttribute("href")).toBe("https://www.rich.edu/facts")
     expect(link.getAttribute("rel")).toBe("noopener noreferrer")
     expect(link.textContent).toContain("2025 · rich.edu")
