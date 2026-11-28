@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.17.0] - 2026-11-28
+
 ### Added
 
 - Admission: an MCP connection panel for students and staff, "Your own finds" on the plan page, and `.ics` export of chosen deadlines; the consent screen names admission scopes.
