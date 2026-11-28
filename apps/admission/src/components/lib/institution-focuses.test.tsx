@@ -13,7 +13,7 @@ describe("InstitutionFocuses", () => {
     )
     expect(screen.getByRole("heading", { name: "What MIT says it looks for" })).toBeTruthy()
     expect(screen.getByText("We value building things.").tagName).toBe("BLOCKQUOTE")
-    const link = screen.getByRole("link", { name: (name) => name.includes("mit.edu") })
+    const link = screen.getAllByRole("link").find((el) => el.getAttribute("href") === "https://www.mit.edu/a")!
     expect(link.getAttribute("target")).toBe("_blank")
     expect(link.getAttribute("rel")).toBe("noopener noreferrer")
     expect(link.getAttribute("href")).toBe("https://www.mit.edu/a")

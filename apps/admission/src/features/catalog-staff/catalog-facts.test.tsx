@@ -16,7 +16,7 @@ describe("proposal facts", () => {
     renderAdmissionApp(<ProposalFacts facts={FACTS} />)
     expect(await screen.findByTestId("proposal-facts")).toBeTruthy()
     expect(screen.getByText(/2025/)).toBeTruthy()
-    const link = screen.getByRole("link", { name: (name) => name.includes("example.edu") })
+    const link = screen.getAllByRole("link").find((el) => el.getAttribute("href") === "https://example.edu/intl")!
     expect(link.getAttribute("rel")).toBe("noopener noreferrer")
     expect(link.getAttribute("href")).toBe("https://example.edu/intl")
     fireEvent.focus(link)
