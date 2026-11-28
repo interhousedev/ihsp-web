@@ -17,7 +17,14 @@ import type {
   HomeworkNoteBody,
   HomeworkSubmission,
   HomeworkSubmissionBody,
+  HomeworkBoard,
+  HomeworkBoardParams,
+  HomeworkReviewBody,
+  HomeworkSettings,
+  HomeworkSettingsBody,
   LessonHomeworkSubmissions,
+  LessonHomeworkSwitchesBody,
+  StaffSubmissionRow,
   Journal,
   JournalOption,
   JournalParams,
@@ -147,6 +154,49 @@ export function putStaffLessonHomework(
 /** DELETE /v1/staff/lessons/{id}/homework — teacher of the lesson; returns the updated lesson. */
 export function deleteStaffLessonHomework(id: string, opts?: RequestOptions): Promise<StaffLesson> {
   return api.delete<StaffLesson>(`/v1/staff/lessons/${seg(id)}/homework`, opts)
+}
+
+/** PATCH /v1/staff/lessons/{id}/homework/settings — the lesson's switches; `notify: null` follows the teacher's setting. */
+export function patchStaffLessonHomeworkSettings(
+  id: string,
+  body: LessonHomeworkSwitchesBody,
+  opts?: RequestOptions,
+): Promise<StaffLesson> {
+  return api.patch<StaffLesson>(`/v1/staff/lessons/${seg(id)}/homework/settings`, body, opts)
+}
+
+/** GET /v1/staff/homework — the lessons of one journal option with homework, switches and counts. */
+export function getStaffHomeworkBoard(params: HomeworkBoardParams, opts?: RequestOptions): Promise<HomeworkBoard> {
+  return api.get<HomeworkBoard>("/v1/staff/homework", { ...opts, query: params })
+}
+
+/** GET /v1/staff/homework/settings — the teacher's own defaults. */
+export function getStaffHomeworkSettings(opts?: RequestOptions): Promise<HomeworkSettings> {
+  return api.get<HomeworkSettings>("/v1/staff/homework/settings", opts)
+}
+
+/** PUT /v1/staff/homework/settings — an omitted field is kept. */
+export function putStaffHomeworkSettings(body: HomeworkSettingsBody, opts?: RequestOptions): Promise<HomeworkSettings> {
+  return api.put<HomeworkSettings>("/v1/staff/homework/settings", body, opts)
+}
+
+/** GET /v1/staff/homework/submissions/{id} — one submission with time-limited file links. */
+export function getStaffHomeworkSubmission(id: string, opts?: RequestOptions): Promise<StaffSubmissionRow> {
+  return api.get<StaffSubmissionRow>(`/v1/staff/homework/submissions/${seg(id)}`, opts)
+}
+
+/** PUT /v1/staff/homework/submissions/{id}/review — grade 2..5 (also a temporary mark) or return with a comment. */
+export function putStaffHomeworkReview(
+  id: string,
+  body: HomeworkReviewBody,
+  opts?: RequestOptions,
+): Promise<StaffSubmissionRow> {
+  return api.put<StaffSubmissionRow>(`/v1/staff/homework/submissions/${seg(id)}/review`, body, opts)
+}
+
+/** DELETE /v1/staff/homework/submissions/{id}/review — back to pending; the grade's mark is deleted. */
+export function deleteStaffHomeworkReview(id: string, opts?: RequestOptions): Promise<void> {
+  return api.delete<void>(`/v1/staff/homework/submissions/${seg(id)}/review`, opts)
 }
 
 /** PUT /v1/staff/lessons/{id}/topic — teacher of the lesson. */

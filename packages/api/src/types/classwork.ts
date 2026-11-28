@@ -20,7 +20,17 @@ export type HomeworkItem = {
   note: string | null
   /** What the student handed in; `null` (or absent in older responses) when nothing was submitted. */
   submission?: HomeworkSubmissionSummary | null
+  /** Who gave the homework; `null` on a lesson page without homework. `text` is empty for `emis` only. */
+  source: HomeworkSource | null
+  /** The EMIS topic text. */
+  topic: string | null
+  /** The EMIS homework files. */
+  emis_files: ResourceItem[]
+  accepts_submissions: boolean
 }
+
+export type HomeworkSource = "teacher" | "emis" | "both"
+export type HomeworkReviewStatus = "pending" | "returned" | "graded"
 
 export type HomeworkSubmissionStatus = "submitted" | "late"
 
@@ -29,6 +39,8 @@ export type HomeworkSubmissionSummary = {
   status: HomeworkSubmissionStatus
   file_count: number
   submitted_at: string
+  review_status: HomeworkReviewStatus
+  grade: number | null
 }
 
 export type HomeworkSubmissionFile = { id: string; name: string; size: number; content_type: string }
@@ -40,10 +52,17 @@ export type HomeworkSubmission = {
   comment: string | null
   files: HomeworkSubmissionFile[]
   submitted_at: string
+  text: string | null
+  review_status: HomeworkReviewStatus
+  grade: number | null
+  teacher_comment: string | null
+  previous_comment: string | null
+  reviewed_at: string | null
+  reviewer: PersonRef | null
 }
 
-/** Body of `PUT /v1/me/homework/{lesson_id}/submission`: 1 to 10 file ids. */
-export type HomeworkSubmissionBody = { file_ids: string[]; comment?: string | null }
+/** Body of `PUT /v1/me/homework/{lesson_id}/submission`: a text answer, up to 10 file ids or both; empty → 422. */
+export type HomeworkSubmissionBody = { file_ids?: string[]; text?: string | null; comment?: string | null }
 
 export type StaffSubmissionFile = HomeworkSubmissionFile & { download_url: string }
 
@@ -57,12 +76,32 @@ export type StaffSubmissionRow = {
   submitted_at: string | null
   comment: string | null
   files: StaffSubmissionFile[]
+  text: string | null
+  review_status: HomeworkReviewStatus
+  grade: number | null
+  teacher_comment: string | null
+  previous_comment: string | null
+  reviewed_at: string | null
+  reviewer: PersonRef | null
 }
+
+/** Body of `PUT /v1/staff/homework/submissions/{id}/review`: grade 2..5 (also a temporary mark) or return with a comment. */
+export type HomeworkReviewBody =
+  | { action: "grade"; grade: number; comment?: string }
+  | { action: "return"; comment: string }
 
 /** The teacher's view of a lesson's homework submissions. */
 export type LessonHomeworkSubmissions = {
   lesson_id: string
-  counts: { submitted: number; late: number; missing: number; total: number }
+  counts: {
+    submitted: number
+    late: number
+    missing: number
+    to_review: number
+    returned: number
+    graded: number
+    total: number
+  }
   students: StaffSubmissionRow[]
 }
 
@@ -144,6 +183,13 @@ export type StaffLesson = {
     due_date: string | null
     due_auto: boolean
     submissions?: { submitted: number; total: number } | null
+    source: HomeworkSource
+    accept_submissions: boolean
+    /** `null` follows the teacher's own setting; `notify_effective` is the value in force. */
+    notify: boolean | null
+    notify_effective: boolean
+    emis_files: ResourceItem[]
+    emis_topic_description: string | null
   } | null
   attendance: AttendanceSheet
 }
@@ -213,7 +259,44 @@ export type HomeworkDoneBody = { done: boolean }
 export type HomeworkNoteBody = { note: string | null }
 export type StudentAttendanceParams = DateRangeParams
 
-export type StaffHomeworkBody = { text: string; due_date?: string }
+/** `text` may be omitted when the lesson has EMIS homework; an omitted `accept_submissions` keeps the switch. */
+export type StaffHomeworkBody = { text?: string | null; due_date?: string | null; accept_submissions?: boolean | null }
+
+export type HomeworkSettings = { accept_by_default: boolean; notify_on_submission: boolean }
+/** Body of `PUT /v1/staff/homework/settings`; an omitted field is kept. */
+export type HomeworkSettingsBody = Partial<HomeworkSettings>
+/** Body of `PATCH /v1/staff/lessons/{id}/homework/settings`; `notify: null` follows the teacher's setting again. */
+export type LessonHomeworkSwitchesBody = { accept_submissions?: boolean; notify?: boolean | null }
+
+export type HomeworkBoardOnly = "all" | "with_homework" | "to_review"
+export type HomeworkBoardParams = {
+  subject_id: string
+  audience_key: string
+  from?: string
+  to?: string
+  only?: HomeworkBoardOnly
+}
+export type HomeworkBoardLesson = {
+  lesson_id: string
+  date: string
+  period: number
+  topic: string | null
+  emis_topic_description: string | null
+  emis_files: ResourceItem[]
+  homework: { text: string; due_date: string | null; due_auto: boolean; source: HomeworkSource } | null
+  accept_submissions: boolean
+  notify: boolean | null
+  notify_effective: boolean
+  counts: { submitted: number; late: number; missing: number; to_review: number; graded: number; total: number } | null
+}
+/** `GET /v1/staff/homework`: the lessons of one journal option, newest first. */
+export type HomeworkBoard = {
+  subject: SubjectRef
+  audience_key: string
+  label: string
+  lessons: HomeworkBoardLesson[]
+  settings: HomeworkSettings
+}
 export type StaffTopicBody = { topic: string }
 
 /** `present_unassigned` lists students without a subgroup who attended a subgroup lesson (ACA-2). */
