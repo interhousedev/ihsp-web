@@ -416,15 +416,6 @@ describe("templates", () => {
     expect(read("sites", "share.conf")).toMatch(/location = \/ai\/env\.js \{[^}]*Cache-Control "no-store"/)
   })
 
-  it("share.conf serves the admission guest page uncached, unindexed, with the shared security headers", () => {
-    const conf = read("sites", "share.conf")
-    const block = /location = \/ai\/admission-guest\/ \{([^}]*)\}/.exec(conf)?.[1] ?? ""
-    expect(block).toContain("try_files /ai/admission-guest/index.html =404;")
-    expect(block).toContain("security-headers.conf;")
-    expect(block).toContain('Cache-Control "no-store"')
-    expect(block).toContain('X-Robots-Tag "noindex, nofollow"')
-  })
-
   it("env.js.template carries the app mode, the PWA url and the library url", () => {
     const template = read("env.js.template")
     expect(template).toContain('APP_MODE: "${APP_MODE}",')

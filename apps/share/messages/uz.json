@@ -62,34 +62,13 @@
       "openApp": "{appMy} ni ochish"
     },
     "card": {
-      "expiredTitle": "Karta kodining amal qilish muddati tugagan",
-      "expiredDescription": "Talabadan yangi QR-kodni koʻrsatishini soʻrang.",
-      "lyceum": "Litsey",
+      "invalidTitle": "Karta kodi yaroqsiz",
+      "invalidDescription": "Talaba uni almashtirgan boʻlishi mumkin. Joriy QR kodni koʻrsatishini soʻrang.",
+      "label": "Talaba",
       "group": "Guruh",
-      "course": "Kurs",
-      "direction": "Yoʻnalish",
+      "studentId": "Talaba ID",
       "speciality": "Mutaxassislik",
-      "validUntil": "{time} gacha amal qiladi",
-      "expiresIn": "{time} qoldi"
-    },
-    "admissionGuest": {
-      "title": "{name}ga yordam",
-      "student": "oʻquvchi",
-      "validUntil": "Havola {time} gacha amal qiladi",
-      "activities": "Faoliyatlar",
-      "responses": "Javoblar",
-      "text": "Javobingiz",
-      "url": "Havola (https), ixtiyoriy",
-      "urlInvalid": "Faqat https havolalar qabul qilinadi",
-      "send": "Yuborish",
-      "thanks": "Rahmat, {name} buni koʻradi",
-      "claimHint": "Javoblarni bir joyda saqlash uchun hisobga kiring.",
-      "missingTitle": "Havola toʻliq emas",
-      "missingText": "Olingan havolani toʻliq oching.",
-      "unavailableTitle": "Havola endi ishlamaydi",
-      "unavailableText": "Muddati tugagan yoki bekor qilingan. Yangisini soʻrang.",
-      "limitedTitle": "Urinishlar juda koʻp",
-      "limitedText": "Bir necha daqiqadan keyin qayta urining."
+      "photoAlt": "Talaba surati"
     },
     "essayReview": {
       "name": "Ismingiz",

@@ -3,21 +3,24 @@
 import { useT } from "@ihsp/i18n"
 import { Skeleton, StateView } from "@ihsp/ui"
 
-/** The token is unknown or its minute is over. */
-export function CardExpired() {
+/** The token is unknown or the student replaced it with a new one. */
+export function CardInvalid() {
   const t = useT("share.card")
   return (
-    <StateView state="empty" className="border-0" title={t("expiredTitle")} description={t("expiredDescription")} />
+    <StateView state="empty" className="border-0" title={t("invalidTitle")} description={t("invalidDescription")} />
   )
 }
 
 export function CardLoading() {
   const t = useT("share")
   return (
-    <div role="status" aria-busy="true" aria-label={t("loading")} className="flex flex-col items-center gap-3">
-      <Skeleton className="size-32 rounded-full" />
-      <Skeleton className="h-8 w-2/3" />
-      <Skeleton className="h-24 w-full" />
+    <div
+      role="status"
+      aria-busy="true"
+      aria-label={t("loading")}
+      className="mx-auto flex w-full max-w-md flex-col gap-3"
+    >
+      <Skeleton className="h-72 w-full rounded-3xl" />
     </div>
   )
 }
